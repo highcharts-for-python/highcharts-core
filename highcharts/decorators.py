@@ -185,6 +185,19 @@ def class_sensitive(types = None,
       Defaults to ``False`` (because most attributes are just singletons).
     :type allow_iterable: :class:`bool <python:bool>`
 
+    .. note::
+
+      To apply the decorator to a property setter method (the most-common use case), place
+      it *after* the ``@<property name>.setter`` decorator and directly above the function
+      name like so:
+
+      .. code-block:: python
+
+        @some_property.setter
+        @class_sensitive(...)
+        def some_property(self, value):
+            ...
+
     :returns: The result of the decorated function or method having validated the class
       typing.
 
