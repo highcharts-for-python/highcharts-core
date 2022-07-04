@@ -13,7 +13,7 @@ def validate_types(value,
                    allow_dict = True,
                    allow_json = True,
                    allow_none = True,
-                   allow_iterable = False,
+                   force_iterable = False,
                    function_name = None):
     """Validates that ``value`` is one or more of the allowed types, where the first
     type passed in ``types`` is the primary type that it will be returned as.
@@ -40,9 +40,9 @@ def validate_types(value,
       object as ``value``. Defaults to ``True``.
     :type allow_none: :class:`bool <python:bool>`
 
-    :param allow_iterable: If ``True``, will accept an iterable object as ``value``.
+    :param force_iterable: If ``True``, will accept an iterable object as ``value``.
       Defaults to ``False`` (because most attributes are just singletons).
-    :type allow_iterable: :class:`bool <python:bool>`
+    :type force_iterable: :class:`bool <python:bool>`
 
     :param function_name: The optional name of the function that was originally called.
     :type function_name: :class:`str <python:str>`
@@ -80,7 +80,7 @@ def validate_types(value,
 
     primary_type = types_list[0]
 
-    if allow_none and allow_iterable and checkers.is_iterable(value) and not value:
+    if allow_none and force_iterable and checkers.is_iterable(value) and not value:
         value = []
     elif allow_none and not value:
         value = None
@@ -106,12 +106,12 @@ def validate_types(value,
         except TypeError:
             value = json.loads(value)
 
-    if allow_iterable and checkers.is_iterable(value):
+    if force_iterable and checkers.is_iterable(value):
         value = [validate_types(x,
                                 types = types,
                                 allow_dict = allow_dict,
                                 allow_json = allow_json,
-                                allow_iterable = allow_iterable)
+                                force_iterable = force_iterable)
                  for x in value]
     elif allow_none and not value:
         pass
@@ -120,29 +120,29 @@ def validate_types(value,
         if function_name:
             error_string = f'{function_name} ' + error_string
 
-        if allow_dict and allow_json and allow_iterable and allow_none:
+        if allow_dict and allow_json and force_iterable and allow_none:
             error_string += ', dict, str, iterable, or empty object.'
-        elif allow_dict and allow_json and allow_iterable:
+        elif allow_dict and allow_json and force_iterable:
             error_string += ', dict, str, or iterable object.'
         elif allow_dict and allow_json and allow_none:
             error_string += ', dict, str, or empty object.'
-        elif allow_dict and allow_iterable and allow_none:
+        elif allow_dict and force_iterable and allow_none:
             error_string += ', dict, iterable, or empty object.'
         elif allow_dict and allow_json:
             error_string += ', dict, or str object.'
-        elif allow_dict and allow_iterable:
+        elif allow_dict and force_iterable:
             error_string += ', dict, or iterable object.'
         elif allow_dict and allow_none:
             error_string += ', dict, or empty object.'
-        elif allow_json and allow_iterable:
+        elif allow_json and force_iterable:
             error_string += ', str, or iterable object.'
         elif allow_json and allow_none:
             error_string += ', str, or empty object.'
-        elif allow_iterable and allow_none:
+        elif force_iterable and allow_none:
             error_string += ', iterable, or empty object.'
         elif allow_json:
             error_string += ' or str object.'
-        elif allow_iterable:
+        elif force_iterable:
             error_string += ' or iterable object.'
         elif allow_none:
             error_string += ' or empty object.'
@@ -158,7 +158,7 @@ def class_sensitive(types = None,
                     allow_dict = True,
                     allow_json = True,
                     allow_none = True,
-                    allow_iterable = False):
+                    force_iterable = False):
     """Validates that the values passed to a decorated function or method are
     de-serialized to the appropriate type.
 
@@ -181,9 +181,9 @@ def class_sensitive(types = None,
       object as ``value``. Defaults to ``True``.
     :type allow_none: :class:`bool <python:bool>`
 
-    :param allow_iterable: If ``True``, will accept an iterable object as ``value``.
+    :param force_iterable: If ``True``, will accept an iterable object as ``value``.
       Defaults to ``False`` (because most attributes are just singletons).
-    :type allow_iterable: :class:`bool <python:bool>`
+    :type force_iterable: :class:`bool <python:bool>`
 
     .. note::
 
@@ -227,7 +227,7 @@ def class_sensitive(types = None,
                                    allow_dict = allow_dict,
                                    allow_json = allow_json,
                                    allow_none = allow_none,
-                                   allow_iterable = allow_iterable,
+                                   force_iterable = force_iterable,
                                    function_name = function_name)
 
             result = func(args[0], value)

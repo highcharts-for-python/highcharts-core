@@ -40,7 +40,7 @@ class TestDecoratedClass:
                      allow_dict = True,
                      allow_json = True,
                      allow_none = True,
-                     allow_iterable = False)
+                     force_iterable = False)
     def prop(self, value):
         self._prop = value
 
@@ -53,7 +53,7 @@ class TestDecoratedClass:
                      allow_dict = True,
                      allow_json = True,
                      allow_none = True,
-                     allow_iterable = True)
+                     force_iterable = True)
     def list_prop(self, value):
         self._list_prop = value
 
@@ -165,42 +165,42 @@ def test_validate_types_none(kwargs, error):
 
 
 @pytest.mark.parametrize('kwargs, error, result_class', [
-    # allow_iterable and allow_dict and everything works
+    # force_iterable and allow_dict and everything works
     ({
         'value': [{'prop': 123}, {'prop': 456}],
         'types': TestClass,
         'allow_dict': True,
-        'allow_iterable': True
+        'force_iterable': True
     }, None, TestClass),
     # not allow iterable
     ({
         'value': [{'prop': 123}, {'prop': 456}],
         'types': TestClass,
         'allow_dict': True,
-        'allow_iterable': False
+        'force_iterable': False
     }, errors.HighchartsError, TestClass),
-    # allow_iterable and allow_json and everything works
+    # force_iterable and allow_json and everything works
     ({
         'value': '[{"prop": 123}, {"prop": 456}]',
         'types': TestClass,
         'allow_dict': True,
-        'allow_iterable': True,
+        'force_iterable': True,
         'allow_json': True
     }, None, TestClass),
-    # allow_iterable and allow_json and everything works
+    # force_iterable and allow_json and everything works
     ({
         'value': bytes('[{"prop": 123}, {"prop": 456}]', encoding = 'utf8'),
         'types': TestClass,
         'allow_dict': True,
-        'allow_iterable': True,
+        'force_iterable': True,
         'allow_json': True
     }, None, TestClass),
-    # allow_iterable and allow_empty and everything works
+    # force_iterable and allow_empty and everything works
     ({
         'value': [],
         'types': TestClass,
         'allow_dict': True,
-        'allow_iterable': True,
+        'force_iterable': True,
         'allow_json': True,
         'allow_none': True
     }, None, TestClass),
