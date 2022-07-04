@@ -44,3 +44,7 @@ ALLOWED_JS_LITERAL_TYPES = [
     'VariableDeclaration',
     'ClassDeclaration',
 ]
+
+
+## ANNOTATIONS DEFAULTS
+DEFAULT_DRAGGABLE = 'xy'
