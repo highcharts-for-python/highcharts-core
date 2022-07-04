@@ -41,6 +41,10 @@ from highcharts.range_selector import RangeSelector
 from highcharts.scrollbar import Scrollbar
 from highcharts.stock_tools import StockTools
 
+# Highcharts Maps Classes
+from highcharts.map_navigation import MapNavigation
+from highcharts.map_view import MapView
+
 
 class Options(HighchartsMeta):
     """Metaclass which establishes properties shared across different variations of the
@@ -49,7 +53,6 @@ class Options(HighchartsMeta):
     def __init__(self, **kwargs):
         self._accessibility = None
         self._annotations = None
-        self._boost = None
         self._caption = None
         self._chart = None
         self._color_axis = None
@@ -62,20 +65,18 @@ class Options(HighchartsMeta):
         self._legend = None
         self._loading = None
         self._navigation = None
-        self._no_data = None
-        self._pane = None
         self._plot_options = None
         self._responsive = None
         self._series = None
         self._subtitle = None
         self._time = None
         self._title = None
+        self._tooltip = None
         self._x_axis = None
         self._y_axis = None
 
         self.accessibility = kwargs.pop('accessibility', None)
         self.annotations = kwargs.pop('annotations', None)
-        self.boost = kwargs.pop('boost', None)
         self.caption = kwargs.pop('caption', None)
         self.chart = kwargs.pop('chart', None)
         self.color_axis = kwargs.pop('color_axis', None)
@@ -88,14 +89,13 @@ class Options(HighchartsMeta):
         self.legend = kwargs.pop('legend', None)
         self.loading = kwargs.pop('loading', None)
         self.navigation = kwargs.pop('navigation', None)
-        self.no_data = kwargs.pop('no_data', None)
-        self.pane = kwargs.pop('pane', None)
         self.plot_options = kwargs.pop('plot_options', None)
         self.responsive = kwargs.pop('responsive', None)
         self.series = kwargs.pop('series', None)
         self.subtitle = kwargs.pop('subtitle', None)
         self.time = kwargs.pop('time', None)
         self.title = kwargs.pop('title', None)
+        self.tooltip = kwargs.pop('tooltip', None)
         self.x_axis = kwargs.pop('x_axis', None)
         self.y_axis = kwargs.pop('y_axis', None)
 
@@ -139,38 +139,6 @@ class Options(HighchartsMeta):
     @class_sensitive(Annotation, force_iterable = True)
     def annotations(self, value):
         self._annotations = value
-
-    @property
-    def boost(self) -> Optional[Boost]:
-        """Options for the Boost module.
-
-        The Boost module allows certain series types to be rendered by WebGL instead of
-        the default SVG. This allows hundreds of thousands of data points to be rendered
-        in milliseconds. In addition to the WebGL rendering it saves time by skipping
-        processing and inspection of the data wherever possible.
-
-        .. warning::
-
-          This introduces some limitations to what features are available in boost mode.
-          See
-          `the docs <https://www.highcharts.com/docs/advanced-chart-features/boost-module>`_
-          for details.
-
-        .. note:
-
-          In addition to the global boost option, each series has a ``boostThreshold``
-          that defines when the boost should kick in.
-
-        :returns: The :class:`Boost <Boost>` object.
-        :rtype: :class:`Boost <highcharts.boost.Boost>`
-
-        """
-        return self._boost
-
-    @boost.setter
-    @class_sensitive(Boost)
-    def boost(self, value):
-        self._boost = value
 
     @property
     def caption(self):
@@ -440,30 +408,6 @@ class Options(HighchartsMeta):
         self._navigation = value
 
     @property
-    def no_data(self):
-        """Options for displaying a message like "No data to display".
-
-        .. warning::
-
-          This feature requires the file ``no-data-to-display.js`` to be loaded in the
-          page.
-
-        .. tip::
-
-          The actual text to display is set in the :meth:`language <Options.language>`
-          options.
-
-        :returns: Configuration of how to display a no data message.
-        :rtype: :class:`NoData` or :obj:`None <python:None>`
-        """
-        return self._no_data
-
-    @no_data.setter
-    @class_sensitive(NoData)
-    def no_data(self, value):
-        self._no_data = value
-
-    @property
     def plot_options(self):
         """A wrapper object for configurations applied to each series type.
 
@@ -631,15 +575,51 @@ class HighchartOptions(HighchartsMeta):
     ``options`` `configuration object <https://api.highcharts.com/highcharts/>`_."""
 
     def __init__(self, **kwargs):
+        self._boost = None
         self._drilldown = None
+        self._no_data = None
         self._pane = None
         self._z_axis = None
 
+        self.boost = kwargs.pop('boost', None)
         self.drilldown = kwargs.pop('drilldown', None)
+        self.no_data = kwargs.pop('no_data', None)
         self.pane = kwargs.pop('pane', None)
         self.z_axis = kwargs.pop('z_axis', None)
 
         super().__init__(**kwargs)
+
+    @property
+    def boost(self) -> Optional[Boost]:
+        """Options for the Boost module.
+
+        The Boost module allows certain series types to be rendered by WebGL instead of
+        the default SVG. This allows hundreds of thousands of data points to be rendered
+        in milliseconds. In addition to the WebGL rendering it saves time by skipping
+        processing and inspection of the data wherever possible.
+
+        .. warning::
+
+          This introduces some limitations to what features are available in boost mode.
+          See
+          `the docs <https://www.highcharts.com/docs/advanced-chart-features/boost-module>`_
+          for details.
+
+        .. note:
+
+          In addition to the global boost option, each series has a ``boostThreshold``
+          that defines when the boost should kick in.
+
+        :returns: The :class:`Boost <Boost>` object.
+        :rtype: :class:`Boost <highcharts.boost.Boost>`
+
+        """
+        return self._boost
+
+    @boost.setter
+    @class_sensitive(Boost)
+    def boost(self, value):
+        self._boost = value
 
     @property
     def drilldown(self):
@@ -663,6 +643,30 @@ class HighchartOptions(HighchartsMeta):
     @class_sensitive(Drilldown)
     def drilldown(self, value):
         self._drilldown = value
+
+    @property
+    def no_data(self):
+        """Options for displaying a message like "No data to display".
+
+        .. warning::
+
+          This feature requires the file ``no-data-to-display.js`` to be loaded in the
+          page.
+
+        .. tip::
+
+          The actual text to display is set in the :meth:`language <Options.language>`
+          options.
+
+        :returns: Configuration of how to display a no data message.
+        :rtype: :class:`NoData` or :obj:`None <python:None>`
+        """
+        return self._no_data
+
+    @no_data.setter
+    @class_sensitive(NoData)
+    def no_data(self, value):
+        self._no_data = value
 
     @property
     def pane(self):
@@ -777,17 +781,53 @@ class HighchartsStockOptions(Options):
     `Highcharts Stock <https://api.highcharts.com/highstock/>`_ configuration object."""
 
     def __init__(self, **kwargs):
+        self._boost = None
         self._navigator = None
+        self._no_data = None
         self._range_selector = None
         self._scrollbar = None
         self._stock_tools = None
 
+        self.boost = kwargs.pop('boost', None)
         self.navigator = kwargs.pop('navigator', None)
+        self.no_data = kwargs.pop('no_data', None)
         self.range_selector = kwargs.pop('range_selector', None)
         self.scrollbar = kwargs.pop('scrollbar', None)
         self.stock_tools = kwargs.pop('stock_tools', None)
 
         super().__init__(**kwargs)
+
+    @property
+    def boost(self) -> Optional[Boost]:
+        """Options for the Boost module.
+
+        The Boost module allows certain series types to be rendered by WebGL instead of
+        the default SVG. This allows hundreds of thousands of data points to be rendered
+        in milliseconds. In addition to the WebGL rendering it saves time by skipping
+        processing and inspection of the data wherever possible.
+
+        .. warning::
+
+          This introduces some limitations to what features are available in boost mode.
+          See
+          `the docs <https://www.highcharts.com/docs/advanced-chart-features/boost-module>`_
+          for details.
+
+        .. note:
+
+          In addition to the global boost option, each series has a ``boostThreshold``
+          that defines when the boost should kick in.
+
+        :returns: The :class:`Boost <Boost>` object.
+        :rtype: :class:`Boost <highcharts.boost.Boost>`
+
+        """
+        return self._boost
+
+    @boost.setter
+    @class_sensitive(Boost)
+    def boost(self, value):
+        self._boost = value
 
     @property
     def navigator(self):
@@ -804,6 +844,30 @@ class HighchartsStockOptions(Options):
     @class_sensitive(Navigator)
     def navigator(self, value):
         self._navigator = value
+
+    @property
+    def no_data(self):
+        """Options for displaying a message like "No data to display".
+
+        .. warning::
+
+          This feature requires the file ``no-data-to-display.js`` to be loaded in the
+          page.
+
+        .. tip::
+
+          The actual text to display is set in the :meth:`language <Options.language>`
+          options.
+
+        :returns: Configuration of how to display a no data message.
+        :rtype: :class:`NoData` or :obj:`None <python:None>`
+        """
+        return self._no_data
+
+    @no_data.setter
+    @class_sensitive(NoData)
+    def no_data(self, value):
+        self._no_data = value
 
     @property
     def range_selector(self):
@@ -942,6 +1006,147 @@ class HighchartsStockOptions(Options):
             'tooltip': self.tooltip,
             'xAxis': self.x_axis,
             'yAxis': self.y_axis,
+        }
+
+        as_dict = {}
+        for key in untrimmed_dict:
+            value = untrimmed_dict.get(key, None)
+            if value and hasattr(value, 'to_dict'):
+                as_dict[key] = value.to_dict()
+            elif value:
+                as_dict[key] = value
+
+        return as_dict
+
+
+class HighchartsMapsOptions(HighchartsMeta):
+    """The Python representation of the
+    `Highcharts Maps <https://api.highcharts.com/highmaps/>`_ configuration object."""
+
+    def __init__(self, **kwargs):
+        self._drilldown = None
+        self._map_navigation = None
+        self._map_view = None
+
+        self.drilldown = kwargs.pop('drilldown', None)
+        self.map_navigation = kwargs.pop('map_navigation', None)
+        self.map_view = kwargs.pop('map_view', None)
+
+    @property
+    def drilldown(self):
+        """Options to configure :term:`drill down` functionality in the chart, which
+        enables users to inspect increasingly high resolution data by clicking on chart
+        items like columns or pie slices.
+
+        .. note::
+
+          The drilldown feature requires the ``drilldown.js`` file to be loaded in the
+          browser/client. This file is found in the modules directory of the download
+          package, or online at
+          `code.highcharts.com/modules/drilldown.js <code.highcharts.com/modules/drilldown.js>`_.
+
+        :returns: The options to configure the chart's drill down functionality.
+        :rtype: :class:`Drilldown` or :obj:`None <python:None>`
+        """
+        return self._drilldown
+
+    @drilldown.setter
+    @class_sensitive(Drilldown)
+    def drilldown(self, value):
+        self._drilldown = value
+
+    @property
+    def map_navigation(self):
+        """The map navigation option handles buttons for navigation in addition to
+        ``mousewheel`` and ``doubleclick`` handlers for map zooming.
+
+        :returns: Configuration settings for map navigation.
+        :rtype: :class:`MapNavigation` or :obj:`None <python:None>`
+        """
+        return self._map_navigation
+
+    @map_navigation.setter
+    @class_sensitive(MapNavigation)
+    def map_navigation(self, value):
+        self._map_navigation = value
+
+    @property
+    def map_view(self):
+        """The map view options control the initial view of the chart, and how projection
+        is set up for raw geoJSON maps.
+
+        :returns: Configuration of the initial map view settings.
+        :rtype: :class:`MapView` or :obj:`None <python:None>`
+        """
+        return self._map_view
+
+    @map_view.setter
+    @class_sensitive(MapView)
+    def map_view(self, value):
+        self._map_view = value
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        as_dict = validators.dict(as_dict, allow_empty = True)
+        kwargs_dict = {
+            'accessibility': as_dict.pop('accessibility', None),
+            'annotations': as_dict.pop('annotations', None),
+            'caption': as_dict.pop('caption', None),
+            'chart': as_dict.pop('chart', None),
+            'color_axis': as_dict.pop('colorAxis', None),
+            'colors': as_dict.pop('colors', DEFAULT_COLORS),
+            'credits': as_dict.pop('credits', None),
+            'data': as_dict.pop('data', None),
+            'defs': as_dict.pop('defs', None),
+            'drilldown': as_dict.pop('drilldown', None),
+            'exporting': as_dict.pop('exporting', None),
+            'language': as_dict.pop('lang', None),
+            'legend': as_dict.pop('legend', None),
+            'loading': as_dict.pop('loading', None),
+            'map_navigation': as_dict.pop('mapNavigation', None),
+            'map_view': as_dict.pop('mapView', None),
+            'navigation': as_dict.pop('navigation', None),
+            'plot_options': as_dict.pop('plotOptions', None),
+            'responsive': as_dict.pop('responsive', None),
+            'series': as_dict.pop('series', None),
+            'subtitle': as_dict.pop('subtitle', None),
+            'time': as_dict.pop('time', None),
+            'title': as_dict.pop('title', None),
+            'tooltip': as_dict.pop('tooltip', None),
+            'x_axis': as_dict.pop('xAxis', None),
+            'y_axis': as_dict.pop('yAxis', None)
+        }
+
+        return cls(**kwargs_dict)
+
+    def to_dict(self):
+        untrimmed_dict = {
+            'accessibility': self.accessibility,
+            'annotations': self.annotations,
+            'caption': self.caption,
+            'chart': self.chart,
+            'colorAxis': self.color_axis,
+            'colors': self.colors,
+            'credits': self.credits,
+            'data': self.data,
+            'defs': self.defs,
+            'drilldown': self.drilldown,
+            'exporting': self.exporting,
+            'lang': self.language,
+            'legend': self.legend,
+            'loading': self.loading,
+            'mapNavigation': self.map_navigation,
+            'mapView': self.map_view,
+            'navigation': self.naviation,
+            'plotOptions': self.plot_options,
+            'responsive': self.responsive,
+            'series': self.series,
+            'subtitle': self.subtitle,
+            'time': self.time,
+            'title': self.title,
+            'tooltip': self.tooltip,
+            'xAxis': self.x_axis,
+            'yAxis': self.y_axis
         }
 
         as_dict = {}
