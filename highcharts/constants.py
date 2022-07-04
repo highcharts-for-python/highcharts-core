@@ -34,6 +34,7 @@ DEFAULT_BEFORE_CHART_FORMAT = ('<{headingTagName}>{chartTitle}</{headingTagName}
                                '<div>{viewTableButton}</div><div>{xAxisDescription}</div>'
                                '<div>{yAxisDescription}</div>'
                                '<div>{annotationsTitle}{annotationsList}</div>')
+DEFAULT_DESCRIPTION_FORMAT = '{seriesDescription}{authorDescription}{axisDescription}'
 
 ## JAVASCRIPT LITERAL DEFAULTS
 
