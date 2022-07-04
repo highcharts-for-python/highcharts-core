@@ -26,6 +26,24 @@ class HighchartsMeta(ABC):
         for key in kwargs:
             setattr(self, key, kwargs.get(key, None))
 
+    @staticmethod
+    def trim_dict(untrimmed):
+        """Remove keys from ``untrimmed`` whose values are :obj:`None <python:None>` and
+        convert values that have ``.to_dict()`` methods.
+
+        :returns: Trimmed :class:`dict <python:dict>`
+        :rtype: :class:`dict <python:dict>`
+        """
+        as_dict = {}
+        for key in untrimmed:
+            value = untrimmed.get(key, None)
+            if value and hasattr(value, 'to_dict'):
+                as_dict[key] = value.to_dict()
+            elif value:
+                as_dict[key] = value
+
+        return as_dict
+
     @classmethod
     @abstractmethod
     def from_dict(cls, as_dict: dict):

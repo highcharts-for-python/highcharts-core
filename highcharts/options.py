@@ -734,7 +734,7 @@ class HighchartOptions(HighchartsMeta):
         return cls(**kwargs_dict)
 
     def to_dict(self):
-        untrimmed_dict = {
+        untrimmed = {
             'accessibility': self.accessibility,
             'annotations': self.annotations,
             'boost': self.boost,
@@ -765,15 +765,7 @@ class HighchartOptions(HighchartsMeta):
             'zAxis': self.z_axis
         }
 
-        as_dict = {}
-        for key in untrimmed_dict:
-            value = untrimmed_dict.get(key, None)
-            if value and hasattr(value, 'to_dict'):
-                as_dict[key] = value.to_dict()
-            elif value:
-                as_dict[key] = value
-
-        return as_dict
+        return self.trim_dict(untrimmed)
 
 
 class HighchartsStockOptions(Options):
@@ -976,7 +968,7 @@ class HighchartsStockOptions(Options):
         return cls(**kwargs_dict)
 
     def to_dict(self):
-        untrimmed_dict = {
+        untrimmed = {
             'accessibility': self.accessibility,
             'annotations': self.annotations,
             'boost': self.boost,
@@ -1008,15 +1000,7 @@ class HighchartsStockOptions(Options):
             'yAxis': self.y_axis,
         }
 
-        as_dict = {}
-        for key in untrimmed_dict:
-            value = untrimmed_dict.get(key, None)
-            if value and hasattr(value, 'to_dict'):
-                as_dict[key] = value.to_dict()
-            elif value:
-                as_dict[key] = value
-
-        return as_dict
+        return self.trim_dict(untrimmed)
 
 
 class HighchartsMapsOptions(HighchartsMeta):
@@ -1120,7 +1104,7 @@ class HighchartsMapsOptions(HighchartsMeta):
         return cls(**kwargs_dict)
 
     def to_dict(self):
-        untrimmed_dict = {
+        untrimmed = {
             'accessibility': self.accessibility,
             'annotations': self.annotations,
             'caption': self.caption,
@@ -1149,12 +1133,4 @@ class HighchartsMapsOptions(HighchartsMeta):
             'yAxis': self.y_axis
         }
 
-        as_dict = {}
-        for key in untrimmed_dict:
-            value = untrimmed_dict.get(key, None)
-            if value and hasattr(value, 'to_dict'):
-                as_dict[key] = value.to_dict()
-            elif value:
-                as_dict[key] = value
-
-        return as_dict
+        return self.trim_dict(untrimmed)

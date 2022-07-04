@@ -1,4 +1,5 @@
 """Implements the Python representation of the Accessibility module."""
+from typing import Optional
 
 from validator_collection import validators
 
@@ -7,7 +8,6 @@ from highcharts.decorators import class_sensitive
 from highcharts import constants, errors
 
 from highcharts.accessibility.announce_new_data import AnnounceNewData
-from highcharts.accessibility.custom_components import CustomComponents
 from highcharts.accessibility.high_contrast_theme import HighContrastTheme
 from highcharts.accessibility.keyboard_navigation import KeyboardNavigation
 from highcharts.accessibility.point import AccessibilityPoint
@@ -70,11 +70,11 @@ class Accessibility(HighchartsMeta):
         self._announce_new_data = value
 
     @property
-    def custom_components(self):
+    def custom_components(self) -> Optional[str]:
         """A hook for adding custom components to the accessibility module.
 
-        Should be an object mapping component names to instances of classes inheriting
-        from the
+        Should be a string containing JavaScript code which contains an object mapping
+        component names to instances of classes inheriting from the
         `Highcharts.AccessibilityComponent <https://api.highcharts.com/class-reference/Highcharts.AccessibilityComponent>`_
         base class.
 
@@ -84,15 +84,14 @@ class Accessibility(HighchartsMeta):
           for the keyboard navigation to be usable.
 
         :returns: Custom components that have been added to the accessibility module.
-        :rtype: :class:`CustomComponents` or :obj:`None <python:None>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
 
         """
         return self._custom_components
 
     @custom_components.setter
-    @class_sensitive(CustomComponents)
     def custom_components(self, value):
-        self._custom_components = value
+        self._custom_components = validators.string(value, allow_empty = True)
 
     @property
     def description(self):
@@ -323,3 +322,42 @@ class Accessibility(HighchartsMeta):
     @type_description.setter
     def type_description(self, value):
         self._type_description = validators.string(value, allow_empty = True)
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'announce_new_data': as_dict.pop('announceNewData', None),
+            'custom_components': as_dict.pop('customComponents', None),
+            'description': as_dict.pop('description', None),
+            'enabled': as_dict.pop('enabled', True),
+            'high_contrast_theme': as_dict.pop('highContrastTheme', None),
+            'keyboard_navigation': as_dict.pop('keyboardNavigation', None),
+            'landmark_verbosity': as_dict.pop('landmark_verbosity',
+                                              constants.DEFAULT_LANDMARK_VERBOSITY),
+            'linked_description': as_dict.pop('linkedDescription',
+                                              constants.DEFAULT_LINKED_DESCRIPTION),
+            'point': as_dict.pop('point', None),
+            'screen_reader_section': as_dict.pop('screenReaderSection', None),
+            'series': as_dict.pop('series', None),
+            'type_description': as_dict.pop('typeDescription', None)
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self):
+        untrimmed = {
+            'announceNewData': self.announce_new_data,
+            'customComponents': self.custom_components,
+            'description': self.description,
+            'enabled': self.enabled,
+            'highContrastTheme': self.high_contrast_theme,
+            'keyboardNavigation': self.keyboard_navigation,
+            'landmarkVerbosity': self.landmark_verbosity,
+            'linkedDescription': self.linked_description,
+            'point': self.point,
+            'screenReaderSection': self.screen_reader_section,
+            'series': self.series,
+            'typeDescription': self.type_description
+        }
+
+        return self.trim_dict(untrimmed)
