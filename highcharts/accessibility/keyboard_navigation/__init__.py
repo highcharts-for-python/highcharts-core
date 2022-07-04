@@ -138,3 +138,10 @@ class KeyboardNavigation(HighchartsMeta):
             'wrapAround': self.wrapAround
         }
         return self.trim_dict(untrimmed)
+
+
+__all__ = [
+    'KeyboardNavigation',
+    'FocusBorder',
+    'SeriesNavigation'
+]

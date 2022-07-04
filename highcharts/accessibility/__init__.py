@@ -361,3 +361,14 @@ class Accessibility(HighchartsMeta):
         }
 
         return self.trim_dict(untrimmed)
+
+
+__all__ = [
+    'Accessibility',
+    'AnnounceNewData',
+    'HighContrastTheme',
+    'KeyboardNavigation',
+    'AccessibilityPoint',
+    'ScreenReaderSection',
+    'SeriesAccessibility'
+]
