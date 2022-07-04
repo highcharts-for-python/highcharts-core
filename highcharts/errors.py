@@ -14,3 +14,8 @@ class HighchartsValueError(ImplementationError):
     for Python. Typically an implementation error.
     """
     pass
+
+class NotSupportedError(HighchartsError, TypeError):
+    """:exc:`TypeError <python:TypeError>` encountered when attempting functionality that
+    is not (and is not intended to be) supported."""
+    pass

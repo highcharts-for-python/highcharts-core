@@ -1,6 +1,8 @@
 """Implements the :class:`HighchartOptions` class."""
 from typing import Optional, Any
 
+from validator_collection import validators
+
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.decorators import class_sensitive
 from highcharts.constants import DEFAULT_COLORS
@@ -28,14 +30,21 @@ from highcharts.series import Series
 from highcharts.subtitle import Subtitle
 from highcharts.time import Time
 from highcharts.title import Title
+from highcharts.tooltip import Tooltip
 from highcharts.x_axis import XAxis
 from highcharts.y_axis import YAxis
 from highcharts.z_axis import ZAxis
 
+# Highcharts Stock Classes
+from highcharts.navigator import Navigator
+from highcharts.range_selector import RangeSelector
+from highcharts.scrollbar import Scrollbar
+from highcharts.stock_tools import StockTools
 
-class HighchartOptions(HighchartsMeta):
-    """The Python representation of the `Highcharts <https://highcharts.com>`_
-    ``options`` `configuration object <https://api.highcharts.com/highcharts/>`_."""
+
+class Options(HighchartsMeta):
+    """Metaclass which establishes properties shared across different variations of the
+    Highcharts configuration objects."""
 
     def __init__(self, **kwargs):
         self._accessibility = None
@@ -48,7 +57,6 @@ class HighchartOptions(HighchartsMeta):
         self._credits = None
         self._data = None
         self._defs = None
-        self._drilldown = None
         self._exporting = None
         self._language = None
         self._legend = None
@@ -64,7 +72,6 @@ class HighchartOptions(HighchartsMeta):
         self._title = None
         self._x_axis = None
         self._y_axis = None
-        self._z_axis = None
 
         self.accessibility = kwargs.pop('accessibility', None)
         self.annotations = kwargs.pop('annotations', None)
@@ -76,7 +83,6 @@ class HighchartOptions(HighchartsMeta):
         self.credits = kwargs.pop('credits', None)
         self.data = kwargs.pop('data', None)
         self.defs = kwargs.pop('defs', None)
-        self.drilldown = kwargs.pop('drilldown', None)
         self.exporting = kwargs.pop('exporting', None)
         self.language = kwargs.pop('language', None)
         self.legend = kwargs.pop('legend', None)
@@ -92,7 +98,6 @@ class HighchartOptions(HighchartsMeta):
         self.title = kwargs.pop('title', None)
         self.x_axis = kwargs.pop('x_axis', None)
         self.y_axis = kwargs.pop('y_axis', None)
-        self.z_axis = kwargs.pop('z_axis', None)
 
     @property
     def accessibility(self) -> Optional[Accessibility]:
@@ -337,29 +342,6 @@ class HighchartOptions(HighchartsMeta):
         self._defs = value
 
     @property
-    def drilldown(self):
-        """Options to configure :term:`drill down` functionality in the chart, which
-        enables users to inspect increasingly high resolution data by clicking on chart
-        items like columns or pie slices.
-
-        .. note::
-
-          The drilldown feature requires the ``drilldown.js`` file to be loaded in the
-          browser/client. This file is found in the modules directory of the download
-          package, or online at
-          `code.highcharts.com/modules/drilldown.js <code.highcharts.com/modules/drilldown.js>`_.
-
-        :returns: The options to configure the chart's drill down functionality.
-        :rtype: :class:`Drilldown` or :obj:`None <python:None>`
-        """
-        return self._drilldown
-
-    @drilldown.setter
-    @class_sensitive(Drilldown)
-    def drilldown(self, value):
-        self._drilldown = value
-
-    @property
     def exporting(self):
         """Options to configure the export functionality enabled for the chart.
 
@@ -480,21 +462,6 @@ class HighchartOptions(HighchartsMeta):
     @class_sensitive(NoData)
     def no_data(self, value):
         self._no_data = value
-
-    @property
-    def pane(self):
-        """The pane serves as a container for axes and backgrounds for circular gauges and
-        polar charts.
-
-        :returns: The Pane configuration options.
-        :rtype: :class:`Pane` or :obj:`None <python:None>`
-        """
-        return self._pane
-
-    @pane.setter
-    @class_sensitive(Pane)
-    def pane(self, value):
-        self._pane = value
 
     @property
     def plot_options(self):
@@ -658,6 +625,60 @@ class HighchartOptions(HighchartsMeta):
     def y_axis(self, value):
         self._y_axis = value
 
+
+class HighchartOptions(HighchartsMeta):
+    """The Python representation of the `Highcharts <https://highcharts.com>`_
+    ``options`` `configuration object <https://api.highcharts.com/highcharts/>`_."""
+
+    def __init__(self, **kwargs):
+        self._drilldown = None
+        self._pane = None
+        self._z_axis = None
+
+        self.drilldown = kwargs.pop('drilldown', None)
+        self.pane = kwargs.pop('pane', None)
+        self.z_axis = kwargs.pop('z_axis', None)
+
+        super().__init__(**kwargs)
+
+    @property
+    def drilldown(self):
+        """Options to configure :term:`drill down` functionality in the chart, which
+        enables users to inspect increasingly high resolution data by clicking on chart
+        items like columns or pie slices.
+
+        .. note::
+
+          The drilldown feature requires the ``drilldown.js`` file to be loaded in the
+          browser/client. This file is found in the modules directory of the download
+          package, or online at
+          `code.highcharts.com/modules/drilldown.js <code.highcharts.com/modules/drilldown.js>`_.
+
+        :returns: The options to configure the chart's drill down functionality.
+        :rtype: :class:`Drilldown` or :obj:`None <python:None>`
+        """
+        return self._drilldown
+
+    @drilldown.setter
+    @class_sensitive(Drilldown)
+    def drilldown(self, value):
+        self._drilldown = value
+
+    @property
+    def pane(self):
+        """The pane serves as a container for axes and backgrounds for circular gauges and
+        polar charts.
+
+        :returns: The Pane configuration options.
+        :rtype: :class:`Pane` or :obj:`None <python:None>`
+        """
+        return self._pane
+
+    @pane.setter
+    @class_sensitive(Pane)
+    def pane(self, value):
+        self._pane = value
+
     @property
     def z_axis(self):
         """The Z axis or depth axis for 3D plots.
@@ -748,4 +769,187 @@ class HighchartOptions(HighchartsMeta):
             elif value:
                 as_dict[key] = value
 
-        return target_dict
+        return as_dict
+
+
+class HighchartsStockOptions(Options):
+    """The Python representation of the
+    `Highcharts Stock <https://api.highcharts.com/highstock/>`_ configuration object."""
+
+    def __init__(self, **kwargs):
+        self._navigator = None
+        self._range_selector = None
+        self._scrollbar = None
+        self._stock_tools = None
+
+        self.navigator = kwargs.pop('navigator', None)
+        self.range_selector = kwargs.pop('range_selector', None)
+        self.scrollbar = kwargs.pop('scrollbar', None)
+        self.stock_tools = kwargs.pop('stock_tools', None)
+
+        super().__init__(**kwargs)
+
+    @property
+    def navigator(self):
+        """The navigator is a small series below the main series, displaying a view of the
+        entire data set. It provides tools to zoom in and out on parts of the data as well
+        as panning across the dataset.
+
+        :returns: Configuration instructions for the :class:`Navigator` functionality.
+        :rtype: :class:`Navigator` or :obj:`None <python:None>`
+        """
+        return self._navigator
+
+    @navigator.setter
+    @class_sensitive(Navigator)
+    def navigator(self, value):
+        self._navigator = value
+
+    @property
+    def range_selector(self):
+        """The range selector is a tool for selecting ranges to display within the chart.
+        It provides buttons to select preconfigured ranges in the chart, like 1 day, 1
+        week, 1 month etc. It also provides input boxes where min and max dates can be
+        manually input.
+
+        :returns: Configuration instructions for the Range Selector functionality.
+        :rtype: :class:`RangeSelector` or :obj:`None <python:None>`
+        """
+        return self._range_selector
+
+    @range_selector.setter
+    @class_sensitive(RangeSelector)
+    def range_selector(self, value):
+        self._range_selector = value
+
+    @property
+    def scrollbar(self):
+        """The scrollbar is a means of panning over the X axis of a stock chart.
+
+        .. note::
+
+          Scrollbars can also be applied to other types of axes.
+
+        .. note::
+
+          Another approach to scrollable charts is the :meth:`Chart.scrollable_plot_area`
+          option that is especially suitable for simpler cartesian charts on mobile.
+
+        In styled mode, all the presentational options for the scrollbar are replaced by
+        the classes ``.highcharts-scrollbar-thumb``, ``.highcharts-scrollbar-arrow``,
+        ``.highcharts-scrollbar-button``, ``.highcharts-scrollbar-rifles`` and
+        ``.highcharts-scrollbar-track``.
+
+        :returns: The configuration options for the Scrollbar functionality.
+        :rtype: :class:`Scrollbar` or :obj:`None <python:None>`
+        """
+        return self._scrollbar
+
+    @scrollbar.setter
+    @class_sensitive(Scrollbar)
+    def scrollbar(self, value):
+        self._scrollbar = value
+
+    @property
+    def stock_tools(self):
+        """Configure the **stockTools** GUI strings in the chart.
+
+        .. warning::
+
+          Requires the `stockTools module <https://api.highcharts.com/highstock/>`_` to be
+          loaded in the client/browser.
+
+        .. seealso::
+
+          For a description of the module and information on its features, see
+          `Highcharts StockTools <https://api.highcharts.com/highstock/>`_.
+
+        :returns: The configuration options for the StockTools functionality.
+        :rtype: :class:`StockTools` or :obj:`None <python:None>`
+        """
+        return self._stock_tools
+
+    @stock_tools.setter
+    @class_sensitive(StockTools)
+    def stock_tools(self, value):
+        self._stock_tools = value
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        as_dict = validators.dict(as_dict, allow_empty = True)
+        kwargs_dict = {
+            'accessibility': as_dict.pop('accessibility', None),
+            'annotations': as_dict.pop('annotations', None),
+            'boost': as_dict.pop('boost', None),
+            'caption': as_dict.pop('caption', None),
+            'chart': as_dict.pop('chart', None),
+            'color_axis': as_dict.pop('colorAxis', None),
+            'colors': as_dict.pop('colors', DEFAULT_COLORS),
+            'credits': as_dict.pop('credits', None),
+            'data': as_dict.pop('data', None),
+            'defs': as_dict.pop('defs', None),
+            'exporting': as_dict.pop('exporting', None),
+            'language': as_dict.pop('lang', None),
+            'legend': as_dict.pop('legend', None),
+            'loading': as_dict.pop('loading', None),
+            'navigation': as_dict.pop('navigation', None),
+            'navigator': as_dict.pop('navigator', None),
+            'no_data': as_dict.pop('noData', None),
+            'plot_options': as_dict.pop('plotOptions', None),
+            'range_selector': as_dict.pop('rangeSelector', None),
+            'responsive': as_dict.pop('responsive', None),
+            'scrollbar': as_dict.pop('scrollbar', None),
+            'series': as_dict.pop('series', None),
+            'stock_tools': as_dict.pop('stockTools', None),
+            'subtitle': as_dict.pop('subtitle', None),
+            'time': as_dict.pop('time', None),
+            'title': as_dict.pop('title', None),
+            'tooltip': as_dict.pop('tooltip', None),
+            'x_axis': as_dict.pop('xAxis', None),
+            'y_axis': as_dict.pop('yAxis', None)
+        }
+
+        return cls(**kwargs_dict)
+
+    def to_dict(self):
+        untrimmed_dict = {
+            'accessibility': self.accessibility,
+            'annotations': self.annotations,
+            'boost': self.boost,
+            'caption': self.caption,
+            'chart': self.chart,
+            'colorAxis': self.color_axis,
+            'colors': self.colors,
+            'credits': self.credits,
+            'data': self.data,
+            'defs': self.defs,
+            'exporting': self.exporting,
+            'lang': self.language,
+            'legend': self.legend,
+            'loading': self.loading,
+            'navigation': self.naviation,
+            'navigator': self.navigator,
+            'noData': self.no_data,
+            'plotOptions': self.plot_options,
+            'rangeSelector': self.range_selector,
+            'responsive': self.responsive,
+            'scrollbar': self.scrollbar,
+            'series': self.series,
+            'stockTools': self.stock_tools,
+            'subtitle': self.subtitle,
+            'time': self.time,
+            'title': self.title,
+            'tooltip': self.tooltip,
+            'xAxis': self.x_axis,
+            'yAxis': self.y_axis,
+        }
+
+        as_dict = {}
+        for key in untrimmed_dict:
+            value = untrimmed_dict.get(key, None)
+            if value and hasattr(value, 'to_dict'):
+                as_dict[key] = value.to_dict()
+            elif value:
+                as_dict[key] = value
+
+        return as_dict
