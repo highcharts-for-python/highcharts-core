@@ -13,6 +13,8 @@ except ImportError:
         except ImportError:
             import json
 
+import esprima
+from esprima.error_handler import Error as ParseError
 from validator_collection import validators
 
 from highcharts import constants
@@ -116,6 +118,37 @@ class HighchartsMeta(ABC):
             as_json = json.dumps(as_dict)
 
         return as_json
+
+    def to_js_literal(self):
+        """Return the object represented as a :class:`str <python:str>` containing the
+        JavaScript object literal.
+
+        :rtype: :class:`str <python:str>`
+        """
+        as_dict = self.to_dict()
+        as_json = self.to_json()
+
+        keys_possible_code = [(key, as_dict[key]) for key in as_dict
+                              if isinstance(as_dict[key], str) is True]
+        for item in keys_possible_code:
+            value = item[1]
+            try:
+                parse_result = esprima.parse(value)
+            except ParseError:
+                keys_possible_code.remove(item)
+
+            first_obj = parse_result.get('body', None)
+            if not first_obj:
+                keys_possible_code.remove(item)
+            first_type = first_obj.get('type', None)
+            if first_type not in constants.ALLOWED_JS_LITERAL_TYPES:
+                keys_possible_code.remove(item)
+
+        # TODO: IMPLEMENT THIS METHOD
+
+        raise NotImplementedError()
+
+
 
 
 class JavaScriptDict(UserDict):

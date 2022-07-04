@@ -23,3 +23,11 @@ LANDMARK_VERBOSITY_VALUES = ['all',
                              ]
 
 DEFAULT_LINKED_DESCRIPTION = '*[data-highcharts-chart="{index}"] + .highcharts-description'
+
+
+# TODO: DETERMINE IF THE FOLLOWING WILL ACTUALLY BE NEEDED
+ALLOWED_JS_LITERAL_TYPES = [
+    'FunctionDeclaration',
+    'VariableDeclaration',
+    'ClassDeclaration',
+]
