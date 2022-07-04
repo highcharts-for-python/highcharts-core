@@ -26,6 +26,14 @@ LANDMARK_VERBOSITY_VALUES = ['all',
 DEFAULT_LINKED_DESCRIPTION = '*[data-highcharts-chart="{index}"] + .highcharts-description'
 
 DEFAULT_ACCESSIBILITY_POINT_VALUE_FORMAT = '{xDescription}{separator}{value}'
+DEFAULT_AFTER_CHART_FORMAT = '{endOfChartMarker}'
+DEFAULT_AXIS_RANGE_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+DEFAULT_BEFORE_CHART_FORMAT = ('<{headingTagName}>{chartTitle}</{headingTagName}><div>'
+                               '{typeDescription}</div><div>{chartSubtitle}</div>'
+                               '<div>{chartLongdesc}</div><div>{playAsSoundButton}</div>'
+                               '<div>{viewTableButton}</div><div>{xAxisDescription}</div>'
+                               '<div>{yAxisDescription}</div>'
+                               '<div>{annotationsTitle}{annotationsList}</div>')
 
 ## JAVASCRIPT LITERAL DEFAULTS
 
