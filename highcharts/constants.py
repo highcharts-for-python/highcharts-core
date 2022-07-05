@@ -81,3 +81,7 @@ SHAPES_ALLOWED_DASH_STYLES = ('Solid',
                               'DashDot',
                               'LongDashDot',
                               'LongDashDotDot')
+
+## BOOST DEFAULTS
+DEFAULT_BOOST_PIXEL_RATIO = 1
+DEFAULT_BOOST_SERIES_THRESHOLD = 50
