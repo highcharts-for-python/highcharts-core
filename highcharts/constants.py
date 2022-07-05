@@ -6,6 +6,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+class EnforcedNullType:
+    pass
+
+
+EnforcedNull = EnforcedNullType()
+
+
 JAVASCRIPT_INDENT_SPACES = os.getenv('JAVASCRIPT_INDENT_SPACES') or 2
 JAVASCRIPT_INDENT = ''
 indent_count = 1
@@ -94,3 +101,53 @@ DEFAULT_CAPTION_STYLE = '{"color": "#666666"}'
 DEFAULT_CAPTION_VERTICAL_ALIGN = 'bottom'
 DEFAULT_CAPTION_X = 0
 DEFAULT_CAPTION_Y = None
+
+
+## CHART DEFAULTS
+DEFAULT_CHART_BACKGROUND_COLOR = '#ffffff'
+DEFAULT_CHART_BORDER_COLOR = '#335cad'
+DEFAULT_CHART_BORDER_RADIUS = 0
+DEFAULT_CHART_BORDER_WIDTH = 0
+DEFAULT_CHART_COLOR_COUNT = 10
+DEFAULT_CHART_SERIES_TYPE = 'line'
+DEFAULT_CHART_PLOT_BACKGROUND_COLOR = None
+DEFAULT_CHART_PLOT_BORDER_COLOR = '#cccccc'
+DEFAULT_CHART_PLOT_BORDER_WIDTH = 0
+DEFAULT_CHART_SELECTION_MARKER_FILL = 'rgba(51,92,173,0.25)'
+DEFAULT_CHART_SPACING_BOTTOM = 15
+DEFAULT_CHART_SPACING_LEFT = 10
+DEFAULT_CHART_SPACING_TOP = 10
+DEFAULT_CHART_SPACING_RIGHT = 10
+DEFAULT_CHART_SPACING = [DEFAULT_CHART_SPACING_TOP,
+                         DEFAULT_CHART_SPACING_RIGHT,
+                         DEFAULT_CHART_SPACING_BOTTOM,
+                         DEFAULT_CHART_SPACING_LEFT]
+DEFAULT_CHART_STYLE = '{"fontFamily": "\"Lucida Grande\", \"Lucida Sans Unicode\", Verdana, Arial, Helvetica, sans-serif","fontSize":"12px"}'
+DEFAULT_CHART_TYPE = 'line'
+DEFAULT_CHART_PARALLEL_AXES = {
+    'line_width': 1,
+    'gridlines_width': 0,
+    'title': {
+        'text': '',
+        'reserve_space': False
+    },
+    'labels': {
+        'x': 0,
+        'y': 0,
+        'align': 'center',
+        'reserve_space': False
+    },
+    'offset': 0
+}
+
+
+## RESET ZOOM BUTTON DEFAULTS
+DEFAULT_RESET_ZOOM_BUTTON_POSITION = {
+    'align': 'right',
+    'vertical_align': 'top',
+    'x': -10,
+    'y': 10
+}
+DEFAULT_RESET_ZOOM_BUTTON_THEME = {
+    'zIndex': 6
+}

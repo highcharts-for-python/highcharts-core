@@ -7,6 +7,9 @@ from highcharts import constants, errors
 from highcharts.annotations.points import AnnotationPoint
 from highcharts.decorators import class_sensitive, validate_types
 from highcharts.metaclasses import HighchartsMeta
+from highcharts.utility_classes.gradients import Gradient
+from highcharts.utility_classes.patterns import Pattern
+from highcharts.utility_classes.shadows import ShadowOptions
 
 
 class AnnotationLabelOptionAccessibility(HighchartsMeta):
@@ -42,107 +45,6 @@ class AnnotationLabelOptionAccessibility(HighchartsMeta):
     def to_dict(self):
         untrimmed = {
             'description': self.description
-        }
-        as_dict = self.trim_dict(untrimmed)
-
-        return as_dict
-
-
-class ShadowOptions(HighchartsMeta):
-    """Object configuring the shadow to apply to another object."""
-
-    def __init__(self, **kwargs):
-        self._color = None,
-        self._offset_x = None
-        self._offset_y = None
-        self._opacity = None
-        self._width = None
-
-        self.color = kwargs.pop('color', None)
-        self.offset_x = kwargs.pop('offset_x', None)
-        self.offset_y = kwargs.pop('offset_y', None)
-        self.opacity = kwargs.pop('opacity', None)
-        self.width = kwargs.pop('width', None)
-
-    @property
-    def color(self) -> Optional[str]:
-        """The color to apply to the shadow.
-
-        :returns: Color string
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
-        """
-        return self._color
-
-    @color.setter
-    def color(self, value):
-        self._color = validators.string(value, allow_empty = True)
-
-    @property
-    def offset_x(self) -> Optional[Any[int, float, Decimal]]:
-        """The offset to apply along the horizontal axis.
-
-        :rtype: numeric or :obj:`None <python:None>`
-        """
-        return self._offset_x
-
-    @offset_x.setter
-    def offset_x(self, value):
-        self._offset_x = validators.numeric(value, allow_empty = True)
-
-    @property
-    def offset_y(self) -> Optional[Any[int, float, Decimal]]:
-        """The offset to apply along the vertical axis.
-
-        :rtype: numeric or :obj:`None <python:None>`
-        """
-        return self._offset_y
-
-    @offset_y.setter
-    def offset_y(self, value):
-        self._offset_y = validators.numeric(value, allow_empty = True)
-
-    @property
-    def opacity(self) -> Optional[Any[int, float, Decimal]]:
-        """The opacity to apply to the shadow.
-
-        :rtype: numeric or :obj:`None <python:None>`
-        """
-        return self._opacity
-
-    @opacity.setter
-    def opacity(self, value):
-        self._opacity = validators.numeric(value, allow_empty = True)
-
-    @property
-    def width(self) -> Optional[Any[int, float, Decimal]]:
-        """The width of the shadow in pixels.
-
-        :rtype: numeric or :obj:`None <python:None>`
-        """
-        return self._width
-
-    @width.setter
-    def width(self, value):
-        self._width = validators.numeric(value, allow_empty = True)
-
-    @classmethod
-    def from_dict(cls, as_dict):
-        kwargs = {
-            'color': as_dict.pop('color', None),
-            'offset_x': as_dict.pop('offsetX', None),
-            'offset_y': as_dict.pop('offsetY', None),
-            'opacity': as_dict.pop('opacity', None),
-            'width': as_dict.pop('width', None)
-        }
-        return cls(**kwargs)
-
-    def to_dict(self):
-        untrimmed = {
-            'color': self.color,
-            'offsetX': self.offset_x,
-            'offsetY': self.offset_y,
-            'opacity': self.opacity,
-            'width': self.width
         }
         as_dict = self.trim_dict(untrimmed)
 
@@ -266,18 +168,46 @@ class LabelOptions(HighchartsMeta):
         self._allow_overlap = bool(value)
 
     @property
-    def background_color(self) -> Optional[str]:
+    def background_color(self) -> Optional[Any[str, Gradient, Pattern]]:
         f"""The background color or gradient for the annotation's label. Defaults to
         ``'{constants.DEFAULT_LABEL_BACKGROUND_COLOR}'``.
 
         :returns: The backgorund color for the annotation's label.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
+          :obj:`None <python:None>`
         """
         return self._background_color
 
     @background_color.setter
     def background_color(self, value):
-        self._background_color = validators.string(value, allow_empty = True)
+        if not value:
+            self._background_color = None
+        elif isinstance(value, (Gradient, Pattern)):
+            self._background_color = value
+        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
+            try:
+                self._background_color = Gradient.from_json(value)
+            except ValueError:
+                if isinstance(value, dict):
+                    self._background_color = Gradient.from_dict(value)
+                else:
+                    self._background_color = validators.string(value)
+        elif isinstance(value, dict) and 'linear_gradient' in value:
+            self._background_color = Gradient(**value)
+        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
+            try:
+                self._background_color = Pattern.from_json(value)
+            except ValueError:
+                if isinstance(value, dict):
+                    self._background_color = Pattern.from_dict(value)
+                else:
+                    self._background_color = validators.string(value)
+        elif isinstance(value, dict) and 'pattern_options' in value:
+            self._background_color = Pattern(**value)
+        else:
+            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
+                                              f'Gradient, or Pattern. Value received '
+                                              f'was: {value}')
 
     @property
     def border_color(self) -> Optional[str]:

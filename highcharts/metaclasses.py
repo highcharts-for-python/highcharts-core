@@ -112,6 +112,9 @@ class HighchartsMeta(ABC):
         :rtype: :class:`str <python:str>` or :class:`bytes <python:bytes>`
         """
         as_dict = self.to_dict()
+        for key in as_dict:
+            if as_dict[key] == constants.EnforcedNull:
+                as_dict[key] = None
         try:
             as_json = json.dumps(as_dict, encoding = encoding)
         except TypeError:

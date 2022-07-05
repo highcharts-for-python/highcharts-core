@@ -349,7 +349,7 @@ class ShapeOptions(HighchartsMeta):
         return self.trim_dict(untrimmed)
 
 
-class AnnotationShape(HighchartsMeta):
+class AnnotationShape(ShapeOptions):
     """Configuration for an annotation shape applied to a specific point.
 
     Used to override the global settings configured in :class:`ShapeOptions` and applied
