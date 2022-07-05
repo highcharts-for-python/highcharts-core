@@ -306,3 +306,12 @@ class Annotation(HighchartsMeta):
         as_dict = self.trim_dict(untrimmed)
 
         return as_dict
+
+
+__all__ = [
+    'Annotation',
+    'AnnotationPoint',
+    'LabelOptions',
+    'AnnotationLabel',
+    'ShapeOptions'
+]

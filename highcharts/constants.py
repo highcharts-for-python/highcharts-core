@@ -48,3 +48,36 @@ ALLOWED_JS_LITERAL_TYPES = [
 
 ## ANNOTATIONS DEFAULTS
 DEFAULT_DRAGGABLE = 'xy'
+DEFAULT_LABEL_ALIGN = 'center'
+DEFAULT_LABEL_BACKGROUND_COLOR = 'rgba(0, 0, 0, 0.75)'
+DEFAULT_LABEL_BORDER_COLOR = '#000000'
+DEFAULT_LABEL_BORDER_RADIUS = 3
+DEFAULT_LABEL_BORDER_WIDTH = 1
+DEFAULT_LABEL_CLASS_NAME = 'highcharts-no-tooltip'
+DEFAULT_LABEL_OVERFLOW = 'justify'
+DEFAULT_LABEL_FORMATTER = """function () { return defined(this.y) ? this.y : 'Annotation label'; }"""
+DEFAULT_LABEL_PADDING = 5
+DEFAULT_LABEL_SHAPE = 'callout'
+DEFAULT_LABEL_VERTICAL_ALIGN = 'bottom'
+DEFAULT_LABEL_X = 0
+DEFAULT_LABEL_Y = -16
+
+
+## SHAPES DEFAULTS
+DEFAULT_SHAPES_FILL = 'rgba(0, 0, 0, 0.75)'
+DEFALUT_SHAPES_R = 0
+DEFAULT_SHAPES_SNAP = 2
+DEFAULT_SHAPES_STROKE = 'rgba(0, 0, 0, 0.75)'
+DEFAULT_SHAPES_STROKE_WIDTH = 1
+DEFAULT_SHAPES_TYPE = 'rect'
+SHAPES_ALLOWED_DASH_STYLES = ('Solid',
+                              'ShortDash',
+                              'ShortDot',
+                              'ShortDashDot',
+                              'ShortDashDotDot',
+                              'Dot',
+                              'Dash',
+                              'LongDash',
+                              'DashDot',
+                              'LongDashDot',
+                              'LongDashDotDot')
