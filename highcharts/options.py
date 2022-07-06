@@ -623,7 +623,7 @@ class HighchartOptions(HighchartsMeta):
 
     @property
     def drilldown(self):
-        """Options to configure :term:`drill down` functionality in the chart, which
+        """Options to configure :term:`drilldown` functionality in the chart, which
         enables users to inspect increasingly high resolution data by clicking on chart
         items like columns or pie slices.
 

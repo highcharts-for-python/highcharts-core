@@ -10,7 +10,7 @@ from highcharts.utility_classes.animation import AnimationOptions
 from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
 from highcharts.utility_classes.shadows import ShadowOptions
-from highcharts.chart.events import ChartEvents
+from highcharts.utility_classes.events import ChartEvents
 from highcharts.chart.options_3d import Options3D
 from highcharts.axes.parallel_axes import ParallelAxesOptions
 from highcharts.chart.reset_zoom_button import ResetZoomButtonOptions

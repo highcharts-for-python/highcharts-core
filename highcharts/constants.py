@@ -161,3 +161,33 @@ DEFAULT_CREDITS_STYLE = {
     'fontSize': '9px'
 }
 DEFAULT_CREDITS_TEXT = 'Highcharts'
+
+
+## DRILLDOWN DEFAULTS
+DEFAULT_DRILLDOWN_ACTIVE_AXIS_LABEL_STYLE = {
+    "cursor": "pointer",
+    "color": "#003399",
+    "fontWeight": "bold",
+    "textDecoration": "underline"
+}
+DEFAULT_DRILLDOWN_ACTIVE_DATA_LABEL_STYLE = {
+    'color': '#003399',
+    'cursor': 'pointer',
+    'fontWeight': 'bold',
+    'textDecoration': 'underline'
+}
+
+
+## DRILLDOWN BREAADCRUMB DEFAULTS
+DEFAULT_BREADCRUMBS_POSITION = {
+    'align': 'left',
+    'vertical_align': 'top',
+    'x': 0,
+    'y': None
+}
+DEFAULT_BREADCRUMBS_RELATIVE_TO = 'plotBox'
+DEFAULT_BREADCRUMBS_STYLE = None
+DEFAULT_BREADCRUMBS_SEPARATOR_STYLE = {
+    'color': '#666666'
+}
+DEFAULT_BREADCRUMBS_SEPARATOR_TEXT = '/'

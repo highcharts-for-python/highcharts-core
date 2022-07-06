@@ -300,3 +300,54 @@ class ChartEvents(HighchartsMeta):
         }
 
         return self.trim_dict(untrimmed)
+
+
+class BreadcrumbEvents(HighchartsMeta):
+    """Event listeners for breadcrumbs."""
+
+    def __init__(self, **kwargs):
+        self._click = None
+
+        for attribute in dir(self):
+            if attribute.startswith('_') and not attribute.startswith('__'):
+                non_private_name = attribute[1:]
+                setattr(self, non_private_name, kwargs.pop(non_private_name, None))
+
+    @property
+    def click(self) -> Optional[str]:
+        """JavaScript callback function that fires when the user clicks on the plot
+        background. One parameter, ``event``, is passed to the JavaScript function,
+        containing common event information.
+
+        .. hint::
+
+          Information on the clicked spot can be found in your JavaScript function through
+          ``event.xAxis`` and ``event.yAxis``, which are arrays containing the axes of
+          each dimension and each axis' value at the clicked spot.
+
+          The primary axes are ``event.xAxis[0]`` and ``event.yAxis[0]``.
+
+          Remember the unit of a datetime axis is milliseconds since 1970-01-01 00:00:00.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._click
+
+    @click.setter
+    def click(self, value):
+        self._click = validators.string(value, allow_empty = False)
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'click': as_dict.pop('click', None)
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self):
+        untrimmed = {
+            'click': self.click
+        }
+
+        return self.trim_dict(untrimmed)
