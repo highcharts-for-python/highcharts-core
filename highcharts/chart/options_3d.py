@@ -24,7 +24,7 @@ class PanelOptions(HighchartsMeta):
 
     @property
     def color(self) -> Optional[Any[str, Gradient, Pattern]]:
-        f"""The background color or gradient for the 3D panel. Defaults to
+        """The background color or gradient for the 3D panel. Defaults to
         ``'transparent'``.
 
         :returns: The backgorund color for the 3D panel

@@ -151,3 +151,13 @@ DEFAULT_RESET_ZOOM_BUTTON_POSITION = {
 DEFAULT_RESET_ZOOM_BUTTON_THEME = {
     'zIndex': 6
 }
+
+
+## CREDITS DEFAULTS
+DEFAULT_CREDITS_HREF = 'https://www.highcharts.com?credits'
+DEFAULT_CREDITS_STYLE = {
+    'color': '#999999',
+    'cursor': 'pointer',
+    'fontSize': '9px'
+}
+DEFAULT_CREDITS_TEXT = 'Highcharts'

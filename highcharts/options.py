@@ -12,7 +12,7 @@ from highcharts.annotations import Annotation
 from highcharts.boost import Boost
 from highcharts.caption import Caption
 from highcharts.chart import Chart
-from highcharts.color_axis import ColorAxis
+from highcharts.axes.color_access import ColorAxis
 from highcharts.credits import Credits
 from highcharts.data import Data
 from highcharts.defs import MarkerDefinition
