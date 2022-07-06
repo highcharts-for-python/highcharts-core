@@ -191,3 +191,38 @@ DEFAULT_BREADCRUMBS_SEPARATOR_STYLE = {
     'color': '#666666'
 }
 DEFAULT_BREADCRUMBS_SEPARATOR_TEXT = '/'
+
+
+## EXPORTING DEFAULTS
+DEFAULT_EXPORTING_FILENAME = 'chart'
+DEFAULT_EXPORTING_LIB_URL = None
+DEFAULT_EXPORTING_MENU_ITEM_DEFINITIONS = {
+    "viewFullscreen": {},
+    "printChart": {},
+    "separator": {},
+    "downloadPNG": {},
+    "downloadJPEG": {},
+    "downloadPDF": {},
+    "downloadSVG": {}
+}
+DEFAULT_EXPORTING_PRINT_MAX_WIDTH = 780
+DEFAULT_EXPORTING_SCALE = 2
+DEFAULT_EXPORTING_TYPE = 'image/png'
+DEFAULT_EXPORTING_URL = 'https://export.highcharts.com/'
+
+## EXPORTING: CONTEXT BUTTON
+DEFAULT_CONTEXT_BUTTON_CLASS_NAME = 'highcharts-contextbutton'
+DEFAULT_CONTEXT_MENU_CLASS_NAME = 'highcharts-contextmenu'
+DEFAULT_CONTEXT_MENU_ITEMS = [
+    "viewFullscreen",
+    "printChart",
+    "separator",
+    "downloadPNG",
+    "downloadJPEG",
+    "downloadPDF",
+    "downloadSVG"
+]
+
+## EXPORTING: CSV
+DEFAULT_CSV_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
+DEFAULT_CSV_LINE_DELIMITER = '\n'
