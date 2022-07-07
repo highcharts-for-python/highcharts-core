@@ -298,14 +298,14 @@ class Options(HighchartsMeta):
     def defs(self):
         """Options for configuring markers for annotations.
 
-        :returns: A collection of :class:`MarkerDefinition` objects, or
+        :returns: A :class:`MarkerDefinition` object or
           :obj:`None <python:None>`
-        :rtype: :class:`list <python:list>` of :class:`MarkerDefinition`
+        :rtype: :class:`MarkerDefinition` or :obj:`None <python:None>`
         """
         return self._defs
 
     @defs.setter
-    @class_sensitive(MarkerDefinition, force_iterable = True)
+    @class_sensitive(MarkerDefinition)
     def defs(self, value):
         self._defs = value
 
