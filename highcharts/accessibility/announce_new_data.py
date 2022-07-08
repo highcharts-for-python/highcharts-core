@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Optional
 from decimal import Decimal
 
 from validator_collection import validators
@@ -126,7 +126,7 @@ class AnnounceNewData(HighchartsMeta):
         return self._minimum_announcement_interval
 
     @minimum_announcement_interval.setter
-    def minimum_announcement_interval(self, value: Any[int, float, Decimal]):
+    def minimum_announcement_interval(self, value: int | float | Decimal):
         value = validators.integer(value,
                                    allow_empty = False,
                                    coerce_value = True,

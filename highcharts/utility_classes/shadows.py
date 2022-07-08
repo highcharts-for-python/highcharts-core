@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Optional
 from decimal import Decimal
 
 from validator_collection import validators
@@ -36,7 +36,7 @@ class ShadowOptions(HighchartsMeta):
         self._color = validators.string(value, allow_empty = True)
 
     @property
-    def offset_x(self) -> Optional[Any[int, float, Decimal]]:
+    def offset_x(self) -> Optional[int | float | Decimal]:
         """The offset to apply along the horizontal axis.
 
         :rtype: numeric or :obj:`None <python:None>`
@@ -48,7 +48,7 @@ class ShadowOptions(HighchartsMeta):
         self._offset_x = validators.numeric(value, allow_empty = True)
 
     @property
-    def offset_y(self) -> Optional[Any[int, float, Decimal]]:
+    def offset_y(self) -> Optional[int | float | Decimal]:
         """The offset to apply along the vertical axis.
 
         :rtype: numeric or :obj:`None <python:None>`
@@ -60,7 +60,7 @@ class ShadowOptions(HighchartsMeta):
         self._offset_y = validators.numeric(value, allow_empty = True)
 
     @property
-    def opacity(self) -> Optional[Any[int, float, Decimal]]:
+    def opacity(self) -> Optional[int | float | Decimal]:
         """The opacity to apply to the shadow.
 
         :rtype: numeric or :obj:`None <python:None>`
@@ -72,7 +72,7 @@ class ShadowOptions(HighchartsMeta):
         self._opacity = validators.numeric(value, allow_empty = True)
 
     @property
-    def width(self) -> Optional[Any[int, float, Decimal]]:
+    def width(self) -> Optional[int | float | Decimal]:
         """The width of the shadow in pixels.
 
         :rtype: numeric or :obj:`None <python:None>`

@@ -1,5 +1,5 @@
 """Implements the :class:`HighchartOptions` class."""
-from typing import Optional, Any
+from typing import Optional
 
 from validator_collection import validators
 
@@ -120,7 +120,7 @@ class Options(HighchartsMeta):
 
     @accessibility.setter
     @class_sensitive(Accessibility)
-    def accessibility(self, value: Optional[Any[Accessibility, dict, str]]):
+    def accessibility(self, value: Optional[Accessibility | dict | str]):
         self._accessibility = value
 
     @property

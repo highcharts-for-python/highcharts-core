@@ -1,5 +1,3 @@
-from typing import Any
-
 from validator_collection import validators
 
 from highcharts import errors
@@ -51,7 +49,7 @@ class SeriesNavigation(HighchartsMeta):
         self._mode = value
 
     @property
-    def point_navigation_enabled_threshold(self) -> Any[bool, int]:
+    def point_navigation_enabled_threshold(self) -> bool | int:
         """When a series contains more points than this, we no longer allow keyboard
         navigation for it. Accepts either an :class:`int <python:int>` or a
         a :class:`bool <python:bool>` value of ``False``.

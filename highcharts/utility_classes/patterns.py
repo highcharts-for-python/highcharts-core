@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Optional
 from decimal import Decimal
 from fraction import Fraction
 
@@ -40,7 +40,7 @@ class PatternOptions(HighchartsMeta):
         self.y = kwargs.pop('y', 0)
 
     @property
-    def aspect_ratio(self) -> Optional[Any[int, float, Decimal, Fraction]]:
+    def aspect_ratio(self) -> Optional[int | float | Decimal | Fraction]:
         """For automatically calculated width and height on images, it is possible to set
         an aspect ratio. The image will be zoomed to fill the bounding box, maintaining
         the aspect ratio defined.
@@ -80,7 +80,7 @@ class PatternOptions(HighchartsMeta):
         self._color = validators.string(value, allow_empty = True)
 
     @property
-    def height(self) -> Optional[Any[int, float, Decimal]]:
+    def height(self) -> Optional[int | float | Decimal]:
         """Height of the pattern expressed in pixels.
 
         .. note::
@@ -194,7 +194,7 @@ class PatternOptions(HighchartsMeta):
         self._pattern_transform = validators.string(value, allow_empty = True)
 
     @property
-    def width(self) -> Optional[Any[int, float, Decimal]]:
+    def width(self) -> Optional[int | float | Decimal]:
         """Width of the pattern expressed in pixels.
 
         .. note::
@@ -216,7 +216,7 @@ class PatternOptions(HighchartsMeta):
         self._width = validators.numeric(value, allow_empty = True)
 
     @property
-    def x(self) -> Optional[Any[int, float, Decimal]]:
+    def x(self) -> Optional[int | float | Decimal]:
         """Horizontal offset applied to the pattern. Defaults to ``0``.
 
         :rtype: numeric or :obj:`None <python:None>`
@@ -228,7 +228,7 @@ class PatternOptions(HighchartsMeta):
         self._x = validators.numeric(value, allow_empty = True)
 
     @property
-    def y(self) -> Optional[Any[int, float, Decimal]]:
+    def y(self) -> Optional[int | float | Decimal]:
         """Vertical offset applied to the pattern. Defaults to ``0``.
 
         :rtype: numeric or :obj:`None <python:None>`

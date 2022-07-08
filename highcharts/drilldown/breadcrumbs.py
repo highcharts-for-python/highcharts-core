@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Optional
 from decimal import Decimal
 
 from validator_collection import validators
@@ -101,7 +101,7 @@ class BreadcrumbOptions(HighchartsMeta):
         self.z_index = kwargs.pop('z_index', 7)
 
     @property
-    def button_spacing(self) -> Any[int, float, Decimal]:
+    def button_spacing(self) -> int | float | Decimal:
         """The default padding expressed in pixels for each button and separator in each
         direction.
 

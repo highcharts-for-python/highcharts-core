@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Optional
 from decimal import Decimal
 
 from validator_collection import validators
@@ -23,7 +23,7 @@ class PanelOptions(HighchartsMeta):
         self.visible = kwargs.pop('default')
 
     @property
-    def color(self) -> Optional[Any[str, Gradient, Pattern]]:
+    def color(self) -> Optional[str | Gradient | Pattern]:
         """The background color or gradient for the 3D panel. Defaults to
         ``'transparent'``.
 
@@ -65,7 +65,7 @@ class PanelOptions(HighchartsMeta):
                                               f'was: {value}')
 
     @property
-    def size(self) -> Any[int, float, Decimal]:
+    def size(self) -> int | float | Decimal:
         """The thickness of the panel. Defaults to ``1``.
 
         :rtype: numeric
@@ -79,7 +79,7 @@ class PanelOptions(HighchartsMeta):
                                         minimum = 0)
 
     @property
-    def visible(self) -> Any[bool, str]:
+    def visible(self) -> bool | str:
         """Indicates whether to display the panel in the frame. Defaults to ``'default'``.
 
         Accepts:
@@ -231,7 +231,7 @@ class Frame(HighchartsMeta):
         self._top = value
 
     @property
-    def size(self) -> Any[int, float, Decimal]:
+    def size(self) -> int | float | Decimal:
         """The thickness of the frame. Defaults to ``1``.
 
         :rtype: numeric
@@ -245,7 +245,7 @@ class Frame(HighchartsMeta):
                                         minimum = 0)
 
     @property
-    def visible(self) -> Any[bool, str]:
+    def visible(self) -> bool | str:
         """Indicates whether to display the frame. Defaults to ``'default'``.
 
         Accepts:
@@ -336,7 +336,7 @@ class Options3D(HighchartsMeta):
         self.view_distance = kwargs.pop('view_distance', 25)
 
     @property
-    def alpha(self) -> Any[int, float, Decimal]:
+    def alpha(self) -> int | float | Decimal:
         """One of two rotation angles for the chart. Defaults to ``0``.
 
         :rtype: numeric
@@ -348,7 +348,7 @@ class Options3D(HighchartsMeta):
         self._alpha = validators.integer(value, allow_empty = False)
 
     @property
-    def axis_label_position(self) -> Any[constants.EnforcedNullType, str]:
+    def axis_label_position(self) -> constants.EnforcedNullType | str:
         """Set to ``'auto'`` to automatically move the labels to the best edge.
 
         Defaults to :class:`EnforcedNull <EnforcedNullType>`` which indicates
@@ -373,7 +373,7 @@ class Options3D(HighchartsMeta):
             self._axis_label_position = value
 
     @property
-    def beta(self) -> Any[int, float, Decimal]:
+    def beta(self) -> int | float | Decimal:
         """One of two rotation angles for the chart. Defaults to ``0``.
 
         :rtype: numeric
@@ -385,7 +385,7 @@ class Options3D(HighchartsMeta):
         self._beta = validators.integer(value, allow_empty = False)
 
     @property
-    def depth(self) -> Any[int, float, Decimal]:
+    def depth(self) -> int | float | Decimal:
         """The total depth of the chart. Defaults to ``25``.
 
         :rtype: numeric
@@ -439,7 +439,7 @@ class Options3D(HighchartsMeta):
         self._frame = value
 
     @property
-    def view_distance(self) -> Optional[Any[int, float, Decimal]]:
+    def view_distance(self) -> Optional[int | float | Decimal]:
         """Defines the distance the viewer is standing in front of the chart. Defaults
         to ``25``.
 

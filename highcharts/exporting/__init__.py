@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Optional
 from decimal import Decimal
 
 from validator_collection import validators, checkers
@@ -396,7 +396,7 @@ class Exporting(HighchartsMeta):
         self._pdf_font = value
 
     @property
-    def print_max_width(self) -> Optional[Any[int, float, Decimal]]:
+    def print_max_width(self) -> Optional[int | float | Decimal]:
         f"""When printing the chart from the menu item in the burger menu, if the
         on-screen chart exceeds this width, it is resized. After printing or cancelled, it
         is restored.
@@ -417,7 +417,7 @@ class Exporting(HighchartsMeta):
         self._print_max_width = validators.numeric(value, allow_empty = True)
 
     @property
-    def scale(self) -> Optional[Any[int, float, Decimal]]:
+    def scale(self) -> Optional[int | float | Decimal]:
         f"""Defines the scale or zoom factor for the exported image compared to the
         on-screen display. Defaults to ``{constants.DEFAULT_EXPORTING_SCALE}``.
 
@@ -448,7 +448,7 @@ class Exporting(HighchartsMeta):
         self._show_table = bool(value)
 
     @property
-    def source_height(self) -> Optional[Any[int, float, Decimal]]:
+    def source_height(self) -> Optional[int | float | Decimal]:
         """The height of the original chart when exported, unless an explicit (JavaScript)
         ``chart.height`` is set, or a pixel width is set on the container.
 
@@ -463,7 +463,7 @@ class Exporting(HighchartsMeta):
         self._source_height = validators.numeric(value, allow_empty = True)
 
     @property
-    def source_width(self) -> Optional[Any[int, float, Decimal]]:
+    def source_width(self) -> Optional[int | float | Decimal]:
         """The width of the original chart when exported, unless an explicit (JavaScript)
         ``chart.width`` is set, or a pixel width is set on the container.
 
@@ -478,7 +478,7 @@ class Exporting(HighchartsMeta):
         self._source_width = validators.numeric(value, allow_empty = True)
 
     @property
-    def table_caption(self) -> Optional[Any[bool, str]]:
+    def table_caption(self) -> Optional[bool | str]:
         """Caption for the data table. If not specified (:obj:`None <python:None>)`), will
         default to the chart title.
 
@@ -592,7 +592,7 @@ class Exporting(HighchartsMeta):
         self._use_rowspan_headers = bool(value)
 
     @property
-    def width(self) -> Optional[Any[int, float, Decimal]]:
+    def width(self) -> Optional[int | float | Decimal]:
         """An explicitly set pixel width for charts exported to PNG or JPG. Defaults to
         :obj:`None <python:None>`.
 

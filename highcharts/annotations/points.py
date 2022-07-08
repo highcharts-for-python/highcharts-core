@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Optional
 from decimal import Decimal
 
 from validator_collection import validators
@@ -22,7 +22,7 @@ class AnnotationPoint(HighchartsMeta):
         self.y_axis = kwargs.pop('y_axis', None)
 
     @property
-    def x(self) -> Optional[Any[int, float, Decimal]]:
+    def x(self) -> Optional[int | float | Decimal]:
         """The x position of the point.
 
         Units can be either in axis or chart pixel coordinates.
@@ -36,7 +36,7 @@ class AnnotationPoint(HighchartsMeta):
         self._x = validators.numeric(value, allow_empty = True)
 
     @property
-    def x_axis(self) -> Optional[Any[str, int]]:
+    def x_axis(self) -> Optional[str | int]:
         """This number defines which xAxis the point is connected to.
 
         It refers to either the axis id (as a :class:`str <python:str>`) or the index of
@@ -65,7 +65,7 @@ class AnnotationPoint(HighchartsMeta):
                                                   'supported type.')
 
     @property
-    def y(self) -> Optional[Any[int, float, Decimal]]:
+    def y(self) -> Optional[int | float | Decimal]:
         """The y position of the point.
 
         Units can be either in axis or chart pixel coordinates.
@@ -79,7 +79,7 @@ class AnnotationPoint(HighchartsMeta):
         self._y = validators.numeric(value, allow_empty = True)
 
     @property
-    def y_axis(self) -> Optional[Any[str, int]]:
+    def y_axis(self) -> Optional[str | int]:
         """This number defines which yAxis the point is connected to.
 
         It refers to either the axis id (as a :class:`str <python:str>`) or the index of

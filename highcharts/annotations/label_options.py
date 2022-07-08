@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Optional
 from decimal import Decimal
 
 from validator_collection import validators
@@ -168,7 +168,7 @@ class LabelOptions(HighchartsMeta):
         self._allow_overlap = bool(value)
 
     @property
-    def background_color(self) -> Optional[Any[str, Gradient, Pattern]]:
+    def background_color(self) -> Optional[str | Gradient | Pattern]:
         f"""The background color or gradient for the annotation's label. Defaults to
         ``'{constants.DEFAULT_LABEL_BACKGROUND_COLOR}'``.
 
@@ -224,7 +224,7 @@ class LabelOptions(HighchartsMeta):
         self._border_color = validators.string(value, allow_empty = True)
 
     @property
-    def border_radius(self) -> Optional[Any[int, float, Decimal]]:
+    def border_radius(self) -> Optional[int | float | Decimal]:
         f"""The border radius (in pixels) applied to the annotation's label. Defaults to
         ``{constants.DEFAULT_LABEL_BORDER_RADIUS}``.
 
@@ -238,7 +238,7 @@ class LabelOptions(HighchartsMeta):
         self._border_radius = validators.numeric(value, allow_empty = True)
 
     @property
-    def border_width(self) -> Optional[Any[int, float, Decimal]]:
+    def border_width(self) -> Optional[int | float | Decimal]:
         f"""The border width (in pixels) applied to the annotation's label. Defaults to
         ``{constants.DEFAULT_LABEL_BORDER_WIDTH}``.
 
@@ -281,7 +281,7 @@ class LabelOptions(HighchartsMeta):
         self._crop = bool(value)
 
     @property
-    def distance(self) -> Optional[Any[int, float, Decimal]]:
+    def distance(self) -> Optional[int | float | Decimal]:
         """The label's distance in pixels from the point.
 
         :returns: The label's distance in pixels from the point.
@@ -399,7 +399,7 @@ class LabelOptions(HighchartsMeta):
         self._padding = validators.numeric(value, allow_empty = True)
 
     @property
-    def shadow(self) -> Any[bool, ShadowOptions]:
+    def shadow(self) -> bool | ShadowOptions:
         """Configuration for the shadow to apply to the annotation box. Defaults to
         ``False``.
 
@@ -650,7 +650,7 @@ class AnnotationLabel(LabelOptions):
         super().__init__(**kwargs)
 
     @property
-    def point(self) -> Optional[Any[str, AnnotationPoint]]:
+    def point(self) -> Optional[str | AnnotationPoint]:
         """Determines the point to which the label will be connected.
 
         It can be either the ID of the point which exists in the series, or a new point

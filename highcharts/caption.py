@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Optional
 from decimal import Decimal
 
 from validator_collection import validators
@@ -78,7 +78,7 @@ class Caption(HighchartsMeta):
         self._floating = bool(value)
 
     @property
-    def margin(self) -> Any[int, float, Decimal]:
+    def margin(self) -> int | float Decimal:
         f"""The margin between the caption and the plot area. Defaults to
         ``{constants.DEFAULT_CAPTION_MARGIN}``.
 
@@ -159,7 +159,7 @@ class Caption(HighchartsMeta):
             self._vertical_align = value
 
     @property
-    def x(self) -> Any[int, float, Decimal]:
+    def x(self) -> int | float | Decimal:
         f"""The x position of the caption relative to the alignment within
         :meth:`Options.chart.spacing_left` and :meth:`Option.chart.spacing_right`.
         Defaults to ``{constants.DEFAULT_CAPTION_X}``.

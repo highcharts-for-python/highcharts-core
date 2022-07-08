@@ -1,6 +1,5 @@
 """Implements decorators used throughout the library."""
 import json
-from typing import Callable
 from functools import wraps
 
 from validator_collection import checkers

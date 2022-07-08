@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Optional
 
 from validator_collection import validators
 
@@ -101,7 +101,7 @@ class AccessibilitySeries(HighchartsMeta):
         self._description_formatter = validators.string(value, allow_empty = True)
 
     @property
-    def point_description_enabled_threshold(self) -> Any[bool, int]:
+    def point_description_enabled_threshold(self) -> bool | int:
         """When a series contains more points than the value set for this property,
         Highcharts will no longer expose information about individual points to screen
         readers.

@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Optional
 from decimal import Decimal
 
 from validator_collection import validators
@@ -15,7 +15,7 @@ class AnnotationAnimation(HighchartsMeta):
         self.defer = kwargs.pop('defer', None)
 
     @property
-    def defer(self) -> Optional[Any[int, float, Decimal]]:
+    def defer(self) -> Optional[int | float | Decimal]:
         """The animation delay time in milliseconds. Defaults to
         :obj:`None <python:None>`.
 

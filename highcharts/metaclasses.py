@@ -1,5 +1,4 @@
 """Set of metaclasses used throughout the library."""
-from typing import Union
 from abc import ABC, abstractmethod
 from collections import UserDict
 try:
@@ -86,7 +85,7 @@ class HighchartsMeta(ABC):
         raise NotImplementedError()
 
     @classmethod
-    def from_json(cls, as_json: str|bytes):
+    def from_json(cls, as_json: str | bytes):
         """Construct an instance of the class from a JSON string.
 
         :param as_json: The JSON string for the object.

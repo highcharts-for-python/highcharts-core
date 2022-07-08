@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Optional
 from decimal import Decimal
 
 from validator_collection import validators
@@ -37,7 +37,7 @@ class ScrollablePlotArea(HighchartsMeta):
         self.scroll_position_y = kwargs.pop('scroll_position_y', None)
 
     @property
-    def minimum_height(self) -> Optional[Any[int, float, Decimal]]:
+    def minimum_height(self) -> Optional[int | float | Decimal]:
         """The minimum height for the plot area expressed in pixels. If it gets smaller
         than this, the plot area will become scrollable.
 
@@ -50,7 +50,7 @@ class ScrollablePlotArea(HighchartsMeta):
         self._minimum_height = validators.numeric(value, allow_empty = True)
 
     @property
-    def minimum_width(self) -> Optional[Any[int, float, Decimal]]:
+    def minimum_width(self) -> Optional[int | float | Decimal]:
         """The minimum width for the plot area expressed in pixels. If it gets smaller
         than this, the plot area will become scrollable.
 

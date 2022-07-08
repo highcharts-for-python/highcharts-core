@@ -2,7 +2,7 @@ from typing import Optional
 
 from validator_collection import validators
 
-from highcharts import errors, constants
+from highcharts import constants
 from highcharts.metaclasses import HighchartsMeta
 
 

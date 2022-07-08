@@ -1,4 +1,4 @@
-from typing import Optional, Any, List
+from typing import Optional, List
 from decimal import Decimal
 
 from validator_collection import validators, checkers
@@ -296,7 +296,7 @@ class Chart(HighchartsMeta):
         self._allow_mutating_data = bool(value)
 
     @property
-    def animation(self) -> Optional[Any[bool, AnimationOptions]]:
+    def animation(self) -> Optional[bool | AnimationOptions]:
         """Configures the overall animation for all chart updating.
 
         The animation can be configured as either a boolean or a :class:`AnimationOptions`
@@ -331,7 +331,7 @@ class Chart(HighchartsMeta):
                                              types = AnimationOptions)
 
     @property
-    def background_color(self) -> Optional[Any[str, Gradient, Pattern]]:
+    def background_color(self) -> Optional[str | Gradient | Pattern]:
         f"""The background color or gradient for the outer chart area. Defaults to
         ``'{constants.DEFAULT_CHART_BACKGROUND_COLOR}'``.
 
@@ -373,7 +373,7 @@ class Chart(HighchartsMeta):
                                               f'was: {value}')
 
     @property
-    def border_color(self) -> Optional[Any[str, Gradient, Pattern]]:
+    def border_color(self) -> Optional[str | Gradient | Pattern]:
         f"""The color of the outer chart border. Defaults to
         ``'{constants.DEFAULT_CHART_BORDER_COLOR}'``.
 
@@ -416,7 +416,7 @@ class Chart(HighchartsMeta):
                                               f'was: {value}')
 
     @property
-    def border_radius(self) -> Optional[Any[int, float, Decimal]]:
+    def border_radius(self) -> Optional[int | float | Decimal]:
         f"""The border radius (in pixels) applied to the outer chart border. Defaults to
         ``{constants.DEFAULT_CHART_BORDER_RADIUS}``.
 
@@ -430,7 +430,7 @@ class Chart(HighchartsMeta):
         self._border_radius = validators.numeric(value, allow_empty = True)
 
     @property
-    def border_width(self) -> Optional[Any[int, float, Decimal]]:
+    def border_width(self) -> Optional[int | float | Decimal]:
         f"""The border width (in pixels) applied to the outer chart border. Defaults to
         ``{constants.DEFAULT_CHART_BORDER_WIDTH}``.
 
@@ -505,7 +505,7 @@ class Chart(HighchartsMeta):
         self._events = value
 
     @property
-    def height(self) -> Any[constants.EnforcedNullType, int, float, Decimal, str]:
+    def height(self) -> constants.EnforcedNullType | int | float | Decimal | str:
         """An explicit height for the chart.
 
         Defaults to :class:`EnforcedNull <EnforcedNullType>`` which indicates
@@ -590,7 +590,7 @@ class Chart(HighchartsMeta):
         self._inverted = bool(value)
 
     @property
-    def margin(self) -> Optional[List[Any[int, float, Decimal]]]:
+    def margin(self) -> Optional[List[int | float | Decimal]]:
         """The margin between the outer edge of the chart and the plot area. The numbers
         in the array designate top, right, bottom and left respectively.
 
@@ -642,7 +642,7 @@ class Chart(HighchartsMeta):
             self.margin_left = value
 
     @property
-    def margin_bottom(self) -> Optional[Any[int, float, Decimal]]:
+    def margin_bottom(self) -> Optional[int | float | Decimal]:
         """The margin between the bottom outer edge of the chart and the plot area. Use
         this to set a fixed pixel value for the margin as opposed to the default dynamic
         margin.
@@ -662,7 +662,7 @@ class Chart(HighchartsMeta):
         self._margin_bottom = validators.numeric(value, allow_empty = True)
 
     @property
-    def margin_left(self) -> Optional[Any[int, float, Decimal]]:
+    def margin_left(self) -> Optional[int | float | Decimal]:
         """The margin between the left outer edge of the chart and the plot area. Use
         this to set a fixed pixel value for the margin as opposed to the default dynamic
         margin.
@@ -682,7 +682,7 @@ class Chart(HighchartsMeta):
         self._margin_left = validators.numeric(value, allow_empty = True)
 
     @property
-    def margin_right(self) -> Optional[Any[int, float, Decimal]]:
+    def margin_right(self) -> Optional[int | float | Decimal]:
         """The margin between the right outer edge of the chart and the plot area. Use
         this to set a fixed pixel value for the margin as opposed to the default dynamic
         margin.
@@ -702,7 +702,7 @@ class Chart(HighchartsMeta):
         self._margin_right = validators.numeric(value, allow_empty = True)
 
     @property
-    def margin_top(self) -> Optional[Any[int, float, Decimal]]:
+    def margin_top(self) -> Optional[int | float | Decimal]:
         """The margin between the top outer edge of the chart and the plot area. Use
         this to set a fixed pixel value for the margin as opposed to the default dynamic
         margin.
@@ -888,7 +888,7 @@ class Chart(HighchartsMeta):
             self._pinch_type = value
 
     @property
-    def plot_background_color(self) -> Optional[Any[str, Gradient, Pattern]]:
+    def plot_background_color(self) -> Optional[str | Gradient | Pattern]:
         f"""The background color or gradient for the plot area. Defaults to
         ``'{constants.DEFAULT_CHART_PLOT_BACKGROUND_COLOR}'``.
 
@@ -966,7 +966,7 @@ class Chart(HighchartsMeta):
                                                       f'valid URL or path')
 
     @property
-    def plot_border_color(self) -> Optional[Any[str, Gradient, Pattern]]:
+    def plot_border_color(self) -> Optional[str | Gradient | Pattern]:
         f"""The color of the outer chart border. Defaults to
         ``'{constants.DEFAULT_CHART_PLOT_BORDER_COLOR}'``.
 
@@ -1009,7 +1009,7 @@ class Chart(HighchartsMeta):
                                               f'was: {value}')
 
     @property
-    def plot_border_width(self) -> Optional[Any[int, float, Decimal]]:
+    def plot_border_width(self) -> Optional[int | float | Decimal]:
         f"""The border width (in pixels) applied to the outer chart border. Defaults to
         ``{constants.DEFAULT_CHART_PLOT_BORDER_WIDTH}``.
 
@@ -1023,7 +1023,7 @@ class Chart(HighchartsMeta):
         self._plot_border_width = validators.numeric(value, allow_empty = True)
 
     @property
-    def plot_shadow(self) -> Any[bool, ShadowOptions]:
+    def plot_shadow(self) -> bool | ShadowOptions:
         """Configuration of a drop shadow applied to the plot area. Accepts either a
         boolean value of ``False`` which disables any shadow, or a :class:`ShadowOptions`
         instance with the applicable configuration.
@@ -1135,7 +1135,7 @@ class Chart(HighchartsMeta):
         self._scrollable_plot_area = value
 
     @property
-    def selection_marker_fill(self) -> Optional[Any[str, Gradient, Pattern]]:
+    def selection_marker_fill(self) -> Optional[str | Gradient | Pattern]:
         f"""The background color or the marker square when selecting (zooming in on) an
         area of the chart. Defaults to
         ``'{constants.DEFAULT_CHART_SELECTION_MARKER_FILL}'``.
@@ -1179,7 +1179,7 @@ class Chart(HighchartsMeta):
                                               f'was: {value}')
 
     @property
-    def shadow(self) -> Any[bool, ShadowOptions]:
+    def shadow(self) -> bool | ShadowOptions:
         """Configuration of a drop shadow applied to the outer chart area. Accepts either
         a boolean value of ``False`` which disables any shadow, or a
         :class:`ShadowOptions` instance with the applicable configuration.
@@ -1226,7 +1226,7 @@ class Chart(HighchartsMeta):
             self._show_axes = bool(value)
 
     @property
-    def spacing(self) -> Optional[List[Any[int, float, Decimal]]]:
+    def spacing(self) -> Optional[List[int | float | Decimal]]:
         f"""The distance between the outer edge of the chart and the content, like title or
         legend, or axis title and labels if present. The numbers in the array designate
         top, right, bottom and left respectively.
@@ -1276,7 +1276,7 @@ class Chart(HighchartsMeta):
             self.spacing_left = value
 
     @property
-    def spacing_bottom(self) -> Optional[Any[int, float, Decimal]]:
+    def spacing_bottom(self) -> Optional[int | float | Decimal]:
         f"""The spacing between the bottom edge of the chart and the content (plot area,
         axis title and labels, title, subtitle or legend in top position).
 
@@ -1291,7 +1291,7 @@ class Chart(HighchartsMeta):
         self._spacing_bottom = validators.numeric(value, allow_empty = True)
 
     @property
-    def spacing_left(self) -> Optional[Any[int, float, Decimal]]:
+    def spacing_left(self) -> Optional[int | float | Decimal]:
         f"""The spacing between the left edge of the chart and the content (plot area,
         axis title and labels, title, subtitle or legend in top position).
 
@@ -1306,7 +1306,7 @@ class Chart(HighchartsMeta):
         self._spacing_left = validators.numeric(value, allow_empty = True)
 
     @property
-    def spacing_right(self) -> Optional[Any[int, float, Decimal]]:
+    def spacing_right(self) -> Optional[int | float | Decimal]:
         f"""The spacing between the right edge of the chart and the content (plot area,
         axis title and labels, title, subtitle or legend in top position).
 
@@ -1321,7 +1321,7 @@ class Chart(HighchartsMeta):
         self._spacing_right = validators.numeric(value, allow_empty = True)
 
     @property
-    def spacing_top(self) -> Optional[Any[int, float, Decimal]]:
+    def spacing_top(self) -> Optional[int | float | Decimal]:
         f"""The spacing between the top edge of the chart and the content (plot area, axis
         title and labels, title, subtitle or legend in top position).
 
@@ -1393,7 +1393,7 @@ class Chart(HighchartsMeta):
         self._type = validators.string(value, allow_empty = True)
 
     @property
-    def width(self) -> Any[constants.EnforcedNullType, int, float, Decimal, str]:
+    def width(self) -> constants.EnforcedNullType | int | float | Decimal | str:
         """An explicit width for the chart.
 
         Defaults to :class:`EnforcedNull <EnforcedNullType>`` which indicates

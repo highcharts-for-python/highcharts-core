@@ -1,4 +1,4 @@
-from typing import Optional, Any, List
+from typing import Optional, List
 from decimal import Decimal
 
 from validator_collection import validators, checkers
@@ -78,7 +78,7 @@ class ShapeOptions(HighchartsMeta):
             self._dash_style = value
 
     @property
-    def fill(self) -> Optional[Any[str, Gradient, Pattern]]:
+    def fill(self) -> Optional[str | Gradient | Pattern]:
         f"""The color of the shape's fill. Defaults to {constants.DEFAULT_SHAPES_FILL}.
 
         :rtype: :class:`str <python:str>` (for colors), :class:`Gradient` for gradients,
@@ -118,7 +118,7 @@ class ShapeOptions(HighchartsMeta):
                                               f'was: {value}')
 
     @property
-    def height(self) -> Optional[Any[int, float, Decimal]]:
+    def height(self) -> Optional[int | float | Decimal]:
         """The height of the shape in pixels.
 
         :rtype: numeric or :obj:`None <python:None>`
@@ -130,7 +130,7 @@ class ShapeOptions(HighchartsMeta):
         self._height = validators.numeric(value, allow_empty = True)
 
     @property
-    def r(self) -> Optional[Any[int, float, Decimal]]:
+    def r(self) -> Optional[int | float | Decimal]:
         f"""The radius of the shape in pixels. Defaults to {constants.DEFAULT_SHAPES_R}.
 
         :rtype: numeric or :obj:`None <python:None>`
@@ -142,7 +142,7 @@ class ShapeOptions(HighchartsMeta):
         self._r = validators.numeric(value, allow_empty = True)
 
     @property
-    def ry(self) -> Optional[Any[int, float, Decimal]]:
+    def ry(self) -> Optional[int | float | Decimal]:
         """The radius of the shape along the vertical dimension. Used to draw ellipses.
 
         :rtype: numeric or :obj:`None <python:None>`
@@ -154,7 +154,7 @@ class ShapeOptions(HighchartsMeta):
         self._ry = validators.numeric(value, allow_empty = True)
 
     @property
-    def snap(self) -> Optional[Any[int, float, Decimal]]:
+    def snap(self) -> Optional[int | float | Decimal]:
         f"""Defines additional snapping area around an annotation making this annotation
         to focus. Defined in pixels.
 
@@ -212,7 +212,7 @@ class ShapeOptions(HighchartsMeta):
         self._stroke = validators.string(value, allow_empty = True)
 
     @property
-    def stroke_width(self) -> Optional[Any[int, float, Decimal]]:
+    def stroke_width(self) -> Optional[int | float | Decimal]:
         f"""The pixel stroke width of the shape. Defaults to
         ``{constants.DEFAULT_SHAPES_STROKE_WIDTH}``.
 
@@ -255,7 +255,7 @@ class ShapeOptions(HighchartsMeta):
             self._type = value
 
     @property
-    def width(self) -> Optional[Any[int, float, Decimal]]:
+    def width(self) -> Optional[int | float | Decimal]:
         """The width of the shape, expressed in pixels.
 
         :rtype: numeric or :obj:`None <python:None>`
@@ -400,7 +400,7 @@ class AnnotationShape(ShapeOptions):
         self._marker_start = validators.string(value, allow_empty = True)
 
     @property
-    def point(self) -> Optional[Any[str, AnnotationPoint]]:
+    def point(self) -> Optional[str | AnnotationPoint]:
         """Determines the point to which the shape will be connected.
 
         It can be either the ID of the point which exists in the series, or a new point
@@ -431,7 +431,7 @@ class AnnotationShape(ShapeOptions):
                                               'supported type.')
 
     @property
-    def points(self) -> Optional[List[Any[str, AnnotationPoint]]]:
+    def points(self) -> Optional[List[str | AnnotationPoint]]:
         """An array of points for the shape or a JavaScript callback function that returns
         that shape point.
 

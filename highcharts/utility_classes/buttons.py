@@ -1,4 +1,4 @@
-from typing import Optional, Any, List
+from typing import Optional, List
 from decimal import Decimal
 from collections import UserDict
 try:
@@ -32,7 +32,7 @@ class ButtonTheme(HighchartsMeta):
         self.stroke = kwargs.pop('stroke', 'none')
 
     @property
-    def fill(self) -> Optional[Any[str, Gradient, Pattern]]:
+    def fill(self) -> Optional[str | Gradient | Pattern]:
         """The color of the button's fill. The default fill exists only to capture hover
         events.
 
@@ -158,7 +158,7 @@ class ButtonConfiguration(HighchartsMeta):
         self._theme = value
 
     @property
-    def y(self) -> Optional[Any[int, float, Decimal]]:
+    def y(self) -> Optional[int | float | Decimal]:
         """The vertical offset of the button's position relative to its ``verticalAlign``
         setting. Defaults to ``0``.
 
@@ -351,7 +351,7 @@ class ContextButtonConfiguration(ButtonConfiguration):
                                             allow_empty = True) or 'contextButtonTitle'
 
     @property
-    def x(self) -> Optional[Any[int, float, Decimal]]:
+    def x(self) -> Optional[int | float | Decimal]:
         """The horizontal offset of the button's position relative to its ``align``
         setting. Defaults to ``-10``.
 

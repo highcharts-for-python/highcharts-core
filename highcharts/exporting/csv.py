@@ -1,4 +1,4 @@
-from typing import Optional, Any
+from typing import Optional
 
 from validator_collection import validators
 
@@ -157,7 +157,7 @@ class ExportingCSV(HighchartsMeta):
             constants.DEFAULT_CSV_DATE_FORMAT
 
     @property
-    def decimal_point(self) -> Any[str, constants.EnforcedNullType]:
+    def decimal_point(self) -> str | constants.EnforcedNullType:
         """Decimal point to use for exported CSV. Defaults to the same as the browser
         locale, typically ``'.'`` (English) or ``','`` (German, French, etc).
 
@@ -176,7 +176,7 @@ class ExportingCSV(HighchartsMeta):
             self._decimal_point = validators.string(value)
 
     @property
-    def item_delimiter(self) -> Any[str, constants.EnforcedNullType]:
+    def item_delimiter(self) -> str | constants.EnforcedNullType:
         """The item delimiter in the exported data.
 
         Use ``';'`` for direct exporting to Excel. If

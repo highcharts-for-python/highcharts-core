@@ -1,4 +1,4 @@
-from typing import Optional, Any, List
+from typing import Optional, List
 
 from validator_collection import validators
 
@@ -105,7 +105,7 @@ class Drilldown(HighchartsMeta):
         self._allow_point_drilldown = bool(value)
 
     @property
-    def animation(self) -> Optional[Any[bool, AnimationOptions]]:
+    def animation(self) -> Optional[bool | AnimationOptions]:
         """Configures the animation for all drilldown. Animation of a drilldown occurs
         when drilling between a column point and a column series, or a pie slice and a
         full pie series. Drilldown can still be used between series and points of
