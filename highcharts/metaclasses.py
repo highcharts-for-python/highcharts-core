@@ -1,5 +1,5 @@
 """Set of metaclasses used throughout the library."""
-from typing import Any
+from typing import Union
 from abc import ABC, abstractmethod
 from collections import UserDict
 try:
@@ -15,7 +15,7 @@ except ImportError:
 
 import esprima
 from esprima.error_handler import Error as ParseError
-from validator_collection import validators
+from validator_collection import validators, checkers
 
 from highcharts import constants
 
@@ -29,6 +29,28 @@ class HighchartsMeta(ABC):
             setattr(self, key, kwargs.get(key, None))
 
     @staticmethod
+    def trim_iterable(untrimmed):
+        """Convert any :class:`EnforcedNullType` values in ``untrimmed`` to ``'null'``.
+
+        :rtype: iterable
+        """
+        if not checkers.is_iterable(untrimmed):
+            return untrimmed
+
+        trimmed = []
+        for item in untrimmed:
+            if item is None or item == constants.EnforcedNull:
+                trimmed.append('null')
+            elif hasattr(item, 'to_dict'):
+                item_as_dict = item.to_dict()
+                trimmed_item = HighchartsMeta.trim_dict(item_as_dict)
+                trimmed.append(trimmed_item)
+            else:
+                trimmed.append(item)
+
+        return trimmed
+
+    @staticmethod
     def trim_dict(untrimmed):
         """Remove keys from ``untrimmed`` whose values are :obj:`None <python:None>` and
         convert values that have ``.to_dict()`` methods.
@@ -40,9 +62,13 @@ class HighchartsMeta(ABC):
         for key in untrimmed:
             value = untrimmed.get(key, None)
             if value and hasattr(value, 'to_dict'):
-                as_dict[key] = value.to_dict()
+                value_as_dict = value.to_dict()
+                trimmed_value = HighchartsMeta.trim_dict(value_as_dict)
+                as_dict[key] = trimmed_value
+            elif value == constants.EnforcedNull:
+                as_dict[key] = 'null'
             elif value:
-                as_dict[key] = value
+                as_dict[key] = HighchartsMeta.trim_iterable(value)
 
         return as_dict
 
@@ -60,7 +86,7 @@ class HighchartsMeta(ABC):
         raise NotImplementedError()
 
     @classmethod
-    def from_json(cls, as_json: Any[str, bytes]):
+    def from_json(cls, as_json: str|bytes):
         """Construct an instance of the class from a JSON string.
 
         :param as_json: The JSON string for the object.

@@ -226,3 +226,315 @@ DEFAULT_CONTEXT_MENU_ITEMS = [
 ## EXPORTING: CSV
 DEFAULT_CSV_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 DEFAULT_CSV_LINE_DELIMITER = '\n'
+
+
+## LANG
+DEFAULT_LANG_CONTEXT_BUTTON_TITLE = 'Chart context menu'
+DEFAULT_LANG_DOWNLOAD_CSV = 'Download CSV'
+DEFAULT_LANG_DOWNLOAD_JPEG = 'Download JPEG'
+DEFAULT_LANG_DOWNLOAD_PDF = 'Download PDF'
+DEFAULT_LANG_DOWNLOAD_PNG = 'Download PNG'
+DEFAULT_LANG_DOWNLOAD_SVG = 'Download SVG'
+DEFAULT_LANG_DOWNLOAD_XLS = 'Download Excel'
+DEFAULT_LANG_DRILLUP_TEXT = None
+DEFAULT_LANG_EXIT_FULLSCREEN = 'Exit from full screen'
+DEFALUT_LANG_HIDE_DATA = 'Hide data table'
+DEFAULT_LANG_INVALID_DATE = ''
+DEFAULT_LANG_LOADING = 'Loading...'
+DEFAULT_LANG_MAIN_BREADCRUM = 'Main'
+DEFAULT_LANG_MONTHS = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+]
+DEFAULT_LANG_NO_DATA = 'No data to display'
+DEFAULT_LANG_NUMERIC_SYMBOL_MAGNITUDE = 1000
+DEFAULT_LANG_NUMERIC_SYMBOLS = ["k", "M", "G", "T", "P", "E"]
+DEFAULT_LANG_PRINT_CHART = 'Print chart'
+DEFAULT_LANG_RESET_ZOOM = 'Reset zoom'
+DEFAULT_LANG_RESET_ZOOM_TITLE = 'Reset zeem level 1:1'
+DEFAULT_LANG_SHORT_MONTHS = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+]
+DEFAULT_LANG_SHORT_WEEKDAYS = None
+DEFAULT_LANG_THOUSANDS_SEP = '\u0020'
+DEFAULT_LANG_VIEW_DATA = 'View data table'
+DEFAULT_LANG_VIEW_FULLSCREEN = 'View in full screen'
+DEFAULT_LANG_WEEKDAYS = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+]
+
+## LANGUAGE: ACCESSIBILITY
+DEFAULT_LANG_ACCESSIBILITY_CHART_CONTAINER_LABEL = '{title}. Highcharts interactive chart.'
+DEFAULT_LANG_ACCESSIBILITY_CREDITS = 'Chart credits: {creditsStr}'
+DEFAULT_LANG_ACCESSIBILITY_DEFAULT_CHART_TITLE = 'Chart'
+DEFAULT_LANG_ACCESSIBILITY_DRILLUP_BUTTON = '{buttonText}'
+DEFAULT_LANG_ACCESSIBILITY_GRAPHIC_CONTAINER_LABEL = ''
+DEFAULT_LANG_ACCESSIBILITY_SVG_CONTAINER_LABEL = 'Interactive chart'
+DEFAULT_LANG_ACCESSIBILITY_SVG_CONTAINER_TITLE = ''
+DEFAULT_LANG_ACCESSIBILITY_THOUSANDSSEP = ','
+
+DEFAULT_LANG_ACS_ANNOUNCE_NEW_DATA = 'Updated data for chart {chartTitle}'
+DEFAULT_LANG_ACS_ANNOUNCE_NEW_POINT_MULTIPLE = 'New data point in chart {chartTitle}: {pointDesc}'
+DEFAULT_LANG_ACS_ANNOUNCE_NEW_POINT_SINGLE = 'New data point: {pointDesc}'
+DEFAULT_LANG_ACS_ANNOUNCE_NEW_SERIES_MULTIPLE = 'New data series in chart {chartTitle}: {seriesDesc}'
+DEFAULT_LANG_ACS_ANNOUNCE_NEW_SERIES_SINGLE = 'New data series: {seriesDesc}'
+
+DEFAULT_LANG_ACS_AXIS_RANGE_CATEGORIES = 'Data range: {numCategories} categories.'
+DEFAULT_LANG_ACS_AXIS_RANGE_FROM_TO = 'Data ranges from {rangeFrom} to {rangeTo}.'
+DEFAULT_LANG_ACS_TIME_RANGE_DAYS = 'Data range: {range} days.'
+DEFAULT_LANG_ACS_TIME_RANGE_HOURS = 'Data range: {range} hours.'
+DEFAULT_LANG_ACS_TIME_RANGE_MINUTES = 'Data range: {range} minutes.'
+DEFAULT_LANG_ACS_TIME_RANGE_SECONDS = 'Data range: {range} seconds.'
+DEFAULT_LANG_ACS_X_AXIS_DESCRIPTION_PLURAL = 'The chart has {numAxes} X axes displaying {#each(names, -1), }and {names[-1]}.'
+DEFAULT_LANG_ACS_X_AXIS_DESCRIPTION_SINGULAR = 'The chart has 1 X axis displaying {names[0]}. {ranges[0]}'
+DEFAULT_LANG_ACS_Y_AXIS_DESCRIPTION_PLURAL = 'The chart has {numAxes} Y axes displaying {#each(names, -1), }and {names[-1]}.'
+DEFAULT_LANG_ACS_Y_AXIS_DESCRIPTION_SINGULAR = 'The chart has 1 Y axis displaying {names[0]}. {ranges[0]}'
+
+DEFAULT_LANG_ACS_CHART_TYPES_BAR_MULTIPLE = 'Bar chart with {numSeries} data series.'
+DEFAULT_LANG_ACS_CHART_TYPES_BAR_SINGLE = 'Bar chart with {numPoints} {#plural(numPoints, bars, bar)}.'
+DEFAULT_LANG_ACS_CHART_TYPES_BOXPLOT_MULTIPLE = 'Boxplot with {numSeries} data series.'
+DEFAULT_LANG_ACS_CHART_TYPES_BOXPLOT_SINGLE = 'Boxplot with {numPoints} {#plural(numPoints, boxes, box)}.'
+DEFAULT_LANG_ACS_CHART_TYPES_BUBBLE_MULTIPLE = 'Bubble chart with {numSeries} data series.'
+DEFAULT_LANG_ACS_CHART_TYPES_BUBBLE_SINGLE = 'Bubble chart with {numPoints} {#plural(numPoints, bubbles, bubble)}.'
+DEFAULT_LANG_ACS_CHART_TYPES_COLUMN_MULTIPLE = 'Bar chart with {numSeries} data series.'
+DEFAULT_LANG_ACS_CHART_TYPES_COLUMN_SINGLE = 'Bar chart with {numPoints} {#plural(numPoints, bars, bar)}.'
+DEFAULT_LANG_ACS_CHART_TYPES_COMBO = 'Combination chart with {numSeries} data series.'
+DEFAULT_LANG_ACS_CHART_TYPES_DEFAULT_MULTIPLE = 'Chart with {numSeries} data series.'
+DEFAULT_LANG_ACS_CHART_TYPES_DEFAULT_SINGLE = 'Chart with {numPoints} data {#plural(numPoints, points, point)}.'
+DEFAULT_LANG_ACS_CHART_TYPES_EMPTY_CHART = 'Empty chart'
+DEFAULT_LANG_ACS_CHART_TYPES_LINE_MULTIPLE = 'Line chart with {numSeries} lines.'
+DEFAULT_LANG_ACS_CHART_TYPES_LINE_SINGLE = 'Line chart with {numPoints} data {#plural(numPoints, points, point)}.'
+DEFAULT_LANG_ACS_CHART_TYPES_MAP_TYPE_DESCRIPTION = 'Map of {mapTitle} with {numSeries} data series.'
+DEFAULT_LANG_ACS_CHART_TYPES_PIE_MULTIPLE = 'Pie chart with {numSeries} pies.'
+DEFAULT_LANG_ACS_CHART_TYPES_PIE_SINGLE = 'Pie chart with {numPoints} {#plural(numPoints, slices, slice)}.'
+DEFAULT_LANG_ACS_CHART_TYPES_SCATTER_MULTIPLE = 'Scatter chart with {numSeries} data series.'
+DEFAULT_LANG_ACS_CHART_TYPES_SCATTER_SINGLE = 'Scatter chart with {numPoints} {#plural(numPoints, points, point)}.'
+DEFAULT_LANG_ACS_CHART_TYPES_SPLINE_MULTIPLE = 'Line chart with {numSeries} lines.'
+DEFAULT_LANG_ACS_CHART_TYPES_SPLINE_SINGLE = 'Line chart with {numPoints} data {#plural(numPoints, points, point)}.'
+DEFAULT_LANG_ACS_CHART_TYPES_UNKNOWN_MAP = 'Map of unspecified region with {numSeries} data series.'
+
+DEFAULT_LANG_ACS_EXPORTING_CHART_MENU_LABEL = 'Chart menu'
+DEFAULT_LANG_ACS_EXPORTING_MENU_BTN_LABEL = 'View chart menu, {chartTitle}'
+
+
+DEFAULT_LANG_ACS_LEGEND_ITEM = 'Show {itemName}'
+DEFAULT_LANG_ACS_LEGEND_LABEL = 'Chart legend: {legendTitle}'
+DEFAULT_LANG_ACS_LEGEND_LABEL_NO_TITLE = 'Toggle series visibility, {chartTitle}'
+
+
+DEFAULT_LANG_ACS_RANGE_SELECTOR_CLICK_BTN_ANNOUNCEMENT = 'Viewing {axisRangeDescription}'
+DEFAULT_LANG_ACS_RANGE_SELECTOR_DROPDOWN_LBL = '{rangeTitle}'
+DEFAULT_LANG_ACS_RANGE_SELECTOR_MAX_INPUT_LBL = 'Select end date.'
+DEFAULT_LANG_ACS_RANGE_SELECTOR_MIN_INPUT_LBL = 'Select start date.'
+
+
+DEFAULT_LANG_ACS_SRS_AFTER_REGION_LBL = ''
+DEFAULT_LANG_ACS_SRS_BEFORE_REGION_LBL = ''
+DEFAULT_LANG_ACS_SRS_END_OF_CHART_MRKR = 'End of interactive chart.'
+
+
+DEFAULT_LANG_ACS_SRS_ANNOTATION_DESCRIPTION_MULTIPLE_PTS = '{annotationText}. Related to {annotationPoint}{ Also related to, #each(additionalAnnotationPoints)}'
+DEFAULT_LANG_ACS_SRS_ANNOTATION_DESCRIPTION_NO_PTS = '{annotationText}'
+DEFAULT_LANG_ACS_SRS_ANNOTATION_DESCRIPTION_SINGLE_PT = '{annotationText}. Related to {annotationPoint}'
+DEFAULT_LANG_ACS_SRS_ANNOTATION_HEADING = 'Chart annotations summary'
+
+
+DEFAULT_LANG_ACS_SERIES_DESCRIPTION = ''
+DEFAULT_LANG_ACS_SERIES_NULL_PT_VALUE = ''
+DEFAULT_LANG_ACS_SERIES_PT_ANNOTATIONS_DESCRIPTION = ''
+DEFAULT_LANG_ACS_SERIES_XAXIS_DESCRIPTION = ''
+DEFAULT_LANG_ACS_SERIES_YAXIS_DESCRIPTION = ''
+
+
+DEFAULT_LANG_ACS_SERIES_SUMMARY = {
+    'bar': '{series.name}, bar series {seriesNumber} of {chart.series.length} with {series.points.length} {#plural(series.points.length, bars, bar)}.',
+    'bar_combination': '{series.name}, series {seriesNumber} of {chart.series.length}. Bar series with {series.points.length} {#plural(series.points.length, bars, bar)}.',
+    'boxplot': '{series.name}, boxplot {seriesNumber} of {chart.series.length} with {series.points.length} {#plural(series.points.length, boxes, box)}.',
+    'boxplot_combination': '{series.name}, series {seriesNumber} of {chart.series.length}. Boxplot with {series.points.length} {#plural(series.points.length, boxes, box)}.',
+    'bubble': '{series.name}, bubble series {seriesNumber} of {chart.series.length} with {series.points.length} {#plural(series.points.length, bubbles, bubble)}.',
+    'bubble_combination': '{series.name}, series {seriesNumber} of {chart.series.length}. Bubble series with {series.points.length} {#plural(series.points.length, bubbles, bubble)}.',
+    'column': '{series.name}, bar series {seriesNumber} of {chart.series.length} with {series.points.length} {#plural(series.points.length, bars, bar)}.',
+    'column_combination': '{series.name}, series {seriesNumber} of {chart.series.length}. Bar series with {series.points.length} {#plural(series.points.length, bars, bar)}.',
+    'default': '{series.name}, series {seriesNumber} of {chart.series.length} with {series.points.length} data {#plural(series.points.length, points, point)}.',
+    'default_combination': '{series.name}, series {seriesNumber} of {chart.series.length} with {series.points.length} data {#plural(series.points.length, points, point)}.',
+    'line': '{series.name}, line {seriesNumber} of {chart.series.length} with {series.points.length} data {#plural(series.points.length, points, point)}.',
+    'line_combination': '{series.name}, series {seriesNumber} of {chart.series.length}. Line with {series.points.length} data {#plural(series.points.length, points, point)}.',
+    'map': '{series.name}, map {seriesNumber} of {chart.series.length} with {series.points.length} {#plural(series.points.length, areas, area)}.',
+    'map_combination': '{series.name}, series {seriesNumber} of {chart.series.length}. Map with {series.points.length} {#plural(series.points.length, areas, area)}.',
+    'mapbubble': '{series.name}, bubble series {seriesNumber} of {chart.series.length} with {series.points.length} {#plural(series.points.length, bubbles, bubble)}.',
+    'mapbubble_combination': '{series.name}, series {seriesNumber} of {chart.series.length}. Bubble series with {series.points.length} {#plural(series.points.length, bubbles, bubble)}.',
+    'mapline': '{series.name}, line {seriesNumber} of {chart.series.length} with {series.points.length} data {#plural(series.points.length, points, point)}.',
+    'mapline_combination': '{series.name}, series {seriesNumber} of {chart.series.length}. Line with {series.points.length} data {#plural(series.points.length, points, point)}.',
+    'pie': '{series.name}, pie {seriesNumber} of {chart.series.length} with {series.points.length} {#plural(series.points.length, slices, slice)}.',
+    'pie_combination': '{series.name}, series {seriesNumber} of {chart.series.length}. Pie with {series.points.length} {#plural(series.points.length, slices, slice)}.',
+    'scatter': '{series.name}, scatter plot {seriesNumber} of {chart.series.length} with {series.points.length} {#plural(series.points.length, points, point)}.',
+    'scatter_combination': '{series.name}, series {seriesNumber} of {chart.series.length}, scatter plot with {series.points.length} {#plural(series.points.length, points, point)}.',
+    'spline': '{series.name}, line {seriesNumber} of {chart.series.length} with {series.points.length} data {#plural(series.points.length, points, point)}.',
+    'spline_combination': '{series.name}, series {seriesNumber} of {chart.series.length}. Line with {series.points.length} data {#plural(series.points.length, points, point)}.',
+}
+
+
+DEFAULT_LANG_ACS_SERIES_TYPES = {
+    'arearange': 'Arearange charts are line charts displaying a range between a lower and higher value for each point.',
+    'areasplinerange': 'These charts are line charts displaying a range between a lower and higher value for each point.',
+    'boxplot': 'Box plot charts are typically used to display groups of statistical data. Each data point in the chart can have up to 5 values: minimum, lower quartile, median, upper quartile, and maximum.',
+    'bubble': 'Bubble charts are scatter charts where each data point also has a size value.',
+    'columnrange': 'Columnrange charts are column charts displaying a range between a lower and higher value for each point.',
+    'errorbar': 'Errorbar series are used to display the variability of the data.',
+    'funnel': 'Funnel charts are used to display reduction of data in stages.',
+    'pyramid': 'Pyramid charts consist of a single pyramid with item heights corresponding to each point value.',
+    'waterfall': 'A waterfall chart is a column chart where each column contributes towards a total end value.'
+}
+
+
+## LANGUAGE: ACCESSIBILITY: SONIFICATION
+DEFAULT_LANG_ACS_SONIFICATION_PLAY_AS_SOUND_BTN_TXT = 'Play as sound, {chartTitle}'
+DEFAULT_LANG_ACS_SONIFICATION_PLAY_AS_SOUND_CLK_ANNOUNCEMENT = 'Play'
+
+
+## LANGUAGES: ACCESSIBILITY: TABLE
+DEFAULT_LANG_ACS_TABLE_SUMMARY = 'Table representation of chart.'
+DEFAULT_LANG_ACS_TABLE_VIEW_AS_DATA_TABLE = 'View as data table, {chartTitle}'
+
+
+## LANGUAGES: ACCESSIBILITY: ZOOM
+DEFAULT_LANG_ACS_ZOOM_MAP_ZOOM_IN = 'Zoom chart'
+DEFAULT_LANG_ACS_ZOOM_MAP_ZOOM_OUT = 'Zoom out chart'
+DEFAULT_LANG_ACS_ZOOM_RESET_ZOOM_BTN = 'Reset zoom'
+
+
+## LANGUAGES: EXPORT DATA
+DEFAULT_LANG_EXPORT_DATA = {
+    'annotation_header': 'Annotations',
+    'category_datetime_header': 'DateTime',
+    'category_header': 'Category'
+}
+
+
+## LANGUAGES: NAVIGATION
+DEFAULT_LANG_NAVIGATION = {
+    'add_button': 'add',
+    'algorithm': 'Algorithm',
+    'arrow_infinity_line': 'Arrow line',
+    'arrow_ray': 'Arrow ray',
+    'arrow_segment': 'Arrow segment',
+    'average': 'Average',
+    'background': 'Background',
+    'background_color': 'Background color',
+    'background_colors': 'Background colors',
+    'border_color': 'Border color',
+    'border_radius': 'Border radius',
+    'border_width': 'Border width',
+    'bottom_band': 'Bottom band',
+    'circle': 'Circle',
+    'clear_filter': 'X Clear Filter',
+    'color': 'Color',
+    'connector': 'Connector',
+    'crooked3': 'Crooked 3 line',
+    'crooked5': 'Crooked 5 line',
+    'crosshairX': 'Crosshair X',
+    'crosshairY': 'Crosshair Y',
+    'decimals': 'Decimals',
+    'deviation': 'Deviation',
+    'edit_button': 'edit',
+    'elliott3': 'Elliott 3 line',
+    'elliott5': 'Elliott 5 line',
+    'ellipse': 'Ellipse',
+    'factor': 'Factor',
+    'fast_avg_period': 'Fast average period',
+    'fibonacci': 'Fibonacci',
+    'fibonacci_time_zones': 'Fibonacci Time Zones',
+    'fill': 'Fill',
+    'flags': 'Flags',
+    'font_size': 'Font size',
+    'format': 'Text',
+    'height': 'Height',
+    'high_index': 'High index',
+    'horizontal_line': 'Horizontal line',
+    'increment': 'Increment',
+    'index': 'Index',
+    'infinity_line': 'Infinity line',
+    'initial_acceleration_factor': 'Initial acceleration factor',
+    'inner_background': 'Inner background',
+    'label': 'Label',
+    'label_options': 'Label options',
+    'labels': 'Labels',
+    'line': 'Line',
+    'lines': 'Lines',
+    'long_period': 'Long period',
+    'low_index': 'Low index',
+    'max_acceleration_factor': 'Max acceleration factor',
+    'measure': 'Measure',
+    'measure_x': 'Measure X',
+    'measure_xy': 'Measure XY',
+    'measure_y': 'Measure Y',
+    'multiplier': 'Multiplier',
+    'multiplier_atr': 'ATR multiplier',
+    'name': 'Name',
+    'no_filter_match': 'No match',
+    'outer_background': 'Outer background',
+    'padding': 'Padding',
+    'parallel_channel': 'Parallel channel',
+    'period': 'Period',
+    'period_atr': 'ATR period',
+    'periods': 'Periods',
+    'period_senkou_span_b': 'Senkou Span B period',
+    'period_tenkan': 'Tenkan period',
+    'pitchfork': 'Pitchfork',
+    'ranges': 'Ranges',
+    'ray': 'Ray',
+    'rectangle': 'Rectangle',
+    'remove_button': 'remove',
+    'save_button': 'save',
+    'search_indicators': 'Search Indicators',
+    'segment': 'Segment',
+    'series': 'Series',
+    'shape_options': 'Shape options',
+    'shapes': 'Shape options',
+    'short_period': 'Short period',
+    'signal_period': 'Signal period',
+    'simple_shapes': 'Simple shapes',
+    'slow_avg_period': 'Slow average period',
+    'standard_deviation': 'Standard deviation',
+    'stroke': 'Line color',
+    'stroke_width': 'Line width',
+    'style': 'Style',
+    'time_cycles': 'Time Cycles',
+    'title': 'Title',
+    'top_band': 'Top band',
+    'tunnel': 'Tunnel',
+    'type_options': 'Details',
+    'vertical_arrow': 'Vertical arrow',
+    'vertical_counter': 'Vertical counter',
+    'vertical_label': 'Vertical label',
+    'vertical_line': 'Vertical line',
+    'volume': 'Volume',
+    'x_axis_unit': 'x-axis unit'
+}
