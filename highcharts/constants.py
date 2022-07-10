@@ -538,3 +538,85 @@ DEFAULT_LANG_NAVIGATION = {
     'volume': 'Volume',
     'x_axis_unit': 'x-axis unit'
 }
+
+
+## DEFAULTS: LEGEND
+DEFAULT_LEGEND = {
+    'accessibility': None,
+    'align': 'center',
+    'align_columns': True,
+    'background_color': None,
+    'border_color': '#999999',
+    'border_radius': 0,
+    'border_width': 0,
+    'bubble_legend': None,
+    'class_name': 'highcharts-no-tooltip',
+    'enabled': False,
+    'floating': False,
+    'item_checkbox_style': '{"width": "13px", "height": "13px", "position":"absolute"}',
+    'item_distance': 20,
+    'item_hidden_style': '{"color": "#cccccc"}',
+    'item_hover_style': '{"color": "#000000"}',
+    'item_margin_bottom': 0,
+    'item_margin_top': 0,
+    'item_style': '{"color": "#333333", "cursor": "pointer", "fontSize": "12px", "fontWeight": "bold", "textOverflow": "ellipsis"}',
+    'item_width': None,
+    'label_format': '{name}',
+    'label_formatter': None,
+    'layout': 'horizontal',
+    'margin': 12,
+    'max_height': None,
+    'navigation': {
+        'active_color': '#003399',
+        'arrow_size': 12,
+        'inactive_color': '#cccccc',
+        'style': None
+    },
+    'padding': 8,
+    'reversed': False,
+    'rtl': False,
+    'shadow': False,
+    'square_symbol': True,
+    'symbol_height': None,
+    'symbol_padding': 5,
+    'symbol_radius': None,
+    'symbol_width': None,
+    'title': {
+        'style': '{"fontWeight": "bold"}'
+    },
+    'use_html': False,
+    'vertical_align': 'bottom',
+    'width': None,
+    'x': 0,
+    'y': 0
+}
+DEFAULT_BUBBLE_LEGEND = {
+    'border_color': None,
+    'border_width': 2,
+    'class_name': None,
+    'color': None,
+    'connector_class_name': None,
+    'connector_color': None,
+    'connector_distance': None,
+    'connector_width': None,
+    'enabled': False,
+    'labels': {
+        'align': 'right',
+        'allow_overlap': False,
+        'class_name': None,
+        'format': '',
+        'formatter': None,
+        'style': None,
+        'x': 0,
+        'y': 0
+    },
+    'legend_index': 0,
+    'max_size': 60,
+    'min_size': 10,
+    'ranges': None,
+    'size_by': 'area',
+    'size_by_absolute_value': False,
+    'z_index': 1,
+    'z_threshold': 0
+
+}
