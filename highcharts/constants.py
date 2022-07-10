@@ -620,3 +620,12 @@ DEFAULT_BUBBLE_LEGEND = {
     'z_threshold': 0
 
 }
+
+
+## LOADING
+DEFAULT_LOADING = {
+    'hide_duration': 100,
+    'label_style': '{"fontWeight": "bold", "position": "relative", "top": "45%"}',
+    'show_duration': 100,
+    'style': '{"position": "absolute", "backgroundColor": "#ffffff", "opacity": 0.5, "textAlign": "center"}'
+}
