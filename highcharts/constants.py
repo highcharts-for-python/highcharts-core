@@ -636,3 +636,21 @@ DEFAULT_NAVIGATION = {
     'bindings_class_name': 'highcharts-bindings-container',
     'icons_url': 'https://code.highcharts.com/@product.version@/gfx/stock-icons/'
 }
+
+## PANE
+DEFAULT_PANE = {
+    'center': [['50%', '50%']],
+    'end_angle': None,
+    'inner_size': '0%',
+    'size': '85%',
+    'start_angle': 0
+}
+DEFAULT_PANE_BACKGROUND = {
+    'background_color': '{ "linearGradient": { "x1": 0, "y1": 0, "x2": 0, "y2": 1 }, stops: [[0, "#ffffff"], [1, "#e6e6e6"]] }',
+    'border_color': '#cccccc',
+    'border_width': 1,
+    'class_name': 'highcharts-pane',
+    'inner_radius': 0,
+    'outer_radius': '105%',
+    'shape': 'circle'
+}
