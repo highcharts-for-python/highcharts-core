@@ -351,3 +351,89 @@ class BreadcrumbEvents(HighchartsMeta):
         }
 
         return self.trim_dict(untrimmed)
+
+
+class NavigationEvents(HighchartsMeta):
+    """Event listeners for the chart."""
+
+    def __init__(self, **kwargs):
+        self._close_popup = None
+        self._deselect_button = None
+        self._select_button = None
+        self._show_popup = None
+
+        for attribute in dir(self):
+            if attribute.startswith('_') and not attribute.startswith('__'):
+                non_private_name = attribute[1:]
+                setattr(self, non_private_name, kwargs.pop(non_private_name, None))
+
+    @property
+    def close_popup(self) -> Optional[str]:
+        """JavaScript callback function that fires when a popup should be closed, for
+        example when clicking on an annotation again.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._close_popup
+
+    @close_popup.setter
+    def close_popup(self, value):
+        self._close_popup = validators.string(value, allow_empty = False)
+
+    @property
+    def deselect_button(self) -> Optional[str]:
+        """JavaScript callback function that fires when button state should change, for
+        example after adding an annotation.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._deselect_button
+
+    @deselect_button.setter
+    def deselect_button(self, value):
+        self._deselect_button = validators.string(value, allow_empty = False)
+
+    @property
+    def select_button(self) -> Optional[str]:
+        """JavaScript callback function that fires on a button click.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._select_button
+
+    @select_button.setter
+    def select_button(self, value):
+        self._select_button = validators.string(value, allow_empty = False)
+
+    @property
+    def show_popup(self) -> Optional[str]:
+        """JavaScript callback function that fires when when selecting an annotation.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._show_popup
+
+    @show_popup.setter
+    def show_popup(self, value):
+        self._show_popup = validators.string(value, allow_empty = False)
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'close_popup': as_dict.pop('closePopup', None),
+            'deselect_button': as_dict.pop('deselectButton', None),
+            'select_button': as_dict.pop('selectButton', None),
+            'show_popup': as_dict.pop('showPopup', None)
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self):
+        untrimmed = {
+            'closePopup': self.close_popup,
+            'deselectButton': self.deselect_button,
+            'selectButton': self.select_button,
+            'showPopup': self.show_popup
+        }
+
+        return self.trim_dict(untrimmed)

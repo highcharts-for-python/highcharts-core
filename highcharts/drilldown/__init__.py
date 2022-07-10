@@ -6,7 +6,7 @@ from highcharts import constants
 from highcharts.decorators import validate_types, class_sensitive
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.utility_classes.animation import AnimationOptions
-from highcharts.drilldown.breadcrumbs import BreadcrumbOptions
+from highcharts.utility_classes.breadcrumbs import BreadcrumbOptions
 from highcharts.series import Series
 
 

@@ -629,3 +629,10 @@ DEFAULT_LOADING = {
     'show_duration': 100,
     'style': '{"position": "absolute", "backgroundColor": "#ffffff", "opacity": 0.5, "textAlign": "center"}'
 }
+
+
+## NAVIGATION
+DEFAULT_NAVIGATION = {
+    'bindings_class_name': 'highcharts-bindings-container',
+    'icons_url': 'https://code.highcharts.com/@product.version@/gfx/stock-icons/'
+}
