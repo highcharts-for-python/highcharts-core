@@ -1,5 +1,107 @@
+from typing import Optional
+
+from validator_collection import validators
+
+from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
+from highcharts.utility_classes.ast import AttributeObject
+from highcharts.utility_classes.position import Position
 
 
 class NoData(HighchartsMeta):
-    pass
+    """Options for displaying a message like "No data to display".
+
+    .. warning::
+
+      This feature requires the file ``no-data-to-display.js`` to be loaded in the
+      page.
+
+    .. tip::
+
+      The actual text to display is set in the :meth:`language <Options.language>`
+      options.
+
+    """
+
+    def __init__(self, **kwargs):
+        self._attr = None
+        self._position = None
+        self._style = None
+        self._use_html = False
+
+        self.attr = kwargs.pop('attr', None)
+        self.position = kwargs.pop('position', None)
+        self.style = kwargs.pop('style', None)
+        self.use_html = kwargs.pop('use_html', False)
+
+    @property
+    def attr(self) -> Optional[AttributeObject]:
+        """An object of additional SVG attributes for the no-data label.
+
+        :rtype: :class:`AttributeObject` or :obj:`None <python:None>`
+        """
+        return self._attr
+
+    @attr.setter
+    @class_sensitive(AttributeObject)
+    def attr(self, value):
+        self._attr = value
+
+    @property
+    def position(self) -> Optional[Position]:
+        """The position of the no-data label, relative to the plot area.
+
+        :rtype: :class:`Position` or :obj:`None <python:None>`
+        """
+        return self._position
+
+    @position.setter
+    @class_sensitive(Position)
+    def position(self, value):
+        self._position = value
+
+    @property
+    def style(self) -> Optional[str]:
+        """CSS styles to apply to the no-data label.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._style
+
+    @style.setter
+    def style(self, value):
+        self._style = validators.string(value, allow_empty = True)
+
+    @property
+    def use_html(self) -> bool:
+        """If ``True``, inserts the label as HTML. If ``False``, inserts the label as
+        pseudo-HTML rendered with SVG. Defaults to ``False``.
+
+        :rtype: :class:`bool <python:bool>`
+        """
+        return self._use_html
+
+    @use_html.setter
+    def use_html(self, value):
+        self._use_html = bool(value)
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'attr': as_dict.pop('attr', None),
+            'position': as_dict.pop('position', None),
+            'style': as_dict.pop('style', None),
+            'use_html': as_dict.pop('useHTML', False)
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self):
+        untrimmed = {
+            'attr': self.attr,
+            'position': self.position,
+            'style': self.style,
+            'useHTML': self.use_html
+        }
+
+        return self.trim_dict(untrimmed)
