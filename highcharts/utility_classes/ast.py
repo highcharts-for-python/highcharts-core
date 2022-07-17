@@ -306,3 +306,68 @@ class ASTMap(UserDict):
             as_json = json.dumps(as_dict)
 
         return as_json
+
+
+class TextPath(HighchartsMeta):
+    """Options for a label text which should follow marker's shape.
+
+    .. note::
+
+      Border and background are disabled for a label that follows a path.
+
+    .. warning::
+
+      Only SVG-based renderer supports this option. Setting :meth:`DataLabel.use_html` to
+      ``True`` will disable this option.
+
+    """
+
+    def __init__(self, **kwargs):
+        self._attributes = None
+        self._enabled = False
+
+        self.attributes = kwargs.pop('attributes', None)
+        self.enabled = kwargs.pop('enabled', False)
+
+    @property
+    def attributes(self) -> Optional[AttributeObject]:
+        """Presentation attributes for the text path.
+
+        :rtype: :class:`AttributeObject` or :obj:`None <python:None>`
+        """
+        return self._attributes
+
+    @attributes.setter
+    @class_sensitive(AttributeObject)
+    def attributes(self, value):
+        self._attributes = value
+
+    @property
+    def enabled(self) -> bool:
+        """If ``True``, enables the use of a text path for links or marker data labels.
+        Defaults to ``False``.
+
+        :rtype: :class:`bool <python:bool>`
+        """
+        return self._enabled
+
+    @enabled.setter
+    def enabled(self, value):
+        self._enabled = bool(value)
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'attributes': as_dict.pop('attributes', None),
+            'enabled': as_dict.pop('enabled', False)
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self):
+        untrimmed = {
+            'attributes': self.attributes,
+            'enabled': self.enabled
+        }
+
+        return self.trim_dict(untrimmed)

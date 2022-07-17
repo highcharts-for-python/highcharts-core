@@ -30,7 +30,7 @@ from highcharts.series import Series
 from highcharts.subtitle import Subtitle
 from highcharts.time import Time
 from highcharts.title import Title
-from highcharts.tooltip import Tooltip
+from highcharts.tooltips import Tooltip
 from highcharts.x_axis import XAxis
 from highcharts.y_axis import YAxis
 from highcharts.z_axis import ZAxis
@@ -523,7 +523,8 @@ class Options(HighchartsMeta):
 
     @property
     def tooltip(self):
-        """Options for the tooltip that appears when the user hovers over a series or point.
+        """Options for the tooltip that appears when the user hovers over a series or
+        point.
 
         :returns: Configuration settings for tooltips to display above the chart.
         :rtype: :class:`Tooltip` or :obj:`None <python:None>`

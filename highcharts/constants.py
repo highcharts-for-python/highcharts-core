@@ -23,6 +23,58 @@ while indent_count < int(JAVASCRIPT_INDENT_SPACES):
 DEFAULT_COLORS = ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80",
                   "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"]
 
+SUPPORTED_CURSOR_VALUES = [
+    'alias',
+    'all-scroll',
+    'auto',
+    'cell',
+    'col-resize',
+    'context-menu',
+    'copy',
+    'crosshair',
+    'default',
+    'e-resize',
+    'ew-resize',
+    'grab',
+    'grabbing',
+    'help',
+    'move',
+    'n-resize',
+    'ne-resize',
+    'nesw-resize',
+    'no-drop',
+    'none',
+    'not-allowed',
+    'ns-resize',
+    'nw-resize',
+    'nwse-resize',
+    'pointer',
+    'progress',
+    'row-resize',
+    's-resize',
+    'se-resize',
+    'sw-resize',
+    'text',
+    'vertical-text',
+    'w-resize',
+    'wait',
+    'zoom-in',
+    'zoom-out'
+]
+SUPPORTED_DASH_STYLE_VALUES = [
+    'Dash',
+    'DashDot',
+    'Dot',
+    'LongDash',
+    'LongDashDot',
+    'LongDashDotDot',
+    'ShortDash',
+    'ShortDashDot',
+    'ShortDashDotDot',
+    'ShortDot',
+    'Solid'
+]
+
 ## ACCESSIBILITY DEFAULTS
 DEFAULT_LANDMARK_VERBOSITY = 'all'
 LANDMARK_VERBOSITY_VALUES = ['all',
@@ -653,4 +705,64 @@ DEFAULT_PANE_BACKGROUND = {
     'inner_radius': 0,
     'outer_radius': '105%',
     'shape': 'circle'
+}
+
+
+## TOOLTIP
+DEFAULT_TOOLTIP = {
+    'border_radius': 3,
+    'border_width': 1,
+    'distance': 16,
+    'footer_format': '',
+    'header_shape': 'callout',
+    'hide_delay': 500,
+    'padding': 8,
+    'shape': 'callout',
+    'snap': None
+}
+
+
+DEFAULT_DATE_TIME_LABEL_FORMATS = {
+    'day': '%A, %b %e, %Y',
+    'hour': '%A, %b %e, %H:%M',
+    'millisecond': '%A, %b %e, %H:%M:%S.%L',
+    'minute': '%A, %b %e, %H:%M',
+    'month': '%B %Y',
+    'second': '%A, %b %e, %H:%M:%S',
+    'week': 'Week from %A, %b %e, %Y',
+    'year': '%Y'
+}
+
+
+## DATA LABELS
+DEFAULT_DATA_LABEL = {
+    'border_radius': 0,
+    'border_width': 0,
+    'class_name': None,
+    'color': None,
+    'crop': True,
+    'defer': True,
+    'format': 'point.value',
+    'overflow': 'justify',
+    'padding': 5,
+    'position': 'center',
+    'rotation': 0,
+    'shadow': False,
+    'shape': 'square',
+    'style': None,
+    'vertical_align': None,
+    'x': 0,
+    'y': None,
+    'z': 6
+}
+
+
+## MARKER
+DEFAULT_MARKER = {
+    'enabled_threshold': 2,
+    'line_color': '#ffffff',
+    'line_width': 0,
+    'radius': 4,
+    'symbol': None,
+    'width': None
 }

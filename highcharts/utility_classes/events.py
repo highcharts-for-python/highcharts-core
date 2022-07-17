@@ -437,3 +437,404 @@ class NavigationEvents(HighchartsMeta):
         }
 
         return self.trim_dict(untrimmed)
+
+
+class PointEvents(HighchartsMeta):
+    """Event listeners for Points."""
+
+    def __init__(self, **kwargs):
+        self._click = None
+        self._drag = None
+        self._drag_start = None
+        self._drop = None
+        self._mouse_out = None
+        self._mouse_over = None
+        self._remove = None
+        self._select = None
+        self._unselect = None
+        self._update = None
+
+        self.click = kwargs.pop('click', None)
+        self.drag = kwargs.pop('drag', None)
+        self.drag_start = kwargs.pop('drag_start', None)
+        self.drop = kwargs.pop('drop', None)
+        self.mouse_out = kwargs.pop('mouse_out', None)
+        self.mouse_over = kwargs.pop('mouse_over', None)
+        self.remove = kwargs.pop('remove', None)
+        self.select = kwargs.pop('select', None)
+        self.unselect = kwargs.pop('unselect', None)
+        self.update = kwargs.pop('update', None)
+
+    @property
+    def click(self) -> Optional[str]:
+        """JavaScript function that fires when a point is clicked.
+
+        One parameter, ``event``, is passed to the function, containing common event
+        information.
+
+        If the :meth:`Series.allow_point_select` option is ``True``, the default action
+        for the point's click event is to toggle the point's select state. Returning
+        ``False`` from the JavaScript event handler function cancels this action.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._click
+
+    @click.setter
+    def click(self, value):
+        self._click = validators.string(value, allow_empty = True)
+
+    @property
+    def drag(self) -> Optional[str]:
+        """JavaScript callback function that fires while dragging a point.
+
+        The mouse event is passed in as parameter. The original data can be accessed from
+        ``e.origin``, and the new point values can be accessed from ``e.newPoints``. If
+        there is only a single point being updated, it can be accessed from ``e.newPoint``
+        for simplicity, and its ID can be accessed from ``e.newPointId``. The this context
+        is the point being dragged. To stop the default drag action, return ``false``.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._drag
+
+    @drag.setter
+    def drag(self, value):
+        self._drag = validators.string(value, allow_empty = True)
+
+    @property
+    def drag_start(self) -> Optional[str]:
+        """JavaScript callback function that fires when starting to drag a point.
+
+        In JavaScript, the mouse event object is passed in as an argument. If a drag
+        handle is used, ``e.updateProp`` is set to the data property being dragged.
+        The ``this`` context is the point.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._drag_start
+
+    @drag_start.setter
+    def drag_start(self, value):
+        self._drag_start = validators.string(value, allow_empty = True)
+
+    @property
+    def drop(self) -> Optional[str]:
+        """JavaScript function that fires when a point is droped (when dragging ends).
+
+        The mouse event is passed in as parameter. The original data can be accessed from
+        ``e.origin``, and the new point values can be accessed from ``e.newPoints``. If
+        there is only a single point being updated, it can be accessed from ``e.newPoint``
+        for simplicity, and its ID can be accessed from ``e.newPointId``. The this context
+        is the point being dragged.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._drop
+
+    @drop.setter
+    def drop(self, value):
+        self._drop = validators.string(value, allow_empty = True)
+
+    @property
+    def mouse_out(self) -> Optional[str]:
+        """JavaScript function which fires when the mouse leaves the area close to the
+        point.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._mouse_out
+
+    @mouse_out.setter
+    def mouse_out(self, value):
+        self._mouse_out = validators.string(value, allow_empty = True)
+
+    @property
+    def mouse_over(self) -> Optional[str]:
+        """JavaScript function which fires when the mouse enters the area close to the
+        point. One parameter, ``event``, is passed to the function, containing common
+        event information.
+
+        Returning ``false`` cancels the default behavior, which is to show a tooltip for
+        the point.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._mouse_over
+
+    @mouse_over.setter
+    def mouse_over(self, value):
+        self._mouse_over = validators.string(value, allow_empty = True)
+
+    @property
+    def remove(self) -> Optional[str]:
+        """JavaScript function which fires when the point is removed using the
+        (JavaScript) ``.remove()`` method.
+
+        One parameter, ``event``, is passed to the function. Returning ``false`` cancels
+        the operation.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._remove
+
+    @remove.setter
+    def remove(self, value):
+        self._remove = validators.string(value, allow_empty = True)
+
+    @property
+    def select(self) -> Optional[str]:
+        """JavaScript function which fires when the point is selected either
+        programmatically or following a click on the point.
+
+        One parameter, ``event``, is passed to the function. Returning ``false`` cancels
+        the operation.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._select
+
+    @select.setter
+    def select(self, value):
+        self._select = validators.string(value, allow_empty = True)
+
+    @property
+    def unselect(self) -> Optional[str]:
+        """JavaScript function that fires when the point is unselected either
+        programmatically or following a click on the point.
+
+        One parameter, ``event``, is passed to the function. Returning ``false`` cancels
+        the operation.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._unselect
+
+    @unselect.setter
+    def unselect(self, value):
+        self._unselect = validators.string(value, allow_empty = True)
+
+    @property
+    def update(self) -> Optional[str]:
+        """JavaScript function that fires when the point is updated programmatically
+        through the (JavaScript) ``.update()`` method.
+
+        One parameter, ``event``, is passed to the function. The new point options can be
+        accessed through ``event.options``. Returning ``false`` cancels the operation.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._update
+
+    @update.setter
+    def update(self, value):
+        self._update = validators.string(value, allow_empty = True)
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'click': as_dict.pop('click', None),
+            'drag': as_dict.pop('drag', None),
+            'drag_start': as_dict.pop('dragStart', None),
+            'drop': as_dict.pop('drop', None),
+            'mouse_out': as_dict.pop('mouseOut', None),
+            'mouse_over': as_dict.pop('mouseOver', None),
+            'remove': as_dict.pop('remove', None),
+            'select': as_dict.pop('select', None),
+            'unselect': as_dict.pop('unselect', None),
+            'update': as_dict.pop('update', None)
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self):
+        untrimmed = {
+            'click': self.click,
+            'drag': self.drag,
+            'dragStart': self.drag_start,
+            'drop': self.drop,
+            'mouseOut': self.mouse_out,
+            'mouseOver': self.mouse_over,
+            'remove': self.remove,
+            'select': self.select,
+            'unselect': self.unselect,
+            'update': self.update
+        }
+
+        return self.trim_dict(untrimmed)
+
+
+class SeriesEvents(HighchartsMeta):
+    """Event listeners for Series."""
+
+    def __init__(self, **kwargs):
+        self._after_animate = None
+        self._checkbox_click = None
+        self._click = None
+        self._hide = None
+        self._legend_item_click = None
+        self._mouse_out = None
+        self._mouse_over = None
+        self._show = None
+
+        self.after_animate = kwargs.pop('after_animate', None)
+        self.checkbox_click = kwargs.pop('checkbox_click', None)
+        self.click = kwargs.pop('click', None)
+        self.hide = kwargs.pop('hide', None)
+        self.legend_item_click = kwargs.pop('legend_item_click', None)
+        self.mouse_out = kwargs.pop('mouse_out', None)
+        self.mouse_over = kwargs.pop('mouse_over', None)
+        self.show = kwargs.pop('show', None)
+
+    @property
+    def after_animate(self) -> Optional[str]:
+        """JavaScript function that fires after the series has finished its initial
+        animation, or if animation is disabled, immediately as the series is displayed.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._after_animate
+
+    @after_animate.setter
+    def after_animate(self, value):
+        self._after_animate = validators.string(value, allow_empty = True)
+
+    @property
+    def checkbox_click(self) -> Optional[str]:
+        """JavaScript function that fires when the checkbox next to the series' name in
+        the legend is clicked.
+
+        One parameter, ``event``, is passed to the (JavaScript) function. The state of the
+        checkbox is found by ``event.checked``. The checked item is found by
+        ``event.item``. Return ``false`` to prevent the default action which is to toggle
+        the select state of the series.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._checkbox_click
+
+    @checkbox_click.setter
+    def checkbox_click(self, value):
+        self._checkbox_click = validators.string(value, allow_empty = True)
+
+    @property
+    def click(self) -> Optional[str]:
+        """JavaScript function that fires when when the series is clicked.
+
+        One parameter, ``event``, is passed to the (JavaScript) function, containing
+        common event information. Additionally, ``event.point`` holds a pointer to the
+        nearest point on the graph.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._click
+
+    @click.setter
+    def click(self, value):
+        self._click = validators.string(value, allow_empty = True)
+
+    @property
+    def hide(self) -> Optional[str]:
+        """JavaScript function that fires when the series is hidden after chart generation
+        time, either by clicking the legend item or by calling (in JavaScript)
+        ``.hide()``.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._hide
+
+    @hide.setter
+    def hide(self, value):
+        self._hide = validators.string(value, allow_empty = True)
+
+    @property
+    def legend_item_click(self) -> Optional[str]:
+        """JavaScript function that fires when the legend item belonging to the series is
+        clicked.
+
+        One parameter, ``event``, is passed to the (JavaScript) function. The default
+        action is to toggle the visibility of the series. This can be prevented by
+        returning ``false`` or calling (in JavaScript) ``event.preventDefault()``.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._legend_item_click
+
+    @legend_item_click.setter
+    def legend_item_click(self, value):
+        self._legend_item_click = validators.string(value, allow_empty = True)
+
+    @property
+    def mouse_out(self) -> Optional[str]:
+        """JavaScript function which fires when the mouse leaves the graph.
+
+        One parameter, ``event``, is passed to the (JavaScript) function, containing
+        common event information. If the ``stickyTracking`` option is ``true``,
+        the ``mouse_out`` event doesn't happen before the mouse enters another graph or
+        leaves the plot area.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._mouse_out
+
+    @mouse_out.setter
+    def mouse_out(self, value):
+        self._mouse_out = validators.string(value, allow_empty = True)
+
+    @property
+    def mouse_over(self) -> Optional[str]:
+        """JavaScript function which fires when the mouse enters the graph.
+
+        One parameter, ``event``, is passed to the function, containing common event
+        information.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._mouse_over
+
+    @mouse_over.setter
+    def mouse_over(self, value):
+        self._mouse_over = validators.string(value, allow_empty = True)
+
+    @property
+    def show(self) -> Optional[str]:
+        """JavaScript function which fires when the series is shown after chart generation
+        time, either by clicking the legend item or by calling (in JavaScript)
+        ``.show()``.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._show
+
+    @show.setter
+    def show(self, value):
+        self._show = validators.string(value, allow_empty = True)
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'after_animate': as_dict.pop('afterAnimate', None),
+            'checkbox_click': as_dict.pop('checkboxClick', None),
+            'click': as_dict.pop('click', None),
+            'hide': as_dict.pop('hide', None),
+            'legend_item_click': as_dict.pop('legendItemClick', None),
+            'mouse_out': as_dict.pop('mouseOut', None),
+            'mouse_over': as_dict.pop('mouseOver', None),
+            'show': as_dict.pop('show', None)
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self):
+        untrimmed = {
+            'afterAnimate': self.after_animate,
+            'checkboxClick': self.checkbox_click,
+            'click': self.click,
+            'hide': self.hide,
+            'legendItemClick': self.legend_item_click,
+            'mouseOut': self.mouse_out,
+            'mouseOver': self.mouse_over,
+            'show': self.show
+        }
+
+        return self.trim_dict(untrimmed)
