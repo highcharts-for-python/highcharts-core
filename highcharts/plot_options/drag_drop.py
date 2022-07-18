@@ -923,3 +923,74 @@ class BoxPlotDragDropOptions(DragDropOptions):
         }
 
         return self.trim_dict(untrimmed)
+
+
+class BulletDragDropOptions(DragDropOptions):
+    """The draggable-points module allows points to be moved around or modified in the
+    chart."""
+
+    def __init__(self, **kwargs):
+        self._draggable_target = None
+
+        self.draggable_target = kwargs.pop('draggable_target', True)
+
+        super(self).__init__(**kwargs)
+
+    @property
+    def draggable_target(self) -> Optional[bool]:
+        """If ``True``, enables the target to be dragged individually. Defaults to
+        :obj:`None <python:None>`, which is equivalent to ``True``.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._draggable_target
+
+    @draggable_target.setter
+    def draggable_target(self, value):
+        if value is None:
+            self._draggable_target = None
+        else:
+            self._draggable_target = bool(value)
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'draggable_x': as_dict.pop('draggableX', None),
+            'draggable_y': as_dict.pop('draggableY', None),
+            'drag_handle': as_dict.pop('dragHandle', None),
+            'drag_max_x': as_dict.pop('dragMaxX', None),
+            'drag_max_y': as_dict.pop('dragMaxY', None),
+            'drag_min_x': as_dict.pop('dragMinX', None),
+            'drag_min_y': as_dict.pop('dragMinY', None),
+            'drag_precision_x': as_dict.pop('dragPrecisionX', None),
+            'drag_precision_y': as_dict.pop('dragPrecisionY', None),
+            'drag_sensitivity': as_dict.pop('dragSensitivity', 2),
+            'group_by': as_dict.pop('groupBy', None),
+            'guide_box': as_dict.pop('guideBox', None),
+            'live_redraw': as_dict.pop('liveRedraw', True),
+
+            'draggable_target': as_dict.pop('draggableTarget', True)
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self) -> Optional[dict]:
+        untrimmed = {
+            'draggableX': self.draggable_x,
+            'draggableY': self.draggable_y,
+            'dragHandle': self.drag_handle,
+            'dragMaxX': self.drag_max_x,
+            'dragMaxY': self.drag_max_y,
+            'dragMinX': self.drag_min_x,
+            'dragMinY': self.drag_min_y,
+            'dragPrecisionX': self.drag_precision_x,
+            'dragPrecisionY': self.drag_precision_y,
+            'dragSensitivity': self.drag_sensitivity,
+            'groupBy': self.group_by,
+            'guideBox': self.guide_box,
+            'liveRedraw': self.live_redraw,
+
+            'draggableTarget': self.draggable_target
+        }
+
+        return self.trim_dict(untrimmed)
