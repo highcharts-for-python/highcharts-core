@@ -792,3 +792,134 @@ class DragDropOptions(HighchartsMeta):
         }
 
         return self.trim_dict(untrimmed)
+
+
+class BoxPlotDragDropOptions(DragDropOptions):
+    """The draggable-points module allows points to be moved around or modified in the
+    chart."""
+
+    def __init__(self, **kwargs):
+        self._draggable_high = None
+        self._draggable_low = None
+        self._draggable_q1 = None
+        self._draggable_q3 = None
+
+        self.draggable_high = kwargs.pop('draggable_high', True)
+        self.draggable_low = kwargs.pop('draggable_low', True)
+        self.draggable_q1 = kwargs.pop('draggable_q1', True)
+        self.draggable_q3 = kwargs.pop('draggable_q3', True)
+
+        super(self).__init__(**kwargs)
+
+    @property
+    def draggable_high(self) -> Optional[bool]:
+        """If ``True``, enables high value to be dragged individually. Defaults to
+        :obj:`None <python:None>`, which is equivalent to ``True``.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._draggable_high
+
+    @draggable_high.setter
+    def draggable_high(self, value):
+        if value is None:
+            self._draggable_high = None
+        else:
+            self._draggable_high = bool(value)
+
+    @property
+    def draggable_low(self) -> Optional[bool]:
+        """If ``True``, enables the low value to be dragged individually. Defaults to
+        :obj:`None <python:None>`, which is equivalent to ``True``.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._draggable_low
+
+    @draggable_low.setter
+    def draggable_low(self, value):
+        if value is None:
+            self._draggable_low = None
+        else:
+            self._draggable_low = bool(value)
+
+    @property
+    def draggable_q1(self) -> Optional[bool]:
+        """If ``True``, enables the Q1 value to be dragged individually. Defaults to
+        :obj:`None <python:None>`, which is equivalent to ``True``.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._draggable_q1
+
+    @draggable_q1.setter
+    def draggable_q1(self, value):
+        if value is None:
+            self._draggable_q1 = None
+        else:
+            self._draggable_q1 = bool(value)
+
+    @property
+    def draggable_q3(self) -> Optional[bool]:
+        """If ``True``, enables the Q3 value to be dragged individually. Defaults to
+        :obj:`None <python:None>`, which is equivalent to ``True``.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._draggable_q3
+
+    @draggable_q3.setter
+    def draggable_q3(self, value):
+        if value is None:
+            self._draggable_q3 = None
+        else:
+            self._draggable_q3 = bool(value)
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'draggable_x': as_dict.pop('draggableX', None),
+            'draggable_y': as_dict.pop('draggableY', None),
+            'drag_handle': as_dict.pop('dragHandle', None),
+            'drag_max_x': as_dict.pop('dragMaxX', None),
+            'drag_max_y': as_dict.pop('dragMaxY', None),
+            'drag_min_x': as_dict.pop('dragMinX', None),
+            'drag_min_y': as_dict.pop('dragMinY', None),
+            'drag_precision_x': as_dict.pop('dragPrecisionX', None),
+            'drag_precision_y': as_dict.pop('dragPrecisionY', None),
+            'drag_sensitivity': as_dict.pop('dragSensitivity', 2),
+            'group_by': as_dict.pop('groupBy', None),
+            'guide_box': as_dict.pop('guideBox', None),
+            'live_redraw': as_dict.pop('liveRedraw', True),
+
+            'draggable_high': as_dict.pop('draggableHigh', True),
+            'draggable_low': as_dict.pop('draggableLow', True),
+            'draggable_q1': as_dict.pop('draggableQ1', True),
+            'draggable_q3': as_dict.pop('draggableQ3', True)
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self) -> Optional[dict]:
+        untrimmed = {
+            'draggableX': self.draggable_x,
+            'draggableY': self.draggable_y,
+            'dragHandle': self.drag_handle,
+            'dragMaxX': self.drag_max_x,
+            'dragMaxY': self.drag_max_y,
+            'dragMinX': self.drag_min_x,
+            'dragMinY': self.drag_min_y,
+            'dragPrecisionX': self.drag_precision_x,
+            'dragPrecisionY': self.drag_precision_y,
+            'dragSensitivity': self.drag_sensitivity,
+            'groupBy': self.group_by,
+            'guideBox': self.guide_box,
+            'liveRedraw': self.live_redraw,
+
+            'draggableHigh': self.draggable_high,
+            'draggableLow': self.draggable_low,
+            'draggableQ1': self.draggable_q1,
+            'draggableQ3': self.draggable_q3
+        }
+
+        return self.trim_dict(untrimmed)
