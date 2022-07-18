@@ -12,10 +12,10 @@ from highcharts.plot_options.bellcurve import BellCurveOptions
 from highcharts.plot_options.boxplot import BoxPlotOptions
 from highcharts.plot_options.bubble import BubbleOptions
 from highcharts.plot_options.bullet import BulletOptions
-from highcharts.plot_options.column import ColumnOptions
-from highcharts.plot_options.columnpyramid import ColumnPyramidOptions
-from highcharts.plot_options.columnrange import ColumnRangeOptions
-from highcharts.plot_options.cylinder import CylinderOptions
+from highcharts.plot_options.bar import ColumnOptions
+from highcharts.plot_options.bar import ColumnPyramidOptions
+from highcharts.plot_options.bar import ColumnRangeOptions
+from highcharts.plot_options.bar import CylinderOptions
 from highcharts.plot_options.dependencywheel import DependencyWheelOptions
 from highcharts.plot_options.dumbbell import DumbbellOptions
 from highcharts.plot_options.errorbar import ErrorBarOptions

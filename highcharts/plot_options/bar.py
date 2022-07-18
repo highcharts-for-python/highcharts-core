@@ -467,3 +467,91 @@ class BarOptions(AreaOptions):
             untrimmed[key] = parent_as_dict[key]
 
         return self.trim_dict(untrimmed)
+
+
+class ColumnOptions(BarOptions):
+    """General options to apply to all Column series types.
+
+    Column series display one column per value along an X axis.
+
+    .. figure:: _static/column-example.png
+      :alt: Column Example Chart
+      :align: center
+
+    """
+    pass
+
+
+class ColumnPyramidOptions(ColumnOptions):
+    """General options to apply to all Column Pyramid series types.
+
+    Column Pyramid series display one pyramid per value along an X axis.
+
+    .. hint::
+
+      To display horizontal pyramids, set :meth:`Chart.inverted` to ``True``.
+
+    .. tabs::
+
+      .. tab:: Standard
+
+        .. figure:: _static/columnpyramid-example.png
+          :alt: ColumnPyramid Example Chart
+          :align: center
+
+      .. tab:: Stacked
+
+        .. figure:: _static/columnpyramid-example-stacked.png
+          :alt: Stacked Column Pyramid Example Chart
+          :align: center
+
+      .. tab:: Stacked + Inverted
+
+        .. figure:: _static/columnpyramid-example-stacked-horizontal.png
+          :alt: Stacked and Inverted Column Pyramid Example Chart
+          :align: center
+
+    """
+    pass
+
+
+class ColumnRangeOptions(ColumnOptions):
+    """General options to apply to all Column Range series types.
+
+    The column range is a cartesian series type with higher and lower Y values along
+    an X axis.
+
+    .. hint::
+
+      To display horizontal bars, set :meth:`Chart.inverted` to ``True``.
+
+    .. tabs::
+
+      .. tab:: Standard
+
+        .. figure:: _static/columnrange-example.png
+          :alt: ColumnRange Example Chart
+          :align: center
+
+      .. tab:: Horizontal
+
+        .. figure:: _static/columnrange-example-horizontal.png
+          :alt: Inverted Column Range Example Chart
+          :align: center
+
+    """
+    pass
+
+
+class CylinderOptions(BarOptions):
+    """General options to apply to all Cylinder series types.
+
+    A cylinder graph is a variation of a 3d column graph. The cylinder graph features
+    cylindrical points.
+
+    .. figure:: _static/cylinder-example.png
+      :alt: Cylinder Example Chart
+      :align: center
+
+    """
+    pass
