@@ -4,9 +4,9 @@ from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.plot_options.arcdiagram import ArcDiagramOptions
 from highcharts.plot_options.area import AreaOptions
-from highcharts.plot_options.arearange import AreaRangeOptions
-from highcharts.plot_options.areaspline import AreaSplineOptions
-from highcharts.plot_options.areasplinerange import AreaSplineRangeOptions
+from highcharts.plot_options.area import AreaRangeOptions
+from highcharts.plot_options.area import AreaSplineOptions
+from highcharts.plot_options.area import AreaSplineRangeOptions
 from highcharts.plot_options.bar import BarOptions
 from highcharts.plot_options.bellcurve import BellCurveOptions
 from highcharts.plot_options.boxplot import BoxPlotOptions
