@@ -10,6 +10,249 @@ from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
 
 
+class DragHandle(HighchartsMeta):
+    """Options for the drag handles available in column series."""
+
+    def __init__(self, **kwargs):
+        self._class_name = None
+        self._color = None
+        self._cursor = None
+        self._line_color = None
+        self._line_width = None
+        self._path_formatter = None
+        self._z_index = None
+
+        self.class_name = kwargs.pop('class_name', 'highcharts-drag-handle')
+        self.color = kwargs.pop('color', '#fff')
+        self.cursor = kwargs.pop('cursor', None)
+        self.line_color = kwargs.pop('line_color', 'rgba(0, 0, 0, 0.6)')
+        self.line_width = kwargs.pop('line_width', 1)
+        self.path_formatter = kwargs.pop('path_formatter', None)
+        self.z_index = kwargs.pop('z_index', 901)
+
+    @property
+    def class_name(self) -> Optional[str]:
+        """CSS class name of the guide box in this state. Defaults to
+        ``'highcharts-drag-handle'``.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._class_name
+
+    @class_name.setter
+    def class_name(self, value):
+        self._class_name = validators.string(value, allow_empty = True)
+
+    @property
+    def color(self) -> Optional[str | Gradient | Pattern]:
+        """The fill color of the drag handles. Defaults to ``'#fff'``.
+
+        :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
+          :obj:`None <python:None>`
+        """
+        return self._color
+
+    @color.setter
+    def color(self, value):
+        if not value:
+            self._color = None
+        elif isinstance(value, (Gradient, Pattern)):
+            self._color = value
+        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
+            try:
+                self._color = Gradient.from_json(value)
+            except ValueError:
+                if isinstance(value, dict):
+                    self._color = Gradient.from_dict(value)
+                else:
+                    self._color = validators.string(value)
+        elif isinstance(value, dict) and 'linear_gradient' in value:
+            self._color = Gradient(**value)
+        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
+            try:
+                self._color = Pattern.from_json(value)
+            except ValueError:
+                if isinstance(value, dict):
+                    self._color = Pattern.from_dict(value)
+                else:
+                    self._color = validators.string(value)
+        elif isinstance(value, dict) and 'pattern_options' in value:
+            self._color = Pattern(**value)
+        else:
+            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
+                                              f'Gradient, or Pattern. Value received '
+                                              f'was: {value}')
+
+    @property
+    def cursor(self) -> Optional[str]:
+        """The mouse cursor to use for the drag handles. By default (when
+        :obj:`None <python:None>`), this intelligently switches between ``'ew-resize'``
+        and ``'ns-resize'`` depending on the direction the point is being dragged.
+
+        Acceptable values are:
+
+          * ``'alias'``
+          * ``'all-scroll'``
+          * ``'auto'``
+          * ``'cell'``
+          * ``'col-resize'``
+          * ``'context-menu'``
+          * ``'copy'``
+          * ``'crosshair'``
+          * ``'default'``
+          * ``'e-resize'``
+          * ``'ew-resize'``
+          * ``'grab'``
+          * ``'grabbing'``
+          * ``'help'``
+          * ``'move'``
+          * ``'n-resize'``
+          * ``'ne-resize'``
+          * ``'nesw-resize'``
+          * ``'no-drop'``
+          * ``'none'``
+          * ``'not-allowed'``
+          * ``'ns-resize'``
+          * ``'nw-resize'``
+          * ``'nwse-resize'``
+          * ``'pointer'``
+          * ``'progress'``
+          * ``'row-resize'``
+          * ``'s-resize'``
+          * ``'se-resize'``
+          * ``'sw-resize'``
+          * ``'text'``
+          * ``'vertical-text'``
+          * ``'w-resize'``
+          * ``'wait'``
+          * ``'zoom-in'``
+          * ``'zoom-out'
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._cursor
+
+    @cursor.setter
+    def cursor(self, value):
+        if not value:
+            self._cursor = None
+        else:
+            value = validators.string(value)
+            value = value.lower()
+            if value not in constants.SUPPORTED_CURSOR_VALUES:
+                raise errors.HighchartsValueError(f'cursor expects a valid cursor value. '
+                                                  f'Received: {value}')
+            self._cursor = value
+
+    @property
+    def line_color(self) -> Optional[str | Gradient | Pattern]:
+        """The line color of the drag handles. Defaults to ``'rgba(0, 0, 0, 0.6)'``.
+
+        :rtype: :obj:`None <python:None>`, :class:`Gradient`, :class:`Pattern`, or
+          :class:`str <python:str>`
+        """
+        return self._line_color
+
+    @line_color.setter
+    def line_color(self, value):
+        if not value:
+            self._line_color = None
+        elif isinstance(value, (Gradient, Pattern)):
+            self._line_color = value
+        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
+            try:
+                self._line_color = Gradient.from_json(value)
+            except ValueError:
+                if isinstance(value, dict):
+                    self._line_color = Gradient.from_dict(value)
+                else:
+                    self._line_color = validators.string(value)
+        elif isinstance(value, dict) and 'linear_gradient' in value:
+            self._line_color = Gradient(**value)
+        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
+            try:
+                self._line_color = Pattern.from_json(value)
+            except ValueError:
+                if isinstance(value, dict):
+                    self._line_color = Pattern.from_dict(value)
+                else:
+                    self._line_color = validators.string(value)
+        elif isinstance(value, dict) and 'pattern_options' in value:
+            self._line_color = Pattern(**value)
+        else:
+            raise errors.HighchartsValueError(f'Unable to resolve value to an '
+                                              f'EnforcedNullType, string, '
+                                              f'Gradient, or Pattern. Value received '
+                                              f'was: {value}')
+
+    @property
+    def line_width(self) -> Optional[int | float | Decimal]:
+        """The line width for the drag handles. Defaults to ``1``.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._line_width
+
+    @line_width.setter
+    def line_width(self, value):
+        self._line_width = validators.numeric(value,
+                                              allow_empty = True,
+                                              minimum = 0)
+
+    @property
+    def path_formatter(self) -> Optional[str]:
+        """JavaScript function to define the SVG path to use for the drag handles. Takes
+        the ``point`` as a (JavaScript) argument. Should return an SVG path in array
+        format. The SVG path is automatically positioned on the point.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._path_formatter
+
+    @path_formatter.setter
+    def path_formatter(self, value):
+        self._path_formatter = validators.string(value, allow_empty = True)
+
+    @property
+    def z_index(self) -> Optional[int | float | Decimal]:
+        """Drag handles' zIndex position. Defaults to ``901``.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._z_index
+
+    @z_index.setter
+    def z_index(self, value):
+        self._z_index = validators.numeric(value, allow_empty = True)
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'class_name': as_dict.pop('className', 'highcharts-drag-handle'),
+            'color': as_dict.pop('color', '#fff'),
+            'cursor': as_dict.pop('cursor', None),
+            'line_color': as_dict.pop('lineColor', 'rgba(0, 0, 0, 0.6)'),
+            'line_width': as_dict.pop('lineWidth', 1),
+            'path_formatter': as_dict.pop('pathFormatter', None),
+            'z_index': as_dict.pop('zIndex', 901)
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self) -> Optional[dict]:
+        untrimmed = {
+            'className': self.class_name,
+            'color': self.color,
+            'cursor': self.cursor,
+            'lineColor': self.line_color,
+            'lineWidth': self.line_width,
+            'pathFormatter': self.path_formatter,
+            'zIndex': self.z_index
+        }
+
+        return self.trim_dict(untrimmed)
+
+
 class GuideBoxOptions(HighchartsMeta):
     """Style options for the guide box default state."""
 
@@ -223,12 +466,12 @@ class GuideBoxOptions(HighchartsMeta):
 
     def to_dict(self) -> Optional[dict]:
         untrimmed = {
-            'class_name': self.class_name,
+            'className': self.class_name,
             'color': self.color,
             'cursor': self.cursor,
-            'line_color': self.line_color,
-            'line_width': self.line_width,
-            'z_index': self.z_index
+            'lineColor': self.line_color,
+            'lineWidth': self.line_width,
+            'zIndex': self.z_index
         }
 
         return self.trim_dict(untrimmed)
@@ -285,6 +528,7 @@ class DragDropOptions(HighchartsMeta):
     def __init__(self, **kwargs):
         self._draggable_x = None
         self._draggable_y = None
+        self._drag_handle = None
         self._drag_max_x = None
         self._drag_max_y = None
         self._drag_min_x = None
@@ -298,6 +542,7 @@ class DragDropOptions(HighchartsMeta):
 
         self.draggable_x = kwargs.pop('draggable_x', None)
         self.draggable_y = kwargs.pop('draggable_y', None)
+        self.drag_handle = kwargs.pop('drag_handle', None)
         self.drag_max_x = kwargs.pop('drag_max_x', None)
         self.drag_max_y = kwargs.pop('drag_max_y', None)
         self.drag_min_x = kwargs.pop('drag_min_x', None)
@@ -344,6 +589,19 @@ class DragDropOptions(HighchartsMeta):
             self._draggable_y = None
         else:
             self._draggable_y = bool(value)
+
+    @property
+    def drag_handle(self) -> Optional[DragHandle]:
+        """Options for the drag handles available in column series.
+
+        :rtype: :class:`DragHandle` or :obj:`None <python:None>`
+        """
+        return self._drag_handle
+
+    @drag_handle.setter
+    @class_sensitive(DragHandle)
+    def drag_handle(self, value):
+        self._drag_handle = value
 
     @property
     def drag_max_x(self) -> Optional[int | float | Decimal]:
@@ -501,6 +759,7 @@ class DragDropOptions(HighchartsMeta):
         kwargs = {
             'draggable_x': as_dict.pop('draggableX', None),
             'draggable_y': as_dict.pop('draggableY', None),
+            'drag_handle': as_dict.pop('dragHandle', None),
             'drag_max_x': as_dict.pop('dragMaxX', None),
             'drag_max_y': as_dict.pop('dragMaxY', None),
             'drag_min_x': as_dict.pop('dragMinX', None),
@@ -519,6 +778,7 @@ class DragDropOptions(HighchartsMeta):
         untrimmed = {
             'draggableX': self.draggable_x,
             'draggableY': self.draggable_y,
+            'dragHandle': self.drag_handle,
             'dragMaxX': self.drag_max_x,
             'dragMaxY': self.drag_max_y,
             'dragMinX': self.drag_min_x,
