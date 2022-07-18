@@ -54,6 +54,8 @@ class BarOptions(AreaOptions):
         self.point_range = kwargs.pop('point_range', constants.EnforcedNull)
         self.point_width = kwargs.pop('point_width', None)
 
+        super(self).__init__(**kwargs)
+
     @property
     def border_color(self) -> Optional[str | Gradient | Pattern]:
         """The color of the border surrounding each column or bar. Defaults to
