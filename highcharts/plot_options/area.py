@@ -1059,3 +1059,17 @@ class AreaSplineRangeOptions(AreaOptions):
     axis. The area inside the range is colored, and the graph outlining the area is a
     smoothed spline."""
     pass
+
+
+class LineOptions(AreaOptions):
+    """General options to apply to all Line series types.
+
+    A line series displays information as a series of data points connected by
+    straight line segments.
+
+    .. figure:: _static/line-example.png
+      :alt: Line Example Chart
+      :align: center
+
+    """
+    pass
