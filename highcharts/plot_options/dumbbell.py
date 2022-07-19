@@ -978,3 +978,22 @@ class DumbbellOptions(GenericTypeOptions):
             untrimmed[key] = parent_as_dict[key]
 
         return self.trim_dict(untrimmed)
+
+
+class LollipopOptions(DumbbellOptions):
+    """General options to apply to all Lollipop series types.
+
+    The lollipop series is a carteseian series with a line anchored from the x axis
+    and a dot at the end to mark the value.
+
+    .. warning::
+
+      Requires ``highcharts-more.js``, ``modules/dumbbell.js``, and
+      ``modules/lollipop.js`` to be loaded client-side.
+
+    .. figure:: _static/lollipop-example.png
+      :alt: Lollipop Example Chart
+      :align: center
+
+    """
+    pass

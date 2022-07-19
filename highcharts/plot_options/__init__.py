@@ -26,7 +26,7 @@ from highcharts.plot_options.heatmap import HeatmapOptions
 from highcharts.plot_options.histogram import HistogramOptions
 from highcharts.plot_options.item import ItemOptions
 from highcharts.plot_options.area import LineOptions
-from highcharts.plot_options.lollipop import LollipopOptions
+from highcharts.plot_options.dumbbell import LollipopOptions
 from highcharts.plot_options.networkgraph import NetworkGraphOptions
 from highcharts.plot_options.organization import OrganizationOptions
 from highcharts.plot_options.packedbubble import PackedBubbleOptions
