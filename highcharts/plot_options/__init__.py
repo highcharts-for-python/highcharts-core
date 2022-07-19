@@ -634,7 +634,7 @@ class PlotOptions(HighchartsMeta):
         return self._funnel_3d
 
     @funnel_3d.setter
-    @class_sensitive(FunnelOptions)
+    @class_sensitive(Funnel3DOptions)
     def funnel_3d(self, value):
         self._funnel_3d = value
 
