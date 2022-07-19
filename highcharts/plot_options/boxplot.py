@@ -473,3 +473,17 @@ class BoxPlotOptions(BarOptions):
             untrimmed[key] = parent_as_dict[key]
 
         return self.trim_dict(untrimmed)
+
+
+class ErrorBarOptions(BoxPlotOptions):
+    """General options to apply to all Error Bar series types.
+
+    Error bars are a graphical representation of the variability of data and are used
+    on graphs to indicate the error, or uncertainty in a reported measurement.
+
+    .. figure:: _static/errorbar-example.png
+      :alt: Error Bar Example Chart
+      :align: center
+
+    """
+    pass

@@ -18,7 +18,7 @@ from highcharts.plot_options.bar import ColumnRangeOptions
 from highcharts.plot_options.bar import CylinderOptions
 from highcharts.plot_options.dependencywheel import DependencyWheelOptions
 from highcharts.plot_options.dumbbell import DumbbellOptions
-from highcharts.plot_options.errorbar import ErrorBarOptions
+from highcharts.plot_options.boxplot import ErrorBarOptions
 from highcharts.plot_options.funnel import FunnelOptions
 from highcharts.plot_options.funnel import Funnel3DOptions
 from highcharts.plot_options.gauge import GaugeOptions
