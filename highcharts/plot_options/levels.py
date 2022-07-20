@@ -499,3 +499,201 @@ class SunburstLevelOptions(BaseLevelOptions):
             untrimmed[key] = parent_as_dict[key]
 
         return self.trim_dict(untrimmed)
+
+
+class TreemapLevelOptions(BaseLevelOptions):
+    """Set options on specific levels for Treemap Charts. Takes precedence over series
+    options, but not node and link options."""
+
+    def __init__(self, **kwargs):
+        self._border_dash_style = None
+        self._color = None
+        self._color_variation = None
+        self._layout_algoritm = None
+        self._layout_starting_direction = None
+
+        self.border_dash_style = kwargs.pop('border_dash_style', None)
+        self.color = kwargs.pop('color', None)
+        self.color_variation = kwargs.pop('color_variation', None)
+        self.layout_algorithm = kwargs.pop('layout_algorithm', None)
+        self.layout_starting_direction = kwargs.pop('layout_starting_direction', None)
+
+        super().__init__(**kwargs)
+
+    @property
+    def border_dash_style(self) -> Optional[str]:
+        """The dash style applied to all points which lie on the same level. Defaults to
+        :obj:`None <python:None>`.
+
+        Accepts one of the following values:
+
+          * 'Dash',
+          * 'DashDot',
+          * 'Dot',
+          * 'LongDash',
+          * 'LongDashDot',
+          * 'LongDashDotDot',
+          * 'ShortDash',
+          * 'ShortDashDot',
+          * 'ShortDashDotDot',
+          * 'ShortDot',
+          * 'Solid'
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._border_dash_style
+
+    @border_dash_style.setter
+    def border_dash_style(self, value):
+        if not value:
+            self._border_dash_style = None
+        else:
+            value = validators.string(value)
+            if value not in constants.SUPPORTED_DASH_STYLE_VALUES:
+                raise errors.HighchartsValueError(f'border_dash_style expects a '
+                                                  f'recognized value, but received: '
+                                                  f'{value}')
+            self._border_dash_style = value
+
+    @property
+    def color(self) -> Optional[str | Gradient | Pattern]:
+        """Set a color on all points which lies on the same level. Defaults to
+        :obj:`None <python:None>`.
+
+        :rtype: :obj:`None <python:None>`, :class:`Gradient`, :class:`Pattern`, or
+          :class:`str <python:str>`
+        """
+        return self._color
+
+    @color.setter
+    def color(self, value):
+        if not value:
+            self._color = None
+        elif isinstance(value, (Gradient, Pattern)):
+            self._color = value
+        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
+            try:
+                self._color = Gradient.from_json(value)
+            except ValueError:
+                if isinstance(value, dict):
+                    self._color = Gradient.from_dict(value)
+                else:
+                    self._color = validators.string(value)
+        elif isinstance(value, dict) and 'linear_gradient' in value:
+            self._color = Gradient(**value)
+        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
+            try:
+                self._color = Pattern.from_json(value)
+            except ValueError:
+                if isinstance(value, dict):
+                    self._color = Pattern.from_dict(value)
+                else:
+                    self._color = validators.string(value)
+        elif isinstance(value, dict) and 'pattern_options' in value:
+            self._color = Pattern(**value)
+        else:
+            raise errors.HighchartsValueError(f'Unable to resolve value to an '
+                                              f'EnforcedNullType, string, '
+                                              f'Gradient, or Pattern. Value received '
+                                              f'was: {value}')
+
+    @property
+    def color_variation(self) -> Optional[ColorVariation]:
+        """Set a color variation on all points which lie on the same level. Defaults to
+        :obj:`None <python:None>`.
+
+        :rtype: :class:`ColorVariation` or :obj:`None <python:None>`
+        """
+        return self._color_variation
+
+    @color_variation.setter
+    @class_sensitive(ColorVariation)
+    def color_variation(self, value):
+        self._color_variation = value
+
+    @property
+    def layout_algorithm(self) -> Optional[str]:
+        """This option decides which algorithm is used for setting position and dimensions
+        of the points. Defaults to ``'sliceAndDice'``.
+
+        Accepts the following (case-sensitive) values:
+
+          * ``'sliceAndDice'``
+          * ``'stripes'``
+          * ``'squarified'``
+          * ``'strip'``
+
+        .. note::
+
+          You also have the ability to extend Highcharts with your own layout algorithm.
+          For more information, read the
+          `original JavaScript documentation <https://www.highcharts.com/docs/chart-and-series-types/treemap#add-your-own-algorithm>`_.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._layout_algorithm
+
+    @layout_algorithm.setter
+    def layout_algorithm(self, value):
+        self._layout_algorithm = validators.variable_name(value, allow_empty = True)
+
+    @property
+    def layout_starting_direction(self) -> Optional[str]:
+        """Defines which direction the layout algorithm will start drawing. Defaults to
+        ``'vertical'``.
+
+        Accepts:
+
+          * ``'vertical'``
+          * ``'horizontal'``
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._layout_starting_direction
+
+    @layout_starting_direction.setter
+    def layout_starting_direction(self, value):
+        if not value:
+            self._layout_starting_direction = None
+        else:
+            value = validators.string(value)
+            value = value.lower()
+            if value not in ['vertical', 'horizontal']:
+                raise errors.HighchartsError(f'layout_starting_direction expects either '
+                                             f'"vertical" or "horizontal". Received: '
+                                             f'{value}')
+
+            self._layout_starting_direction = value
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'border_color': as_dict.pop('borderColor', None),
+            'border_width': as_dict.pop('borderWidth', None),
+            'data_labels': as_dict.pop('dataLabels', None),
+            'level': as_dict.pop('level', None),
+
+            'border_dash_style': as_dict.pop('borderDashStyle', None),
+            'color': as_dict.pop('color', None),
+            'color_variation': as_dict.pop('colorVariation', None),
+
+            'layout_algorithm': as_dict.pop('layoutAlgorithm', None),
+            'layout_starting_direction': as_dict.pop('layoutStartingDirection', None)
+         }
+
+        return cls(**kwargs)
+
+    def to_dict(self) -> Optional[dict]:
+        untrimmed = {
+            'borderDashStyle': self.border_dash_style,
+            'color': self.color,
+            'colorVariation': self.color_variation,
+            'layoutAlgorithm': self.layout_algorithm,
+            'layoutStartingDirection': self.layout_starting_direction
+        }
+
+        parent_as_dict = super().to_dict()
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
+
+        return self.trim_dict(untrimmed)
