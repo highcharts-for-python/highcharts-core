@@ -4,10 +4,11 @@ from decimal import Decimal
 from validator_collection import validators
 
 from highcharts import constants, errors
-from highcharts.decorators import validate_types
+from highcharts.decorators import class_sensitive, validate_types
 from highcharts.plot_options.series import SeriesOptions
 from highcharts.utility_classes.gradients import Gradient
 from higcharts.utility_classes.patterns import Pattern
+from highcharts.utility_classes.data_grouping import DataGroupingOptions
 
 
 class BaseBarOptions(SeriesOptions):
@@ -930,6 +931,226 @@ class WaterfallOptions(ColumnOptions):
         untrimmed = {
             'lineColor': self.line_color,
             'upColor': self.up_color
+        }
+        parent_as_dict = super(self).to_dict()
+
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
+
+        return self.trim_dict(untrimmed)
+
+
+class WindBarbOptions(BarOptions):
+    """General options to apply to all Wind Barb series types.
+
+    Wind barbs are a convenient way to represent wind speed and direction in one
+    graphical form. Wind direction is given by the stem direction, and wind speed by
+    the number and shape of barbs.
+
+    .. figure:: _static/windbarb-example.png
+      :alt: Wind Barb Example Chart
+      :align: center
+
+    """
+
+    def __init__(self, **kwargs):
+        self._data_grouping = None
+        self._on_series = None
+        self._vector_length = None
+        self._x_offset = None
+        self._y_offset = None
+
+        self.data_grouping = kwargs.pop('data_grouping', None)
+        self.on_series = kwargs.pop('on_series', None)
+        self.vector_length = kwargs.pop('vector_length', None)
+        self.x_offset = kwargs.pop('x_offset', None)
+        self.y_offset = kwargs.pop('y_offset', None)
+
+        super().__init__(**kwargs)
+
+    @property
+    def data_grouping(self) -> Optional[DataGroupingOptions]:
+        """Data grouping options for the wind barbs. Defaults to
+        :obj:`None <python:None>`.
+
+        .. warning::
+
+          In Highcharts, this requires the ``modules/datagrouping.js`` module to be
+          loaded. In Highcharts Stock, data grouping is included.
+
+        :rtype: :class:`DataGroupingOptions` or :obj:`None <python:None>`
+        """
+        return self._data_grouping
+
+    @data_grouping.setter
+    @class_sensitive(DataGroupingOptions)
+    def data_grouping(self, value):
+        self._data_grouping = value
+
+    @property
+    def on_series(self) -> Optional[str]:
+        """The id of another series in the chart that the wind barbs are projected on.
+        When :obj:`None <python:None>`, the wind symbols are drawn on the X axis, but
+        offset up or down by the :meth:`WindbarbOptions.y_offset` setting.
+
+        Defaults to :obj:`None <python:None>`.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._on_series
+
+    @on_series.setter
+    def on_series(self, value):
+        self._on_series = validators.string(value, allow_empty = True)
+
+    @property
+    def vector_length(self) -> Optional[int | float | Decimal]:
+        """Length of the windbarb stems, expressed in pixels. Defaults to ``20``.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._vector_length
+
+    @vector_length.setter
+    def vector_length(self, value):
+        self._vector_length = validators.numeric(value,
+                                                 allow_empty = True,
+                                                 minimum = 0)
+
+    @property
+    def x_offset(self) -> Optional[int | float | Decimal]:
+        """Horizontal offset from the cartesian position, in pixels. Defaults to ``0``.
+
+        .. note::
+
+          When the chart is inverted, this option allows translation similar to
+          :meth:`WindbarbOptions.y_offset` in non-inverted charts.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._x_offset
+
+    @x_offset.setter
+    def x_offset(self, value):
+        self._x_offset = validators.numeric(value, allow_empty = True)
+
+    @property
+    def y_offset(self) -> Optional[int | float | Decimal]:
+        """Vertical offset from the cartesian position, in pixels. Defaults to ``-20``.
+
+        .. note::
+
+          The default value makes sure the symbols don't overlap the X axis when
+          :meth:`WindbarbOptions.on_series` is :obj:`None <python:None>`, and that they
+          don't overlap the linked series when :meth:`Windbarb.on_series` is provided.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._y_offset
+
+    @y_offset.setter
+    def y_offset(self, value):
+        self._y_offset = validators.numeric(value, allow_empty = True)
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'accessibility': as_dict.pop('accessibility', None),
+            'allow_point_select': as_dict.pop('allowPointSelect', False),
+            'animation': as_dict.pop('animation', None),
+            'class_name': as_dict.pop('className', None),
+            'clip': as_dict.pop('clip', True),
+            'color': as_dict.pop('color', None),
+            'cursor': as_dict.pop('cursor', None),
+            'custom': as_dict.pop('custom', None),
+            'dash_style': as_dict.pop('dashStyle', None),
+            'data_labels': as_dict.pop('dataLabels', None),
+            'description': as_dict.pop('description', None),
+            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', True),
+            'events': as_dict.pop('events', None),
+            'include_in_data_export': as_dict.pop('includeInDataExport', None),
+            'keys': as_dict.pop('keys', None),
+            'label': as_dict.pop('label', None),
+            'linked_to': as_dict.pop('linkedTo', None),
+            'marker': as_dict.pop('marker', None),
+            'on_point': as_dict.pop('onPoint', None),
+            'opacity': as_dict.pop('opacity', None),
+            'point': as_dict.pop('point', None),
+            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
+            'selected': as_dict.pop('selected', False),
+            'show_checkbox': as_dict.pop('showCheckbox', False),
+            'show_in_legend': as_dict.pop('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
+            'states': as_dict.pop('states', None),
+            'threshold': as_dict.pop('threshold', None),
+            'tooltip': as_dict.pop('tooltip', None),
+            'turbo_threshold': as_dict.pop('turboThreshold', None),
+            'visible': as_dict.pop('visible', True),
+
+            'animation_limit': as_dict.pop('animationLimit', None),
+            'boost_blending': as_dict.pop('boostBlending', None),
+            'boost_threshold': as_dict.pop('boostThreshold', 5000),
+            'color_axis': as_dict.pop('colorAxis', None),
+            'color_index': as_dict.pop('colorIndex', None),
+            'color_key': as_dict.pop('colorKey', None),
+            'connect_ends': as_dict.pop('connectEnds', None),
+            'connect_nulls': as_dict.pop('connectNulls', False),
+            'crisp': as_dict.pop('crisp', True),
+            'crop_threshold': as_dict.pop('cropThreshold', 300),
+            'data_sorting': as_dict.pop('dataSorting', None),
+            'drag_drop': as_dict.pop('dragDrop', None),
+            'find_nearest_point_by': as_dict.pop('findNearestPointBy', None),
+            'get_extremes_for_all': as_dict.pop('getExtremesForAll', False),
+            'linecap': as_dict.pop('linecap', 'round'),
+            'line_width': as_dict.pop('lineWidth', 2),
+            'negative_color': as_dict.pop('negativeColor', None),
+            'point_interval': as_dict.pop('pointInterval', 1),
+            'point_interval_unit': as_dict.pop('pointIntervalUnit', None),
+            'point_placement': as_dict.pop('pointPlacement', None),
+            'point_start': as_dict.pop('pointStart', 0),
+            'relative_x_value': as_dict.pop('relativeXValue', False),
+            'shadow': as_dict.pop('shadow', False),
+            'soft_threshold': as_dict.pop('softThreshold', True),
+            'stacking': as_dict.pop('stacking', None),
+            'step': as_dict.pop('step', None),
+            'zone_axis': as_dict.pop('zoneAxis', 'y'),
+            'zones': as_dict.pop('zones', None),
+
+            'border_color': as_dict.pop('borderColor', '#ffffff'),
+            'border_radius': as_dict.pop('borderRadius', 0),
+            'border_width': as_dict.pop('borderWidth', None),
+            'center_in_category': as_dict.pop('centerInCategory', False),
+            'color_by_point': as_dict.pop('colorByPoint', False),
+            'colors': as_dict.pop('colors', None),
+            'grouping': as_dict.pop('grouping', True),
+            'group_padding': as_dict.pop('groupPadding', 0.2),
+            'max_point_width': as_dict.pop('maxPointWidth', None),
+            'min_point_length': as_dict.pop('minPointLength', 0),
+            'point_padding': as_dict.pop('pointPadding', 0.1),
+            'point_range': as_dict.pop('pointRange', constants.EnforcedNull),
+            'point_width': as_dict.pop('pointWidth', None),
+
+            'depth': as_dict.pop('depth', None),
+            'edge_color': as_dict.pop('edgeColor', None),
+            'edge_width': as_dict.pop('edgeWidth', None),
+            'group_z_padding': as_dict.pop('groupZPadding', None),
+
+            'data_grouping': as_dict.pop('dataGrouping', None),
+            'on_series': as_dict.pop('onSeries', None),
+            'vector_length': as_dict.pop('vectorLength', None),
+            'x_offset': as_dict.pop('xOffset', None),
+            'y_offset': as_dict.pop('yOffset', None)
+         }
+
+        return kwargs
+
+    def to_dict(self) -> Optional[dict]:
+        untrimmed = {
+            'dataGrouping': self.data_grouping,
+            'onSeries': self.on_series,
+            'vectorLength': self.vector_length,
+            'xOffset': self.x_offset,
+            'yOffset': self.y_offset,
         }
         parent_as_dict = super(self).to_dict()
 
