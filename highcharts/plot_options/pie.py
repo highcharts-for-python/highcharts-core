@@ -594,3 +594,218 @@ class PieOptions(GenericTypeOptions):
             untrimmed[key] = parent_as_dict[key]
 
         return self.trim_dict(untrimmed)
+
+
+class VariablePieOptions(PieOptions):
+    """General options to apply to all Variable Pie series types.
+
+    A variable pie series is a two dimensional series type, where each point renders
+    an Y and Z value. Each point is drawn as a pie slice where the size (arc) of the
+    slice relates to the Y value and the radius of pie slice relates to the Z value.
+
+    .. figure:: _static/variablepie-example.png
+      :alt: Variable Pie Example Chart
+      :align: center
+
+    """
+
+    def __init__(self, **kwargs):
+        self._max_point_size = None
+        self._min_point_size = None
+        self._size_by = None
+        self._z_max = None
+        self._z_min = None
+
+        self.max_point_size = kwargs.pop('max_point_size', None)
+        self.min_point_size = kwargs.pop('min_point_size', None)
+        self.size_by = kwargs.pop('size_by', None)
+        self.z_max = kwargs.pop('z_max', None)
+        self.z_min = kwargs.pop('z_min', None)
+
+        super().__init__(**kwargs)
+
+    @property
+    def max_point_size(self) -> Optional[str | int | float | Decimal]:
+        """The maximum size of the points' radius in relation to the chart's plot area. If
+        a number is provided, it applies in pixels. Defaults to ``'100%'``.
+
+        :rtype: :class:`str <python:str>`, numeric, or :obj:`None <python:None>`
+        """
+        return self._max_point_size
+
+    @max_point_size.setter
+    def max_point_size(self, value):
+        if value is None:
+            self._max_point_size = None
+        else:
+            try:
+                value = validators.string(value)
+                if '%' not in value:
+                    raise ValueError
+            except ValueError:
+                value = validators.numeric(value, allow_empty = True)
+
+            self._max_point_size = value
+
+    @property
+    def min_point_size(self) -> Optional[str | int | float | Decimal]:
+        """The minimum size of the points' radius in relation to the chart's plot area. If
+        a number is provided, it applies in pixels. Defaults to ``'10%'``.
+
+        :rtype: :class:`str <python:str>`, numeric, or :obj:`None <python:None>`
+        """
+        return self._min_point_size
+
+    @min_point_size.setter
+    def min_point_size(self, value):
+        if value is None:
+            self._min_point_size = None
+        else:
+            try:
+                value = validators.string(value)
+                if '%' not in value:
+                    raise ValueError
+            except ValueError:
+                value = validators.numeric(value, allow_empty = True)
+
+            self._min_point_size = value
+
+    @property
+    def size_by(self) -> Optional[str]:
+        """Whether the pie slice's value should be represented by the ``'area'`` or the
+        ``'radius'`` of the slice. Defaults to ``'area'``.
+
+        .. hint::
+
+          The default (``'area'``) corresponds best to the human perception of the size of
+          each pie slice.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._size_by
+
+    @size_by.setter
+    def size_by(self, value):
+        if not value:
+            self._size_by = None
+        else:
+            value = validators.string(value)
+            value = value.lower()
+            if value not in ['area', 'radius']:
+                raise errors.HighchartsValueError(f'size_by expects either "area", or '
+                                                  f'"radius". Received: {value}')
+
+            self._size_by = value
+
+    @property
+    def z_max(self) -> Optional[int | float | Decimal]:
+        """The maximum possible z value for the point's radius calculation. Defaults to
+        :obj:`None <python:None>`.
+
+        .. note::
+
+          If the point's Z value is bigger than ``z_max``, the slice will be drawn
+          according to the ``z_max`` value.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._z_max
+
+    @z_max.setter
+    def z_max(self, value):
+        self._z_max = validators.numeric(value, allow_empty = True)
+
+    @property
+    def z_min(self) -> Optional[int | float | Decimal]:
+        """The minimum possible z value for the point's radius calculation. Defaults to
+        :obj:`None <python:None>`.
+
+        .. note::
+
+          If the point's Z value is smaller than ``z_min``, the slice will be drawn
+          according to the ``z_min`` value.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._z_min
+
+    @z_min.setter
+    def z_min(self, value):
+        self._z_min = validators.numeric(value, allow_empty = True)
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'accessibility': as_dict.pop('accessibility', None),
+            'allow_point_select': as_dict.pop('allowPointSelect', False),
+            'animation': as_dict.pop('animation', None),
+            'class_name': as_dict.pop('className', None),
+            'clip': as_dict.pop('clip', True),
+            'color': as_dict.pop('color', None),
+            'cursor': as_dict.pop('cursor', None),
+            'custom': as_dict.pop('custom', None),
+            'dash_style': as_dict.pop('dashStyle', None),
+            'data_labels': as_dict.pop('dataLabels', None),
+            'description': as_dict.pop('description', None),
+            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', True),
+            'events': as_dict.pop('events', None),
+            'include_in_data_export': as_dict.pop('includeInDataExport', None),
+            'keys': as_dict.pop('keys', None),
+            'label': as_dict.pop('label', None),
+            'linked_to': as_dict.pop('linkedTo', None),
+            'marker': as_dict.pop('marker', None),
+            'on_point': as_dict.pop('onPoint', None),
+            'opacity': as_dict.pop('opacity', None),
+            'point': as_dict.pop('point', None),
+            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
+            'selected': as_dict.pop('selected', False),
+            'show_checkbox': as_dict.pop('showCheckbox', False),
+            'show_in_legend': as_dict.pop('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
+            'states': as_dict.pop('states', None),
+            'threshold': as_dict.pop('threshold', None),
+            'tooltip': as_dict.pop('tooltip', None),
+            'turbo_threshold': as_dict.pop('turboThreshold', None),
+            'visible': as_dict.pop('visible', True),
+
+            'border_color': as_dict.pop('borderColor', None),
+            'border_width': as_dict.pop('borderWidth', None),
+            'center': as_dict.pop('center', None),
+            'color_axis': as_dict.pop('colorAxis', None),
+            'color_index': as_dict.pop('colorIndex', None),
+            'color_key': as_dict.pop('colorKey', None),
+            'colors': as_dict.pop('colors', None),
+            'depth': as_dict.pop('depth', 0),
+            'end_angle': as_dict.pop('endAngle', None),
+            'fill_color': as_dict.pop('fillColor', None),
+            'ignore_hidden_point': as_dict.pop('ignoreHiddenPoint', True),
+            'inner_size': as_dict.pop('innerSize', 0),
+            'linecap': as_dict.pop('linecap', 'round'),
+            'min_size': as_dict.pop('minSize', 80),
+            'size': as_dict.pop('size', None),
+            'sliced_offset': as_dict.pop('slicedOffset', 10),
+            'start_angle': as_dict.pop('startAngle', 0),
+
+            'max_point_size': as_dict.pop('maxPointSize', None),
+            'min_point_size': as_dict.pop('minPointSize', None),
+            'size_by': as_dict.pop('sizeBy', None),
+            'z_max': as_dict.pop('zMax', None),
+            'z_min': as_dict.pop('zMin', None)
+        }
+
+        return kwargs
+
+    def to_dict(self) -> dict:
+        untrimmed = {
+            'max_point_size': self.max_point_size,
+            'min_point_size': self.min_point_size,
+            'size_by': self.size_by,
+            'z_max': self.z_max,
+            'z_min': self.z_min
+        }
+        parent_as_dict = super(self).to_dict()
+
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
+
+        return self.trim_dict(untrimmed)
