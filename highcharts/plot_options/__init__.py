@@ -50,7 +50,7 @@ from highcharts.plot_options.pie import VariablePieOptions
 from highcharts.plot_options.bar import VariwideOptions
 from highcharts.plot_options.vector import VectorOptions
 from highcharts.plot_options.venn import VennOptions
-from highcharts.plot_options.waterfall import WaterfallOptions
+from highcharts.plot_options.bar import WaterfallOptions
 from highcharts.plot_options.windbarb import WindBarbOptions
 from highcharts.plot_options.wordcloud import WordcloudOptions
 from highcharts.plot_options.xrange import XRangeOptions
