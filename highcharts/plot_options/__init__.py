@@ -47,7 +47,7 @@ from highcharts.plot_options.tilemap import TilemapOptions
 from highcharts.plot_options.timeline import TimelineOptions
 from highcharts.plot_options.treemap import TreemapOptions
 from highcharts.plot_options.pie import VariablePieOptions
-from highcharts.plot_options.variwide import VariwideOptions
+from highcharts.plot_options.bar import VariwideOptions
 from highcharts.plot_options.vector import VectorOptions
 from highcharts.plot_options.venn import VennOptions
 from highcharts.plot_options.waterfall import WaterfallOptions
