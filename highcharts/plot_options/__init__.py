@@ -41,7 +41,7 @@ from highcharts.plot_options.scatter import Scatter3DOptions
 from highcharts.plot_options.series import SeriesOptions
 from highcharts.plot_options.gauge import SolidGaugeOptions
 from highcharts.plot_options.spline import SplineOptions
-from highcharts.plot_options.steamgraph import SteamGraphOptions
+from highcharts.plot_options.area import StreamGraphOptions
 from highcharts.plot_options.sunburst import SunburstOptions
 from highcharts.plot_options.tilemap import TilemapOptions
 from highcharts.plot_options.timeline import TimelineOptions
@@ -113,7 +113,7 @@ class PlotOptions(HighchartsMeta):
         self._series = None
         self._solidgauge = None
         self._spline = None
-        self._steamgraph = None
+        self._streamgraph = None
         self._sunburst = None
         self._tilemap = None
         self._timeline = None
@@ -1192,28 +1192,28 @@ class PlotOptions(HighchartsMeta):
         self._spline = value
 
     @property
-    def steamgraph(self) -> Optional[SteamGraphOptions]:
-        """General options to apply to all Steam Graph series types.
+    def streamgraph(self) -> Optional[StreamGraphOptions]:
+        """General options to apply to all Stream Graph series types.
 
         A streamgraph is a type of stacked area graph which is displaced around a central
         axis, resulting in a flowing, organic shape.
 
-        .. figure:: _static/steamgraph-example.png
-          :alt: SteamGraph Example Chart
+        .. figure:: _static/streamgraph-example.png
+          :alt: StreamGraph Example Chart
           :align: center
 
         .. note::
 
-          In TypeScript the :meth:`SteamGraphOptions.type` setting must always be set.
+          In TypeScript the :meth:`StreamGraphOptions.type` setting must always be set.
 
-        :rtype: :class:`SteamGraphOptions` or :obj:`None <python:None>`
+        :rtype: :class:`StreamGraphOptions` or :obj:`None <python:None>`
         """
-        return self._steamgraph
+        return self._streamgraph
 
-    @steamgraph.setter
-    @class_sensitive(SteamGraphOptions)
-    def steamgraph(self, value):
-        self._steamgraph = value
+    @streamgraph.setter
+    @class_sensitive(StreamGraphOptions)
+    def streamgraph(self, value):
+        self._streamgraph = value
 
     @property
     def sunburst(self) -> Optional[SunburstOptions]:

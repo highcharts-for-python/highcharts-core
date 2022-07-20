@@ -334,3 +334,17 @@ class LineOptions(AreaOptions):
 
     """
     pass
+
+
+class StreamGraphOptions(AreaOptions):
+    """General options to apply to all Stream Graph series types.
+
+    A streamgraph is a type of stacked area graph which is displaced around a central
+    axis, resulting in a flowing, organic shape.
+
+    .. figure:: _static/streamgraph-example.png
+      :alt: StreamGraph Example Chart
+      :align: center
+
+    """
+    pass
