@@ -4,9 +4,11 @@ from decimal import Decimal
 from validator_collection import validators
 
 from highcharts import constants, errors
+from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
+from highcharts.utility_classes.markers import Marker
 
 
 class Zone(HighchartsMeta):
@@ -191,6 +193,95 @@ class Zone(HighchartsMeta):
             'dashStyle': self.dash_style,
             'fillColor': self.fill_color,
             'value': self.value
+        }
+
+        return self.trim_dict(untrimmed)
+
+
+class ClusterZone(HighchartsMeta):
+    """A zone defined for a group of Clusters."""
+
+    def __init__(self, **kwargs):
+        self._class_name = None
+        self._from = None
+        self._marker = None
+        self._to = None
+
+        self.class_name = kwargs.pop('class_name', None)
+        self.from_ = kwargs.pop('from', None)
+        self.marker = kwargs.pop('marker', None)
+        self.to = kwargs.pop('to', None)
+
+    @property
+    def class_name(self) -> Optional[str]:
+        """A custom class name for the zone.
+
+        .. warning::
+
+          Supported in :term:`styled mode` only.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._class_name
+
+    @class_name.setter
+    def class_name(self, value):
+        self._class_name = validators.string(value, allow_empty = True)
+
+    @property
+    def from_(self) -> Optional[int | float | Decimal]:
+        """The value where the zone starts.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._from
+
+    @from_.setter
+    def from_(self, value):
+        self._from = validators.numeric(value, allow_empty = True)
+
+    @property
+    def marker(self) -> Optional[Marker]:
+        """Settings for the cluster marker belonging to the zone.
+
+        :rtype: :class:`Marker` or :obj:`None <python:None>`
+        """
+        return self._marker
+
+    @marker.setter
+    @class_sensitive(Marker)
+    def marker(self, value):
+        self._marker = value
+
+    @property
+    def to(self) -> Optional[int | float | Decimal]:
+        """The value where the zone ends.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._to
+
+    @to.setter
+    def to(self, value):
+        self._to = validators.numeric(value, allow_empty = True)
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'class_name': as_dict.pop('className', None),
+            'from_': as_dict.pop('from', None),
+            'marker': as_dict.pop('marker', None),
+            'to': as_dict.pop('to', None)
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self) -> Optional[dict]:
+        untrimmed = {
+            'className': self.class_name,
+            'from': self.from_,
+            'marker': self.marker,
+            'to': self.to
         }
 
         return self.trim_dict(untrimmed)

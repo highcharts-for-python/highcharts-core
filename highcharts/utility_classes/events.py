@@ -838,3 +838,40 @@ class SeriesEvents(HighchartsMeta):
         }
 
         return self.trim_dict(untrimmed)
+
+
+class ClusterEvents(HighchartsMeta):
+    """General event handlers for marker clusters."""
+
+    def __init__(self, **kwargs):
+        self._drill_to_cluster = None
+
+        self.drill_to_cluster = kwargs.pop('drill_to_cluster', None)
+
+    @property
+    def drill_to_cluster(self) -> Optional[str]:
+        """JavaScript callback function that fires when the cluster point is clicked and
+        :meth:`Cluster.drill_to_cluster` is ``True``.
+
+        One parameter, ``event``, is passed to the function. The default action is to zoom
+        to the cluster points range. This can be prevented by calling (in JavaScript)
+        ``event.preventDefault()``.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._drill_to_cluster
+
+    @drill_to_cluster.setter
+    def drill_to_cluster(self, value):
+        self._drill_to_cluster = validators.string(value, allow_empty = True)
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        return cls({
+            'drill_to_cluster': as_dict.pop('drillToCluster', None)
+        })
+
+    def to_dict(self) -> Optional[dict]:
+        return self.trim_dict({
+            'drillToCluster': self.drill_to_cluster
+        })
