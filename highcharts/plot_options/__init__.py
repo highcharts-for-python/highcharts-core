@@ -1128,7 +1128,7 @@ class PlotOptions(HighchartsMeta):
 
     @property
     def series(self) -> Optional[SeriesOptions]:
-        """General options to apply to all Scatter series types.
+        """General options to apply to all series types.
 
         .. note::
 

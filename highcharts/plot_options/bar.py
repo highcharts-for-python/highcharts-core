@@ -4,12 +4,12 @@ from decimal import Decimal
 from validator_collection import validators
 
 from highcharts import constants, errors
-from highcharts.plot_options.area import AreaOptions
+from highcharts.plot_options.series import SeriesOptions
 from highcharts.utility_classes.gradients import Gradient
 from higcharts.utility_classes.patterns import Pattern
 
 
-class BarOptions(AreaOptions):
+class BarOptions(SeriesOptions):
     """General options to apply to all Bar series types. A bar series is a special
     type of column series where the columns are horizontal.
 

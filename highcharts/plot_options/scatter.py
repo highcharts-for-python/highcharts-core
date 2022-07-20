@@ -1,11 +1,11 @@
 from typing import Optional
 
 from highcharts.decorators import class_sensitive
-from highcharts.plot_options.area import AreaOptions
+from highcharts.plot_options.series import SeriesOptions
 from highcharts.utility_classes.jitter import Jitter
 
 
-class ScatterOptions(AreaOptions):
+class ScatterOptions(SeriesOptions):
     """General options to apply to all Scatter series types.
 
     A scatter plot uses cartesian coordinates to display values for two variables for

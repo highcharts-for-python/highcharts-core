@@ -5,11 +5,11 @@ from validator_collection import validators
 
 from highcharts import errors
 from highcharts.decorators import class_sensitive
-from highcharts.plot_options.area import AreaOptions
+from highcharts.plot_options.series import SeriesOptions
 from highcharts.utility_classes.jitter import Jitter
 
 
-class BubbleOptions(AreaOptions):
+class BubbleOptions(SeriesOptions):
     """General options to apply to all Bubble series types.
 
     A bubble series is a three dimensional series type where each point renders an X,
@@ -279,15 +279,11 @@ class BubbleOptions(AreaOptions):
             'crop_threshold': as_dict.pop('cropThreshold', 300),
             'data_sorting': as_dict.pop('dataSorting', None),
             'drag_drop': as_dict.pop('dragDrop', None),
-            'fill_color': as_dict.pop('fillColor', None),
-            'fill_opacity': as_dict.pop('fillOpacity', 0.75),
             'find_nearest_point_by': as_dict.pop('findNearestPointBy', None),
             'get_extremes_for_all': as_dict.pop('getExtremesForAll', False),
             'linecap': as_dict.pop('linecap', 'round'),
-            'line_color': as_dict.pop('lineColor', None),
             'line_width': as_dict.pop('lineWidth', 2),
             'negative_color': as_dict.pop('negativeColor', None),
-            'negative_fill_color': as_dict.pop('negativeFillColor', None),
             'point_interval': as_dict.pop('pointInterval', 1),
             'point_interval_unit': as_dict.pop('pointIntervalUnit', None),
             'point_placement': as_dict.pop('pointPlacement', None),
@@ -297,7 +293,6 @@ class BubbleOptions(AreaOptions):
             'soft_threshold': as_dict.pop('softThreshold', True),
             'stacking': as_dict.pop('stacking', None),
             'step': as_dict.pop('step', None),
-            'track_by_area': as_dict.pop('trackByArea', False),
             'zone_axis': as_dict.pop('zoneAxis', 'y'),
             'zones': as_dict.pop('zones', None),
 

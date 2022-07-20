@@ -1,7 +1,7 @@
-from highcharts.plot_options.area import AreaOptions
+from highcharts.plot_options.series import SeriesOptions
 
 
-class PolygonOptions(AreaOptions):
+class PolygonOptions(SeriesOptions):
     """General options to apply to all Polygon series types.
 
     A polygon series can be used to draw any freeform shape in the cartesian

@@ -1,7 +1,7 @@
-from highcharts.plot_options.area import AreaOptions
+from highcharts.plot_options.series import SeriesOptions
 
 
-class ParetoOptions(AreaOptions):
+class ParetoOptions(SeriesOptions):
     """General options to apply to all Pareto series types.
 
     A pareto diagram is a type of chart that contains both bars and a line graph,
