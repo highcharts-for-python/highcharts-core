@@ -30,11 +30,11 @@ class FunnelOptions(PieOptions):
         self._reversed = False
         self._width = None
 
-        self.height = kwargs.pop('height', '100%')
-        self.neck_height = kwargs.pop('neck_height', '25%')
-        self.neck_width = kwargs.pop('neck_width', '30%')
+        self.height = kwargs.pop('height', None)
+        self.neck_height = kwargs.pop('neck_height', None)
+        self.neck_width = kwargs.pop('neck_width', None)
         self.reversed = kwargs.pop('reversed', False)
-        self.width = kwargs.pop('width', '90%')
+        self.width = kwargs.pop('width', None)
 
         super(self).__init__(**kwargs)
 
@@ -311,13 +311,17 @@ class Funnel3DOptions(FunnelOptions, ColumnOptions):
             'pointRange': self.point_range,
             'pointWidth': self.point_width,
 
+            'height': self.height,
+            'neckHeight': self.neck_height,
+            'neckWidth': self.neck_width,
+            'reversed': self.reversed,
+            'width': self.width,
+
             'gradientForSides': self.gradient_for_sides
         }
-        parent_as_dict = super(Funnel3DOptions, self).to_dict()
+        parent_as_dict = super().to_dict()
 
-        for key in parent_as_dict[0]:
-            untrimmed[key] = parent_as_dict[0][key]
-        for key in parent_as_dict[1]:
-            untrimmed[key] = parent_as_dict[1][key]
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
 
         return self.trim_dict(untrimmed)
