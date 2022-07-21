@@ -1,5 +1,5 @@
 """Implements the :class:`HighchartOptions` class."""
-from typing import Optional
+from typing import Optional, List
 
 from validator_collection import validators
 
@@ -25,8 +25,8 @@ from highcharts.loading import Navigation
 from highcharts.no_data import NoData
 from highcharts.pane import Pane
 from highcharts.plot_options import PlotOptions
+from highcharts.plot_options.generic import GenericTypeOptions
 from highcharts.responsive import Responsive
-from highcharts.series import Series
 from highcharts.subtitle import Subtitle
 from highcharts.time import Time
 from highcharts.title import Title
@@ -141,7 +141,7 @@ class Options(HighchartsMeta):
         self._annotations = value
 
     @property
-    def caption(self):
+    def caption(self) -> Optional[Caption]:
         """The chart's caption, which will render below the chart and will be part of
         exported charts.
 
@@ -161,7 +161,7 @@ class Options(HighchartsMeta):
         self._caption = value
 
     @property
-    def chart(self):
+    def chart(self) -> Optional[Chart]:
         """General options for the chart.
 
         .. note::
@@ -180,7 +180,7 @@ class Options(HighchartsMeta):
         self._chart = value
 
     @property
-    def color_axis(self):
+    def color_axis(self) -> Optional[ColorAxis]:
         """A color axis for series.
 
         Visually, the color axis will appear as a gradient or as separate items inside the
@@ -223,7 +223,7 @@ class Options(HighchartsMeta):
         self._color_axis = value
 
     @property
-    def colors(self):
+    def colors(self) -> Optional[List[str]]:
         """An array containing the default colors for the chart's series.
 
         When all colors are used, new colors are pulled from the start again.
@@ -255,7 +255,7 @@ class Options(HighchartsMeta):
         self._colors = value
 
     @property
-    def credits(self):
+    def credits(self) -> Optional[Credits]:
         """Highchart by default puts a credits label in the lower right corner of the
         chart. This can be changed using these options.
 
@@ -270,7 +270,7 @@ class Options(HighchartsMeta):
         self._credits = value
 
     @property
-    def data(self):
+    def data(self) -> Optional[Data]:
         """The ``data`` property provides a simplified interface for adding data to a
         chart from sources like CVS, HTML tables, or grid views. See also
         `the tutorial article on the Data module <https://www.highcharts.com/docs/working-with-data/data-module>`_.
@@ -295,7 +295,7 @@ class Options(HighchartsMeta):
         self._data = value
 
     @property
-    def defs(self):
+    def defs(self) -> Optional[MarkerDefinition]:
         """Options for configuring markers for annotations.
 
         :returns: A :class:`MarkerDefinition` object or
@@ -310,7 +310,7 @@ class Options(HighchartsMeta):
         self._defs = value
 
     @property
-    def exporting(self):
+    def exporting(self) -> Optional[Exporting]:
         """Options to configure the export functionality enabled for the chart.
 
         :returns: The configuration of the chart's exporting functionality.
@@ -324,7 +324,7 @@ class Options(HighchartsMeta):
         self._exporting = value
 
     @property
-    def language(self):
+    def language(self) -> Optional[Language]:
         """Language object which can be used to configure the specific text to use in the
         chart.
 
@@ -347,7 +347,7 @@ class Options(HighchartsMeta):
         self._language = value
 
     @property
-    def legend(self):
+    def legend(self) -> Optional[Legend]:
         """The legend is a box containing a symbol and name for each series item or point
         item in the chart. Each series (or points in case of pie charts) is represented by
         a symbol and its name in the legend.
@@ -368,7 +368,7 @@ class Options(HighchartsMeta):
         self._legend = value
 
     @property
-    def loading(self):
+    def loading(self) -> Optional[Loading]:
         """The loading options control the appearance of the loading screen that covers
         the plot area on chart operations.
 
@@ -393,7 +393,7 @@ class Options(HighchartsMeta):
         self._loading = value
 
     @property
-    def navigation(self):
+    def navigation(self) -> Optional[Navigation]:
         """A collection of options for buttons and menus appearing in the exporting
         module or in Stock Tools.
 
@@ -408,7 +408,7 @@ class Options(HighchartsMeta):
         self._navigation = value
 
     @property
-    def plot_options(self):
+    def plot_options(self) -> Optional[PlotOptions]:
         """A wrapper object for configurations applied to each series type.
 
         The config objects for each series can also be overridden for each series item as
@@ -435,7 +435,7 @@ class Options(HighchartsMeta):
         self._plot_options = value
 
     @property
-    def responsive(self):
+    def responsive(self) -> Optional[Responsive]:
         """Rules to apply for different screen or chart sizes.
 
         .. note::
@@ -453,7 +453,7 @@ class Options(HighchartsMeta):
         self._responsive = value
 
     @property
-    def series(self):
+    def series(self) -> Optional[List[GenericTypeOptions]]:
         """Series options for specific data and the data itself.
 
         :returns: The series to display along with configuration and data.
@@ -462,12 +462,12 @@ class Options(HighchartsMeta):
         return self._series
 
     @series.setter
-    @class_sensitive(Series, force_iterable = True)
+    @class_sensitive(GenericTypeOptions, force_iterable = True)
     def series(self, value):
         self._series = value
 
     @property
-    def subtitle(self):
+    def subtitle(self) -> Optional[Subtitle]:
         """The chart's subtitle.
 
         .. note::
@@ -491,7 +491,7 @@ class Options(HighchartsMeta):
         self._subtitle = value
 
     @property
-    def time(self):
+    def time(self) -> Optional[Time]:
         """Time options that can apply globally or to individual charts. These settings
         affect how datetime axes are laid out, how tooltips are formatted, how series
         :meth:`point_interval_unit <Series.point_interval_unit` works and how the
@@ -508,7 +508,7 @@ class Options(HighchartsMeta):
         self._time = value
 
     @property
-    def title(self):
+    def title(self) -> Optional[Title]:
         """Options for configuring the chart's main title.
 
         :returns: Configuration of the chart's main title.
@@ -522,7 +522,7 @@ class Options(HighchartsMeta):
         self._title = value
 
     @property
-    def tooltip(self):
+    def tooltip(self) -> Optional[Tooltip]:
         """Options for the tooltip that appears when the user hovers over a series or
         point.
 
@@ -537,7 +537,7 @@ class Options(HighchartsMeta):
         self._tooltip = value
 
     @property
-    def x_axis(self):
+    def x_axis(self) -> Optional[List[XAxis]]:
         """The X axis or category axis.
 
         Normally this is the horizontal axis, though if the chart is inverted this is the
@@ -554,7 +554,7 @@ class Options(HighchartsMeta):
         self._x_axis = value
 
     @property
-    def y_axis(self):
+    def y_axis(self) -> Optional[List[YAxis]]:
         """The Y axis or value axis.
 
         Normally this is the vertical axis, though if the chart is inverted this is the
@@ -623,7 +623,7 @@ class HighchartOptions(HighchartsMeta):
         self._boost = value
 
     @property
-    def drilldown(self):
+    def drilldown(self) -> Optional[Drilldown]:
         """Options to configure :term:`drilldown` functionality in the chart, which
         enables users to inspect increasingly high resolution data by clicking on chart
         items like columns or pie slices.
@@ -646,7 +646,7 @@ class HighchartOptions(HighchartsMeta):
         self._drilldown = value
 
     @property
-    def no_data(self):
+    def no_data(self) -> Optional[NoData]:
         """Options for displaying a message like "No data to display".
 
         .. warning::
@@ -670,7 +670,7 @@ class HighchartOptions(HighchartsMeta):
         self._no_data = value
 
     @property
-    def pane(self):
+    def pane(self) -> Optional[Pane]:
         """The pane serves as a container for axes and backgrounds for circular gauges and
         polar charts.
 
@@ -685,7 +685,7 @@ class HighchartOptions(HighchartsMeta):
         self._pane = value
 
     @property
-    def z_axis(self):
+    def z_axis(self) -> Optional[List[ZAxis]]:
         """The Z axis or depth axis for 3D plots.
 
         :returns: A collection of :class:`ZAxis` objects
@@ -823,7 +823,7 @@ class HighchartsStockOptions(Options):
         self._boost = value
 
     @property
-    def navigator(self):
+    def navigator(self) -> Optional[Navigator]:
         """The navigator is a small series below the main series, displaying a view of the
         entire data set. It provides tools to zoom in and out on parts of the data as well
         as panning across the dataset.
@@ -839,7 +839,7 @@ class HighchartsStockOptions(Options):
         self._navigator = value
 
     @property
-    def no_data(self):
+    def no_data(self) -> Optional[NoData]:
         """Options for displaying a message like "No data to display".
 
         .. warning::
@@ -863,7 +863,7 @@ class HighchartsStockOptions(Options):
         self._no_data = value
 
     @property
-    def range_selector(self):
+    def range_selector(self) -> Optional[RangeSelector]:
         """The range selector is a tool for selecting ranges to display within the chart.
         It provides buttons to select preconfigured ranges in the chart, like 1 day, 1
         week, 1 month etc. It also provides input boxes where min and max dates can be
@@ -880,7 +880,7 @@ class HighchartsStockOptions(Options):
         self._range_selector = value
 
     @property
-    def scrollbar(self):
+    def scrollbar(self) -> Optional[Scrollbar]:
         """The scrollbar is a means of panning over the X axis of a stock chart.
 
         .. note::
@@ -908,7 +908,7 @@ class HighchartsStockOptions(Options):
         self._scrollbar = value
 
     @property
-    def stock_tools(self):
+    def stock_tools(self) -> Optional[StockTools]:
         """Configure the **stockTools** GUI strings in the chart.
 
         .. warning::
@@ -1018,7 +1018,7 @@ class HighchartsMapsOptions(HighchartsMeta):
         self.map_view = kwargs.pop('map_view', None)
 
     @property
-    def drilldown(self):
+    def drilldown(self) -> Optional[Drilldown]:
         """Options to configure :term:`drill down` functionality in the chart, which
         enables users to inspect increasingly high resolution data by clicking on chart
         items like columns or pie slices.
@@ -1041,7 +1041,7 @@ class HighchartsMapsOptions(HighchartsMeta):
         self._drilldown = value
 
     @property
-    def map_navigation(self):
+    def map_navigation(self) -> Optional[MapNavigation]:
         """The map navigation option handles buttons for navigation in addition to
         ``mousewheel`` and ``doubleclick`` handlers for map zooming.
 
@@ -1056,7 +1056,7 @@ class HighchartsMapsOptions(HighchartsMeta):
         self._map_navigation = value
 
     @property
-    def map_view(self):
+    def map_view(self) -> Optional[MapView]:
         """The map view options control the initial view of the chart, and how projection
         is set up for raw geoJSON maps.
 
