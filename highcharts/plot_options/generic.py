@@ -92,6 +92,21 @@ class GenericTypeOptions(HighchartsMeta):
         self.visible = kwargs.pop('visible', True)
 
     @property
+    def type_(self) -> str:
+        """Indicates the type of series that is represented by this instance.
+
+        .. warning::
+
+          This proprety is read-only!
+
+        :rtype: :class:`str <python:str>`
+        """
+        class_name = self.__class__.__name__
+        class_name = class_name.replace('Options', '')
+
+        return class_name.lower()
+
+    @property
     def accessibility(self) -> Optional[TypeOptionsAccessibility]:
         """Accessibility options for a series.
 
@@ -790,6 +805,7 @@ class GenericTypeOptions(HighchartsMeta):
 
     def to_dict(self):
         untrimmed = {
+            'type': self.type_,
             'accessibility': self.accessibility,
             'allowPointSelect': self.allow_point_select,
             'animation': self.animation,
