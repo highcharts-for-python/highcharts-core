@@ -2,6 +2,8 @@ from typing import Optional, List
 
 from validator_collection import validators
 
+from highcharts import errors
+from highcharts.decorators import validate_types
 from highcharts.metaclasses import HighchartsMeta
 
 
@@ -96,4 +98,75 @@ class CallbackFunction(HighchartsMeta):
             'function_name': self.function_name,
             'arguments': self.arguments,
             'body': self.body
+        })
+
+
+class JavaScriptClass(HighchartsMeta):
+    """Representation of a JavaScript class."""
+
+    def __init__(self, **kwargs):
+        self._methods = None
+
+        self.methods = kwargs.pop('methods', None)
+
+    @property
+    def methods(self) -> Optional[List[CallbackFunction]]:
+        """Collection of methods that are to be defined within the class. Defaults to
+        :obj:`None <python:None>`.
+
+        .. warning::
+
+          All methods *must* have a :meth:`function_name <CallbackFunction.function_name>`
+          set.
+
+        .. warning::
+
+          One of the methods *must* have a
+          :meth:`function_name <CallbackFunction.function_name>` of ``'constructor'`` and
+          be used as a constructor for the class.
+
+        .. note::
+
+          For the sake of simplicity, the :class:`JavaScriptClass` does not support
+          ECMAScript's more robust public/private field declaration syntax, nor does it
+          support the definition of getters or generators.
+
+        :rtype: :class:`list <python:list>` of :class:`CallbackFunction`, or
+          :obj:`None <python:None>`
+        """
+        return self._methods
+
+    @methods.setter
+    def methods(self, value):
+        if not value:
+            self._methods = None
+        else:
+            value = validate_types(value,
+                                   types = CallbackFunction,
+                                   force_iterable = True)
+            has_constructor = False
+            for method in value:
+                if not method.function_name:
+                    raise errors.JavaScriptError('All JavaScriptClass methods '
+                                                 'require a function name.')
+                if method.function_name == 'constructor':
+                    has_constructor = True
+
+            if not has_constructor:
+                raise errors.JavaScriptError('A JavaScriptClass requires at least '
+                                             'one "constructor" method. Yours had none.')
+
+            self._methods = value
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'methods': as_dict.pop('methods', None)
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self) -> Optional[dict]:
+        return self.trim_dict({
+            'methods': self.methods
         })
