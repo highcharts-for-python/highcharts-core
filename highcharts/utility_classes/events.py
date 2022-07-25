@@ -2,7 +2,9 @@ from typing import Optional
 
 from validator_collection import validators
 
+from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class ChartEvents(HighchartsMeta):
@@ -875,3 +877,228 @@ class ClusterEvents(HighchartsMeta):
         return self.trim_dict({
             'drillToCluster': self.drill_to_cluster
         })
+
+
+class AxisEvents(HighchartsMeta):
+    """Event listeners for axes."""
+
+    def __init__(self, **kwargs):
+        self._after_breaks = None
+        self._after_set_extremes = None
+        self._point_break = None
+        self._point_in_break = None
+        self._set_extremes = None
+
+        self.after_breaks = kwargs.pop('after_breaks', None)
+        self.after_set_extremes = kwargs.pop('after_set_extremes', None)
+        self.point_breaks = kwargs.pop('point_breaks', None)
+        self.point_in_break = kwargs.pop('point_in_break', None)
+        self.set_extremes = kwargs.pop('set_extremes', None)
+
+    @property
+    def after_breaks(self) -> Optional[CallbackFunction]:
+        """A JavaScript event function fired after breaks have rendered. Defaults to
+        :obj:`None <python:None>`.
+
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
+        """
+        return self._after_breaks
+
+    @after_breaks.setter
+    @class_sensitive(CallbackFunction)
+    def after_breaks(self, value):
+        self._after_breaks = value
+
+    @property
+    def after_set_extremes(self) -> Optional[CallbackFunction]:
+        """As opposed to :meth:`AxisEvent.set_extremes`, this JavaScript event fires after
+        the final min and max values are computed and corrected for
+        :meth:`GenericAxis.min_range`. Defaults to :obj:`None <python:None>`.
+
+        Fires when the minimum and maximum is set for the axis, either by calling the
+        (JavaScript) ``.setExtremes()`` method or by selecting an area in the chart. One
+        parameter, ``event``, is passed to the function, containing common event
+        information.
+
+        The new user-set minimum and maximum values can be found (in JavaScript) by
+        ``event.min`` and ``event.max``. These reflect the axis minimum and maximum in
+        axis values. The actual data extremes are found in ``event.dataMin`` and
+        ``event.dataMax``.
+
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
+        """
+        return self._after_set_extremes
+
+    @after_set_extremes.setter
+    @class_sensitive(CallbackFunction)
+    def after_set_extremes(self, value):
+        self._after_set_extremes = value
+
+    @property
+    def point_break(self) -> Optional[CallbackFunction]:
+        """A JavaScript event fired when a break from this axis occurs on a point.
+        Defaults to :obj:`None <python:None>`.
+
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
+        """
+        return self._point_break
+
+    @point_break.setter
+    @class_sensitive(CallbackFunction)
+    def point_break(self, value):
+        self._point_break = value
+
+    @property
+    def point_in_break(self) -> Optional[CallbackFunction]:
+        """A JavaScript event fired when a point falls inside a break from this axis.
+        Defaults to :obj:`None <python:None>`.
+
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
+        """
+        return self._point_in_break
+
+    @point_in_break.setter
+    @class_sensitive(CallbackFunction)
+    def point_in_break(self, value):
+        self._point_break = value
+
+    @property
+    def set_extremes(self) -> Optional[CallbackFunction]:
+        """JavaScript function which fires when the minimum and maximum is set for the
+        axis, either by calling the (JavaScript) ``.setExtremes()`` method or by selecting
+        an area in the chart.
+
+        One parameter, ``event``, is passed to the function, containing common event
+        information.
+
+        The new user-set minimum and maximum values can be found by ``event.min`` and
+        ``event.max``. These reflect the axis minimum and maximum in data values. When an
+        axis is zoomed all the way out from the "Reset zoom" button, ``event.min`` and
+        ``event.max`` are ``null``, and the new extremes are set based on
+        ``this.dataMin`` and ``this.dataMax``.
+
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
+        """
+        return self._set_extremes
+
+    @set_extremes.setter
+    @class_sensitive(CallbackFunction)
+    def set_extremes(self, value):
+        self._set_extremes = value
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'after_breaks': as_dict.pop('after_breaks', None),
+            'after_set_extremes': as_dict.pop('after_set_extremes', None),
+            'point_break': as_dict.pop('point_break', None),
+            'point_in_break': as_dict.pop('point_in_break', None),
+            'set_extremes': as_dict.pop('set_extremes', None)
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self) -> Optional[dict]:
+        untrimmed = {
+            'afterBreaks': self.after_breaks,
+            'afterSetExtremes': self.after_set_extremes,
+            'pointBreak': self.point_break,
+            'pointInBreak': self.point_in_break,
+            'setExtremes': self.set_extremes
+        }
+
+        return self.trim_dict(untrimmed)
+
+
+class MouseEvents(HighchartsMeta):
+    """Collection of basic / standard event handlers for mouse interactions."""
+
+    def __init__(self, **kwargs):
+        self._click = None
+        self._mousemove = None
+        self._mouseout = None
+        self._mouseover = None
+
+        self.click = kwargs.pop('click', None)
+        self.mousemove = kwargs.pop('mousemove', None)
+        self.mouseout = kwargs.pop('mouseout', None)
+        self.mouseover = kwargs.pop('mouseover', None)
+
+    @property
+    def click(self) -> Optional[CallbackFunction]:
+        """JavaScript callback function that fires when the user clicks on the plot
+        band. One parameter, ``event``, is passed to the JavaScript function,
+        containing common event information. Defaults to :obj:`None <python:None>`.
+
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
+        """
+        return self._click
+
+    @click.setter
+    @class_sensitive(CallbackFunction)
+    def click(self, value):
+        self._click = value
+
+    @property
+    def mousemove(self) -> Optional[CallbackFunction]:
+        """JavaScript callback function that fires on the mousemove event within the plot
+        band. Defaults to :obj:`None <python:None>`.
+
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
+        """
+        return self._mousemove
+
+    @mousemove.setter
+    @class_sensitive(CallbackFunction)
+    def mousemove(self, value):
+        self._mousemove = value
+
+    @property
+    def mouseout(self) -> Optional[CallbackFunction]:
+        """JavaScript callback function that fires when the mouse moves away from the
+        corner of the plot band. Defaults to :obj:`None <python:None>`.
+
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
+        """
+        return self._mouseout
+
+    @mouseout.setter
+    @class_sensitive(CallbackFunction)
+    def mouseout(self, value):
+        self._mouseout = value
+
+    @property
+    def mouseover(self) -> Optional[CallbackFunction]:
+        """JavaScript callback function that fires when the user moves their mouse over
+        the plot band. One parameter, ``event``, is passed to the JavaScript function,
+        containing common event information. Defaults to :obj:`None <python:None>`.
+
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
+        """
+        return self._mouseover
+
+    @mouseover.setter
+    @class_sensitive(CallbackFunction)
+    def mouseover(self, value):
+        self._mouseover = value
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'click': as_dict.pop('click', None),
+            'mousemove': as_dict.pop('mousemove', None),
+            'mouseout': as_dict.pop('mouseout', None),
+            'mouseover': as_dict.pop('mouseover', None)
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self) -> Optional[dict]:
+        untrimmed = {
+            'click': self.click,
+            'mousemove': self.mousemove,
+            'mouseout': self.mouseout,
+            'mouseover': self.mouseover
+        }
+
+        return self.trim_dict(untrimmed)

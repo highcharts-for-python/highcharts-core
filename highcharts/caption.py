@@ -78,11 +78,11 @@ class Caption(HighchartsMeta):
         self._floating = bool(value)
 
     @property
-    def margin(self) -> int | float Decimal:
+    def margin(self) -> Optional[int | float | Decimal]:
         f"""The margin between the caption and the plot area. Defaults to
         ``{constants.DEFAULT_CAPTION_MARGIN}``.
 
-        :rtype: numeric
+        :rtype: numeric or :obj:`None <python:None>`
         """
         return self._margin
 

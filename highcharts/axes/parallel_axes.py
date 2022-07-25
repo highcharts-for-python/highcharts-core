@@ -1,15 +1,12 @@
-from typing import Optional
-from decimal import Decimal
-
-from validator_collection import validators
-
-from highcharts import constants, errors
-from highcharts.decorators import class_sensitive
-
-from highcharts.axes import AxisBase
+from highcharts.axes.y_axis import YAxis
 
 
-class ParallelAxesOptions(AxisBase):
+class ParallelAxesOptions(YAxis):
+    """Common options for all Y-axes rendered in a parallel coordinates plot.
+
+    .. warning::
+
+      This feature requires ``modules/parallel-coordinates.js``.
+
+    """
     pass
-
-# TODO: Define Parallel Axes Options (see chart.parallelAxes)

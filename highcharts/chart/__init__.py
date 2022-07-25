@@ -239,7 +239,7 @@ class Chart(HighchartsMeta):
         self._align_thresholds = bool(value)
 
     @property
-    def align_ticks(self) -> bool:
+    def align_ticks(self) -> Optional[bool]:
         """If ``True`` and using multiple axes, the ticks of two or more opposite axes
         will automatically be aligned by adding ticks to the axis or axes with the least
         ticks, as if ``tick_amount`` were specified. This can be prevented by setting
@@ -262,13 +262,16 @@ class Chart(HighchartsMeta):
           Aways disabled for logarithmic axes.
 
         :returns: Flag indicating whether ot align ticks along the axes.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._align_ticks
 
     @align_ticks.setter
     def align_ticks(self, value):
-        self._align_ticks = bool(value)
+        if value is None:
+            self._align_ticks = None
+        else:
+            self._align_ticks = bool(value)
 
     @property
     def allow_mutating_data(self) -> bool:
