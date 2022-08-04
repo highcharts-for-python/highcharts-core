@@ -2,19 +2,20 @@ from typing import Optional
 
 from validator_collection import validators
 
-from highcharts.series.bar import BarSeries
-from highcharts.plot_options.histogram import HistogramOptions
+from highcharts.series.base import SeriesBase
+from highcharts.plot_options.pareto import ParetoOptions
 from highcharts.utility_functions import mro_init, mro_to_dict
 
 
-class HistogramSeries(BarSeries, HistogramOptions):
-    """Options to configure a Histogram series.
+class ParetoSeries(SeriesBase, ParetoOptions):
+    """Options to configure a Pareto series.
 
-    A histogram is a column series which represents the distribution of the data set
-    in the base series. Histogram splits data into bins and shows their frequencies.
+    A pareto diagram is a type of chart that contains both bars and a line graph,
+    where individual values are represented in descending order by bars, and the
+    cumulative total is represented by the line.
 
-    .. figure:: _static/histogram-example.png
-      :alt: Histogram Example Chart
+    .. figure:: _static/pareto-example.png
+      :alt: Pareto Example Chart
       :align: center
 
     """
@@ -55,9 +56,9 @@ class HistogramSeries(BarSeries, HistogramOptions):
 
         .. warning::
 
-          All Histogram Series by definition return :obj:`None <python:None>` for their
+          All Pareto Series by definition return :obj:`None <python:None>` for their
           data. They are a special series, drawn in relationship to the
-          :meth:`base_series <HistogramSeries.base_series>` specified, and do not receive
+          :meth:`base_series <ParetoSeries.base_series>` specified, and do not receive
           independent data points of their own.
 
         :rtype: :obj:`None <python:None>`
@@ -72,17 +73,17 @@ class HistogramSeries(BarSeries, HistogramOptions):
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
+            'allow_point_select': as_dict.pop('allowPointSelect', False),
             'animation': as_dict.pop('animation', None),
             'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
+            'clip': as_dict.pop('clip', True),
             'color': as_dict.pop('color', None),
             'cursor': as_dict.pop('cursor', None),
             'custom': as_dict.pop('custom', None),
             'dash_style': as_dict.pop('dashStyle', None),
             'data_labels': as_dict.pop('dataLabels', None),
             'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
+            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', True),
             'events': as_dict.pop('events', None),
             'include_in_data_export': as_dict.pop('includeInDataExport', None),
             'keys': as_dict.pop('keys', None),
@@ -93,68 +94,44 @@ class HistogramSeries(BarSeries, HistogramOptions):
             'opacity': as_dict.pop('opacity', None),
             'point': as_dict.pop('point', None),
             'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
+            'selected': as_dict.pop('selected', False),
+            'show_checkbox': as_dict.pop('showCheckbox', False),
             'show_in_legend': as_dict.pop('showInLegend', None),
             'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
             'states': as_dict.pop('states', None),
             'threshold': as_dict.pop('threshold', None),
             'tooltip': as_dict.pop('tooltip', None),
             'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'visible': as_dict.pop('visible', True),
 
             'animation_limit': as_dict.pop('animationLimit', None),
             'boost_blending': as_dict.pop('boostBlending', None),
-            'boost_threshold': as_dict.pop('boostThreshold', None),
+            'boost_threshold': as_dict.pop('boostThreshold', 5000),
             'color_axis': as_dict.pop('colorAxis', None),
             'color_index': as_dict.pop('colorIndex', None),
             'color_key': as_dict.pop('colorKey', None),
             'connect_ends': as_dict.pop('connectEnds', None),
-            'connect_nulls': as_dict.pop('connectNulls', None),
-            'crisp': as_dict.pop('crisp', None),
-            'crop_threshold': as_dict.pop('cropThreshold', None),
+            'connect_nulls': as_dict.pop('connectNulls', False),
+            'crisp': as_dict.pop('crisp', True),
+            'crop_threshold': as_dict.pop('cropThreshold', 300),
             'data_sorting': as_dict.pop('dataSorting', None),
             'drag_drop': as_dict.pop('dragDrop', None),
-            'fill_color': as_dict.pop('fillColor', None),
-            'fill_opacity': as_dict.pop('fillOpacity', None),
             'find_nearest_point_by': as_dict.pop('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.pop('getExtremesForAll', None),
-            'linecap': as_dict.pop('linecap', None),
-            'line_color': as_dict.pop('lineColor', None),
-            'line_width': as_dict.pop('lineWidth', None),
+            'get_extremes_for_all': as_dict.pop('getExtremesForAll', False),
+            'linecap': as_dict.pop('linecap', 'round'),
+            'line_width': as_dict.pop('lineWidth', 2),
             'negative_color': as_dict.pop('negativeColor', None),
-            'negative_fill_color': as_dict.pop('negativeFillColor', None),
-            'point_interval': as_dict.pop('pointInterval', None),
+            'point_interval': as_dict.pop('pointInterval', 1),
             'point_interval_unit': as_dict.pop('pointIntervalUnit', None),
             'point_placement': as_dict.pop('pointPlacement', None),
-            'point_start': as_dict.pop('pointStart', None),
-            'relative_x_value': as_dict.pop('relativeXValue', None),
-            'shadow': as_dict.pop('shadow', None),
-            'soft_threshold': as_dict.pop('softThreshold', None),
+            'point_start': as_dict.pop('pointStart', 0),
+            'relative_x_value': as_dict.pop('relativeXValue', False),
+            'shadow': as_dict.pop('shadow', False),
+            'soft_threshold': as_dict.pop('softThreshold', True),
             'stacking': as_dict.pop('stacking', None),
             'step': as_dict.pop('step', None),
-            'track_by_area': as_dict.pop('trackByArea', None),
-            'zone_axis': as_dict.pop('zoneAxis', None),
+            'zone_axis': as_dict.pop('zoneAxis', 'y'),
             'zones': as_dict.pop('zones', None),
-
-            'border_color': as_dict.pop('borderColor', '#ffffff'),
-            'border_radius': as_dict.pop('borderRadius', 0),
-            'border_width': as_dict.pop('borderWidth', None),
-            'center_in_category': as_dict.pop('centerInCategory', False),
-            'color_by_point': as_dict.pop('colorByPoint', False),
-            'colors': as_dict.pop('colors', None),
-            'grouping': as_dict.pop('grouping', True),
-            'group_padding': as_dict.pop('groupPadding', 0.2),
-            'max_point_width': as_dict.pop('maxPointWidth', None),
-            'min_point_length': as_dict.pop('minPointLength', 0),
-            'point_padding': as_dict.pop('pointPadding', 0.1),
-            'point_range': as_dict.pop('pointRange', None),
-            'point_width': as_dict.pop('pointWidth', None),
-
-            'depth': as_dict.pop('depth', 25),
-            'edge_color': as_dict.pop('edgeColor', None),
-            'edge_width': as_dict.pop('edgeWidth', 1),
-            'group_z_padding': as_dict.pop('groupZPadding', 1),
 
             'data': as_dict.pop('data', None),
             'id': as_dict.pop('id', None),
@@ -166,9 +143,6 @@ class HistogramSeries(BarSeries, HistogramOptions):
             'y_axis': as_dict.pop('yAxis', None),
             'z_index': as_dict.pop('zIndex', None),
 
-            'bins_number': as_dict.pop('binsNumber', None),
-            'bin_width': as_dict.pop('binWidth', None),
-
             'base_series': as_dict.pop('baseSeries', None),
         }
 
@@ -178,9 +152,9 @@ class HistogramSeries(BarSeries, HistogramOptions):
         untrimmed = {
             'baseSeries': self.base_series
         }
+        parent_as_dict = mro_to_dict(self) or {}
 
-        parents_as_dict = mro_to_dict(self) or {}
-        for key in parents_as_dict:
-            untrimmed[key] = parents_as_dict[key]
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
 
         return self.trim_dict(untrimmed)
