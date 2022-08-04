@@ -387,3 +387,161 @@ class Cartesian3DData(CartesianData):
         }
 
         return self.trim_dict(untrimmed)
+
+
+class CartesianValueData(CartesianData):
+    """Variant of :class:`CartesianData` which supports three values (an ``x``, ``y``, and
+    ``value``)."""
+
+    def __init__(self, **kwargs):
+        self._point_padding = None
+        self._value = None
+
+        self.point_padding = kwargs.pop('point_padding', None)
+        self.value = kwargs.pop('value', None)
+
+        super().__init__(**kwargs)
+
+    @property
+    def point_padding(self) -> Optional[int | float | Decimal]:
+        """Point padding for the data point. Defaults to :obj:`None <python:None>`.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._point_padding
+
+    @point_padding.setter
+    def point_padding(self, value):
+        self._point_padding = validators.numeric(value, allow_empty = True)
+
+    @property
+    def value(self) -> Optional[int | float | Decimal | type(None) | constants.EnforcedNullType]:
+        """The ``value`` of the data point. Defaults to :obj:`None <python:None>`.
+
+        :rtype: numeric or :class:`EnforcedNullType` or :obj:`None <python:None>`
+        """
+        return self._value
+
+    @value.setter
+    def value(self, value_):
+        if value_ is None or isinstance(value_, constants.EnforcedNullType):
+            self._value = None
+        else:
+            self._value = validators.numeric(value_)
+
+    @classmethod
+    def from_setter(cls, value):
+        """Generator method which produces a collection of :class:`CartesianValueData`
+        instances derived from ``value``. Generally consumed by the setter methods in
+        series-type specific data classes.
+
+        :rtype: :class:`list <python:list>` of :obj:`CartesianValueData` instances
+        """
+        if not value:
+            return []
+        elif not checkers.is_iterable(value):
+            value = [value]
+
+        collection = []
+        for item in value:
+            if checkers.is_type(item, 'CartesianValueData'):
+                as_obj = item
+            elif checkers.is_dict(item):
+                as_obj = cls.from_dict(item)
+            elif item is None or isinstance(item, constants.EnforcedNullType):
+                as_obj = cls(x = None,
+                             y = None,
+                             value = None)
+            elif checkers.is_iterable(item):
+                if len(item) == 3:
+                    as_dict = {
+                        'x': item[0],
+                        'y': item[1],
+                        'value': item[2]
+                    }
+                elif len(item) == 2:
+                    as_dict = {
+                        'x': None,
+                        'y': item[0],
+                        'value': item[1]
+                    }
+                else:
+                    raise errors.HighchartsValueError(f'data expects either a 3D or 3D '
+                                                      f'collection. Collection received '
+                                                      f'had {len(item)} dimensions.')
+                as_obj = cls.from_dict(as_dict)
+            else:
+                raise errors.HighchartsValueError(f'each data point supplied must either '
+                                                  f'be a Cartesian Value Data Point or be'
+                                                  f' coercable to one. Could not coerce: '
+                                                  f'{item}')
+
+            collection.append(as_obj)
+
+        return collection
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        """Convenience method which returns the keyword arguments used to initialize the
+        class from a Highcharts Javascript-compatible :class:`dict <python:dict>` object.
+
+        :param as_dict: The HighCharts JS compatible :class:`dict <python:dict>`
+          representation of the object.
+        :type as_dict: :class:`dict <python:dict>`
+
+        :returns: The keyword arguments that would be used to initialize an instance.
+        :rtype: :class:`dict <python:dict>`
+
+        """
+        kwargs = {
+            'accessibility': as_dict.pop('accessibility', None),
+            'class_name': as_dict.pop('className', None),
+            'color': as_dict.pop('color', None),
+            'color_index': as_dict.pop('colorIndex', None),
+            'custom': as_dict.pop('custom', None),
+            'description': as_dict.pop('description', None),
+            'events': as_dict.pop('events', None),
+            'id': as_dict.pop('id', None),
+            'label_rank': as_dict.pop('labelrank', None),
+            'name': as_dict.pop('name', None),
+            'selected': as_dict.pop('selected', None),
+
+            'data_labels': as_dict.pop('dataLabels', None),
+            'drag_drop': as_dict.pop('dragDrop', None),
+            'drilldown': as_dict.pop('drilldown', None),
+            'marker': as_dict.pop('marker', None),
+            'x': as_dict.pop('x', None),
+            'y': as_dict.pop('y', None),
+
+            'point_padding': as_dict.pop('pointPadding', None),
+            'value': as_dict.pop('value', None),
+        }
+
+        return kwargs
+
+    def to_dict(self) -> Optional[dict]:
+        untrimmed = {
+            'accessibility': self.accessibility,
+            'className': self.class_name,
+            'color': self.color,
+            'colorIndex': self.color_index,
+            'custom': self.custom,
+            'description': self.description,
+            'events': self.events,
+            'id': self.id,
+            'labelrank': self.label_rank,
+            'name': self.name,
+            'selected': self.selected,
+
+            'dataLabels': self.data_labels,
+            'dragDrop': self.drag_drop,
+            'drilldown': self.drilldown,
+            'marker': self.marker,
+            'x': self.x,
+            'y': self.y,
+
+            'pointPadding': self.point_padding,
+            'value': self.value,
+        }
+
+        return self.trim_dict(untrimmed)
