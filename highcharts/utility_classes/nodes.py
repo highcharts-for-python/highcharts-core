@@ -221,23 +221,17 @@ class NodeOptions(HighchartsMeta):
         return self.trim_dict(untrimmed)
 
 
-class OrganizationNodeOptions(NodeOptions):
-    """Variant of :class:`NodeOptions` for use in :class:`OrganizationSeries`."""
+class DependencyWheelNodeOptions(NodeOptions):
+    """Variant of :class:`NodeOptions` for use in :class:`DependencyWheelSeries`."""
 
     def __init__(self, **kwargs):
         self._column = None
-        self._image = None
-        self._layout = None
         self._level = None
-        self._title = None
 
         self.column = kwargs.pop('column', None)
-        self.image = kwargs.pop('image', None)
-        self.layout = kwargs.pop('layout', None)
         self.level = kwargs.pop('level', None)
-        self.title = kwargs.pop('title', None)
 
-        super().__init__(**kwargs)
+        super().__init__(self, **kwargs)
 
     @property
     def column(self) -> Optional[int]:
@@ -270,6 +264,72 @@ class OrganizationNodeOptions(NodeOptions):
     @class_sensitive(NodeDataLabel)
     def data_labels(self, value):
         self._data_labels = value
+
+    @property
+    def level(self) -> Optional[int]:
+        """An optional level index of where to place the node. Defaults to
+        :obj:`None <python:None>`, which places it next to the preceding node.
+
+        .. notes:
+
+          Alias of :meth:`DependencyWheelNodeOptions.column`, but in inverted sankeys and
+          org charts, the levels are laid out as rows.
+
+        :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
+        """
+        return self._level
+
+    @level.setter
+    def level(self, value):
+        self._level = validators.integer(value, allow_empty = True)
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'color': as_dict.pop('color', None),
+            'color_index': as_dict.pop('colorIndex', None),
+            'data_labels': as_dict.pop('dataLabels', None),
+            'id': as_dict.pop('id', None),
+            'name': as_dict.pop('name', None),
+            'offset_horizontal': as_dict.pop('offsetHorizontal', None),
+            'offset_vertical': as_dict.pop('offsetVertical', None),
+
+            'column': as_dict.pop('column', None),
+            'level': as_dict.pop('level', None),
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self) -> Optional[dict]:
+        untrimmed = {
+            'column': self.column,
+            'level': self.level,
+        }
+
+        parent_as_dict = super().to_dict() or {}
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
+
+        return self.trim_dict(untrimmed)
+
+
+class OrganizationNodeOptions(DependencyWheelNodeOptions):
+    """Variant of :class:`NodeOptions` for use in :class:`OrganizationSeries`."""
+
+    def __init__(self, **kwargs):
+        self._column = None
+        self._image = None
+        self._layout = None
+        self._level = None
+        self._title = None
+
+        self.column = kwargs.pop('column', None)
+        self.image = kwargs.pop('image', None)
+        self.layout = kwargs.pop('layout', None)
+        self.level = kwargs.pop('level', None)
+        self.title = kwargs.pop('title', None)
+
+        super().__init__(**kwargs)
 
     @property
     def image(self) -> Optional[str]:
@@ -326,24 +386,6 @@ class OrganizationNodeOptions(NodeOptions):
             self._layout = value
 
     @property
-    def level(self) -> Optional[int]:
-        """An optional level index of where to place the node. Defaults to
-        :obj:`None <python:None>`, which places it next to the preceding node.
-
-        .. notes:
-
-          Alias of :meth:`OrganizationNodeOptions.column`, but in inverted sankeys and org
-          charts, the levels are laid out as rows.
-
-        :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
-        """
-        return self._level
-
-    @level.setter
-    def level(self, value):
-        self._level = validators.integer(value, allow_empty = True)
-
-    @property
     def title(self) -> Optional[str]:
         """The job title for the node card. Defaults to :obj:`None <python:None>`.
 
@@ -358,3 +400,37 @@ class OrganizationNodeOptions(NodeOptions):
     @title.setter
     def title(self, value):
         self._title = validators.string(value, allow_empty = True)
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'color': as_dict.pop('color', None),
+            'color_index': as_dict.pop('colorIndex', None),
+            'data_labels': as_dict.pop('dataLabels', None),
+            'id': as_dict.pop('id', None),
+            'name': as_dict.pop('name', None),
+            'offset_horizontal': as_dict.pop('offsetHorizontal', None),
+            'offset_vertical': as_dict.pop('offsetVertical', None),
+
+            'column': as_dict.pop('column', None),
+            'level': as_dict.pop('level', None),
+
+            'image': as_dict.pop('image', None),
+            'layout': as_dict.pop('layout', None),
+            'title': as_dict.pop('title', None),
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self) -> Optional[dict]:
+        untrimmed = {
+            'image': self.image,
+            'layout': self.layout,
+            'title': self.title,
+        }
+
+        parent_as_dict = super().to_dict() or {}
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
+
+        return self.trim_dict(untrimmed)
