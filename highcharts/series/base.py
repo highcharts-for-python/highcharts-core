@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from decimal import Decimal
 
 from validator_collection import validators
@@ -33,7 +33,7 @@ class SeriesBase(SeriesOptions):
         self.z_index = kwargs.pop('z_index', None)
 
     @property
-    def data(self) -> Optional[DataBase]:
+    def data(self) -> Optional[List[DataBase]]:
         """The collection of data points for the series. Defaults to
         :obj:`None <python:None>`.
 

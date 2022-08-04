@@ -39,7 +39,7 @@ class FunnelSeries(PieSeries, FunnelOptions):
 
             .. code-block::
 
-              series = PieSeries()
+              series = FunnelSeries()
               series.data = [0, 5, 3, 5]
 
             A one-dimensional collection of numerical values. Each member of the

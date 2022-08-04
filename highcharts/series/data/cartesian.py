@@ -11,8 +11,6 @@ from highcharts.series.data.base import DataBase
 from highcharts.plot_options.drag_drop import DragDropOptions
 from highcharts.utility_classes.data_labels import DataLabel
 from highcharts.utility_classes.markers import Marker
-from highcharts.utility_classes.gradients import Gradient
-from highcharts.utility_classes.patterns import Pattern
 
 
 class CartesianData(DataBase):
