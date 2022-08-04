@@ -122,8 +122,8 @@ class DumbbellOptions(GenericTypeOptions):
     def color_axis(self) -> Optional[str | int | bool]:
         """When using dual or multiple color axes, this setting defines which
         :term:`color axis` the particular series is connected to. It refers to either the
-        :meth:`ColorAxis.id` or the index of the axis in the :class:`ColorAxis` array, with
-        ``0`` being the first. Set this option to ``False`` to prevent a series from
+        :meth:`ColorAxis.id` or the index of the axis in the :class:`ColorAxis` array,
+        with ``0`` being the first. Set this option to ``False`` to prevent a series from
         connecting to the default color axis.
 
         Defaults to ``0``.
@@ -937,7 +937,7 @@ class DumbbellOptions(GenericTypeOptions):
 
         return kwargs
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> Optional[dict]:
         untrimmed = {
             'animationLimit': self.animation_limit,
             'colorAxis': self.color_axis,

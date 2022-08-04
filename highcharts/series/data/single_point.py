@@ -363,25 +363,11 @@ class SingleXData(SinglePointBase):
     """Data point that features a single labeled ``x`` value."""
 
     def __init__(self, **kwargs):
-        self._label = None
         self._x = None
 
-        self.label = kwargs.pop('label', None)
         self.x = kwargs.pop('x', None)
 
         super().__init__(**kwargs)
-
-    @property
-    def label(self) -> Optional[str]:
-        """The label for the event. Defaults to :obj:`None <python:None>`.
-
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
-        """
-        return self._label
-
-    @label.setter
-    def label(self, value):
-        self._label = validators.string(value, allow_empty = True)
 
     @property
     def x(self) -> Optional[int | float | Decimal | type(None) | constants.EnforcedNullType]:
@@ -461,6 +447,119 @@ class SingleXData(SinglePointBase):
             'drag_drop': as_dict.pop('dragDrop', None),
             'drilldown': as_dict.pop('drilldown', None),
 
+            'x': as_dict.pop('x', None),
+        }
+
+        return kwargs
+
+    def to_dict(self) -> Optional[dict]:
+        untrimmed = {
+            'accessibility': self.accessibility,
+            'className': self.class_name,
+            'color': self.color,
+            'colorIndex': self.color_index,
+            'custom': self.custom,
+            'description': self.description,
+            'events': self.events,
+            'id': self.id,
+            'labelrank': self.label_rank,
+            'name': self.name,
+            'selected': self.selected,
+
+            'dataLabels': self.data_labels,
+            'dragDrop': self.drag_drop,
+            'drilldown': self.drilldown,
+
+            'x': self.x,
+        }
+
+        return self.trim_dict(untrimmed)
+
+
+class LabeledSingleXData(SinglePointBase):
+    """Data point that features a single labeled ``x`` value."""
+
+    def __init__(self, **kwargs):
+        self._label = None
+
+        self.label = kwargs.pop('label', None)
+
+        super().__init__(**kwargs)
+
+    @property
+    def label(self) -> Optional[str]:
+        """The label for the event. Defaults to :obj:`None <python:None>`.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._label
+
+    @label.setter
+    def label(self, value):
+        self._label = validators.string(value, allow_empty = True)
+
+    @classmethod
+    def from_setter(cls, value):
+        """Generator method which produces a collection of :class:`LabeledSingleXData`
+        instances derived from ``value``. Generally consumed by the setter methods in
+        series-type specific data classes.
+
+        :rtype: :class:`list <python:list>` of :obj:`LabeledSingleXData` instances
+        """
+        if not value:
+            return []
+        elif not checkers.is_iterable(value):
+            value = [value]
+
+        collection = []
+        for item in value:
+            if checkers.is_type(item, 'LabeledSingleXData'):
+                as_obj = item
+            elif checkers.is_dict(item):
+                as_obj = cls.from_dict(item)
+            elif item is None or isinstance(item, constants.EnforcedNullType):
+                as_obj = cls(x = None)
+            elif checkers.is_numeric(item):
+                as_obj = cls(x = item)
+            else:
+                raise errors.HighchartsValueError(f'each data point supplied must either '
+                                                  f'be a Single X-value Data Point or be '
+                                                  f'coercable to one. Could not coerce: '
+                                                  f'{item}')
+            collection.append(as_obj)
+
+        return collection
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        """Convenience method which returns the keyword arguments used to initialize the
+        class from a Highcharts Javascript-compatible :class:`dict <python:dict>` object.
+
+        :param as_dict: The HighCharts JS compatible :class:`dict <python:dict>`
+          representation of the object.
+        :type as_dict: :class:`dict <python:dict>`
+
+        :returns: The keyword arguments that would be used to initialize an instance.
+        :rtype: :class:`dict <python:dict>`
+
+        """
+        kwargs = {
+            'accessibility': as_dict.pop('accessibility', None),
+            'class_name': as_dict.pop('className', None),
+            'color': as_dict.pop('color', None),
+            'color_index': as_dict.pop('colorIndex', None),
+            'custom': as_dict.pop('custom', None),
+            'description': as_dict.pop('description', None),
+            'events': as_dict.pop('events', None),
+            'id': as_dict.pop('id', None),
+            'label_rank': as_dict.pop('labelrank', None),
+            'name': as_dict.pop('name', None),
+            'selected': as_dict.pop('selected', None),
+
+            'data_labels': as_dict.pop('dataLabels', None),
+            'drag_drop': as_dict.pop('dragDrop', None),
+            'drilldown': as_dict.pop('drilldown', None),
+
             'label': as_dict.pop('label', None),
             'x': as_dict.pop('x', None),
         }
@@ -487,6 +586,142 @@ class SingleXData(SinglePointBase):
 
             'label': self.label,
             'x': self.x,
+        }
+
+        return self.trim_dict(untrimmed)
+
+
+class ConnectedSingleXData(SingleXData):
+    """Variant of :class:`SingleXData` which supports a connector."""
+
+    def __init__(self, **kwargs):
+        self._connector_color = None
+        self._connector_width = None
+
+        self.connector_color = kwargs.pop('connector_color', None)
+        self.connector_width = kwargs.pop('connector_width', None)
+
+        super().__init__(**kwargs)
+
+    @property
+    def connector_color(self) -> Optional[str]:
+        """Color of the line that connects the dumbbell point's values. If
+        :obj:`None <python:None>`, applies the series' color. Defaults to
+        :obj:`None <python:None>`.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._connector_color
+
+    @connector_color.setter
+    def connector_color(self, value):
+        self._connector_color = validators.string(value, allow_empty = True)
+
+    @property
+    def connector_width(self) -> Optional[int | float | Decimal]:
+        """Pixel width of the line that connects the dumbbell point's values. Defaults to
+        ``1``.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._connector_width
+
+    @connector_width.setter
+    def connector_width(self, value):
+        self._connector_width = validators.numeric(value, allow_empty = True)
+
+    @classmethod
+    def from_setter(cls, value):
+        """Generator method which produces a collection of :class:`ConnectedSingleXData`
+        instances derived from ``value``. Generally consumed by the setter methods in
+        series-type specific data classes.
+
+        :rtype: :class:`list <python:list>` of :obj:`ConnectedSingleXData` instances
+        """
+        if not value:
+            return []
+        elif not checkers.is_iterable(value):
+            value = [value]
+
+        collection = []
+        for item in value:
+            if checkers.is_type(item, 'ConnectedSingleXData'):
+                as_obj = item
+            elif checkers.is_dict(item):
+                as_obj = cls.from_dict(item)
+            elif item is None or isinstance(item, constants.EnforcedNullType):
+                as_obj = cls(x = None)
+            elif checkers.is_numeric(item):
+                as_obj = cls(x = item)
+            else:
+                raise errors.HighchartsValueError(f'each data point supplied must either '
+                                                  f'be a Single X-value Data Point or be '
+                                                  f'coercable to one. Could not coerce: '
+                                                  f'{item}')
+            collection.append(as_obj)
+
+        return collection
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        """Convenience method which returns the keyword arguments used to initialize the
+        class from a Highcharts Javascript-compatible :class:`dict <python:dict>` object.
+
+        :param as_dict: The HighCharts JS compatible :class:`dict <python:dict>`
+          representation of the object.
+        :type as_dict: :class:`dict <python:dict>`
+
+        :returns: The keyword arguments that would be used to initialize an instance.
+        :rtype: :class:`dict <python:dict>`
+
+        """
+        kwargs = {
+            'accessibility': as_dict.pop('accessibility', None),
+            'class_name': as_dict.pop('className', None),
+            'color': as_dict.pop('color', None),
+            'color_index': as_dict.pop('colorIndex', None),
+            'custom': as_dict.pop('custom', None),
+            'description': as_dict.pop('description', None),
+            'events': as_dict.pop('events', None),
+            'id': as_dict.pop('id', None),
+            'label_rank': as_dict.pop('labelrank', None),
+            'name': as_dict.pop('name', None),
+            'selected': as_dict.pop('selected', None),
+
+            'data_labels': as_dict.pop('dataLabels', None),
+            'drag_drop': as_dict.pop('dragDrop', None),
+            'drilldown': as_dict.pop('drilldown', None),
+
+            'x': as_dict.pop('x', None),
+
+            'connector_color': as_dict.pop('connectorColor', None),
+            'connector_width': as_dict.pop('connectorWidth', None),
+        }
+
+        return kwargs
+
+    def to_dict(self) -> Optional[dict]:
+        untrimmed = {
+            'accessibility': self.accessibility,
+            'className': self.class_name,
+            'color': self.color,
+            'colorIndex': self.color_index,
+            'custom': self.custom,
+            'description': self.description,
+            'events': self.events,
+            'id': self.id,
+            'labelrank': self.label_rank,
+            'name': self.name,
+            'selected': self.selected,
+
+            'dataLabels': self.data_labels,
+            'dragDrop': self.drag_drop,
+            'drilldown': self.drilldown,
+
+            'x': self.x,
+
+            'connectorColor': self.connector_color,
+            'connectorWidth': self.connector_width,
         }
 
         return self.trim_dict(untrimmed)

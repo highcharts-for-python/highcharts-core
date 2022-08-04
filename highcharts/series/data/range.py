@@ -11,6 +11,8 @@ from highcharts.series.data.base import DataBase
 from highcharts.plot_options.drag_drop import DragDropOptions
 from highcharts.utility_classes.data_labels import DataLabel
 from highcharts.utility_classes.markers import Marker
+from highcharts.utility_classes.gradients import Gradient
+from highcharts.utility_classes.patterns import Pattern
 
 
 class RangeData(DataBase):
@@ -264,5 +266,142 @@ class RangeData(DataBase):
             'marker': self.marker,
             'x': self.x,
         }
+
+        return self.trim_dict(untrimmed)
+
+
+class ConnectedRangeData(RangeData):
+    """Variant of :class:`RangeData` which extends the class with connector attributes."""
+
+    def __init__(self, **kwargs):
+        self._connector_color = None
+        self._connector_width = None
+        self._low_color = None
+
+        self.connector_color = kwargs.pop('connector_color', None)
+        self.connector_width = kwargs.pop('connector_width', None)
+        self.low_color = kwargs.pop('low_color', None)
+
+        super().__init__(**kwargs)
+
+    @property
+    def connector_color(self) -> Optional[str]:
+        """Color of the line that connects the dumbbell point's values. If
+        :obj:`None <python:None>`, applies the series' color. Defaults to
+        :obj:`None <python:None>`.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._connector_color
+
+    @connector_color.setter
+    def connector_color(self, value):
+        self._connector_color = validators.string(value, allow_empty = True)
+
+    @property
+    def connector_width(self) -> Optional[int | float | Decimal]:
+        """Pixel width of the line that connects the dumbbell point's values. Defaults to
+        ``1``.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._connector_width
+
+    @connector_width.setter
+    def connector_width(self, value):
+        self._connector_width = validators.numeric(value, allow_empty = True)
+
+    @property
+    def low_color(self) -> Optional[str | Gradient | Pattern]:
+        """Color of the start markers in a dumbbell graph. Defaults to ``'#333333'``.
+
+        :rtype: :obj:`None <python:None>`, :class:`Gradient`, :class:`Pattern`, or
+          :class:`str <python:str>`
+        """
+        return self._low_color
+
+    @low_color.setter
+    def low_color(self, value):
+        if not value:
+            self._low_color = None
+        elif isinstance(value, (Gradient, Pattern)):
+            self._low_color = value
+        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
+            try:
+                self._low_color = Gradient.from_json(value)
+            except ValueError:
+                if isinstance(value, dict):
+                    self._low_color = Gradient.from_dict(value)
+                else:
+                    self._low_color = validators.string(value)
+        elif isinstance(value, dict) and 'linear_gradient' in value:
+            self._low_color = Gradient(**value)
+        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
+            try:
+                self._low_color = Pattern.from_json(value)
+            except ValueError:
+                if isinstance(value, dict):
+                    self._low_color = Pattern.from_dict(value)
+                else:
+                    self._low_color = validators.string(value)
+        elif isinstance(value, dict) and 'pattern_options' in value:
+            self._low_color = Pattern(**value)
+        else:
+            raise errors.HighchartsValueError(f'Unable to resolve value to an '
+                                              f'string, '
+                                              f'Gradient, or Pattern. Value received '
+                                              f'was: {value}')
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        """Convenience method which returns the keyword arguments used to initialize the
+        class from a Highcharts Javascript-compatible :class:`dict <python:dict>` object.
+
+        :param as_dict: The HighCharts JS compatible :class:`dict <python:dict>`
+          representation of the object.
+        :type as_dict: :class:`dict <python:dict>`
+
+        :returns: The keyword arguments that would be used to initialize an instance.
+        :rtype: :class:`dict <python:dict>`
+
+        """
+        kwargs = {
+            'accessibility': as_dict.pop('accessibility', None),
+            'class_name': as_dict.pop('className', None),
+            'color': as_dict.pop('color', None),
+            'color_index': as_dict.pop('colorIndex', None),
+            'custom': as_dict.pop('custom', None),
+            'description': as_dict.pop('description', None),
+            'events': as_dict.pop('events', None),
+            'id': as_dict.pop('id', None),
+            'label_rank': as_dict.pop('labelrank', None),
+            'name': as_dict.pop('name', None),
+            'selected': as_dict.pop('selected', None),
+
+            'data_labels': as_dict.pop('dataLabels', None),
+            'drag_drop': as_dict.pop('dragDrop', None),
+            'drilldown': as_dict.pop('drilldown', None),
+            'high': as_dict.pop('high', None),
+            'low': as_dict.pop('low', None),
+            'marker': as_dict.pop('marker', None),
+            'x': as_dict.pop('x', None),
+
+            'connector_color': as_dict.pop('connectorColor', None),
+            'connector_width': as_dict.pop('connectorWidth', None),
+            'low_color': as_dict.pop('lowColor', None),
+        }
+
+        return kwargs
+
+    def to_dict(self) -> Optional[dict]:
+        untrimmed = {
+            'connectorColor': self.connector_color,
+            'connectorWidth': self.connector_width,
+            'lowColor': self.low_color
+        }
+
+        parent_as_dict = super().to_dict() or {}
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
 
         return self.trim_dict(untrimmed)

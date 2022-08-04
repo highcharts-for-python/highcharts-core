@@ -1,35 +1,20 @@
 from typing import Optional, List
 
 from highcharts.series.base import SeriesBase
-from highcharts.series.data.single_point import LabeledSingleXData
-from highcharts.plot_options.timeline import TimelineOptions
+from highcharts.series.data.range import ConnectedRangeData
+from highcharts.plot_options.dumbbell import LollipopOptions, DumbbellOptions
 from highcharts.utility_functions import mro_init, mro_to_dict
 
 
-class TimelineSeries(SeriesBase, TimelineOptions):
-    """General options to apply to all Timeline series types.
+class DumbbellSeries(SeriesBase, DumbbellOptions):
+    """Options to configure a Dumbbell series.
 
-    The timeline series presents given events along a drawn line.
+    The dumbbell series is a cartesian series with higher and lower values for each
+    point along an X axis, connected with a line between the values.
 
-    .. tabs::
-
-      .. tab:: Standard Timeline
-
-        .. figure:: _static/timeline-example.png
-          :alt: Timeline Example Chart
-          :align: center
-
-      .. tab:: Inverted Timeline
-
-        .. figure:: _static/timeline-example-inverted.png
-          :alt: Inverted Timeline Example Chart
-          :align: center
-
-      .. tab:: With True Datetime Axis
-
-        .. figure:: _static/timeline-example-datetime.png
-          :alt: Timeline Example Chart with Datetime Axis
-          :align: center
+    .. figure:: _static/dumbbell-example.png
+      :alt: Dumbbell Example Chart
+      :align: center
 
     """
 
@@ -37,20 +22,75 @@ class TimelineSeries(SeriesBase, TimelineOptions):
         mro_init(self, kwargs)
 
     @property
-    def data(self) -> Optional[List[LabeledSingleXData]]:
+    def data(self) -> Optional[List[ConnectedRangeData]]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
-        While the series type returns a collection of :class:`LabeledSingleXData` instances,
-        it accepts as input three different types of data:
+        While the series type returns a collection of :class:`ConnectedRangeData`
+        instances, it accepts as input two different types of data:
 
         .. tabs::
 
+          .. tab:: 3D Collection
+
+            .. code-block::
+
+              series = DumbbellSeries()
+
+              # Category X-axis
+              series.data = [
+                  ['Category A', 8, 3],
+                  ['Category B', 1, 1],
+                  ['Category C', 6, 8]
+              ]
+
+              # Numerical X-axis
+              series.data = [
+                  [0, 8, 3],
+                  [1, 1, 1],
+                  [2, 6, 8]
+              ]
+
+            A three-dimensional collection of numerical values. Each member of the
+            collection will be interpreted as an ``x`` value, a ``low`` value, and a
+            ``high`` value.
+
+            The ``x`` value can be a :class:`str <python:str>`,
+            :class:`date <python:datetime.date>`,
+            :class:`datetime <python:datetime.datetime>`, or numeric value.
+
+            .. note::
+
+              If the ``x`` value is a :class:`str <python:str>`, it will be interpreted
+              as the name of the data point.
+
+          .. tab:: 2D Collection
+
+            .. code-block::
+
+              series = DumbbellSeries()
+              series.data = [
+                  [8, 3],
+                  [1, 1],
+                  [6, 8]
+              ]
+
+            A two-dimensional collection of values. Each member of the collection will be
+            interpreted as an ``low`` and ``high`` value. The ``x`` values are
+            automatically inferred:
+
+              If :meth:`DumbbellSeries.point_start` is :obj:`None <python:None>`, ``x``
+              values will begin at ``0``. Otherwise, they will start at ``point_start``.
+
+              If :meth:`DumbbellSeries.point_interval` is :obj:`None <python:None>`, ``x``
+              values will be incremented by ``1``. Otherwise, they will be incremented
+              by the value of ``point_interval``.
+
           .. tab:: Object Collection
 
-            A one-dimensional collection of :class:`LabeledSingleXData` objects.
+            A one-dimensional collection of :class:`ConnectedRangeData` objects.
 
-        :rtype: :class:`list <python:list>` of :class:`LabeledSingleXData` or
+        :rtype: :class:`list <python:list>` of :class:`ConnectedRangeData` or
           :obj:`None <python:None>`
         """
         return self._data
@@ -60,7 +100,7 @@ class TimelineSeries(SeriesBase, TimelineOptions):
         if not value:
             self._data = None
         else:
-            self._data = LabeledSingleXData.from_setter(value)
+            self._data = ConnectedRangeData.from_setter(value)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -136,8 +176,13 @@ class TimelineSeries(SeriesBase, TimelineOptions):
             'y_axis': as_dict.pop('yAxis', None),
             'z_index': as_dict.pop('zIndex', None),
 
-            'color_by_point': as_dict.pop('colorByPoint', None),
-            'ignore_hidden_point': as_dict.pop('ignoreHiddenPoint', None),
+            'connector_color': as_dict.pop('connectorColor', None),
+            'connector_width': as_dict.pop('connectorWidth', None),
+            'group_padding': as_dict.pop('groupPadding', None),
+            'line_color': as_dict.pop('lineColor', None),
+            'low_color': as_dict.pop('lowColor', None),
+            'negative_fill_color': as_dict.pop('negativeFillColor', None),
+            'point_padding': as_dict.pop('pointPadding', None),
         }
 
         return kwargs
@@ -146,3 +191,22 @@ class TimelineSeries(SeriesBase, TimelineOptions):
         untrimmed = mro_to_dict(self)
 
         return self.trim_dict(untrimmed)
+
+
+class LollipopSeries(SeriesBase, LollipopOptions):
+    """Options to configure a Lollipop series.
+
+    The lollipop series is a carteseian series with a line anchored from the x axis
+    and a dot at the end to mark the value.
+
+    .. warning::
+
+      Requires ``highcharts-more.js``, ``modules/dumbbell.js``, and
+      ``modules/lollipop.js`` to be loaded client-side.
+
+    .. figure:: _static/lollipop-example.png
+      :alt: Lollipop Example Chart
+      :align: center
+
+    """
+    pass
