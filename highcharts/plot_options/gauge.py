@@ -822,7 +822,7 @@ class GaugeOptions(GenericTypeOptions):
         return self.trim_dict(untrimmed)
 
 
-class SolidGauge(SeriesOptions):
+class SolidGaugeOptions(SeriesOptions):
     """General options to apply to all Solid Gauge series types.
 
     A solid gauge is a circular gauge where the value is indicated by a filled arc,
