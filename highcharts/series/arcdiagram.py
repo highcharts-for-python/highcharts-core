@@ -13,6 +13,7 @@ from highcharts.utility_functions import mro_to_dict, mro_init
 from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
 from highcharts.utility_classes.labels import DataLabel
+from highcharts.utility_classes.nodes import NodeOptions
 
 
 class NodeOptions(HighchartsMeta):

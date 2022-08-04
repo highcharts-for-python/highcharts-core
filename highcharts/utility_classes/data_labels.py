@@ -11,6 +11,7 @@ from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
 from highcharts.utility_classes.shadows import ShadowOptions
 from highcharts.utility_classes.ast import TextPath
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class Filter(HighchartsMeta):
@@ -926,3 +927,109 @@ class DataLabel(HighchartsMeta):
         as_dict = self.trim_dict(untrimmed)
 
         return as_dict
+
+
+class NodeDataLabel(DataLabel):
+    """Variant of :class:`DataLabel` used for node-based charts/diagrams."""
+
+    def __init__(self, **kwargs):
+        self._node_format = None
+        self._node_formatter = None
+
+        self.node_format = kwargs.pop('node_format', None)
+        self.node_formatter = kwargs.pop('node_formatter', None)
+
+        super().__init__(**kwargs)
+
+    @property
+    def node_format(self) -> Optional[str]:
+        """The format string which determines what to render for nodes in a sankey,
+        organization, or similar diagram. Defaults to :obj:`None <python:None>`.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._node_format
+
+    @node_format.setter
+    def node_format(self, value):
+        self._node_format = validators.string(value, allow_empty = True)
+
+    @property
+    def node_formatter(self) -> Optional[CallbackFunction]:
+        """JavaScript callback function to format data labels for nodes in a sankey or
+        organization diagram. Defaults to :obj:`None <python:None>`.
+
+        .. note::
+
+          The :meth:`node_format <NodeDataLabel.node_format>` takes precedence over the
+          ``node_formatter``.
+
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
+        """
+        return self._node_formatter
+
+    @node_formatter.setter
+    @class_sensitive(CallbackFunction)
+    def node_formatter(self, value):
+        self._node_formatter = value
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'align': as_dict.pop('align', constants.DEFAULT_DATA_LABEL.get('align', None)),
+            'allow_overlap': as_dict.pop('allowOverlap', False),
+            'animation': as_dict.pop('animation', None),
+            'background_color': as_dict.pop('backgroundColor',
+                                            constants.DEFAULT_DATA_LABEL.get('background_color', None)),
+            'border_color': as_dict.pop('borderColor',
+                                        constants.DEFAULT_DATA_LABEL.get('border_color', None)),
+            'border_radius': as_dict.pop('borderRadius',
+                                         constants.DEFAULT_DATA_LABEL.get('border_radius', None)),
+            'border_width': as_dict.pop('borderWidth',
+                                        constants.DEFAULT_DATA_LABEL.get('border_width')),
+            'class_name': as_dict.pop('className',
+                                      constants.DEFAULT_DATA_LABEL.get('class_name')),
+            'color': as_dict.pop('color',
+                                 constants.DEFAULT_DATA_LABEL.get('color')),
+            'crop': as_dict.pop('crop', False),
+            'defer': as_dict.pop('defer', constants.DEFAULT_DATA_LABEL.get('defer')),
+            'enabled': as_dict.pop('enabled', False),
+            'filter': as_dict.pop('filter', None),
+            'format': as_dict.pop('format', None),
+            'formatter': as_dict.pop('formatter', None),
+            'inside': as_dict.pop('inside', None),
+            'null_format': as_dict.pop('nullFormat', None),
+            'null_formatter': as_dict.pop('nullFormatter', None),
+            'overflow': as_dict.pop('overflow',
+                                    constants.DEFAULT_DATA_LABEL.get('overflow')),
+            'padding': as_dict.pop('padding', constants.DEFAULT_DATA_LABEL.get('padding')),
+            'position': as_dict.pop('position', constants.DEFAULT_DATA_LABEL.get('position')),
+            'rotation': as_dict.pop('rotation', constants.DEFAULT_DATA_LABEL.get('rotation')),
+            'shadow': as_dict.pop('shadow', False),
+            'shape': as_dict.pop('shape', constants.DEFAULT_DATA_LABEL.get('shape')),
+            'style': as_dict.pop('style', None),
+            'text_path': as_dict.pop('textPath', None),
+            'use_html': as_dict.pop('useHTML', False),
+            'vertical_align': as_dict.pop('verticalAlign',
+                                          constants.DEFAULT_DATA_LABEL.get('vertical_align')),
+            'x': as_dict.pop('x', constants.DEFAULT_DATA_LABEL.get('x')),
+            'y': as_dict.pop('y', constants.DEFAULT_DATA_LABEL.get('y')),
+            'z': as_dict.pop('z', constants.DEFAULT_DATA_LABEL.get('z')),
+
+            'node_format': as_dict.pop('nodeFormat', None),
+            'node_formatter': as_dict.pop('nodeFormatter', None),
+        }
+
+        return cls(**kwargs)
+
+    def to_dict(self):
+        untrimmed = {
+            'nodeFormat': self.node_format,
+            'nodeFormatter': self.node_formatter,
+        }
+
+        parent_as_dict = super().to_dict() or {}
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
+
+        return self.trim_dict(untrimmed)
