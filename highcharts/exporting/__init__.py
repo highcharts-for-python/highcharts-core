@@ -11,6 +11,7 @@ from highcharts.exporting.pdf_font import PDFFontOptions
 from highcharts.utility_classes.menus import MenuObject
 from highcharts.utility_classes.buttons import ContextButtonConfiguration, \
     ExportingButtons
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 default_context_button = ExportingButtons()
 default_context_button['contextButton'] = ContextButtonConfiguration()
@@ -253,7 +254,7 @@ class Exporting(HighchartsMeta):
             self._enabled = bool(value)
 
     @property
-    def error(self) -> Optional[str]:
+    def error(self) -> Optional[CallbackFunction]:
         """JavaScript function that is called if the offline-exporting module fails to
         export a chart on the client side, and :meth:`Exporting.fallback_to_export_server`
         is disabled.
@@ -267,13 +268,14 @@ class Exporting(HighchartsMeta):
           * :meth:`Exporting.fallback_to_export_server`
 
         :returns: JavaScript function code
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._error
 
     @error.setter
+    @class_sensitive(CallbackFunction)
     def error(self, value):
-        self._error = validators.string(value, allow_empty = True)
+        self._error = value
 
     @property
     def fallback_to_export_server(self) -> Optional[bool]:

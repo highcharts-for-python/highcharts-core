@@ -5,6 +5,7 @@ from validator_collection import validators
 from highcharts import constants
 from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class CSVAnnotationOptions(HighchartsMeta):
@@ -109,7 +110,7 @@ class ExportingCSV(HighchartsMeta):
         self._annotations = value
 
     @property
-    def column_header_formatter(self) -> Optional[str]:
+    def column_header_formatter(self) -> Optional[CallbackFunction]:
         """JavaScript formatter callback function for the column headers.
 
         The parameters received by the callback function are:
@@ -133,13 +134,14 @@ class ExportingCSV(HighchartsMeta):
         To use Highcharts' automatically-suggested header, the callback function should
         return ``False``.
 
-        :rtype: :class:`str` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._column_header_formatter
 
     @column_header_formatter.setter
+    @class_sensitive(CallbackFunction)
     def column_header_formatter(self, value):
-        self._column_header_formatter = validators.string(value, allow_empty = True)
+        self._column_header_formatter = value
 
     @property
     def date_format(self) -> Optional[str]:

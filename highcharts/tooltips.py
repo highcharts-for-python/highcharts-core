@@ -10,6 +10,7 @@ from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
 from highcharts.utility_classes.shadows import ShadowOptions
 from highcharts.utility_classes.date_time_label_formats import DateTimeLabelFormats
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class Tooltip(HighchartsMeta):
@@ -375,7 +376,7 @@ class Tooltip(HighchartsMeta):
             self._footer_format = validators.string(value, allow_empty = True)
 
     @property
-    def formatter(self) -> Optional[str]:
+    def formatter(self) -> Optional[CallbackFunction]:
         """JavaScript callback function to format the text of the tooltip from scratch.
         Defaults to :obj:`None <python:None>`
 
@@ -396,10 +397,10 @@ class Tooltip(HighchartsMeta):
 
         .. note::
 
-          The available data in the formatter differ a bit depending on whether the tooltip
-          is shared, split, or belongs to a single point. In a shared/split tooltip, all
-          properties except ``x``, which is common for all points, are kept in an array,
-          ``this.points``.
+          The available data in the formatter differ a bit depending on whether the
+          tooltip is shared, split, or belongs to a single point. In a shared/split
+          tooltip, all properties except ``x``, which is common for all points, are kept
+          in an array, ``this.points``.
 
           Available data are:
 
@@ -412,7 +413,8 @@ class Tooltip(HighchartsMeta):
             * ``this.points``: In a shared tooltip, this is an array containing all other
               properties for each point.
             * ``this.series`` (when not shared) / ``this.points[i].series`` (when shared):
-              The series object. The series name is available through ``this.series.name``.
+              The series object. The series name is available through
+              ``this.series.name``.
             * ``this.total`` (when not shared) / ``this.points[i].total`` (when shared):
               Stacked series only. The total value at this point's x value.
             * ``this.x``: The x value. This property is the same regardless of the tooltip
@@ -420,13 +422,14 @@ class Tooltip(HighchartsMeta):
             * ``this.y`` (when not shared) / ``this.points[i].y`` (when shared): The y
               value.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._formatter
 
     @formatter.setter
+    @class_sensitive(CallbackFunction)
     def formatter(self, value):
-        self._formatter = validators.string(value, allow_empty = True)
+        self._formatter = value
 
     @property
     def header_format(self) -> Optional[str]:
@@ -511,7 +514,7 @@ class Tooltip(HighchartsMeta):
         self._null_format = validators.string(value, allow_empty = True)
 
     @property
-    def null_formatter(self) -> Optional[str]:
+    def null_formatter(self) -> Optional[CallbackFunction]:
         """JavaScript callback function to format the text of the tooltip for visible null
         points.
 
@@ -519,13 +522,14 @@ class Tooltip(HighchartsMeta):
 
           Works analogously to :meth:`Tooltip.formatter`.
 
-        :rtype: :class:`str <python:None>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._null_formatter
 
     @null_formatter.setter
+    @class_sensitive(CallbackFunction)
     def null_formatter(self, value):
-        self._null_formatter = validators.string(value, allow_empty = True)
+        self._null_formatter = value
 
     @property
     def outside(self) -> Optional[bool]:
@@ -597,19 +601,20 @@ class Tooltip(HighchartsMeta):
         self._point_format = validators.string(value, allow_empty = True)
 
     @property
-    def point_formatter(self) -> Optional[str]:
+    def point_formatter(self) -> Optional[CallbackFunction]:
         """JavaScript callback function to format the text of the tooltip's point line.
 
-        :rtype: :class:`str <python:None>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._point_formatter
 
     @point_formatter.setter
+    @class_sensitive(CallbackFunction)
     def point_formatter(self, value):
-        self._point_formatter = validators.string(value, allow_empty = True)
+        self._point_formatter = value
 
     @property
-    def positioner(self) -> Optional[str]:
+    def positioner(self) -> Optional[CallbackFunction]:
         """A JavaScript callback function to place the tooltip in a custom position.
 
         The callback receives three (JavaScript) parameters: ``labelWidth``,
@@ -624,13 +629,14 @@ class Tooltip(HighchartsMeta):
         The return should be an object containing x and y values, for example:
         ``{ x: 100, y: 100 }``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._positioner
 
     @positioner.setter
+    @class_sensitive(CallbackFunction)
     def positioner(self, value):
-        self._positioner = validators.string(value, allow_empty = True)
+        self._positioner = value
 
     @property
     def shadow(self) -> Optional[bool | ShadowOptions]:

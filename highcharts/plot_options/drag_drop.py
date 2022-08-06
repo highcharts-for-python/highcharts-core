@@ -8,6 +8,7 @@ from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class DragHandle(HighchartsMeta):
@@ -200,18 +201,19 @@ class DragHandle(HighchartsMeta):
                                               minimum = 0)
 
     @property
-    def path_formatter(self) -> Optional[str]:
+    def path_formatter(self) -> Optional[CallbackFunction]:
         """JavaScript function to define the SVG path to use for the drag handles. Takes
         the ``point`` as a (JavaScript) argument. Should return an SVG path in array
         format. The SVG path is automatically positioned on the point.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._path_formatter
 
     @path_formatter.setter
+    @class_sensitive(CallbackFunction)
     def path_formatter(self, value):
-        self._path_formatter = validators.string(value, allow_empty = True)
+        self._path_formatter = value
 
     @property
     def z_index(self) -> Optional[int | float | Decimal]:

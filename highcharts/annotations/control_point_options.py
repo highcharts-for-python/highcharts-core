@@ -1,8 +1,8 @@
 from typing import Optional
 
-from validator_collection import validators
-
+from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class AnnotationControlPointOption(HighchartsMeta):
@@ -14,7 +14,7 @@ class AnnotationControlPointOption(HighchartsMeta):
         self.positioner = kwargs.pop('positioner', None)
 
     @property
-    def positioner(self) -> Optional[str]:
+    def positioner(self) -> Optional[CallbackFunction]:
         """A JavaScript callback function to modify annotation's positioner controls.
 
         The JavaScript function should receive two arguments, ``this`` being the
@@ -22,13 +22,14 @@ class AnnotationControlPointOption(HighchartsMeta):
 
         :returns: A JavaScript callback function to modify the annotation's positioner
           controls.
-        :rtype: :class:`str` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._positioner
 
     @positioner.setter
+    @class_sensitive(CallbackFunction)
     def positioner(self, value):
-        self._positioner = validators.string(value, allow_empty = True)
+        self._positioner = value
 
     @classmethod
     def from_dict(cls, as_dict):

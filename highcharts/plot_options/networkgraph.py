@@ -10,6 +10,7 @@ from highcharts.plot_options.generic import GenericTypeOptions
 from highcharts.plot_options.link import LinkOptions
 from highcharts.plot_options.zones import Zone
 from highcharts.utility_classes.shadows import ShadowOptions
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class LayoutAlgorithm(HighchartsMeta):
@@ -70,7 +71,7 @@ class LayoutAlgorithm(HighchartsMeta):
         self._approximation = validators.string(value, allow_empty = True)
 
     @property
-    def attractive_force(self) -> Optional[str]:
+    def attractive_force(self) -> Optional[CallbackFunction]:
         """JavaScript function which calculates the attraction force applied on a node
         which is conected to another node by a link.
 
@@ -96,13 +97,14 @@ class LayoutAlgorithm(HighchartsMeta):
                 return (k - d) / d;
             }
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._attractive_force
 
     @attractive_force.setter
+    @class_sensitive(CallbackFunction)
     def attractive_force(self, value):
-        self._attractive_force = validators.string(value, allow_empty = True)
+        self._attractive_force = value
 
     @property
     def enable_simulation(self) -> Optional[bool]:
@@ -275,7 +277,7 @@ class LayoutAlgorithm(HighchartsMeta):
                                              minimum = 0)
 
     @property
-    def repulsive_force(self) -> Optional[str]:
+    def repulsive_force(self) -> Optional[CallbackFunction]:
         """JavaScript function which calculates the repulsive force applied on a node
         which is conected to another node by a link.
 
@@ -301,13 +303,14 @@ class LayoutAlgorithm(HighchartsMeta):
                 return (k - d) / d * (k > d ? 1 : 0)
             }
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._repulsive_force
 
     @repulsive_force.setter
+    @class_sensitive(CallbackFunction)
     def repulsive_force(self, value):
-        self._repulsive_force = validators.string(value, allow_empty = True)
+        self._repulsive_force = value
 
     @property
     def theta(self) -> Optional[int | float | Decimal]:

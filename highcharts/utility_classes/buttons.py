@@ -19,6 +19,7 @@ from highcharts.decorators import validate_types, class_sensitive
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.utility_classes.gradient import Gradient
 from highcharts.utility_classes.pattern import Pattern
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class ButtonTheme(HighchartsMeta):
@@ -285,16 +286,17 @@ class ContextButtonConfiguration(ButtonConfiguration):
             self._menu_items = value
 
     @property
-    def onclick(self) -> Optional[str]:
+    def onclick(self) -> Optional[CallbackFunction]:
         """JavaScript event callback function which fires when the button is clicked.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._onclick
 
     @onclick.setter
+    @class_sensitive(CallbackFunction)
     def onclick(self, value):
-        self._onclick = validators.string(value, allow_empty = True)
+        self._onclick = value
 
     @property
     def symbol(self) -> Optional[str]:

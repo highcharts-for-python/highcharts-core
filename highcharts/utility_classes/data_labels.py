@@ -467,7 +467,7 @@ class DataLabel(HighchartsMeta):
         self._format = validators.string(value, allow_empty = True)
 
     @property
-    def formatter(self) -> Optional[str]:
+    def formatter(self) -> Optional[CallbackFunction]:
         """JavaScript callback function to format the data label. Defaults to
         :obj:`None <python:None>`.
 
@@ -476,13 +476,14 @@ class DataLabel(HighchartsMeta):
           If a :meth:`DataLabel.format` is specified, the formatter will be ignored.
 
         :returns: A JavaScript callback function.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._formatter
 
     @formatter.setter
+    @class_sensitive(CallbackFunction)
     def formatter(self, value):
-        self._formatter = validators.string(value, allow_empty = True)
+        self._formatter = value
 
     @property
     def inside(self) -> Optional[bool]:
@@ -524,7 +525,7 @@ class DataLabel(HighchartsMeta):
         self._null_format = validators.string(value, allow_empty = True)
 
     @property
-    def null_formatter(self) -> Optional[str]:
+    def null_formatter(self) -> Optional[CallbackFunction]:
         """JavaScript callback function to format the text of the data label for visible
         null points.
 
@@ -536,13 +537,14 @@ class DataLabel(HighchartsMeta):
 
           Can only be applied only to series which support displaying null points.
 
-        :rtype: :class:`str <python:None>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._null_formatter
 
     @null_formatter.setter
+    @class_sensitive(CallbackFunction)
     def null_formatter(self, value):
-        self._null_formatter = validators.string(value, allow_empty = True)
+        self._null_formatter = value
 
     @property
     def overflow(self) -> Optional[str]:

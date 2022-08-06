@@ -13,8 +13,9 @@ except ImportError:
 
 from validator_collection import validators
 
-from highcharts.decorators import validate_types
+from highcharts.decorators import class_sensitive, validate_types
 from highcharts.metaclasses import HighchartsMeta
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class MenuItem(HighchartsMeta):
@@ -32,16 +33,17 @@ class MenuItem(HighchartsMeta):
         self.separator = kwargs.pop('separator', None)
 
     @property
-    def onclick(self) -> Optional[str]:
+    def onclick(self) -> Optional[CallbackFunction]:
         """JavaScript event callback function which fires when the menu item is clicked.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._onclick
 
     @onclick.setter
+    @class_sensitive(CallbackFunction)
     def onclick(self, value):
-        self._onclick = validators.string(value, allow_empty = True)
+        self._onclick = value
 
     @property
     def text(self) -> Optional[str]:

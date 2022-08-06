@@ -3,7 +3,9 @@ from decimal import Decimal
 
 from validator_collection import validators
 
+from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class AnnounceNewData(HighchartsMeta):
@@ -34,7 +36,7 @@ class AnnounceNewData(HighchartsMeta):
                                                         None)
 
     @property
-    def announcement_formatter(self) -> Optional[str]:
+    def announcement_formatter(self) -> Optional[CallbackFunction]:
         """Optional JavaScript formatter callback for the announcement.
 
         Expects a string containing JavaScript code. This code should be a JavaScript
@@ -56,13 +58,14 @@ class AnnounceNewData(HighchartsMeta):
 
         :returns: The code of the JavaScript function ot use as the formatter callback for
           the new data announcement.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._announcement_formatter
 
     @announcement_formatter.setter
-    def announcement_formatter(self, value: Optional[str]):
-        self._announcement_formatter = validators.string(value, allow_empty = True)
+    @class_sensitive(CallbackFunction)
+    def announcement_formatter(self, value):
+        self._announcement_formatter = value
 
     @property
     def enabled(self) -> Optional[bool]:

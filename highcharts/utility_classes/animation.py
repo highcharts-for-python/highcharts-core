@@ -2,7 +2,9 @@ from typing import Optional
 
 from validator_collection import validators
 
+from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class AnimationOptions(HighchartsMeta):
@@ -30,16 +32,17 @@ class AnimationOptions(HighchartsMeta):
         self.step = kwargs.pop('step', None)
 
     @property
-    def complete(self) -> Optional[str]:
+    def complete(self) -> Optional[CallbackFunction]:
         """A JavaScript callback function to execute when the animation finishes.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._complete
 
     @complete.setter
+    @class_sensitive(CallbackFunction)
     def complete(self, value):
-        self._complete = validators.string(value, allow_empty = True)
+        self._complete = value
 
     @property
     def defer(self) -> Optional[int]:
@@ -88,19 +91,20 @@ class AnimationOptions(HighchartsMeta):
         self._easing = validators.string(value, allow_empty = True)
 
     @property
-    def step(self) -> Optional[str]:
+    def step(self) -> Optional[CallbackFunction]:
         """A JavaScript callback function to execute on each step of each attribute or
         CSS property that is being animated.
 
         The first argument contains information about the animation and progress.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._step
 
     @step.setter
+    @class_sensitive(CallbackFunction)
     def step(self, value):
-        self._step = validators.string(value, allow_empty = True)
+        self._step = value
 
     @classmethod
     def from_dict(cls, as_dict):

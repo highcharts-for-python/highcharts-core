@@ -2,8 +2,10 @@ from typing import Optional
 
 from validator_collection import validators
 
-from highcharts.metaclasses import HighchartsMeta
 from highcharts import constants
+from highcharts.decorators import class_sensitive
+from highcharts.metaclasses import HighchartsMeta
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class AccessibilityPoint(HighchartsMeta):
@@ -51,7 +53,7 @@ class AccessibilityPoint(HighchartsMeta):
         self._date_format = validators.string(value, allow_empty = True)
 
     @property
-    def date_formatter(self) -> Optional[str]:
+    def date_formatter(self) -> Optional[CallbackFunction]:
         """JavaScript formatter function to determine the date/time format used with
         points on datetime axes when describing them to screen reader users.
 
@@ -60,13 +62,14 @@ class AccessibilityPoint(HighchartsMeta):
         :meth:`AccessibilityPoint.date_format`.
 
         :returns: Formatter function to determine date/time format used.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._date_formatter
 
     @date_formatter.setter
+    @class_sensitive(CallbackFunction)
     def date_formatter(self, value):
-        self._date_formatter = validators.string(value, allow_empty = True)
+        self._date_formatter = value
 
     @property
     def describe_null(self) -> Optional[bool]:
@@ -89,7 +92,7 @@ class AccessibilityPoint(HighchartsMeta):
             self._describe_null = bool(value)
 
     @property
-    def description_formatter(self) -> Optional[str]:
+    def description_formatter(self) -> Optional[CallbackFunction]:
         """JavaScript formatter function to use instead of the default for point
         descriptions.
 
@@ -105,13 +108,14 @@ class AccessibilityPoint(HighchartsMeta):
             preserved.
 
         :returns: The JavaScript formatter function to use for point descriptions.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._description_formatter
 
     @description_formatter.setter
+    @class_sensitive(CallbackFunction)
     def description_formatter(self, value):
-        self._value = validators.string(value, allow_empty = True)
+        self._value = value
 
     @property
     def value_decimals(self) -> Optional[int]:

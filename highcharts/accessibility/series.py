@@ -3,7 +3,9 @@ from typing import Optional
 from validator_collection import validators
 
 from highcharts import constants
+from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class AccessibilitySeries(HighchartsMeta):
@@ -85,7 +87,7 @@ class AccessibilitySeries(HighchartsMeta):
         self._description_format = validators.string(value, allow_empty = True)
 
     @property
-    def description_formatter(self) -> Optional[str]:
+    def description_formatter(self) -> Optional[CallbackFunction]:
         """JavaScript formatter function to use instead of the default for series
         descriptions.
 
@@ -94,13 +96,14 @@ class AccessibilitySeries(HighchartsMeta):
         ``false`` is returned, the default formatter will be used for that series.
 
         :returns: JavaScript formatter function
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._description_formatter
 
     @description_formatter.setter
+    @class_sensitive(CallbackFunction)
     def description_formatter(self, value):
-        self._description_formatter = validators.string(value, allow_empty = True)
+        self._description_formatter = value
 
     @property
     def point_description_enabled_threshold(self) -> Optional[bool | int]:

@@ -32,7 +32,7 @@ class ChartEvents(HighchartsMeta):
                 setattr(self, non_private_name, kwargs.pop(non_private_name, None))
 
     @property
-    def add_series(self) -> Optional[str]:
+    def add_series(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when a series is added to the chart
         after load time, using the JavaScript ``.addSeries()`` method.
 
@@ -42,42 +42,45 @@ class ChartEvents(HighchartsMeta):
 
         Returning ``false`` prevents the series from being added.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._add_series
 
     @add_series.setter
+    @class_sensitive(CallbackFunction)
     def add_series(self, value):
-        self._add_series = validators.string(value, allow_empty = True)
+        self._add_series = value
 
     @property
-    def after_print(self) -> Optional[str]:
+    def after_print(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires after a chart has been printed through
         the context menu or the ``Chart.print()`` JavaScript method.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._after_print
 
     @after_print.setter
+    @class_sensitive(CallbackFunction)
     def after_print(self, value):
-        self._after_print = validators.string(value, allow_empty = True)
+        self._after_print = value
 
     @property
-    def before_print(self) -> Optional[str]:
+    def before_print(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires before a chart is printed through
         the context menu or the ``Chart.print()`` JavaScript method.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._before_print
 
     @before_print.setter
+    @class_sensitive(CallbackFunction)
     def before_print(self, value):
-        self._before_print = validators.string(value, allow_empty = True)
+        self._before_print = value
 
     @property
-    def click(self) -> Optional[str]:
+    def click(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when the user clicks on the plot
         background. One parameter, ``event``, is passed to the JavaScript function,
         containing common event information.
@@ -92,16 +95,17 @@ class ChartEvents(HighchartsMeta):
 
           Remember the unit of a datetime axis is milliseconds since 1970-01-01 00:00:00.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._click
 
     @click.setter
+    @class_sensitive(CallbackFunction)
     def click(self, value):
-        self._click = validators.string(value, allow_empty = True)
+        self._click = value
 
     @property
-    def drilldown(self) -> Optional[str]:
+    def drilldown(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when a drilldown point is clicked,
         before the new series is added.
 
@@ -125,97 +129,104 @@ class ChartEvents(HighchartsMeta):
             all points corresponding to the category
           * ``seriesOptions``: options for the new series
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._drilldown
 
     @drilldown.setter
+    @class_sensitive(CallbackFunction)
     def drilldown(self, value):
-        self._drilldown = validators.string(value, allow_empty = True)
+        self._drilldown = value
 
     @property
-    def drillup(self) -> Optional[str]:
+    def drillup(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when the user drills up from a
         drilldown series.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._drillup
 
     @drillup.setter
+    @class_sensitive(CallbackFunction)
     def drillup(self, value):
-        self._drillup = validators.string(value, allow_empty = True)
+        self._drillup = value
 
     @property
-    def drillupall(self) -> Optional[str]:
+    def drillupall(self) -> Optional[CallbackFunction]:
         """In a chart with multiple drilldown series, this JavaScript callback function
         fires after all the series have been drilled up.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._drillupall
 
     @drillupall.setter
+    @class_sensitive(CallbackFunction)
     def drillupall(self, value):
-        self._drillupall = validators.string(value, allow_empty = True)
+        self._drillupall = value
 
     @property
-    def export_data(self) -> Optional[str]:
+    def export_data(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires while exporting data. This enables
         the modification of data rows before they are processed into their final format.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._export_data
 
     @export_data.setter
+    @class_sensitive(CallbackFunction)
     def export_data(self, value):
-        self._export_data = validators.string(value, allow_empty = True)
+        self._export_data = value
 
     @property
-    def fullscreen_close(self) -> Optional[str]:
+    def fullscreen_close(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when a fullscreen view is closed,
         either through a context menu item, the ``Esc`` key, or the JavaScript
         ``Chart.fullscreen.close()`` method.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._fullscreen_close
 
     @fullscreen_close.setter
+    @class_sensitive(CallbackFunction)
     def fullscreen_close(self, value):
-        self._fullscreen_close = validators.string(value, allow_empty = True)
+        self._fullscreen_close = value
 
     @property
-    def fullscreen_open(self) -> Optional[str]:
+    def fullscreen_open(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when a fullscreen view is opened,
         either through a context menu item or the JavaScript ``Chart.fullscreen.open()``
         method.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._fullscreen_open
 
     @fullscreen_open.setter
+    @class_sensitive(CallbackFunction)
     def fullscreen_open(self, value):
-        self._fullscreen_open = validators.string(value, allow_empty = True)
+        self._fullscreen_open = value
 
     @property
-    def load(self) -> Optional[str]:
+    def load(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when the chart has finished loading
         (including images, for example in point markers). One parameter, ``event``, is
         passed to the JavaScript function, containing common event information.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._load
 
     @load.setter
+    @class_sensitive(CallbackFunction)
     def load(self, value):
-        self._load = validators.string(value, allow_empty = True)
+        self._load = value
 
     @property
-    def redraw(self) -> Optional[str]:
+    def redraw(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when the chart is redrawn, either after
         a JavaScript call to ``chart.redraw()`` or after an axis, series, or point is
         modified in JavaScript with the ``redraw`` option set to ``true``.
@@ -223,16 +234,17 @@ class ChartEvents(HighchartsMeta):
         One parameter, ``event``, is passed to the JavaScript function, containing common
         event information.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._redraw
 
     @redraw.setter
+    @class_sensitive(CallbackFunction)
     def redraw(self, value):
-        self._redraw = validators.string(value, allow_empty = True)
+        self._redraw = value
 
     @property
-    def selection(self) -> Optional[str]:
+    def selection(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when an area of the chart has been
         selected (selection is enabled by setting :class:`Chart.zoom_type`).
 
@@ -256,13 +268,14 @@ class ChartEvents(HighchartsMeta):
 
           Remember the unit of a datetime axis is milliseconds since 1970-01-01 00:00:00.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._selection
 
     @selection.setter
+    @class_sensitive(CallbackFunction)
     def selection(self, value):
-        self._selection = validators.string(value, allow_empty = True)
+        self._selection = value
 
     @classmethod
     def from_dict(cls, as_dict):
@@ -316,7 +329,7 @@ class BreadcrumbEvents(HighchartsMeta):
                 setattr(self, non_private_name, kwargs.pop(non_private_name, None))
 
     @property
-    def click(self) -> Optional[str]:
+    def click(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when the user clicks on the plot
         background. One parameter, ``event``, is passed to the JavaScript function,
         containing common event information.
@@ -331,13 +344,14 @@ class BreadcrumbEvents(HighchartsMeta):
 
           Remember the unit of a datetime axis is milliseconds since 1970-01-01 00:00:00.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._click
 
     @click.setter
+    @class_sensitive(CallbackFunction)
     def click(self, value):
-        self._click = validators.string(value, allow_empty = True)
+        self._click = value
 
     @classmethod
     def from_dict(cls, as_dict):
@@ -370,54 +384,58 @@ class NavigationEvents(HighchartsMeta):
                 setattr(self, non_private_name, kwargs.pop(non_private_name, None))
 
     @property
-    def close_popup(self) -> Optional[str]:
+    def close_popup(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when a popup should be closed, for
         example when clicking on an annotation again.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._close_popup
 
     @close_popup.setter
+    @class_sensitive(CallbackFunction)
     def close_popup(self, value):
-        self._close_popup = validators.string(value, allow_empty = True)
+        self._close_popup = value
 
     @property
-    def deselect_button(self) -> Optional[str]:
+    def deselect_button(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when button state should change, for
         example after adding an annotation.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._deselect_button
 
     @deselect_button.setter
+    @class_sensitive(CallbackFunction)
     def deselect_button(self, value):
-        self._deselect_button = validators.string(value, allow_empty = True)
+        self._deselect_button = value
 
     @property
-    def select_button(self) -> Optional[str]:
+    def select_button(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires on a button click.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._select_button
 
     @select_button.setter
+    @class_sensitive(CallbackFunction)
     def select_button(self, value):
-        self._select_button = validators.string(value, allow_empty = True)
+        self._select_button = value
 
     @property
-    def show_popup(self) -> Optional[str]:
+    def show_popup(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when when selecting an annotation.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._show_popup
 
     @show_popup.setter
+    @class_sensitive(CallbackFunction)
     def show_popup(self, value):
-        self._show_popup = validators.string(value, allow_empty = True)
+        self._show_popup = value
 
     @classmethod
     def from_dict(cls, as_dict):
@@ -468,7 +486,7 @@ class PointEvents(HighchartsMeta):
         self.update = kwargs.pop('update', None)
 
     @property
-    def click(self) -> Optional[str]:
+    def click(self) -> Optional[CallbackFunction]:
         """JavaScript function that fires when a point is clicked.
 
         One parameter, ``event``, is passed to the function, containing common event
@@ -478,16 +496,17 @@ class PointEvents(HighchartsMeta):
         for the point's click event is to toggle the point's select state. Returning
         ``False`` from the JavaScript event handler function cancels this action.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._click
 
     @click.setter
+    @class_sensitive(CallbackFunction)
     def click(self, value):
-        self._click = validators.string(value, allow_empty = True)
+        self._click = value
 
     @property
-    def drag(self) -> Optional[str]:
+    def drag(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires while dragging a point.
 
         The mouse event is passed in as parameter. The original data can be accessed from
@@ -496,32 +515,34 @@ class PointEvents(HighchartsMeta):
         for simplicity, and its ID can be accessed from ``e.newPointId``. The this context
         is the point being dragged. To stop the default drag action, return ``false``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._drag
 
     @drag.setter
+    @class_sensitive(CallbackFunction)
     def drag(self, value):
-        self._drag = validators.string(value, allow_empty = True)
+        self._drag = value
 
     @property
-    def drag_start(self) -> Optional[str]:
+    def drag_start(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when starting to drag a point.
 
         In JavaScript, the mouse event object is passed in as an argument. If a drag
         handle is used, ``e.updateProp`` is set to the data property being dragged.
         The ``this`` context is the point.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._drag_start
 
     @drag_start.setter
+    @class_sensitive(CallbackFunction)
     def drag_start(self, value):
-        self._drag_start = validators.string(value, allow_empty = True)
+        self._drag_start = value
 
     @property
-    def drop(self) -> Optional[str]:
+    def drop(self) -> Optional[CallbackFunction]:
         """JavaScript function that fires when a point is droped (when dragging ends).
 
         The mouse event is passed in as parameter. The original data can be accessed from
@@ -530,29 +551,31 @@ class PointEvents(HighchartsMeta):
         for simplicity, and its ID can be accessed from ``e.newPointId``. The this context
         is the point being dragged.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._drop
 
     @drop.setter
+    @class_sensitive(CallbackFunction)
     def drop(self, value):
-        self._drop = validators.string(value, allow_empty = True)
+        self._drop = value
 
     @property
-    def mouse_out(self) -> Optional[str]:
+    def mouse_out(self) -> Optional[CallbackFunction]:
         """JavaScript function which fires when the mouse leaves the area close to the
         point.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._mouse_out
 
     @mouse_out.setter
+    @class_sensitive(CallbackFunction)
     def mouse_out(self, value):
-        self._mouse_out = validators.string(value, allow_empty = True)
+        self._mouse_out = value
 
     @property
-    def mouse_over(self) -> Optional[str]:
+    def mouse_over(self) -> Optional[CallbackFunction]:
         """JavaScript function which fires when the mouse enters the area close to the
         point. One parameter, ``event``, is passed to the function, containing common
         event information.
@@ -560,77 +583,81 @@ class PointEvents(HighchartsMeta):
         Returning ``false`` cancels the default behavior, which is to show a tooltip for
         the point.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._mouse_over
 
     @mouse_over.setter
+    @class_sensitive(CallbackFunction)
     def mouse_over(self, value):
-        self._mouse_over = validators.string(value, allow_empty = True)
+        self._mouse_over = value
 
     @property
-    def remove(self) -> Optional[str]:
+    def remove(self) -> Optional[CallbackFunction]:
         """JavaScript function which fires when the point is removed using the
         (JavaScript) ``.remove()`` method.
 
         One parameter, ``event``, is passed to the function. Returning ``false`` cancels
         the operation.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._remove
 
     @remove.setter
+    @class_sensitive(CallbackFunction)
     def remove(self, value):
-        self._remove = validators.string(value, allow_empty = True)
+        self._remove = value
 
     @property
-    def select(self) -> Optional[str]:
+    def select(self) -> Optional[CallbackFunction]:
         """JavaScript function which fires when the point is selected either
         programmatically or following a click on the point.
 
         One parameter, ``event``, is passed to the function. Returning ``false`` cancels
         the operation.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._select
 
     @select.setter
+    @class_sensitive(CallbackFunction)
     def select(self, value):
-        self._select = validators.string(value, allow_empty = True)
+        self._select = value
 
     @property
-    def unselect(self) -> Optional[str]:
+    def unselect(self) -> Optional[CallbackFunction]:
         """JavaScript function that fires when the point is unselected either
         programmatically or following a click on the point.
 
         One parameter, ``event``, is passed to the function. Returning ``false`` cancels
         the operation.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._unselect
 
     @unselect.setter
+    @class_sensitive(CallbackFunction)
     def unselect(self, value):
-        self._unselect = validators.string(value, allow_empty = True)
+        self._unselect = value
 
     @property
-    def update(self) -> Optional[str]:
+    def update(self) -> Optional[CallbackFunction]:
         """JavaScript function that fires when the point is updated programmatically
         through the (JavaScript) ``.update()`` method.
 
         One parameter, ``event``, is passed to the function. The new point options can be
         accessed through ``event.options``. Returning ``false`` cancels the operation.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._update
 
     @update.setter
     def update(self, value):
-        self._update = validators.string(value, allow_empty = True)
+        self._update = value
 
     @classmethod
     def from_dict(cls, as_dict):
@@ -689,20 +716,21 @@ class SeriesEvents(HighchartsMeta):
         self.show = kwargs.pop('show', None)
 
     @property
-    def after_animate(self) -> Optional[str]:
+    def after_animate(self) -> Optional[CallbackFunction]:
         """JavaScript function that fires after the series has finished its initial
         animation, or if animation is disabled, immediately as the series is displayed.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._after_animate
 
     @after_animate.setter
+    @class_sensitive(CallbackFunction)
     def after_animate(self, value):
-        self._after_animate = validators.string(value, allow_empty = True)
+        self._after_animate = value
 
     @property
-    def checkbox_click(self) -> Optional[str]:
+    def checkbox_click(self) -> Optional[CallbackFunction]:
         """JavaScript function that fires when the checkbox next to the series' name in
         the legend is clicked.
 
@@ -711,46 +739,49 @@ class SeriesEvents(HighchartsMeta):
         ``event.item``. Return ``false`` to prevent the default action which is to toggle
         the select state of the series.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._checkbox_click
 
     @checkbox_click.setter
+    @class_sensitive(CallbackFunction)
     def checkbox_click(self, value):
-        self._checkbox_click = validators.string(value, allow_empty = True)
+        self._checkbox_click = value
 
     @property
-    def click(self) -> Optional[str]:
+    def click(self) -> Optional[CallbackFunction]:
         """JavaScript function that fires when when the series is clicked.
 
         One parameter, ``event``, is passed to the (JavaScript) function, containing
         common event information. Additionally, ``event.point`` holds a pointer to the
         nearest point on the graph.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._click
 
     @click.setter
+    @class_sensitive(CallbackFunction)
     def click(self, value):
-        self._click = validators.string(value, allow_empty = True)
+        self._click = value
 
     @property
-    def hide(self) -> Optional[str]:
+    def hide(self) -> Optional[CallbackFunction]:
         """JavaScript function that fires when the series is hidden after chart generation
         time, either by clicking the legend item or by calling (in JavaScript)
         ``.hide()``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._hide
 
     @hide.setter
+    @class_sensitive(CallbackFunction)
     def hide(self, value):
-        self._hide = validators.string(value, allow_empty = True)
+        self._hide = value
 
     @property
-    def legend_item_click(self) -> Optional[str]:
+    def legend_item_click(self) -> Optional[CallbackFunction]:
         """JavaScript function that fires when the legend item belonging to the series is
         clicked.
 
@@ -758,16 +789,17 @@ class SeriesEvents(HighchartsMeta):
         action is to toggle the visibility of the series. This can be prevented by
         returning ``false`` or calling (in JavaScript) ``event.preventDefault()``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._legend_item_click
 
     @legend_item_click.setter
+    @class_sensitive(CallbackFunction)
     def legend_item_click(self, value):
-        self._legend_item_click = validators.string(value, allow_empty = True)
+        self._legend_item_click = value
 
     @property
-    def mouse_out(self) -> Optional[str]:
+    def mouse_out(self) -> Optional[CallbackFunction]:
         """JavaScript function which fires when the mouse leaves the graph.
 
         One parameter, ``event``, is passed to the (JavaScript) function, containing
@@ -775,42 +807,45 @@ class SeriesEvents(HighchartsMeta):
         the ``mouse_out`` event doesn't happen before the mouse enters another graph or
         leaves the plot area.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._mouse_out
 
     @mouse_out.setter
+    @class_sensitive(CallbackFunction)
     def mouse_out(self, value):
-        self._mouse_out = validators.string(value, allow_empty = True)
+        self._mouse_out = value
 
     @property
-    def mouse_over(self) -> Optional[str]:
+    def mouse_over(self) -> Optional[CallbackFunction]:
         """JavaScript function which fires when the mouse enters the graph.
 
         One parameter, ``event``, is passed to the function, containing common event
         information.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._mouse_over
 
     @mouse_over.setter
+    @class_sensitive(CallbackFunction)
     def mouse_over(self, value):
-        self._mouse_over = validators.string(value, allow_empty = True)
+        self._mouse_over = value
 
     @property
-    def show(self) -> Optional[str]:
+    def show(self) -> Optional[CallbackFunction]:
         """JavaScript function which fires when the series is shown after chart generation
         time, either by clicking the legend item or by calling (in JavaScript)
         ``.show()``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._show
 
     @show.setter
+    @class_sensitive(CallbackFunction)
     def show(self, value):
-        self._show = validators.string(value, allow_empty = True)
+        self._show = value
 
     @classmethod
     def from_dict(cls, as_dict):
@@ -851,7 +886,7 @@ class ClusterEvents(HighchartsMeta):
         self.drill_to_cluster = kwargs.pop('drill_to_cluster', None)
 
     @property
-    def drill_to_cluster(self) -> Optional[str]:
+    def drill_to_cluster(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when the cluster point is clicked and
         :meth:`Cluster.drill_to_cluster` is ``True``.
 
@@ -859,13 +894,14 @@ class ClusterEvents(HighchartsMeta):
         to the cluster points range. This can be prevented by calling (in JavaScript)
         ``event.preventDefault()``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._drill_to_cluster
 
     @drill_to_cluster.setter
+    @class_sensitive(CallbackFunction)
     def drill_to_cluster(self, value):
-        self._drill_to_cluster = validators.string(value, allow_empty = True)
+        self._drill_to_cluster = value
 
     @classmethod
     def from_dict(cls, as_dict):

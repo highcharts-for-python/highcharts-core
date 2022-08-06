@@ -4,10 +4,11 @@ from decimal import Decimal
 from validator_collection import validators
 
 from highcharts import constants, errors
-from highcharts.decorators import class_sensitive, validate_types
+from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class BubbleLegendLabelOptions(HighchartsMeta):
@@ -107,7 +108,7 @@ class BubbleLegendLabelOptions(HighchartsMeta):
         self._format = validators.string(value, allow_empty = True)
 
     @property
-    def formatter(self) -> Optional[str]:
+    def formatter(self) -> Optional[CallbackFunction]:
         """JavaScript callback function to format the bubble legend's data labels.
 
         .. hint::
@@ -119,13 +120,14 @@ class BubbleLegendLabelOptions(HighchartsMeta):
             * ``this.center`` - the y position of the bubble's center
 
         :returns: A JavaScript callback function.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._formatter
 
     @formatter.setter
+    @class_sensitive(CallbackFunction)
     def formatter(self, value):
-        self._formatter = validators.string(value, allow_empty = True)
+        self._formatter = value
 
     @property
     def style(self) -> Optional[str]:

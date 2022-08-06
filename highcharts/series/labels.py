@@ -6,6 +6,7 @@ from validator_collection import validators
 from highcharts import constants
 from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class Box(HighchartsMeta):
@@ -206,19 +207,20 @@ class SeriesLabel(HighchartsMeta):
         self._format = validators.string(value, allow_empty = True)
 
     @property
-    def formatter(self) -> Optional[str]:
+    def formatter(self) -> Optional[CallbackFunction]:
         """JavaScript callback function to format each of the series' labels.
 
         The ``this`` keyword refers to the ``series`` object. By default the formatter is
         :obj:`None <python:None>` and the ``series.name`` is rendered.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._formatter
 
     @formatter.setter
+    @class_sensitive(CallbackFunction)
     def formatter(self, value):
-        self._formatter = validators.string(value, allow_empty = True)
+        self._formatter = value
 
     @property
     def max_font_size(self) -> Optional[int | float | Decimal | constants.EnforcedNullType]:

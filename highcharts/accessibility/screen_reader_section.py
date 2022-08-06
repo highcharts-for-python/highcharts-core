@@ -3,7 +3,9 @@ from typing import Optional
 from validator_collection import validators
 
 from highcharts import constants
+from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class ScreenReaderSection(HighchartsMeta):
@@ -72,7 +74,7 @@ class ScreenReaderSection(HighchartsMeta):
             self._after_chart_format = validators.string(value, allow_empty = False)
 
     @property
-    def after_chart_formatter(self) -> Optional[str]:
+    def after_chart_formatter(self) -> Optional[CallbackFunction]:
         """A JavaScript formatter function to create the HTML contents of the hidden
         screen reader information region after the chart.
 
@@ -84,13 +86,14 @@ class ScreenReaderSection(HighchartsMeta):
 
         :returns: JavaScript formatter function for the screen reader information region
           after the chart.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._after_chart_formatter
 
     @after_chart_formatter.setter
+    @class_sensitive(CallbackFunction)
     def after_chart_formatter(self, value):
-        self._after_chart_formatter = validators.string(value, allow_empty = True)
+        self._after_chart_formatter = value
 
     @property
     def axis_range_date_format(self) -> Optional[str]:
@@ -156,7 +159,7 @@ class ScreenReaderSection(HighchartsMeta):
             self._before_chart_format = validators.string(value, allow_empty = False)
 
     @property
-    def before_chart_formatter(self) -> Optional[str]:
+    def before_chart_formatter(self) -> Optional[CallbackFunction]:
         """A JavaScript formatter function to create the HTML contents of the hidden
         screen reader information region before the chart.
 
@@ -168,16 +171,17 @@ class ScreenReaderSection(HighchartsMeta):
 
         :returns: JavaScript formatter function for the screen reader information region
           before the chart.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._before_chart_formatter
 
     @before_chart_formatter.setter
+    @class_sensitive(CallbackFunction)
     def before_chart_formatter(self, value):
-        self._before_chart_formatter = validators.string(value, allow_empty = True)
+        self._before_chart_formatter = value
 
     @property
-    def on_play_as_sound_click(self) -> Optional[str]:
+    def on_play_as_sound_click(self) -> Optional[CallbackFunction]:
         """JavaScript function to run upon clicking the "Play as sound" button in the
         screen reader region.
 
@@ -190,11 +194,12 @@ class ScreenReaderSection(HighchartsMeta):
         return self._on_play_as_sound_click
 
     @on_play_as_sound_click.setter
+    @class_sensitive(CallbackFunction)
     def on_play_as_sound_click(self, value):
-        self._on_play_as_sound_click = validators.string(value, allow_empty = True)
+        self._on_play_as_sound_click = value
 
     @property
-    def on_view_data_table_click(self) -> Optional[str]:
+    def on_view_data_table_click(self) -> Optional[CallbackFunction]:
         """JavaScript function to run upon clicking the "View as Data Table" link in the
         screen reader region.
 
@@ -203,13 +208,14 @@ class ScreenReaderSection(HighchartsMeta):
 
         :returns: JavaScript function to run upon clicking the "View as Data Table" link
           in the screen reader region.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._on_view_data_table_click
 
     @on_view_data_table_click.setter
+    @class_sensitive(CallbackFunction)
     def on_view_data_table_click(self, value):
-        self._on_view_data_table_click = validators.string(value, allow_empty = True)
+        self._on_view_data_table_click = value
 
     @classmethod
     def from_dict(cls, as_dict):

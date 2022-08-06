@@ -18,6 +18,7 @@ from highcharts.utility_classes.data_labels import DataLabel
 from highcharts.utility_classes.events import SeriesEvents
 from highcharts.utility_classes.markers import Marker
 from highcharts.utility_classes.states import States
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class GenericTypeOptions(HighchartsMeta):
@@ -570,17 +571,18 @@ class GenericTypeOptions(HighchartsMeta):
         self._point = value
 
     @property
-    def point_description_formatter(self) -> Optional[str]:
+    def point_description_formatter(self) -> Optional[CallbackFunction]:
         """Same as for :meth:`Accessibility.series.description_formatter`, only for an
         individual series. Overrides the chart-wide configuration.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._point_description_formatter
 
     @point_description_formatter.setter
+    @class_sensitive(CallbackFunction)
     def point_description_formatter(self, value):
-        self._point_description_formatter = validators.string(value, allow_empty = True)
+        self._point_description_formatter = value
 
     @property
     def selected(self) -> Optional[bool]:

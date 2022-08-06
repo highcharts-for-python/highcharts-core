@@ -6,6 +6,7 @@ from validator_collection import validators, checkers
 from highcharts import errors, constants
 from highcharts.decorators import class_sensitive, validate_types
 from highcharts.metaclasses import HighchartsMeta
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 from highcharts.utility_classes.animation import AnimationOptions
 from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
@@ -733,17 +734,18 @@ class Chart(HighchartsMeta):
         self._margin_top = validators.numeric(value, allow_empty = True)
 
     @property
-    def number_formatter(self) -> Optional[str]:
+    def number_formatter(self) -> Optional[CallbackFunction]:
         """JavaScript Callback function to override the default function that formats all
         the numbers in the chart. Returns a string with the formatted number.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._number_formatter
 
     @number_formatter.setter
+    @class_sensitive(CallbackFunction)
     def number_formatter(self, value):
-        self._number_formatter = validators.string(value, allow_empty = True)
+        self._number_formatter = value
 
     @property
     def options_3d(self) -> Optional[Options3D]:

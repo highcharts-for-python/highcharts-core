@@ -10,6 +10,7 @@ from highcharts.metaclasses import HighchartsMeta
 from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
 from highcharts.utility_classes.shadows import ShadowOptions
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class AnnotationLabelOptionAccessibility(HighchartsMeta):
@@ -315,7 +316,7 @@ class LabelOptions(HighchartsMeta):
         self._format = validators.string(value, allow_empty = True)
 
     @property
-    def formatter(self) -> Optional[str]:
+    def formatter(self) -> Optional[CallbackFunction]:
         f"""JavaScript callback function to format the annotation's label.
 
         Defaults to {constants.DEFAULT_LABEL_FORMATTER}.
@@ -330,13 +331,14 @@ class LabelOptions(HighchartsMeta):
           In the callback function, the use of ``this`` refers to a point object.
 
         :returns: A JavaScript callback function.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._formatter
 
     @formatter.setter
+    @class_sensitive(CallbackFunction)
     def formatter(self, value):
-        self._formatter = validators.string(value, allow_empty = True)
+        self._formatter = value
 
     @property
     def include_in_data_export(self) -> Optional[bool]:

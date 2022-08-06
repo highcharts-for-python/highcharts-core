@@ -13,6 +13,7 @@ from highcharts.legend.title import LegendTitle
 from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
 from highcharts.utility_classes.shadows import ShadowOptions
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class Legend(HighchartsMeta):
@@ -525,7 +526,7 @@ class Legend(HighchartsMeta):
         self._label_format = validators.string(value, allow_empty = True)
 
     @property
-    def label_formatter(self) -> Optional[str]:
+    def label_formatter(self) -> Optional[CallbackFunction]:
         """A JavaScript callback function that formats each of the series' labels.
 
         .. note::
@@ -533,13 +534,14 @@ class Legend(HighchartsMeta):
           The (JavaScript) ``this`` keyword refers to the series object for most chart
           types, and refers to the point object for pie charts.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._label_formatter
 
     @label_formatter.setter
+    @class_sensitive(CallbackFunction)
     def label_formatter(self, value):
-        self._label_formatter = validators.string(value, allow_empty = True)
+        self._label_formatter = value
 
     @property
     def layout(self) -> Optional[str]:

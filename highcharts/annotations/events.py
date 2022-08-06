@@ -1,8 +1,8 @@
 from typing import Optional
 
-from validator_collection import validators
-
+from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class AnnotationEvent(HighchartsMeta):
@@ -21,58 +21,62 @@ class AnnotationEvent(HighchartsMeta):
         self.remove = kwargs.pop('remove', None)
 
     @property
-    def add(self) -> Optional[str]:
+    def add(self) -> Optional[CallbackFunction]:
         """JavaScript callback function called when an annotation is added to a chart.
 
         :returns: JavaScript callback function.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._add
 
     @add.setter
+    @class_sensitive(CallbackFunction)
     def add(self, value):
-        self._add = validators.string(value, allow_empty = True)
+        self._add = value
 
     @property
-    def after_update(self) -> Optional[str]:
+    def after_update(self) -> Optional[CallbackFunction]:
         """JavaScript callback function called when an annotation is updated (e.g. drag
         and dropped or resized by control points).
 
         :returns: JavaScript callback function.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._after_update
 
     @after_update.setter
+    @class_sensitive(CallbackFunction)
     def after_update(self, value):
-        self._after_update = validators.string(value, allow_empty = True)
+        self._after_update = value
 
     @property
-    def click(self) -> Optional[str]:
+    def click(self) -> Optional[CallbackFunction]:
         """JavaScript callback function called when an annotation is clicked.
 
         :returns: JavaScript callback function.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._click
 
     @click.setter
+    @class_sensitive(CallbackFunction)
     def click(self, value):
-        self._click = validators.string(value, allow_empty = True)
+        self._click = value
 
     @property
-    def remove(self) -> Optional[str]:
+    def remove(self) -> Optional[CallbackFunction]:
         """JavaScript callback function called when an annotation is removed from the
         chart.
 
         :returns: JavaScript callback function.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._remove
 
     @remove.setter
+    @class_sensitive(CallbackFunction)
     def remove(self, value):
-        self._remove = validators.string(value, allow_empty = True)
+        self._remove = value
 
     @classmethod
     def from_dict(cls, as_dict):

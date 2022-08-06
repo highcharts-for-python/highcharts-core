@@ -8,6 +8,7 @@ from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.utility_classes.events import BreadcrumbEvents
 from highcharts.utility_classes.position import Position
+from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 class Separator(HighchartsMeta):
@@ -178,17 +179,18 @@ class BreadcrumbOptions(HighchartsMeta):
         self._format = validators.string(value, allow_empty = True)
 
     @property
-    def formatter(self) -> Optional[str]:
+    def formatter(self) -> Optional[CallbackFunction]:
         """JavaScript callback function to format the breadcrumb text.
 
         :returns: A JavaScript callback function.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
         """
         return self._formatter
 
     @formatter.setter
+    @class_sensitive(CallbackFunction)
     def formatter(self, value):
-        self._formatter = validators.string(value, allow_empty = True)
+        self._formatter = value
 
     @property
     def position(self) -> Optional[Position]:
