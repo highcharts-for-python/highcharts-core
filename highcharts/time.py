@@ -179,7 +179,7 @@ class Time(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'Date': self.Date,
             'getTimezoneOffset': self.get_timezone_offset,
@@ -189,4 +189,4 @@ class Time(HighchartsMeta):
             'useUTC': self.use_utc
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

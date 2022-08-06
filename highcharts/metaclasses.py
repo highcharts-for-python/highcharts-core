@@ -1,6 +1,7 @@
 """Set of metaclasses used throughout the library."""
 from abc import ABC, abstractmethod
 from collections import UserDict
+from typing import Optional
 try:
     import orjson as json
 except ImportError:
@@ -27,6 +28,22 @@ class HighchartsMeta(ABC):
         for key in kwargs:
             setattr(self, key, kwargs.get(key, None))
 
+    @abstractmethod
+    def _to_untrimmed_dict(self) -> dict:
+        """Generate the first-level of the :class:`dict <python:dict>` representation of
+        the object.
+
+        .. note::
+
+          This method does *not* traverse the object structure to convert the object into
+          a full :class:`dict <python:dict>` representation - it merely goes "part" of the
+          way there to replace the Highcharts for Python keys with their correpsond
+          Highcharts JS keys.
+
+        :rtype: :class:`dict <python:dict>`
+        """
+        raise NotImplementedError()
+
     @staticmethod
     def trim_iterable(untrimmed):
         """Convert any :class:`EnforcedNullType` values in ``untrimmed`` to ``'null'``.
@@ -50,7 +67,7 @@ class HighchartsMeta(ABC):
         return trimmed
 
     @staticmethod
-    def trim_dict(untrimmed):
+    def trim_dict(untrimmed: Optional[dict]) -> dict:
         """Remove keys from ``untrimmed`` whose values are :obj:`None <python:None>` and
         convert values that have ``.to_dict()`` methods.
 
@@ -66,6 +83,8 @@ class HighchartsMeta(ABC):
                 as_dict[key] = trimmed_value
             elif value == constants.EnforcedNull:
                 as_dict[key] = 'null'
+            elif isinstance(value, dict):
+                as_dict[key] = HighchartsMeta.trim_dict(value_as_dict)
             elif value:
                 as_dict[key] = HighchartsMeta.trim_iterable(value)
 
@@ -98,8 +117,7 @@ class HighchartsMeta(ABC):
 
         return cls.from_dict(as_dict)
 
-    @abstractmethod
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """Generate a :class:`dict <python:dict>` representation of the object compatible
         with the Highcharts JavaScript library.
 
@@ -113,7 +131,9 @@ class HighchartsMeta(ABC):
         :returns: A :class:`dict <python:dict>` representation of the object.
         :rtype: :class:`dict <python:dict>`
         """
-        raise NotImplementedError()
+        untrimmed = self._to_untrimmed_dict()
+
+        return self.trim_dict(untrimmed)
 
     def to_json(self, encoding = 'utf-8'):
         """Generate a JSON string/byte string representation of the object compatible with

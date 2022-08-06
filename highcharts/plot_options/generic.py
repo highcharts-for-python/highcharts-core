@@ -59,7 +59,7 @@ class GenericTypeOptions(HighchartsMeta):
         self._visible = None
 
         self.accessibility = kwargs.pop('accessibility', None)
-        self.allow_point_select = kwargs.pop('allow_point_select', False)
+        self.allow_point_select = kwargs.pop('allow_point_select', None)
         self.animation = kwargs.pop('animation', None)
         self.class_name = kwargs.pop('class_name', None)
         self.clip = kwargs.pop('clip', True)
@@ -69,7 +69,7 @@ class GenericTypeOptions(HighchartsMeta):
         self.dash_style = kwargs.pop('dash_style', None)
         self.data_labels = kwargs.pop('data_labels', None)
         self.description = kwargs.pop('description', None)
-        self.enable_mouse_tracking = kwargs.pop('enable_mouse_tracking', True)
+        self.enable_mouse_tracking = kwargs.pop('enable_mouse_tracking', None)
         self.events = kwargs.pop('events', None)
         self.include_in_data_export = kwargs.pop('include_in_data_export', None)
         self.keys = kwargs.pop('keys', None)
@@ -80,8 +80,8 @@ class GenericTypeOptions(HighchartsMeta):
         self.opacity = kwargs.pop('opacity', None)
         self.point = kwargs.pop('point', None)
         self.point_description_formatter = kwargs.pop('point_description_formatter', None)
-        self.selected = kwargs.pop('selected', False)
-        self.show_checkbox = kwargs.pop('show_checkbox', False)
+        self.selected = kwargs.pop('selected', None)
+        self.show_checkbox = kwargs.pop('show_checkbox', None)
         self.show_in_legend = kwargs.pop('show_in_legend', None)
         self.skip_keyboard_navigation = kwargs.pop('skip_keyboard_navigation', None)
         self.states = kwargs.pop('states', None)
@@ -89,7 +89,7 @@ class GenericTypeOptions(HighchartsMeta):
         self.threshold = kwargs.pop('threshold', None)
         self.tooltip = kwargs.pop('tooltip', None)
         self.turbo_threshold = kwargs.pop('turbo_threshold', None)
-        self.visible = kwargs.pop('visible', True)
+        self.visible = kwargs.pop('visible', None)
 
     @property
     def type_(self) -> str:
@@ -120,7 +120,7 @@ class GenericTypeOptions(HighchartsMeta):
         self._accessibility = value
 
     @property
-    def allow_point_select(self) -> bool:
+    def allow_point_select(self) -> Optional[bool]:
         """Allow this series' points to be selected by clicking on the graphic (columns,
         point markers, pie slices, map areas etc).
 
@@ -131,7 +131,7 @@ class GenericTypeOptions(HighchartsMeta):
 
         Defaults to ``False``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._allow_point_select
 
@@ -184,18 +184,21 @@ class GenericTypeOptions(HighchartsMeta):
         self._class_name = validators.string(value, allow_empty = True)
 
     @property
-    def clip(self) -> bool:
+    def clip(self) -> Optional[bool]:
         """If ``False``, allows the series to be rendered in the entire plot area. If
         ``True``, constrains where the series can be rendered within the plot area.
         Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._clip
 
     @clip.setter
     def clip(self, value):
-        self._clip = bool(value)
+        if value is None:
+            self._clip = None
+        else:
+            self._clip = bool(value)
 
     @property
     def color(self) -> Optional[str | Gradient | Pattern]:
@@ -384,7 +387,7 @@ class GenericTypeOptions(HighchartsMeta):
         """A description of the series to add to the screen reader information about the
         series.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._description
 
@@ -393,18 +396,21 @@ class GenericTypeOptions(HighchartsMeta):
         self._description = validators.string(value, allow_empty = True)
 
     @property
-    def enable_mouse_tracking(self) -> bool:
+    def enable_mouse_tracking(self) -> Optional[bool]:
         """If ``True``, enables mouse tracking for the series (used to capture point
         tooltips, click events on graphs and points, etc.). If ``False``, disables
         mouse tracking for the series (which can help performance). Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._enable_mouse_tracking
 
     @enable_mouse_tracking.setter
     def enable_mouse_tracking(self, value):
-        self._enable_mouse_tracking = bool(value)
+        if value is None:
+            self._enable_mouse_tracking = None
+        else:
+            self._enable_mouse_tracking = bool(value)
 
     @property
     def events(self) -> Optional[SeriesEvents]:
@@ -425,17 +431,20 @@ class GenericTypeOptions(HighchartsMeta):
         self._events = value
 
     @property
-    def include_in_data_export(self) -> bool:
+    def include_in_data_export(self) -> Optional[bool]:
         """If ``False``, will prevent the data series from being included in any form of
         data export. Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._include_in_data_export
 
     @include_in_data_export.setter
     def include_in_data_export(self, value):
-        self._include_in_data_export = bool(value)
+        if value is None:
+            self._include_in_data_export = None
+        else:
+            self._include_in_data_export = bool(value)
 
     @property
     def keys(self) -> Optional[List[str]]:
@@ -574,7 +583,7 @@ class GenericTypeOptions(HighchartsMeta):
         self._point_description_formatter = validators.string(value, allow_empty = True)
 
     @property
-    def selected(self) -> bool:
+    def selected(self) -> Optional[bool]:
         """If ``True``, the series is selected initially (by default, without user
         interaction). Defaults to ``False``.
 
@@ -583,16 +592,19 @@ class GenericTypeOptions(HighchartsMeta):
           If :meth:`GenericTypeOptions.show_checkbox` is ``True``, then the checkbox
           will be checked if ``selected`` is ``True``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._selected
 
     @selected.setter
     def selected(self, value):
-        self._selected = bool(value)
+        if value is None:
+            self._selected = None
+        else:
+            self._selected = bool(value)
 
     @property
-    def show_checkbox(self) -> bool:
+    def show_checkbox(self) -> Optional[bool]:
         """If ``True``, a checkbox is displayed next to the legend item to allow selecting
         the series.
 
@@ -601,35 +613,48 @@ class GenericTypeOptions(HighchartsMeta):
           The state of the checkbox is controlled by the
           :meth:`GenericTypeOptions.selected` property.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._show_checkbox
 
+    @show_checkbox.settter
+    def show_checkbox(self, value):
+        if value is None:
+            self._show_checkbox = None
+        else:
+            self._show_checkbox = bool(value)
+
     @property
-    def show_in_legend(self) -> bool:
+    def show_in_legend(self) -> Optional[bool]:
         """Whether to display this particular series or series type in the legend.
         Standalone series are shown in the legend by default, and linked series are not.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._show_in_legend
 
     @show_in_legend.setter
     def show_in_legend(self, value):
-        self._show_in_legend = bool(value)
+        if value is None:
+            self._show_in_legend = None
+        else:
+            self._show_in_legend = bool(value)
 
     @property
-    def skip_keyboard_navigation(self) -> bool:
+    def skip_keyboard_navigation(self) -> Optional[bool]:
         """If ``True``, the accessibility module will skip past this series when executing
         keyboard navigation.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._skip_keyboard_navigation
 
     @skip_keyboard_navigation.setter
     def skip_keyboard_navigation(self, value):
-        self._skip_keyboard_navigation = bool(value)
+        if value is None:
+            self._skip_keyboard_navigation = None
+        else:
+            self._skip_keyboard_navigation = bool(value)
 
     @property
     def states(self) -> Optional[States]:
@@ -645,7 +670,7 @@ class GenericTypeOptions(HighchartsMeta):
         self._states = value
 
     @property
-    def sticky_tracking(self) -> bool:
+    def sticky_tracking(self) -> Optional[bool]:
         """Sticky tracking of mouse events.
 
         When ``True``, the (JavaScript) ``mouseOut`` event on a series is not triggered
@@ -665,22 +690,25 @@ class GenericTypeOptions(HighchartsMeta):
 
           The boost module will force this option because of technical limitations.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._sticky_tracking
 
     @sticky_tracking.setter
     def sticky_tracking(self, value):
-        self._sticky_tracking = bool(value)
+        if value is None:
+            self._sticky_tracking = None
+        else:
+            self._sticky_tracking = bool(value)
 
     @property
-    def threshold(self) -> constants.EnforcedNullType | int | float | Decimal:
+    def threshold(self) -> Optional[constants.EnforcedNullType | int | float | Decimal]:
         """The Y axis value to serve as the base for the columns, for distinguishing
         between values above and below a threshold. Defaults to ``0``.
 
         If :class:`EnforcedNullType`, the columns extend from the padding Y axis minimum.
 
-        :rtype: numeric or :class:`EnforcedNullType`
+        :rtype: numeric or :class:`EnforcedNullType` or :obj:`None <python:None>`
         """
         return self._threshold
 
@@ -689,7 +717,7 @@ class GenericTypeOptions(HighchartsMeta):
         if value == constants.EnforcedNull:
             self._threshold = constants.EnforcedNull
         else:
-            self._threshold = validators.numeric(value, allow_empty = True) or 0
+            self._threshold = validators.numeric(value, allow_empty = True)
 
     @property
     def tooltip(self) -> Optional[Tooltip]:
@@ -707,7 +735,7 @@ class GenericTypeOptions(HighchartsMeta):
         self._tooltip = value
 
     @property
-    def turbo_threshold(self) -> int:
+    def turbo_threshold(self) -> Optional[int]:
         """When a series contains a data array longer than this value, only one
         dimensional arrays of numbers, or two dimensional arrays with x and y values are
         allowed. Also, only the first point is tested, and the rest are assumed to be the
@@ -721,31 +749,31 @@ class GenericTypeOptions(HighchartsMeta):
           In boost mode, turbo threshold is forced. Only array of numbers or two
           dimensional arrays are allowed.
 
-        :rtype: :class:`int <python:int>`
+        :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
         """
         return self._turbo_threshold
 
     @turbo_threshold.setter
     def turbo_threshold(self, value):
-        if not value:
-            self._turbo_threshold = 0
-        else:
-            self._turbo_threshold = validators.integer(value,
-                                                       allow_empty = True,
-                                                       minimum = 0) or 0
+        self._turbo_threshold = validators.integer(value,
+                                                   allow_empty = True,
+                                                   minimum = 0)
 
     @property
-    def visible(self) -> bool:
+    def visible(self) -> Optional[bool]:
         """If ``True``, the series is initially visible. If ``False``, the series is
         hidden by default. Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._visible
 
     @visible.setter
     def visible(self, value):
-        self._visible = bool(value)
+        if value is None:
+            self._visible = None
+        else:
+            self._visible = bool(value)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -762,17 +790,17 @@ class GenericTypeOptions(HighchartsMeta):
         """
         kwargs = {
             'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', False),
+            'allow_point_select': as_dict.pop('allowPointSelect', None),
             'animation': as_dict.pop('animation', None),
             'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', True),
+            'clip': as_dict.pop('clip', None),
             'color': as_dict.pop('color', None),
             'cursor': as_dict.pop('cursor', None),
             'custom': as_dict.pop('custom', None),
             'dash_style': as_dict.pop('dashStyle', None),
             'data_labels': as_dict.pop('dataLabels', None),
             'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', True),
+            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
             'events': as_dict.pop('events', None),
             'include_in_data_export': as_dict.pop('includeInDataExport', None),
             'keys': as_dict.pop('keys', None),
@@ -783,8 +811,8 @@ class GenericTypeOptions(HighchartsMeta):
             'opacity': as_dict.pop('opacity', None),
             'point': as_dict.pop('point', None),
             'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', False),
-            'show_checkbox': as_dict.pop('showCheckbox', False),
+            'selected': as_dict.pop('selected', None),
+            'show_checkbox': as_dict.pop('showCheckbox', None),
             'show_in_legend': as_dict.pop('showInLegend', None),
             'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
             'states': as_dict.pop('states', None),
@@ -803,7 +831,7 @@ class GenericTypeOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'type': self.type_,
             'accessibility': self.accessibility,
@@ -840,4 +868,4 @@ class GenericTypeOptions(HighchartsMeta):
             'visible': self.visible
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

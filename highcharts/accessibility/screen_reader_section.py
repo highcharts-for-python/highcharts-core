@@ -11,21 +11,18 @@ class ScreenReaderSection(HighchartsMeta):
     and after the chart."""
 
     def __init__(self, **kwargs):
-        self._after_chart_format = constants.DEFAULT_AFTER_CHART_FORMAT
+        self._after_chart_format = None
         self._after_chart_formatter = None
-        self._axis_range_date_format = constants.DEFAULT_AXIS_RANGE_DATE_FORMAT
-        self._before_chart_format = constants.DEFAULT_BEFORE_CHART_FORMAT
+        self._axis_range_date_format = None
+        self._before_chart_format = None
         self._before_chart_formatter = None
         self._on_play_as_sound_click = None
         self._on_view_data_table_click = None
 
-        self.after_chart_format = kwargs.pop('after_chart_format',
-                                             constants.DEFAULT_AFTER_CHART_FORMAT)
+        self.after_chart_format = kwargs.pop('after_chart_format', None)
         self.after_chart_formatter = kwargs.pop('after_chart_formatter', None)
-        self.axis_range_date_format = kwargs.pop('axis_range_date_format',
-                                                 constants.DEFAULT_AXIS_RANGE_DATE_FORMAT)
-        self.before_chart_format = kwargs.pop('before_chart_format',
-                                              constants.DEFAULT_BEFORE_CHART_FORMAT)
+        self.axis_range_date_format = kwargs.pop('axis_range_date_format', None)
+        self.before_chart_format = kwargs.pop('before_chart_format', None)
         self.before_chart_formatter = kwargs.pop('before_chart_formatter', None)
         self.on_play_as_sound_click = kwargs.pop('on_play_as_sound_click', None)
         self.on_view_data_table_click = kwargs.pop('on_view_data_table_click', None)
@@ -217,13 +214,10 @@ class ScreenReaderSection(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'after_chart_format': as_dict.pop('afterChartFormat',
-                                              constants.DEFAULT_AFTER_CHART_FORMAT),
+            'after_chart_format': as_dict.pop('afterChartFormat', None),
             'after_chart_formatter': as_dict.pop('afterChartFormatter', None),
-            'axis_range_date_format': as_dict.pop('axisRangeDateFormat',
-                                                  constants.DEFAULT_AXIS_RANGE_DATE_FORMAT),
-            'before_chart_format': as_dict.pop('beforeChartFormat',
-                                               constants.DEFAULT_BEFORE_CHART_FORMAT),
+            'axis_range_date_format': as_dict.pop('axisRangeDateFormat', None),
+            'before_chart_format': as_dict.pop('beforeChartFormat', None),
             'before_chart_formatter': as_dict.pop('beforeChartFormatter', None),
             'on_play_as_sound_click': as_dict.pop('onPlayAsSoundClick', None),
             'on_view_data_table_click': as_dict.pop('onViewDataTableClick', None)
@@ -231,7 +225,7 @@ class ScreenReaderSection(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_json(self, encoding = 'utf-8'):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'afterChartFormat': self.after_chart_format,
             'afterChartFormatter': self.after_chart_formatter,
@@ -241,6 +235,5 @@ class ScreenReaderSection(HighchartsMeta):
             'onPlayAsSoundClick': self.on_play_as_sound_click,
             'onViewDataTableClick': self.on_view_data_table_click
         }
-        as_dict = self.trim_dict(untrimmed)
 
-        return as_dict
+        return untrimmed

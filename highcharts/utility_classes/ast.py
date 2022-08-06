@@ -65,7 +65,7 @@ class AttributeObject(UserDict):
 
         return cls.from_dict(as_dict)
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """Generate a :class:`dict <python:dict>` representation of the object compatible
         with the Highcharts JavaScript library.
 
@@ -197,7 +197,7 @@ class ASTNode(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'attributes': self.attributes,
             'children': self.children,
@@ -205,7 +205,7 @@ class ASTNode(HighchartsMeta):
             'textContent': self.text_content
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class ASTMap(UserDict):
@@ -262,7 +262,7 @@ class ASTMap(UserDict):
 
         return cls.from_dict(as_dict)
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """Generate a :class:`dict <python:dict>` representation of the object compatible
         with the Highcharts JavaScript library.
 
@@ -324,10 +324,10 @@ class TextPath(HighchartsMeta):
 
     def __init__(self, **kwargs):
         self._attributes = None
-        self._enabled = False
+        self._enabled = None
 
         self.attributes = kwargs.pop('attributes', None)
-        self.enabled = kwargs.pop('enabled', False)
+        self.enabled = kwargs.pop('enabled', None)
 
     @property
     def attributes(self) -> Optional[AttributeObject]:
@@ -343,31 +343,34 @@ class TextPath(HighchartsMeta):
         self._attributes = value
 
     @property
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         """If ``True``, enables the use of a text path for links or marker data labels.
         Defaults to ``False``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(value)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
             'attributes': as_dict.pop('attributes', None),
-            'enabled': as_dict.pop('enabled', False)
+            'enabled': as_dict.pop('enabled', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'attributes': self.attributes,
             'enabled': self.enabled
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

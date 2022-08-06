@@ -15,30 +15,29 @@ class ShapeOptions(HighchartsMeta):
 
     def __init__(self, **kwargs):
         self._dash_style = None
-        self._fill = constants.DEFAULT_SHAPES_FILL
+        self._fill = None
         self._height = None
-        self._r = constants.DEFAULT_SHAPES_R
+        self._r = None
         self._ry = None
-        self._snap = constants.DEFAULT_SHAPES_SNAP
+        self._snap = None
         self._src = None
-        self._stroke = constants.DEFAULT_SHAPES_STROKE
-        self._stroke_width = constants.DEFAULT_SHAPES_STROKE_WIDTH
-        self._type = constants.DEFAULT_SHAPES_TYPE
+        self._stroke = None
+        self._stroke_width = None
+        self._type = None
         self._width = None
         self._x_axis = None
         self._y_axis = None
 
         self.dash_style = kwargs.pop('dash_style', None)
-        self.fill = kwargs.pop('fill', constants.DEFAULT_SHAPES_FILL)
+        self.fill = kwargs.pop('fill', None)
         self.height = kwargs.pop('height', None)
-        self.r = kwargs.pop('r', constants.DEFAULT_SHAPES_R)
+        self.r = kwargs.pop('r', None)
         self.ry = kwargs.pop('ry', None)
-        self.snap = kwargs.pop('snap', constants.DEFAULT_SHAPES_SNAP)
+        self.snap = kwargs.pop('snap', None)
         self.src = kwargs.pop('src', None)
-        self.stroke = kwargs.pop('stroke', constants.DEFAULT_SHAPES_STROKE)
-        self.stroke_width = kwargs.pop('stroke_width',
-                                       constants.DEFAULT_SHAPES_STROKE_WIDTH)
-        self.type = kwargs.pop('type', constants.DEFAULT_SHAPES_TYPE)
+        self.stroke = kwargs.pop('stroke', None)
+        self.stroke_width = kwargs.pop('stroke_width', None)
+        self.type = kwargs.pop('type', None)
         self.width = kwargs.pop('width', None)
         self.x_axis = kwargs.pop('x_axis', None)
         self.y_axis = kwargs.pop('y_axis', None)
@@ -313,23 +312,22 @@ class ShapeOptions(HighchartsMeta):
     def from_dict(cls, as_dict):
         kwargs = {
             'dash_style': as_dict.pop('dashStyle', None),
-            'fill': as_dict.pop('fill', constants.DEFAULT_SHAPES_FILL),
+            'fill': as_dict.pop('fill', None),
             'height': as_dict.pop('height', None),
-            'r': as_dict.pop('r', constants.DEFAULT_SHAPES_R),
+            'r': as_dict.pop('r', None),
             'ry': as_dict.pop('ry', None),
-            'snap': as_dict.pop('snap', constants.DEFAULT_SHAPES_SNAP),
+            'snap': as_dict.pop('snap', None),
             'src': as_dict.pop('src', None),
-            'stroke': as_dict.pop('stroke', constants.DEFAULT_SHAPES_STROKE),
-            'stroke_width': as_dict.pop('strokeWidth',
-                                        constants.DEFAULT_SHAPES_STROKE_WIDTH),
-            'type': as_dict.pop('type', constants.DEFAULT_SHAPES_TYPE),
+            'stroke': as_dict.pop('stroke', None),
+            'stroke_width': as_dict.pop('strokeWidth', None),
+            'type': as_dict.pop('type', None),
             'width': as_dict.pop('width', None),
             'x_axis': as_dict.pop('xAxis', None),
             'y_axis': as_dict.pop('yAxis', None)
         }
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'dashStyle': self.dash_style,
             'fill': self.fill,
@@ -346,7 +344,7 @@ class ShapeOptions(HighchartsMeta):
             'yAxis': self.y_axis
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class AnnotationShape(ShapeOptions):
@@ -464,49 +462,41 @@ class AnnotationShape(ShapeOptions):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
+            # from ShapeOptions
             'dash_style': as_dict.pop('dashStyle', None),
-            'fill': as_dict.pop('fill', constants.DEFAULT_SHAPES_FILL),
+            'fill': as_dict.pop('fill', None),
             'height': as_dict.pop('height', None),
+            'r': as_dict.pop('r', None),
+            'ry': as_dict.pop('ry', None),
+            'snap': as_dict.pop('snap', None),
+            'src': as_dict.pop('src', None),
+            'stroke': as_dict.pop('stroke', None),
+            'stroke_width': as_dict.pop('strokeWidth', None),
+            'type': as_dict.pop('type', None),
+            'width': as_dict.pop('width', None),
+            'x_axis': as_dict.pop('xAxis', None),
+            'y_axis': as_dict.pop('yAxis', None),
+
+            # from AnnotationShape
             'marker_end': as_dict.pop('markerEnd', None),
             'marker_start': as_dict.pop('markerStart', None),
             'point': as_dict.pop('point', None),
             'points': as_dict.pop('points', None),
-            'r': as_dict.pop('r', constants.DEFAULT_SHAPES_R),
-            'ry': as_dict.pop('ry', None),
-            'snap': as_dict.pop('snap', constants.DEFAULT_SHAPES_SNAP),
-            'src': as_dict.pop('src', None),
-            'stroke': as_dict.pop('stroke', constants.DEFAULT_SHAPES_STROKE),
-            'stroke_width': as_dict.pop('strokeWidth',
-                                        constants.DEFAULT_SHAPES_STROKE_WIDTH),
-            'type': as_dict.pop('type', constants.DEFAULT_SHAPES_TYPE),
-            'width': as_dict.pop('width', None),
-            'x_axis': as_dict.pop('xAxis', None),
-            'y_axis': as_dict.pop('yAxis', None)
         }
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
-            'dashStyle': self.dash_style,
-            'fill': self.fill,
-            'height': self.height,
             'markerEnd': self.marker_end,
             'markerStart': self.marker_start,
             'point': self.point,
             'points': self.points,
-            'r': self.r,
-            'ry': self.ry,
-            'snap': self.snap,
-            'src': self.src,
-            'stroke': self.stroke,
-            'strokeWidth': self.stroke_width,
-            'type': self.type,
-            'width': self.width,
-            'xAxis': self.x_axis,
-            'yAxis': self.y_axis
         }
+        parent_as_dict = super()._to_untrimmed_dict()
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 __all__ = [

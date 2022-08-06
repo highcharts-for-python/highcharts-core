@@ -117,7 +117,7 @@ class PDFFontOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'bold': self.bold,
             'bolditalic': self.bolditalic,
@@ -125,4 +125,4 @@ class PDFFontOptions(HighchartsMeta):
             'normal': self.normal
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

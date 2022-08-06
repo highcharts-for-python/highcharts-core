@@ -28,13 +28,11 @@ class Navigation(HighchartsMeta):
 
         self.annotation_options = kwargs.pop('annotation_options', None)
         self.bindings = kwargs.pop('bindings', None)
-        self.bindings_class_name = kwargs.pop('bindings_class_name',
-                                              constants.DEFAULT_NAVIGATION.get('bindings_class_name'))
+        self.bindings_class_name = kwargs.pop('bindings_class_name', None)
         self.breadcrumbs = kwargs.pop('breadcrumbs', None)
         self.button_options = kwargs.pop('button_options', None)
         self.events = kwargs.pop('events', None)
-        self.icons_url = kwargs.pop('icons_url',
-                                    constants.DEFAULT_NAVIGATION.get('icons_url'))
+        self.icons_url = kwargs.pop('icons_url', None)
 
     @property
     def annotation_options(self) -> Optional[Annotation]:
@@ -147,18 +145,16 @@ class Navigation(HighchartsMeta):
         kwargs = {
             'annotation_options': as_dict.pop('annotationOptions', None),
             'bindings': as_dict.pop('bindings', None),
-            'bindings_class_name': as_dict.pop('bindingsClassName',
-                                               constants.DEFAULT_NAVIGATION.get('bindings_class_name')),
+            'bindings_class_name': as_dict.pop('bindingsClassName', None),
             'breadcrumbs': as_dict.pop('breadcrumbs', None),
             'button_options': as_dict.pop('buttonOptions', None),
             'events': as_dict.pop('events', None),
-            'icons_url': as_dict.pop('iconsURL',
-                                     constants.DEFAULT_NAVIGATION.get('icons_url'))
+            'icons_url': as_dict.pop('iconsURL', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'annotationOptions': self.annotation_options,
             'bindings': self.bindings,
@@ -169,4 +165,4 @@ class Navigation(HighchartsMeta):
             'iconsURL': self.icons_url
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

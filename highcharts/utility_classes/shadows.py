@@ -94,7 +94,7 @@ class ShadowOptions(HighchartsMeta):
         }
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'color': self.color,
             'offsetX': self.offset_x,
@@ -102,6 +102,5 @@ class ShadowOptions(HighchartsMeta):
             'opacity': self.opacity,
             'width': self.width
         }
-        as_dict = self.trim_dict(untrimmed)
 
-        return as_dict
+        return untrimmed

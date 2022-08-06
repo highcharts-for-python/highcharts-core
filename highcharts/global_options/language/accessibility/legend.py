@@ -1,3 +1,5 @@
+from typing import Optional
+
 from validator_collection import validators
 
 from highcharts import constants
@@ -12,78 +14,60 @@ class LegendLanguageOptions(HighchartsMeta):
         self._legend_label = None
         self._legend_label_no_title = None
 
-        self.legend_item = kwargs.pop('legend_item',
-                                      constants.DEFAULT_LANG_ACS_LEGEND_ITEM)
-        self.legend_label = kwargs.pop('legend_label',
-                                       constants.DEFAULT_LANG_ACS_LEGEND_LABEL)
-        self.legend_label_no_title = kwargs.pop('legend_label_no_title',
-                                                constants.DEFAULT_LANG_ACS_LEGEND_LABEL_NO_TITLE)
+        self.legend_item = kwargs.pop('legend_item', None)
+        self.legend_label = kwargs.pop('legend_label', None)
+        self.legend_label_no_title = kwargs.pop('legend_label_no_title', None)
 
     @property
-    def legend_item(self) -> str:
+    def legend_item(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_LEGEND_ITEM}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._legend_item
 
     @legend_item.setter
     def legend_item(self, value):
-        if value == '':
-            self._legend_item = ''
-        else:
-            self._legend_item = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_LEGEND_ITEM
+        self._legend_item = validators.string(value, allow_empty = True)
 
     @property
-    def legend_label(self) -> str:
+    def legend_label(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_LEGEND_LABEL}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._legend_label
 
     @legend_label.setter
     def legend_label(self, value):
-        if value == '':
-            self._legend_label = ''
-        else:
-            self._legend_label = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_LEGEND_LABEL
+        self._legend_label = validators.string(value, allow_empty = True)
 
     @property
-    def legend_label_no_title(self) -> str:
+    def legend_label_no_title(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_LEGEND_LABEL_NO_TITLE}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._legend_label_no_title
 
     @legend_label_no_title.setter
     def legend_label_no_title(self, value):
-        if value == '':
-            self._legend_label_no_title = ''
-        else:
-            self._legend_label_no_title = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_LEGEND_LABEL_NO_TITLE
+        self._legend_label_no_title = validators.string(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'legend_item': as_dict.pop('legendItem',
-                                       constants.DEFAULT_LANG_ACS_LEGEND_ITEM),
-            'legend_label': as_dict.pop('legendLabel',
-                                        constants.DEFAULT_LANG_ACS_LEGEND_LABEL),
-            'legend_label_no_title': as_dict.pop('legendLabelNoTitle',
-                                                 constants.DEFAULT_LANG_ACS_LEGEND_LABEL_NO_TITLE)
+            'legend_item': as_dict.pop('legendItem', None),
+            'legend_label': as_dict.pop('legendLabel', None),
+            'legend_label_no_title': as_dict.pop('legendLabelNoTitle', None),
         }
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
-            'legend_item': self.legend_item,
-            'legend_label': self.legend_label,
-            'legend_label_no_title': self.legend_label_no_title
+            'legendItem': self.legend_item,
+            'legendLabel': self.legend_label,
+            'legendLabelNoTitle': self.legend_label_no_title
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

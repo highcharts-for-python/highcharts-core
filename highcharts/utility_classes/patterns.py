@@ -23,8 +23,8 @@ class PatternOptions(HighchartsMeta):
         self._path = None
         self._pattern_transform = None
         self._width = None
-        self._x = 0
-        self._y = 0
+        self._x = None
+        self._y = None
 
         self.aspect_ratio = kwargs.pop('aspect_ratio', None)
         self.background_color = kwargs.pop('backgorund_color', None)
@@ -36,8 +36,8 @@ class PatternOptions(HighchartsMeta):
         self.path = kwargs.pop('path', None)
         self.pattern_transform = kwargs.pop('pattern_transform', None)
         self.width = kwargs.pop('width', None)
-        self.x = kwargs.pop('x', 0)
-        self.y = kwargs.pop('y', 0)
+        self.x = kwargs.pop('x', None)
+        self.y = kwargs.pop('y', None)
 
     @property
     def aspect_ratio(self) -> Optional[int | float | Decimal | Fraction]:
@@ -252,12 +252,12 @@ class PatternOptions(HighchartsMeta):
             'path': as_dict.pop('path', None),
             'pattern_transform': as_dict.pop('patternTransform', None),
             'width': as_dict.pop('width', None),
-            'x': as_dict.pop('x', 0),
-            'y': as_dict.pop('y', 0)
+            'x': as_dict.pop('x', None),
+            'y': as_dict.pop('y', None)
         }
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'aspectRatio': self.aspect_ratio,
             'backgroundColor': self.background_color,
@@ -272,9 +272,8 @@ class PatternOptions(HighchartsMeta):
             'x': self.x,
             'y': self.y
         }
-        as_dict = self.trim_dict(untrimmed)
 
-        return as_dict
+        return untrimmed
 
 
 class Pattern(HighchartsMeta):
@@ -343,12 +342,11 @@ class Pattern(HighchartsMeta):
         }
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'animation': self.animation,
             'pattern': self.pattern_options,
             'patternIndex': self.pattern_index
         }
-        as_dict = self.trim_dict(untrimmed)
 
-        return as_dict
+        return untrimmed

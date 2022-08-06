@@ -211,7 +211,7 @@ class HandleOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'backgroundColor': self.background_color,
             'borderColor': self.border_color,
@@ -222,7 +222,7 @@ class HandleOptions(HighchartsMeta):
             'width': self.width,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class Navigator(HighchartsMeta):
@@ -567,7 +567,7 @@ class Navigator(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'adaptToUpdatedData': self.adapt_to_updated_data,
             'enabled': self.enabled,
@@ -584,4 +584,4 @@ class Navigator(HighchartsMeta):
             'yAxis': self.y_axis,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

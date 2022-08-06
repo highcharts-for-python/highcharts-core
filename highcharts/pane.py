@@ -22,20 +22,13 @@ class PaneBackground(HighchartsMeta):
         self._outer_radius = None
         self._shape = None
 
-        self.background_color = kwargs.pop('background_color',
-                                           constants.DEFAULT_PANE_BACKGROUND.get('background_color'))
-        self.border_color = kwargs.pop('border_color',
-                                       constants.DEFAULT_PANE_BACKGROUND.get('border_color'))
-        self.border_width = kwargs.pop('border_width',
-                                       constants.DEFAULT_PANE_BACKGROUND.get('border_width'))
-        self.class_name = kwargs.pop('class_name',
-                                     constants.DEFAULT_PANE_BACKGROUND.get('class_name'))
-        self.inner_radius = kwargs.pop('inner_radius',
-                                       constants.DEFAULT_PANE_BACKGROUND.get('inner_radius'))
-        self.outer_radius = kwargs.pop('outer_radius',
-                                       constants.DEFAULT_PANE_BACKGROUND.get('outer_radius'))
-        self.shape = kwargs.pop('shape',
-                                constants.DEFAULT_PANE_BACKGROUND.get('shape'))
+        self.background_color = kwargs.pop('background_color', None)
+        self.border_color = kwargs.pop('border_color', None)
+        self.border_width = kwargs.pop('border_width', None)
+        self.class_name = kwargs.pop('class_name', None)
+        self.inner_radius = kwargs.pop('inner_radius', None)
+        self.outer_radius = kwargs.pop('outer_radius', None)
+        self.shape = kwargs.pop('shape', None)
 
     @property
     def background_color(self) -> Optional[str | Gradient | Pattern]:
@@ -244,7 +237,7 @@ class PaneBackground(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'backgroundColor': self.background_color,
             'borderColor': self.border_color,
@@ -255,7 +248,7 @@ class PaneBackground(HighchartsMeta):
             'shape': self.shape
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class Pane(HighchartsMeta):
@@ -271,11 +264,11 @@ class Pane(HighchartsMeta):
         self._start_angle = None
 
         self.background = kwargs.pop('background', None)
-        self.center = kwargs.pop('center', constants.DEFAULT_PANE.get('center'))
-        self.end_angle = kwargs.pop('end_angle', constants.DEFAULT_PANE.get('end_angle'))
-        self.inner_size = kwargs.pop('inner_size', constants.DEFAULT_PANE.get('inner_size'))
-        self.size = kwargs.pop('size', constants.DEFAULT_PANE.get('size'))
-        self.start_angle = kwargs.pop('start_angle', constants.DEFAULT_PANE.get('start_angle'))
+        self.center = kwargs.pop('center', None)
+        self.end_angle = kwargs.pop('end_angle', None)
+        self.inner_size = kwargs.pop('inner_size', None)
+        self.size = kwargs.pop('size', None)
+        self.start_angle = kwargs.pop('start_angle', None)
 
     @property
     def background(self) -> Optional[List[PaneBackground]]:
@@ -406,7 +399,7 @@ class Pane(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'background': self.background,
             'center': self.center,
@@ -416,4 +409,4 @@ class Pane(HighchartsMeta):
             'startAngle': self.start_angle
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

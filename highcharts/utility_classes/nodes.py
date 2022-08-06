@@ -207,7 +207,7 @@ class NodeOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'color': self.color,
             'colorIndex': self.color_index,
@@ -218,7 +218,7 @@ class NodeOptions(HighchartsMeta):
             'offsetVertical': self.offset_vertical,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class DependencyWheelNodeOptions(NodeOptions):
@@ -300,17 +300,17 @@ class DependencyWheelNodeOptions(NodeOptions):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'column': self.column,
             'level': self.level,
         }
 
-        parent_as_dict = super().to_dict() or {}
+        parent_as_dict = super()._to_untrimmed_dict() or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class OrganizationNodeOptions(DependencyWheelNodeOptions):
@@ -422,15 +422,15 @@ class OrganizationNodeOptions(DependencyWheelNodeOptions):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'image': self.image,
             'layout': self.layout,
             'title': self.title,
         }
 
-        parent_as_dict = super().to_dict() or {}
+        parent_as_dict = super()._to_untrimmed_dict() or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

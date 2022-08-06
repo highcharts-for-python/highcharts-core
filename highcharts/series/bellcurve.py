@@ -149,14 +149,14 @@ class BellCurveSeries(AreaSeries, BellCurveOptions):
             'y_axis': as_dict.pop('yAxis', None),
             'z_index': as_dict.pop('zIndex', None),
 
-            'intervals': as_dict.pop('intervals', 3),
+            'intervals': as_dict.pop('intervals', None),
 
             'base_series': as_dict.pop('baseSeries', None),
         }
 
         return kwargs
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'baseSeries': self.base_series
         }
@@ -165,4 +165,4 @@ class BellCurveSeries(AreaSeries, BellCurveOptions):
         for key in parents_as_dict:
             untrimmed[key] = parents_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

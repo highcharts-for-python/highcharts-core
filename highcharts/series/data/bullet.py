@@ -142,14 +142,14 @@ class BulletData(BarCartesianData):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'target': self.target,
             'targetOptions': self.target_options
         }
 
-        parent_as_dict = super().to_dict() or {}
+        parent_as_dict = super()._to_untrimmed_dict() or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

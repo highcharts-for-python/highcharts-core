@@ -130,7 +130,7 @@ class VectorData(CartesianData):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -155,4 +155,4 @@ class VectorData(CartesianData):
             'length': self.length,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

@@ -137,24 +137,24 @@ class HistogramSeries(BarSeries, HistogramOptions):
             'zone_axis': as_dict.pop('zoneAxis', None),
             'zones': as_dict.pop('zones', None),
 
-            'border_color': as_dict.pop('borderColor', '#ffffff'),
-            'border_radius': as_dict.pop('borderRadius', 0),
+            'border_color': as_dict.pop('borderColor', None),
+            'border_radius': as_dict.pop('borderRadius', None),
             'border_width': as_dict.pop('borderWidth', None),
-            'center_in_category': as_dict.pop('centerInCategory', False),
-            'color_by_point': as_dict.pop('colorByPoint', False),
+            'center_in_category': as_dict.pop('centerInCategory', None),
+            'color_by_point': as_dict.pop('colorByPoint', None),
             'colors': as_dict.pop('colors', None),
-            'grouping': as_dict.pop('grouping', True),
-            'group_padding': as_dict.pop('groupPadding', 0.2),
+            'grouping': as_dict.pop('grouping', None),
+            'group_padding': as_dict.pop('groupPadding', None),
             'max_point_width': as_dict.pop('maxPointWidth', None),
-            'min_point_length': as_dict.pop('minPointLength', 0),
-            'point_padding': as_dict.pop('pointPadding', 0.1),
+            'min_point_length': as_dict.pop('minPointLength', None),
+            'point_padding': as_dict.pop('pointPadding', None),
             'point_range': as_dict.pop('pointRange', None),
             'point_width': as_dict.pop('pointWidth', None),
 
-            'depth': as_dict.pop('depth', 25),
+            'depth': as_dict.pop('depth', None),
             'edge_color': as_dict.pop('edgeColor', None),
-            'edge_width': as_dict.pop('edgeWidth', 1),
-            'group_z_padding': as_dict.pop('groupZPadding', 1),
+            'edge_width': as_dict.pop('edgeWidth', None),
+            'group_z_padding': as_dict.pop('groupZPadding', None),
 
             'data': as_dict.pop('data', None),
             'id': as_dict.pop('id', None),
@@ -174,7 +174,7 @@ class HistogramSeries(BarSeries, HistogramOptions):
 
         return kwargs
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'baseSeries': self.base_series
         }
@@ -183,4 +183,4 @@ class HistogramSeries(BarSeries, HistogramOptions):
         for key in parents_as_dict:
             untrimmed[key] = parents_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

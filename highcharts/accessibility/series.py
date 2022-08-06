@@ -16,34 +16,36 @@ class AccessibilitySeries(HighchartsMeta):
     """
 
     def __init__(self, **kwargs):
-        self._describe_single_series = False
-        self._description_format = constants.DEFAULT_DESCRIPTION_FORMAT
+        self._describe_single_series = None
+        self._description_format = None
         self._description_formatter = None
-        self._point_description_enabled_threshold = 200
+        self._point_description_enabled_threshold = None
 
-        self.describe_single_series = kwargs.pop('describe_single_series', False)
-        self.description_format = kwargs.pop('description_format',
-                                             constants.DEFAULT_DESCRIPTION_FORMAT)
+        self.describe_single_series = kwargs.pop('describe_single_series', None)
+        self.description_format = kwargs.pop('description_format', None)
         self.description_formatter = kwargs.pop('description_formatter', None)
         self.point_description_enabled_threshold = kwargs.pop(
             'point_description_enabled_threshold',
-            200
+            None
         )
 
     @property
-    def describe_single_series(self) -> bool:
+    def describe_single_series(self) -> Optional[bool]:
         """If ``True``, will add series descriptions to charts with a single series.
         Defaults to ``False``.
 
         :returns: Flag indicating whether to add series descriptions to charts with a
           single series.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._describe_single_series
 
     @describe_single_series.setter
     def describe_single_series(self, value):
-        self._describe_single_series = bool(value)
+        if value is None:
+            self._describe_single_series = None
+        else:
+            self._describe_single_series = bool(value)
 
     @property
     def description_format(self) -> Optional[str]:
@@ -101,7 +103,7 @@ class AccessibilitySeries(HighchartsMeta):
         self._description_formatter = validators.string(value, allow_empty = True)
 
     @property
-    def point_description_enabled_threshold(self) -> bool | int:
+    def point_description_enabled_threshold(self) -> Optional[bool | int]:
         """When a series contains more points than the value set for this property,
         Highcharts will no longer expose information about individual points to screen
         readers.
@@ -115,13 +117,16 @@ class AccessibilitySeries(HighchartsMeta):
 
         :returns: The threshold for number of data points above which point description
           information wlil not be provided.
-        :rtype: :class:`int <python:int>` or :class:`bool <python:bool>`
+        :rtype: :class:`int <python:int>` or :class:`bool <python:bool>` or
+          :obj:`None <python:None>`
         """
         return self._point_description_enabled_threshold
 
     @point_description_enabled_threshold.setter
     def point_description_enabled_threshold(self, value):
-        if isinstance(value, bool) and value is False:
+        if value is None:
+            self._point_description_enabled_threshold = None
+        elif isinstance(value, bool) and value is False:
             self._point_description_enabled_threshold = False
         else:
             self._point_description_enabled_threshold = validators.integer(
@@ -134,25 +139,23 @@ class AccessibilitySeries(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'describe_single_series': as_dict.pop('describeSingleSeries', False),
-            'description_format': as_dict.pop('descriptionFormat',
-                                              constants.DEFAULT_DESCRIPTION_FORMAT),
+            'describe_single_series': as_dict.pop('describeSingleSeries', None),
+            'description_format': as_dict.pop('descriptionFormat', None),
             'description_formatter': as_dict.pop('descriptionFormatter', None),
             'point_description_enabled_threshold': as_dict.pop(
                 'pointDescriptionEnabledThreshold',
-                200
-            )
+                None
+            ),
         }
 
         return cls(**kwargs)
 
-    def to_json(self, encoding = 'utf-8'):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'describeSingleSeries': self.describe_single_series,
             'descriptionFormat': self.descriptionFormat,
             'descriptionFormatter': self.descriptionFormatter,
             'pointDescriptionEnabledThreshold': self.point_description_enabled_threshold
         }
-        as_dict = self.trim_dict(untrimmed)
 
-        return as_dict
+        return untrimmed

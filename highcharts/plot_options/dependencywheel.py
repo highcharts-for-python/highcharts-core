@@ -27,33 +27,32 @@ class DependencyWheelOptions(GenericTypeOptions):
         self._border_color = None
         self._border_width = None
         self._center = None
-        self._center_in_category = False
-        self._color_by_point = True
+        self._center_in_category = None
+        self._color_by_point = None
         self._color_index = None
         self._colors = None
         self._curve_factor = None
         self._levels = None
-        self._link_opacity = 0.5
-        self._min_link_width = 0
-        self._node_padding = 10
-        self._node_width = 20
-        self._start_angle = 0
+        self._link_opacity = None
+        self._min_link_width = None
+        self._node_padding = None
+        self._node_width = None
+        self._start_angle = None
 
         self.border_color = kwargs.pop('border_color', None)
         self.border_width = kwargs.pop('border_width', None)
-        self.center = kwargs.pop('center', [constants.EnforcedNull,
-                                            constants.EnforcedNull])
-        self.center_in_category = kwargs.pop('center_in_category', False)
-        self.color_by_point = kwargs.pop('color_by_point', True)
+        self.center = kwargs.pop('center', None)
+        self.center_in_category = kwargs.pop('center_in_category', None)
+        self.color_by_point = kwargs.pop('color_by_point', None)
         self.color_index = kwargs.pop('color_index', None)
         self.colors = kwargs.pop('colors', None)
-        self.curve_factor = kwargs.pop('curve_factor', 0.6)
+        self.curve_factor = kwargs.pop('curve_factor', None)
         self.levels = kwargs.pop('levels', None)
-        self.link_opacity = kwargs.pop('link_opacity', 0.5)
-        self.min_link_width = kwargs.pop('min_link_width', 0)
-        self.node_padding = kwargs.pop('node_padding', 10)
-        self.node_width = kwargs.pop('node_width', 20)
-        self.start_angle = kwargs.pop('start_angle', 0)
+        self.link_opacity = kwargs.pop('link_opacity', None)
+        self.min_link_width = kwargs.pop('min_link_width', None)
+        self.node_padding = kwargs.pop('node_padding', None)
+        self.node_width = kwargs.pop('node_width', None)
+        self.start_angle = kwargs.pop('start_angle', None)
 
         super(self).__init__(**kwargs)
 
@@ -165,20 +164,23 @@ class DependencyWheelOptions(GenericTypeOptions):
             self._center_in_category = bool(value)
 
     @property
-    def color_by_point(self) -> bool:
+    def color_by_point(self) -> Optional[bool]:
         """When using automatic point colors pulled from the global colors or
         series-specific collections, this option determines whether the chart should
         receive one color per series (``False``) or one color per point (``True``).
 
         Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._color_by_point
 
     @color_by_point.setter
     def color_by_point(self, value):
-        self._color_by_point = bool(value)
+        if value is None:
+            self._color_by_point = None
+        else:
+            self._color_by_point = bool(value)
 
     @property
     def color_index(self) -> Optional[int]:
@@ -339,17 +341,17 @@ class DependencyWheelOptions(GenericTypeOptions):
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', False),
+            'allow_point_select': as_dict.pop('allowPointSelect', None),
             'animation': as_dict.pop('animation', None),
             'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', True),
+            'clip': as_dict.pop('clip', None),
             'color': as_dict.pop('color', None),
             'cursor': as_dict.pop('cursor', None),
             'custom': as_dict.pop('custom', None),
             'dash_style': as_dict.pop('dashStyle', None),
             'data_labels': as_dict.pop('dataLabels', None),
             'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', True),
+            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
             'events': as_dict.pop('events', None),
             'include_in_data_export': as_dict.pop('includeInDataExport', None),
             'keys': as_dict.pop('keys', None),
@@ -360,35 +362,35 @@ class DependencyWheelOptions(GenericTypeOptions):
             'opacity': as_dict.pop('opacity', None),
             'point': as_dict.pop('point', None),
             'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', False),
-            'show_checkbox': as_dict.pop('showCheckbox', False),
+            'selected': as_dict.pop('selected', None),
+            'show_checkbox': as_dict.pop('showCheckbox', None),
             'show_in_legend': as_dict.pop('showInLegend', None),
             'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
             'states': as_dict.pop('states', None),
             'threshold': as_dict.pop('threshold', None),
             'tooltip': as_dict.pop('tooltip', None),
             'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', True),
+            'visible': as_dict.pop('visible', None),
 
             'border_color': as_dict.pop('borderColor', None),
             'border_width': as_dict.pop('borderWidth', None),
             'center': as_dict.pop('center', None),
             'center_in_category': as_dict.pop('centerInCategory', None),
-            'color_by_point': as_dict.pop('colorByPoint', True),
+            'color_by_point': as_dict.pop('colorByPoint', None),
             'color_index': as_dict.pop('colorIndex', None),
             'colors': as_dict.pop('colors', None),
-            'curve_factor': as_dict.pop('curveFactor', 0.6),
+            'curve_factor': as_dict.pop('curveFactor', None),
             'levels': as_dict.pop('levels', None),
-            'link_opacity': as_dict.pop('linkOpacity', 0.5),
-            'min_link_width': as_dict.pop('minLinkWidth', 0),
-            'node_padding': as_dict.pop('nodePadding', 10),
-            'node_width': as_dict.pop('nodeWidth', 20),
-            'start_angle': as_dict.pop('startAngle', 0)
+            'link_opacity': as_dict.pop('linkOpacity', None),
+            'min_link_width': as_dict.pop('minLinkWidth', None),
+            'node_padding': as_dict.pop('nodePadding', None),
+            'node_width': as_dict.pop('nodeWidth', None),
+            'start_angle': as_dict.pop('startAngle', None)
         }
 
         return kwargs
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'borderColor': self.border_color,
             'borderWidth': self.border_width,
@@ -405,9 +407,9 @@ class DependencyWheelOptions(GenericTypeOptions):
             'nodeWidth': self.node_width,
             'startAngle': self.start_angle
         }
-        parent_as_dict = super(self).to_dict()
+        parent_as_dict = super(self)._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

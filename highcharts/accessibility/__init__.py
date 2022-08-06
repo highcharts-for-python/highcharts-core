@@ -1,5 +1,5 @@
 """Implements the Python representation of the Accessibility module."""
-from typing import Optional
+from typing import Optional, Any
 
 from validator_collection import validators
 
@@ -38,17 +38,15 @@ class Accessibility(HighchartsMeta):
         self.enabled = kwargs.pop('enabled', True)
         self.high_contrast_theme = kwargs.pop('high_contrast_theme', None)
         self.keyboard_navigation = kwargs.pop('keyboard_navigation', None)
-        self.landmark_verbosity = kwargs.pop('landmark_verbosity',
-                                             constants.DEFAULT_LANDMARK_VERBOSITY)
-        self.linked_description = kwargs.pop('linked_description',
-                                             constants.DEFAULT_LINKED_DESCRIPTION)
+        self.landmark_verbosity = kwargs.pop('landmark_verbosity', None)
+        self.linked_description = kwargs.pop('linked_description', None)
         self.point = kwargs.pop('point', None)
         self.screen_reader_section = kwargs.pop('screen_reader_section', None)
         self.series = kwargs.pop('series', None)
         self.type_description = kwargs.pop('type_description', None)
 
     @property
-    def announce_new_data(self):
+    def announce_new_data(self) -> Optional[AnnounceNewData]:
         """Options for announcing new data to screen reader users.
 
         .. tip::
@@ -94,7 +92,7 @@ class Accessibility(HighchartsMeta):
         self._custom_components = validators.string(value, allow_empty = True)
 
     @property
-    def description(self):
+    def description(self) -> Optional[str]:
         """A text description of the chart.
 
         If the Accessibility module is loaded, this option is included by default as a
@@ -122,7 +120,7 @@ class Accessibility(HighchartsMeta):
         self._description = value
 
     @property
-    def enabled(self):
+    def enabled(self) -> Optional[bool]:
         """If ``True``, enables accessibility functionality for the chart. Defaults to
         ``True``.
 
@@ -143,16 +141,19 @@ class Accessibility(HighchartsMeta):
 
         :returns: Flag indicating whether the :class:`Accessibility` module is enabled
           for the chart.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(enabled)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @property
-    def high_contrast_theme(self):
+    def high_contrast_theme(self) -> Any:
         """Theme to apply to the chart when Windows High Contrast Mode is detected.
 
         By default, a high contrast theme matching the high contrast system system colors
@@ -164,12 +165,11 @@ class Accessibility(HighchartsMeta):
         return self._high_contrast_theme
 
     @high_contrast_theme.setter
-    @class_sensitive(HighContrastTheme)
     def high_contrast_theme(self, value):
         self._high_contrast_theme = value
 
     @property
-    def keyboard_navigation(self):
+    def keyboard_navigation(self) -> Optional[KeyboardNavigation]:
         """Options for keyboard navigation.
 
         :returns: Configuration for keyboard navigation.
@@ -183,7 +183,7 @@ class Accessibility(HighchartsMeta):
         self._keyboard_navigation = value
 
     @property
-    def landmark_verbosity(self):
+    def landmark_verbosity(self) -> Optional[str]:
         """Amount of landmarks/regions to create for screen reader users.
 
         More landmarks can make navigation with screen readers easier, but can be
@@ -198,7 +198,7 @@ class Accessibility(HighchartsMeta):
         Defaults to ``'all'``.
 
         :returns: The landmark verbosity for screen readers to use.
-        :rtype: :class:`str`
+        :rtype: :class:`str` or :obj:`None <python:None>`
         """
         return self._landmark_verbosity
 
@@ -211,7 +211,7 @@ class Accessibility(HighchartsMeta):
         self._landmark_verbosity = value
 
     @property
-    def linked_description(self):
+    def linked_description(self) -> Optional[str]:
         f"""Link the chart to an HTML element describing the contents of the chart.
 
         .. hint::
@@ -246,17 +246,17 @@ class Accessibility(HighchartsMeta):
 
         :returns: The CSS selector used to indicate the HTML element containing a
           description of the chart.
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
 
         """
         return self._linked_description
 
     @linked_description.setter
     def linked_description(self, value):
-        self._linked_description = validators.string(value, allow_empty = False)
+        self._linked_description = validators.string(value, allow_empty = True)
 
     @property
-    def point(self):
+    def point(self) -> Optional[AccessibilityPoint]:
         """Options for describing individual points.
 
         :returns: Configuration for how to describe individual points on the chart.
@@ -270,7 +270,7 @@ class Accessibility(HighchartsMeta):
         self._point = value
 
     @property
-    def screen_reader_section(self):
+    def screen_reader_section(self) -> Optional[ScreenReaderSection]:
         """Accessibility options for the screen reader information sections added before
         and after the chart.
 
@@ -285,7 +285,7 @@ class Accessibility(HighchartsMeta):
         self._screen_reader_section = value
 
     @property
-    def series(self):
+    def series(self) -> Optional[SeriesAccessibility]:
         """Accessibility options global to all data series.
 
         .. hint::
@@ -303,7 +303,7 @@ class Accessibility(HighchartsMeta):
         self._series = value
 
     @property
-    def type_description(self):
+    def type_description(self) -> Optional[str]:
         """A text description of the chart type.
 
         If the Accessibility module is loaded, this will be included in the description
@@ -344,7 +344,7 @@ class Accessibility(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'announceNewData': self.announce_new_data,
             'customComponents': self.custom_components,
@@ -360,7 +360,7 @@ class Accessibility(HighchartsMeta):
             'typeDescription': self.type_description
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 __all__ = [

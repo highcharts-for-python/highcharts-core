@@ -99,7 +99,7 @@ class AxisBreak(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'breakSize': self.break_size,
             'from': self.from_,
@@ -107,4 +107,4 @@ class AxisBreak(HighchartsMeta):
             'to': self.to
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

@@ -89,20 +89,23 @@ class TimelineOptions(GenericTypeOptions):
                                                       minimum = 0)
 
     @property
-    def color_by_point(self) -> bool:
+    def color_by_point(self) -> Optional[bool]:
         """When using automatic point colors pulled from the global colors or
         series-specific collections, this option determines whether the chart should
         receive one color per series (``False``) or one color per point (``True``).
 
         Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._color_by_point
 
     @color_by_point.setter
     def color_by_point(self, value):
-        self._color_by_point = bool(value)
+        if value is None:
+            self._color_by_point = None
+        else:
+            self._color_by_point = bool(value)
 
     @property
     def color_index(self) -> Optional[int]:
@@ -281,17 +284,17 @@ class TimelineOptions(GenericTypeOptions):
         """
         kwargs = {
             'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', False),
+            'allow_point_select': as_dict.pop('allowPointSelect', None),
             'animation': as_dict.pop('animation', None),
             'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', True),
+            'clip': as_dict.pop('clip', None),
             'color': as_dict.pop('color', None),
             'cursor': as_dict.pop('cursor', None),
             'custom': as_dict.pop('custom', None),
             'dash_style': as_dict.pop('dashStyle', None),
             'data_labels': as_dict.pop('dataLabels', None),
             'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', True),
+            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
             'events': as_dict.pop('events', None),
             'include_in_data_export': as_dict.pop('includeInDataExport', None),
             'keys': as_dict.pop('keys', None),
@@ -302,8 +305,8 @@ class TimelineOptions(GenericTypeOptions):
             'opacity': as_dict.pop('opacity', None),
             'point': as_dict.pop('point', None),
             'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', False),
-            'show_checkbox': as_dict.pop('showCheckbox', False),
+            'selected': as_dict.pop('selected', None),
+            'show_checkbox': as_dict.pop('showCheckbox', None),
             'show_in_legend': as_dict.pop('showInLegend', None),
             'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
             'states': as_dict.pop('states', None),
@@ -311,7 +314,7 @@ class TimelineOptions(GenericTypeOptions):
             'threshold': as_dict.pop('threshold', None),
             'tooltip': as_dict.pop('tooltip', None),
             'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', True),
+            'visible': as_dict.pop('visible', None),
 
             'color_axis': as_dict.pop('colorAxis', None),
             'color_by_point': as_dict.pop('colorByPoint', None),
@@ -327,7 +330,7 @@ class TimelineOptions(GenericTypeOptions):
 
         return kwargs
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'colorAxis': self.color_axis,
             'colorByPoint': self.color_by_point,
@@ -340,8 +343,8 @@ class TimelineOptions(GenericTypeOptions):
             'relative_XValue': self.relative_x_value,
             'shadow': self.shadow
         }
-        parent_as_dict = super().to_dict() or {}
+        parent_as_dict = super()._to_untrimmed_dict() or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

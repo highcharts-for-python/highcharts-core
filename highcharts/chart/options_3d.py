@@ -14,13 +14,13 @@ class PanelOptions(HighchartsMeta):
     """Configuration of a panel used in 3D charts."""
 
     def __init__(self, **kwargs):
-        self._color = 'transparent'
-        self._size = 1
-        self._visible = 'default'
+        self._color = None
+        self._size = None
+        self._visible = None
 
-        self.color = kwargs.pop('color', 'transparent')
-        self.size = kwargs.pop('size', 1)
-        self.visible = kwargs.pop('default')
+        self.color = kwargs.pop('color', None)
+        self.size = kwargs.pop('size', None)
+        self.visible = kwargs.pop('default', None)
 
     @property
     def color(self) -> Optional[str | Gradient | Pattern]:
@@ -65,7 +65,7 @@ class PanelOptions(HighchartsMeta):
                                               f'was: {value}')
 
     @property
-    def size(self) -> int | float | Decimal:
+    def size(self) -> Optional[int | float | Decimal]:
         """The thickness of the panel. Defaults to ``1``.
 
         :rtype: numeric
@@ -79,7 +79,7 @@ class PanelOptions(HighchartsMeta):
                                         minimum = 0)
 
     @property
-    def visible(self) -> bool | str:
+    def visible(self) -> Optional[bool | str]:
         """Indicates whether to display the panel in the frame. Defaults to ``'default'``.
 
         Accepts:
@@ -90,18 +90,17 @@ class PanelOptions(HighchartsMeta):
           * ``'default'`` to display the panel it is behind data based on the axis layout,
             ignoring the user's point of view
 
-        :rtype: :class:`bool <python:bool>` or :class:`str <python:str>`
+        :rtype: :class:`bool <python:bool>` or :class:`str <python:str>` or
+          :obj:`None <python:None>`
         """
         return self._visible
 
     @visible.setter
     def visible(self, value):
-        if value is False:
-            self._visible = False
-        elif value is True:
-            self._visible = True
-        elif not value:
-            self._visible = 'default'
+        if value is None:
+            self._visible = None
+        elif isinstance(value, bool):
+            self._visible = value
         else:
             value = validators.string(value)
             value = value.lower()
@@ -113,14 +112,14 @@ class PanelOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'color': as_dict.pop('color', 'transparent'),
-            'size': as_dict.pop('size', 1),
-            'visible': as_dict.pop('visible', 'default')
+            'color': as_dict.pop('color', None),
+            'size': as_dict.pop('size', None),
+            'visible': as_dict.pop('visible', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         return {
             'color': self.color,
             'size': self.size,
@@ -139,18 +138,18 @@ class Frame(HighchartsMeta):
         self._left = None
         self._right = None
         self._side = None
-        self._size = 1
+        self._size = None
         self._top = None
-        self._visible = 'default'
+        self._visible = None
 
         self.back = kwargs.pop('back', None)
         self.bottom = kwargs.pop('bottom', None)
         self.front = kwargs.pop('front', None)
         self.left = kwargs.pop('left', None)
         self.right = kwargs.pop('right', None)
-        self.size = kwargs.pop('size', 1)
+        self.size = kwargs.pop('size', None)
         self.top = kwargs.pop('top', None)
-        self.visible = kwargs.pop('visible', 'default')
+        self.visible = kwargs.pop('visible', None)
 
     @property
     def back(self) -> Optional[PanelOptions]:
@@ -231,10 +230,10 @@ class Frame(HighchartsMeta):
         self._top = value
 
     @property
-    def size(self) -> int | float | Decimal:
+    def size(self) -> Optional[int | float | Decimal]:
         """The thickness of the frame. Defaults to ``1``.
 
-        :rtype: numeric
+        :rtype: numeric or :obj:`None <python:None>`
         """
         return self._size
 
@@ -245,7 +244,7 @@ class Frame(HighchartsMeta):
                                         minimum = 0)
 
     @property
-    def visible(self) -> bool | str:
+    def visible(self) -> Optional[bool | str]:
         """Indicates whether to display the frame. Defaults to ``'default'``.
 
         Accepts:
@@ -256,18 +255,17 @@ class Frame(HighchartsMeta):
           * ``'default'`` to display the panel it is behind data based on the axis layout,
             ignoring the user's point of view
 
-        :rtype: :class:`bool <python:bool>` or :class:`str <python:str>`
+        :rtype: :class:`bool <python:bool>` or :class:`str <python:str>` or
+          :obj:`None <python:None>`
         """
         return self._visible
 
     @visible.setter
     def visible(self, value):
-        if value is False:
-            self._visible = False
-        elif value is True:
-            self._visible = True
-        elif not value:
-            self._visible = 'default'
+        if value is None:
+            self._visible = None
+        elif isinstance(value, bool):
+            self._visible = value
         else:
             value = validators.string(value)
             value = value.lower()
@@ -284,14 +282,14 @@ class Frame(HighchartsMeta):
             'front': as_dict.pop('front', None),
             'left': as_dict.pop('left', None),
             'right': as_dict.pop('right', None),
-            'size': as_dict.pop('size', 1),
+            'size': as_dict.pop('size', None),
             'top': as_dict.pop('top', None),
-            'visible': as_dict.pop('visible', 'default')
+            'visible': as_dict.pop('visible', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         return {
             'back': self.back,
             'bottom': self.bottom,
@@ -316,52 +314,53 @@ class Options3D(HighchartsMeta):
     """
 
     def __init__(self, **kwargs):
-        self._alpha = 0
-        self._axis_label_position = constants.enforcedNull
-        self._beta = 0
-        self._depth = 100
-        self._enabled = False
-        self._fit_to_plot = True
+        self._alpha = None
+        self._axis_label_position = None
+        self._beta = None
+        self._depth = None
+        self._enabled = None
+        self._fit_to_plot = None
         self._frame = None
-        self._view_distance = 25
+        self._view_distance = None
 
-        self.alpha = kwargs.pop('alpha', 0)
-        self.axis_label_position = kwargs.pop('axis_label_position',
-                                              constants.enforcedNull)
-        self.beta = kwargs.pop('beta', 0)
-        self.depth = kwargs.pop('depth', 100)
-        self.enabled = kwargs.pop('enabled', False)
-        self.fit_to_plot = kwargs.pop('fit_to_plot', True)
+        self.alpha = kwargs.pop('alpha', None)
+        self.axis_label_position = kwargs.pop('axis_label_position', None)
+        self.beta = kwargs.pop('beta', None)
+        self.depth = kwargs.pop('depth', None)
+        self.enabled = kwargs.pop('enabled', None)
+        self.fit_to_plot = kwargs.pop('fit_to_plot', None)
         self.frame = kwargs.pop('frame', None)
-        self.view_distance = kwargs.pop('view_distance', 25)
+        self.view_distance = kwargs.pop('view_distance', None)
 
     @property
-    def alpha(self) -> int | float | Decimal:
+    def alpha(self) -> Optional[int | float | Decimal]:
         """One of two rotation angles for the chart. Defaults to ``0``.
 
-        :rtype: numeric
+        :rtype: numeric or :obj:`None <python:None>`
         """
         return self._alpha
 
     @alpha.setter
     def alpha(self, value):
-        self._alpha = validators.integer(value, allow_empty = False)
+        self._alpha = validators.integer(value, allow_empty = True)
 
     @property
-    def axis_label_position(self) -> constants.EnforcedNullType | str:
+    def axis_label_position(self) -> Optional[constants.EnforcedNullType | str]:
         """Set to ``'auto'`` to automatically move the labels to the best edge.
 
         Defaults to :class:`EnforcedNull <EnforcedNullType>`` which indicates
         a JavaScript value of ``null`` (as opposed to :obj:`None <python:None>`) which
         results in ``undefined`` when converted JavaScript.
 
-        :rtype: :class:`str` or :class:`EnforcedNullType`
+        :rtype: :class:`str` or :class:`EnforcedNullType` or :obj:`None <python:None>`
         """
         return self._axis_label_position
 
     @axis_label_position.setter
     def axis_label_position(self, value):
         if not value:
+            self._axis_label_position = None
+        elif isinstance(value, constants.EnforcedNullType):
             self._axis_label_position = constants.EnforcedNull
         else:
             value = validators.string(value)
@@ -373,57 +372,63 @@ class Options3D(HighchartsMeta):
             self._axis_label_position = value
 
     @property
-    def beta(self) -> int | float | Decimal:
+    def beta(self) -> Optional[int | float | Decimal]:
         """One of two rotation angles for the chart. Defaults to ``0``.
 
-        :rtype: numeric
+        :rtype: numeric or :obj:`None <python:None>`
         """
         return self._beta
 
     @beta.setter
     def beta(self, value):
-        self._beta = validators.integer(value, allow_empty = False)
+        self._beta = validators.integer(value, allow_empty = True)
 
     @property
-    def depth(self) -> int | float | Decimal:
+    def depth(self) -> Optional[int | float | Decimal]:
         """The total depth of the chart. Defaults to ``25``.
 
-        :rtype: numeric
+        :rtype: numeric or :obj:`None <python:None>`
         """
         return self._depth
 
     @depth.setter
     def depth(self, value):
-        self._depth = validators.integer(value, allow_empty = False)
+        self._depth = validators.integer(value, allow_empty = True)
 
     @property
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         """If ``True``, renders the chart using the 3D functionality. Defaults to
         ``False``.
 
         :returns: Flag enabling or disabling 3D rendering.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(value)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @property
-    def fit_to_plot(self) -> bool:
+    def fit_to_plot(self) -> Optional[bool]:
         """If ``True``, automatically adjusts the 3d box to the chart plot area. Defaults
         to ``True``.
 
         :returns: Flag controlling the auto-adjustment of the 3d box to the chart plot
           area.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._fit_to_plot
 
     @fit_to_plot.setter
     def fit_to_plot(self, value):
-        self._fit_to_plot = bool(value)
+        if value is None:
+            self._fit_to_plot = None
+        else:
+            self._fit_to_plot = bool(value)
 
     @property
     def frame(self) -> Optional[Frame]:
@@ -459,23 +464,22 @@ class Options3D(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'alpha': as_dict.pop('alpha', 0),
-            'axis_label_position': as_dict.pop('axisLabelPosition',
-                                               constants.EnforcedNull),
-            'beta': as_dict.pop('beta', 0),
-            'depth': as_dict.pop('depth', 100),
-            'enabled': as_dict.pop('enabled', False),
-            'fit_to_plot': as_dict.pop('fitToPlot', True),
+            'alpha': as_dict.pop('alpha', None),
+            'axis_label_position': as_dict.pop('axisLabelPosition', None),
+            'beta': as_dict.pop('beta', None),
+            'depth': as_dict.pop('depth', None),
+            'enabled': as_dict.pop('enabled', None),
+            'fit_to_plot': as_dict.pop('fitToPlot', None),
             'frame': as_dict.pop('frame', None),
-            'view_distance': as_dict.pop('viewDistance', 25)
+            'view_distance': as_dict.pop('viewDistance', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'alpha': self.alpha,
-            'axisLabelPositin': self.axis_label_position,
+            'axisLabelPosition': self.axis_label_position,
             'beta': self.beta,
             'depth': self.depth,
             'enabled': self.enabled,
@@ -484,4 +488,4 @@ class Options3D(HighchartsMeta):
             'viewDistance': self.view_distance
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

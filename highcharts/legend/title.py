@@ -13,8 +13,7 @@ class LegendTitle(HighchartsMeta):
         self._style = None
         self._text = None
 
-        self.style = kwargs.pop('style', constants.DEFAULT_LEGEND.get('title',
-                                                                      {}).get('style'))
+        self.style = kwargs.pop('style', None)
         self.style = kwargs.pop('text', None)
 
     @property
@@ -45,17 +44,16 @@ class LegendTitle(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'style': as_dict.pop('style', constants.DEFAULT_LEGEND.get('title',
-                                                                       {}).get('style')),
+            'style': as_dict.pop('style', None),
             'text': as_dict.pop('text', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'style': self.style,
             'text': self.text
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

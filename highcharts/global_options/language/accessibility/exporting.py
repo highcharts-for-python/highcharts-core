@@ -1,3 +1,5 @@
+from typing import Optional
+
 from validator_collection import validators
 
 from highcharts import constants
@@ -11,58 +13,46 @@ class ExportingLanguageOptions(HighchartsMeta):
         self._chart_menu_label = None
         self._menu_button_label = None
 
-        self.chart_menu_label = kwargs.pop('chart_menu_label',
-                                           constants.DEFAULT_LANG_ACS_EXPORTING_CHART_MENU_LABEL)
-        self.menu_button_label = kwargs.pop('menu_button_label',
-                                            constants.DEFAULT_LANG_ACS_EXPORTING_MENU_BTN_LABEL)
+        self.chart_menu_label = kwargs.pop('chart_menu_label', None)
+        self.menu_button_label = kwargs.pop('menu_button_label', None)
 
     @property
-    def chart_menu_label(self) -> str:
+    def chart_menu_label(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_EXPORTING_CHART_MENU_LABEL}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._chart_menu_label
 
     @chart_menu_label.setter
     def chart_menu_label(self, value):
-        if value == '':
-            self._chart_menu_label = ''
-        else:
-            self._chart_menu_label = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_EXPORTING_CHART_MENU_LABEL
+        self._chart_menu_label = validators.string(value, allow_empty = True)
 
     @property
-    def menu_button_label(self) -> str:
+    def menu_button_label(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_EXPORTING_MENU_BTN_LABEL}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._menu_button_label
 
     @menu_button_label.setter
     def menu_button_label(self, value):
-        if value == '':
-            self._menu_button_label = ''
-        else:
-            self._menu_button_label = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_EXPORTING_MENU_BTN_LABEL
+        self._menu_button_label = validators.string(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'chart_menu_label': as_dict.pop('chartMenuLabel',
-                                               constants.DEFAULT_LANG_ACS_EXPORTING_CHART_MENU_LABEL),
-            'menu_button_label': as_dict.pop('menuButtonLabel',
-                                                constants.DEFAULT_LANG_ACS_EXPORTING_MENU_BTN_LABEL)
+            'chart_menu_label': as_dict.pop('chartMenuLabel', None),
+            'menu_button_label': as_dict.pop('menuButtonLabel', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'chartMenuLabel': self.chart_menu_label,
             'menuButtonLabel': self.menu_button_label
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

@@ -11,52 +11,58 @@ class BoostDebug(HighchartsMeta):
     """Debugging options for boost. Useful for benchmarking, and general timing."""
 
     def __init__(self, **kwargs):
-        self._show_skip_summary = False
-        self._time_buffer_copy = False
-        self._time_kd_tree = False
-        self._time_rendering = False
-        self._time_series_processing = False
-        self._time_setup = False
+        self._show_skip_summary = None
+        self._time_buffer_copy = None
+        self._time_kd_tree = None
+        self._time_rendering = None
+        self._time_series_processing = None
+        self._time_setup = None
 
-        self.show_skip_summary = kwargs.pop('show_skip_summary', False)
-        self.time_buffer_copy = kwargs.pop('time_buffer_copy', False)
-        self.time_kd_tree = kwargs.pop('time_kd_tree', False)
-        self.time_rendering = kwargs.pop('time_rendering', False)
-        self.time_series_processing = kwargs.pop('time_series_processing', False)
-        self.time_setup = kwargs.pop('time_setup', False)
+        self.show_skip_summary = kwargs.pop('show_skip_summary', None)
+        self.time_buffer_copy = kwargs.pop('time_buffer_copy', None)
+        self.time_kd_tree = kwargs.pop('time_kd_tree', None)
+        self.time_rendering = kwargs.pop('time_rendering', None)
+        self.time_series_processing = kwargs.pop('time_series_processing', None)
+        self.time_setup = kwargs.pop('time_setup', None)
 
     @property
-    def show_skip_summary(self) -> bool:
+    def show_skip_summary(self) -> Optional[bool]:
         """When ``True``, the number of points skipped in series processing is outputted.
         Defaults to ``False``.
 
         Points are skipped if they are closer than 1 pixel from each other.
 
         :returns: Flag indicating whether the skip summary will be shown.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._show_skip_summary
 
     @show_skip_summary.setter
     def show_skip_summary(self, value):
-        self._show_skip_summary = bool(value)
+        if value is None:
+            self._show_skip_summary = None
+        else:
+            self._show_skip_summary = bool(value)
 
     @property
-    def time_buffer_copy(self) -> bool:
+    def time_buffer_copy(self) -> Optional[bool]:
         """When ``True``, the time it takes for the SVG buffer copy to complete is
         outputted. Defaults to ``False``.
 
         :returns: Flag indicating whether the buffer copy timing will be shown.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._time_buffer_copy
 
     @time_buffer_copy.setter
     def time_buffer_copy(self, value):
-        self._time_buffer_copy = bool(value)
+        if value is None:
+            self._time_buffer_copy = None
+        else:
+            self._time_buffer_copy = bool(value)
 
     @property
-    def time_kd_tree(self) -> bool:
+    def time_kd_tree(self) -> Optional[bool]:
         """When ``True``, the time spent building the k-d tree used for markers, etc. will
         be rendered. Defaults to ``False``.
 
@@ -66,70 +72,82 @@ class BoostDebug(HighchartsMeta):
           Thus, it does not affect the performance of the rendering itself.
 
         :returns: Flag indicating whether the KD tree timing will be shown.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._time_kd_tree
 
     @time_kd_tree.setter
     def time_kd_tree(self, value):
-        self._time_kd_tree = bool(value)
+        if value is None:
+            self._time_kd_tree = None
+        else:
+            self._time_kd_tree = bool(value)
 
     @property
-    def time_rendering(self) -> bool:
+    def time_rendering(self) -> Optional[bool]:
         """When ``True``, the time spent on actual rendering is outputted to the console.
         Defaults to ``False``.
 
         :returns: Flag indicating whether the rendering time will be shown.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._time_rendering
 
     @time_rendering.setter
     def time_rendering(self, value):
-        self._time_rendering = bool(value)
+        if value is None:
+            self._time_rendering = None
+        else:
+            self._time_rendering = bool(value)
 
     @property
-    def time_series_processing(self) -> bool:
+    def time_series_processing(self) -> Optional[bool]:
         """When ``True``, the time spent on transforming the series data to vertex buffers
         is outputted. Defaults to ``False``.
 
         :returns: Flag indicating whether the series processing time will be shown.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._time_series_processing
 
     @time_series_processing.setter
     def time_series_processing(self, value):
-        self._time_series_processing = bool(value)
+        if value is None:
+            self._time_series_processing = None
+        else:
+            self._time_series_processing = bool(value)
 
     @property
-    def time_setup(self) -> bool:
+    def time_setup(self) -> Optional[bool]:
         """When ``True``, the te time spent on setting up the WebGL context, creating
         shaders, and textures is outputted. Defaults to ``False``.
 
         :returns: Flag indicating whether the setup time will be shown.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._time_setup
 
     @time_setup.setter
     def time_setup(self, value):
-        self._time_setup = bool(value)
+        if value is None:
+            self._time_setup = None
+        else:
+            self._time_setup = bool(value)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'show_skip_summary': as_dict.pop('showSkipSummary', False),
-            'time_buffer_copy': as_dict.pop('timeBufferCopy', False),
-            'time_kd_tree': as_dict.pop('timeKDTree', False),
-            'time_rendering': as_dict.pop('timeRendering', False),
-            'time_series_processing': as_dict.pop('timeSeriesProcessing', False),
-            'time_setup': as_dict.pop('timeSetup', False)
+            'show_skip_summary': as_dict.pop('showSkipSummary', None),
+            'time_buffer_copy': as_dict.pop('timeBufferCopy', None),
+            'time_kd_tree': as_dict.pop('timeKDTree', None),
+            'time_rendering': as_dict.pop('timeRendering', None),
+            'time_series_processing': as_dict.pop('timeSeriesProcessing', None),
+            'time_setup': as_dict.pop('timeSetup', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         return {
             'showSkipSummary': self.show_skip_summary,
             'timeBufferCopy': self.time_buffer_copy,
@@ -159,37 +177,39 @@ class Boost(HighchartsMeta):
     """
 
     def __init__(self, **kwargs):
-        self._allow_force = True
+        self._allow_force = None
         self._debug = None
-        self._enabled = True
-        self._pixel_ratio = constants.DEFAULT_BOOST_PIXEL_RATIO
-        self._series_threshold = constants.DEFAULT_BOOST_SERIES_THRESHOLD
-        self._use_gpu_translations = False
-        self._use_preallocated = False
+        self._enabled = None
+        self._pixel_ratio = None
+        self._series_threshold = None
+        self._use_gpu_translations = None
+        self._use_preallocated = None
 
-        self.allow_force = kwargs.pop('allow_force', True)
+        self.allow_force = kwargs.pop('allow_force', None)
         self.debug = kwargs.pop('debug', None)
-        self.enabled = kwargs.pop('enabled', True)
-        self.pixel_ratio = kwargs.pop('pixel_ratio', constants.DEFAULT_BOOST_PIXEL_RATIO)
-        self.series_threshold = kwargs.pop('series_threshold',
-                                           constants.DEFAULT_BOOST_SERIES_THRESHOLD)
-        self.use_gpu_translations = kwargs.pop('use_gpu_translations', False)
-        self.use_preallocated = kwargs.pop('use_preallocated', False)
+        self.enabled = kwargs.pop('enabled', None)
+        self.pixel_ratio = kwargs.pop('pixel_ratio', None)
+        self.series_threshold = kwargs.pop('series_threshold', None)
+        self.use_gpu_translations = kwargs.pop('use_gpu_translations', None)
+        self.use_preallocated = kwargs.pop('use_preallocated', None)
 
     @property
-    def allow_force(self) -> bool:
+    def allow_force(self) -> Optional[bool]:
         """If ``True``, the whole chart will be boosted if one of the series crosses its
         threshold and all the series can be boosted. Defaults to ``True``.
 
         :returns: Flag indicating whether the entire chart can be boosted in response to
           one series being boosted.
-        :rtype: class:`bool <python:bool>`
+        :rtype: class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._allow_force
 
     @allow_force.setter
     def allow_force(self, value):
-        self._allow_force = bool(value)
+        if value is None:
+            self._allow_force = None
+        else:
+            self._allow_force = bool(value)
 
     @property
     def debug(self) -> Optional[BoostDebug]:
@@ -205,21 +225,24 @@ class Boost(HighchartsMeta):
         self._debug = value
 
     @property
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         """If ``True``, boost is enabled on the chart. If ``False``, boost is disabled.
         Defaults to ``True``.
 
         :returns: Flag indicating whether boost is enabled for the chart.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(value)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @property
-    def pixel_ratio(self) -> int:
+    def pixel_ratio(self) -> Optional[int]:
         f"""The pixel ratio for the WebGL content. Defaults to
         ``{constants.DEFAULT_BOOST_PIXEL_RATIO}``.
 
@@ -243,18 +266,18 @@ class Boost(HighchartsMeta):
           is scaled down. Since the Boost module currently can only render ``1px`` line
           widths, it is scaled down to a thin ``0.5`` pixels on a Retina display.
 
-        :rtype: :class:`int <python:int>`
+        :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
         """
         return self._pixel_ratio
 
     @pixel_ratio.setter
     def pixel_ratio(self, value):
         self._pixel_ratio = validators.integer(value,
-                                               allow_empty = False,
+                                               allow_empty = True,
                                                minimum = 0)
 
     @property
-    def series_threshold(self) -> int:
+    def series_threshold(self) -> Optional[int]:
         f"""Set the series threshold for when the boost should kick in globally. Defaults
         to ``{constants.DEFAULT_BOOST_SERIES_THRESHOLD}``.
 
@@ -263,16 +286,16 @@ class Boost(HighchartsMeta):
         be rendered to a common canvas. This offers a significant speed improvment in
         charts with a very high amount of series.
 
-        :rtype: :class:`int <python:int>`
+        :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
         """
         return self._series_threshold
 
     @series_threshold.setter
     def series_threshold(self, value):
-        self._series_threshold = validators.integer(value, allow_empty = False)
+        self._series_threshold = validators.integer(value, allow_empty = True)
 
     @property
-    def use_gpu_translations(self) -> bool:
+    def use_gpu_translations(self) -> Optional[bool]:
         """If ``True``, enables GPU translations. GPU translations are faster than doing
         the translation in JavaScript. Defaults to ``False``.
 
@@ -283,16 +306,19 @@ class Boost(HighchartsMeta):
           work correctly. This is due to floating point precission.
 
         :returns: Flag indicating whether to use GPU translations.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None.`
         """
         return self._use_gpu_translations
 
     @use_gpu_translations.setter
     def use_gpu_translations(self, value):
-        self._use_gpu_translations = bool(value)
+        if value is None:
+            self._use_gpu_translations = None
+        else:
+            self._use_gpu_translations = bool(value)
 
     @property
-    def use_preallocated(self) -> bool:
+    def use_preallocated(self) -> Optional[bool]:
         """If ``True``, enables the pre-allocation of vertex buffers. Defaults to
         ``False``.
 
@@ -310,30 +336,32 @@ class Boost(HighchartsMeta):
           doesn't cause any rendering glitches with the given use-case.
 
         :returns: Flag indicating whether pre-allocation of vertex buffers is enabled.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._use_preallocation
 
     @use_preallocated.setter
     def use_preallocated(self, value):
-        self._use_preallocated = bool(value)
+        if value is None:
+            self._use_preallocated = None
+        else:
+            self._use_preallocated = bool(value)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'allow_force': as_dict.pop('allowForce', True),
+            'allow_force': as_dict.pop('allowForce', None),
             'debug': as_dict.pop('debug', None),
-            'enabled': as_dict.pop('enabled', True),
-            'pixel_ratio': as_dict.pop('pixelRatio', constants.DEFAULT_BOOST_PIXEL_RATIO),
-            'series_threshold': as_dict.pop('seriesThreshold',
-                                            constants.DEFALUT_BOOST_SERIES_THRESHOLD),
-            'use_gpu_translations': as_dict.pop('useGPUTranslations', False),
-            'use_preallocated': as_dict.pop('usePreallocated', False)
+            'enabled': as_dict.pop('enabled', None),
+            'pixel_ratio': as_dict.pop('pixelRatio', None),
+            'series_threshold': as_dict.pop('seriesThreshold', None),
+            'use_gpu_translations': as_dict.pop('useGPUTranslations', None),
+            'use_preallocated': as_dict.pop('usePreallocated', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'allowForce': self.allow_force,
             'debug': self.debug,
@@ -344,4 +372,4 @@ class Boost(HighchartsMeta):
             'usePreallocated': self.use_preallocated
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

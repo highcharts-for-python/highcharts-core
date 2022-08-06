@@ -197,17 +197,17 @@ class OrganizationSeries(BarSeries, OrganizationOptions):
             'zone_axis': as_dict.pop('zoneAxis', None),
             'zones': as_dict.pop('zones', None),
 
-            'border_color': as_dict.pop('borderColor', '#ffffff'),
-            'border_radius': as_dict.pop('borderRadius', 0),
+            'border_color': as_dict.pop('borderColor', None),
+            'border_radius': as_dict.pop('borderRadius', None),
             'border_width': as_dict.pop('borderWidth', None),
-            'center_in_category': as_dict.pop('centerInCategory', False),
-            'color_by_point': as_dict.pop('colorByPoint', False),
+            'center_in_category': as_dict.pop('centerInCategory', None),
+            'color_by_point': as_dict.pop('colorByPoint', None),
             'colors': as_dict.pop('colors', None),
-            'grouping': as_dict.pop('grouping', True),
-            'group_padding': as_dict.pop('groupPadding', 0.2),
+            'grouping': as_dict.pop('grouping', None),
+            'group_padding': as_dict.pop('groupPadding', None),
             'max_point_width': as_dict.pop('maxPointWidth', None),
-            'min_point_length': as_dict.pop('minPointLength', 0),
-            'point_padding': as_dict.pop('pointPadding', 0.1),
+            'min_point_length': as_dict.pop('minPointLength', None),
+            'point_padding': as_dict.pop('pointPadding', None),
             'point_range': as_dict.pop('pointRange', None),
             'point_width': as_dict.pop('pointWidth', None),
 
@@ -238,7 +238,7 @@ class OrganizationSeries(BarSeries, OrganizationOptions):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'nodes': self.nodes
         }
@@ -247,4 +247,4 @@ class OrganizationSeries(BarSeries, OrganizationOptions):
         for key in parents_as_dict:
             untrimmed[key] = parents_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

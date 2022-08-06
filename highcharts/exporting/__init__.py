@@ -20,32 +20,35 @@ class ExportingAccessibilityOptions(HighchartsMeta):
     """Accessibility options for the exporting menu."""
 
     def __init_(self, **kwargs):
-        self._enabled = True
+        self._enabled = None
 
-        self.enabled = kwargs.pop('enabled', True)
+        self.enabled = kwargs.pop('enabled', None)
 
     @property
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         """If ``True``, enables accessibility support for the export menu. Defaults to
         ``True``.
 
         :returns: Flag indicating whether accessibility support is enabled for the
           export menu.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(value)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @classmethod
     def from_dict(cls, as_dict):
         return {
-            'enabled': as_dict.pop('enabled')
+            'enabled': as_dict.pop('enabled', None)
         }
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         return {
             'enabled': self.enabled
         }
@@ -56,55 +59,53 @@ class Exporting(HighchartsMeta):
 
     def __init__(self, **kwargs):
         self._accessibility = None
-        self._allow_html = False
+        self._allow_html = None
         self._buttons = None
         self._chart_options = None
         self._csv = None
-        self._enabled = True
+        self._enabled = None
         self._error = None
-        self._fallback_to_export_server = True
-        self._filename = constants.DEFAULT_EXPORTING_FILENAME
+        self._fallback_to_export_server = None
+        self._filename = None
         self._form_attributes = None
-        self._lib_url = constants.DEFAULT_EXPORTING_LIB_URL
-        self._menu_item_definitions = constants.DEFAULT_EXPORTING_MENU_ITEM_DEFINITIONS
+        self._lib_url = None
+        self._menu_item_definitions = None
         self._pdf_font = None
-        self._print_max_width = constants.DEFAULT_EXPORTING_PRINT_MAX_WIDTH
-        self._scale = constants.DEFAULT_EXPORTING_SCALE
-        self._show_table = False
+        self._print_max_width = None
+        self._scale = None
+        self._show_table = None
         self._source_height = None
         self._source_width = None
         self._table_caption = None
-        self._type = constants.DEFAULT_EXPORTING_TYPE
-        self._url = constants.DEFAULT_EXPORTING_URL
-        self._use_multi_level_headers = True
-        self._use_rowspan_headers = True
+        self._type = None
+        self._url = None
+        self._use_multi_level_headers = None
+        self._use_rowspan_headers = None
         self._width = None
 
         self.accessibility = kwargs.pop('accessibility', None)
-        self.allow_html = kwargs.pop('allow_html', False)
-        self.buttons = kwargs.pop('buttons', default_context_button)
+        self.allow_html = kwargs.pop('allow_html', None)
+        self.buttons = kwargs.pop('buttons', None)
         self.chart_options = kwargs.pop('chart_options', None)
         self.csv = kwargs.pop('csv', None)
-        self.enabled = kwargs.pop('enabled', True)
+        self.enabled = kwargs.pop('enabled', None)
         self.error = kwargs.pop('error', None)
-        self.fallback_to_export_server = kwargs.pop('fallback_to_export_server', True)
-        self.filename = kwargs.pop('filename', constants.DEFAULT_EXPORTING_FILENAME)
+        self.fallback_to_export_server = kwargs.pop('fallback_to_export_server', None)
+        self.filename = kwargs.pop('filename', None)
         self.form_attributes = kwargs.pop('form_attributes', None)
-        self.lib_url = kwargs.pop('lib_url', constants.DEFAULT_EXPORTING_LIB_URL)
-        self.menu_item_definitions = kwargs.pop('menu_item_definitions',
-                                                constants.DEFAULT_EXPORTING_MENU_ITEM_DEFINITIONS)
+        self.lib_url = kwargs.pop('lib_url', None)
+        self.menu_item_definitions = kwargs.pop('menu_item_definitions', None)
         self.pdf_font = kwargs.pop('pdf_font', None)
-        self.print_max_width = kwargs.pop('print_max_width',
-                                          constants.DEFAULT_EXPORTING_PRINT_MAX_WIDTH)
-        self.scale = kwargs.pop('scale', constants.DEFAULT_EXPORTING_SCALE)
-        self.show_table = kwargs.pop('show_table', False)
+        self.print_max_width = kwargs.pop('print_max_width', None)
+        self.scale = kwargs.pop('scale', None)
+        self.show_table = kwargs.pop('show_table', None)
         self.source_height = kwargs.pop('source_height', None)
         self.source_width = kwargs.pop('source_width', None)
         self.table_caption = kwargs.pop('table_caption', None)
-        self.type = kwargs.pop('type', constants.DEFAULT_EXPORTING_TYPE)
-        self.url = kwargs.pop('url', constants.DEFAULT_EXPORTING_URL)
-        self.use_multi_level_headers = kwargs.pop('use_multi_level_headers', True)
-        self.use_rowspan_headers = kwargs.pop('use_rowspan_headers', True)
+        self.type = kwargs.pop('type', None)
+        self.url = kwargs.pop('url', None)
+        self.use_multi_level_headers = kwargs.pop('use_multi_level_headers', None)
+        self.use_rowspan_headers = kwargs.pop('use_rowspan_headers', None)
         self.width = kwargs.pop('width', None)
 
     @property
@@ -121,7 +122,7 @@ class Exporting(HighchartsMeta):
         self._accessibility = value
 
     @property
-    def allow_html(self) -> bool:
+    def allow_html(self) -> Optional[bool]:
         """If ``True``, allows HTML inside the chart (added using
         :meth:`Exporting.use_html`) to be added directly to the exported image. This
         allows you to preserve complicated HTML structures like tables or bi-directional
@@ -139,13 +140,16 @@ class Exporting(HighchartsMeta):
           you want to open in a desktop client.
 
         :returns: Flag indicating whether to allow HTML in the exported image.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._allow_html
 
     @allow_html.setter
     def allow_html(self, value):
-        self._allow_html = bool(value)
+        if value is None:
+            self._allow_html = None
+        else:
+            self._allow_html = bool(value)
 
     @property
     def buttons(self) -> Optional[ExportingButtons]:
@@ -229,7 +233,7 @@ class Exporting(HighchartsMeta):
         self._csv = value
 
     @property
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         """If ``True``, displays the export context button and allows for exporting the
         chart. If ``False``, the context button will be hidden but JavaScript export API
         methods will still be available.
@@ -237,13 +241,16 @@ class Exporting(HighchartsMeta):
         Defaults to ``True``.
 
         :returns: Flag indicating whether the export menu is displayed on the chart.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(value)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @property
     def error(self) -> Optional[str]:
@@ -269,7 +276,7 @@ class Exporting(HighchartsMeta):
         self._error = validators.string(value, allow_empty = True)
 
     @property
-    def fallback_to_export_server(self) -> bool:
+    def fallback_to_export_server(self) -> Optional[bool]:
         """If ``True``, falls back to the export server if the offline-exporting module is
         unable to export the chart on the client side. Defaults to ``True``.
 
@@ -285,27 +292,29 @@ class Exporting(HighchartsMeta):
 
         :returns: Flag indicating whether to fall back to the export server if chart
           export fails.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._fallback_to_export_server
 
     @fallback_to_export_server.setter
     def fallback_to_export_server(self, value):
-        self._fallback_to_export_server = bool(value)
+        if value is None:
+            self._fallback_to_export_server = None
+        else:
+            self._fallback_to_export_server = bool(value)
 
     @property
-    def filename(self) -> str:
+    def filename(self) -> Optional[str]:
         """The filename (without file type extension) to use for the exported chart.
         Defaults to ``'{constants.DEFAULT_EXPORTING_FILENAME}'``.
 
-        :rtype: :class:`str`
+        :rtype: :class:`str` or :obj:`None <python:None>`
         """
         return self._filename
 
     @filename.setter
     def filename(self, value):
-        self._filename = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_EXPORTING_FILENAME
+        self._filename = validators.string(value, allow_empty = True)
 
     @property
     def form_attributes(self) -> Optional[dict]:
@@ -340,7 +349,7 @@ class Exporting(HighchartsMeta):
         return self._lib_url
 
     @property
-    def menu_item_definitions(self) -> MenuObject:
+    def menu_item_definitions(self) -> Optional[MenuObject]:
         """An object consisting of definitions for the menu items in the context menu.
 
         Each key value pair has a key that is referenced in the ``menu_items`` setting,
@@ -362,7 +371,7 @@ class Exporting(HighchartsMeta):
           {constants.DEFAULT_EXPORTING_MENU_ITEM_DEFINITIONS}
 
         :returns: Definitions for menu items in the Exporting context menu.
-        :rtype: :class:`MenuObject`
+        :rtype: :class:`MenuObject` or :obj:`None <python:None>`
         """
         return self._menu_item_definitions
 
@@ -434,18 +443,21 @@ class Exporting(HighchartsMeta):
         self._scale = validators.numeric(value, allow_empty = True)
 
     @property
-    def show_table(self) -> bool:
+    def show_table(self) -> Optional[bool]:
         """If ``True``, shows an HTML table below the chart with the chart's current data.
         Defaults to ``False``.
 
         :returns: Flag indicating whether to display an HTML table with the export.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._show_table
 
     @show_table.setter
     def show_table(self, value):
-        self._show_table = bool(value)
+        if value is None:
+            self._show_table = None
+        else:
+            self._show_table = bool(value)
 
     @property
     def source_height(self) -> Optional[int | float | Decimal]:
@@ -503,7 +515,7 @@ class Exporting(HighchartsMeta):
             self._table_caption = validators.string(value, allow_empty = False)
 
     @property
-    def type(self) -> str:
+    def type(self) -> Optional[str]:
         f"""Default MIME type for exporting if the JavaScript ``chart.exportChart()`` is
         called without specifying a ``type`` option.
 
@@ -516,14 +528,14 @@ class Exporting(HighchartsMeta):
 
         Defaults to ``'{constants.DEFAULT_EXPORTING_TYPE}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._type
 
     @type.setter
     def type(self, value):
         if not value:
-            self._type = constants.DEFAULT_EXPORTING_TYPE
+            self._type = None
         else:
             value = validators.string(value)
             value = value.lower()
@@ -537,12 +549,12 @@ class Exporting(HighchartsMeta):
             self._type = value
 
     @property
-    def url(self) -> str:
+    def url(self) -> Optional[str]:
         """The URL for the server module converting the SVG string to an image format. By
         default this points to Highchart's free web service:
         ``'{constants.DEFAULT_EXPORTING_URL}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
 
         :raises ValueError: if not a well-formed URL or path
         """
@@ -556,7 +568,7 @@ class Exporting(HighchartsMeta):
             self._url = validators.path(value)
 
     @property
-    def use_multi_level_headers(self) -> bool:
+    def use_multi_level_headers(self) -> Optional[bool]:
         """If ``True``, uses multi-level (nested) headers in the exported data table.
         Defaults to ``True``.
 
@@ -568,28 +580,34 @@ class Exporting(HighchartsMeta):
           work properly.
 
         :returns: Flag indicating whether to use multi-level headers in the data table.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._use_multi_level_headers
 
     @use_multi_level_headers.setter
     def use_multi_level_headers(self, value):
-        self._use_multi_level_headers = bool(value)
+        if value is None:
+            self._use_multi_level_headers = None
+        else:
+            self._use_multi_level_headers = bool(value)
 
     @property
-    def use_rowspan_headers(self) -> bool:
+    def use_rowspan_headers(self) -> Optional[bool]:
         """If ``True`` and using multi-level headers, uses rowspans in the data table for
         headers that only have one level. Defaults to ``True``.
 
         :returns: Flag indicating whether to use rowspans for single-level headers in a
           data table using multi-level headers.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._use_rowspan_headers
 
     @use_rowspan_headers.setter
     def use_rowspan_headers(self, value):
-        self._use_rowspan_headers = bool(value)
+        if value is None:
+            self._use_rowspan_headers = None
+        else:
+            self._use_rowspan_headers = bool(value)
 
     @property
     def width(self) -> Optional[int | float | Decimal]:
@@ -614,36 +632,34 @@ class Exporting(HighchartsMeta):
     def from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.pop('accessibility', None),
-            'allow_html': as_dict.pop('allowHTML', False),
+            'allow_html': as_dict.pop('allowHTML', None),
             'buttons': as_dict.pop('buttons', None),
             'chart_options': as_dict.pop('chartOptions', None),
             'csv': as_dict.pop('csv', None),
-            'enabled': as_dict.pop('enabled', True),
+            'enabled': as_dict.pop('enabled', None),
             'error': as_dict.pop('error', None),
-            'fallback_to_export_server': as_dict.pop('fallbackToExportServer', True),
-            'filename': as_dict.pop('filename', constants.DEFAULT_EXPORTING_FILENAME),
+            'fallback_to_export_server': as_dict.pop('fallbackToExportServer', None),
+            'filename': as_dict.pop('filename', None),
             'form_attributes': as_dict.pop('formAttributes', None),
-            'lib_url': as_dict.pop('libURL', constants.DEFAULT_EXPORTING_LIB_URL),
-            'menu_item_definitions': as_dict.pop('menuItemDefinitions',
-                                                    constants.DEFAULT_EXPORTING_MENU_ITEM_DEFINITIONS),
+            'lib_url': as_dict.pop('libURL', None),
+            'menu_item_definitions': as_dict.pop('menuItemDefinitions', None),
             'pdf_font': as_dict.pop('pdfFont', None),
-            'print_max_width': as_dict.pop('printMaxWidth',
-                                              constants.DEFAULT_EXPORTING_PRINT_MAX_WIDTH),
-            'scale': as_dict.pop('scale', constants.DEFAULT_EXPORTING_SCALE),
-            'show_table': as_dict.pop('showTable', False),
+            'print_max_width': as_dict.pop('printMaxWidth', None),
+            'scale': as_dict.pop('scale', None),
+            'show_table': as_dict.pop('showTable', None),
             'source_height': as_dict.pop('sourceHeight', None),
             'source_width': as_dict.pop('sourceWidth', None),
             'table_caption': as_dict.pop('tableCaption', None),
-            'type': as_dict.pop('type', constants.DEFAULT_EXPORTING_TYPE),
-            'url': as_dict.pop('url', constants.DEFAULT_EXPORTING_URL),
-            'use_multi_level_headers': as_dict.pop('useMultiLevelHeaders', True),
-            'use_rowspan_headers': as_dict.pop('useRowspanHeaders', True),
+            'type': as_dict.pop('type', None),
+            'url': as_dict.pop('url', None),
+            'use_multi_level_headers': as_dict.pop('useMultiLevelHeaders', None),
+            'use_rowspan_headers': as_dict.pop('useRowspanHeaders', None),
             'width': as_dict.pop('width', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'allowHTML': self.allow_html,
@@ -671,4 +687,4 @@ class Exporting(HighchartsMeta):
             'width': self.width
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

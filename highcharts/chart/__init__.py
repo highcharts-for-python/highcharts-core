@@ -33,27 +33,30 @@ class PanningOptions(HighchartsMeta):
     """
 
     def __init__(self, **kwargs):
-        self._enabled = False
-        self._type = 'x'
+        self._enabled = None
+        self._type = None
 
-        self.enabled = kwargs.pop('enabled', False)
-        self.type = kwargs.pop('type', 'x')
+        self.enabled = kwargs.pop('enabled', None)
+        self.type = kwargs.pop('type', None)
 
     @property
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         """If ``True``, enables chart panning. Defaults to ``False``.
 
         :returns: Flag enabling or disabling chart panning.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(value)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @property
-    def type(self) -> str:
+    def type(self) -> Optional[str]:
         """Determines in what dimensions the user can pan the chart. Defaults to ``'x'``.
 
         Accepts:
@@ -62,14 +65,14 @@ class PanningOptions(HighchartsMeta):
           * ``'y'``
           * ``'xy'``
 
-        :rtype: :class:`str`
+        :rtype: :class:`str` or :obj:`None <python:None>`
         """
         return self._type
 
     @type.setter
     def type(self, value):
         if not value:
-            self._type = 'x'
+            self._type = None
         else:
             value = validators.string(value)
             value = value.lower()
@@ -82,13 +85,13 @@ class PanningOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'enabled': as_dict.pop('enabled', False),
-            'type': as_dict.pop('type', 'x')
+            'enabled': as_dict.pop('enabled', None),
+            'type': as_dict.pop('type', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         return {
             'enabled': self.enabled,
             'type': self.type
@@ -99,21 +102,21 @@ class Chart(HighchartsMeta):
     """Configuration settings that apply to a chart."""
 
     def __init__(self, **kwargs):
-        self._align_thresholds = False
-        self._align_ticks = True
-        self._allow_mutating_data = True
+        self._align_thresholds = None
+        self._align_ticks = None
+        self._allow_mutating_data = None
         self._animation = None
-        self._background_color = constants.DEFAULT_CHART_BACKGROUND_COLOR
-        self._border_color = constants.DEFAULT_CHART_BORDER_COLOR
-        self._border_radius = constants.DEFAULT_CHART_BORDER_RADIUS
-        self._border_width = constants.DEFAULT_CHART_BORDER_WIDTH
+        self._background_color = None
+        self._border_color = None
+        self._border_radius = None
+        self._border_width = None
         self._class_name = None
-        self._color_count = constants.DEFAULT_CHART_COLOR_COUNT
-        self._display_errors = True
+        self._color_count = None
+        self._display_errors = None
         self._events = None
-        self._height = constants.EnforcedNull
-        self._ignore_hidden_series = True
-        self._inverted = False
+        self._height = None
+        self._ignore_hidden_series = None
+        self._inverted = None
         self._margin_bottom = None
         self._margin_left = None
         self._margin_right = None
@@ -125,50 +128,46 @@ class Chart(HighchartsMeta):
         self._parallel_axes = None
         self._parallel_coordinates = None
         self._pinch_type = None
-        self._plot_background_color = constants.DEFAULT_CHART_PLOT_BACKGROUND_COLOR
+        self._plot_background_color = None
         self._plot_background_image = None
-        self._plot_border_color = constants.DEFAULT_CHART_PLOT_BORDER_COLOR
-        self._plot_border_width = constants.DEFAULT_CHART_PLOT_BORDER_WIDTH
-        self._plot_shadow = False
-        self._polar = False
-        self._reflow = True
+        self._plot_border_color = None
+        self._plot_border_width = None
+        self._plot_shadow = None
+        self._polar = None
+        self._reflow = None
         self._render_to = None
         self._reset_zoom_button = None
         self._scrollable_plot_area = None
-        self._selection_marker_fill = constants.DEFAULT_CHART_SELECTION_MARKER_FILL
-        self._shadow = False
+        self._selection_marker_fill = None
+        self._shadow = None
         self._show_axes = None
-        self._spacing_bottom = constants.DEFAULT_CHART_SPACING_BOTTOM
-        self._spacing_left = constants.DEFAULT_CHART_SPACING_LEFT
-        self._spacing_top = constants.DEFAULT_CHART_SPACING_TOP
-        self._spacing_right = constants.DEFAULT_CHART_SPACING_RIGHT
-        self._style = constants.DEFAULT_CHART_STYLE
-        self._styled_mode = False
-        self._type = constants.DEFAULT_CHART_TYPE
-        self._width = constants.EnforcedNull
-        self._zoom_by_single_touch = False
+        self._spacing_bottom = None
+        self._spacing_left = None
+        self._spacing_top = None
+        self._spacing_right = None
+        self._style = None
+        self._styled_mode = None
+        self._type = None
+        self._width = None
+        self._zoom_by_single_touch = None
         self._zoom_key = None
         self._zoom_type = None
 
-        self.align_thresholds = kwargs.pop('align_thresholds', False)
-        self.align_ticks = kwargs.pop('align_ticks', True)
-        self.allow_mutating_data = kwargs.pop('allow_mutating_data', True)
+        self.align_thresholds = kwargs.pop('align_thresholds', None)
+        self.align_ticks = kwargs.pop('align_ticks', None)
+        self.allow_mutating_data = kwargs.pop('allow_mutating_data', None)
         self.animation = kwargs.pop('animation', None)
-        self.background_color = kwargs.pop('background_color',
-                                           constants.DEFAULT_CHART_BACKGROUND_COLOR)
-        self.border_color = kwargs.pop('border_color',
-                                       constants.DEFAULT_CHART_BORDER_COLOR)
-        self.border_radius = kwargs.pop('border_radius',
-                                        constants.DEFAULT_CHART_BORDER_RADIUS)
-        self.border_width = kwargs.pop('border_width',
-                                       constants.DEFAULT_CHART_BORDER_WIDTH)
+        self.background_color = kwargs.pop('background_color', None)
+        self.border_color = kwargs.pop('border_color', None)
+        self.border_radius = kwargs.pop('border_radius', None)
+        self.border_width = kwargs.pop('border_width', None)
         self.class_name = kwargs.pop('class_name', None)
-        self.color_count = kwargs.pop('color_count', constants.DEFAULT_CHART_COLOR_COUNT)
-        self.display_errors = kwargs.pop('display_errors', True)
+        self.color_count = kwargs.pop('color_count', None)
+        self.display_errors = kwargs.pop('display_errors', None)
         self.events = kwargs.pop('events', None)
-        self.height = kwargs.pop('height', constants.EnforcedNull)
-        self.ignore_hidden_series = kwargs.pop('ignore_hidden_series', True)
-        self.inverted = kwargs.pop('inverted', False)
+        self.height = kwargs.pop('height', None)
+        self.ignore_hidden_series = kwargs.pop('ignore_hidden_series', None)
+        self.inverted = kwargs.pop('inverted', None)
         self.margin_bottom = kwargs.pop('margin_bottom', None)
         self.margin_left = kwargs.pop('margin_left', None)
         self.margin_right = kwargs.pop('margin_right', None)
@@ -180,40 +179,33 @@ class Chart(HighchartsMeta):
         self.parallel_axes = kwargs.pop('parallel_axes', None)
         self.parallel_coordinates = kwargs.pop('parallel_coordinates', None)
         self.pinch_type = kwargs.pop('pinch_type', None)
-        self.plot_background_color = kwargs.pop('plot_background_color',
-                                                constants.DEFAULT_CHART_PLOT_BACKGROUND_COLOR)
+        self.plot_background_color = kwargs.pop('plot_background_color', None)
         self.plot_background_image = kwargs.pop('plot_background_image', None)
-        self.plot_border_color = kwargs.pop('plot_border_color',
-                                            constants.DEFAULT_CHART_PLOT_BORDER_COLOR)
-        self.plot_border_width = kwargs.pop('plot_border_width',
-                                            constants.DEFAULT_CHART_PLOT_BORDER_WIDTH)
-        self.plot_shadow = kwargs.pop('plot_shadow', False)
-        self.polar = kwargs.pop('polar', False)
-        self.reflow = kwargs.pop('reflow', True)
+        self.plot_border_color = kwargs.pop('plot_border_color', None)
+        self.plot_border_width = kwargs.pop('plot_border_width', None)
+        self.plot_shadow = kwargs.pop('plot_shadow', None)
+        self.polar = kwargs.pop('polar', None)
+        self.reflow = kwargs.pop('reflow', None)
         self.render_to = kwargs.pop('render_to', None)
         self.reset_zoom_button = kwargs.pop('reset_zoom_button', None)
         self.scrollable_plot_area = kwargs.pop('scrollable_plot_area', None)
-        self.selection_marker_fill = kwargs.pop('selection_marker_fill',
-                                                constants.DEFAULT_CHART_SELECTION_MARKER_FILL)
-        self.shadow = kwargs.pop('shadow', False)
+        self.selection_marker_fill = kwargs.pop('selection_marker_fill', None)
+        self.shadow = kwargs.pop('shadow', None)
         self.show_axes = kwargs.pop('show_axes', None)
-        self.spacing_bottom = kwargs.pop('spacing_bottom',
-                                         constants.DEFAULT_CHART_SPACING_BOTTOM)
-        self.spacing_left = kwargs.pop('spacing_left',
-                                       constants.DEFAULT_CHART_SPACING_LEFT)
-        self.spacing_top = kwargs.pop('spacing_top', constants.DEFAULT_CHART_SPACING_TOP)
-        self.spacing_right = kwargs.pop('spacing_right',
-                                        constants.DEFAULT_CHART_SPACING_RIGHT)
-        self.style = kwargs.pop('style', constants.DEFAULT_CHART_STYLE)
-        self.styled_mode = kwargs.pop('styled_mode', False)
-        self.type = kwargs.pop('type', constants.DEFAULT_CHART_TYPE)
-        self.width = kwargs.pop('width', constants.EnforcedNull)
-        self.zoom_by_single_touch = kwargs.pop('zoom_by_single_touch', False)
+        self.spacing_bottom = kwargs.pop('spacing_bottom', None)
+        self.spacing_left = kwargs.pop('spacing_left', None)
+        self.spacing_top = kwargs.pop('spacing_top', None)
+        self.spacing_right = kwargs.pop('spacing_right', None)
+        self.style = kwargs.pop('style', None)
+        self.styled_mode = kwargs.pop('styled_mode', None)
+        self.type = kwargs.pop('type', None)
+        self.width = kwargs.pop('width', None)
+        self.zoom_by_single_touch = kwargs.pop('zoom_by_single_touch', None)
         self.zoom_key = kwargs.pop('zoom_key', None)
         self.zoom_type = kwargs.pop('zoom_type', None)
 
     @property
-    def align_thresholds(self) -> bool:
+    def align_thresholds(self) -> Optional[bool]:
         """When using multiple axes, align the thresholds. When ``True``, other ticks will
         also be aligned. Defaults to ``False``.
 
@@ -230,13 +222,16 @@ class Chart(HighchartsMeta):
           to ``False``, or if the axis is logarithmic, the threshold will not be aligned.
 
         :returns: Flag indicating whether thresholds should be aligned.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._align_thresholds
 
     @align_thresholds.setter
     def align_thresholds(self, value):
-        self._align_thresholds = bool(value)
+        if value is None:
+            self._align_thresholds = None
+        else:
+            self._align_thresholds = bool(value)
 
     @property
     def align_ticks(self) -> Optional[bool]:
@@ -274,7 +269,7 @@ class Chart(HighchartsMeta):
             self._align_ticks = bool(value)
 
     @property
-    def allow_mutating_data(self) -> bool:
+    def allow_mutating_data(self) -> Optional[bool]:
         """If ``True``, the original data source will be allowed to be mutated. However,
         if ``False`` then Highcharts will create a copy of the original data to prevent
         inadvertent mutation. Defaults to ``True``.
@@ -290,13 +285,16 @@ class Chart(HighchartsMeta):
 
         :returns: Flag indicating whether to allow mutation by referencing th eoriginal
           data (``True``), or prevent it by copying the original data (``False``).
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._allow_mutating_data
 
     @allow_mutating_data.setter
     def allow_mutating_data(self, value):
-        self._allow_mutating_data = bool(value)
+        if value is None:
+            self._allow_mutating_data = None
+        else:
+            self._allow_mutating_data = bool(value)
 
     @property
     def animation(self) -> Optional[bool | AnimationOptions]:
@@ -448,7 +446,7 @@ class Chart(HighchartsMeta):
 
     @property
     def class_name(self) -> Optional[str]:
-        f"""A classname to apply styling using CSS.
+        """A classname to apply styling using CSS.
 
         :returns: The classname to apply to enable styling via CSS.
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
@@ -481,18 +479,21 @@ class Chart(HighchartsMeta):
                                                coerce_value = True)
 
     @property
-    def display_errors(self) -> bool:
+    def display_errors(self) -> Optional[bool]:
         """If ``True``, will display errors on the chart itself. If ``False``, will only
         report errors to the console. Defaults to ``True``.
 
         :returns: Flag indicating whether ot display errors on the chart.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._display_errors
 
     @display_errors.setter
     def display_errors(self, value):
-        self._display_errors = bool(value)
+        if value is None:
+            self._display_errors = None
+        else:
+            self._display_errors = bool(value)
 
     @property
     def events(self) -> Optional[ChartEvents]:
@@ -508,7 +509,7 @@ class Chart(HighchartsMeta):
         self._events = value
 
     @property
-    def height(self) -> constants.EnforcedNullType | int | float | Decimal | str:
+    def height(self) -> Optional[constants.EnforcedNullType | int | float | Decimal | str]:
         """An explicit height for the chart.
 
         Defaults to :class:`EnforcedNull <EnforcedNullType>`` which indicates
@@ -522,14 +523,15 @@ class Chart(HighchartsMeta):
         By default (when null) the height is calculated from the offset height of the
         containing element, or 400 pixels if the containing element's height is 0.
 
-        :rtype: :class:`EnforcedNullType` or numeric or :class:`str <python:str>`
+        :rtype: :class:`EnforcedNullType` or numeric or :class:`str <python:str>` or
+          :obj:`None <python:None>`
         """
         return self._height or constants.EnforcedNull
 
     @height.setter
     def height(self, value):
-        if value is None:
-            self._height = constants.EnforcedNull
+        if value is None or isinstance(value, constants.EnforcedNullType):
+            self._height = None
         else:
             try:
                 try:
@@ -544,7 +546,7 @@ class Chart(HighchartsMeta):
                                                   'supported data type.')
 
     @property
-    def ignore_hidden_series(self) -> bool:
+    def ignore_hidden_series(self) -> Optional[bool]:
         """If ``True``, the axes will scale to the remaining visible series once one
         series is hidden. If ``False``, hiding and showing a series will not affect the
         axes or the other series.
@@ -557,16 +559,19 @@ class Chart(HighchartsMeta):
           will close in around it even if the axis is not affected.
 
         :returns: Flag indicating whether to ignore hidden series.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._ignore_hidden_series
 
     @ignore_hidden_series.setter
     def ignore_hidden_series(self, value):
-        self._ignore_hidden_series = bool(value)
+        if value is None:
+            self._ignore_hidden_series = None
+        else:
+            self._ignore_hidden_series = bool(value)
 
     @property
-    def inverted(self) -> bool:
+    def inverted(self) -> Optional[bool]:
         """If ``True``, inverts the axes so that the x-axis is vertical and y-axis is
         horizontal. Defaults to ``False``.
 
@@ -584,13 +589,16 @@ class Chart(HighchartsMeta):
           the chart, or if the chart is a polar chart type.
 
         :returns: Flag indicating whether to invert the axes.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._inverted
 
     @inverted.setter
     def inverted(self, value):
-        self._inverted = bool(value)
+        if value is None:
+            self._inverted = None
+        else:
+            self._inverted = bool(value)
 
     @property
     def margin(self) -> Optional[List[int | float | Decimal]]:
@@ -830,7 +838,7 @@ class Chart(HighchartsMeta):
         self._parallel_axes = value
 
     @property
-    def parallel_coordinates(self) -> bool:
+    def parallel_coordinates(self) -> Optional[bool]:
         """If ``True``, renders charts as a parallel coordinates plot. Defaults to
         ``False``.
 
@@ -846,13 +854,16 @@ class Chart(HighchartsMeta):
           * `Parallel Coordinates Demo <https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples//highcharts/demo/parallel-coordinates/>`_
 
         :returns: Flag indicating whether the chart is a parallel coordinates plot.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._parallel_coordinates
 
     @parallel_coordinates.setter
     def parallel_coordinates(self, value):
-        self._parallel_coordinates = bool(value)
+        if value is None:
+            self._parallel_coordinates = None
+        else:
+            self._parallel_coordinates = bool(value)
 
     @property
     def pinch_type(self) -> Optional[str]:
@@ -1026,7 +1037,7 @@ class Chart(HighchartsMeta):
         self._plot_border_width = validators.numeric(value, allow_empty = True)
 
     @property
-    def plot_shadow(self) -> bool | ShadowOptions:
+    def plot_shadow(self) -> Optional[bool | ShadowOptions]:
         """Configuration of a drop shadow applied to the plot area. Accepts either a
         boolean value of ``False`` which disables any shadow, or a :class:`ShadowOptions`
         instance with the applicable configuration.
@@ -1043,7 +1054,9 @@ class Chart(HighchartsMeta):
 
     @plot_shadow.setter
     def plot_shadow(self, value):
-        if value is False:
+        if value is None:
+            self._plot_shadow = None
+        elif value is False:
             self._plot_shadow = False
         else:
             value = validate_types(value,
@@ -1052,34 +1065,40 @@ class Chart(HighchartsMeta):
             self._plot_shadow = value
 
     @property
-    def polar(self) -> bool:
+    def polar(self) -> Optional[bool]:
         """If ``True``, cartesian charts like line, spline, area, and column are
         transformed into the polar coordinate system. This produces polar charts (also
         known as radar charts). Defaults to ``False``.
 
         :returns: Flag indicating whether to render the chart as a polar chart.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._polar
 
     @polar.setter
     def polar(self, value):
-        self._polar = bool(value)
+        if value is None:
+            self._polar = None
+        else:
+            self._polar = bool(value)
 
     @property
-    def reflow(self) -> bool:
+    def reflow(self) -> Optional[bool]:
         """If ``True``, reflows the chart to fit the width of the container ``div`` when
         the window is resized. Defaults to ``True``.
 
         :returns: Flag indicating whether to reflow the chart in response to window
           resizing.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._reflow
 
     @reflow.setter
     def reflow(self, value):
-        self._reflow = bool(value)
+        if value is None:
+            self._reflow = None
+        else:
+            self._reflow = bool(value)
 
     @property
     def render_to(self) -> Optional[str]:
@@ -1182,7 +1201,7 @@ class Chart(HighchartsMeta):
                                               f'was: {value}')
 
     @property
-    def shadow(self) -> bool | ShadowOptions:
+    def shadow(self) -> Optional[bool | ShadowOptions]:
         """Configuration of a drop shadow applied to the outer chart area. Accepts either
         a boolean value of ``False`` which disables any shadow, or a
         :class:`ShadowOptions` instance with the applicable configuration.
@@ -1199,7 +1218,9 @@ class Chart(HighchartsMeta):
 
     @shadow.setter
     def shadow(self, value):
-        if value is False:
+        if value is None:
+            self._shadow = None
+        elif value is False:
             self._shadow = False
         else:
             value = validate_types(value,
@@ -1230,8 +1251,8 @@ class Chart(HighchartsMeta):
 
     @property
     def spacing(self) -> Optional[List[int | float | Decimal]]:
-        f"""The distance between the outer edge of the chart and the content, like title or
-        legend, or axis title and labels if present. The numbers in the array designate
+        f"""The distance between the outer edge of the chart and the content, like title
+        or legend, or axis title and labels if present. The numbers in the array designate
         top, right, bottom and left respectively.
 
         By default, ``{constants.DEFAULT_CHART_SPACING}``.
@@ -1264,8 +1285,8 @@ class Chart(HighchartsMeta):
             self.spacing_left = None
         elif checkers.is_iterable(value):
             if len(value) != 4:
-                raise errors.HighchartsValueError(f'spacing expects either a single value '
-                                                  f'or an iterable of four values. '
+                raise errors.HighchartsValueError(f'spacing expects either a single value'
+                                                  f' or an iterable of four values. '
                                                   f'Received an iterable of {len(value)} '
                                                   f'values ({value})')
             self.spacing_top = value[0]
@@ -1358,7 +1379,7 @@ class Chart(HighchartsMeta):
         self._style = validators.string(value, allow_empty = True)
 
     @property
-    def styled_mode(self) -> bool:
+    def styled_mode(self) -> Optional[bool]:
         """If ``True``, sets the chart to operate in **styled mode**, where no
         presentational attributes or CSS are applied to the chart SVG. Instead, CSS rules
         are required to style the chart. Defaults to ``False``.
@@ -1368,16 +1389,19 @@ class Chart(HighchartsMeta):
           * The Default Style Sheet:
             `https://code.highcharts.com/css/highcharts.css <https://code.highcharts.com/css/highcharts.css>`_.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._styled_mode
 
     @styled_mode.setter
     def styled_mode(self, value):
-        self._styled_mode = bool(value)
+        if value is None:
+            self._styled_mode = None
+        else:
+            self._styled_mode = bool(value)
 
     @property
-    def type(self) -> str:
+    def type(self) -> Optional[str]:
         """The default series type for the chart. Defaults to ``'line'``.
 
         Can be any of the chart types listed under :class:`PlotOptions` and
@@ -1385,9 +1409,10 @@ class Chart(HighchartsMeta):
 
         .. note::
 
-          In TypeScript this option has no effect in sense of typing and instead the type option must always be set in the series.
+          In TypeScript this option has no effect in sense of typing and instead the type
+          option must always be set in the series.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._type
 
@@ -1396,7 +1421,7 @@ class Chart(HighchartsMeta):
         self._type = validators.string(value, allow_empty = True)
 
     @property
-    def width(self) -> constants.EnforcedNullType | int | float | Decimal | str:
+    def width(self) -> Optional[constants.EnforcedNullType | int | float | Decimal | str]:
         """An explicit width for the chart.
 
         Defaults to :class:`EnforcedNull <EnforcedNullType>`` which indicates
@@ -1410,14 +1435,15 @@ class Chart(HighchartsMeta):
         By default (when null) the width is calculated from the offset width of the
         containing element.
 
-        :rtype: :class:`EnforcedNullType` or numeric or :class:`str <python:str>`
+        :rtype: :class:`EnforcedNullType` or numeric or :class:`str <python:str>` or
+          :obj:`None <python:None>`
         """
-        return self._width or constants.EnforcedNull
+        return self._width
 
     @width.setter
     def width(self, value):
         if value is None:
-            self._width = constants.EnforcedNull
+            self._width = None
         else:
             try:
                 try:
@@ -1432,7 +1458,7 @@ class Chart(HighchartsMeta):
                                                   'supported data type.')
 
     @property
-    def zoom_by_single_touch(self) -> bool:
+    def zoom_by_single_touch(self) -> Optional[bool]:
         """If ``True``, enables zooming with a single touch (in combination with
         :meth:`Chart.zoom_type`) while two-finger pinch will still work as per
         :meth:`Chart.pinch_type`. Defaults to ``False``.
@@ -1443,13 +1469,16 @@ class Chart(HighchartsMeta):
           read the tooltip, and if vertical zooming is enabled will make it hard to scroll
           vertically on the page.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._zoom_by_single_touch
 
     @zoom_by_single_touch.setter
     def zoom_by_single_touch(self, value):
-        self._zoom_by_single_touch = bool(value)
+        if value is None:
+            self._zoom_by_single_touch = None
+        else:
+            self._zoom_by_single_touch = bool(value)
 
     @property
     def zoom_key(self) -> Optional[str]:
@@ -1503,25 +1532,21 @@ class Chart(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'align_thresholds': as_dict.pop('alignThresholds', False),
-            'align_ticks': as_dict.pop('alignTicks', True),
-            'allow_mutating_data': as_dict.pop('allowMutatingData', True),
+            'align_thresholds': as_dict.pop('alignThresholds', None),
+            'align_ticks': as_dict.pop('alignTicks', None),
+            'allow_mutating_data': as_dict.pop('allowMutatingData', None),
             'animation': as_dict.pop('animation', None),
-            'background_color': as_dict.pop('backgroundColor',
-                                            constants.DEFAULT_CHART_BACKGROUND_COLOR),
-            'border_color': as_dict.pop('borderColor',
-                                        constants.DEFAULT_CHART_BORDER_COLOR),
-            'border_radius': as_dict.pop('borderRadius',
-                                         constants.DEFAULT_CHART_BORDER_RADIUS),
-            'border_width': as_dict.pop('borderWidth',
-                                        constants.DEFAULT_CHART_BORDER_WIDTH),
+            'background_color': as_dict.pop('backgroundColor', None),
+            'border_color': as_dict.pop('borderColor', None),
+            'border_radius': as_dict.pop('borderRadius', None),
+            'border_width': as_dict.pop('borderWidth', None),
             'class_name': as_dict.pop('className', None),
-            'color_count': as_dict.pop('colorCount', constants.DEFAULT_CHART_COLOR_COUNT),
-            'display_errors': as_dict.pop('displayErrors', True),
+            'color_count': as_dict.pop('colorCount', None),
+            'display_errors': as_dict.pop('displayErrors', None),
             'events': as_dict.pop('events', None),
-            'height': as_dict.pop('height', constants.EnforcedNull),
-            'ignore_hidden_series': as_dict.pop('ignoreHiddenSeries', True),
-            'inverted': as_dict.pop('inverted', False),
+            'height': as_dict.pop('height', None),
+            'ignore_hidden_series': as_dict.pop('ignoreHiddenSeries', None),
+            'inverted': as_dict.pop('inverted', None),
             'margin': as_dict.pop('margin', None),
             'margin_bottom': as_dict.pop('marginBottom', None),
             'margin_left': as_dict.pop('marginLeft', None),
@@ -1534,40 +1559,36 @@ class Chart(HighchartsMeta):
             'parallel_axes': as_dict.pop('parallelAxes', None),
             'parallel_coordinates': as_dict.pop('parallelCoordinates', None),
             'pinch_type': as_dict.pop('pinchType', None),
-            'plot_background_color': as_dict.pop('plotBackgroundColor',
-                                                 constants.DEFAULT_CHART_PLOT_BACKGROUND_COLOR),
+            'plot_background_color': as_dict.pop('plotBackgroundColor', None),
             'plot_background_image': as_dict.pop('plotBackgroundImage', None),
-            'plot_border_color': as_dict.pop('plotBorderColor',
-                                             constants.DEFAULT_CHART_PLOT_BORDER_COLOR),
-            'plot_border_width': as_dict.pop('plotBorderWidth',
-                                             constants.DEFAULT_CHART_PLOT_BORDER_WIDTH),
-            'plot_shadow': as_dict.pop('plotShadow', False),
-            'polar': as_dict.pop('polar', False),
-            'reflow': as_dict.pop('reflow', True),
+            'plot_border_color': as_dict.pop('plotBorderColor', None),
+            'plot_border_width': as_dict.pop('plotBorderWidth', None),
+            'plot_shadow': as_dict.pop('plotShadow', None),
+            'polar': as_dict.pop('polar', None),
+            'reflow': as_dict.pop('reflow', None),
             'render_to': as_dict.pop('renderTo', None),
             'reset_zoom_button': as_dict.pop('resetZoomButton', None),
             'scollable_plot_area': as_dict.pop('scrollablePlotArea', None),
-            'selection_marker_fill': as_dict.pop('selectionMarkerFill',
-                                                 constants.DEFAULT_CHART_SELECTION_MARKER_FILL),
-            'shadow': as_dict.pop('shadow', False),
+            'selection_marker_fill': as_dict.pop('selectionMarkerFill', None),
+            'shadow': as_dict.pop('shadow', None),
             'show_axes': as_dict.pop('showAxes', None),
             'spacing': as_dict.pop('spacing', None),
             'spacing_bottom': as_dict.pop('spacingBottom', None),
             'spacing_left': as_dict.pop('spacingLeft', None),
             'spacing_top': as_dict.pop('spacingTop', None),
             'spacing_right': as_dict.pop('spacingRight', None),
-            'style': as_dict.pop('style', constants.DEFAULT_CHART_STYLE),
-            'styled_mode': as_dict.pop('styledMode', False),
-            'type': as_dict.pop('type', constants.DEFAULT_CHART_TYPE),
-            'width': as_dict.pop('width', constants.EnforcedNull),
-            'zoom_by_single_touch': as_dict.pop('zoomBySingleTouch', False),
+            'style': as_dict.pop('style', None),
+            'styled_mode': as_dict.pop('styledMode', None),
+            'type': as_dict.pop('type', None),
+            'width': as_dict.pop('width', None),
+            'zoom_by_single_touch': as_dict.pop('zoomBySingleTouch', None),
             'zoom_key': as_dict.pop('zoomKey', None),
             'zoom_type': as_dict.pop('zoomType', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'alignThresholds': self.align_thresholds,
             'alignTicks': self.align_ticks,
@@ -1623,4 +1644,4 @@ class Chart(HighchartsMeta):
             'zoomType': self.zoom_type
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

@@ -1,3 +1,5 @@
+from typing import Optional
+
 from validator_collection import validators
 
 from highcharts import errors
@@ -8,19 +10,19 @@ class SeriesNavigation(HighchartsMeta):
     """Options for the keyboard navigation of data points and series."""
 
     def __init__(self, **kwargs):
-        self._mode = 'normal'
-        self._point_navigation_enabled_threshold = False
-        self._remember_point_focus = False
-        self._skip_null_points = True
+        self._mode = None
+        self._point_navigation_enabled_threshold = None
+        self._remember_point_focus = None
+        self._skip_null_points = None
 
-        self.mode = kwargs.pop('mode', 'normal')
+        self.mode = kwargs.pop('mode', None)
         self.point_navigation_enabled_threshold = kwargs.pop('point_navigation_enabled_threshold',
-                                                             False)
-        self.remember_point_focus = kwargs.pop('remember_point_focus', False)
-        self.skip_null_points = kwargs.pop('skip_null_points', True)
+                                                             None)
+        self.remember_point_focus = kwargs.pop('remember_point_focus', None)
+        self.skip_null_points = kwargs.pop('skip_null_points', None)
 
     @property
-    def mode(self) -> str:
+    def mode(self) -> Optional[str]:
         """Sets the keyboard navigation mode for the chart. Defaults to ``'normal'``.
 
         Can be ``"normal"`` or ``"serialize"``.
@@ -31,38 +33,44 @@ class SeriesNavigation(HighchartsMeta):
 
         In ``'serialize'`` mode, points are instead navigated as a single list.
         Left/right behaves as in ``"normal"`` mode. Up/down arrow keys will behave like
-        left/right. This can be useful for unifying navigation behavior with/without screen
-        readers enabled.
+        left/right. This can be useful for unifying navigation behavior with/without
+        screen readers enabled.
 
         :returns: The keyboard navigation mode to apply to the chart.
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._mode
 
     @mode.setter
     def mode(self, value):
-        value = validators.string(value, allow_empty = False).lower()
-        if value not in ['normal', 'serialize']:
-            raise errors.HighchartsValueError(f'Expects either "normal" or "serialize". '
-                                              f'Received: {value}')
+        if not value:
+            self._mode = None
+        else:
+            value = validators.string(value).lower()
+            if value not in ['normal', 'serialize']:
+                raise errors.HighchartsValueError(f'Expects either "normal" or '
+                                                  f'"serialize". Received: {value}')
 
-        self._mode = value
+            self._mode = value
 
     @property
-    def point_navigation_enabled_threshold(self) -> bool | int:
+    def point_navigation_enabled_threshold(self) -> Optional[bool | int]:
         """When a series contains more points than this, we no longer allow keyboard
         navigation for it. Accepts either an :class:`int <python:int>` or a
         a :class:`bool <python:bool>` value of ``False``.
 
         Setting to ``False`` will disable any threshold.
 
-        :rtype: :class:`int <python:int>` or :class:`bool <python:bool>`
+        :rtype: :class:`int <python:int>` or :class:`bool <python:bool>` or
+          :obj:`None <python:None>`
         """
         return self._point_navigation_enabled_threshold
 
     @point_navigation_enabled_threshold.setter
     def point_navigation_enabled_threshold(self, value):
-        if isinstance(value, bool) and value is False:
+        if value is None:
+            self._point_navigation_enabled_threshold = None
+        elif isinstance(value, bool) and value is False:
             self._point_navigation_enabled_threshold = False
         else:
             value = validators.integer(value,
@@ -71,7 +79,7 @@ class SeriesNavigation(HighchartsMeta):
             self._point_navigation_enabled_threshold = value
 
     @property
-    def remember_point_focus(self) -> bool:
+    def remember_point_focus(self) -> Optional[bool]:
         """If ``True``, remembers which point was focused even after navigating away from
         the series, so that when navigating back to the series you start at the last
         focused point.
@@ -79,44 +87,50 @@ class SeriesNavigation(HighchartsMeta):
         Defaults to ``False``.
 
         :returns: Flag indicating whether to remember point focus.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self.point_focus
 
     @remember_point_focus.setter
     def remember_point_focus(self, value):
-        self._remember_point_focus = bool(value)
+        if value is None:
+            self._remember_point_focus = None
+        else:
+            self._remember_point_focus = bool(value)
 
     @property
-    def skip_null_points(self) -> bool:
+    def skip_null_points(self) -> Optional[bool]:
         """If ``True``, skip null points when navigating through points with the keyboard.
         Defaults to ``True``.
 
         :returns: Flag indicating whether to skip null points in keyboard navigation.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._skip_null_points
 
     @skip_null_points.setter
     def skip_null_points(self, value):
-        self._skip_null_points = bool(value)
+        if value is None:
+            self._skip_null_points = None
+        else:
+            self._skip_null_points = bool(value)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'mode': as_dict.pop('mode', 'normal'),
+            'mode': as_dict.pop('mode', None),
             'point_navigation_enabled_threshold': as_dict.pop('pointNavigationEnabledThreshold',
-                                                              False),
-            'remember_point_focus': as_dict.pop('rememberPointFocus', False),
-            'skip_null_points': as_dict.pop('skipNullPoints', True)
+                                                              None),
+            'remember_point_focus': as_dict.pop('rememberPointFocus', None),
+            'skip_null_points': as_dict.pop('skipNullPoints', None),
         }
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'mode': self.mode,
             'pointNavigationEnabledThreshold': self.point_navigation_enabled_threshold,
             'rememberPointFocus': self.remmeber_point_focus,
             'skipNullPoints': self.skip_null_points
         }
-        return self.trim_dict(untrimmed)
+        return untrimmed

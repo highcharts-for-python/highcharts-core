@@ -48,7 +48,7 @@ class ChartEvents(HighchartsMeta):
 
     @add_series.setter
     def add_series(self, value):
-        self._add_series = validators.string(value, allow_empty = False)
+        self._add_series = validators.string(value, allow_empty = True)
 
     @property
     def after_print(self) -> Optional[str]:
@@ -61,7 +61,7 @@ class ChartEvents(HighchartsMeta):
 
     @after_print.setter
     def after_print(self, value):
-        self._after_print = validators.string(value, allow_empty = False)
+        self._after_print = validators.string(value, allow_empty = True)
 
     @property
     def before_print(self) -> Optional[str]:
@@ -74,7 +74,7 @@ class ChartEvents(HighchartsMeta):
 
     @before_print.setter
     def before_print(self, value):
-        self._before_print = validators.string(value, allow_empty = False)
+        self._before_print = validators.string(value, allow_empty = True)
 
     @property
     def click(self) -> Optional[str]:
@@ -98,7 +98,7 @@ class ChartEvents(HighchartsMeta):
 
     @click.setter
     def click(self, value):
-        self._click = validators.string(value, allow_empty = False)
+        self._click = validators.string(value, allow_empty = True)
 
     @property
     def drilldown(self) -> Optional[str]:
@@ -131,7 +131,7 @@ class ChartEvents(HighchartsMeta):
 
     @drilldown.setter
     def drilldown(self, value):
-        self._drilldown = validators.string(value, allow_empty = False)
+        self._drilldown = validators.string(value, allow_empty = True)
 
     @property
     def drillup(self) -> Optional[str]:
@@ -144,7 +144,7 @@ class ChartEvents(HighchartsMeta):
 
     @drillup.setter
     def drillup(self, value):
-        self._drillup = validators.string(value, allow_empty = False)
+        self._drillup = validators.string(value, allow_empty = True)
 
     @property
     def drillupall(self) -> Optional[str]:
@@ -157,7 +157,7 @@ class ChartEvents(HighchartsMeta):
 
     @drillupall.setter
     def drillupall(self, value):
-        self._drillupall = validators.string(value, allow_empty = False)
+        self._drillupall = validators.string(value, allow_empty = True)
 
     @property
     def export_data(self) -> Optional[str]:
@@ -170,7 +170,7 @@ class ChartEvents(HighchartsMeta):
 
     @export_data.setter
     def export_data(self, value):
-        self._export_data = validators.string(value, allow_empty = False)
+        self._export_data = validators.string(value, allow_empty = True)
 
     @property
     def fullscreen_close(self) -> Optional[str]:
@@ -184,7 +184,7 @@ class ChartEvents(HighchartsMeta):
 
     @fullscreen_close.setter
     def fullscreen_close(self, value):
-        self._fullscreen_close = validators.string(value, allow_empty = False)
+        self._fullscreen_close = validators.string(value, allow_empty = True)
 
     @property
     def fullscreen_open(self) -> Optional[str]:
@@ -198,7 +198,7 @@ class ChartEvents(HighchartsMeta):
 
     @fullscreen_open.setter
     def fullscreen_open(self, value):
-        self._fullscreen_open = validators.string(value, allow_empty = False)
+        self._fullscreen_open = validators.string(value, allow_empty = True)
 
     @property
     def load(self) -> Optional[str]:
@@ -212,7 +212,7 @@ class ChartEvents(HighchartsMeta):
 
     @load.setter
     def load(self, value):
-        self._load = validators.string(value, allow_empty = False)
+        self._load = validators.string(value, allow_empty = True)
 
     @property
     def redraw(self) -> Optional[str]:
@@ -229,7 +229,7 @@ class ChartEvents(HighchartsMeta):
 
     @redraw.setter
     def redraw(self, value):
-        self._redraw = validators.string(value, allow_empty = False)
+        self._redraw = validators.string(value, allow_empty = True)
 
     @property
     def selection(self) -> Optional[str]:
@@ -262,7 +262,7 @@ class ChartEvents(HighchartsMeta):
 
     @selection.setter
     def selection(self, value):
-        self._selection = validators.string(value, allow_empty = False)
+        self._selection = validators.string(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
@@ -284,7 +284,7 @@ class ChartEvents(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'addSeries': self.add_series,
             'afterPrint': self.after_print,
@@ -301,7 +301,7 @@ class ChartEvents(HighchartsMeta):
             'selection': self.selection
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class BreadcrumbEvents(HighchartsMeta):
@@ -337,7 +337,7 @@ class BreadcrumbEvents(HighchartsMeta):
 
     @click.setter
     def click(self, value):
-        self._click = validators.string(value, allow_empty = False)
+        self._click = validators.string(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
@@ -347,12 +347,12 @@ class BreadcrumbEvents(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'click': self.click
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class NavigationEvents(HighchartsMeta):
@@ -380,7 +380,7 @@ class NavigationEvents(HighchartsMeta):
 
     @close_popup.setter
     def close_popup(self, value):
-        self._close_popup = validators.string(value, allow_empty = False)
+        self._close_popup = validators.string(value, allow_empty = True)
 
     @property
     def deselect_button(self) -> Optional[str]:
@@ -393,7 +393,7 @@ class NavigationEvents(HighchartsMeta):
 
     @deselect_button.setter
     def deselect_button(self, value):
-        self._deselect_button = validators.string(value, allow_empty = False)
+        self._deselect_button = validators.string(value, allow_empty = True)
 
     @property
     def select_button(self) -> Optional[str]:
@@ -405,7 +405,7 @@ class NavigationEvents(HighchartsMeta):
 
     @select_button.setter
     def select_button(self, value):
-        self._select_button = validators.string(value, allow_empty = False)
+        self._select_button = validators.string(value, allow_empty = True)
 
     @property
     def show_popup(self) -> Optional[str]:
@@ -417,7 +417,7 @@ class NavigationEvents(HighchartsMeta):
 
     @show_popup.setter
     def show_popup(self, value):
-        self._show_popup = validators.string(value, allow_empty = False)
+        self._show_popup = validators.string(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
@@ -430,7 +430,7 @@ class NavigationEvents(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'closePopup': self.close_popup,
             'deselectButton': self.deselect_button,
@@ -438,7 +438,7 @@ class NavigationEvents(HighchartsMeta):
             'showPopup': self.show_popup
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class PointEvents(HighchartsMeta):
@@ -649,7 +649,7 @@ class PointEvents(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'click': self.click,
             'drag': self.drag,
@@ -663,7 +663,7 @@ class PointEvents(HighchartsMeta):
             'update': self.update
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class SeriesEvents(HighchartsMeta):
@@ -827,7 +827,7 @@ class SeriesEvents(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'afterAnimate': self.after_animate,
             'checkboxClick': self.checkbox_click,
@@ -839,7 +839,7 @@ class SeriesEvents(HighchartsMeta):
             'show': self.show
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class ClusterEvents(HighchartsMeta):
@@ -873,7 +873,7 @@ class ClusterEvents(HighchartsMeta):
             'drill_to_cluster': as_dict.pop('drillToCluster', None)
         })
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         return self.trim_dict({
             'drillToCluster': self.drill_to_cluster
         })
@@ -998,7 +998,7 @@ class AxisEvents(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'afterBreaks': self.after_breaks,
             'afterSetExtremes': self.after_set_extremes,
@@ -1007,7 +1007,7 @@ class AxisEvents(HighchartsMeta):
             'setExtremes': self.set_extremes
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class MouseEvents(HighchartsMeta):
@@ -1093,7 +1093,7 @@ class MouseEvents(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'click': self.click,
             'mousemove': self.mousemove,
@@ -1101,4 +1101,4 @@ class MouseEvents(HighchartsMeta):
             'mouseover': self.mouseover
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

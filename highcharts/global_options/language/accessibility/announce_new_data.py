@@ -1,3 +1,5 @@
+from typing import Optional
+
 from validator_collection import validators
 
 from highcharts import constants
@@ -28,130 +30,98 @@ class AnnounceNewDataLanguageOptions(HighchartsMeta):
         self._new_series_announce_multiple = None
         self._new_series_announce_single = None
 
-        self.new_data_announce = kwargs.pop('new_data_announce',
-                                             constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_DATA)
-        self.new_point_announce_multiple = kwargs.pop('new_point_announce_multiple',
-                                                      constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_POINT_MULTIPLE)
-        self.new_point_announce_single = kwargs.pop('new_point_announce_single',
-                                                    constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_POINT_SINGLE)
+        self.new_data_announce = kwargs.pop('new_data_announce', None)
+        self.new_point_announce_multiple = kwargs.pop('new_point_announce_multiple', None)
+        self.new_point_announce_single = kwargs.pop('new_point_announce_single', None)
         self.new_series_announce_multiple = kwargs.pop('new_series_announce_multiple',
-                                                       constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_SERIES_MULTIPLE)
-        self.new_series_announce_single = kwargs.pop('new_series_announce_single',
-                                                     constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_SERIES_SINGLE)
+                                                       None)
+        self.new_series_announce_single = kwargs.pop('new_series_announce_single', None)
 
     @property
-    def new_data_announce(self) -> str:
+    def new_data_announce(self) -> Optional[str]:
         """Announcement for any new data. Defaults to:
         ``'{constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_DATA}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._new_data_announce
 
     @new_data_announce.setter
     def new_data_announce(self, value):
-        if value == '':
-            self._new_data_announce = ''
-        else:
-            self._new_data_announce = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_DATA
+        self._new_data_announce = validators.string(value, allow_empty = True)
 
     @property
-    def new_point_announce_multiple(self) -> str:
+    def new_point_announce_multiple(self) -> Optional[str]:
         """Announcement when multiple new points have been added. Defaults to:
         ``'{constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_POINT_MULTIPLE}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._new_point_announce_multiple
 
     @new_point_announce_multiple.setter
     def new_point_announce_multiple(self, value):
-        if value == '':
-            self._new_point_announce_multiple = ''
-        else:
-            self._new_point_announce_multiple = validators.string(value,
-                                                                  allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_POINT_MULTIPLE
+        self._new_point_announce_multiple = validators.string(value, allow_empty = True)
 
     @property
-    def new_point_announce_single(self) -> str:
+    def new_point_announce_single(self) -> Optional[str]:
         """Announcement when a single new point has been added. Defaults to:
         ``'{constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_POINT_SINGLE}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._new_point_announce_single
 
     @new_point_announce_single.setter
     def new_point_announce_single(self, value):
-        if value == '':
-            self._new_point_announce_single = ''
-        else:
-            self._new_point_announce_single = validators.string(value,
-                                                                allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_POINT_SINGLE
+        self._new_point_announce_single = validators.string(value, allow_empty = True)
 
     @property
-    def new_series_announce_multiple(self) -> str:
+    def new_series_announce_multiple(self) -> Optional[str]:
         """Announcement when multiple new series have been added. Defaults to:
         ``'{constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_SERIES_MULTIPLE}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._new_series_announce_multiple
 
     @new_series_announce_multiple.setter
     def new_series_announce_multiple(self, value):
-        if value == '':
-            self._new_series_announce_multiple = ''
-        else:
-            self._new_series_announce_multiple = validators.string(value,
-                                                                   allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_SERIES_MULTIPLE
+        self._new_series_announce_multiple = validators.string(value, allow_empty = True)
 
     @property
-    def new_series_announce_single(self) -> str:
+    def new_series_announce_single(self) -> Optional[str]:
         """Announcement when a single new series has been added. Defaults to:
         ``'{constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_SERIES_SINGLE}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._new_series_announce_single
 
     @new_series_announce_single.setter
     def new_series_announce_single(self, value):
-        if value == '':
-            self._new_series_announce_single = ''
-        else:
-            self._new_series_announce_single = validators.string(value,
-                                                                 allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_SERIES_SINGLE
+        self._new_series_announce_single = validators.string(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'new_data_announce': as_dict.pop('newDataAnnounce',
-                                             constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_DATA),
-            'new_point_announce_multiple': as_dict.pop('newPointAnnounceMultiple',
-                                                       constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_POINT_MULTIPLE),
-            'new_point_announce_single': as_dict.pop('newPointAnnounceSingle',
-                                                     constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_POINT_SINGLE),
+            'new_data_announce': as_dict.pop('newDataAnnounce', None),
+            'new_point_announce_multiple': as_dict.pop('newPointAnnounceMultiple', None),
+            'new_point_announce_single': as_dict.pop('newPointAnnounceSingle', None),
             'new_series_announce_multiple': as_dict.pop('newSeriesAnnounceMultiple',
-                                                        constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_SERIES_MULTIPLE),
-            'new_series_announce_single': as_dict.pop('newSeriesAnnounceSingle',
-                                                      constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_SERIES_SINGLE)
+                                                        None),
+            'new_series_announce_single': as_dict.pop('newSeriesAnnounceSingle', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
-            'new_data_announce': self.new_data_announce,
-            'new_point_announce_multiple': self.new_point_announce_multiple,
-            'new_point_announce_single': self.new_point_announce_single,
-            'new_series_announce_multiple': self.new_series_announce_multiple,
-            'new_series_announce_single': self.new_series_announce_single
+            'newDataAnnounce': self.new_data_announce,
+            'newPointAnnounceMultiple': self.new_point_announce_multiple,
+            'newPointAnnounceSingle': self.new_point_announce_single,
+            'newSeriesAnnounceMultiple': self.new_series_announce_multiple,
+            'newSeriesAnnounceSingle': self.new_series_announce_single
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

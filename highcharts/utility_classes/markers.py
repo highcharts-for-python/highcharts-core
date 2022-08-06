@@ -27,18 +27,15 @@ class Marker(HighchartsMeta):
         self._width = None
 
         self.enabled = kwargs.pop('enabled', None)
-        self.enabled_threshold = kwargs.pop('enabled_threshold',
-                                            constants.DEFAULT_MARKER.get('enabled_threshold'))
+        self.enabled_threshold = kwargs.pop('enabled_threshold', None)
         self.fill_color = kwargs.pop('fill_color', None)
         self.height = kwargs.pop('height', None)
-        self.line_color = kwargs.pop('line_color',
-                                     constants.DEFAULT_MARKER.get('line_color'))
-        self.line_width = kwargs.pop('line_width',
-                                     constants.DEFAULT_MARKER.get('line_width'))
-        self.radius = kwargs.pop('radius', constants.DEFAULT_MARKER.get('radius'))
+        self.line_color = kwargs.pop('line_color', None)
+        self.line_width = kwargs.pop('line_width', None)
+        self.radius = kwargs.pop('radius', None)
         self.states = kwargs.pop('states', None)
         self.symbol = kwargs.pop('symbol', None)
-        self.width = kwargs.pop('width', constants.DEFAULT_MARKER.get('width'))
+        self.width = kwargs.pop('width', None)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -287,23 +284,20 @@ class Marker(HighchartsMeta):
     def from_dict(cls, as_dict):
         kwargs = {
             'enabled': as_dict.pop('enabled', None),
-            'enabled_threshold': as_dict.pop('enabledThreshold',
-                                             constants.DEFAULT_MARKER.get('enabled_threshold')),
+            'enabled_threshold': as_dict.pop('enabledThreshold', None),
             'fill_color': as_dict.pop('fillColor', None),
             'height': as_dict.pop('height', None),
-            'line_color': as_dict.pop('lineColor',
-                                      constants.DEFAULT_MARKER.get('line_color')),
-            'line_width': as_dict.pop('lineWidth',
-                                      constants.DEFAULT_MARKER.get('line_width')),
-            'radius': as_dict.pop('radius', constants.DEFAULT_MARKER.get('radius')),
+            'line_color': as_dict.pop('lineColor', None),
+            'line_width': as_dict.pop('lineWidth', None),
+            'radius': as_dict.pop('radius', None),
             'states': as_dict.pop('states', None),
             'symbol': as_dict.pop('symbol', None),
-            'width': as_dict.pop('width', constants.DEFAULT_MARKER.get('width'))
+            'width': as_dict.pop('width', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'enabled': self.enabled,
             'enabledThreshold': self.enabled_threshold,
@@ -317,4 +311,4 @@ class Marker(HighchartsMeta):
             'width': self.width
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

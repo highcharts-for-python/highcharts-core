@@ -69,7 +69,7 @@ class PartialFillOptions(HighchartsMeta):
             'fill': as_dict.pop('fill', None)
         })
 
-    def to_dict(self) -> Optional[dict]:
-        return self.trim_dict({
+    def _to_untrimmed_dict(self) -> dict:
+        return {
             'fill': self.fill
-        })
+        }

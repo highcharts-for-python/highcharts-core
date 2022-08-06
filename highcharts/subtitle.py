@@ -218,7 +218,7 @@ class Subtitle(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'align': self.align,
             'floating': self.floating,
@@ -231,4 +231,4 @@ class Subtitle(HighchartsMeta):
             'y': self.y
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

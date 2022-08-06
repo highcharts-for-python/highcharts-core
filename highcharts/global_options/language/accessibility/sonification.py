@@ -15,60 +15,55 @@ class SonificationLanguageOptions(HighchartsMeta):
         self._play_as_sound_button_text = None
         self._play_as_sound_click_announcement = None
 
-        self.play_as_sound_button_text = kwargs.pop('play_as_sound_button_text',
-                                                    constants.DEFAULT_LANG_ACS_SONIFICATION_PLAY_AS_SOUND_BTN_TXT)
-        self.play_as_sound_click_announcement = kwargs.pop('play_as_sound_click_announcement',
-                                                           constants.DEFAULT_LANG_ACS_SONIFICATION_PLAY_AS_SOUND_CLK_ANNOUNCEMENT)
+        self.play_as_sound_button_text = kwargs.pop('play_as_sound_button_text', None)
+        self.play_as_sound_click_announcement = kwargs.pop(
+            'play_as_sound_click_announcement',
+            None
+        )
 
     @property
-    def play_as_sound_button_text(self) -> str:
+    def play_as_sound_button_text(self) -> Optional[str]:
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SONIFICATION_PLAY_AS_SOUND_BTN_TXT}'``
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._play_as_sound_button_text
 
     @play_as_sound_button_text.setter
     def play_as_sound_button_text(self, value):
-        if value == '':
-            self._play_as_sound_button_text = ''
-        else:
-            self._play_as_sound_button_text = validators.string(value, allow_empty = True)\
-                or constants.DEFAULT_LANG_ACS_SONIFICATION_PLAY_AS_SOUND_BTN_TXT
+        self._play_as_sound_button_text = validators.string(value, allow_empty = True)
 
     @property
-    def play_as_sound_click_announcement(self) -> str:
+    def play_as_sound_click_announcement(self) -> Optional[str]:
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SONIFICATION_PLAY_AS_SOUND_CLK_ANNOUNCEMENT}'``
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._play_as_sound_click_announcement
 
     @play_as_sound_click_announcement.setter
     def play_as_sound_click_announcement(self, value):
-        if value == '':
-            self._play_as_sound_click_announcement = ''
-        else:
-            self._play_as_sound_click_announcement = validators.string(value, allow_empty = True)\
-                or constants.DEFAULT_LANG_ACS_SONIFICATION_PLAY_AS_SOUND_CLK_ANNOUNCEMENT
+        self._play_as_sound_click_announcement = validators.string(value,
+                                                                   allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'play_as_sound_button_text': as_dict.pop('playAsSoundButtonText',
-                                                        constants.DEFAULT_LANG_ACS_SONIFICATION_PLAY_AS_SOUND_BTN_TXT),
-            'play_as_sound_click_announcement': as_dict.pop('playAsSoundClickAnnouncement',
-                                                               constants.DEFAULT_LANG_ACS_SONIFICATION_PLAY_AS_SOUND_CLK_ANNOUNCEMENT)
+            'play_as_sound_button_text': as_dict.pop('playAsSoundButtonText', None),
+            'play_as_sound_click_announcement': as_dict.pop(
+                'playAsSoundClickAnnouncement',
+                None
+            ),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'playAsSoundButtonText': self.play_as_sound_button_text,
             'playAsSoundClickAnnouncement': self.play_as_sound_click_announcement
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

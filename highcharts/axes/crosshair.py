@@ -179,7 +179,7 @@ class CrosshairOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[str]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'className': self.class_name,
             'color': self.color,
@@ -189,4 +189,4 @@ class CrosshairOptions(HighchartsMeta):
             'zIndex': self.z_index
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

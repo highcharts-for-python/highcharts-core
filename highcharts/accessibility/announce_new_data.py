@@ -23,26 +23,26 @@ class AnnounceNewData(HighchartsMeta):
 
     def __init__(self, **kwargs):
         self._announcement_formatter = None
-        self._enabled = False
-        self._interrupt_user = False
-        self._minimum_announcement_interval = 5000
+        self._enabled = None
+        self._interrupt_user = None
+        self._minimum_announcement_interval = None
 
         self.announcement_formatter = kwargs.pop('announcement_formatter', None)
-        self.enabled = kwargs.pop('enabled', False)
-        self.interrupt_user = kwargs.pop('interrupt_user', False)
+        self.enabled = kwargs.pop('enabled', None)
+        self.interrupt_user = kwargs.pop('interrupt_user', None)
         self.minimum_announcement_interval = kwargs.pop('minimum_announcement_interval',
-                                                        5000)
+                                                        None)
 
     @property
-    def announcement_formatter(self) -> str:
+    def announcement_formatter(self) -> Optional[str]:
         """Optional JavaScript formatter callback for the announcement.
 
         Expects a string containing JavaScript code. This code should be a JavaScript
         function that up to three arguments:
 
           #. The first argument is always an array of all series that received updates.
-             If an announcement is already queued, the series that received updates for that
-             announcement are also included in this array.
+             If an announcement is already queued, the series that received updates for
+             that announcement are also included in this array.
           #. The second argument is provided if ``chart.addSeries`` was called
              (in JavaScript), and there is a new series. In that case, this argument is a
              reference to the new series.
@@ -65,23 +65,26 @@ class AnnounceNewData(HighchartsMeta):
         self._announcement_formatter = validators.string(value, allow_empty = True)
 
     @property
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         """Enable the announcement of new data to screen reader users.
 
         Defaults to ``False``.
 
         :returns: Flag indicating whether new data announcements are enabled for the
           chart.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(value)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @property
-    def interrupt_user(self) -> bool:
+    def interrupt_user(self) -> Optional[bool]:
         """Choose whether or not the announcements should interrupt the screen reader.
         Defaults to ``False``.
 
@@ -94,16 +97,19 @@ class AnnounceNewData(HighchartsMeta):
 
         :returns: Flag indicating whether new data announcements should interrupt the
           screen reader.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._interrupt_user
 
     @interrupt_user.setter
     def interrupt_user(self, value):
-        self._interrupt_user = bool(value)
+        if value is None:
+            self._interrupt_user = None
+        else:
+            self._interrupt_user = bool(value)
 
     @property
-    def minimum_announcement_interval(self) -> int:
+    def minimum_announcement_interval(self) -> Optional[int]:
         """Minimum interval between announcements in milliseconds. Defaults to ``5000``.
 
         .. warning::
@@ -119,7 +125,7 @@ class AnnounceNewData(HighchartsMeta):
         disturbing to users.
 
         :returns: The minimum interval between announcements, expressed in milliseconds.
-        :rtype: :class:`int <python:int>`
+        :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
 
         :raises ValueError: if a negative value is supplied
         """
@@ -128,7 +134,28 @@ class AnnounceNewData(HighchartsMeta):
     @minimum_announcement_interval.setter
     def minimum_announcement_interval(self, value: int | float | Decimal):
         value = validators.integer(value,
-                                   allow_empty = False,
+                                   allow_empty = True,
                                    coerce_value = True,
                                    minimum = 0)
-        self._minimum_announcement_interval = value
+
+    @classmethod
+    def from_dict(cls, as_dict):
+        kwargs = {
+            'announcement_formatter': as_dict.pop('announcementFormatter', None),
+            'enabled': as_dict.pop('enabled', None),
+            'interrupt_user': as_dict.pop('interruptUser', None),
+            'minimum_announcement_interval': as_dict.pop('minimumAnnouncementInterval',
+                                                            None),
+        }
+
+        return cls(**kwargs)
+
+    def _to_untrimmed_dict(self) -> dict:
+        untrimmed = {
+            'announcementFormatter': self.announcement_formatter,
+            'enabled': self.enabled,
+            'interruptUser': self.interrupt_user,
+            'minimumAnnouncementInterval': self.minimum_announcement_interval
+        }
+
+        return untrimmed

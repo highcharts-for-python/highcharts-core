@@ -29,7 +29,7 @@ class MenuItem(HighchartsMeta):
         self.onclick = kwargs.pop('onclick', None)
         self.text = kwargs.pop('text', None)
         self.text_key = kwargs.pop('text_key', None)
-        self.separator = kwargs.pop('separator', False)
+        self.separator = kwargs.pop('separator', None)
 
     @property
     def onclick(self) -> Optional[str]:
@@ -91,12 +91,12 @@ class MenuItem(HighchartsMeta):
             'onclick': as_dict.pop('onclick', None),
             'text': as_dict.pop('text', None),
             'text_key': as_dict.pop('textKey', None),
-            'separator': as_dict.pop('separator', False)
+            'separator': as_dict.pop('separator', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'onclick': self.onclick,
             'text': self.text,
@@ -104,7 +104,7 @@ class MenuItem(HighchartsMeta):
             'separator': self.separator
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class MenuObject(UserDict):
@@ -161,7 +161,7 @@ class MenuObject(UserDict):
 
         return cls.from_dict(as_dict)
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """Generate a :class:`dict <python:dict>` representation of the object compatible
         with the Highcharts JavaScript library.
 

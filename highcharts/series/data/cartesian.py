@@ -221,7 +221,7 @@ class CartesianData(DataBase):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -243,7 +243,7 @@ class CartesianData(DataBase):
             'y': self.y,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class Cartesian3DData(CartesianData):
@@ -362,7 +362,7 @@ class Cartesian3DData(CartesianData):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -386,7 +386,7 @@ class Cartesian3DData(CartesianData):
             'z': self.z,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class CartesianValueData(CartesianData):
@@ -519,7 +519,7 @@ class CartesianValueData(CartesianData):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -544,4 +544,4 @@ class CartesianValueData(CartesianData):
             'value': self.value,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

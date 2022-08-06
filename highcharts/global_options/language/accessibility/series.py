@@ -22,197 +22,143 @@ class SeriesTypeDescriptions(HighchartsMeta):
         self._pyramid = None
         self._waterfall = None
 
-        self.arearange = kwargs.pop('arearange',
-                                    constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('arearange'))
-        self.areasplinerange = kwargs.pop('areasplinerange',
-                                          constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('areasplinerange'))
-        self.boxplot = kwargs.pop('boxplot',
-                                  constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('boxplot'))
-        self.bubble = kwargs.pop('bubble',
-                                 constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('bubble'))
-        self.columnrange = kwargs.pop('columnrange',
-                                      constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('columnrange'))
-        self.errorbar = kwargs.pop('errorbar',
-                                   constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('errorbar'))
-        self.funnel = kwargs.pop('funnel',
-                                 constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('funnel'))
-        self.pyramid = kwargs.pop('pyramid',
-                                  constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('pyramid'))
-        self.waterfall = kwargs.pop('waterfall',
-                                    constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('waterfall'))
+        self.arearange = kwargs.pop('arearange', None)
+        self.areasplinerange = kwargs.pop('areasplinerange', None)
+        self.boxplot = kwargs.pop('boxplot', None)
+        self.bubble = kwargs.pop('bubble', None)
+        self.columnrange = kwargs.pop('columnrange', None)
+        self.errorbar = kwargs.pop('errorbar', None)
+        self.funnel = kwargs.pop('funnel', None)
+        self.pyramid = kwargs.pop('pyramid', None)
+        self.waterfall = kwargs.pop('waterfall', None)
 
     @property
-    def arearange(self) -> str:
+    def arearange(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('arearange')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._arearange
 
     @arearange.setter
     def arearange(self, value):
-        if value == '':
-            self._arearange = ''
-        else:
-            self._arearange = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('arearange')
+        self._arearange = validators.string(value, allow_empty = True)
 
     @property
-    def areasplinerange(self) -> str:
+    def areasplinerange(self) -> Optional[str]:
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('areasplinerange')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._areasplinerange
 
     @areasplinerange.setter
     def areasplinerange(self, value):
-        if value == '':
-            self._areasplinerange = ''
-        else:
-            self._areasplinerange = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('areasplinerange')
+        self._areasplinerange = validators.string(value, allow_empty = True)
 
     @property
-    def boxplot(self) -> str:
+    def boxplot(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('boxplot')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._boxplot
 
     @boxplot.setter
     def boxplot(self, value):
-        if value == '':
-            self._boxplot = ''
-        else:
-            self._boxplot = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('boxplot')
+        self._boxplot = validators.string(value, allow_empty = True)
 
     @property
-    def bubble(self) -> str:
+    def bubble(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('bubble')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._bubble
 
     @bubble.setter
     def bubble(self, value):
-        if value == '':
-            self._bubble = ''
-        else:
-            self._bubble = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('bubble')
+        self._bubble = validators.string(value, allow_empty = True)
 
     @property
-    def columnrange(self) -> str:
+    def columnrange(self) -> Optional[str]:
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('columnrange')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._columnrange
 
     @columnrange.setter
     def columnrange(self, value):
-        if value == '':
-            self._columnrange = ''
-        else:
-            self._columnrange = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('columnrange')
+        self._columnrange = validators.string(value, allow_empty = True)
 
     @property
-    def errorbar(self) -> str:
+    def errorbar(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('errorbar')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._errorbar
 
     @errorbar.setter
     def errorbar(self, value):
-        if value == '':
-            self._errorbar = ''
-        else:
-            self._errorbar = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('errorbar')
+        self._errorbar = validators.string(value, allow_empty = True)
 
     @property
-    def funnel(self) -> str:
+    def funnel(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('funnel')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._funnel
 
     @funnel.setter
     def funnel(self, value):
-        if value == '':
-            self._funnel = ''
-        else:
-            self._funnel = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('funnel')
+        self._funnel = validators.string(value, allow_empty = True)
 
     @property
-    def pyramid(self) -> str:
+    def pyramid(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('pyramid')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._pyramid
 
     @pyramid.setter
     def pyramid(self, value):
-        if value == '':
-            self._pyramid = ''
-        else:
-            self._pyramid = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('pyramid')
+        self._pyramid = validators.string(value, allow_empty = True)
 
     @property
-    def waterfall(self) -> str:
+    def waterfall(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('waterfall')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._waterfall
 
     @waterfall.setter
     def waterfall(self, value):
-        if value == '':
-            self._waterfall = ''
-        else:
-            self._waterfall = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('waterfall')
+        self._waterfall = validators.string(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'arearange': as_dict.pop('arearange',
-                                     constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('arearange')),
-            'areasplinerange': as_dict.pop('areasplinerange',
-                                           constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('areasplinerange')),
-            'boxplot': as_dict.pop('boxplot',
-                                   constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('boxplot')),
-            'bubble': as_dict.pop('bubble',
-                                  constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('bubble')),
-            'columnrange': as_dict.pop('columnrange',
-                                       constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('columnrange')),
-            'errorbar': as_dict.pop('errorbar',
-                                    constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('errorbar')),
-            'funnel': as_dict.pop('funnel',
-                                  constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('funnel')),
-            'pyramid': as_dict.pop('pyramid',
-                                   constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('pyramid')),
-            'waterfall': as_dict.pop('waterfall',
-                                     constants.DEFAULT_LANG_ACS_SERIES_TYPES.get('waterfall')),
+            'arearange': as_dict.pop('arearange', None),
+            'areasplinerange': as_dict.pop('areasplinerange', None),
+            'boxplot': as_dict.pop('boxplot', None),
+            'bubble': as_dict.pop('bubble', None),
+            'columnrange': as_dict.pop('columnrange', None),
+            'errorbar': as_dict.pop('errorbar', None),
+            'funnel': as_dict.pop('funnel', None),
+            'pyramid': as_dict.pop('pyramid', None),
+            'waterfall': as_dict.pop('waterfall', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'arearange': self.arearange,
             'areasplinerange': self.areasplinerange,
@@ -225,7 +171,7 @@ class SeriesTypeDescriptions(HighchartsMeta):
             'waterfall': self.waterfall
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class SeriesSummaryLanguageOptions(HighchartsMeta):
@@ -325,457 +271,337 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
                                              constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('spline_combination'))
 
     @property
-    def bar(self) -> str:
+    def bar(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('bar')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._bar
 
     @bar.setter
     def bar(self, value):
-        if value == '':
-            self._bar = ''
-        else:
-            self._bar = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('bar')
+        self._bar = validators.string(value, allow_empty = True)
 
     @property
-    def bar_combination(self) -> str:
+    def bar_combination(self) -> Optional[str]:
         """Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('bar_combination')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._bar_combination
 
     @bar_combination.setter
     def bar_combination(self, value):
-        if value == '':
-            self._bar_combination = ''
-        else:
-            self._bar_combination = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('bar_combination')
+        self._bar_combination = validators.string(value, allow_empty = True)
 
     @property
-    def boxplot(self) -> str:
+    def boxplot(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('boxplot')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._boxplot
 
     @boxplot.setter
     def boxplot(self, value):
-        if value == '':
-            self._boxplot = ''
-        else:
-            self._boxplot = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('boxplot')
+        self._boxplot = validators.string(value, allow_empty = True)
 
     @property
-    def boxplot_combination(self) -> str:
+    def boxplot_combination(self) -> Optional[str]:
         """Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('boxplot_combination')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._boxplot_combination
 
     @boxplot_combination.setter
     def boxplot_combination(self, value):
-        if value == '':
-            self._boxplot_combination = ''
-        else:
-            self._boxplot_combination = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('boxplot_combination')
+        self._boxplot_combination = validators.string(value, allow_empty = True)
 
     @property
-    def bubble(self) -> str:
+    def bubble(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('bubble')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._bubble
 
     @bubble.setter
     def bubble(self, value):
-        if value == '':
-            self._bubble = ''
-        else:
-            self._bubble = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('bubble')
+        self._bubble = validators.string(value, allow_empty = True)
 
     @property
-    def bubble_combination(self) -> str:
+    def bubble_combination(self) -> Optional[str]:
         """Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('bubble_combination')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._bubble_combination
 
     @bubble_combination.setter
     def bubble_combination(self, value):
-        if value == '':
-            self._bubble_combination = ''
-        else:
-            self._bubble_combination = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('bubble_combination')
+        self._bubble_combination = validators.string(value, allow_empty = True)
 
     @property
-    def column(self) -> str:
+    def column(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('column')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._column
 
     @column.setter
     def column(self, value):
-        if value == '':
-            self._column = ''
-        else:
-            self._column = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('column')
+        self._column = validators.string(value, allow_empty = True)
 
     @property
-    def column_combination(self) -> str:
+    def column_combination(self) -> Optional[str]:
         """Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('column_combination')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._column_combination
 
     @column_combination.setter
     def column_combination(self, value):
-        if value == '':
-            self._column_combination = ''
-        else:
-            self._column_combination = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('column_combination')
+        self._column_combination = validators.string(value, allow_empty = True)
 
     @property
-    def default(self) -> str:
+    def default(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('default')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._default
 
     @default.setter
     def default(self, value):
-        if value == '':
-            self._default = ''
-        else:
-            self._default = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('default')
+        self._default = validators.string(value, allow_empty = True)
 
     @property
-    def default_combination(self) -> str:
+    def default_combination(self) -> Optional[str]:
         """Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('default_combination')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._default_combination
 
     @default_combination.setter
     def default_combination(self, value):
-        if value == '':
-            self._default_combination = ''
-        else:
-            self._default_combination = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('default_combination')
+        self._default_combination = validators.string(value, allow_empty = True)
 
     @property
-    def line(self) -> str:
+    def line(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('line')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._line
 
     @line.setter
     def line(self, value):
-        if value == '':
-            self._line = ''
-        else:
-            self._line = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('line')
+        self._line = validators.string(value, allow_empty = True)
 
     @property
-    def line_combination(self) -> str:
+    def line_combination(self) -> Optional[str]:
         """Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('line_combination')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._line_combination
 
     @line_combination.setter
     def line_combination(self, value):
-        if value == '':
-            self._line_combination = ''
-        else:
-            self._line_combination = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('line_combination')
+        self._line_combination = validators.string(value, allow_empty = True)
 
     @property
-    def map(self) -> str:
+    def map(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('map')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._map
 
     @map.setter
     def map(self, value):
-        if value == '':
-            self._map = ''
-        else:
-            self._map = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('map')
+        self._map = validators.string(value, allow_empty = True)
 
     @property
-    def map_combination(self) -> str:
+    def map_combination(self) -> Optional[str]:
         """Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('map_combination')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._map_combination
 
     @map_combination.setter
     def map_combination(self, value):
-        if value == '':
-            self._map_combination = ''
-        else:
-            self._map_combination = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('map_combination')
+        self._map_combination = validators.string(value, allow_empty = True)
 
     @property
-    def mapbubble(self) -> str:
+    def mapbubble(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('mapbubble')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._mapbubble
 
     @mapbubble.setter
     def mapbubble(self, value):
-        if value == '':
-            self._mapbubble = ''
-        else:
-            self._mapbubble = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('mapbubble')
+        self._mapbubble = validators.string(value, allow_empty = True)
 
     @property
-    def mapbubble_combination(self) -> str:
+    def mapbubble_combination(self) -> Optional[str]:
         """Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('mapbubble_combination')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._mapbubble_combination
 
     @mapbubble_combination.setter
     def mapbubble_combination(self, value):
-        if value == '':
-            self._mapbubble_combination = ''
-        else:
-            self._mapbubble_combination = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('mapbubble_combination')
+        self._mapbubble_combination = validators.string(value, allow_empty = True)
 
     @property
-    def mapline(self) -> str:
+    def mapline(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('mapline')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._mapline
 
     @mapline.setter
     def mapline(self, value):
-        if value == '':
-            self._mapline = ''
-        else:
-            self._mapline = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('mapline')
+        self._mapline = validators.string(value, allow_empty = True)
 
     @property
-    def mapline_combination(self) -> str:
+    def mapline_combination(self) -> Optional[str]:
         """Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('mapline_combination')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._mapline_combination
 
     @mapline_combination.setter
     def mapline_combination(self, value):
-        if value == '':
-            self._mapline_combination = ''
-        else:
-            self._mapline_combination = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('mapline_combination')
+        self._mapline_combination = validators.string(value, allow_empty = True)
 
     @property
-    def pie(self) -> str:
+    def pie(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('pie')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._pie
 
     @pie.setter
     def pie(self, value):
-        if value == '':
-            self._pie = ''
-        else:
-            self._pie = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('pie')
+        self._pie = validators.string(value, allow_empty = True)
 
     @property
-    def pie_combination(self) -> str:
+    def pie_combination(self) -> Optional[str]:
         """Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('pie_combination')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._pie_combination
 
     @pie_combination.setter
     def pie_combination(self, value):
-        if value == '':
-            self._pie_combination = ''
-        else:
-            self._pie_combination = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('pie_combination')
+        self._pie_combination = validators.string(value, allow_empty = True)
 
     @property
-    def scatter(self) -> str:
+    def scatter(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('scatter')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._scatter
 
     @scatter.setter
     def scatter(self, value):
-        if value == '':
-            self._scatter = ''
-        else:
-            self._scatter = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('scatter')
+        self._scatter = validators.string(value, allow_empty = True)
 
     @property
-    def scatter_combination(self) -> str:
+    def scatter_combination(self) -> Optional[str]:
         """Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('scatter_combination')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._scatter_combination
 
     @scatter_combination.setter
     def scatter_combination(self, value):
-        if value == '':
-            self._scatter_combination = ''
-        else:
-            self._scatter_combination = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('scatter_combination')
+        self._scatter_combination = validators.string(value, allow_empty = True)
 
     @property
-    def spline(self) -> str:
+    def spline(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('spline')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._spline
 
     @spline.setter
     def spline(self, value):
-        if value == '':
-            self._spline = ''
-        else:
-            self._spline = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('spline')
+        self._spline = validators.string(value, allow_empty = True)
 
     @property
-    def spline_combination(self) -> str:
+    def spline_combination(self) -> Optional[str]:
         """Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('spline_combination')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._spline_combination
 
     @spline_combination.setter
     def spline_combination(self, value):
-        if value == '':
-            self._spline_combination = ''
-        else:
-            self._spline_combination = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('spline_combination')
+        self._spline_combination = validators.string(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'bar': as_dict.pop('bar',
-                               constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('bar')),
-            'bar_combination': as_dict.pop('barCombination',
-                                           constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('bar_combination')),
-            'boxplot': as_dict.pop('boxplot',
-                                   constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('boxplot')),
-            'boxplot_combination': as_dict.pop('boxplotCombination',
-                                               constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('boxplot_combination')),
-            'bubble': as_dict.pop('bubble',
-                                  constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('bubble')),
-            'bubble_combination': as_dict.pop('bubbleCombination',
-                                              constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('bubble_combination')),
-            'column': as_dict.pop('column',
-                                  constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('column')),
-            'column_combination': as_dict.pop('columnCombination',
-                                              constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('column_combination')),
-            'default': as_dict.pop('default',
-                                   constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('default')),
-            'default_combination': as_dict.pop('defaultCombination',
-                                               constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('default_combination')),
-            'line': as_dict.pop('line',
-                                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('line')),
-            'line_combination': as_dict.pop('lineCombination',
-                                            constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('line_combination')),
-            'map': as_dict.pop('map',
-                               constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('map')),
-            'map_combination': as_dict.pop('mapCombination',
-                                           constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('map_combination')),
-            'mapbubble': as_dict.pop('mapbubble',
-                                     constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('mapbubble')),
-            'mapbubble_combination': as_dict.pop('mapbubbleCombination',
-                                                 constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('mapbubble_combination')),
-            'mapline': as_dict.pop('mapline',
-                                   constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('mapline')),
-            'mapline_combination': as_dict.pop('maplineCombination',
-                                               constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('mapline_combination')),
-            'pie': as_dict.pop('pie',
-                               constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('pie')),
-            'pie_combination': as_dict.pop('pieCombination',
-                                           constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('pie_combination')),
-            'scatter': as_dict.pop('scatter',
-                                   constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('scatter')),
-            'scatter_combination': as_dict.pop('scatterCombination',
-                                               constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('scatter_combination')),
-            'spline': as_dict.pop('spline',
-                                  constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('spline')),
-            'spline_combination': as_dict.pop('splineCombination',
-                                              constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('spline_combination')),
+            'bar': as_dict.pop('bar', None),
+            'bar_combination': as_dict.pop('barCombination', None),
+            'boxplot': as_dict.pop('boxplot', None),
+            'boxplot_combination': as_dict.pop('boxplotCombination', None),
+            'bubble': as_dict.pop('bubble', None),
+            'bubble_combination': as_dict.pop('bubbleCombination', None),
+            'column': as_dict.pop('column', None),
+            'column_combination': as_dict.pop('columnCombination', None),
+            'default': as_dict.pop('default', None),
+            'default_combination': as_dict.pop('defaultCombination', None),
+            'line': as_dict.pop('line', None),
+            'line_combination': as_dict.pop('lineCombination', None),
+            'map': as_dict.pop('map', None),
+            'map_combination': as_dict.pop('mapCombination', None),
+            'mapbubble': as_dict.pop('mapbubble', None),
+            'mapbubble_combination': as_dict.pop('mapbubbleCombination', None),
+            'mapline': as_dict.pop('mapline', None),
+            'mapline_combination': as_dict.pop('maplineCombination', None),
+            'pie': as_dict.pop('pie', None),
+            'pie_combination': as_dict.pop('pieCombination', None),
+            'scatter': as_dict.pop('scatter', None),
+            'scatter_combination': as_dict.pop('scatterCombination', None),
+            'spline': as_dict.pop('spline', None),
+            'spline_combination': as_dict.pop('splineCombination', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'bar': self.bar,
             'barCombination': self.bar_combination,
@@ -803,7 +629,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
             'splineCombination': self.spline_combination
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class SeriesLanguageOptions(HighchartsMeta):
@@ -824,20 +650,16 @@ class SeriesLanguageOptions(HighchartsMeta):
         self._x_axis_description = None
         self._y_axis_description = None
 
-        self.description = kwargs.pop('description',
-                                      constants.DEFAULT_LANG_ACS_SERIES_DESCRIPTION)
-        self.null_point_value = kwargs.pop('null_point_value',
-                                           constants.DEFAULT_LANG_ACS_SERIES_NULL_PT_VALUE)
+        self.description = kwargs.pop('description', None)
+        self.null_point_value = kwargs.pop('null_point_value', None)
         self.point_annotations_description = kwargs.pop('point_annotations_description',
-                                                        constants.DEFAULT_LANG_ACS_SERIES_PT_ANNOTATIONS_DESCRIPTION)
+                                                        None)
         self.summary = kwargs.pop('summary', None)
-        self.x_axis_description = kwargs.pop('x_axis_description',
-                                             constants.DEFAULT_LANG_ACS_SERIES_XAXIS_DESCRIPTION)
-        self.y_axis_description = kwargs.pop('y_axis_description',
-                                             constants.DEFAULT_LANG_ACS_SERIES_YAXIS_DESCRIPTION)
+        self.x_axis_description = kwargs.pop('x_axis_description', None)
+        self.y_axis_description = kwargs.pop('y_axis_description', None)
 
     @property
-    def description(self) -> str:
+    def description(self) -> Optional[str]:
         """User supplied description text. Defaults to:
         ``'{constants.DEFAULT_LANG_ACS_SERIES_DESCRIPTION}'``.
 
@@ -845,52 +667,40 @@ class SeriesLanguageOptions(HighchartsMeta):
 
           This is added in the point comment description by default if present.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._description
 
     @description.setter
     def description(self, value):
-        if value == '':
-            self._description = ''
-        else:
-            self._description = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_DESCRIPTION
+        self._description = validators.string(value, allow_empty = True)
 
     @property
-    def null_point_value(self) -> str:
+    def null_point_value(self) -> Optional[str]:
         """Description for the value of null points. Defaults to:
         ``'{constants.DEFAULT_LANG_ACS_SERIES_NULL_PT_VALUE}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._null_point_value
 
     @null_point_value.setter
     def null_point_value(self, value):
-        if value == '':
-            self._null_point_value = ''
-        else:
-            self._null_point_value = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_NULL_PT_VALUE
+        self._null_point_value = validators.string(value, allow_empty = True)
 
     @property
-    def point_annotations_description(self) -> str:
+    def point_annotations_description(self) -> Optional[str]:
         """Description for annotations on a point, as it is made available to assistive
         technology. Defaults to:
         ``'{constants.DEFAULT_LANG_ACS_SERIES_PT_ANNOTATIONS_DESCRIPTION}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._point_annotations_description
 
     @point_annotations_description.setter
     def point_annotations_description(self, value):
-        if value == '':
-            self._point_annotations_description = ''
-        else:
-            self._point_annotations_description = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_PT_ANNOTATIONS_DESCRIPTION
+        self._point_annotations_description = validators.string(value, allow_empty = True)
 
     @property
     def summary(self) -> Optional[SeriesSummaryLanguageOptions]:
@@ -909,7 +719,8 @@ class SeriesLanguageOptions(HighchartsMeta):
           Chart and its subproperties can be accessed with the ``{chart}`` variable. The
           series and its subproperties can be accessed with the ``{series}`` variable.
 
-          The series index (starting from 1) can be accessed with the ``{seriesNumber}`` variable.
+          The series index (starting from 1) can be accessed with the ``{seriesNumber}``
+          variable.
 
         :rtype: :class:`SeriesSummaryLanguageOptions` or :obj:`None <python:None>`
         """
@@ -921,58 +732,46 @@ class SeriesLanguageOptions(HighchartsMeta):
         self._summary = value
 
     @property
-    def x_axis_description(self) -> str:
+    def x_axis_description(self) -> Optional[str]:
         """xAxis description for series if there are multiple xAxes in the chart. Defaults
         to: ``'{constants.DEFAULT_LANG_ACS_SERIES_XAXIS_DESCRIPTION}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._x_axis_description
 
     @x_axis_description.setter
     def x_axis_description(self, value):
-        if value == '':
-            self._x_axis_description = ''
-        else:
-            self._x_axis_description = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_XAXIS_DESCRIPTION
+        self._x_axis_description = validators.string(value, allow_empty = True)
 
     @property
-    def y_axis_description(self) -> str:
+    def y_axis_description(self) -> Optional[str]:
         """yAxis description for series if there are multiple yAxes in the chart. Defaults
         to: ``'{constants.DEFAULT_LANG_ACS_SERIES_YAXIS_DESCRIPTION}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._y_axis_description
 
     @y_axis_description.setter
     def y_axis_description(self, value):
-        if value == '':
-            self._y_axis_description = ''
-        else:
-            self._y_axis_description = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LANG_ACS_SERIES_YAXIS_DESCRIPTION
+        self._y_axis_description = validators.string(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'description': as_dict.pop('description',
-                                       constants.DEFAULT_LANG_ACS_SERIES_DESCRIPTION),
-            'null_point_value': as_dict.pop('nullPointValue',
-                                            constants.DEFAULT_LANG_ACS_SERIES_NULL_PT_VALUE),
+            'description': as_dict.pop('description', None),
+            'null_point_value': as_dict.pop('nullPointValue', None),
             'point_annotations_description': as_dict.pop('pointAnnotationsDescription',
-                                                         constants.DEFAULT_LANG_ACS_SERIES_PT_ANNOTATIONS_DESCRIPTION),
+                                                         None),
             'summary': as_dict.pop('summary', None),
-            'x_axis_description': as_dict.pop('xAxisDescription',
-                                              constants.DEFAULT_LANG_ACS_SERIES_XAXIS_DESCRIPTION),
-            'y_axis_description': as_dict.pop('yAxisDescription',
-                                              constants.DEFAULT_LANG_ACS_SERIES_YAXIS_DESCRIPTION)
+            'x_axis_description': as_dict.pop('xAxisDescription', None),
+            'y_axis_description': as_dict.pop('yAxisDescription', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'description': self.description,
             'nullPointValue': self.null_point_value,
@@ -982,4 +781,4 @@ class SeriesLanguageOptions(HighchartsMeta):
             'yAxisDescription': self.y_axis_description
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

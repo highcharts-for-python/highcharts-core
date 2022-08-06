@@ -118,7 +118,7 @@ class AnnotationPoint(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         return {
             'x': self.x,
             'xAxis': self.x_axis,

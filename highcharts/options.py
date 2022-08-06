@@ -734,7 +734,7 @@ class HighchartOptions(HighchartsMeta):
 
         return cls(**kwargs_dict)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'annotations': self.annotations,
@@ -766,7 +766,7 @@ class HighchartOptions(HighchartsMeta):
             'zAxis': self.z_axis
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class HighchartsStockOptions(Options):
@@ -968,7 +968,7 @@ class HighchartsStockOptions(Options):
 
         return cls(**kwargs_dict)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'annotations': self.annotations,
@@ -1001,7 +1001,7 @@ class HighchartsStockOptions(Options):
             'yAxis': self.y_axis,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class HighchartsMapsOptions(HighchartsMeta):
@@ -1104,7 +1104,7 @@ class HighchartsMapsOptions(HighchartsMeta):
 
         return cls(**kwargs_dict)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'annotations': self.annotations,
@@ -1134,4 +1134,4 @@ class HighchartsMapsOptions(HighchartsMeta):
             'yAxis': self.y_axis
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

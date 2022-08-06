@@ -17,7 +17,7 @@ class Tooltip(HighchartsMeta):
     point."""
 
     def __init__(self, **kwargs):
-        self._animation = True
+        self._animation = None
         self._background_color = None
         self._border_color = None
         self._border_radius = None
@@ -26,9 +26,9 @@ class Tooltip(HighchartsMeta):
         self._cluster_format = None
         self._date_time_label_formats = None
         self._distance = None
-        self._enabled = True
-        self._follow_pointer = False
-        self._follow_touch_move = True
+        self._enabled = None
+        self._follow_pointer = None
+        self._follow_touch_move = None
         self._footer_format = None
         self._formatter = None
         self._header_format = None
@@ -41,74 +41,72 @@ class Tooltip(HighchartsMeta):
         self._point_format = None
         self._point_formatter = None
         self._positioner = None
-        self._shadow = True
+        self._shadow = None
         self._shape = None
-        self._shared = False
+        self._shared = None
         self._snap = None
-        self._split = False
-        self._stick_on_contact = False
+        self._split = None
+        self._stick_on_contact = None
         self._style = None
-        self._use_html = False
+        self._use_html = None
         self._value_decimals = None
         self._value_prefix = None
         self._value_suffix = None
         self._x_date_format = None
 
-        self.animation = kwargs.pop('animation', True)
+        self.animation = kwargs.pop('animation', None)
         self.background_color = kwargs.pop('background_color', None)
         self.border_color = kwargs.pop('border_color', None)
-        self.border_radius = kwargs.pop('border_radius',
-                                        constants.DEFAULT_TOOLTIP.get('border_radius'))
-        self.border_width = kwargs.pop('border_width',
-                                       constants.DEFAULT_TOOLTIP.get('border_width'))
+        self.border_radius = kwargs.pop('border_radius', None)
+        self.border_width = kwargs.pop('border_width', None)
         self.class_name = kwargs.pop('class_name', None)
         self.cluster_format = kwargs.pop('cluster_format', None)
         self.date_time_label_formats = kwargs.pop('date_time_label_formats', None)
-        self.distance = kwargs.pop('distance', constants.DEFAULT_TOOLTIP.get('distance'))
-        self.enabled = kwargs.pop('enabled', True)
-        self.follow_pointer = kwargs.pop('follow_pointer', False)
-        self.follow_touch_move = kwargs.pop('follow_touch_move', True)
-        self.footer_format = kwargs.pop('footer_format',
-                                        constants.DEFAULT_TOOLTIP.get('footer_format'))
+        self.distance = kwargs.pop('distance', None)
+        self.enabled = kwargs.pop('enabled', None)
+        self.follow_pointer = kwargs.pop('follow_pointer', None)
+        self.follow_touch_move = kwargs.pop('follow_touch_move', None)
+        self.footer_format = kwargs.pop('footer_format', None)
         self.formatter = kwargs.pop('formatter', None)
         self.header_format = kwargs.pop('header_format', None)
-        self.header_shape = kwargs.pop('header_shape',
-                                       constants.DEFAULT_TOOLTIP.get('header_shape'))
-        self.hide_delay = kwargs.pop('hide_delay',
-                                     constants.DEFAULT_TOOLTIP.get('hide_delay'))
+        self.header_shape = kwargs.pop('header_shape', None)
+        self.hide_delay = kwargs.pop('hide_delay', None)
         self.null_format = kwargs.pop('null_format', None)
         self.null_formatter = kwargs.pop('null_formatter', None)
         self.outside = kwargs.pop('outside', None)
-        self.padding = kwargs.pop('padding', constants.DEFAULT_TOOLTIP.get('padding'))
+        self.padding = kwargs.pop('padding', None)
         self.point_format = kwargs.pop('point_format', None)
         self.point_formatter = kwargs.pop('point_formatter', None)
         self.positioner = kwargs.pop('positioner', None)
-        self.shadow = kwargs.pop('shadow', True)
-        self.shape = kwargs.pop('shape', constants.DEFAULT_TOOLTIP.get('shape'))
-        self.shared = kwargs.pop('shared', False)
-        self.snap = kwargs.pop('snap', constants.DEFAULT_TOOLTIP.get('snap'))
-        self.split = kwargs.pop('split', False)
-        self.stick_on_contact = kwargs.pop('stick_on_contact', False)
+        self.shadow = kwargs.pop('shadow', None)
+        self.shape = kwargs.pop('shape', None)
+        self.shared = kwargs.pop('shared', None)
+        self.snap = kwargs.pop('snap', None)
+        self.split = kwargs.pop('split', None)
+        self.stick_on_contact = kwargs.pop('stick_on_contact', None)
         self.style = kwargs.pop('style', None)
-        self.use_html = kwargs.pop('use_html', False)
+        self.use_html = kwargs.pop('use_html', None)
         self.value_decimals = kwargs.pop('value_decimals', None)
         self.value_prefix = kwargs.pop('value_prefix', None)
         self.value_suffix = kwargs.pop('value_suffix', None)
         self.x_date_format = kwargs.pop('x_date_format', None)
 
     @property
-    def animation(self) -> bool:
+    def animation(self) -> Optional[bool]:
         """Flag which indicates whether animation is enabled on the toltip (``True``).
 
         Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._animation
 
     @animation.setter
     def animation(self, value):
-        self._animation = bool(value)
+        if value is None:
+            self._animation = None
+        else:
+            self._animation = bool(value)
 
     @property
     def background_color(self) -> Optional[str | Gradient | Pattern]:
@@ -295,10 +293,10 @@ class Tooltip(HighchartsMeta):
         self._distance = validators.numeric(value, allow_empty = True)
 
     @property
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         """If ``True``, enables the use of tooltips. Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
@@ -307,7 +305,7 @@ class Tooltip(HighchartsMeta):
         self._enabled = bool(value)
 
     @property
-    def follow_pointer(self) -> bool:
+    def follow_pointer(self) -> Optional[bool]:
         """If ``True``, the tooltip will follow the mouse pointer as it moves across
         columns, pie slices, and other point types with an extent. Defaults to ``False``
         generally, except for pie, polygon, map, sankey, and wordcloud series types where
@@ -317,16 +315,19 @@ class Tooltip(HighchartsMeta):
 
           If :meth:`Tooltip.split` is ``True``, then this property is ignored.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._follow_pointer
 
     @follow_pointer.setter
     def follow_pointer(self, value):
-        self._follow_pointer = bool(value)
+        if value is None:
+            self._follow_pointer = None
+        else:
+            self._follow_pointer = bool(value)
 
     @property
-    def follow_touch_move(self) -> bool:
+    def follow_touch_move(self) -> Optional[bool]:
         """If ``True``, the tooltip will follow the single finger touches on a touch base.
         Defaults to ``True``.
 
@@ -346,13 +347,16 @@ class Tooltip(HighchartsMeta):
           to column (above or below the column as applicable) as the user swipes across
           the plot area.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._follow_touch_move
 
     @follow_touch_move.setter
     def follow_touch_move(self, value):
-        self._follow_touch_move = bool(value)
+        if value is None:
+            self._follow_touch_move = None
+        else:
+            self._follow_touch_move = bool(value)
 
     @property
     def footer_format(self) -> Optional[str]:
@@ -629,7 +633,7 @@ class Tooltip(HighchartsMeta):
         self._positioner = validators.string(value, allow_empty = True)
 
     @property
-    def shadow(self) -> bool | ShadowOptions:
+    def shadow(self) -> Optional[bool | ShadowOptions]:
         """Configuration for the shadow to apply to the tooltip. Defaults to
         ``True``.
 
@@ -637,15 +641,16 @@ class Tooltip(HighchartsMeta):
 
         :returns: The shadow configuration to apply or a boolean setting which hides the
           shadow or displays the default shadow.
-        :rtype: :class:`bool <python:bool>` or :class:`ShadowOptions`
+        :rtype: :class:`bool <python:bool>` or :class:`ShadowOptions` or
+          :obj:`None <python:None>`
         """
         return self._shadow
 
     @shadow.setter
     def shadow(self, value):
-        if isinstance(value, bool) and value is False:
-            self._shadow = False
-        elif not value:
+        if value is None:
+            self._shadow = None
+        elif isinstance(value, bool) and value is False:
             self._shadow = False
         else:
             value = validate_types(value,
@@ -653,7 +658,7 @@ class Tooltip(HighchartsMeta):
             self._shadow = value
 
     @property
-    def shape(self) -> str:
+    def shape(self) -> Optional[str]:
         f"""The name of the symbol to use for the border around the tooltip. Defaults to
         ``'{constants.DEFAULT_TOOLTIP.get('shape')}'``.
 
@@ -669,23 +674,26 @@ class Tooltip(HighchartsMeta):
           the header (which is controlled by :meth:`Tooltip.header_shape`).
 
         :returns: The shape to use for the border around the tooltip.
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._shape
 
     @shape.setter
     def shape(self, value):
-        value = validators.string(value, allow_empty = False)
-        value = value.lower()
-        if value not in ['callout',
-                         'rect',
-                         'circle']:
-            raise errors.HighchartsValueError(f'shape expects a supported tooltip shape. '
-                                              f'Was: {value}')
-        self._shape = value
+        if not value:
+            self._shape = None
+        else:
+            value = validators.string(value, allow_empty = False)
+            value = value.lower()
+            if value not in ['callout',
+                             'rect',
+                             'circle']:
+                raise errors.HighchartsValueError(f'shape expects a supported tooltip '
+                                                  f'shape. Was: {value}')
+            self._shape = value
 
     @property
-    def shared(self) -> bool:
+    def shared(self) -> Optional[bool]:
         """When ``True``, the entire plot area will capture mouse movement or touch
         events. Defaults to ``False``.
 
@@ -699,7 +707,7 @@ class Tooltip(HighchartsMeta):
           series, especially line-type series. The :meth:`Tooltip.split` option takes
           precedence over :meth:`Tooltip.shared`.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._shared
 
@@ -732,7 +740,7 @@ class Tooltip(HighchartsMeta):
                                         minimum = 0)
 
     @property
-    def split(self) -> bool:
+    def split(self) -> Optional[bool]:
         """If ``True``, splits the tooltip into one label per series, with the header
         close to the axis. Defaults to ``False``.
 
@@ -745,26 +753,32 @@ class Tooltip(HighchartsMeta):
 
           This option takes precedence over :meth:`Tooltip.shared`.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._split
 
     @split.setter
     def split(self, value):
-        self._split = bool(value)
+        if value is None:
+            self._split = None
+        else:
+            self._split = bool(value)
 
     @property
-    def stick_on_contact(self) -> bool:
+    def stick_on_contact(self) -> Optional[bool]:
         """If ``True``, prevents the tooltip from switching or closing when touched or
         pointed. Defaults to ``False``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._stick_on_contact
 
     @stick_on_contact.setter
     def stick_on_contact(self, value):
-        self._stick_on_contact = bool(value)
+        if value is None:
+            self._stick_on_contact = None
+        else:
+            self._stick_on_contact = bool(value)
 
     @property
     def style(self) -> Optional[str]:
@@ -788,7 +802,7 @@ class Tooltip(HighchartsMeta):
         self._style = validators.string(value, allow_empty = True)
 
     @property
-    def use_html(self) -> bool:
+    def use_html(self) -> Optional[bool]:
         """If ``True``, will use HTML to render the tooltip. If ``False``, will
         use SVG or WebGL as applicable.
 
@@ -801,13 +815,16 @@ class Tooltip(HighchartsMeta):
           Firefox.
 
         :returns: Flag indicating whether to render tooltips using HTML.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._use_html
 
     @use_html.setter
     def use_html(self, value):
-        self._use_html = bool(value)
+        if value is None:
+            self._use_html = None
+        else:
+            self._use_html = bool(value)
 
     @property
     def value_decimals(self) -> Optional[int]:
@@ -915,7 +932,7 @@ class Tooltip(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'animation': self.animation,
             'backgroundColor': self.background_color,
@@ -955,4 +972,4 @@ class Tooltip(HighchartsMeta):
             'xDateFormat': self.x_date_format
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

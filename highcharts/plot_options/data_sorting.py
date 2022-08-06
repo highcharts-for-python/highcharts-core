@@ -77,11 +77,11 @@ class DataSorting(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'enabled': self.enabled,
             'matchByName': self.match_by_name,
             'sortKey': self.sort_key
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

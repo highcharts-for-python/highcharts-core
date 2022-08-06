@@ -22,29 +22,29 @@ class Annotation(HighchartsMeta):
     def __init__(self, **kwargs):
         self._animation = None
         self._control_point_options = None
-        self._crop = True
-        self._draggable = constants.DEFAULT_DRAGGABLE
+        self._crop = None
+        self._draggable = None
         self._events = None
         self._id = None
         self._label_options = None
         self._labels = None
         self._shape_options = None
         self._shapes = None
-        self._visible = True
-        self._z_index = 6
+        self._visible = None
+        self._z_index = None
 
         self.animation = kwargs.pop('animation', None)
         self.control_point_options = kwargs.pop('control_point_options', None)
-        self.crop = kwargs.pop('crop', True)
-        self.draggable = kwargs.pop('draggable', constants.DEFALUT_DRAGGABLE)
+        self.crop = kwargs.pop('crop', None)
+        self.draggable = kwargs.pop('draggable', None)
         self.events = kwargs.pop('events', None)
         self.id = kwargs.pop('id', None)
         self.label_options = kwargs.pop('label_options', None)
         self.labels = kwargs.pop('labels', None)
         self.shape_options = kwargs.pop('shape_options', None)
         self.shapes = kwargs.pop('shapes', None)
-        self.visible = kwargs.pop('visible', True)
-        self.z_index = kwargs.pop('z_index', 6)
+        self.visible = kwargs.pop('visible', None)
+        self.z_index = kwargs.pop('z_index', None)
 
     @property
     def animation(self) -> Optional[AnnotationAnimation]:
@@ -87,22 +87,25 @@ class Annotation(HighchartsMeta):
         self._control_point_options = value
 
     @property
-    def crop(self) -> bool:
+    def crop(self) -> Optional[bool]:
         """If ``True``, hide the part of the annotation that is outside the plot area.
         Defaults to ``True``.
 
         :returns: Flag indicating whether to clip an annotation that extends beyond the
           plot area.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._crop
 
     @crop.setter
     def crop(self, value):
-        self._crop = bool(value)
+        if value is None:
+            self._crop = None
+        else:
+            self._crop = bool(value)
 
     @property
-    def draggable(self) -> str:
+    def draggable(self) -> Optional[str]:
         f"""Setting that allows an annotation to be draggable by a user. Defaults to
         ``'{constants.DEFAULT_DRAGGABLE}'``
 
@@ -114,7 +117,7 @@ class Annotation(HighchartsMeta):
           * ``''`` (empty string - disables dragging)
 
         :returns: Configuration of annotation dragging by the user.
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
 
         :raises HighchartsValueError: if an unsupported value is supplied
         """
@@ -122,10 +125,10 @@ class Annotation(HighchartsMeta):
 
     @draggable.setter
     def draggable(self, value):
-        value = validators.string(value, allow_empty = True)
         if value is None:
-            self._draggable = ''
+            self._draggable = None
         else:
+            value = validators.string(value, allow_empty = True)
             value = value.lower()
             if value not in ['x', 'xy', 'y']:
                 raise errors.HighchartsValueError(f'draggable must be "x", "xy", "y", '
@@ -138,7 +141,7 @@ class Annotation(HighchartsMeta):
         events.
 
         :returns: Callback functions that fire in response to annotation-related events.
-        :rtype: :class:`AnnotationEvent`
+        :rtype: :class:`AnnotationEvent` or :obj:`None <python:None>`
 
         """
         return self._events
@@ -241,54 +244,53 @@ class Annotation(HighchartsMeta):
         self._shapes = value
 
     @property
-    def visible(self) -> bool:
+    def visible(self) -> Optional[bool]:
         """If ``True``, indicates the annotation is visible.
 
         :returns: Flag which indicates whether the annotation is visible or not.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._visible
 
     @visible.setter
     def visible(self, value):
-        self._visible = bool(value)
+        if value is None:
+            self._visible = None
+        else:
+            self._visible = bool(value)
 
     @property
-    def z_index(self) -> int:
+    def z_index(self) -> Optional[int]:
         """The Z-Index for the annotation. Defaults to ``6``.
 
         :returns: The z-index for the annotation.
-        :rtype: :class:`int <python:int>`
+        :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
         """
         return self._z_index
 
     @z_index.setter
     def z_index(self, value):
-        value = validators.integer(value, allow_empty = True)
-        if not value:
-            self._z_index = 0
-        else:
-            self._z_index = value
+        self._z_index = validators.integer(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
             'animation': as_dict.pop('animation', None),
             'control_point_options': as_dict.pop('controlPointOptions', None),
-            'crop': as_dict.pop('crop', True),
-            'draggable': as_dict.pop('draggable', constants.DEFAULT_DRAGGABLE),
+            'crop': as_dict.pop('crop', None),
+            'draggable': as_dict.pop('draggable', None),
             'events': as_dict.pop('events', None),
             'id': as_dict.pop('id', None),
             'label_options': as_dict.pop('labelOptions', None),
             'labels': as_dict.pop('labels', None),
             'shape_options': as_dict.pop('shapeOptions', None),
             'shapes': as_dict.pop('shapes', None),
-            'visible': as_dict.pop('visible', True),
-            'z_index': as_dict.pop('zIndex', 6)
+            'visible': as_dict.pop('visible', None),
+            'z_index': as_dict.pop('zIndex', None),
         }
         return cls(**kwargs)
 
-    def to_dict(self, encoding = 'utf-8'):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'animation': self.animation,
             'controlPointOptions': self.control_point_options,
@@ -303,9 +305,8 @@ class Annotation(HighchartsMeta):
             'visible': self.visible,
             'zIndex': self.z_index
         }
-        as_dict = self.trim_dict(untrimmed)
 
-        return as_dict
+        return untrimmed
 
 
 __all__ = [

@@ -27,12 +27,12 @@ class NoData(HighchartsMeta):
         self._attr = None
         self._position = None
         self._style = None
-        self._use_html = False
+        self._use_html = None
 
         self.attr = kwargs.pop('attr', None)
         self.position = kwargs.pop('position', None)
         self.style = kwargs.pop('style', None)
-        self.use_html = kwargs.pop('use_html', False)
+        self.use_html = kwargs.pop('use_html', None)
 
     @property
     def attr(self) -> Optional[AttributeObject]:
@@ -73,7 +73,7 @@ class NoData(HighchartsMeta):
         self._style = validators.string(value, allow_empty = True)
 
     @property
-    def use_html(self) -> bool:
+    def use_html(self) -> Optional[bool]:
         """If ``True``, inserts the label as HTML. If ``False``, inserts the label as
         pseudo-HTML rendered with SVG. Defaults to ``False``.
 
@@ -83,7 +83,10 @@ class NoData(HighchartsMeta):
 
     @use_html.setter
     def use_html(self, value):
-        self._use_html = bool(value)
+        if value is None:
+            self._use_html = None
+        else:
+            self._use_html = bool(value)
 
     @classmethod
     def from_dict(cls, as_dict):
@@ -96,7 +99,7 @@ class NoData(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'attr': self.attr,
             'position': self.position,
@@ -104,4 +107,4 @@ class NoData(HighchartsMeta):
             'useHTML': self.use_html
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

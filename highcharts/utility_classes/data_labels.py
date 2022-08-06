@@ -90,7 +90,7 @@ class Filter(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         return {
             'operator': self.operator,
             'property': self.property_,
@@ -103,7 +103,7 @@ class DataLabel(HighchartsMeta):
 
     def __init__(self, **kwargs):
         self._align = None
-        self._allow_overlap = False
+        self._allow_overlap = None
         self._animation = None
         self._background_color = None
         self._border_color = None
@@ -111,9 +111,9 @@ class DataLabel(HighchartsMeta):
         self._border_width = None
         self._class_name = None
         self._color = None
-        self._crop = True
+        self._crop = None
         self._defer = None
-        self._enabled = False
+        self._enabled = None
         self._filter = None
         self._format = None
         self._formatter = None
@@ -124,55 +124,47 @@ class DataLabel(HighchartsMeta):
         self._padding = None
         self._position = None
         self._rotation = None
-        self._shadow = False
+        self._shadow = None
         self._shape = None
         self._style = None
         self._text_path = None
-        self._use_html = False
+        self._use_html = None
         self._vertical_align = None
         self._x = None
         self._y = None
         self._z = None
 
-        self.align = kwargs.pop('align', constants.DEFAULT_DATA_LABEL.get('align', None))
-        self.allow_overlap = kwargs.pop('allow_overlap', False)
+        self.align = kwargs.pop('align', None)
+        self.allow_overlap = kwargs.pop('allow_overlap', None)
         self.animation = kwargs.pop('animation', None)
-        self.background_color = kwargs.pop('background_color',
-                                           constants.DEFAULT_DATA_LABEL.get('background_color', None))
-        self.border_color = kwargs.pop('border_color',
-                                       constants.DEFAULT_DATA_LABEL.get('border_color', None))
-        self.border_radius = kwargs.pop('border_radius',
-                                        constants.DEFAULT_DATA_LABEL.get('border_radius', None))
-        self.border_width = kwargs.pop('border_width',
-                                       constants.DEFAULT_DATA_LABEL.get('border_width'))
-        self.class_name = kwargs.pop('class_name',
-                                     constants.DEFAULT_DATA_LABEL.get('class_name'))
-        self.color = kwargs.pop('color',
-                                constants.DEFAULT_DATA_LABEL.get('color'))
-        self.crop = kwargs.pop('crop', False)
-        self.defer = kwargs.pop('defer', constants.DEFAULT_DATA_LABEL.get('defer'))
-        self.enabled = kwargs.pop('enabled', False)
+        self.background_color = kwargs.pop('background_color', None)
+        self.border_color = kwargs.pop('border_color', None)
+        self.border_radius = kwargs.pop('border_radius', None)
+        self.border_width = kwargs.pop('border_width', None)
+        self.class_name = kwargs.pop('class_name', None)
+        self.color = kwargs.pop('color', None)
+        self.crop = kwargs.pop('crop', None)
+        self.defer = kwargs.pop('defer', None)
+        self.enabled = kwargs.pop('enabled', None)
         self.filter = kwargs.pop('filter', None)
         self.format = kwargs.pop('format', None)
         self.formatter = kwargs.pop('formatter', None)
         self.inside = kwargs.pop('inside', None)
         self.null_format = kwargs.pop('null_format', None)
         self.null_formatter = kwargs.pop('null_formatter', None)
-        self.overflow = kwargs.pop('overflow',
-                                   constants.DEFAULT_DATA_LABEL.get('overflow'))
-        self.padding = kwargs.pop('padding', constants.DEFAULT_DATA_LABEL.get('padding'))
-        self.position = kwargs.pop('position', constants.DEFAULT_DATA_LABEL.get('position'))
-        self.rotation = kwargs.pop('rotation', constants.DEFAULT_DATA_LABEL.get('rotation'))
-        self.shadow = kwargs.pop('shadow', False)
-        self.shape = kwargs.pop('shape', constants.DEFAULT_DATA_LABEL.get('shape'))
+        self.overflow = kwargs.pop('overflow', None)
+        self.padding = kwargs.pop('padding', None)
+        self.position = kwargs.pop('position', None)
+        self.rotation = kwargs.pop('rotation', None)
+        self.shadow = kwargs.pop('shadow', None)
+        self.shape = kwargs.pop('shape', None)
         self.style = kwargs.pop('style', None)
         self.text_path = kwargs.pop('text_path', None)
-        self.use_html = kwargs.pop('use_html', False)
-        self.vertical_align = kwargs.pop('vertical_align',
-                                         constants.DEFAULT_DATA_LABEL.get('vertical_align'))
-        self.x = kwargs.pop('x', constants.DEFAULT_DATA_LABEL.get('x'))
-        self.y = kwargs.pop('y', constants.DEFAULT_DATA_LABEL.get('y'))
-        self.z = kwargs.pop('z', constants.DEFAULT_DATA_LABEL.get('z'))
+        self.use_html = kwargs.pop('use_html', None)
+        self.vertical_align = kwargs.pop('vertical_align', None)
+        self.x = kwargs.pop('x', None)
+        self.y = kwargs.pop('y', None)
+        self.z = kwargs.pop('z', None)
 
     @property
     def align(self) -> Optional[str]:
@@ -196,16 +188,19 @@ class DataLabel(HighchartsMeta):
 
     @align.setter
     def align(self, value):
-        value = validators.string(value, allow_empty = False)
-        value = value.lower()
-        if value not in ['left', 'center', 'right']:
-            raise errors.HighchartsValueError(f'align must be either "left", "center", or '
-                                              f'"right". Was: {value}')
+        if not value:
+            self._align = None
+        else:
+            value = validators.string(value, allow_empty = False)
+            value = value.lower()
+            if value not in ['left', 'center', 'right']:
+                raise errors.HighchartsValueError(f'align must be either "left", '
+                                                  f'"center", or "right". Was: {value}')
 
         self._align = value
 
     @property
-    def allow_overlap(self) -> bool:
+    def allow_overlap(self) -> Optional[bool]:
         """If ``True``, data labels are allowed to overlap each other.
 
         Defaults to ``False``.
@@ -216,13 +211,16 @@ class DataLabel(HighchartsMeta):
           can be set to ``0``.
 
         :returns: Flag indicating whether to allow data labels to overlap.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._allow_overlap
 
     @allow_overlap.setter
     def allow_overlap(self, value):
-        self._allow_overlap = bool(value)
+        if value is None:
+            self._allow_overlap = None
+        else:
+            self._allow_overlap = bool(value)
 
     @property
     def animation(self) -> Optional[AnimationOptions]:
@@ -370,7 +368,7 @@ class DataLabel(HighchartsMeta):
         self._color = validators.string(value, allow_empty = True)
 
     @property
-    def crop(self) -> bool:
+    def crop(self) -> Optional[bool]:
         """If ``True``, hide part of the data label that falls outside the plot
         area. Defaults to ``False``.
 
@@ -381,13 +379,16 @@ class DataLabel(HighchartsMeta):
 
         :returns: Flag indicating whether to clip a data label that extends beyond
           the plot area.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._crop
 
     @crop.setter
     def crop(self, value):
-        self._crop = bool(value)
+        if value is None:
+            self._crop = None
+        else:
+            self._crop = bool(value)
 
     def defer(self) -> Optional[bool | int]:
         """Whether to defer displaying the data labels until the initial series animation
@@ -644,22 +645,23 @@ class DataLabel(HighchartsMeta):
         return self._rotation
 
     @property
-    def shadow(self) -> bool | ShadowOptions:
+    def shadow(self) -> Optional[bool | ShadowOptions]:
         """Configuration for the shadow to apply to the data label box. Defaults to
         ``False``.
 
         If ``False``, no shadow is applied.
 
         :returns: The shadow configuration to apply or ``False``.
-        :rtype: :class:`bool <python:bool>` or :class:`ShadowOptions`
+        :rtype: :class:`bool <python:bool>` or :class:`ShadowOptions` or
+          :obj:`None <python:None>`
         """
         return self._shadow
 
     @shadow.setter
     def shadow(self, value):
-        if value is False:
-            self._shadow = False
-        elif not value:
+        if value is None:
+            self._shadow = None
+        elif value is False:
             self._shadow = False
         else:
             value = validate_types(value,
@@ -667,7 +669,7 @@ class DataLabel(HighchartsMeta):
             self._shadow = value
 
     @property
-    def shape(self) -> str:
+    def shape(self) -> Optional[str]:
         f"""The name of the symbol to use for the border around the label. Defaults to
         ``'{constants.DEFAULT_DATA_LABEL.get('shape')}'``.
 
@@ -681,23 +683,26 @@ class DataLabel(HighchartsMeta):
           * ``'callout'``
 
         :returns: The shape to use for the border around the label.
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._shape
 
     @shape.setter
     def shape(self, value):
-        value = validators.string(value, allow_empty = False)
-        value = value.lower()
-        if value not in ['callout',
-                         'connector',
-                         'rect',
-                         'circle',
-                         'diamond',
-                         'triangle']:
-            raise errors.HighchartsValueError(f'shape expects a supported annotation '
-                                              f'label shape. Was: {value}')
-        self._shape = value
+        if not value:
+            self._shape = None
+        else:
+            value = validators.string(value, allow_empty = False)
+            value = value.lower()
+            if value not in ['callout',
+                             'connector',
+                             'rect',
+                             'circle',
+                             'diamond',
+                             'triangle']:
+                raise errors.HighchartsValueError(f'shape expects a supported annotation '
+                                                  f'label shape. Was: {value}')
+            self._shape = value
 
     @property
     def style(self) -> Optional[str]:
@@ -748,20 +753,23 @@ class DataLabel(HighchartsMeta):
         self.text_path = value
 
     @property
-    def use_html(self) -> bool:
+    def use_html(self) -> Optional[bool]:
         """If ``True``, will use HTML to render the data label. If ``False``, will
         use SVG or WebGL as applicable.
 
         Defaults to ``False``.
 
         :returns: Flag indicating whether to render data labels using HTML.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._use_html
 
     @use_html.setter
     def use_html(self, value):
-        self._use_html = bool(value)
+        if value is None:
+            self._use_html = None
+        else:
+            self._use_html = bool(value)
 
     @property
     def vertical_align(self) -> Optional[str]:
@@ -796,21 +804,17 @@ class DataLabel(HighchartsMeta):
             self._vertical_align = value
 
     @property
-    def x(self) -> int | float | Decimal:
+    def x(self) -> Optional[int | float | Decimal]:
         f"""The x position offset of the label relative to the point. Defaults to
         ``{constants.DEFAULT_DATA_LABEL.get('x')}``.
 
-        :rtype: numeric
+        :rtype: numeric or :obj:`None <python:None>`
         """
         return self._x
 
     @x.setter
     def x(self, value):
-        value = validators.numeric(value, allow_empty = True)
-        if value is None:
-            self._x = 0
-        else:
-            self._x = value
+        self._x = validators.numeric(value, allow_empty = True)
 
     @property
     def y(self) -> Optional[int | float | Decimal]:
@@ -847,50 +851,42 @@ class DataLabel(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.pop('align', constants.DEFAULT_DATA_LABEL.get('align', None)),
-            'allow_overlap': as_dict.pop('allowOverlap', False),
+            'align': as_dict.pop('align', None),
+            'allow_overlap': as_dict.pop('allowOverlap', None),
             'animation': as_dict.pop('animation', None),
-            'background_color': as_dict.pop('backgroundColor',
-                                            constants.DEFAULT_DATA_LABEL.get('background_color', None)),
-            'border_color': as_dict.pop('borderColor',
-                                        constants.DEFAULT_DATA_LABEL.get('border_color', None)),
-            'border_radius': as_dict.pop('borderRadius',
-                                         constants.DEFAULT_DATA_LABEL.get('border_radius', None)),
-            'border_width': as_dict.pop('borderWidth',
-                                        constants.DEFAULT_DATA_LABEL.get('border_width')),
-            'class_name': as_dict.pop('className',
-                                      constants.DEFAULT_DATA_LABEL.get('class_name')),
-            'color': as_dict.pop('color',
-                                 constants.DEFAULT_DATA_LABEL.get('color')),
-            'crop': as_dict.pop('crop', False),
-            'defer': as_dict.pop('defer', constants.DEFAULT_DATA_LABEL.get('defer')),
-            'enabled': as_dict.pop('enabled', False),
+            'background_color': as_dict.pop('backgroundColor', None),
+            'border_color': as_dict.pop('borderColor', None),
+            'border_radius': as_dict.pop('borderRadius', None),
+            'border_width': as_dict.pop('borderWidth', None),
+            'class_name': as_dict.pop('className', None),
+            'color': as_dict.pop('color', None),
+            'crop': as_dict.pop('crop', None),
+            'defer': as_dict.pop('defer', None),
+            'enabled': as_dict.pop('enabled', None),
             'filter': as_dict.pop('filter', None),
             'format': as_dict.pop('format', None),
             'formatter': as_dict.pop('formatter', None),
             'inside': as_dict.pop('inside', None),
             'null_format': as_dict.pop('nullFormat', None),
             'null_formatter': as_dict.pop('nullFormatter', None),
-            'overflow': as_dict.pop('overflow',
-                                    constants.DEFAULT_DATA_LABEL.get('overflow')),
-            'padding': as_dict.pop('padding', constants.DEFAULT_DATA_LABEL.get('padding')),
-            'position': as_dict.pop('position', constants.DEFAULT_DATA_LABEL.get('position')),
-            'rotation': as_dict.pop('rotation', constants.DEFAULT_DATA_LABEL.get('rotation')),
-            'shadow': as_dict.pop('shadow', False),
-            'shape': as_dict.pop('shape', constants.DEFAULT_DATA_LABEL.get('shape')),
+            'overflow': as_dict.pop('overflow', None),
+            'padding': as_dict.pop('padding', None),
+            'position': as_dict.pop('position', None),
+            'rotation': as_dict.pop('rotation', None),
+            'shadow': as_dict.pop('shadow', None),
+            'shape': as_dict.pop('shape', None),
             'style': as_dict.pop('style', None),
             'text_path': as_dict.pop('textPath', None),
-            'use_html': as_dict.pop('useHTML', False),
-            'vertical_align': as_dict.pop('verticalAlign',
-                                          constants.DEFAULT_DATA_LABEL.get('vertical_align')),
-            'x': as_dict.pop('x', constants.DEFAULT_DATA_LABEL.get('x')),
-            'y': as_dict.pop('y', constants.DEFAULT_DATA_LABEL.get('y')),
-            'z': as_dict.pop('z', constants.DEFAULT_DATA_LABEL.get('z'))
+            'use_html': as_dict.pop('useHTML', None),
+            'vertical_align': as_dict.pop('verticalAlign', None),
+            'x': as_dict.pop('x', None),
+            'y': as_dict.pop('y', None),
+            'z': as_dict.pop('z', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'align': self.align,
             'allowOverlap': self.allow_overlap,
@@ -976,45 +972,37 @@ class NodeDataLabel(DataLabel):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.pop('align', constants.DEFAULT_DATA_LABEL.get('align', None)),
-            'allow_overlap': as_dict.pop('allowOverlap', False),
+            'align': as_dict.pop('align', None),
+            'allow_overlap': as_dict.pop('allowOverlap', None),
             'animation': as_dict.pop('animation', None),
-            'background_color': as_dict.pop('backgroundColor',
-                                            constants.DEFAULT_DATA_LABEL.get('background_color', None)),
-            'border_color': as_dict.pop('borderColor',
-                                        constants.DEFAULT_DATA_LABEL.get('border_color', None)),
-            'border_radius': as_dict.pop('borderRadius',
-                                         constants.DEFAULT_DATA_LABEL.get('border_radius', None)),
-            'border_width': as_dict.pop('borderWidth',
-                                        constants.DEFAULT_DATA_LABEL.get('border_width')),
-            'class_name': as_dict.pop('className',
-                                      constants.DEFAULT_DATA_LABEL.get('class_name')),
-            'color': as_dict.pop('color',
-                                 constants.DEFAULT_DATA_LABEL.get('color')),
-            'crop': as_dict.pop('crop', False),
-            'defer': as_dict.pop('defer', constants.DEFAULT_DATA_LABEL.get('defer')),
-            'enabled': as_dict.pop('enabled', False),
+            'background_color': as_dict.pop('backgroundColor', None),
+            'border_color': as_dict.pop('borderColor', None),
+            'border_radius': as_dict.pop('borderRadius', None),
+            'border_width': as_dict.pop('borderWidth', None),
+            'class_name': as_dict.pop('className', None),
+            'color': as_dict.pop('color', None),
+            'crop': as_dict.pop('crop', None),
+            'defer': as_dict.pop('defer', None),
+            'enabled': as_dict.pop('enabled', None),
             'filter': as_dict.pop('filter', None),
             'format': as_dict.pop('format', None),
             'formatter': as_dict.pop('formatter', None),
             'inside': as_dict.pop('inside', None),
             'null_format': as_dict.pop('nullFormat', None),
             'null_formatter': as_dict.pop('nullFormatter', None),
-            'overflow': as_dict.pop('overflow',
-                                    constants.DEFAULT_DATA_LABEL.get('overflow')),
-            'padding': as_dict.pop('padding', constants.DEFAULT_DATA_LABEL.get('padding')),
-            'position': as_dict.pop('position', constants.DEFAULT_DATA_LABEL.get('position')),
-            'rotation': as_dict.pop('rotation', constants.DEFAULT_DATA_LABEL.get('rotation')),
-            'shadow': as_dict.pop('shadow', False),
-            'shape': as_dict.pop('shape', constants.DEFAULT_DATA_LABEL.get('shape')),
+            'overflow': as_dict.pop('overflow', None),
+            'padding': as_dict.pop('padding', None),
+            'position': as_dict.pop('position', None),
+            'rotation': as_dict.pop('rotation', None),
+            'shadow': as_dict.pop('shadow', None),
+            'shape': as_dict.pop('shape', None),
             'style': as_dict.pop('style', None),
             'text_path': as_dict.pop('textPath', None),
-            'use_html': as_dict.pop('useHTML', False),
-            'vertical_align': as_dict.pop('verticalAlign',
-                                          constants.DEFAULT_DATA_LABEL.get('vertical_align')),
-            'x': as_dict.pop('x', constants.DEFAULT_DATA_LABEL.get('x')),
-            'y': as_dict.pop('y', constants.DEFAULT_DATA_LABEL.get('y')),
-            'z': as_dict.pop('z', constants.DEFAULT_DATA_LABEL.get('z')),
+            'use_html': as_dict.pop('useHTML', None),
+            'vertical_align': as_dict.pop('verticalAlign', None),
+            'x': as_dict.pop('x', None),
+            'y': as_dict.pop('y', None),
+            'z': as_dict.pop('z', None),
 
             'node_format': as_dict.pop('nodeFormat', None),
             'node_formatter': as_dict.pop('nodeFormatter', None),
@@ -1022,14 +1010,14 @@ class NodeDataLabel(DataLabel):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'nodeFormat': self.node_format,
             'nodeFormatter': self.node_formatter,
         }
 
-        parent_as_dict = super().to_dict() or {}
+        parent_as_dict = super()._to_untrimmed_dict() or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

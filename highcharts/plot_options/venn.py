@@ -51,8 +51,8 @@ class VennOptions(GenericTypeOptions):
         self.color_axis = kwargs.pop('color_axis', None)
         self.color_index = kwargs.pop('color_index', None)
         self.color_key = kwargs.pop('color_key', None)
-        self.crisp = kwargs.pop('crisp', True)
-        self.relative_x_value = kwargs.pop('relative_x_value', False)
+        self.crisp = kwargs.pop('crisp', None)
+        self.relative_x_value = kwargs.pop('relative_x_value', None)
         self.step = kwargs.pop('step', None)
 
         self.border_dash_style = kwargs.pop('border_dash_style', None)
@@ -284,17 +284,17 @@ class VennOptions(GenericTypeOptions):
         """
         kwargs = {
             'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', False),
+            'allow_point_select': as_dict.pop('allowPointSelect', None),
             'animation': as_dict.pop('animation', None),
             'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', True),
+            'clip': as_dict.pop('clip', None),
             'color': as_dict.pop('color', None),
             'cursor': as_dict.pop('cursor', None),
             'custom': as_dict.pop('custom', None),
             'dash_style': as_dict.pop('dashStyle', None),
             'data_labels': as_dict.pop('dataLabels', None),
             'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', True),
+            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
             'events': as_dict.pop('events', None),
             'include_in_data_export': as_dict.pop('includeInDataExport', None),
             'keys': as_dict.pop('keys', None),
@@ -305,8 +305,8 @@ class VennOptions(GenericTypeOptions):
             'opacity': as_dict.pop('opacity', None),
             'point': as_dict.pop('point', None),
             'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', False),
-            'show_checkbox': as_dict.pop('showCheckbox', False),
+            'selected': as_dict.pop('selected', None),
+            'show_checkbox': as_dict.pop('showCheckbox', None),
             'show_in_legend': as_dict.pop('showInLegend', None),
             'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
             'states': as_dict.pop('states', None),
@@ -314,7 +314,7 @@ class VennOptions(GenericTypeOptions):
             'threshold': as_dict.pop('threshold', None),
             'tooltip': as_dict.pop('tooltip', None),
             'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', True),
+            'visible': as_dict.pop('visible', None),
 
             'animation_limit': as_dict.pop('animationLimit', None),
             'color_axis': as_dict.pop('colorAxis', None),
@@ -331,7 +331,7 @@ class VennOptions(GenericTypeOptions):
 
         return kwargs
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'animation_limit': self.animation_limit,
             'color_axis': self.color_axis,
@@ -346,8 +346,8 @@ class VennOptions(GenericTypeOptions):
             'cluster': self.cluster
         }
 
-        parent_as_dict = super().to_dict() or {}
+        parent_as_dict = super()._to_untrimmed_dict() or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

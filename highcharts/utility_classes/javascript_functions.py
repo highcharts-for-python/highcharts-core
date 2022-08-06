@@ -93,12 +93,12 @@ class CallbackFunction(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
-        return self.trim_dict({
+    def _to_untrimmed_dict(self) -> dict:
+        return {
             'function_name': self.function_name,
             'arguments': self.arguments,
             'body': self.body
-        })
+        }
 
 
 class JavaScriptClass(HighchartsMeta):
@@ -166,7 +166,7 @@ class JavaScriptClass(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
-        return self.trim_dict({
+    def _to_untrimmed_dict(self) -> dict:
+        return {
             'methods': self.methods
-        })
+        }

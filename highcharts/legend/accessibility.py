@@ -8,30 +8,33 @@ class LegendKeyboardNavigation(HighchartsMeta):
     """Options for keyboard navigation of the legend."""
 
     def __init__(self, **kwargs):
-        self._enabled = True
+        self._enabled = None
 
-        self.enabled = kwargs.pop('enabled', True)
+        self.enabled = kwargs.pop('enabled', None)
 
     @property
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         """If ``True``, enables keyboard navigation for the legend. Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(value)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @classmethod
     def from_dict(cls, as_dict):
-        return cls(enabled = as_dict.pop('enabled', True))
+        return cls(enabled = as_dict.pop('enabled', None))
 
-    def to_dict(self):
-        return self.trim_dict({
+    def _to_untrimmed_dict(self) -> dict:
+        return {
             'enabled': self.enabled
-        })
+        }
 
 
 class LegendAccessibilityOptions(HighchartsMeta):
@@ -44,24 +47,27 @@ class LegendAccessibilityOptions(HighchartsMeta):
     """
 
     def __init__(self, **kwargs):
-        self._enabled = True
+        self._enabled = None
         self._keyboard_navigation = None
 
-        self.enabled = kwargs.pop('enabled', True)
+        self.enabled = kwargs.pop('enabled', None)
         self.keyboard_navigation = kwargs.pop('keyboard_navigation', None)
 
     @property
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         """If ``True``, enables accessibility support for the legend. Defaults to
         ``True``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(value)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @property
     def keyboard_navigation(self) -> Optional[LegendKeyboardNavigation]:
@@ -79,16 +85,16 @@ class LegendAccessibilityOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'enabled': as_dict.pop('enabled', True),
+            'enabled': as_dict.pop('enabled', None),
             'keyboard_navigation': as_dict.pop('keyboardNavigation', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'enabled': self.enabled,
             'keyboardNavigation': self.keyboard_navigation
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

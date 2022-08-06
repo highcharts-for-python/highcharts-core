@@ -16,11 +16,11 @@ class ConnectorOptions(HighchartsMeta):
     def __init__(self, **kwargs):
         self._dashstyle = None
         self._stroke = None
-        self._width = 1
+        self._width = None
 
         self.dashstyle = kwargs.pop('dashstyle', None)
         self.stroke = kwargs.pop('stroke', None)
-        self.width = kwargs.pop('width', 1)
+        self.width = kwargs.pop('width', None)
 
     @property
     def dashstyle(self) -> Optional[str]:
@@ -84,19 +84,19 @@ class ConnectorOptions(HighchartsMeta):
         kwargs = {
             'dashstyle': as_dict.pop('dashstyle', None) or as_dict.pop('dashStyle', None),
             'stroke': as_dict.pop('stroke', None),
-            'width': as_dict.pop('width', 1)
+            'width': as_dict.pop('width', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'dashstyle': self.dashstyle,
             'stroke': self.stroke,
             'width': self.width
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class OnPointOptions(HighchartsMeta):
@@ -166,14 +166,14 @@ class OnPointOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'connectorOptions': self.connector_options,
             'id': self.id,
             'position': self.position
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class Point(HighchartsMeta):
@@ -205,9 +205,9 @@ class Point(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'events': self.events
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

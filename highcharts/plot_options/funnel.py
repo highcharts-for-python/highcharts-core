@@ -27,13 +27,13 @@ class FunnelOptions(PieOptions):
         self._height = None
         self._neck_height = None
         self._neck_width = None
-        self._reversed = False
+        self._reversed = None
         self._width = None
 
         self.height = kwargs.pop('height', None)
         self.neck_height = kwargs.pop('neck_height', None)
         self.neck_width = kwargs.pop('neck_width', None)
-        self.reversed = kwargs.pop('reversed', False)
+        self.reversed = kwargs.pop('reversed', None)
         self.width = kwargs.pop('width', None)
 
         super(self).__init__(**kwargs)
@@ -160,17 +160,17 @@ class FunnelOptions(PieOptions):
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', False),
+            'allow_point_select': as_dict.pop('allowPointSelect', None),
             'animation': as_dict.pop('animation', None),
             'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', True),
+            'clip': as_dict.pop('clip', None),
             'color': as_dict.pop('color', None),
             'cursor': as_dict.pop('cursor', None),
             'custom': as_dict.pop('custom', None),
             'dash_style': as_dict.pop('dashStyle', None),
             'data_labels': as_dict.pop('dataLabels', None),
             'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', True),
+            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
             'events': as_dict.pop('events', None),
             'include_in_data_export': as_dict.pop('includeInDataExport', None),
             'keys': as_dict.pop('keys', None),
@@ -181,15 +181,15 @@ class FunnelOptions(PieOptions):
             'opacity': as_dict.pop('opacity', None),
             'point': as_dict.pop('point', None),
             'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', False),
-            'show_checkbox': as_dict.pop('showCheckbox', False),
+            'selected': as_dict.pop('selected', None),
+            'show_checkbox': as_dict.pop('showCheckbox', None),
             'show_in_legend': as_dict.pop('showInLegend', None),
             'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
             'states': as_dict.pop('states', None),
             'threshold': as_dict.pop('threshold', None),
             'tooltip': as_dict.pop('tooltip', None),
             'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', True),
+            'visible': as_dict.pop('visible', None),
 
             'border_color': as_dict.pop('borderColor', None),
             'border_width': as_dict.pop('borderWidth', None),
@@ -198,16 +198,16 @@ class FunnelOptions(PieOptions):
             'color_index': as_dict.pop('colorIndex', None),
             'color_key': as_dict.pop('colorKey', None),
             'colors': as_dict.pop('colors', None),
-            'depth': as_dict.pop('depth', 0),
+            'depth': as_dict.pop('depth', None),
             'end_angle': as_dict.pop('endAngle', None),
             'fill_color': as_dict.pop('fillColor', None),
-            'ignore_hidden_point': as_dict.pop('ignoreHiddenPoint', True),
-            'inner_size': as_dict.pop('innerSize', 0),
-            'linecap': as_dict.pop('linecap', 'round'),
-            'min_size': as_dict.pop('minSize', 80),
+            'ignore_hidden_point': as_dict.pop('ignoreHiddenPoint', None),
+            'inner_size': as_dict.pop('innerSize', None),
+            'linecap': as_dict.pop('linecap', None),
+            'min_size': as_dict.pop('minSize', None),
             'size': as_dict.pop('size', None),
-            'sliced_offset': as_dict.pop('slicedOffset', 10),
-            'start_angle': as_dict.pop('startAngle', 0),
+            'sliced_offset': as_dict.pop('slicedOffset', None),
+            'start_angle': as_dict.pop('startAngle', None),
 
             'height': as_dict.pop('height', None),
             'neck_height': as_dict.pop('neckHeight', None),
@@ -218,7 +218,7 @@ class FunnelOptions(PieOptions):
 
         return kwargs
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'height': self.height,
             'neckHeight': self.neck_height,
@@ -226,12 +226,12 @@ class FunnelOptions(PieOptions):
             'reversed': self.reversed,
             'width': self.width
         }
-        parent_as_dict = super().to_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class Funnel3DOptions(FunnelOptions, ColumnOptions):
@@ -292,7 +292,7 @@ class Funnel3DOptions(FunnelOptions, ColumnOptions):
 
         return kwargs
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'borderColor': self.border_color,
             'borderRadius': self.border_radius,
@@ -319,9 +319,9 @@ class Funnel3DOptions(FunnelOptions, ColumnOptions):
 
             'gradientForSides': self.gradient_for_sides
         }
-        parent_as_dict = super().to_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

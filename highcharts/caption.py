@@ -19,27 +19,26 @@ class Caption(HighchartsMeta):
     """
 
     def __init__(self, **kwargs):
-        self._align = constants.DEFAULT_CAPTION_ALIGN
-        self._floating = False
-        self._margin = constants.DEFAULT_CAPTION_MARGIN
-        self._style = constants.DEFAULT_CAPTION_STYLE
+        self._align = None
+        self._floating = None
+        self._margin = None
+        self._style = None
         self._text = None
-        self._use_html = False
-        self._vertical_align = constants.DEFAULT_CAPTION_VERTICAL_ALIGN
-        self._x = constants.DEFAULT_CAPTION_X
-        self._y = constants.DEFAULT_CAPTION_Y
+        self._use_html = None
+        self._vertical_align = None
+        self._x = None
+        self._y = None
 
-        self.align = kwargs.pop('align', constants.DEFAULT_CAPTION_ALIGN)
-        self.floating = kwargs.pop('floating', False)
-        self.margin = kwargs.pop('margin', constants.DEFAULT_CAPTION_MARGIN)
+        self.align = kwargs.pop('align', None)
+        self.floating = kwargs.pop('floating', None)
+        self.margin = kwargs.pop('margin', None)
         self.style = kwargs.pop('style', None)
         self.text = kwargs.pop('text', None)
-        self.use_html = kwargs.pop('use_html', False)
-        self.vertical_align = kwargs.pop('vertical_align',
-                                         constants.DEFAULT_CAPTION_VERTICAL_ALIGN)
+        self.use_html = kwargs.pop('use_html', None)
+        self.vertical_align = kwargs.pop('vertical_align', None)
 
     @property
-    def align(self) -> str:
+    def align(self) -> Optional[str]:
         f"""The alignment of the caption. Defaults to
         ``'{constants.DEFAULT_CAPTION_ALIGN}'``.
 
@@ -49,8 +48,7 @@ class Caption(HighchartsMeta):
           * ``'center'``
           * ``'right'``
 
-        :returns: The alignment of the caption.
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._align
 
@@ -59,23 +57,26 @@ class Caption(HighchartsMeta):
         value = validators.string(value, allow_empty = False)
         value = value.lower()
         if value not in ['left', 'center', 'right']:
-            raise errors.HighchartsValueError(f'align must be either "left", "center", or '
-                                              f'"right". Was: {value}')
+            raise errors.HighchartsValueError(f'align must be either "left", "center", or'
+                                              f' "right". Was: {value}')
 
         self._align = value
 
     @property
-    def floating(self) -> bool:
+    def floating(self) -> Optional[bool]:
         """If ``True`, sets the caption to floating. When the caption is floating, the
         plot area will not move to make space for it. Defaults to ``False``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._floating
 
     @floating.setter
     def floating(self, value):
-        self._floating = bool(value)
+        if value is None:
+            self._floating = None
+        else:
+            self._floating = bool(value)
 
     @property
     def margin(self) -> Optional[int | float | Decimal]:
@@ -88,7 +89,7 @@ class Caption(HighchartsMeta):
 
     @margin.setter
     def margin(self, value):
-        self._margin = validators.numeric(value)
+        self._margin = validators.numeric(value, allow_empty = True)
 
     @property
     def style(self) -> Optional[str]:
@@ -104,7 +105,7 @@ class Caption(HighchartsMeta):
         self._style = validators.string(value, allow_empty = True)
 
     @property
-    def text(self) -> str:
+    def text(self) -> Optional[str]:
         """The caption text of the chart. Defaults to an empty string (``''``).
 
         :rtype: :class:`str <python:str>`
@@ -116,23 +117,26 @@ class Caption(HighchartsMeta):
         self._text = validators.string(value, allow_empty = True)
 
     @property
-    def use_html(self) -> bool:
+    def use_html(self) -> Optional[bool]:
         """If ``True``, will use HTML to render the caption. If ``False``, will
         use SVG or WebGL as applicable.
 
         Defaults to ``False``.
 
         :returns: Flag indicating whether to render the caption using HTML.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._use_html
 
     @use_html.setter
     def use_html(self, value):
-        self._use_html = bool(value)
+        if value is None:
+            self._use_html = None
+        else:
+            self._use_html = bool(value)
 
     @property
-    def vertical_align(self) -> str:
+    def vertical_align(self) -> Optional[str]:
         f"""The vertical alignment of the caption. Defaults to
         ``{constants.DEFAULT_CAPTION_VERTICAL_ALIGN}``.
 
@@ -142,7 +146,7 @@ class Caption(HighchartsMeta):
           * ``'middle'``
           * ``'top'``
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._vertical_align
 
@@ -159,22 +163,18 @@ class Caption(HighchartsMeta):
             self._vertical_align = value
 
     @property
-    def x(self) -> int | float | Decimal:
+    def x(self) -> Optional[int | float | Decimal]:
         f"""The x position of the caption relative to the alignment within
         :meth:`Options.chart.spacing_left` and :meth:`Option.chart.spacing_right`.
         Defaults to ``{constants.DEFAULT_CAPTION_X}``.
 
-        :rtype: numeric
+        :rtype: numeric or :obj:`None <python:None>`
         """
         return self._x
 
     @x.setter
     def x(self, value):
         value = validators.numeric(value, allow_empty = True)
-        if value is None:
-            self._x = 0
-        else:
-            self._x = value
 
     @property
     def y(self) -> Optional[int]:
@@ -193,23 +193,21 @@ class Caption(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.pop('align',
-                                 constants.DEFAULT_CAPTION_ALIGN),
-            'floating': as_dict.pop('floating', False),
-            'margin': as_dict.pop('margin', constants.DEFAULT_CAPTION_MARGIN),
+            'align': as_dict.pop('align', None),
+            'floating': as_dict.pop('floating', None),
+            'margin': as_dict.pop('margin', None),
             'style': as_dict.pop('style', None),
             'text': as_dict.pop('text', None),
-            'use_html': as_dict.pop('useHTML', False),
-            'vertical_align': as_dict.pop('verticalAlign',
-                                          constants.DEFAULT_CAPTION_VERTICAL_ALIGN),
-            'x': as_dict.pop('x', constants.DEFAULT_CAPTION_X),
-            'y': as_dict.pop('y', constants.DEFAULT_CAPTION_Y)
+            'use_html': as_dict.pop('useHTML', None),
+            'vertical_align': as_dict.pop('verticalAlign', None),
+            'x': as_dict.pop('x', None),
+            'y': as_dict.pop('y', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
-        return {
+    def _to_untrimmed_dict(self) -> dict:
+        untrimmed = {
             'align': self.align,
             'floating': self.floating,
             'margin': self.margin,
@@ -220,3 +218,5 @@ class Caption(HighchartsMeta):
             'x': self.x,
             'y': self.y
         }
+
+        return untrimmed

@@ -306,7 +306,7 @@ class XAxis(NumericAxis):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'crosshair': self.crosshair,
             'height': self.height,
@@ -318,8 +318,8 @@ class XAxis(NumericAxis):
             'width': self.width
         }
 
-        parent_as_dict = super().to_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

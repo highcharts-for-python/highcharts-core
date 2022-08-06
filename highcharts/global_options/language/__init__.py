@@ -55,53 +55,35 @@ class Language(HighchartsMeta):
         self._weekdays = None
 
         self.accessibility = kwargs.pop('accessibility', None)
-        self.context_button_title = kwargs.pop('context_button_title',
-                                               constants.DEFAULT_LANG_CONTEXT_BUTTON_TITLE)
-        self.decimal_point = kwargs.pop('decimal_point', '.')
-        self.download_csv = kwargs.pop('download_csv',
-                                       constants.DEFAULT_LANG_DOWNLOAD_CSV)
-        self.download_jpeg = kwargs.pop('download_jpeg',
-                                        constants.DEFAULT_LANG_DOWNLOAD_JPEG)
-        self.download_pdf = kwargs.pop('download_pdf',
-                                       constants.DEFAULT_LANG_DOWNLOAD_PDF)
-        self.download_png = kwargs.pop('download_png',
-                                       constants.DEFAULT_LANG_DOWNLOAD_PNG)
-        self.download_svg = kwargs.pop('download_svg',
-                                       constants.DEFAULT_LANG_DOWNLOAD_SVG)
-        self.download_xls = kwargs.pop('download_xls',
-                                       constants.DEFAULT_LANG_DOWNLOAD_XLS)
-        self.drillup_text = kwargs.pop('drillup_text',
-                                       constants.DEFAULT_LANG_DRILLUP_TEXT)
-        self.exit_fullscreen = kwargs.pop('exit_fullscreen',
-                                          constants.DEFAULT_LANG_EXIT_FULLSCREEN)
+        self.context_button_title = kwargs.pop('context_button_title', None)
+        self.decimal_point = kwargs.pop('decimal_point', None)
+        self.download_csv = kwargs.pop('download_csv', None)
+        self.download_jpeg = kwargs.pop('download_jpeg', None)
+        self.download_pdf = kwargs.pop('download_pdf', None)
+        self.download_png = kwargs.pop('download_png', None)
+        self.download_svg = kwargs.pop('download_svg', None)
+        self.download_xls = kwargs.pop('download_xls', None)
+        self.drillup_text = kwargs.pop('drillup_text', None)
+        self.exit_fullscreen = kwargs.pop('exit_fullscreen', None)
         self.export_data = kwargs.pop('export_data', None)
-        self.hide_data = kwargs.pop('hide_data', constants.DEFALUT_LANG_HIDE_DATA)
-        self.invalid_date = kwargs.pop('invalid_date',
-                                       constants.DEFAULT_LANG_INVALID_DATA)
-        self.loading = kwargs.pop('loading', constants.DEFAULT_LANG_LOADING)
-        self.main_breadcumb = kwargs.pop('main_breadcrumb',
-                                         constants.DEFAULT_LANG_MAIN_BREADCRUM)
-        self.months = kwargs.pop('months', constants.DEFAULT_LANG_MONTHS)
+        self.hide_data = kwargs.pop('hide_data', None)
+        self.invalid_date = kwargs.pop('invalid_date', None)
+        self.loading = kwargs.pop('loading', None)
+        self.main_breadcumb = kwargs.pop('main_breadcrumb', None)
+        self.months = kwargs.pop('months', None)
         self.navigation = kwargs.pop('navigation', None)
-        self.no_data = kwargs.pop('no_data', constants.DEFAULT_LANG_NO_DATA)
-        self.numeric_symbol_magnitude = kwargs.pop('numeric_symbol_magnitude',
-                                                   constants.DEFAULT_LANG_NUMERIC_SYMBOL_MAGNITUDE)
-        self.numeric_symbols = kwargs.pop('numeric_symbols',
-                                          constants.DEFAULT_LANG_NUMERIC_SYMBOLS)
-        self.print_chart = kwargs.pop('print_chart', constants.DEFAULT_LANG_PRINT_CHART)
-        self.reset_zoom = kwargs.pop('reset_zoom', constants.DEFAULT_LANG_RESET_ZOOM)
-        self.reset_zoom_title = kwargs.pop('reset_zoom_title',
-                                           constants.DEFAULT_LANG_RESET_ZOOM_TITLE)
-        self.short_months = kwargs.pop('short_months',
-                                       constants.DEFAULT_LANG_SHORT_MONTHS)
-        self.short_weekdays = kwargs.pop('short_weekdays',
-                                         constants.DEFAULT_LANG_SHORT_WEEKDAYS)
-        self.thousands_separator = kwargs.pop('thousands_separator',
-                                              constants.DEFAULT_LANG_THOUSANDS_SEP)
-        self.view_data = kwargs.pop('view_data', constants.DEFAULT_LANG_VIEW_DATA)
-        self.view_fullscreen = kwargs.pop('view_fullscreen',
-                                          constants.DEFAULT_LANG_VIEW_FULLSCREEN)
-        self.weekdays = kwargs.pop('weekdays', constants.DEFAULT_LANG_WEEKDAYS)
+        self.no_data = kwargs.pop('no_data', None)
+        self.numeric_symbol_magnitude = kwargs.pop('numeric_symbol_magnitude', None)
+        self.numeric_symbols = kwargs.pop('numeric_symbols', None)
+        self.print_chart = kwargs.pop('print_chart', None)
+        self.reset_zoom = kwargs.pop('reset_zoom', None)
+        self.reset_zoom_title = kwargs.pop('reset_zoom_title', None)
+        self.short_months = kwargs.pop('short_months', None)
+        self.short_weekdays = kwargs.pop('short_weekdays', None)
+        self.thousands_separator = kwargs.pop('thousands_separator', None)
+        self.view_data = kwargs.pop('view_data', None)
+        self.view_fullscreen = kwargs.pop('view_fullscreen', None)
+        self.weekdays = kwargs.pop('weekdays', None)
 
     @property
     def accessibility(self) -> Optional[AccessibilityLanguageOptions]:
@@ -134,118 +116,110 @@ class Language(HighchartsMeta):
         self._accessibility = value
 
     @property
-    def context_button_title(self) -> str:
+    def context_button_title(self) -> Optional[str]:
         f"""The tooltip title for the context menu holding print and export menu items.
 
         Defaults to ``'{constants.DEFAULT_LANG_CONTEXT_BUTTON_TITLE}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._context_button_title
 
     @context_button_title.setter
     def context_button_title(self, value):
-        self._context_button_title = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_CONTEXT_BUTTON_TITLE
+        self._context_button_title = validators.string(value, allow_empty = True)
 
     @property
-    def decimal_point(self) -> str:
+    def decimal_point(self) -> Optional[str]:
         f"""Decimal point used in (JavaScript) ``Highcharts.numberFormat``. Defaults to
         ``'{constants.DEFAULT_LANG_DECIMAL_POINT}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._decimal_point
 
     @decimal_point.setter
     def decimal_point(self, value):
-        self._decimal_point = validators.string(value) or \
-            constants.DEFAULT_LANG_DECIMAL_POINT
+        self._decimal_point = validators.string(value, allow_empty = True)
 
     @property
-    def download_csv(self) -> str:
+    def download_csv(self) -> Optional[str]:
         f"""Text for the context menu item that allows the user to download a CSV of the
         chart/data. Defaults to ``'{constants.DEFAULT_LANG_DOWNLOAD_CSV}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._download_csv
 
     @download_csv.setter
     def download_csv(self, value):
-        self._download_csv = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_DOWNLOAD_CSV
+        self._download_csv = validators.string(value, allow_empty = True)
 
     @property
-    def download_jpeg(self) -> str:
+    def download_jpeg(self) -> Optional[str]:
         f"""Text for the context menu item that allows the user to download a JPEG of the
         chart/data. Defaults to ``'{constants.DEFAULT_LANG_DOWNLOAD_CSV}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._download_jpeg
 
     @download_jpeg.setter
     def download_jpeg(self, value):
-        self._download_jpeg = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_DOWNLOAD_JPEG
+        self._download_jpeg = validators.string(value, allow_empty = True)
 
     @property
-    def download_pdf(self) -> str:
+    def download_pdf(self) -> Optional[str]:
         f"""Text for the context menu item that allows the user to download a PDF of the
         chart/data. Defaults to ``'{constants.DEFAULT_LANG_DOWNLOAD_PDF}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._download_pdf
 
     @download_pdf.setter
     def download_pdf(self, value):
-        self._download_pdf = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_DOWNLOAD_PDF
+        self._download_pdf = validators.string(value, allow_empty = True)
 
     @property
-    def download_png(self) -> str:
+    def download_png(self) -> Optional[str]:
         f"""Text for the context menu item that allows the user to download a PNG of the
         chart/data. Defaults to ``'{constants.DEFAULT_LANG_DOWNLOAD_PNG}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._download_png
 
     @download_png.setter
     def download_png(self, value):
-        self._download_png = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_DOWNLOAD_PNG
+        self._download_png = validators.string(value, allow_empty = True)
 
     @property
-    def download_svg(self) -> str:
+    def download_svg(self) -> Optional[str]:
         f"""Text for the context menu item that allows the user to download an SVG of the
         chart/data. Defaults to ``'{constants.DEFAULT_LANG_DOWNLOAD_SVG}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._download_svg
 
     @download_svg.setter
     def download_svg(self, value):
-        self._download_svg = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_DOWNLOAD_SVG
+        self._download_svg = validators.string(value, allow_empty = True)
 
     @property
-    def download_xls(self) -> str:
+    def download_xls(self) -> Optional[str]:
         f"""Text for the context menu item that allows the user to download a Microsoft
         Excel file  of the chart/data. Defaults to
         ``'{constants.DEFAULT_LANG_DOWNLOAD_XLS}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._download_xls
 
     @download_xls.setter
     def download_xls(self, value):
-        self._download_xls = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_DOWNLOAD_XLS
+        self._download_xls = validators.string(value, allow_empty = True)
 
     @property
     def drillup_text(self) -> Optional[str]:
@@ -267,18 +241,17 @@ class Language(HighchartsMeta):
         self._drillup_text = validators.string(value, allow_empty = True)
 
     @property
-    def exit_fullscreen(self) -> str:
+    def exit_fullscreen(self) -> Optional[str]:
         f"""The text for the menu item to exit the chart from full screen. Defaults to
         ``'{constants.DEFAULT_LANG_EXIT_FULLSCREEN}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._exit_fullscreen
 
     @exit_fullscreen.setter
     def exit_fullscreen(self, value):
-        self._exit_fullscreen = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_EXIT_FULLSCREEN
+        self._exit_fullscreen = validators.string(value, allow_empty = True)
 
     @property
     def export_data(self) -> Optional[ExportDataLanguageOptions]:
@@ -294,35 +267,33 @@ class Language(HighchartsMeta):
         self._export_data = value
 
     @property
-    def hide_data(self) -> str:
+    def hide_data(self) -> Optional[str]:
         f"""Text used for the hide data table menu item. Defaults to:
         ``'{constants.DEFAULT_LANG_HIDE_DATA}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._hide_data
 
     @hide_data.setter
     def hide_data(self, value):
-        self._hide_data = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_HIDE_DATA
+        self._hide_data = validators.string(value, allow_empty = True)
 
     @property
-    def invalid_date(self) -> str:
+    def invalid_date(self) -> Optional[str]:
         f"""Text to show in a date field for invalid dates. Defaults to
         ``'{constants.DEFAULT_LANG_INVALID_DATE}'`` (an empty string).
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._invalid_date
 
     @invalid_date.setter
     def invalid_date(self, value):
-        self._invalid_date = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_INVALID_DATE
+        self._invalid_date = validators.string(value, allow_empty = True)
 
     @property
-    def loading(self) -> str:
+    def loading(self) -> Optional[str]:
         f"""The loading text that appears when the chart is set into the loading state
         following a (JavaScript) call to ``chart.showLoading()``. Defaults to
         ``'{constants.DEFAULT_LANG_LOADING}'``.
@@ -333,25 +304,23 @@ class Language(HighchartsMeta):
 
     @loading.setter
     def loading(self, value):
-        self._loading = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_LOADING
+        self._loading = validators.string(value, allow_empty = True)
 
     @property
-    def main_breadcrumb(self) -> str:
+    def main_breadcrumb(self) -> Optional[str]:
         """The root item in the breadcrums used when in drilldown mode. Defaults to
         ``'{constants.DEFAULT_LANG_MAIN_BREADCRUMB}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._main_breadcrumb
 
     @main_breadcrumb.setter
     def main_breadcrum(self, value):
-        self._main_breadcrumb = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_MAIN_BREADCRUMB
+        self._main_breadcrumb = validators.string(value, allow_empty = True)
 
     @property
-    def months(self) -> List[str]:
+    def months(self) -> Optional[List[str]]:
         f"""An array containing the months names. Defaults to:
         ``{constants.DEFAULT_LANG_MONTHS}``
 
@@ -360,14 +329,15 @@ class Language(HighchartsMeta):
           Corresponds to the ``%B`` format string in (JavaScript)
           ``Highcharts.dateFormat()``.
 
-        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`, or
+          :obj:`None <python:None>`
         """
         return self._months
 
     @months.setter
     def months(self, value):
         if not value:
-            self._months = constants.DEFAULT_LANG_MONTHS
+            self._months = None
         else:
             if not checkers.is_iterable(value):
                 raise errors.HighchartsValueError(f'months expects an iterable of strings'
@@ -398,21 +368,20 @@ class Language(HighchartsMeta):
         self._navigation = value
 
     @property
-    def no_data(self) -> str:
+    def no_data(self) -> Optional[str]:
         f"""The text to display when the chart contains no data. Defaults to
         ``'{constants.DEFAULT_LANG_NO_DATA}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._no_data
 
     @no_data.setter
     def no_data(self, value):
-        self._no_data = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_NO_DATA
+        self._no_data = validators.string(value, allow_empty = True)
 
     @property
-    def numeric_symbol_magnitude(self) -> int:
+    def numeric_symbol_magnitude(self) -> Optional[int]:
         """The magnitude of replacements for :meth:`Language.numeric_symbols`
         replacements. Defaults to ``{constants.DEFAULT_LANG_NUMERIC_SYMBOL_MAGNITUDE}``.
 
@@ -430,11 +399,10 @@ class Language(HighchartsMeta):
         self._numeric_symbol_magnitude = validators.integer(value,
                                                             allow_empty = True,
                                                             minimum = 0,
-                                                            coerce_value = True) or \
-            constants.DEFAULT_LANG_NUMERIC_SYMBOL_MAGNITUDE
+                                                            coerce_value = True)
 
     @property
-    def numeric_symbols(self) -> List[str] | constants.EnforcedNullType:
+    def numeric_symbols(self) -> Optional[List[str] | constants.EnforcedNullType]:
         """:term:`Metric prefixes <Metric Prefix>` used to shorten high numbers in axis
         labels. Defaults to ``{constants.DEFAULT_LANG_NUMERIC_SYMBOLS}``.
 
@@ -446,13 +414,16 @@ class Language(HighchartsMeta):
           or :class:`constants.EnforcedNullType` disables shortening altogether.
 
         :rtype: :class:`list <python:list>` of :class:`str <python:str>` or
-          :class:`EnforcedNullType`, or :class:`EnforcedNullType`
+          :class:`EnforcedNullType`, or :class:`EnforcedNullType`, or
+          :obj:`None <python:None>`
         """
         return self._numeric_symbols
 
     @numeric_symbols.setter
     def numeric_symbols(self, value):
         if not value:
+            self._numeric_symbols = None
+        elif isinstance(value, constants.EnforcedNullType):
             self._numeric_symbols = constants.EnforcedNull
         else:
             if not checkers.is_iterable(value):
@@ -469,49 +440,46 @@ class Language(HighchartsMeta):
             self._numeric_symbols = validated
 
     @property
-    def print_chart(self) -> str:
+    def print_chart(self) -> Optional[str]:
         f"""The text for the menu item to print the chart. Defaults to
         ``'{constants.DEFAULT_LANG_PRINT_CHART}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._print_chart
 
     @print_chart.setter
     def print_chart(self, value):
-        self._print_chart = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_PRINT_CHART
+        self._print_chart = validators.string(value, allow_empty = True)
 
     @property
-    def reset_zoom(self) -> str:
+    def reset_zoom(self) -> Optional[str]:
         f"""The text for the label of the button to reset the zoom when a chart is zoomed.
         Defaults to ``'{constants.DEFAULT_LANG_RESET_ZOOM}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._reset_zoom
 
     @reset_zoom.setter
     def reset_zoom(self, value):
-        self._reset_zoom = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_RESET_ZOOM
+        self._reset_zoom = validators.string(value, allow_empty = True)
 
     @property
-    def reset_zoom_title(self) -> str:
+    def reset_zoom_title(self) -> Optional[str]:
         f"""The text for the tooltip which appears above the button to reset the zoom when
         a chart is zoomed. Defaults to ``'{constants.DEFAULT_LANG_RESET_ZOOM_TITLE}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._reset_zoom_title
 
     @reset_zoom_title.setter
     def reset_zoom_title(self, value):
-        self._reset_zoom_title = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_RESET_ZOOM_TITLE
+        self._reset_zoom_title = validators.string(value, allow_empty = True)
 
     @property
-    def short_months(self) -> List[str]:
+    def short_months(self) -> Optional[List[str]]:
         f"""A collection containing the months names in abbreviated form. Defaults to:
         ``{constants.DEFAULT_LANG_SHORT_MONTHS}``.
 
@@ -519,14 +487,15 @@ class Language(HighchartsMeta):
 
           Corresponds to the ``%b`` format in (JavaScript) ``Highcharts.dateFormat()``.
 
-        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`, or
+          :obj:`None <python:None>`
         """
         return self._short_months
 
     @short_months.setter
     def short_months(self, value):
         if not value:
-            self._short_months = constants.DEFAULT_LANG_SHORT_MONTHS
+            self._short_months = None
         else:
             if not checkers.is_iterable(value):
                 raise errors.HighchartsValueError(f'short_months expects an iterable of '
@@ -539,7 +508,7 @@ class Language(HighchartsMeta):
             self._short_months = [validators.string(x) for x in value]
 
     @property
-    def short_weekdays(self) -> Optional[str]:
+    def short_weekdays(self) -> Optional[List[str]]:
         """Short week days, starting Sunday.
 
         If not specified, Highcharts uses the first three letters of the
@@ -562,7 +531,7 @@ class Language(HighchartsMeta):
             self._short_weekdays = [validators.string(x) for x in value]
 
     @property
-    def thousands_separator(self) -> str:
+    def thousands_separator(self) -> Optional[str]:
         """The default thousands separator used in the (JavaScript)
         ``Highcharts.numberFormat()`` method unless otherwise specified in the function
         arguments.
@@ -570,56 +539,54 @@ class Language(HighchartsMeta):
         Defaults to a single space character, which is recommended in ISO 31-0 and works
         across Anglo-American and continental European languages.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._thousands_separator
 
     @thousands_separator.setter
     def thousands_separator(self, value):
-        self._thousands_separator = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_THOUSANDS_SEP
+        self._thousands_separator = validators.string(value, allow_empty = True)
 
     @property
-    def view_data(self) -> str:
+    def view_data(self) -> Optional[str]:
         f"""The text for the menu item to view the chart's data table. Defaults to:
         ``'{constants.DEFAULT_LANG_VIEW_DATA}'``
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._view_data
 
     @view_data.setter
     def view_data(self, value):
-        self._view_data = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_VIEW_DATA
+        self._view_data = validators.string(value, allow_empty = True)
 
     @property
-    def view_fullscreen(self) -> str:
+    def view_fullscreen(self) -> Optional[str]:
         f"""The text for the menu item to view the chart in fullscreen mode. Defaults to:
         ``'{constants.DEFAULT_LANG_VIEW_FULLSCREEN}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._view_fullscreen
 
     @view_fullscreen.setter
     def view_fullscreen(self, value):
-        self._view_fullscreen = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_VIEW_FULLSCREEN
+        self._view_fullscreen = validators.string(value, allow_empty = True)
 
     @property
-    def weekdays(self) -> List[str]:
+    def weekdays(self) -> Optional[List[str]]:
         f"""An array containing the days of the week, starting with Sunday. Defaults to:
         ``{constants.DEFAULT_LANG_WEEKDAYS}``
 
-        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`, or
+          :obj:`None <python:None>`
         """
         return self._weekdays
 
     @weekdays.setter
     def weekdays(self, value):
         if not value:
-            self._weekdays = constants.DEFAULT_LANG_WEEKDAYS
+            self._weekdays = None
         else:
             if not checkers.is_iterable(value):
                 raise errors.HighchartsValueError(f'weekdays expects an iterable of '
@@ -635,58 +602,40 @@ class Language(HighchartsMeta):
     def from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.pop('accessibility', None),
-            'context_button_title': as_dict.pop('contextButtonTitle',
-                                                constants.DEFAULT_LANG_CONTEXT_BUTTON_TITLE),
-            'decimal_point': as_dict.pop('decimalPoint', '.'),
-            'download_csv': as_dict.pop('downloadCSV',
-                                        constants.DEFAULT_LANG_DOWNLOAD_CSV),
-            'download_jpeg': as_dict.pop('downloadJPEG',
-                                         constants.DEFAULT_LANG_DOWNLOAD_JPEG),
-            'download_pdf': as_dict.pop('downloadPDF',
-                                        constants.DEFAULT_LANG_DOWNLOAD_PDF),
-            'download_png': as_dict.pop('downloadPNG',
-                                        constants.DEFAULT_LANG_DOWNLOAD_PNG),
-            'download_svg': as_dict.pop('downloadSVG',
-                                        constants.DEFAULT_LANG_DOWNLOAD_SVG),
-            'download_xls': as_dict.pop('downloadXLS',
-                                        constants.DEFAULT_LANG_DOWNLOAD_XLS),
-            'drillup_text': as_dict.pop('drillUpText',
-                                        constants.DEFAULT_LANG_DRILLUP_TEXT),
-            'exit_fullscreen': as_dict.pop('exitFullscreen',
-                                        constants.DEFAULT_LANG_EXIT_FULLSCREEN),
+            'context_button_title': as_dict.pop('contextButtonTitle', None),
+            'decimal_point': as_dict.pop('decimalPoint', None),
+            'download_csv': as_dict.pop('downloadCSV', None),
+            'download_jpeg': as_dict.pop('downloadJPEG', None),
+            'download_pdf': as_dict.pop('downloadPDF', None),
+            'download_png': as_dict.pop('downloadPNG', None),
+            'download_svg': as_dict.pop('downloadSVG', None),
+            'download_xls': as_dict.pop('downloadXLS', None),
+            'drillup_text': as_dict.pop('drillUpText', None),
+            'exit_fullscreen': as_dict.pop('exitFullscreen', None),
             'export_data': as_dict.pop('exportData', None),
-            'hide_data': as_dict.pop('hideData', constants.DEFALUT_LANG_HIDE_DATA),
-            'invalid_date': as_dict.pop('invalidDate',
-                                        constants.DEFAULT_LANG_INVALID_DATA),
-            'loading': as_dict.pop('loading', constants.DEFAULT_LANG_LOADING),
-            'main_breadcumb': as_dict.pop('mainBreadcrumb',
-                                          constants.DEFAULT_LANG_MAIN_BREADCRUM),
-            'months': as_dict.pop('months', constants.DEFAULT_LANG_MONTHS),
+            'hide_data': as_dict.pop('hideData', None),
+            'invalid_date': as_dict.pop('invalidDate', None),
+            'loading': as_dict.pop('loading', None),
+            'main_breadcumb': as_dict.pop('mainBreadcrumb', None),
+            'months': as_dict.pop('months', None),
             'navigation': as_dict.pop('navigation', None),
-            'no_data': as_dict.pop('noData', constants.DEFAULT_LANG_NO_DATA),
-            'numeric_symbol_magnitude': as_dict.pop('numericSymbolMagnitude',
-                                                    constants.DEFAULT_LANG_NUMERIC_SYMBOL_MAGNITUDE),
-            'numeric_symbols': as_dict.pop('numericSymbols',
-                                           constants.DEFAULT_LANG_NUMERIC_SYMBOLS),
-            'print_chart': as_dict.pop('printChart', constants.DEFAULT_LANG_PRINT_CHART),
-            'reset_zoom': as_dict.pop('resetZoom', constants.DEFAULT_LANG_RESET_ZOOM),
-            'reset_zoom_title': as_dict.pop('resetZoomTitle',
-                                            constants.DEFAULT_LANG_RESET_ZOOM_TITLE),
-            'short_months': as_dict.pop('shortMonths',
-                                        constants.DEFAULT_LANG_SHORT_MONTHS),
-            'short_weekdays': as_dict.pop('shortWeekdays',
-                                          constants.DEFAULT_LANG_SHORT_WEEKDAYS),
-            'thousands_separator': as_dict.pop('thousandsSep',
-                                               constants.DEFAULT_LANG_THOUSANDS_SEP),
-            'view_data': as_dict.pop('viewData', constants.DEFAULT_LANG_VIEW_DATA),
-            'view_fullscreen': as_dict.pop('viewFullscreen',
-                                           constants.DEFAULT_LANG_VIEW_FULLSCREEN),
-            'weekdays': as_dict.pop('weekdays', constants.DEFAULT_LANG_WEEKDAYS)
+            'no_data': as_dict.pop('noData', None),
+            'numeric_symbol_magnitude': as_dict.pop('numericSymbolMagnitude', None),
+            'numeric_symbols': as_dict.pop('numericSymbols', None),
+            'print_chart': as_dict.pop('printChart', None),
+            'reset_zoom': as_dict.pop('resetZoom', None),
+            'reset_zoom_title': as_dict.pop('resetZoomTitle', None),
+            'short_months': as_dict.pop('shortMonths', None),
+            'short_weekdays': as_dict.pop('shortWeekdays', None),
+            'thousands_separator': as_dict.pop('thousandsSep', None),
+            'view_data': as_dict.pop('viewData', None),
+            'view_fullscreen': as_dict.pop('viewFullscreen', None),
+            'weekdays': as_dict.pop('weekdays',  None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'contextButtonTitle': self.context_button_title,
@@ -719,4 +668,4 @@ class Language(HighchartsMeta):
             'viewFullscreen': self.view_fullscreen,
             'weekdays': self.weekdays
         }
-        return self.trim_dict(untrimmed)
+        return untrimmed

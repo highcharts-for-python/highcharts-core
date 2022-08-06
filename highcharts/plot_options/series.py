@@ -20,60 +20,60 @@ class SeriesOptions(GenericTypeOptions):
     def __init__(self, **kwargs):
         self._animation_limit = None
         self._boost_blending = None
-        self._boost_threshold = 5000
+        self._boost_threshold = None
         self._color_axis = None
         self._color_index = None
         self._color_key = None
         self._connect_ends = None
-        self._connect_nulls = False
-        self._crisp = True
+        self._connect_nulls = None
+        self._crisp = None
         self._crop_threshold = None
         self._data_sorting = None
         self._drag_drop = None
         self._find_nearest_point_by = None
-        self._get_extremes_for_all = False
-        self._linecap = 'round'
-        self._line_width = 2
+        self._get_extremes_for_all = None
+        self._linecap = None
+        self._line_width = None
         self._negative_color = None
-        self._point_interval = 1
+        self._point_interval = None
         self._point_interval_unit = None
         self._point_placement = None
-        self._point_start = 0
-        self._relative_x_value = False
-        self._shadow = False
-        self._soft_threshold = True
+        self._point_start = None
+        self._relative_x_value = None
+        self._shadow = None
+        self._soft_threshold = None
         self._stacking = None
         self._step = None
-        self._zone_axis = 'y'
+        self._zone_axis = None
         self._zones = None
 
         self.animation_limit = kwargs.pop('animation_limit', None)
         self.boost_blending = kwargs.pop('boost_blending', None)
-        self.boost_threshold = kwargs.pop('boost_threshold', 5000)
+        self.boost_threshold = kwargs.pop('boost_threshold', None)
         self.color_axis = kwargs.pop('color_axis', None)
         self.color_index = kwargs.pop('color_index', None)
         self.color_key = kwargs.pop('color_key', None)
         self.connect_ends = kwargs.pop('connect_ends', None)
-        self.connect_nulls = kwargs.pop('connect_nulls', False)
-        self.crisp = kwargs.pop('crisp', True)
-        self.crop_threshold = kwargs.pop('crop_threshold', 300)
+        self.connect_nulls = kwargs.pop('connect_nulls', None)
+        self.crisp = kwargs.pop('crisp', None)
+        self.crop_threshold = kwargs.pop('crop_threshold', None)
         self.data_sorting = kwargs.pop('data_sorting', None)
         self.drag_drop = kwargs.pop('drag_drop', None)
         self.find_nearest_point_by = kwargs.pop('find_nearest_point_by', None)
-        self.get_extremes_for_all = kwargs.pop('get_extremes_for_all', False)
-        self.linecap = kwargs.pop('linecap', 'round')
-        self.line_width = kwargs.pop('line_width', 2)
+        self.get_extremes_for_all = kwargs.pop('get_extremes_for_all', None)
+        self.linecap = kwargs.pop('linecap', None)
+        self.line_width = kwargs.pop('line_width', None)
         self.negative_color = kwargs.pop('negative_color', None)
-        self.point_interval = kwargs.pop('point_interval', 1)
+        self.point_interval = kwargs.pop('point_interval', None)
         self.point_interval_unit = kwargs.pop('point_interval_unit', None)
         self.point_placement = kwargs.pop('point_placement', None)
-        self.point_start = kwargs.pop('point_start', 0)
-        self.relative_x_value = kwargs.pop('relative_x_value', False)
-        self.shadow = kwargs.pop('shadow', False)
-        self.soft_threshold = kwargs.pop('soft_threshold', True)
+        self.point_start = kwargs.pop('point_start', None)
+        self.relative_x_value = kwargs.pop('relative_x_value', None)
+        self.shadow = kwargs.pop('shadow', None)
+        self.soft_threshold = kwargs.pop('soft_threshold',  None)
         self.stacking = kwargs.pop('stacking', None)
         self.step = kwargs.pop('step', None)
-        self.zone_axis = kwargs.pop('zone_axis', 'y')
+        self.zone_axis = kwargs.pop('zone_axis', None)
         self.zones = kwargs.pop('zones', None)
 
         super(self).__init__(**kwargs)
@@ -732,17 +732,17 @@ class SeriesOptions(GenericTypeOptions):
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', False),
+            'allow_point_select': as_dict.pop('allowPointSelect', None),
             'animation': as_dict.pop('animation', None),
             'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', True),
+            'clip': as_dict.pop('clip', None),
             'color': as_dict.pop('color', None),
             'cursor': as_dict.pop('cursor', None),
             'custom': as_dict.pop('custom', None),
             'dash_style': as_dict.pop('dashStyle', None),
             'data_labels': as_dict.pop('dataLabels', None),
             'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', True),
+            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
             'events': as_dict.pop('events', None),
             'include_in_data_export': as_dict.pop('includeInDataExport', None),
             'keys': as_dict.pop('keys', None),
@@ -753,49 +753,49 @@ class SeriesOptions(GenericTypeOptions):
             'opacity': as_dict.pop('opacity', None),
             'point': as_dict.pop('point', None),
             'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', False),
-            'show_checkbox': as_dict.pop('showCheckbox', False),
+            'selected': as_dict.pop('selected', None),
+            'show_checkbox': as_dict.pop('showCheckbox', None),
             'show_in_legend': as_dict.pop('showInLegend', None),
             'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
             'states': as_dict.pop('states', None),
             'threshold': as_dict.pop('threshold', None),
             'tooltip': as_dict.pop('tooltip', None),
             'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', True),
+            'visible': as_dict.pop('visible', None),
 
             'animation_limit': as_dict.pop('animationLimit', None),
             'boost_blending': as_dict.pop('boostBlending', None),
-            'boost_threshold': as_dict.pop('boostThreshold', 5000),
+            'boost_threshold': as_dict.pop('boostThreshold', None),
             'color_axis': as_dict.pop('colorAxis', None),
             'color_index': as_dict.pop('colorIndex', None),
             'color_key': as_dict.pop('colorKey', None),
             'connect_ends': as_dict.pop('connectEnds', None),
-            'connect_nulls': as_dict.pop('connectNulls', False),
-            'crisp': as_dict.pop('crisp', True),
-            'crop_threshold': as_dict.pop('cropThreshold', 300),
+            'connect_nulls': as_dict.pop('connectNulls', None),
+            'crisp': as_dict.pop('crisp', None),
+            'crop_threshold': as_dict.pop('cropThreshold', None),
             'data_sorting': as_dict.pop('dataSorting', None),
             'drag_drop': as_dict.pop('dragDrop', None),
             'find_nearest_point_by': as_dict.pop('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.pop('getExtremesForAll', False),
-            'linecap': as_dict.pop('linecap', 'round'),
-            'line_width': as_dict.pop('lineWidth', 2),
+            'get_extremes_for_all': as_dict.pop('getExtremesForAll', None),
+            'linecap': as_dict.pop('linecap', None),
+            'line_width': as_dict.pop('lineWidth', None),
             'negative_color': as_dict.pop('negativeColor', None),
-            'point_interval': as_dict.pop('pointInterval', 1),
+            'point_interval': as_dict.pop('pointInterval', None),
             'point_interval_unit': as_dict.pop('pointIntervalUnit', None),
             'point_placement': as_dict.pop('pointPlacement', None),
-            'point_start': as_dict.pop('pointStart', 0),
-            'relative_x_value': as_dict.pop('relativeXValue', False),
-            'shadow': as_dict.pop('shadow', False),
-            'soft_threshold': as_dict.pop('softThreshold', True),
+            'point_start': as_dict.pop('pointStart', None),
+            'relative_x_value': as_dict.pop('relativeXValue', None),
+            'shadow': as_dict.pop('shadow', None),
+            'soft_threshold': as_dict.pop('softThreshold', None),
             'stacking': as_dict.pop('stacking', None),
             'step': as_dict.pop('step', None),
-            'zone_axis': as_dict.pop('zoneAxis', 'y'),
+            'zone_axis': as_dict.pop('zoneAxis', None),
             'zones': as_dict.pop('zones', None),
         }
 
         return kwargs
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'animationLimit': self.animation_limit,
             'boostBlending': self.boost_blending,
@@ -827,9 +827,9 @@ class SeriesOptions(GenericTypeOptions):
             'zoneAxis': self.zone_axis,
             'zones': self.zones
         }
-        parent_as_dict = super(self).to_dict()
+        parent_as_dict = super(self)._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

@@ -524,7 +524,7 @@ class NumericAxis(GenericAxis):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'alignTicks': self.align_ticks,
@@ -596,4 +596,4 @@ class NumericAxis(GenericAxis):
             'zoomEnabled': self.zoom_enabled,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

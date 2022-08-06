@@ -81,7 +81,7 @@ class Box(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'bottom': self.bottom,
             'left': self.left,
@@ -89,7 +89,7 @@ class Box(HighchartsMeta):
             'top': self.top
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class SeriesLabel(HighchartsMeta):
@@ -139,7 +139,7 @@ class SeriesLabel(HighchartsMeta):
         self._boxes_to_avoid = value
 
     @property
-    def connector_allowed(self) -> bool:
+    def connector_allowed(self) -> Optional[bool]:
         """Allow labels to be placed distant to the graph if necessary, and draw a
         connector line to the graph. Defaults to ``False``.
 
@@ -150,38 +150,44 @@ class SeriesLabel(HighchartsMeta):
           area. Visually, it may also result in a more cluttered chart, though more of the
           series will be labeled.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._connector_allowed
 
     @connector_allowed.setter
     def connector_allowed(self, value):
-        self._connector_allowed = bool(value)
+        if value is None:
+            self._connector_allowed = None
+        else:
+            self._connector_allowed = bool(value)
 
     @property
-    def connector_neighbour_distance(self) -> int | float | Decimal:
+    def connector_neighbour_distance(self) -> Optional[int | float | Decimal]:
         """If the label is closer than this to a neighbour graph, draw a connector.
         Defaults to ``24``.
 
-        :rtype: numeric
+        :rtype: numeric or :obj:`None <python:None>`
         """
         return self._connector_neighbour_distance
 
     @connector_neighbour_distance.setter
     def connector_neighbour_distance(self, value):
-        self._connector_neighbour_distance = validators.numeric(value)
+        self._connector_neighbour_distance = validators.numeric(value, allow_empty = True)
 
     @property
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         """If ``True``, enable the series labels for the series. Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(value)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @property
     def format(self) -> Optional[str]:
@@ -215,57 +221,60 @@ class SeriesLabel(HighchartsMeta):
         self._formatter = validators.string(value, allow_empty = True)
 
     @property
-    def max_font_size(self) -> int | float | Decimal | constants.EnforcedNull:
+    def max_font_size(self) -> Optional[int | float | Decimal | constants.EnforcedNullType]:
         """For area-like series, allow the font size to vary so that small areas get a
         smaller font size. The default applies this effect to area-like series but not
         line-like series.
 
         Defaults to ``EnforcedNull``.
 
-        :rtype: numeric or :class:`EnforcedNullType`
+        :rtype: numeric or :class:`EnforcedNullType` or :obj:`None <python:None>`
         """
         return self._max_font_size
 
     @max_font_size.setter
     def max_font_size(self, value):
-        if not value:
+        if isinstance(value, constants.EnforcedNullType):
             self._max_font_size = constants.EnforcedNull
         else:
-            self._max_font_size = validators.numeric(value)
+            self._max_font_size = validators.numeric(value, allow_empty = True)
 
     @property
-    def min_font_size(self) -> int | float | Decimal | constants.EnforcedNull:
+    def min_font_size(self) -> Optional[int | float | Decimal | constants.EnforcedNullType]:
         """For area-like series, allow the font size to vary so that small areas get a
         smaller font size. The default applies this effect to area-like series but not
         line-like series.
 
         Defaults to ``EnforcedNull``.
 
-        :rtype: numeric or :class:`EnforcedNullType`
+        :rtype: numeric or :class:`EnforcedNullType` or :obj:`None <python:None>`
         """
         return self._min_font_size
 
     @min_font_size.setter
     def min_font_size(self, value):
-        if not value:
+        if isinstance(value, constants.EnforcedNullType):
             self._min_font_size = constants.EnforcedNull
         else:
-            self._min_font_size = validators.numeric(value)
+            self._min_font_size = validators.numeric(value, allow_empty = True)
 
     @property
-    def on_area(self) -> bool | constants.EnforcedNullType:
+    def on_area(self) -> Optional[bool | constants.EnforcedNullType]:
         """Draw the label on the area of an area series.
 
         By default it is drawn on the area. Set it to ``False`` to draw it next to the
         graph instead.
 
-        :rtype: :class:`bool <python:bool>` or :class:`EnforcedNullType`
+        :rtype: :class:`bool <python:bool>` or :class:`EnforcedNullType` or
+          :obj:`None <python:None>`
         """
         return self._on_area
 
     @on_area.setter
     def on_area(self, value):
         if value is None:
+            self._on_area = None
+        elif isinstance(value, constants.EnforcedNullType):
             self._on_area = constants.EnforcedNull
         else:
             self._on_area = bool(value)
@@ -287,31 +296,32 @@ class SeriesLabel(HighchartsMeta):
     def from_dict(cls, as_dict):
         kwargs = {
             'boxes_to_avoid': as_dict.pop('boxesToAvoid', None),
-            'connector_allowed': as_dict.pop('connectorAllowed', False),
-            'connector_neighbour_distance': as_dict.pop('connectorNeighbourDistance', 24),
-            'enabled': as_dict.pop('enabled', True),
+            'connector_allowed': as_dict.pop('connectorAllowed', None),
+            'connector_neighbour_distance': as_dict.pop('connectorNeighbourDistance',
+                                                        None),
+            'enabled': as_dict.pop('enabled', None),
             'format': as_dict.pop('format', None),
             'formatter': as_dict.pop('formatter', None),
-            'max_font_size': as_dict.pop('maxFontSize', constants.EnforcedNull),
-            'min_font_size': as_dict.pop('minFontSize', constants.EnforcedNull),
-            'on_area': as_dict.pop('on_area', constants.EnforcedNull),
+            'max_font_size': as_dict.pop('maxFontSize', None),
+            'min_font_size': as_dict.pop('minFontSize', None),
+            'on_area': as_dict.pop('on_area', None),
             'style': as_dict.pop('style', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
-            'boxes_to_avoid': self.boxes_to_avoid,
-            'connector_allowed': self.connector_allowed,
-            'connector_neighbour_distance': self.connector_neighbour_distance,
+            'boxesToAvoid': self.boxes_to_avoid,
+            'connectorAllowed': self.connector_allowed,
+            'connectorNeighbourDistance': self.connector_neighbour_distance,
             'enabled': self.enabled,
             'format': self.format,
             'formatter': self.formatter,
-            'max_font_size': self.max_font_size,
-            'min_font_size': self.min_font_size,
-            'on_area': self.on_area,
+            'maxFontSize': self.max_font_size,
+            'minFontSize': self.min_font_size,
+            'onArea': self.on_area,
             'style': self.style
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

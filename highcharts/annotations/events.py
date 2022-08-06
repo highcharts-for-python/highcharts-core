@@ -85,14 +85,12 @@ class AnnotationEvent(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'add': self.add,
             'afterUpdate': self.after_update,
             'click': self.click,
             'remove': self.remove
         }
-
-        as_dict = self.trim_dict(untrimmed)
 
         return as_dict

@@ -419,7 +419,7 @@ class ColorAxis(GenericAxis):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'angle': self.angle,
@@ -484,4 +484,4 @@ class ColorAxis(GenericAxis):
             'stops': self.stops
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

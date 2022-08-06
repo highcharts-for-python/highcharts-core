@@ -25,11 +25,11 @@ class ButtonTheme(HighchartsMeta):
     """Settings used to style buttons."""
 
     def __init__(self, **kwargs):
-        self._fill = '#ffffff'
-        self._stroke = 'none'
+        self._fill = None
+        self._stroke = None
 
-        self.fill = kwargs.pop('fill', '#ffffff')
-        self.stroke = kwargs.pop('stroke', 'none')
+        self.fill = kwargs.pop('fill', None)
+        self.stroke = kwargs.pop('stroke', None)
 
     @property
     def fill(self) -> Optional[str | Gradient | Pattern]:
@@ -82,55 +82,58 @@ class ButtonTheme(HighchartsMeta):
 
     @stroke.setter
     def stroke(self, value):
-        self._stroke = validators.string(value, allow_empty = True) or 'none'
+        self._stroke = validators.string(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'fill': as_dict.pop('fill', '#ffffff'),
-            'stroke': as_dict.pop('stroke', 'none')
+            'fill': as_dict.pop('fill', None),
+            'stroke': as_dict.pop('stroke', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'fill': self.fill,
             'stroke': self.stroke
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class ButtonConfiguration(HighchartsMeta):
     """Configuration of options that apply to a given button."""
 
     def __init__(self, **kwargs):
-        self._enabled = True
+        self._enabled = None
         self._text = None
         self._theme = None
-        self._y = 0
+        self._y = None
 
-        self.enabled = kwargs.pop('enabled', True)
+        self.enabled = kwargs.pop('enabled', None)
         self.text = kwargs.pop('text', None)
         self.theme = kwargs.pop('theme', None)
-        self.y = kwargs.pop('y', 0)
+        self.y = kwargs.pop('y', None)
 
     @property
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         """If ``True``, displays the button. If ``False``, the button will be hidden but
         JavaScript API methods may still be available.
 
         Defaults to ``True``.
 
         :returns: Flag indicating whether the button is displayed on the chart.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(value)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @property
     def text(self) -> Optional[str]:
@@ -173,15 +176,15 @@ class ButtonConfiguration(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'enabled': as_dict.pop('enabled', True),
+            'enabled': as_dict.pop('enabled', None),
             'text': as_dict.pop('text', None),
             'theme': as_dict.pop('theme', None),
-            'y': as_dict.pop('y', 0)
+            'y': as_dict.pop('y', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'enabled': self.enabled,
             'text': self.text,
@@ -189,32 +192,30 @@ class ButtonConfiguration(HighchartsMeta):
             'y': self.y
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class ContextButtonConfiguration(ButtonConfiguration):
     """Configuration options that apply to the Context Menu button."""
 
     def __init__(self, **kwargs):
-        self._class_name = constants.DEFAULT_CONTEXT_BUTTON_CLASS_NAME
-        self._menu_class_name = constants.DEFAULT_CONTEXT_MENU_CLASS_NAME
-        self._menu_items = constants.DEFAULT_CONTEXT_MENU_ITEMS
+        self._class_name = None
+        self._menu_class_name = None
+        self._menu_items = None
         self._onclick = None
-        self._symbol = 'menu'
-        self._symbol_fill = '#666666'
-        self._title_key = 'contextButtonTitle'
-        self._x = -10
+        self._symbol = None
+        self._symbol_fill = None
+        self._title_key = None
+        self._x = None
 
-        self.class_name = kwargs.pop('class_name',
-                                     constants.DEFAULT_CONTEXT_BUTTON_CLASS_NAME)
-        self.menu_class_name = kwargs.pop('menu_class_name',
-                                          constants.DEFAULT_CONTEXT_MENU_CLASS_NAME)
-        self.menu_items = kwargs.pop('menu_items', constants.DEFAULT_CONTEXT_MENU_ITEMS)
+        self.class_name = kwargs.pop('class_name', None)
+        self.menu_class_name = kwargs.pop('menu_class_name', None)
+        self.menu_items = kwargs.pop('menu_items', None)
         self.onclick = kwargs.pop('onclick', None)
         self.symbol = kwargs.pop('symbol', 'menu')
-        self.symbol_fill = kwargs.pop('symbol_fill', '#666666')
-        self.title_key = kwargs.pop('title_key', 'contextButtonTitle')
-        self.x = kwargs.pop('x', -10)
+        self.symbol_fill = kwargs.pop('symbol_fill', None)
+        self.title_key = kwargs.pop('title_key', None)
+        self.x = kwargs.pop('x', None)
 
         super().__init__(**kwargs)
 
@@ -296,7 +297,7 @@ class ContextButtonConfiguration(ButtonConfiguration):
         self._onclick = validators.string(value, allow_empty = True)
 
     @property
-    def symbol(self) -> str:
+    def symbol(self) -> Optional[str]:
         """The symbol to display on the button. Defaults to ``'menu'``.
 
         Points to a definition function in the JavaScript ``Highcharts.Renderer.symbols``
@@ -313,42 +314,41 @@ class ContextButtonConfiguration(ButtonConfiguration):
           * ``"menuball"``
           * or a custom shape
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._symbol
 
     @symbol.setter
     def symbol(self, value):
-        self.symbol = validators.string(value, allow_empty = True) or 'menu'
+        self.symbol = validators.string(value, allow_empty = True)
 
     @property
-    def symbol_fill(self) -> str:
+    def symbol_fill(self) -> Optional[str]:
         """The color to use for the symbol. Defaults to ``'#666666'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._symbol_fill
 
     @symbol_fill.setter
     def symbol_fill(self, value):
-        self._symbol_fill = validators.string(value, allow_empty = True) or '#666666'
+        self._symbol_fill = validators.string(value, allow_empty = True)
 
     @property
-    def title_key(self) -> str:
+    def title_key(self) -> Optional[str]:
         """The The key to a :class:`Options.language` option setting that is used for the
         button's title tooltip.
 
         When the key is ``'contextButtonTitle'``, it refers to
         ``language.contextButtonTitle``, whose value defaults to ``"Chart context menu"``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._title_key
 
     @title_key.setter
     def title_key(self, value):
-        self._title_key = validators.string(value,
-                                            allow_empty = True) or 'contextButtonTitle'
+        self._title_key = validators.string(value, allow_empty = True)
 
     @property
     def x(self) -> Optional[int | float | Decimal]:
@@ -366,25 +366,23 @@ class ContextButtonConfiguration(ButtonConfiguration):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'class_name': as_dict.pop('className',
-                                      constants.DEFAULT_CONTEXT_BUTTON_CLASS_NAME),
-            'enabled': as_dict.pop('enabled', True),
-            'menu_class_name': as_dict.pop('menuClassName',
-                                           constants.DEFALUT_CONTEXT_MENU_CLASS_NAME),
-            'menu_items': as_dict.pop('menuItems', constants.DEFAULT_CONTEXT_MENU_ITEMS),
+            'class_name': as_dict.pop('className', None),
+            'enabled': as_dict.pop('enabled', None),
+            'menu_class_name': as_dict.pop('menuClassName', None),
+            'menu_items': as_dict.pop('menuItems', None),
             'onclick': as_dict.pop('onclick', None),
-            'symbol': as_dict.pop('symbol', 'menu'),
-            'symbol_fill': as_dict.pop('symbolFill', '#666666'),
+            'symbol': as_dict.pop('symbol', None),
+            'symbol_fill': as_dict.pop('symbolFill', None),
             'text': as_dict.pop('text', None),
             'theme': as_dict.pop('theme', None),
-            'title_key': as_dict('titleKey', 'contextButtonTitle'),
-            'x': as_dict.pop('x', -10),
-            'y': as_dict.pop('y', 0)
+            'title_key': as_dict('titleKey', None),
+            'x': as_dict.pop('x', None),
+            'y': as_dict.pop('y', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'className': self.class_name,
             'enabled': self.enabled,
@@ -400,7 +398,7 @@ class ContextButtonConfiguration(ButtonConfiguration):
             'y': self.y
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class ExportingButtons(UserDict):
@@ -457,7 +455,7 @@ class ExportingButtons(UserDict):
 
         return cls.from_dict(as_dict)
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """Generate a :class:`dict <python:dict>` representation of the object compatible
         with the Highcharts JavaScript library.
 

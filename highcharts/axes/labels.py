@@ -443,20 +443,23 @@ class AxisLabelOptions(HighchartsMeta):
         self._style = validators.string(value, allow_empty = True)
 
     @property
-    def use_html(self) -> bool:
+    def use_html(self) -> Optional[bool]:
         """If ``True``, will use HTML to render the axis label. If ``False``, will
         use SVG or WebGL as applicable.
 
         Defaults to ``False``.
 
         :returns: Flag indicating whether to render data labels using HTML.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._use_html
 
     @use_html.setter
     def use_html(self, value):
-        self._use_html = bool(value)
+        if value is None:
+            self._use_html = None
+        else:
+            self._use_html = bool(value)
 
     @property
     def x(self) -> Optional[int | float | Decimal]:
@@ -525,7 +528,7 @@ class AxisLabelOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'align': self.align,
             'allowOverlap': self.allow_overlap,
@@ -682,20 +685,23 @@ class PlotBandLabel(HighchartsMeta):
             self._text_align = value
 
     @property
-    def use_html(self) -> bool:
+    def use_html(self) -> Optional[bool]:
         """If ``True``, will use HTML to render the label. If ``False``, will
         use SVG or WebGL as applicable.
 
         Defaults to ``False``.
 
         :returns: Flag indicating whether to render data labels using HTML.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._use_html
 
     @use_html.setter
     def use_html(self, value):
-        self._use_html = bool(value)
+        if value is None:
+            self._use_html = None
+        else:
+            self._use_html = bool(value)
 
     @property
     def vertical_align(self) -> Optional[str]:
@@ -769,7 +775,7 @@ class PlotBandLabel(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'align': self.align,
             'rotation': self.rotation,
@@ -781,9 +787,8 @@ class PlotBandLabel(HighchartsMeta):
             'x': self.x,
             'y': self.y
         }
-        as_dict = self.trim_dict(untrimmed)
 
-        return as_dict
+        return untrimmed
 
 
 class PlotLineLabel(PlotBandLabel):
@@ -833,7 +838,7 @@ class PlotLineLabel(PlotBandLabel):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'align': self.align,
             'formatter': self.formatter,
@@ -846,6 +851,5 @@ class PlotLineLabel(PlotBandLabel):
             'x': self.x,
             'y': self.y
         }
-        as_dict = self.trim_dict(untrimmed)
 
-        return as_dict
+        return untrimmed

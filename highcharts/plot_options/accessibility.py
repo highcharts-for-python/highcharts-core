@@ -38,12 +38,12 @@ class SeriesKeyboardNavigation(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'enabled': self.enabled
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class TypeOptionsAccessibility(HighchartsMeta):
@@ -142,7 +142,7 @@ class TypeOptionsAccessibility(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'description': self.description,
             'enabled': self.enabled,
@@ -151,4 +151,4 @@ class TypeOptionsAccessibility(HighchartsMeta):
             'point': self.point
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

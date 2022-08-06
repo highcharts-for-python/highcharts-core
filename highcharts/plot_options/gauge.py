@@ -263,7 +263,7 @@ class DialOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'backgroundColor': self.background_color,
             'baseLength': self.base_length,
@@ -276,7 +276,7 @@ class DialOptions(HighchartsMeta):
             'topWidth': self.top_width
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class PivotOptions(HighchartsMeta):
@@ -414,7 +414,7 @@ class PivotOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'backgroundColor': self.background_color,
             'borderColor': self.border_color,
@@ -422,7 +422,7 @@ class PivotOptions(HighchartsMeta):
             'radius': self.radius
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class GaugeOptions(GenericTypeOptions):
@@ -748,17 +748,17 @@ class GaugeOptions(GenericTypeOptions):
         """
         kwargs = {
             'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', False),
+            'allow_point_select': as_dict.pop('allowPointSelect', None),
             'animation': as_dict.pop('animation', None),
             'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', True),
+            'clip': as_dict.pop('clip', None),
             'color': as_dict.pop('color', None),
             'cursor': as_dict.pop('cursor', None),
             'custom': as_dict.pop('custom', None),
             'dash_style': as_dict.pop('dashStyle', None),
             'data_labels': as_dict.pop('dataLabels', None),
             'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', True),
+            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
             'events': as_dict.pop('events', None),
             'include_in_data_export': as_dict.pop('includeInDataExport', None),
             'keys': as_dict.pop('keys', None),
@@ -769,8 +769,8 @@ class GaugeOptions(GenericTypeOptions):
             'opacity': as_dict.pop('opacity', None),
             'point': as_dict.pop('point', None),
             'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', False),
-            'show_checkbox': as_dict.pop('showCheckbox', False),
+            'selected': as_dict.pop('selected', None),
+            'show_checkbox': as_dict.pop('showCheckbox', None),
             'show_in_legend': as_dict.pop('showInLegend', None),
             'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
             'states': as_dict.pop('states', None),
@@ -778,17 +778,17 @@ class GaugeOptions(GenericTypeOptions):
             'threshold': as_dict.pop('threshold', None),
             'tooltip': as_dict.pop('tooltip', None),
             'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', True),
+            'visible': as_dict.pop('visible', None),
 
             'color_index': as_dict.pop('colorIndex', None),
-            'crisp': as_dict.pop('crisp', True),
-            'linecap': as_dict.pop('linecap', 'round'),
-            'line_width': as_dict.pop('lineWidth', 2),
-            'point_interval': as_dict.pop('pointInterval', 1),
+            'crisp': as_dict.pop('crisp', None),
+            'linecap': as_dict.pop('linecap', None),
+            'line_width': as_dict.pop('lineWidth', None),
+            'point_interval': as_dict.pop('pointInterval', None),
             'point_interval_unit': as_dict.pop('pointIntervalUnit', None),
             'point_placement': as_dict.pop('pointPlacement', None),
-            'relative_x_value': as_dict.pop('relativeXValue', False),
-            'shadow': as_dict.pop('shadow', False),
+            'relative_x_value': as_dict.pop('relativeXValue', None),
+            'shadow': as_dict.pop('shadow', None),
 
             'dial': as_dict.pop('dial', None),
             'overshoot': as_dict.pop('overshoot', None),
@@ -798,7 +798,7 @@ class GaugeOptions(GenericTypeOptions):
 
         return kwargs
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'colorIndex': self.color_index,
             'crisp': self.crisp,
@@ -814,12 +814,12 @@ class GaugeOptions(GenericTypeOptions):
             'shadow': self.shadow,
             'wrap': self.wrap
         }
-        parent_as_dict = super().to_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class SolidGaugeOptions(SeriesOptions):
@@ -932,17 +932,17 @@ class SolidGaugeOptions(SeriesOptions):
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', False),
+            'allow_point_select': as_dict.pop('allowPointSelect', None),
             'animation': as_dict.pop('animation', None),
             'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', True),
+            'clip': as_dict.pop('clip', None),
             'color': as_dict.pop('color', None),
             'cursor': as_dict.pop('cursor', None),
             'custom': as_dict.pop('custom', None),
             'dash_style': as_dict.pop('dashStyle', None),
             'data_labels': as_dict.pop('dataLabels', None),
             'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', True),
+            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
             'events': as_dict.pop('events', None),
             'include_in_data_export': as_dict.pop('includeInDataExport', None),
             'keys': as_dict.pop('keys', None),
@@ -953,43 +953,43 @@ class SolidGaugeOptions(SeriesOptions):
             'opacity': as_dict.pop('opacity', None),
             'point': as_dict.pop('point', None),
             'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', False),
-            'show_checkbox': as_dict.pop('showCheckbox', False),
+            'selected': as_dict.pop('selected', None),
+            'show_checkbox': as_dict.pop('showCheckbox', None),
             'show_in_legend': as_dict.pop('showInLegend', None),
             'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
             'states': as_dict.pop('states', None),
             'threshold': as_dict.pop('threshold', None),
             'tooltip': as_dict.pop('tooltip', None),
             'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', True),
+            'visible': as_dict.pop('visible', None),
 
             'animation_limit': as_dict.pop('animationLimit', None),
             'boost_blending': as_dict.pop('boostBlending', None),
-            'boost_threshold': as_dict.pop('boostThreshold', 5000),
+            'boost_threshold': as_dict.pop('boostThreshold', None),
             'color_axis': as_dict.pop('colorAxis', None),
             'color_index': as_dict.pop('colorIndex', None),
             'color_key': as_dict.pop('colorKey', None),
             'connect_ends': as_dict.pop('connectEnds', None),
-            'connect_nulls': as_dict.pop('connectNulls', False),
-            'crisp': as_dict.pop('crisp', True),
-            'crop_threshold': as_dict.pop('cropThreshold', 300),
+            'connect_nulls': as_dict.pop('connectNulls', None),
+            'crisp': as_dict.pop('crisp', None),
+            'crop_threshold': as_dict.pop('cropThreshold', None),
             'data_sorting': as_dict.pop('dataSorting', None),
             'drag_drop': as_dict.pop('dragDrop', None),
             'find_nearest_point_by': as_dict.pop('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.pop('getExtremesForAll', False),
-            'linecap': as_dict.pop('linecap', 'round'),
-            'line_width': as_dict.pop('lineWidth', 2),
+            'get_extremes_for_all': as_dict.pop('getExtremesForAll', None),
+            'linecap': as_dict.pop('linecap', None),
+            'line_width': as_dict.pop('lineWidth', None),
             'negative_color': as_dict.pop('negativeColor', None),
-            'point_interval': as_dict.pop('pointInterval', 1),
+            'point_interval': as_dict.pop('pointInterval', None),
             'point_interval_unit': as_dict.pop('pointIntervalUnit', None),
             'point_placement': as_dict.pop('pointPlacement', None),
-            'point_start': as_dict.pop('pointStart', 0),
-            'relative_x_value': as_dict.pop('relativeXValue', False),
-            'shadow': as_dict.pop('shadow', False),
-            'soft_threshold': as_dict.pop('softThreshold', True),
+            'point_start': as_dict.pop('pointStart', None),
+            'relative_x_value': as_dict.pop('relativeXValue', None),
+            'shadow': as_dict.pop('shadow', None),
+            'soft_threshold': as_dict.pop('softThreshold', None),
             'stacking': as_dict.pop('stacking', None),
             'step': as_dict.pop('step', None),
-            'zone_axis': as_dict.pop('zoneAxis', 'y'),
+            'zone_axis': as_dict.pop('zoneAxis', None),
             'zones': as_dict.pop('zones', None),
 
             'inner_radius': as_dict.pop('innerRadius', None),
@@ -1000,16 +1000,16 @@ class SolidGaugeOptions(SeriesOptions):
 
         return kwargs
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'inner_radius': self.inner_radius,
             'overshoot': self.overshoot,
             'radius': self.radius,
             'rounded': self.rounded
         }
-        parent_as_dict = super(self).to_dict()
+        parent_as_dict = super(self)._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

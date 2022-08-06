@@ -139,7 +139,7 @@ class Condition(HighchartsMeta):
             'minWidth': self.min_width
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class ResponsiveRules(HighchartsMeta):
@@ -201,13 +201,13 @@ class ResponsiveRules(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'chartOptions': self.chart_options,
             'condition': self.condition
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class Responsive(HighchartsMeta):
@@ -248,9 +248,9 @@ class Responsive(HighchartsMeta):
             'rules': as_dict.pop('rules', None)
         })
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'rules': self.rules
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

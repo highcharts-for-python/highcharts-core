@@ -179,7 +179,7 @@ class VennData(DataBase):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -201,4 +201,4 @@ class VennData(DataBase):
             'value': self.value,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

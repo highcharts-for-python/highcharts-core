@@ -11,57 +11,57 @@ class CSVAnnotationOptions(HighchartsMeta):
     """Options for annotations in the export-data table."""
 
     def __init__(self, **kwargs):
-        self._item_delimiter = '; '
-        self._join = False
+        self._item_delimiter = None
+        self._join = None
 
-        self.item_delimiter = kwargs.pop('item_delimiter', '; ')
-        self.join = kwargs.pop('join', False)
+        self.item_delimiter = kwargs.pop('item_delimiter', None)
+        self.join = kwargs.pop('join', None)
 
     @property
-    def item_delimiter(self) -> str:
+    def item_delimiter(self) -> Optional[str]:
         """The way to mark the separator for annotations combined in one export-data table
         cell. Defaults to ``'; '``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._item_delimiter
 
     @item_delimiter.setter
     def item_delimiter(self, value):
-        if not value:
-            self._item_delimiter = '; '
-        else:
-            self._item_delimiter = validators.string(value)
+        self._item_delimiter = validators.string(value, allow_empty = True)
 
     @property
-    def join(self) -> bool:
+    def join(self) -> Optional[bool]:
         """If ``True``, then when several labels are assigned to a specific point, they
         will be displayed in one field in the table.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._join
 
     @join.setter
     def join(self, value):
-        self._join = bool(value)
+        if value is None:
+            self._join = None
+        else:
+            self._join = bool(value)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'item_delimiter': as_dict.pop('itemDelimiter', '; '),
-            'join': as_dict.pop('join', False)
+            'item_delimiter': as_dict.pop('itemDelimiter', None),
+            'join': as_dict.pop('join', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'itemDelimiter': self.item_delimiter,
             'join': self.join
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class ExportingCSV(HighchartsMeta):
@@ -83,18 +83,17 @@ class ExportingCSV(HighchartsMeta):
     def __init__(self, **kwargs):
         self._annotations = None
         self._column_header_formatter = None
-        self._date_format = constants.DEFAULT_CSV_DATE_FORMAT
+        self._date_format = None
         self._decimal_point = None
         self._item_delimiter = None
-        self._line_delimiter = constants.DEFAULT_CSV_LINE_DELIMITER
+        self._line_delimiter = None
 
         self.annotations = kwargs.pop('annotations', None)
         self.column_header_formatter = kwargs.pop('column_header_formatter', None)
-        self.date_format = kwargs.pop('date_format', constants.DEFAULT_CSV_DATE_FORMAT)
+        self.date_format = kwargs.pop('date_format', None)
         self.decimal_point = kwargs.pop('decimal_point', None)
         self.item_delimiter = kwargs.pop('item_delimiter', None)
-        self.line_delimiter = kwargs.pop('line_delimiter',
-                                         constants.DEFAULT_CSV_LINE_DELIMITER)
+        self.line_delimiter = kwargs.pop('line_delimiter', None)
 
     @property
     def annotations(self) -> Optional[CSVAnnotationOptions]:
@@ -143,94 +142,91 @@ class ExportingCSV(HighchartsMeta):
         self._column_header_formatter = validators.string(value, allow_empty = True)
 
     @property
-    def date_format(self) -> str:
+    def date_format(self) -> Optional[str]:
         f"""The date format to apply to exported dates on a datetime axis. Defaults to
         ``'{constants.DEFAULT_CSV_DATE_FORMAT}'
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._date_format
 
     @date_format.setter
     def date_format(self, value):
-        self._date_format = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_CSV_DATE_FORMAT
+        self._date_format = validators.string(value, allow_empty = True)
 
     @property
-    def decimal_point(self) -> str | constants.EnforcedNullType:
+    def decimal_point(self) -> Optional[str | constants.EnforcedNullType]:
         """Decimal point to use for exported CSV. Defaults to the same as the browser
         locale, typically ``'.'`` (English) or ``','`` (German, French, etc).
 
         Returns either a string value, or an :class:`EnforcedNull <EnforcedNullType>`
         instance.
 
-        :rtype: :class:`str <python:str>` or :class:`EnforcedNullType`
+        :rtype: :class:`str <python:str>` or :class:`EnforcedNullType` or
+          :obj:`None <python:None>`
         """
         return self._decimal_point
 
     @decimal_point.setter
     def decimal_point(self, value):
-        if not value:
+        if isinstance(value, constants.EnforcedNullType):
             self._decimal_point = constants.EnforcedNull
         else:
-            self._decimal_point = validators.string(value)
+            self._decimal_point = validators.string(value, allow_empty = True)
 
     @property
-    def item_delimiter(self) -> str | constants.EnforcedNullType:
+    def item_delimiter(self) -> Optional[str | constants.EnforcedNullType]:
         """The item delimiter in the exported data.
 
         Use ``';'`` for direct exporting to Excel. If
         :class:`EnforcedNull <constants.EnforcedNullType>`, defaults to a best guess based
-        on the browser locale. If the locale decimal point is ``','``, defaults to ``';'``.
-        Otherwise, the delimiter defaults to ``','``.
+        on the browser locale. If the locale decimal point is ``','``, defaults to
+        ``';'``. Otherwise, the delimiter defaults to ``','``.
 
         Returns either a string value, or an :class:`EnforcedNull <EnforcedNullType>`
         instance.
 
-        :rtype: :class:`str <python:str>` or :class:`EnforcedNullType`
+        :rtype: :class:`str <python:str>` or :class:`EnforcedNullType` or
+          :obj:`None <python:None>`
         """
         return self._item_delimiter
 
     @item_delimiter.setter
     def item_delimiter(self, value):
-        if not value:
+        if isinstance(value, constants.EnforcedNullType):
             self._item_delimiter = constants.EnforcedNull
         else:
-            self._item_delimiter = validators.string(value)
+            self._item_delimiter = validators.string(value, allow_empty = True)
 
     @property
-    def line_delimiter(self) -> str:
+    def line_delimiter(self) -> Optional[str]:
         """The line delimiter in the exported data. Defaults to a new line.
 
         Returns either a string value, or an :class:`EnforcedNull <EnforcedNullType>`
         instance.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._line_delimiter
 
     @line_delimiter.setter
     def line_delimiter(self, value):
-        if not value:
-            self._line_delimiter = '\n'
-        else:
-            self._line_delimiter = validators.string(value)
+        self._line_delimiter = validators.string(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
             'annotations': as_dict.pop('annotations', None),
             'column_header_formatter': as_dict.pop('columnHeaderFormatter', None),
-            'date_format': as_dict.pop('dateFormat', constants.DEFAULT_CSV_DATE_FORMAT),
+            'date_format': as_dict.pop('dateFormat', None),
             'decimal_point': as_dict.pop('decimalPoint', None),
             'item_delimiter': as_dict.pop('itemDelimiter', None),
-            'line_delimiter': as_dict.pop('lineDelimiter',
-                                          constants.DEFAULT_CSV_LINE_DELIMITER)
+            'line_delimiter': as_dict.pop('lineDelimiter', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'annotations': self.annotations,
             'columnHeaderFormatter': self.column_header_formatter,
@@ -240,4 +236,4 @@ class ExportingCSV(HighchartsMeta):
             'line_delimiter': self.line_delimiter
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

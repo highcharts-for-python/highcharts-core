@@ -69,80 +69,46 @@ class Legend(HighchartsMeta):
         self._x = None
         self._y = None
 
-        self.accessibility = kwargs.pop('accessibility',
-                                        constants.DEFAULT_LEGEND.get('accessibility'))
-        self.align = kwargs.pop('align',
-                                constants.DEFAULT_LEGEND.get('align'))
-        self.align_columns = kwargs.pop('align_columns',
-                                        constants.DEFAULT_LEGEND.get('align_columns'))
-        self.background_color = kwargs.pop('background_color',
-                                           constants.DEFAULT_LEGEND.get('background_color'))
-        self.border_color = kwargs.pop('border_color',
-                                       constants.DEFAULT_LEGEND.get('border_color'))
-        self.border_width = kwargs.pop('border_width',
-                                       constants.DEFAULT_LEGEND.get('border_width'))
-        self.border_radius = kwargs.pop('border_radius',
-                                        constants.DEFAULT_LEGEND.get('border_radius'))
-        self.bubble_legend = kwargs.pop('bubble_legend',
-                                        constants.DEFAULT_LEGEND.get('bubble_legend',
-                                                                     None))
-        self.class_name = kwargs.pop('class_name',
-                                     constants.DEFAULT_LEGEND.get('class_name'))
-        self.enabled = kwargs.pop('enabled',
-                                  constants.DEFAULT_LEGEND.get('enabled'))
-        self.floating = kwargs.pop('floating',
-                                   constants.DEFAULT_LEGEND.get('floating'))
-        self.item_checkbox_style = kwargs.pop('item_checkbox_style',
-                                              constants.DEFAULT_LEGEND.get('item_checkbox_style'))
-        self.item_distance = kwargs.pop('item_distance',
-                                        constants.DEFAULT_LEGEND.get('item_distance'))
-        self.item_hidden_style = kwargs.pop('item_hidden_style',
-                                            constants.DEFAULT_LEGEND.get('item_hidden_style'))
-        self.item_hover_style = kwargs.pop('item_hover_style',
-                                           constants.DEFAULT_LEGEND.get('item_hover_style'))
-        self.item_margin_bottom = kwargs.pop('item_margin_bottom',
-                                             constants.DEFAULT_LEGEND.get('item_margin_bottom'))
-        self.item_margin_top = kwargs.pop('item_margin_top',
-                                          constants.DEFAULT_LEGEND.get('item_margin_top'))
-        self.item_style = kwargs.pop('item_style',
-                                     constants.DEFAULT_LEGEND.get('item_style'))
-        self.item_width = kwargs.pop('item_width',
-                                     constants.DEFAULT_LEGEND.get('item_width'))
-        self.label_format = kwargs.pop('label_format',
-                                       constants.DEFAULT_LEGEND.get('label_format'))
-        self.label_formatter = kwargs.pop('label_formatter',
-                                          constants.DEFAULT_LEGEND.get('label_formatter'))
-        self.layout = kwargs.pop('layout', constants.DEFAULT_LEGEND.get('layout'))
-        self.margin = kwargs.pop('margin', constants.DEFAULT_LEGEND.get('margin'))
-        self.max_height = kwargs.pop('max_height',
-                                     constants.DEFAULT_LEGEND.get('max_height'))
-        self.navigation = kwargs.pop('navigation',
-                                     constants.DEFAULT_LEGEND.get('navigation'))
-        self.padding = kwargs.pop('padding',
-                                  constants.DEFAULT_LEGEND.get('padding'))
-        self.reversed = kwargs.pop('reversed',
-                                   constants.DEFAULT_LEGEND.get('reversed'))
-        self.rtl = kwargs.pop('rtl', constants.DEFAULT_LEGEND.get('rtl'))
-        self.shadow = kwargs.pop('shadow', constants.DEFAULT_LEGEND.get('shadow'))
-        self.square_symbol = kwargs.pop('square_symbol',
-                                        constants.DEFAULT_LEGEND.get('square_symbol'))
-        self.symbol_height = kwargs.pop('symbol_height',
-                                        constants.DEFAULT_LEGEND.get('symbol_height'))
-        self.symbol_padding = kwargs.pop('symbol_padding',
-                                         constants.DEFAULT_LEGEND.get('symbol_padding'))
-        self.symbol_radius = kwargs.pop('symbol_radius',
-                                        constants.DEFAULT_LEGEND.get('symbol_radius'))
-        self.symbol_width = kwargs.pop('symbol_width',
-                                       constants.DEFAULT_LEGEND.get('symbol_width'))
-        self.title = kwargs.pop('title',
-                                constants.DEFAULT_LEGEND.get('title', None))
-        self.use_html = kwargs.pop('use_html',
-                                   constants.DEFAULT_LEGEND.get('use_html'))
-        self.vertical_align = kwargs.pop('vertical_align',
-                                         constants.DEFAULT_LEGEND.get('use_html'))
-        self.width = kwargs.pop('width', constants.DEFAULT_LEGEND.get('width'))
-        self.x = kwargs.pop('x', constants.DEFAULT_LEGEND.get('x'))
-        self.y = kwargs.pop('y', constants.DEFAULT_LEGEND.get('y'))
+        self.accessibility = kwargs.pop('accessibility', None)
+        self.align = kwargs.pop('align', None)
+        self.align_columns = kwargs.pop('align_columns', None)
+        self.background_color = kwargs.pop('background_color', None)
+        self.border_color = kwargs.pop('border_color', None)
+        self.border_width = kwargs.pop('border_width', None)
+        self.border_radius = kwargs.pop('border_radius', None)
+        self.bubble_legend = kwargs.pop('bubble_legend', None)
+        self.class_name = kwargs.pop('class_name', None)
+        self.enabled = kwargs.pop('enabled', None)
+        self.floating = kwargs.pop('floating', None)
+        self.item_checkbox_style = kwargs.pop('item_checkbox_style', None)
+        self.item_distance = kwargs.pop('item_distance', None)
+        self.item_hidden_style = kwargs.pop('item_hidden_style', None)
+        self.item_hover_style = kwargs.pop('item_hover_style', None)
+        self.item_margin_bottom = kwargs.pop('item_margin_bottom', None)
+        self.item_margin_top = kwargs.pop('item_margin_top', None)
+        self.item_style = kwargs.pop('item_style', None)
+        self.item_width = kwargs.pop('item_width', None)
+        self.label_format = kwargs.pop('label_format', None)
+        self.label_formatter = kwargs.pop('label_formatter', None)
+        self.layout = kwargs.pop('layout', None)
+        self.margin = kwargs.pop('margin', None)
+        self.max_height = kwargs.pop('max_height', None)
+        self.navigation = kwargs.pop('navigation', None)
+        self.padding = kwargs.pop('padding', None)
+        self.reversed = kwargs.pop('reversed', None)
+        self.rtl = kwargs.pop('rtl', None)
+        self.shadow = kwargs.pop('shadow', None)
+        self.square_symbol = kwargs.pop('square_symbol', None)
+        self.symbol_height = kwargs.pop('symbol_height', None)
+        self.symbol_padding = kwargs.pop('symbol_padding', None)
+        self.symbol_radius = kwargs.pop('symbol_radius', None)
+        self.symbol_width = kwargs.pop('symbol_width', None)
+        self.title = kwargs.pop('title', None)
+        self.use_html = kwargs.pop('use_html', None)
+        self.vertical_align = kwargs.pop('vertical_align', None)
+        self.width = kwargs.pop('width', None)
+        self.x = kwargs.pop('x', None)
+        self.y = kwargs.pop('y', None)
 
     @property
     def accessibility(self) -> Optional[LegendAccessibilityOptions]:
@@ -162,7 +128,7 @@ class Legend(HighchartsMeta):
         self._accessibility = value
 
     @property
-    def align(self) -> str:
+    def align(self) -> Optional[str]:
         f"""The horizontal alignment of the legend box within the chart area. Defaults to
         ``'{constants.DEFAULT_LEGEND.get('align')}'``.
 
@@ -176,14 +142,14 @@ class Legend(HighchartsMeta):
         :meth:`Legend.layout` setting will determine whether to place it above/below or on
         the side of the plot area.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._align
 
     @align.setter
     def align(self, value):
         if not value:
-            self._align = constants.DEFAULT_LEGEND.get('align')
+            self._align = None
         else:
             value = validators.string(value)
             value = value.lower()
@@ -193,7 +159,7 @@ class Legend(HighchartsMeta):
             self._align = value
 
     @property
-    def align_columns(self) -> bool:
+    def align_columns(self) -> Optional[bool]:
         """If the layout is horizontal and the legend items span over two lines or more,
         if the value is ``True`` will align the items into vertical columns.
 
@@ -201,13 +167,16 @@ class Legend(HighchartsMeta):
 
         Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._align_columns
 
     @align_columns.setter
     def align_columns(self, value):
-        self._align_columns = bool(value)
+        if value is None:
+            self._align_columns = None
+        else:
+            self._align_columns = bool(value)
 
     @property
     def background_color(self) -> Optional[str | Gradient | Pattern]:
@@ -341,7 +310,7 @@ class Legend(HighchartsMeta):
 
     @property
     def class_name(self) -> Optional[str]:
-        f"""A classname to apply styling using CSS.
+        """A classname to apply styling using CSS.
 
         :returns: The classname to apply to enable styling via CSS.
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
@@ -353,7 +322,7 @@ class Legend(HighchartsMeta):
         self._class_name = validators.string(value, allow_empty = True)
 
     @property
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         f"""If ``True``, displays the legend. If ``False``, hides the legend. Defaults to
         ``{constants.DEFAULT_LEGEND.get('enabled')}``.
 
@@ -364,27 +333,33 @@ class Legend(HighchartsMeta):
           legend. In some series types this is ``False`` by default, so it must set to
           ``True`` in order to show the legend for the series.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._enabled
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(value)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @property
-    def floating(self) -> bool:
+    def floating(self) -> Optional[bool]:
         f"""If ``True``, the plot area ignores the legend and can be rendered below the
         legend. If ``False``, the legend is rendered visually distinct (not overlapping)
         the plot area. Defaults to ``{constants.DEFAULT_LEGEND.get('floating')}``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._floating
 
     @floating.setter
     def floating(self, value):
-        self._floating = bool(value)
+        if value is None:
+            self._floating = None
+        else:
+            self._floating = bool(value)
 
     @property
     def item_checkbox_style(self) -> Optional[str]:
@@ -551,7 +526,7 @@ class Legend(HighchartsMeta):
 
     @property
     def label_formatter(self) -> Optional[str]:
-        f"""A JavaScript callback function that formats each of the series' labels.
+        """A JavaScript callback function that formats each of the series' labels.
 
         .. note::
 
@@ -567,7 +542,7 @@ class Legend(HighchartsMeta):
         self._label_formatter = validators.string(value, allow_empty = True)
 
     @property
-    def layout(self) -> str:
+    def layout(self) -> Optional[str]:
         f"""The layout of the legend items. Defaults to
         ``'{constants.DEFAULT_LEGEND.get('layout')}'``.
 
@@ -581,14 +556,14 @@ class Legend(HighchartsMeta):
         they're representing, except in inverted charts or when the legend position does
         not allow it.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._layout
 
     @layout.setter
     def layout(self, value):
         if not value:
-            self._layout = constants.DEFAULT_LEGEND.get('layout')
+            self._layout = None
         else:
             value = validators.string(value)
             value = value.lower()
@@ -663,35 +638,41 @@ class Legend(HighchartsMeta):
         self._padding = validators.numeric(value, allow_empty = True)
 
     @property
-    def reversed(self) -> bool:
+    def reversed(self) -> Optional[bool]:
         f"""If ``True``, reverses the order of the legend items compared to the order of
         series/points as defined in the configuration object.
         Defaults to ``{constants.DEFAULT_LEGEND.get('reversed')}``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._reversed
 
     @reversed.setter
     def reversed(self, value):
-        self._reversed = bool(value)
+        if value is None:
+            self._reversed = None
+        else:
+            self._reversed = bool(value)
 
     @property
-    def rtl(self) -> bool:
+    def rtl(self) -> Optional[bool]:
         f"""If ``True``, displays the symbol on the right side of the text rather than
         the left (this is common in RTL languages like Arabic or Hebrew). Defaults to
         ``{constants.DEFAULT_LEGEND.get('rtl')}``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._rtl
 
     @rtl.setter
     def rtl(self, value):
-        self._rtl = bool(value)
+        if value is None:
+            self._rtl = None
+        else:
+            self._rtl = bool(value)
 
     @property
-    def shadow(self) -> bool | ShadowOptions:
+    def shadow(self) -> Optional[bool | ShadowOptions]:
         """Configuration of a drop shadow applied to the legend box. Accepts either
         a boolean value of ``False`` which disables any shadow, or a
         :class:`ShadowOptions` instance with the applicable configuration.
@@ -702,13 +683,16 @@ class Legend(HighchartsMeta):
 
           Requires that :meth:`Legend.background_color` be set.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        :rtype: :class:`bool <python:bool>` or :class:`ShadowOptions` or
+          :obj:`None <python:None>`
         """
         return self._shadow
 
     @shadow.setter
     def shadow(self, value):
-        if value is False:
+        if value is None:
+            self._shadow = None
+        elif value is False:
             self._shadow = False
         else:
             value = validate_types(value,
@@ -717,18 +701,21 @@ class Legend(HighchartsMeta):
             self._shadow = value
 
     @property
-    def square_symbol(self) -> bool:
+    def square_symbol(self) -> Optional[bool]:
         f"""If ``True``, the legend symbol width will be the same as the symbol height,
         which in turn defaults to the font size of the legend items. Defaults to
         ``{constants.DEFAULT_LEGEND.get('square_symbol')}``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._square_symbol
 
     @square_symbol.setter
     def square_symbol(self, value):
-        self._square_symbol = bool(value)
+        if value is None:
+            self._square_symbol = None
+        else:
+            self._square_symbol = bool(value)
 
     @property
     def symbol_height(self) -> Optional[int | float | Decimal]:
@@ -801,20 +788,23 @@ class Legend(HighchartsMeta):
         self._title = value
 
     @property
-    def use_html(self) -> bool:
+    def use_html(self) -> Optional[bool]:
         """If ``True``, will use HTML to render the legend item texts. If ``False``, will
         use SVG or WebGL as applicable.
 
         Defaults to ``False``.
 
         :returns: Flag indicating whether to render annotation labels using HTML.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._use_html
 
     @use_html.setter
     def use_html(self, value):
-        self._use_html = bool(value)
+        if value is None:
+            self._use_html = None
+        else:
+            self._use_html = bool(value)
 
     @property
     def vertical_align(self) -> Optional[str]:
@@ -845,10 +835,10 @@ class Legend(HighchartsMeta):
 
     @vertical_align.setter
     def vertical_align(self, value):
-        value = validators.string(value, allow_empty = True)
         if not value:
             self._vertical_align = None
         else:
+            value = validators.string(value, allow_empty = True)
             value = value.lower()
             if value not in ['bottom', 'middle', 'top']:
                 raise errors.HighchartsValueError(f'vertical_align expects either "top", '
@@ -883,7 +873,7 @@ class Legend(HighchartsMeta):
                                                  minimum = 0)
 
     @property
-    def x(self) -> int:
+    def x(self) -> Optional[int]:
         f"""The x position offset of the legend relative to its horizontal alignment
         (:meth:`Legend.align`) within :meth:`Chart.spacing_left` and
         :meth:`Chart.spacing_right`. Defaults to ``{constants.DEFAULT_LEGEND.get('x')}``.
@@ -892,20 +882,16 @@ class Legend(HighchartsMeta):
 
           Negative values move it to the left, positive values move it to the right.
 
-        :rtype: numeric
+        :rtype: numeric or :obj:`None <python:None>`
         """
         return self._x
 
     @x.setter
     def x(self, value):
         value = validators.numeric(value, allow_empty = True)
-        if value is None:
-            self._x = 0
-        else:
-            self._x = value
 
     @property
-    def y(self) -> int:
+    def y(self) -> Optional[int]:
         f"""The y position offset of the legend relative to its vertical alignment
         (:meth:`Legend.vertical_align`) within :meth:`Chart.spacing_top` and
         :meth:`Chart.spacing_bottom`. Defaults to ``{constants.DEFAULT_LEGEND.get('y')}``.
@@ -914,100 +900,62 @@ class Legend(HighchartsMeta):
 
           Negative values move it up, positive values move it down.
 
-        :rtype: numeric
+        :rtype: numeric or :obj:`None <python:None>`
         """
         return self._y
 
     @y.setter
     def y(self, value):
         value = validators.numeric(value, allow_empty = True)
-        if value is None:
-            self._y = 0
-        else:
-            self._y = value
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility',
-                                         constants.DEFAULT_LEGEND.get('accessibility')),
-            'align': as_dict.pop('align',
-                                 constants.DEFAULT_LEGEND.get('align')),
-            'align_columns': as_dict.pop('alignColumns',
-                                         constants.DEFAULT_LEGEND.get('align_columns')),
-            'background_color': as_dict.pop('backgroundColor',
-                                            constants.DEFAULT_LEGEND.get('background_color')),
-            'border_color': as_dict.pop('borderColor',
-                                        constants.DEFAULT_LEGEND.get('border_color')),
-            'border_width': as_dict.pop('borderWidth',
-                                        constants.DEFAULT_LEGEND.get('border_width')),
-            'border_radius': as_dict.pop('borderRadius',
-                                         constants.DEFAULT_LEGEND.get('border_radius')),
-            'bubble_legend': as_dict.pop('bubbleLegend',
-                                         constants.DEFAULT_LEGEND.get('bubble_legend',
-                                                                      None)),
-            'class_name': as_dict.pop('className',
-                                      constants.DEFAULT_LEGEND.get('class_name')),
-            'enabled': as_dict.pop('enabled',
-                                   constants.DEFAULT_LEGEND.get('enabled')),
-            'floating': as_dict.pop('floating',
-                                    constants.DEFAULT_LEGEND.get('floating')),
-            'item_checkbox_style': as_dict.pop('itemCheckboxStyle',
-                                               constants.DEFAULT_LEGEND.get('item_checkbox_style')),
-            'item_distance': as_dict.pop('itemDistance',
-                                         constants.DEFAULT_LEGEND.get('item_distance')),
-            'item_hidden_style': as_dict.pop('itemHiddenStyle',
-                                             constants.DEFAULT_LEGEND.get('item_hidden_style')),
-            'item_hover_style': as_dict.pop('itemHoverStyle',
-                                            constants.DEFAULT_LEGEND.get('item_hover_style')),
-            'item_margin_bottom': as_dict.pop('itemMarginBottom',
-                                              constants.DEFAULT_LEGEND.get('item_margin_bottom')),
-            'item_margin_top': as_dict.pop('itemMarginTop',
-                                           constants.DEFAULT_LEGEND.get('item_margin_top')),
-            'item_style': as_dict.pop('itemStyle',
-                                      constants.DEFAULT_LEGEND.get('item_style')),
-            'item_width': as_dict.pop('itemWidth',
-                                      constants.DEFAULT_LEGEND.get('item_width')),
-            'label_format': as_dict.pop('labelFormat',
-                                        constants.DEFAULT_LEGEND.get('label_format')),
-            'label_formatter': as_dict.pop('labelFormatter',
-                                           constants.DEFAULT_LEGEND.get('label_formatter')),
-            'layout': as_dict.pop('layout', constants.DEFAULT_LEGEND.get('layout')),
-            'margin': as_dict.pop('margin', constants.DEFAULT_LEGEND.get('margin')),
-            'max_height': as_dict.pop('maxHeight',
-                                      constants.DEFAULT_LEGEND.get('max_height')),
-            'navigation': as_dict.pop('navigation',
-                                      constants.DEFAULT_LEGEND.get('navigation')),
-            'padding': as_dict.pop('padding',
-                                   constants.DEFAULT_LEGEND.get('padding')),
-            'reversed': as_dict.pop('reversed',
-                                    constants.DEFAULT_LEGEND.get('reversed')),
-            'rtl': as_dict.pop('rtl', constants.DEFAULT_LEGEND.get('rtl')),
-            'shadow': as_dict.pop('shadow', constants.DEFAULT_LEGEND.get('shadow')),
-            'square_symbol': as_dict.pop('squareSymbol',
-                                         constants.DEFAULT_LEGEND.get('square_symbol')),
-            'symbol_height': as_dict.pop('symbolHeight',
-                                         constants.DEFAULT_LEGEND.get('symbol_height')),
-            'symbol_padding': as_dict.pop('symbolPadding',
-                                          constants.DEFAULT_LEGEND.get('symbol_padding')),
-            'symbol_radius': as_dict.pop('symbolRadius',
-                                         constants.DEFAULT_LEGEND.get('symbol_radius')),
-            'symbol_width': as_dict.pop('symbolWidth',
-                                        constants.DEFAULT_LEGEND.get('symbol_width')),
-            'title': as_dict.pop('title',
-                                 constants.DEFAULT_LEGEND.get('title', None)),
-            'use_html': as_dict.pop('useHTML',
-                                    constants.DEFAULT_LEGEND.get('use_html')),
-            'vertical_align': as_dict.pop('verticalAlign',
-                                          constants.DEFAULT_LEGEND.get('use_html')),
-            'width': as_dict.pop('width', constants.DEFAULT_LEGEND.get('width')),
-            'x': as_dict.pop('x', constants.DEFAULT_LEGEND.get('x')),
-            'y': as_dict.pop('y', constants.DEFAULT_LEGEND.get('y'))
+            'accessibility': as_dict.pop('accessibility', None),
+            'align': as_dict.pop('align', None),
+            'align_columns': as_dict.pop('alignColumns', None),
+            'background_color': as_dict.pop('backgroundColor', None),
+            'border_color': as_dict.pop('borderColor', None),
+            'border_width': as_dict.pop('borderWidth', None),
+            'border_radius': as_dict.pop('borderRadius', None),
+            'bubble_legend': as_dict.pop('bubbleLegend', None),
+            'class_name': as_dict.pop('className', None),
+            'enabled': as_dict.pop('enabled', None),
+            'floating': as_dict.pop('floating', None),
+            'item_checkbox_style': as_dict.pop('itemCheckboxStyle', None),
+            'item_distance': as_dict.pop('itemDistance', None),
+            'item_hidden_style': as_dict.pop('itemHiddenStyle', None),
+            'item_hover_style': as_dict.pop('itemHoverStyle', None),
+            'item_margin_bottom': as_dict.pop('itemMarginBottom', None),
+            'item_margin_top': as_dict.pop('itemMarginTop', None),
+            'item_style': as_dict.pop('itemStyle', None),
+            'item_width': as_dict.pop('itemWidth', None),
+            'label_format': as_dict.pop('labelFormat', None),
+            'label_formatter': as_dict.pop('labelFormatter', None),
+            'layout': as_dict.pop('layout', None),
+            'margin': as_dict.pop('margin', None),
+            'max_height': as_dict.pop('maxHeight', None),
+            'navigation': as_dict.pop('navigation', None),
+            'padding': as_dict.pop('padding', None),
+            'reversed': as_dict.pop('reversed', None),
+            'rtl': as_dict.pop('rtl', None),
+            'shadow': as_dict.pop('shadow', None),
+            'square_symbol': as_dict.pop('squareSymbol', None),
+            'symbol_height': as_dict.pop('symbolHeight', None),
+            'symbol_padding': as_dict.pop('symbolPadding', None),
+            'symbol_radius': as_dict.pop('symbolRadius', None),
+            'symbol_width': as_dict.pop('symbolWidth', None),
+            'title': as_dict.pop('title', None),
+            'use_html': as_dict.pop('useHTML', None),
+            'vertical_align': as_dict.pop('verticalAlign', None),
+            'width': as_dict.pop('width', None),
+            'x': as_dict.pop('x', None),
+            'y': as_dict.pop('y', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'align': self.align,
@@ -1051,4 +999,4 @@ class Legend(HighchartsMeta):
             'y': self.y
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

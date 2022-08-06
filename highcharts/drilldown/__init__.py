@@ -27,17 +27,15 @@ class Drilldown(HighchartsMeta):
     def __init__(self, **kwargs):
         self._active_axis_label_style = None
         self._active_data_label_style = None
-        self._allow_point_drilldown = True
+        self._allow_point_drilldown = None
         self._animation = None
         self._breadcrumbs = None
         self._drillup_button = None
         self._series = None
 
-        self.active_axis_label_style = kwargs.pop('active_axis_label_style',
-                                                  constants.DEFAULT_DRILLDOWN_ACTIVE_AXIS_LABEL_STYLE)
-        self.active_data_label_style = kwargs.pop('active_data_label_style',
-                                                  constants.DEFAULT_DRILLDOWN_ACTIVE_DATA_LABEL_STYLE)
-        self.allow_point_drilldown = kwargs.pop('allow_point_drilldown', True)
+        self.active_axis_label_style = kwargs.pop('active_axis_label_style', None)
+        self.active_data_label_style = kwargs.pop('active_data_label_style', None)
+        self.allow_point_drilldown = kwargs.pop('allow_point_drilldown', None)
         self.animation = kwargs.pop('animation', None)
         self.breadcrumbs = kwargs.pop('breadcrumbs', None)
         self.drillup_button = kwargs.pop('drillup_button', None)
@@ -88,7 +86,7 @@ class Drilldown(HighchartsMeta):
         self._value = validators.dict(value, allow_empty = True)
 
     @property
-    def allow_point_drilldown(self) -> bool:
+    def allow_point_drilldown(self) -> Optional[bool]:
         """If ``False``, clicking a single point will drill down all points in the same
         category, equivalent to clicking the X axis label. If ``True``, clicking a single
         point will drill down on that specific point.
@@ -96,13 +94,16 @@ class Drilldown(HighchartsMeta):
         Defaults to ``True``.
 
         :returns: Flag which determines whether to enable or disable point drilldown.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._allow_point_drilldown
 
     @allow_point_drilldown.setter
     def allow_point_drilldown(self, value):
-        self._allow_point_drilldown = bool(value)
+        if value is None:
+            self._allow_point_drilldown = None
+        else:
+            self._allow_point_drilldown = bool(value)
 
     @property
     def animation(self) -> Optional[bool | AnimationOptions]:
@@ -165,11 +166,9 @@ class Drilldown(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'active_axis_label_style': as_dict.pop('activeAxisLabelStyle',
-                                                   constants.DEFAULT_DRILLDOWN_ACTIVE_AXIS_LABEL_STYLE),
-            'active_data_label_style': as_dict.pop('activeDataLabelStyle',
-                                                   constants.DEFAULT_DRILLDOWN_ACTIVE_DATA_LABEL_STYLE),
-            'allow_point_drilldown': as_dict.pop('allowPointDrilldown', True),
+            'active_axis_label_style': as_dict.pop('activeAxisLabelStyle', None),
+            'active_data_label_style': as_dict.pop('activeDataLabelStyle', None),
+            'allow_point_drilldown': as_dict.pop('allowPointDrilldown', None),
             'animation': as_dict.pop('animation', None),
             'breadcrumbs': as_dict.pop('breadcrumbs', None),
             'series': as_dict.pop('series', None)
@@ -177,7 +176,7 @@ class Drilldown(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'activeAxisLabelStyle': self.active_axis_label_style,
             'activeDataLabelStyle': self.active_data_label_style,
@@ -187,4 +186,4 @@ class Drilldown(HighchartsMeta):
             'series': self.series
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

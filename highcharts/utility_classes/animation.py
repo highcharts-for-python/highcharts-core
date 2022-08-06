@@ -18,14 +18,14 @@ class AnimationOptions(HighchartsMeta):
 
     def __init__(self, **kwargs):
         self._complete = None
-        self._defer = 0
-        self._duration = 500
+        self._defer = None
+        self._duration = None
         self._easing = None
         self._step = None
 
         self.complete = kwargs.pop('complete', None)
-        self.defer = kwargs.pop('defer', 0)
-        self.duration = kwargs.pop('duration', 500)
+        self.defer = kwargs.pop('defer', None)
+        self.duration = kwargs.pop('duration', None)
         self.easing = kwargs.pop('easing', None)
         self.step = kwargs.pop('step', None)
 
@@ -106,14 +106,14 @@ class AnimationOptions(HighchartsMeta):
     def from_dict(cls, as_dict):
         kwargs = {
             'complete': as_dict.pop('complete', None),
-            'defer': as_dict.pop('defer', 0),
-            'duration': as_dict.pop('duration', 500),
+            'defer': as_dict.pop('defer', None),
+            'duration': as_dict.pop('duration', None),
             'easing': as_dict.pop('easing', None),
             'step': as_dict.pop('step', None)
         }
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'complete': self.complete,
             'defer': self.defer,
@@ -122,4 +122,4 @@ class AnimationOptions(HighchartsMeta):
             'step': self.step
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

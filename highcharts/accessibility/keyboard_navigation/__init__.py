@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from validator_collection import validators
 
@@ -12,30 +12,33 @@ class KeyboardNavigation(HighchartsMeta):
     """Options for Keyboard Navigation."""
 
     def __init__(self, **kwargs):
-        self._enabled = True
+        self._enabled = None
         self._focus_border = None
         self._order = None
-        self._series_navigation = None,
-        self._wrap_around = True
+        self._series_navigation = None
+        self._wrap_around = None
 
-        self.enabled = kwargs.pop('enabled', True)
+        self.enabled = kwargs.pop('enabled', None)
         self.focus_border = kwargs.pop('focus_border', None)
         self.order = kwargs.pop('order', None)
         self.series_navigation = kwargs.pop('series_navigation', None)
-        self.wrap_around = kwargs.pop('wrap_around', True)
+        self.wrap_around = kwargs.pop('wrap_around', None)
 
     @property
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         """Enable keyboard navigation for the chart. Defaults to ``True``.
 
         :returns: Flag indicating whether keyboard navigation is enabled for the chart.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(value)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @property
     def focus_border(self) -> Optional[FocusBorder]:
@@ -54,7 +57,7 @@ class KeyboardNavigation(HighchartsMeta):
         self._focus_border = value
 
     @property
-    def order(self):
+    def order(self) -> Optional[List[str]]:
         """Order of tab navigation in the chart.
 
         Determines which elements are tabbed to first. Available elements are:
@@ -86,7 +89,7 @@ class KeyboardNavigation(HighchartsMeta):
         self._order = value
 
     @property
-    def series_navigation(self) -> SeriesNavigation:
+    def series_navigation(self) -> Optional[SeriesNavigation]:
         """Options for the keyboard navigation of data points and series.
 
         :returns: Configuration for series navigation.
@@ -100,7 +103,7 @@ class KeyboardNavigation(HighchartsMeta):
         self._series_navigation = value
 
     @property
-    def wrap_around(self) -> bool:
+    def wrap_around(self) -> Optional[bool]:
         """If ``True``, indicates that keyboard navigation should wrap around when
         reaching the end of arrow-key navigation for an element in the chart.
 
@@ -108,36 +111,39 @@ class KeyboardNavigation(HighchartsMeta):
 
         :returns: Flag indicating whether navigation should wrap around when reaching the
           end of arrow-key navigation for an element in the chart.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>`:obj:`None <python:None>`
         """
         return self._wrap_around
 
     @wrap_around.setter
     def wrap_around(self, value):
-        self._wrap_around = bool(value)
+        if value is None:
+            self._wrap_around = None
+        else:
+            self._wrap_around = bool(value)
 
     @classmethod
     def from_dict(cls, as_dict):
-        as_dict = validators.dict(as_dict, allow_empty = True)
+        as_dict = validators.dict(as_dict, allow_empty = True) or {}
         kwargs = {
-            'enabled': as_dict.pop('enabled', True),
+            'enabled': as_dict.pop('enabled', None),
             'focus_border': as_dict.pop('focusBorder', None),
             'order': as_dict.pop('order', None),
             'series_navigation': as_dict.pop('seriesNavigation', None),
-            'wrap_around': as_dict.pop('wrapAround', True)
+            'wrap_around': as_dict.pop('wrapAround', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'enabled': self.enabled,
             'focusBorder': self.focus_border,
             'order': self.order,
             'seriesNavigation': self.series_navigation,
-            'wrapAround': self.wrapAround
+            'wrapAround': self.wrap_around
         }
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 __all__ = [

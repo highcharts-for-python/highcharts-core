@@ -177,10 +177,10 @@ class AreaSeries(SeriesBase, AreaOptions):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = mro_to_dict(self)
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class AreaRangeSeries(AreaSeries):

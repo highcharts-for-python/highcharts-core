@@ -51,10 +51,10 @@ class DataPointAccessibility(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'description': self.description,
             'enabled': self.enabled,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

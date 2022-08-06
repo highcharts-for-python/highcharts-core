@@ -1,3 +1,5 @@
+from typing import Optional
+
 from validator_collection import validators
 
 from highcharts import constants
@@ -26,95 +28,79 @@ class Loading(HighchartsMeta):
         self._show_duration = None
         self._style = None
 
-        self.hide_duration = kwargs.pop('hide_duration',
-                                        constants.DEFAULT_LOADING.get('hide_duration'))
-        self.label_style = kwargs.pop('label_style',
-                                      constants.DEFAULT_LOADING.get('label_style'))
-        self.show_duration = kwargs.pop('show_duration',
-                                        constants.DEFAULT_LOADING.get('show_duration'))
-        self.style = kwargs.pop('style',
-                                constants.DEFAULT_LOADING.get('style'))
+        self.hide_duration = kwargs.pop('hide_duration', None)
+        self.label_style = kwargs.pop('label_style', None)
+        self.show_duration = kwargs.pop('show_duration', None)
+        self.style = kwargs.pop('style', None)
 
     @property
-    def hide_duration(self) -> int:
+    def hide_duration(self) -> Optional[int]:
         f"""The duration in milliseconds of the fade out effect. Defaults to
         ``{constants.DEFAULT_LOADING.get('hide_duration')}``.
 
-        :rtype: :class:`int <python:int>`
+        :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
         """
         return self._hide_duration
 
     @hide_duration.setter
     def hide_duration(self, value):
         self._hide_duration = validators.integer(value,
-                                                 allow_empty = False,
+                                                 allow_empty = True,
                                                  minimum = 0)
 
     @property
-    def label_style(self) -> str:
+    def label_style(self) -> Optional[str]:
         f"""CSS styles applied to the loading label's ``<span>``. Defaults to
         ``'{constants.DEFAULT_LOADING.get('label_style')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._label_style
 
     @label_style.setter
     def label_style(self, value):
-        if value == '':
-            self._label_style = ''
-        else:
-            self._label_style = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LOADING.get('label_style')
+        self._label_style = validators.string(value, allow_empty = True)
 
     @property
-    def show_duration(self) -> int:
+    def show_duration(self) -> Optional[int]:
         f"""The duration in milliseconds of the fade in effect. Defaults to
         ``{constants.DEFAULT_LOADING.get('show_duration')}``.
 
-        :rtype: :class:`int <python:int>`
+        :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
         """
         return self._show_duration
 
     @show_duration.setter
     def show_duration(self, value):
         self._show_duration = validators.integer(value,
-                                                 allow_empty = False,
+                                                 allow_empty = True,
                                                  minimum = 0)
 
     @property
-    def style(self) -> str:
+    def style(self) -> Optional[str]:
         f"""CSS styles for the loading screen that covers the plot area. Defaults to
         ``'{constants.DEFAULT_LOADING.get('style')}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._style
 
     @style.setter
     def style(self, value):
-        if value == '':
-            self._style = ''
-        else:
-            self._style = validators.string(value, allow_empty = True) or \
-                constants.DEFAULT_LOADING.get('style')
+        self._style = validators.string(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'hide_duration': as_dict.pop('hideDuration',
-                                         constants.DEFAULT_LOADING.get('hide_duration')),
-            'label_style': as_dict.pop('labelStyle',
-                                       constants.DEFAULT_LOADING.get('label_style')),
-            'show_duration': as_dict.pop('showDuration',
-                                         constants.DEFAULT_LOADING.get('show_duration')),
-            'style': as_dict.pop('style',
-                                 constants.DEFAULT_LOADING.get('style'))
+            'hide_duration': as_dict.pop('hideDuration', None),
+            'label_style': as_dict.pop('labelStyle', None),
+            'show_duration': as_dict.pop('showDuration', None),
+            'style': as_dict.pop('style', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'hideDuration': self.hide_duration,
             'labelStyle': self.label_style,
@@ -122,4 +108,4 @@ class Loading(HighchartsMeta):
             'style': self.style
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

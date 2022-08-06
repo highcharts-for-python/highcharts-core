@@ -205,7 +205,7 @@ class VectorLayoutAlgorithm(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'distance': self.distance,
             'gridSize': self.grid_size,
@@ -214,7 +214,7 @@ class VectorLayoutAlgorithm(HighchartsMeta):
             'type': self.type
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class ClusterOptions(HighchartsMeta):
@@ -261,7 +261,7 @@ class ClusterOptions(HighchartsMeta):
         self.zones = kwargs.pop('zones', None)
 
     @property
-    def allow_overlap(self) -> bool:
+    def allow_overlap(self) -> Optional[bool]:
         """If ``True``, clusters are allowed to overlap. Otherwise, overlapping is
         prevented. Defaults to ``True``.
 
@@ -271,7 +271,7 @@ class ClusterOptions(HighchartsMeta):
           :meth:`layout_algorithm.type <VectorLayoutAlgorithm.type>` is set to ``'grid'``.
 
         :returns: Flag indicating whether to allow clusters to overlap.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._allow_overlap
 
@@ -445,7 +445,7 @@ class ClusterOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'allowOverlap': self.allow_overlap,
             'animation': self.animation,
@@ -460,4 +460,4 @@ class ClusterOptions(HighchartsMeta):
             'zones': self.zones
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

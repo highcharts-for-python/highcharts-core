@@ -26,30 +26,30 @@ class ArcDiagramOptions(GenericTypeOptions):
     def __init__(self, **kwargs):
         self._border_color = None
         self._border_width = None
-        self._centered_links = False
-        self._color_by_point = True
+        self._centered_links = None
+        self._color_by_point = None
         self._color_index = None
         self._colors = None
-        self._equal_nodes = False
+        self._equal_nodes = None
         self._levels = None
-        self._link_opacity = 0.5
-        self._min_link_width = 0
-        self._node_width = 20
-        self._reversed = False
-        self._sticky_tracking = True
+        self._link_opacity = None
+        self._min_link_width = None
+        self._node_width = None
+        self._reversed = None
+        self._sticky_tracking = None
 
         self.border_color = kwargs.pop('border_color', None)
         self.border_width = kwargs.pop('border_width', None)
-        self.centered_links = kwargs.pop('centered_links', False)
-        self.color_by_point = kwargs.pop('color_by_point', True)
+        self.centered_links = kwargs.pop('centered_links', None)
+        self.color_by_point = kwargs.pop('color_by_point', None)
         self.color_index = kwargs.pop('color_index', None)
         self.colors = kwargs.pop('colors', None)
-        self.equal_nodes = kwargs.pop('equal_nodes', False)
+        self.equal_nodes = kwargs.pop('equal_nodes', None)
         self.levels = kwargs.pop('levels', None)
-        self.link_opacity = kwargs.pop('link_opacity', 0.5)
-        self.min_link_width = kwargs.pop('min_link_width', 0)
-        self.node_width = kwargs.pop('node_width', 20)
-        self.reversed = kwargs.pop('reversed', False)
+        self.link_opacity = kwargs.pop('link_opacity', None)
+        self.min_link_width = kwargs.pop('min_link_width', None)
+        self.node_width = kwargs.pop('node_width', None)
+        self.reversed = kwargs.pop('reversed', None)
         self.sticky_tracking = kwargs.pop('sticky_tracking', None)
 
         super(self).__init__(**kwargs)
@@ -111,33 +111,39 @@ class ArcDiagramOptions(GenericTypeOptions):
                                                 minimum = 0)
 
     @property
-    def centered_links(self) -> bool:
+    def centered_links(self) -> Optional[bool]:
         """The option to center links rather than position them one after another.
         Defaults to ``False``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._centered_links
 
     @centered_links.setter
     def centered_links(self, value):
-        self._centered_links = bool(value)
+        if value is None:
+            self._centered_links = None
+        else:
+            self._centered_links = bool(value)
 
     @property
-    def color_by_point(self) -> bool:
+    def color_by_point(self) -> Optional[bool]:
         """When using automatic point colors pulled from the global colors or
         series-specific collections, this option determines whether the chart should
         receive one color per series (``False``) or one color per point (``True``).
 
         Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._color_by_point
 
     @color_by_point.setter
     def color_by_point(self, value):
-        self._color_by_point = bool(value)
+        if value is None:
+            self._color_by_point = None
+        else:
+            self._color_by_point = bool(value)
 
     @property
     def color_index(self) -> Optional[int]:
@@ -185,20 +191,23 @@ class ArcDiagramOptions(GenericTypeOptions):
             self._colors = checked_values
 
     @property
-    def equal_nodes(self) -> bool:
+    def equal_nodes(self) -> Optional[bool]:
         """Whether nodes with different values should have the same size. Defaults to
         ``False``.
 
         If ``True``, all nodes are calculated based on the ``nodePadding`` and current
         plot area. It is possible to override it using the :meth:`Marker.radius` setting.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._equal_nodes
 
     @equal_nodes.setter
     def equal_nodes(self, value):
-        self._equal_nodes = bool(value)
+        if value is None:
+            self._equal_nodes = None
+        else:
+            self._equal_nodes = bool(value)
 
     @property
     def levels(self) -> Optional[List[LevelOptions]]:
@@ -261,17 +270,20 @@ class ArcDiagramOptions(GenericTypeOptions):
                                               minimum = 0)
 
     @property
-    def reversed(self) -> bool:
+    def reversed(self) -> Optional[bool]:
         """If ``True``, places the series on the other side of the plot area. Defaults to
         ``False``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._reversed
 
     @reversed.setter
     def reversed(self, value):
-        self._reversed = bool(value)
+        if value is None:
+            self._reversed = None
+        else:
+            self._reversed = bool(value)
 
     @property
     def sticky_tracking(self) -> Optional[bool]:
@@ -310,17 +322,17 @@ class ArcDiagramOptions(GenericTypeOptions):
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', False),
+            'allow_point_select': as_dict.pop('allowPointSelect', None),
             'animation': as_dict.pop('animation', None),
             'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', True),
+            'clip': as_dict.pop('clip', None),
             'color': as_dict.pop('color', None),
             'cursor': as_dict.pop('cursor', None),
             'custom': as_dict.pop('custom', None),
             'dash_style': as_dict.pop('dashStyle', None),
             'data_labels': as_dict.pop('dataLabels', None),
             'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', True),
+            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
             'events': as_dict.pop('events', None),
             'include_in_data_export': as_dict.pop('includeInDataExport', None),
             'keys': as_dict.pop('keys', None),
@@ -331,34 +343,34 @@ class ArcDiagramOptions(GenericTypeOptions):
             'opacity': as_dict.pop('opacity', None),
             'point': as_dict.pop('point', None),
             'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', False),
-            'show_checkbox': as_dict.pop('showCheckbox', False),
+            'selected': as_dict.pop('selected', None),
+            'show_checkbox': as_dict.pop('showCheckbox', None),
             'show_in_legend': as_dict.pop('showInLegend', None),
             'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
             'states': as_dict.pop('states', None),
             'threshold': as_dict.pop('threshold', None),
             'tooltip': as_dict.pop('tooltip', None),
             'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', True),
+            'visible': as_dict.pop('visible', None),
 
             'border_color': as_dict.pop('borderColor', None),
             'border_width': as_dict.pop('borderWidth', None),
-            'centered_links': as_dict.pop('centeredLinks', False),
-            'color_by_point': as_dict.pop('colorByPoint', True),
+            'centered_links': as_dict.pop('centeredLinks', None),
+            'color_by_point': as_dict.pop('colorByPoint', None),
             'color_index': as_dict.pop('colorIndex', None),
             'colors': as_dict.pop('colors', None),
-            'equal_nodes': as_dict.pop('equalNodes', False),
+            'equal_nodes': as_dict.pop('equalNodes', None),
             'levels': as_dict.pop('levels', None),
-            'link_opacity': as_dict.pop('linkOpacity', 0.5),
-            'min_link_width': as_dict.pop('minLinkWidth', 0),
-            'node_width': as_dict.pop('nodeWidth', 20),
-            'reversed': as_dict.pop('reversed', False),
+            'link_opacity': as_dict.pop('linkOpacity', None),
+            'min_link_width': as_dict.pop('minLinkWidth', None),
+            'node_width': as_dict.pop('nodeWidth', None),
+            'reversed': as_dict.pop('reversed', None),
             'sticky_tracking': as_dict.pop('stickyTracking', None)
         }
 
         return kwargs
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'borderColor': self.border_color,
             'borderWidth': self.border_width,
@@ -374,9 +386,9 @@ class ArcDiagramOptions(GenericTypeOptions):
             'reversed': self.reversed,
             'stickyTracking': self.sticky_tracking
         }
-        parent_as_dict = super(self).to_dict()
+        parent_as_dict = super(self)._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

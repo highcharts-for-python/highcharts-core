@@ -56,30 +56,23 @@ class AccessibilityLanguageOptions(HighchartsMeta):
 
         self.announce_new_data = kwargs.pop('announce_new_data', None)
         self.axis = kwargs.pop('axis', None)
-        self.chart_container_label = kwargs.pop('chart_container_label',
-                                                constants.DEFAULT_LANG_ACCESSIBILITY_CHART_CONTAINER_LABEL)
+        self.chart_container_label = kwargs.pop('chart_container_label', None)
         self.chart_types = kwargs.pop('chart_types', None)
-        self.credits = kwargs.pop('credits', constants.DEFAULT_LANG_ACCESSIBILITY_CREDITS)
-        self.default_chart_title = kwargs.pop('default_chart_title',
-                                              constants.DEFAULT_LANG_ACCESSIBILITY_DEFAULT_CHART_TITLE)
-        self.drillup_button = kwargs.pop('drillup_button',
-                                         constants.DEFAULT_LANG_ACCESSIBILITY_DRILLUP_BUTTON)
+        self.credits = kwargs.pop('credits', None)
+        self.default_chart_title = kwargs.pop('default_chart_title', None)
+        self.drillup_button = kwargs.pop('drillup_button', None)
         self.exporting = kwargs.pop('exporting', None)
-        self.graphic_container_label = kwargs.pop('graphic_container_label',
-                                                  constants.DEFAULT_LANG_ACCESSIBILITY_GRAPHIC_CONTAINER_LABEL)
+        self.graphic_container_label = kwargs.pop('graphic_container_label', None)
         self.legend = kwargs.pop('legend', None)
         self.range_selector = kwargs.pop('range_selector', None)
         self.screen_reader_section = kwargs.pop('screen_reader_section', None)
         self.series = kwargs.pop('series', None)
         self.series_type_description = kwargs.pop('series_type_description', None)
         self.sonification = kwargs.pop('sonification', None)
-        self.svg_container_label = kwargs.pop('svg_container_label',
-                                              constants.DEFAULT_LANG_ACCESSIBILITY_SVG_CONTAINER_LABEL)
-        self.svg_container_title = kwargs.pop('svg_container_title',
-                                              constants.DEFAULT_LANG_ACCESSIBILITY_SVG_CONTAINER_TITLE)
+        self.svg_container_label = kwargs.pop('svg_container_label', None)
+        self.svg_container_title = kwargs.pop('svg_container_title', None)
         self.table = kwargs.pop('table', None)
-        self.thousands_separator = kwargs.pop('thousands_separator',
-                                              constants.DEFAULT_LANG_ACCESSIBILITY_THOUSANDSSEP)
+        self.thousands_separator = kwargs.pop('thousands_separator', None)
         self.zoom = kwargs.pop('zoom', None)
 
     @property
@@ -121,18 +114,17 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         self._axis = value
 
     @property
-    def chart_container_label(self) -> str:
+    def chart_container_label(self) -> Optional[str]:
         f"""Label applied to the chart container. Defaults to
         ``'{constants.DEFAULT_LANG_ACCESSIBILITY_CHART_CONTAINER_LABEL}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._chart_container_label
 
     @chart_container_label.setter
     def chart_container_label(self, value):
-        self._chart_container_label = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_ACCESSIBILITY_CHART_CONTAINER_LABEL
+        self._chart_container_label = validators.string(value, allow_empty = True)
 
     @property
     def chart_types(self) -> Optional[ChartTypesLanguageOptions]:
@@ -157,46 +149,43 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         self._chart_types = value
 
     @property
-    def credits(self) -> str:
+    def credits(self) -> Optional[str]:
         f"""Content of the credits section. Defaults to:
         ``'{constants.DEFAULT_LANG_ACCESSIBILITY_CREDITS}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._credits
 
     @credits.setter
     def credits(self, value):
-        self._credits = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_ACCESSIBILITY_CREDITS
+        self._credits = validators.string(value, allow_empty = True)
 
     @property
-    def default_chart_title(self) -> str:
+    def default_chart_title(self) -> Optional[str]:
         """The default title applied ot the chart. Defaults to
         ``'{constants.DEFAULT_LANG_ACCESSIBILITY_DEFAULT_CHART_TITLE}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._default_chart_title
 
     @default_chart_title.setter
     def default_chart_title(self, value):
-        self._default_chart_title = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_ACCESSIBILITY_DEFAULT_CHART_TITLE
+        self._default_chart_title = validators.string(value, allow_empty = True)
 
     @property
-    def drillup_button(self) -> str:
+    def drillup_button(self) -> Optional[str]:
         f"""String for the drill-up button. Defaults to
         ``'{constants.DEFAULT_LANG_ACCESSIBILITY_DRILLUP_BUTTON}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._drillup_button
 
     @drillup_button.setter
     def drillup_button(self, value):
-        self._drillup_button = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_ACCESSIBILITY_DRILLUP_BUTTON
+        self._drillup_button = validators.string(value, allow_empty = True)
 
     @property
     def exporting(self) -> Optional[ExportingLanguageOptions]:
@@ -212,19 +201,18 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         self._exporting = value
 
     @property
-    def graphic_container_label(self) -> str:
+    def graphic_container_label(self) -> Optional[str]:
         f"""Set a label on the container wrapping the SVG. Defaults to
         ``'{constants.DEFAULT_LANG_ACCESSIBILITY_GRAPHIC_CONTAINER_LABEL}'`` (an empty
         string).
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._graphic_container_label
 
     @graphic_container_label.setter
     def graphic_container_label(self, value):
-        self._graphic_container_label = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_ACCESSIBILITY_GRAPHIC_CONTAINER_LABEL
+        self._graphic_container_label = validators.string(value, allow_empty = True)
 
     @property
     def legend(self) -> Optional[LegendLanguageOptions]:
@@ -313,21 +301,20 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         self._sonification = value
 
     @property
-    def svg_container_label(self) -> str:
+    def svg_container_label(self) -> Optional[str]:
         f"""Set a label on the container wrapping the SVG. Defaults to
         ``'{constants.DEFAULT_LANG_ACCESSIBILITY_SVG_CONTAINER_LABEL}'``.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._svg_container_label
 
     @svg_container_label.setter
     def svg_container_label(self, value):
-        self._svg_container_label = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_ACCESSIBILITY_SVG_CONTAINER_LABEL
+        self._svg_container_label = validators.string(value, allow_empty = True)
 
     @property
-    def svg_container_title(self) -> str:
+    def svg_container_title(self) -> Optional[str]:
         f"""Title element text for the chart SVG element. Defaults to
         ``'{constants.DEFAULT_LANG_ACCESSIBILITY_SVG_CONTAINER_TITLE}'`` (an empty
         string).
@@ -338,14 +325,13 @@ class AccessibilityLanguageOptions(HighchartsMeta):
           content when hovering over elements in the chart. Assistive technology may use
           this element to label the chart.
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._svg_container_title
 
     @svg_container_title.setter
     def svg_container_title(self, value):
-        self._svg_container_title = validators.string(value, allow_empty = True) or \
-            constants.DEFAULT_LANG_ACCESSIBILITY_SVG_CONTAINER_TITLE
+        self._svg_container_title = validators.string(value, allow_empty = True)
 
     @property
     def table(self) -> Optional[TableLanguageOptions]:
@@ -362,7 +348,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         self._table = value
 
     @property
-    def thousands_separator(self) -> str | constants.EnforcedNullType:
+    def thousands_separator(self) -> Optional[str | constants.EnforcedNullType]:
         f"""Thousands separator to use when formatting numbers for screen readers.
         Defaults to ``'{constants.DEFAULT_LANG_ACCESSIBILITY_THOUSANDSSEP}'``.
 
@@ -374,13 +360,16 @@ class AccessibilityLanguageOptions(HighchartsMeta):
           Note that many screen readers will not handle an empty space as a thousands
           separator, and will consider "11 700" as two numbers.
 
-        :rtype: :class:`str <python:str>` or :class:`EnforcedNullType`
+        :rtype: :class:`str <python:str>` or :class:`EnforcedNullType` or
+          :obj:`None <python:None>`
         """
         return self._thousands_separator
 
     @thousands_separator.setter
     def thousands_separator(self, value):
         if not value:
+            self._thousands_separator = None
+        elif isinstance(value, constants.EnforcedNullType):
             self._thousands_separator = constants.EnforcedNull
         else:
             self._thousands_separator = validators.string(value, allow_empty = True)
@@ -404,36 +393,29 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         kwargs = {
             'announce_new_data': as_dict.pop('announceNewData', None),
             'axis': as_dict.pop('axis', None),
-            'chart_container_label': as_dict.pop('chartContainerLabel',
-                                                 constants.DEFAULT_LANG_ACCESSIBILITY_CHART_CONTAINER_LABEL),
+            'chart_container_label': as_dict.pop('chartContainerLabel', None),
             'chart_types': as_dict.pop('chartTypes', None),
-            'credits': as_dict.pop('credits', constants.DEFAULT_LANG_ACCESSIBILITY_CREDITS),
-            'default_chart_title': as_dict.pop('defaultChartTitle',
-                                               constants.DEFAULT_LANG_ACCESSIBILITY_DEFAULT_CHART_TITLE),
-            'drillup_button': as_dict.pop('drillUpButton',
-                                          constants.DEFAULT_LANG_ACCESSIBILITY_DRILLUP_BUTTON),
+            'credits': as_dict.pop('credits', None),
+            'default_chart_title': as_dict.pop('defaultChartTitle', None),
+            'drillup_button': as_dict.pop('drillUpButton', None),
             'exporting': as_dict.pop('exporting', None),
-            'graphic_container_label': as_dict.pop('graphicContainerLabel',
-                                                   constants.DEFAULT_LANG_ACCESSIBILITY_GRAPHIC_CONTAINER_LABEL),
+            'graphic_container_label': as_dict.pop('graphicContainerLabel', None),
             'legend': as_dict.pop('legend', None),
             'range_selector': as_dict.pop('rangeSelector', None),
             'screen_reader_section': as_dict.pop('screenReaderSection', None),
             'series': as_dict.pop('series', None),
             'series_type_description': as_dict.pop('seriesTypeDescription', None),
             'sonification': as_dict.pop('sonification', None),
-            'svg_container_label': as_dict.pop('svgContainerLabel',
-                                               constants.DEFAULT_LANG_ACCESSIBILITY_SVG_CONTAINER_LABEL),
-            'svg_container_title': as_dict.pop('svgContainerTitle',
-                                               constants.DEFAULT_LANG_ACCESSIBILITY_SVG_CONTAINER_TITLE),
+            'svg_container_label': as_dict.pop('svgContainerLabel', None),
+            'svg_container_title': as_dict.pop('svgContainerTitle', None),
             'table': as_dict.pop('table', None),
-            'thousands_separator': as_dict.pop('thousandsSep',
-                                               constants.DEFAULT_LANG_ACCESSIBILITY_THOUSANDSSEP),
+            'thousands_separator': as_dict.pop('thousandsSep', None),
             'zoom': as_dict.pop('zoom', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'announceNewData': self.announce_new_data,
             'axis': self.axis,
@@ -457,4 +439,4 @@ class AccessibilityLanguageOptions(HighchartsMeta):
             'zoom': self.zoom
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

@@ -3,7 +3,7 @@ from typing import Optional
 from validator_collection import validators
 
 from highcharts.metaclasses import HighchartsMeta
-from highcharts import errors, constants
+from highcharts import constants
 
 
 class AccessibilityPoint(HighchartsMeta):
@@ -12,20 +12,19 @@ class AccessibilityPoint(HighchartsMeta):
     def __init__(self, **kwargs):
         self._date_format = None
         self._date_formatter = None
-        self._describe_null = True
+        self._describe_null = None
         self._description_formatter = None
         self._value_decimals = None
-        self._value_description_format = constants.DEFAULT_ACCESSIBILITY_POINT_VALUE_FORMAT
+        self._value_description_format = None
         self._value_prefix = None
         self._value_suffix = None
 
         self.date_format = kwargs.pop('date_format', None)
         self.date_formatter = kwargs.pop('date_formatter', None)
-        self.describe_null = kwargs.pop('describe_null', True)
+        self.describe_null = kwargs.pop('describe_null', None)
         self.description_formatter = kwargs.pop('description_formatter', None)
         self.value_decimals = kwargs.pop('value_decimals', None)
-        self.value_description_format = kwargs.pop('value_description_format',
-                                                   constants.DEFAULT_ACCESSIBILITY_POINT_VALUE)
+        self.value_description_format = kwargs.pop('value_description_format', None)
         self.value_prefix = kwargs.pop('value_prefix', None)
         self.value_suffix = kwargs.pop('value_suffix', None)
 
@@ -70,7 +69,7 @@ class AccessibilityPoint(HighchartsMeta):
         self._date_formatter = validators.string(value, allow_empty = True)
 
     @property
-    def describe_null(self) -> bool:
+    def describe_null(self) -> Optional[bool]:
         """If ``True``, will describe points with the value ``null`` to assistive
         technology (e.g. screen readers).
 
@@ -78,13 +77,16 @@ class AccessibilityPoint(HighchartsMeta):
 
         :returns: Flag indicating whether to describe points with the value ``null`` to
           assistive technology.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._describe_null
 
     @describe_null.setter
     def describe_null(self, value):
-        self._describe_null = bool(value)
+        if value is None:
+            self._describe_null = None
+        else:
+            self._describe_null = bool(value)
 
     @property
     def description_formatter(self) -> Optional[str]:
@@ -196,17 +198,16 @@ class AccessibilityPoint(HighchartsMeta):
         kwargs = {
             'date_format': as_dict.pop('dateFormat', None),
             'date_formatter': as_dict.pop('dateFormatter', None),
-            'describe_null': as_dict.pop('describeNull', True),
+            'describe_null': as_dict.pop('describeNull', None),
             'description_formatter': as_dict.pop('descriptionFormatter', None),
             'value_decimals': as_dict.pop('valueDecimals', None),
-            'value_description_format': as_dict.pop('valueDescriptionFormat',
-                                                    constants.DEFAULT_ACCESSIBILITY_POINT_VALUE_FORMAT),
+            'value_description_format': as_dict.pop('valueDescriptionFormat', None),
             'value_prefix': as_dict.pop('valuePrefix', None),
             'value_suffix': as_dict.pop('valueSuffix', None)
         }
         return cls(**kwargs)
 
-    def to_dict(self, encoding = 'utf-8'):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'dateFormat': self.date_format,
             'dateFormatter': self.date_formatter,
@@ -217,6 +218,5 @@ class AccessibilityPoint(HighchartsMeta):
             'valuePrefix': self.value_prefix,
             'valueSuffix': self.value_suffix
         }
-        as_dict = self.trim_dict(untrimmed)
 
-        return as_dict
+        return untrimmed

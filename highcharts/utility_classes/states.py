@@ -17,15 +17,15 @@ class HoverState(HighchartsMeta):
     def __init__(self, **kwargs):
         self._animation = None
         self._border_color = None
-        self._brightness = 0.1
+        self._brightness = None
         self._color = None
-        self._enabled = True
+        self._enabled = None
 
         self.animation = kwargs.pop('animation', None)
         self.border_color = kwargs.pop('border_color', None)
-        self.brightness = kwargs.pop('brightness', 0.1)
+        self.brightness = kwargs.pop('brightness', None)
         self.color = kwargs.pop('color', None)
-        self.enabled = kwargs.pop('enabled', True)
+        self.enabled = kwargs.pop('enabled', None)
 
     @property
     def animation(self) -> Optional[AnimationOptions]:
@@ -168,14 +168,14 @@ class HoverState(HighchartsMeta):
         kwargs = {
             'animation': as_dict.pop('animation', None),
             'border_color': as_dict.pop('borderColor', None),
-            'brightness': as_dict.pop('brightness', 0.1),
+            'brightness': as_dict.pop('brightness', None),
             'color': as_dict.pop('color', None),
-            'enabled': as_dict.pop('enabled', True)
+            'enabled': as_dict.pop('enabled', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'animation': self.animation,
             'borderColor': self.border_color,
@@ -184,7 +184,7 @@ class HoverState(HighchartsMeta):
             'enabled': self.enabled
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class InactiveState(HighchartsMeta):
@@ -192,12 +192,12 @@ class InactiveState(HighchartsMeta):
 
     def __init__(self, **kwargs):
         self._animation = None
-        self._enabled = True
-        self._opacity = 0.2
+        self._enabled = None
+        self._opacity = None
 
         self.animation = kwargs.pop('animation', None)
-        self.enabled = kwargs.pop('enabled', True)
-        self.opacity = kwargs.pop('opacity', 0.2)
+        self.enabled = kwargs.pop('enabled', None)
+        self.opacity = kwargs.pop('opacity', None)
 
     @property
     def animation(self) -> Optional[AnimationOptions]:
@@ -243,20 +243,20 @@ class InactiveState(HighchartsMeta):
     def from_dict(cls, as_dict):
         kwargs = {
             'animation': as_dict.pop('animation', None),
-            'enabled': as_dict.pop('enabled', True),
-            'opacity': as_dict.pop('opacity', 0.2)
+            'enabled': as_dict.pop('enabled', None),
+            'opacity': as_dict.pop('opacity', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'animation': self.animation,
             'enabled': self.enabled,
             'opacity': self.opacity
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class NormalState(HighchartsMeta):
@@ -293,12 +293,12 @@ class NormalState(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'animation': self.animation
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class SelectState(HighchartsMeta):
@@ -309,12 +309,12 @@ class SelectState(HighchartsMeta):
         self._animation = None
         self._border_color = None
         self._color = None
-        self._enabled = True
+        self._enabled = None
 
         self.animation = kwargs.pop('animation', None)
-        self.border_color = kwargs.pop('border_color', '#000000')
-        self.color = kwargs.pop('color', '#cccccc')
-        self.enabled = kwargs.pop('enabled', True)
+        self.border_color = kwargs.pop('border_color', None)
+        self.color = kwargs.pop('color', None)
+        self.enabled = kwargs.pop('enabled', None)
 
     @property
     def animation(self) -> Optional[AnimationOptions]:
@@ -441,14 +441,14 @@ class SelectState(HighchartsMeta):
     def from_dict(cls, as_dict):
         kwargs = {
             'animation': as_dict.pop('animation', None),
-            'border_color': as_dict.pop('borderColor', '#000000'),
-            'color': as_dict.pop('color', '#cccccc'),
-            'enabled': as_dict.pop('enabled', True)
+            'border_color': as_dict.pop('borderColor', None),
+            'color': as_dict.pop('color', None),
+            'enabled': as_dict.pop('enabled', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'animation': self.animation,
             'borderColor': self.border_color,
@@ -456,7 +456,7 @@ class SelectState(HighchartsMeta):
             'enabled': self.enabled
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class States(HighchartsMeta):
@@ -548,7 +548,7 @@ class States(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'hover': self.hover,
             'inactive': self.inactive,
@@ -556,4 +556,4 @@ class States(HighchartsMeta):
             'select': self.select
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

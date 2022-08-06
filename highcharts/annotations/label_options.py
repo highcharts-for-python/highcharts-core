@@ -42,13 +42,12 @@ class AnnotationLabelOptionAccessibility(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'description': self.description
         }
-        as_dict = self.trim_dict(untrimmed)
 
-        return as_dict
+        return untrimmed
 
 
 class LabelOptions(HighchartsMeta):
@@ -56,57 +55,52 @@ class LabelOptions(HighchartsMeta):
 
     def __init__(self, **kwargs):
         self._accessibility = None
-        self._align = constants.DEFAULT_LABEL_ALIGN
-        self._allow_overlap = False
-        self._background_color = constants.DEFAULT_LABEL_BACKGROUND_COLOR
-        self._border_color = constants.DEFAULT_LABEL_BORDER_COLOR
-        self._border_radius = constants.DEFAULT_LABEL_BORDER_RADIUS
-        self._border_width = constants.DEFAULT_LABEL_BORDER_WIDTH
-        self._class_name = constants.DEFAULT_LABEL_CLASS_NAME
-        self._crop = False
+        self._align = None
+        self._allow_overlap = None
+        self._background_color = None
+        self._border_color = None
+        self._border_radius = None
+        self._border_width = None
+        self._class_name = None
+        self._crop = None
         self._distance = None
         self._format = None
         self._formatter = None
-        self._include_in_data_export = True
-        self._overflow = constants.DEFAULT_LABEL_OVERFLOW
-        self._padding = constants.DEFAULT_LABEL_PADDING
-        self._shadow = False
-        self._shape = constants.DEFAULT_LABEL_SHAPE
+        self._include_in_data_export = None
+        self._overflow = None
+        self._padding = None
+        self._shadow = None
+        self._shape = None
         self._style = None
         self._text = None
-        self._use_html = False
-        self._vertical_align = constants.DEFAULT_LABEL_VERTICAL_ALIGN
-        self._x = constants.DEFAULT_LABEL_X
-        self._y = constants.DEFAULT_LABEL_Y
+        self._use_html = None
+        self._vertical_align = None
+        self._x = None
+        self._y = None
 
         self.accessibility = kwargs.pop('accessibility', None)
-        self.align = kwargs.pop('align', constants.DEFAULT_LABEL_ALIGN)
-        self.allow_overlap = kwargs.pop('allow_overlap', False)
-        self.background_color = kwargs.pop('background_color',
-                                           constants.DEFAULT_LABEL_BACKGROUND_COLOR)
-        self.border_color = kwargs.pop('border_color',
-                                       constants.DEFAULT_LABEL_BORDER_COLOR)
-        self.border_radius = kwargs.pop('border_radius',
-                                        constants.DEFAULT_LABEL_BORDER_RADIUS)
-        self.border_width = kwargs.pop('border_width',
-                                       constants.DEFAULT_LABEL_BORDER_WIDTH)
-        self.class_name = kwargs.pop('class_name', constants.DEFAULT_LABEL_CLASS_NAME)
-        self.crop = kwargs.pop('crop', False)
+        self.align = kwargs.pop('align', None)
+        self.allow_overlap = kwargs.pop('allow_overlap', None)
+        self.background_color = kwargs.pop('background_color', None)
+        self.border_color = kwargs.pop('border_color', None)
+        self.border_radius = kwargs.pop('border_radius', None)
+        self.border_width = kwargs.pop('border_width', None)
+        self.class_name = kwargs.pop('class_name', None)
+        self.crop = kwargs.pop('crop', None)
         self.distance = kwargs.pop('distance', None)
         self.format = kwargs.pop('format', None)
         self.formatter = kwargs.pop('formatter', None)
-        self.include_in_data_export = kwargs.pop('include_in_data_export', True)
-        self.overflow = kwargs.pop('overflow', constants.DEFAULT_LABEL_OVERFLOW)
-        self.padding = kwargs.pop('padding', constants.DEFAULT_LABEL_PADDING)
-        self.shadow = kwargs.pop('shadow', False)
-        self.shape = kwargs.pop('shape', constants.DEFAULT_LABEL_SHAPE)
+        self.include_in_data_export = kwargs.pop('include_in_data_export', None)
+        self.overflow = kwargs.pop('overflow', None)
+        self.padding = kwargs.pop('padding', None)
+        self.shadow = kwargs.pop('shadow', None)
+        self.shape = kwargs.pop('shape', None)
         self.style = kwargs.pop('style', None)
         self.text = kwargs.pop('text', None)
-        self.use_html = kwargs.pop('use_html', False)
-        self.vertical_align = kwargs.pop('vertical_align',
-                                         constants.DEFAULT_LABEL_VERTICAL_ALIGN)
-        self.x = kwargs.pop('x', constants.DEFAULT_LABEL_X)
-        self.y = kwargs.pop('y', constants.DEFAULT_LABEL_Y)
+        self.use_html = kwargs.pop('use_html', None)
+        self.vertical_align = kwargs.pop('vertical_align', None)
+        self.x = kwargs.pop('x', None)
+        self.y = kwargs.pop('y', None)
 
     @property
     def accessibility(self) -> Optional[AnnotationLabelOptionAccessibility]:
@@ -123,7 +117,7 @@ class LabelOptions(HighchartsMeta):
         self._accessibility = value
 
     @property
-    def align(self) -> str:
+    def align(self) -> Optional[str]:
         f"""The alignment of the annotation's label. Defaults to
         ``'{constants.DEFAULT_LABEL_ALIGN}'``.
 
@@ -138,34 +132,40 @@ class LabelOptions(HighchartsMeta):
           If right, the right side of the label should be touching the point.
 
         :returns: The alignment of the annotation's label.
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._align
 
     @align.setter
     def align(self, value):
-        value = validators.string(value, allow_empty = False)
-        value = value.lower()
-        if value not in ['left', 'center', 'right']:
-            raise errors.HighchartsValueError(f'align must be either "left", "center", or '
-                                              f'"right". Was: {value}')
+        if not value:
+            self._align = None
+        else:
+            value = validators.string(value, allow_empty = False)
+            value = value.lower()
+            if value not in ['left', 'center', 'right']:
+                raise errors.HighchartsValueError(f'align must be either "left", '
+                                                  f'"center", or "right". Was: {value}')
 
-        self._align = value
+            self._align = value
 
     @property
-    def allow_overlap(self) -> bool:
+    def allow_overlap(self) -> Optional[bool]:
         """If ``True``, annotation labels are allowed to overlap each other.
 
         Defaults to ``False``.
 
         :returns: Flag indicating whether to allow annotation labels to overlap.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._allow_overlap
 
     @allow_overlap.setter
     def allow_overlap(self, value):
-        self._allow_overlap = bool(value)
+        if value is None:
+            self._allow_overlap = None
+        else:
+            self._allow_overlap = bool(value)
 
     @property
     def background_color(self) -> Optional[str | Gradient | Pattern]:
@@ -266,19 +266,22 @@ class LabelOptions(HighchartsMeta):
         self._class_name = validators.string(value, allow_empty = True)
 
     @property
-    def crop(self) -> bool:
+    def crop(self) -> Optional[bool]:
         """If ``True``, hide part of the annotation label that falls outside the plot
         area. Defaults to ``False``.
 
         :returns: Flag indicating whether to clip an annotation label that extends beyond
           the plot area.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._crop
 
     @crop.setter
     def crop(self, value):
-        self._crop = bool(value)
+        if value is None:
+            self._crop = None
+        else:
+            self._crop = bool(value)
 
     @property
     def distance(self) -> Optional[int | float | Decimal]:
@@ -336,19 +339,22 @@ class LabelOptions(HighchartsMeta):
         self._formatter = validators.string(value, allow_empty = True)
 
     @property
-    def include_in_data_export(self) -> bool:
+    def include_in_data_export(self) -> Optional[bool]:
         """If ``True``, the annotation is visible in the exported data table. Defaults to
         ``True``.
 
         :returns: Flag indicating whether to include the annotation label in the chart's
           exported data table.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._include_in_data_export
 
     @include_in_data_export.setter
     def include_in_data_export(self, value):
-        self._include_in_data_export = bool(value)
+        if value is None:
+            self._include_in_data_export = None
+        else:
+            self._include_in_data_export = bool(value)
 
     @property
     def overflow(self) -> Optional[str]:
@@ -399,22 +405,23 @@ class LabelOptions(HighchartsMeta):
         self._padding = validators.numeric(value, allow_empty = True)
 
     @property
-    def shadow(self) -> bool | ShadowOptions:
+    def shadow(self) -> Optional[bool | ShadowOptions]:
         """Configuration for the shadow to apply to the annotation box. Defaults to
         ``False``.
 
         If ``False``, no shadow is applied.
 
         :returns: The shadow configuration to apply or ``False``.
-        :rtype: :class:`bool <python:bool>` or :class:`ShadowOptions`
+        :rtype: :class:`bool <python:bool>` or :class:`ShadowOptions` or
+          :obj:`None <python:None>`
         """
         return self._shadow
 
     @shadow.setter
     def shadow(self, value):
-        if isinstance(value, bool) and value is False:
-            self._shadow = False
-        elif not value:
+        if value is None:
+            self._shadow = None
+        elif isinstance(value, bool) and value is False:
             self._shadow = False
         else:
             value = validate_types(value,
@@ -422,7 +429,7 @@ class LabelOptions(HighchartsMeta):
             self._shadow = value
 
     @property
-    def shape(self) -> str:
+    def shape(self) -> Optional[str]:
         f"""The name of the symbol to use for the border around the label. Defaults to
         ``'{constants.DEFAULT_LABEL_SHAPE}'``.
 
@@ -436,23 +443,26 @@ class LabelOptions(HighchartsMeta):
           * ``'callout'``
 
         :returns: The shape to use for the border around the label.
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._shape
 
     @shape.setter
     def shape(self, value):
-        value = validators.string(value, allow_empty = False)
-        value = value.lower()
-        if value not in ['callout',
-                         'connector',
-                         'rect',
-                         'circle',
-                         'diamond',
-                         'triangle']:
-            raise errors.HighchartsValueError(f'shape expects a supported annotation '
-                                              f'label shape. Was: {value}')
-        self._shape = value
+        if not value:
+            self._shape = None
+        else:
+            value = validators.string(value, allow_empty = False)
+            value = value.lower()
+            if value not in ['callout',
+                             'connector',
+                             'rect',
+                             'circle',
+                             'diamond',
+                             'triangle']:
+                raise errors.HighchartsValueError(f'shape expects a supported annotation '
+                                                  f'label shape. Was: {value}')
+            self._shape = value
 
     @property
     def style(self) -> Optional[str]:
@@ -480,20 +490,23 @@ class LabelOptions(HighchartsMeta):
         self.format = value
 
     @property
-    def use_html(self) -> bool:
+    def use_html(self) -> Optional[bool]:
         """If ``True``, will use HTML to render the annotation's label. If ``False``, will
         use SVG or WebGL as applicable.
 
         Defaults to ``False``.
 
         :returns: Flag indicating whether to render annotation labels using HTML.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._use_html
 
     @use_html.setter
     def use_html(self, value):
-        self._use_html = bool(value)
+        if value is None:
+            self._use_html = None
+        else:
+            self._use_html = bool(value)
 
     @property
     def vertical_align(self) -> Optional[str]:
@@ -523,7 +536,7 @@ class LabelOptions(HighchartsMeta):
             self._vertical_align = value
 
     @property
-    def x(self) -> int:
+    def x(self) -> Optional[int]:
         f"""The x position offset of the label relative to the point. Defaults to
         ``{constants.DEFAULT_LABEL_X}``.
 
@@ -531,20 +544,16 @@ class LabelOptions(HighchartsMeta):
 
           If a :meth:`LabelOptions.distance` is defined, the distance takes precedence.
 
-        :rtype: numeric
+        :rtype: numeric or :obj:`None <python:None>`
         """
         return self._x
 
     @x.setter
     def x(self, value):
-        value = validators.numeric(value, allow_empty = True)
-        if value is None:
-            self._x = 0
-        else:
-            self._x = value
+        self._x = validators.numeric(value, allow_empty = True)
 
     @property
-    def y(self) -> int:
+    def y(self) -> Optional[int]:
         f"""The y position offset of the label relative to the point. Defaults to
         ``{constants.DEFAULT_LABEL_Y}``.
 
@@ -552,58 +561,45 @@ class LabelOptions(HighchartsMeta):
 
           If a :meth:`LabelOptions.distance` is defined, the distance takes precedence.
 
-        :rtype: numeric
+        :rtype: numeric or :obj:`None <python:None>`
         """
         return self._y
 
     @y.setter
     def y(self, value):
-        value = validators.numeric(value, allow_empty = True)
-        if value is None:
-            self._y = 0
-        else:
-            self._y = value
+        self._y = validators.numeric(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.pop('accessibility', None),
-            'align': as_dict.pop('align',
-                                 constants.DEFAULT_LABEL_ALIGN),
-            'allow_overlap': as_dict.pop('allowOverlap', False),
-            'background_color': as_dict.pop('backgroundColor',
-                                            constants.DEFAULT_LABEL_BACKGROUND_COLOR),
-            'border_color': as_dict.pop('borderColor',
-                                        constants.DEFAULT_LABEL_BORDER_COLOR),
-            'border_radius': as_dict.pop('borderRadius',
-                                         constants.DEFAULT_LABEL_BORDER_RADIUS),
-            'border_width': as_dict.pop('borderWidth',
-                                        constants.DEFAULT_LABEL_BORDER_WIDTH),
-            'class_name': as_dict.pop('className',
-                                      constants.DEFAULT_LABEL_CLASS_NAME),
-            'crop': as_dict.pop('crop', False),
+            'align': as_dict.pop('align', None),
+            'allow_overlap': as_dict.pop('allowOverlap', None),
+            'background_color': as_dict.pop('backgroundColor', None),
+            'border_color': as_dict.pop('borderColor', None),
+            'border_radius': as_dict.pop('borderRadius', None),
+            'border_width': as_dict.pop('borderWidth', None),
+            'class_name': as_dict.pop('className', None),
+            'crop': as_dict.pop('crop', None),
             'distance': as_dict.pop('distance', None),
             'format': as_dict.pop('format', None),
-            'formatter': as_dict.pop('formatter',
-                                     constants.DEFAULT_LABEL_FORMATTER),
-            'include_in_data_export': as_dict.pop('includeInDataExport', True),
-            'overflow': as_dict.pop('overflow',
-                                    constants.DEFAULT_LABEL_OVERFLOW),
-            'padding': as_dict.pop('padding', constants.DEFAULT_LABEL_PADDING),
-            'shadow': as_dict.pop('shadow', False),
-            'shape': as_dict.pop('shape', constants.DEFAULT_LABEL_SHAPE),
+            'formatter': as_dict.pop('formatter', None),
+            'include_in_data_export': as_dict.pop('includeInDataExport', None),
+            'overflow': as_dict.pop('overflow', None),
+            'padding': as_dict.pop('padding', None),
+            'shadow': as_dict.pop('shadow', None),
+            'shape': as_dict.pop('shape', None),
             'style': as_dict.pop('style', None),
             'text': as_dict.pop('text', None),
-            'use_html': as_dict.pop('useHTML', False),
-            'vertical_align': as_dict.pop('verticalAlign',
-                                          constants.DEFAULT_LABEL_VERTICAL_ALIGN),
-            'x': as_dict.pop('x', constants.DEFAULT_LABEL_X),
-            'y': as_dict.pop('y', constants.DEFAULT_LABEL_Y)
+            'use_html': as_dict.pop('useHTML', None),
+            'vertical_align': as_dict.pop('verticalAlign', None),
+            'x': as_dict.pop('x', None),
+            'y': as_dict.pop('y', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'align': self.align,
@@ -629,9 +625,8 @@ class LabelOptions(HighchartsMeta):
             'x': self.x,
             'y': self.y
         }
-        as_dict = self.trim_dict(untrimmed)
 
-        return as_dict
+        return untrimmed
 
 
 class AnnotationLabel(LabelOptions):
@@ -683,73 +678,46 @@ class AnnotationLabel(LabelOptions):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
+            # from LabelOptions
             'accessibility': as_dict.pop('accessibility', None),
-            'align': as_dict.pop('align',
-                                 constants.DEFAULT_LABEL_ALIGN),
-            'allow_overlap': as_dict.pop('allowOverlap', False),
-            'background_color': as_dict.pop('backgroundColor',
-                                            constants.DEFAULT_LABEL_BACKGROUND_COLOR),
-            'border_color': as_dict.pop('borderColor',
-                                        constants.DEFAULT_LABEL_BORDER_COLOR),
-            'border_radius': as_dict.pop('borderRadius',
-                                         constants.DEFAULT_LABEL_BORDER_RADIUS),
-            'border_width': as_dict.pop('borderWidth',
-                                        constants.DEFAULT_LABEL_BORDER_WIDTH),
-            'class_name': as_dict.pop('className',
-                                      constants.DEFAULT_LABEL_CLASS_NAME),
-            'crop': as_dict.pop('crop', False),
+            'align': as_dict.pop('align', None),
+            'allow_overlap': as_dict.pop('allowOverlap', None),
+            'background_color': as_dict.pop('backgroundColor', None),
+            'border_color': as_dict.pop('borderColor', None),
+            'border_radius': as_dict.pop('borderRadius', None),
+            'border_width': as_dict.pop('borderWidth', None),
+            'class_name': as_dict.pop('className', None),
+            'crop': as_dict.pop('crop', None),
             'distance': as_dict.pop('distance', None),
             'format': as_dict.pop('format', None),
-            'formatter': as_dict.pop('formatter',
-                                     constants.DEFAULT_LABEL_FORMATTER),
-            'include_in_data_export': as_dict.pop('includeInDataExport', True),
-            'overflow': as_dict.pop('overflow',
-                                    constants.DEFAULT_LABEL_OVERFLOW),
-            'padding': as_dict.pop('padding', constants.DEFAULT_LABEL_PADDING),
-            'point': as_dict.pop('point', None),
-            'shadow': as_dict.pop('shadow', False),
-            'shape': as_dict.pop('shape', constants.DEFAULT_LABEL_SHAPE),
+            'formatter': as_dict.pop('formatter', None),
+            'include_in_data_export': as_dict.pop('includeInDataExport', None),
+            'overflow': as_dict.pop('overflow', None),
+            'padding': as_dict.pop('padding', None),
+            'shadow': as_dict.pop('shadow', None),
+            'shape': as_dict.pop('shape', None),
             'style': as_dict.pop('style', None),
             'text': as_dict.pop('text', None),
-            'use_html': as_dict.pop('useHTML', False),
-            'vertical_align': as_dict.pop('verticalAlign',
-                                          constants.DEFAULT_LABEL_VERTICAL_ALIGN),
-            'x': as_dict.pop('x', constants.DEFAULT_LABEL_X),
-            'y': as_dict.pop('y', constants.DEFAULT_LABEL_Y)
+            'use_html': as_dict.pop('useHTML', None),
+            'vertical_align': as_dict.pop('verticalAlign', None),
+            'x': as_dict.pop('x', None),
+            'y': as_dict.pop('y', None),
+
+            # from AnnotationLabel
+            'point': as_dict.pop('point', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
-            'accessibility': self.accessibility,
-            'align': self.align,
-            'allowOverlap': self.allow_overlap,
-            'backgroundColor': self.background_color,
-            'borderColor': self.border_color,
-            'borderRadius': self.border_radius,
-            'borderWidth': self.border_width,
-            'className': self.class_name,
-            'crop': self.crop,
-            'distance': self.distance,
-            'format': self.format,
-            'formatter': self.formatter,
-            'includeInDataExport': self.include_in_data_export,
-            'overflow': self.overflow,
-            'padding': self.padding,
-            'point': self.point,
-            'shadow': self.shadow,
-            'shape': self.shape,
-            'style': self.style,
-            'text': self.text,
-            'useHTML': self.use_html,
-            'verticalAlign': self.vertical_align,
-            'x': self.x,
-            'y': self.y
+            'point': self.point
         }
-        as_dict = self.trim_dict(untrimmed)
+        parent_as_dict = super()._to_untrimmed_dict() or {}
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
 
-        return as_dict
+        return untrimmed
 
 
 __all__ = [

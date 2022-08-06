@@ -108,7 +108,7 @@ class ConnectionBase(DataBase):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -126,7 +126,7 @@ class ConnectionBase(DataBase):
             'to': self.to,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class ConnectionData(ConnectionBase):
@@ -239,17 +239,17 @@ class ConnectionData(ConnectionBase):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'dataLabels': self.data_labels,
             'dragDrop': self.drag_drop,
         }
 
-        parent_as_dict = super().to_dict() or {}
+        parent_as_dict = super()._to_untrimmed_dict() or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class WeightedConnectionData(ConnectionBase):
@@ -339,7 +339,7 @@ class WeightedConnectionData(ConnectionBase):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -359,7 +359,7 @@ class WeightedConnectionData(ConnectionBase):
             'weight': self.weight,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class OutgoingWeightedConnectionData(ConnectionBase):
@@ -455,13 +455,13 @@ class OutgoingWeightedConnectionData(ConnectionBase):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'outgoing': self.outgoing
         }
 
-        parent_as_dict = super().to_dict() or {}
+        parent_as_dict = super()._to_untrimmed_dict() or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

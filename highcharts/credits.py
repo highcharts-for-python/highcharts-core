@@ -12,13 +12,13 @@ class CreditStyleOptions(HighchartsMeta):
     """CSS styles that are applicable to the :class:`Credits` label."""
 
     def __init__(self, **kwargs):
-        self._color = kwargs.pop('color', '#999999')
-        self._cursor = kwargs.pop('cursor', 'pointer')
-        self._font_size = kwargs.pop('font_size', '9px')
+        self._color = kwargs.pop('color', None)
+        self._cursor = kwargs.pop('cursor', None)
+        self._font_size = kwargs.pop('font_size', None)
 
-        self.color = kwargs.pop('color', '#999999')
-        self.cursor = kwargs.pop('cursor', 'pointer')
-        self.font_size = kwargs.pop('font_size', '9px')
+        self.color = kwargs.pop('color', None)
+        self.cursor = kwargs.pop('cursor', None)
+        self.font_size = kwargs.pop('font_size', None)
 
     @property
     def color(self) -> Optional[str]:
@@ -66,14 +66,14 @@ class CreditStyleOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'color': self.color,
             'cursor': self.cursor,
             'fontSize': self.font_size
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class Credits(HighchartsMeta):
@@ -81,24 +81,24 @@ class Credits(HighchartsMeta):
     chart. This can be changed using these options."""
 
     def __init__(self, **kwargs):
-        self._enabled = True
+        self._enabled = None
         self._href = None
         self._position = None
         self._style = None
         self._text = None
 
-        self.enabled = kwargs.pop('enabled', True)
-        self.href = kwargs.pop('href', constants.DEFAULT_CREDITS_HREF)
-        self.position = kwargs.pop('position', Position())
-        self.style = kwargs.pop('style', constants.DEFAULT_CREDITS_STYLE)
-        self.text = kwargs.pop('text', constants.DEFAULTS_CREDIT_TEXT)
+        self.enabled = kwargs.pop('enabled', None)
+        self.href = kwargs.pop('href', None)
+        self.position = kwargs.pop('position', None)
+        self.style = kwargs.pop('style', None)
+        self.text = kwargs.pop('text', None)
 
     @property
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         """If ``True``, renders the credits text. Defaults to ``True``.
 
         :returns: Flag enabling or disabling credits.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
@@ -125,10 +125,10 @@ class Credits(HighchartsMeta):
             self._href = validators.path(value, allow_empty = True)
 
     @property
-    def position(self) -> Position:
-        """The position of the credits.
+    def position(self) -> Optional[Position]:
+        """The position of the credits. Defaults to :obj:`None <python:None>`.
 
-        :rtype: :class:`Position`
+        :rtype: :class:`Position` or :obj:`None <python:None>`
         """
         return self._position
 
@@ -181,7 +181,7 @@ class Credits(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'enabled': self.enabled,
             'href': self.href,
@@ -190,4 +190,4 @@ class Credits(HighchartsMeta):
             'text': self.text,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

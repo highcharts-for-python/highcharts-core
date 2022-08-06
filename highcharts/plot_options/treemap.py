@@ -70,21 +70,21 @@ class TreemapOptions(GenericTypeOptions):
         self.color_axis = kwargs.pop('color_axis', None)
         self.color_key = kwargs.pop('color_key', None)
         self.colors = kwargs.pop('colors', None)
-        self.crop_threshold = kwargs.pop('crop_threshold', 300)
+        self.crop_threshold = kwargs.pop('crop_threshold', None)
         self.find_nearest_point_by = kwargs.pop('find_nearest_point_by', None)
-        self.get_extremes_for_all = kwargs.pop('get_extremes_for_all', False)
-        self.ignore_hidden_point = kwargs.pop('ignore_hidden_point', True)
-        self.linecap = kwargs.pop('linecap', 'round')
-        self.line_width = kwargs.pop('line_width', 2)
+        self.get_extremes_for_all = kwargs.pop('get_extremes_for_all', None)
+        self.ignore_hidden_point = kwargs.pop('ignore_hidden_point', None)
+        self.linecap = kwargs.pop('linecap', None)
+        self.line_width = kwargs.pop('line_width', None)
         self.negative_color = kwargs.pop('negative_color', None)
-        self.point_interval = kwargs.pop('point_interval', 1)
+        self.point_interval = kwargs.pop('point_interval', None)
         self.point_interval_unit = kwargs.pop('point_interval_unit', None)
-        self.point_start = kwargs.pop('point_start', 0)
-        self.relative_x_value = kwargs.pop('relative_x_value', False)
-        self.soft_threshold = kwargs.pop('soft_threshold', True)
+        self.point_start = kwargs.pop('point_start', None)
+        self.relative_x_value = kwargs.pop('relative_x_value', None)
+        self.soft_threshold = kwargs.pop('soft_threshold', None)
         self.stacking = kwargs.pop('stacking', None)
         self.step = kwargs.pop('step', None)
-        self.zone_axis = kwargs.pop('zone_axis', 'y')
+        self.zone_axis = kwargs.pop('zone_axis', None)
         self.zones = kwargs.pop('zones', None)
 
         self.color_index = kwargs.pop('color_index', None)
@@ -244,20 +244,23 @@ class TreemapOptions(GenericTypeOptions):
                                                       minimum = 0)
 
     @property
-    def color_by_point(self) -> bool:
+    def color_by_point(self) -> Optional[bool]:
         """When using automatic point colors pulled from the global colors or
         series-specific collections, this option determines whether the chart should
         receive one color per series (``False``) or one color per point (``True``).
 
         Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._color_by_point
 
     @color_by_point.setter
     def color_by_point(self, value):
-        self._color_by_point = bool(value)
+        if value is None:
+            self._color_by_point = None
+        else:
+            self._color_by_point = bool(value)
 
     @property
     def color_index(self) -> Optional[int]:
@@ -840,17 +843,17 @@ class TreemapOptions(GenericTypeOptions):
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', False),
+            'allow_point_select': as_dict.pop('allowPointSelect', None),
             'animation': as_dict.pop('animation', None),
             'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', True),
+            'clip': as_dict.pop('clip', None),
             'color': as_dict.pop('color', None),
             'cursor': as_dict.pop('cursor', None),
             'custom': as_dict.pop('custom', None),
             'dash_style': as_dict.pop('dashStyle', None),
             'data_labels': as_dict.pop('dataLabels', None),
             'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', True),
+            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
             'events': as_dict.pop('events', None),
             'include_in_data_export': as_dict.pop('includeInDataExport', None),
             'keys': as_dict.pop('keys', None),
@@ -861,15 +864,15 @@ class TreemapOptions(GenericTypeOptions):
             'opacity': as_dict.pop('opacity', None),
             'point': as_dict.pop('point', None),
             'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', False),
-            'show_checkbox': as_dict.pop('showCheckbox', False),
+            'selected': as_dict.pop('selected', None),
+            'show_checkbox': as_dict.pop('showCheckbox', None),
             'show_in_legend': as_dict.pop('showInLegend', None),
             'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
             'states': as_dict.pop('states', None),
             'threshold': as_dict.pop('threshold', None),
             'tooltip': as_dict.pop('tooltip', None),
             'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', True),
+            'visible': as_dict.pop('visible', None),
 
             'animation_limit': as_dict.pop('animationLimit', None),
             'boost_blending': as_dict.pop('boostBlending', None),
@@ -879,8 +882,8 @@ class TreemapOptions(GenericTypeOptions):
             'colors': as_dict.pop('colors', None),
             'crop_threshold': as_dict.pop('cropThreshold', None),
             'find_nearest_point_by': as_dict.pop('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.pop('getExtremesForAll', False),
-            'ignore_hidden_point': as_dict.pop('ignoreHiddenPoint', True),
+            'get_extremes_for_all': as_dict.pop('getExtremesForAll', None),
+            'ignore_hidden_point': as_dict.pop('ignoreHiddenPoint', None),
             'linecap': as_dict.pop('linecap', None),
             'line_width': as_dict.pop('lineWidth', None),
             'negative_color': as_dict.pop('negativeColor', None),
@@ -912,7 +915,7 @@ class TreemapOptions(GenericTypeOptions):
 
         return kwargs
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'animationLimit': self.animation_limit,
             'boostBlending': self.boost_blending,
@@ -951,9 +954,9 @@ class TreemapOptions(GenericTypeOptions):
             'layoutStartingDirection': self.layout_starting_direction,
             'sortIndex': self.sort_index
         }
-        parent_as_dict = super(self).to_dict()
+        parent_as_dict = super(self)._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

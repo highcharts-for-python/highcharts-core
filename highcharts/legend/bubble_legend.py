@@ -15,7 +15,7 @@ class BubbleLegendLabelOptions(HighchartsMeta):
 
     def __init__(self, **kwargs):
         self._align = None
-        self._allow_overlap = False
+        self._allow_overlap = None
         self._class_name = None
         self._format = None
         self._formatter = None
@@ -23,17 +23,17 @@ class BubbleLegendLabelOptions(HighchartsMeta):
         self._x = None
         self._y = None
 
-        self.align = kwargs.pop('align', constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('align'))
-        self.allow_overlap = kwargs.pop('allow_overlap', constants.BUBBLE_LEGEND.get('label', {}).get('allow_overlap'))
-        self.class_name = kwargs.pop('class_name', constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('class_name'))
-        self.format = kwargs.pop('format', constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('format'))
+        self.align = kwargs.pop('align', None)
+        self.allow_overlap = kwargs.pop('allow_overlap', None)
+        self.class_name = kwargs.pop('class_name', None)
+        self.format = kwargs.pop('format', None)
         self.formatter = kwargs.pop('formatter', None)
-        self.style = kwargs.pop('style', constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('style'))
-        self.x = kwargs.pop('x', constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('x'))
-        self.y = kwargs.pop('y', constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('y'))
+        self.style = kwargs.pop('style', None)
+        self.x = kwargs.pop('x', None)
+        self.y = kwargs.pop('y', None)
 
     @property
-    def align(self) -> str:
+    def align(self) -> Optional[str]:
         f"""The alignment of the labels relative to the bubble legend. Defaults to
         ``'{constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('align')}'``.
 
@@ -44,34 +44,40 @@ class BubbleLegendLabelOptions(HighchartsMeta):
           * ``'right'``
 
         :returns: The alignment of the annotation's label.
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._align
 
     @align.setter
     def align(self, value):
-        value = validators.string(value, allow_empty = False)
-        value = value.lower()
-        if value not in ['left', 'center', 'right']:
-            raise errors.HighchartsValueError(f'align must be either "left", "center", or'
-                                              f' "right". Was: {value}')
+        if not value:
+            self._align = None
+        else:
+            value = validators.string(value, allow_empty = True)
+            value = value.lower()
+            if value not in ['left', 'center', 'right']:
+                raise errors.HighchartsValueError(f'align must be either "left", "center"'
+                                                  f', or "right". Was: {value}')
 
         self._align = value
 
     @property
-    def allow_overlap(self) -> bool:
+    def allow_overlap(self) -> Optional[bool]:
         """If ``True``, data labels are allowed to overlap each other.
 
         Defaults to ``False``.
 
         :returns: Flag indicating whether to allow data labels to overlap.
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._allow_overlap
 
     @allow_overlap.setter
     def allow_overlap(self, value):
-        self._allow_overlap = bool(value)
+        if value is None:
+            self._allow_overlap = None
+        else:
+            self._allow_overlap = bool(value)
 
     @property
     def class_name(self) -> Optional[str]:
@@ -134,62 +140,47 @@ class BubbleLegendLabelOptions(HighchartsMeta):
         self._style = validators.string(value, allow_empty = True)
 
     @property
-    def x(self) -> int:
+    def x(self) -> Optional[int]:
         f"""The x position offset of the label relative to the connector. Defaults to
         ``{constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('x')}``.
 
-        :rtype: numeric
+        :rtype: numeric or :obj:`None <python:None>`
         """
         return self._x
 
     @x.setter
     def x(self, value):
         value = validators.numeric(value, allow_empty = True)
-        if value is None:
-            self._x = 0
-        else:
-            self._x = value
 
     @property
-    def y(self) -> int:
+    def y(self) -> Optional[int]:
         f"""The y position offset of the label relative to the connector. Defaults to
         ``{constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('y')}``.
 
-        :rtype: numeric
+        :rtype: numeric or :obj:`None <python:None>`
         """
         return self._y
 
     @y.setter
     def y(self, value):
         value = validators.numeric(value, allow_empty = True)
-        if value is None:
-            self._y = 0
-        else:
-            self._y = value
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.pop('align',
-                                 constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('align')),
-            'allow_overlap': as_dict.pop('allowOverlap',
-                                         constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('allow_overlap')),
-            'class_name': as_dict.pop('className',
-                                      constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('class_name')),
-            'format': as_dict.pop('format',
-                                  constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('format')),
+            'align': as_dict.pop('align', None),
+            'allow_overlap': as_dict.pop('allowOverlap', None),
+            'class_name': as_dict.pop('className', None),
+            'format': as_dict.pop('format', None),
             'formatter': as_dict.pop('formatter', None),
-            'style': as_dict.pop('style',
-                                 constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('style')),
-            'x': as_dict.pop('x',
-                             constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('x')),
-            'y': as_dict.pop('y',
-                             constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('y'))
+            'style': as_dict.pop('style', None),
+            'x': as_dict.pop('x', None),
+            'y': as_dict.pop('y', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'align': self.align,
             'allowOverlap': self.allow_overlap,
@@ -200,9 +191,8 @@ class BubbleLegendLabelOptions(HighchartsMeta):
             'x': self.x,
             'y': self.y
         }
-        as_dict = self.trim_dict(untrimmed)
 
-        return as_dict
+        return untrimmed
 
 
 class BubbleLegendRange(HighchartsMeta):
@@ -371,7 +361,7 @@ class BubbleLegendRange(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'border_color': self.border_color,
             'color': self.color,
@@ -379,7 +369,7 @@ class BubbleLegendRange(HighchartsMeta):
             'value': self.value
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 
@@ -408,43 +398,28 @@ class BubbleLegend(HighchartsMeta):
         self._min_size = None
         self._ranges = None
         self._size_by = None
-        self._size_by_absolute_value = False
+        self._size_by_absolute_value = None
         self._z_index = None
         self._z_threshold = None
 
-        self.border_color = kwargs.pop('border_color',
-                                       constants.DEFAULT_BUBBLE_LEGEND.get('border_color'))
-        self.border_width = kwargs.pop('border_width',
-                                       constants.DEFAULT_BUBBLE_LEGEND.get('border_width'))
-        self.class_name = kwargs.pop('class_name',
-                                     constants.DEFAULT_BUBBLE_LEGEND.get('class_name'))
-        self.color = kwargs.pop('color', constants.DEFAULT_BUBBLE_LEGEND.get('color'))
-        self.connector_class_name = kwargs.pop('connector_class_name',
-                                               constants.DEFAULT_BUBBLE_LEGEND.get('connector_class_name'))
-        self.connector_color = kwargs.pop('connector_color',
-                                          constants.DEFAULT_BUBBLE_LEGEND.get('connector_color'))
-        self.connector_distance = kwargs.pop('connector_distance',
-                                             constants.DEFUALT_BUBBLE_LEGEND.get('connector_distance'))
-        self.connector_width = kwargs.pop('connector_width',
-                                          constants.DEFAULT_BUBBLE_LEGEND.get('connector_width'))
-        self.enabled = kwargs.pop('enabled',
-                                  constants.DEFAULT_BUBBLE_LEGEND.get('enabled'))
+        self.border_color = kwargs.pop('border_color', None)
+        self.border_width = kwargs.pop('border_width', None)
+        self.class_name = kwargs.pop('class_name', None)
+        self.color = kwargs.pop('color', None)
+        self.connector_class_name = kwargs.pop('connector_class_name', None)
+        self.connector_color = kwargs.pop('connector_color', None)
+        self.connector_distance = kwargs.pop('connector_distance', None)
+        self.connector_width = kwargs.pop('connector_width', None)
+        self.enabled = kwargs.pop('enabled', None)
         self.labels = kwargs.pop('labels', None)
-        self.legend_index = kwargs.pop('legend_index',
-                                       constants.DEFAULT_BUBBLE_LEGEND.get('legend_index'))
-        self.max_size = kwargs.pop('max_size',
-                                   constants.DEFAULT_BUBBLE_LEGEND.get('max_size'))
-        self.min_size = kwargs.pop('min_size',
-                                   constants.DEFAULT_BUBBLE_LEGEND.get('min_size'))
+        self.legend_index = kwargs.pop('legend_index', None)
+        self.max_size = kwargs.pop('max_size', None)
+        self.min_size = kwargs.pop('min_size', None)
         self.ranges = kwargs.pop('ranges', None)
-        self.size_by = kwargs.pop('size_by',
-                                  constants.DEFAULT_BUBBLE_LEGEND.get('size_by'))
-        self.size_by_absolute_value = kwargs.pop('size_by_absolute_value',
-                                                 constants.DEFAULT_BUBBLE_LEGEND.get('size_by_absolute_value'))
-        self.z_index = kwargs.pop('z_index',
-                                  constants.DEFAULT_BUBBLE_LEGEND.get('z_index'))
-        self.z_threshold = kwargs.pop('z_threshold',
-                                      constants.DEFAULT_BUBBLE_LEGEND.get('z_threshold'))
+        self.size_by = kwargs.pop('size_by', None)
+        self.size_by_absolute_value = kwargs.pop('size_by_absolute_value', None)
+        self.z_index = kwargs.pop('z_index', None)
+        self.z_threshold = kwargs.pop('z_threshold', None)
 
     @property
     def border_color(self) -> Optional[str | Gradient | Pattern]:
@@ -651,17 +626,20 @@ class BubbleLegend(HighchartsMeta):
         self._connector_width = validators.numeric(value, allow_empty = True)
 
     @property
-    def enabled(self) -> bool:
+    def enabled(self) -> Optional[bool]:
         f"""If ``True``, displays the bubble legend. If ``False``, hides the legend.
         Defaults to ``{constants.DEFAULT_LEGEND.get('enabled')}``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._enabled
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(value)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @property
     def labels(self) -> Optional[BubbleLegendLabelOptions]:
@@ -746,7 +724,7 @@ class BubbleLegend(HighchartsMeta):
         self._ranges = value
 
     @property
-    def size_by(self) -> str:
+    def size_by(self) -> Optional[str]:
         f"""Indicates whether the bubble legend range should be represented by the area
         or the width of the bubble. The default
         (``'{constants.DEFAULT_BUBBLE_LEGEND.get('size_by')}'``) corresponds best to the
@@ -757,14 +735,14 @@ class BubbleLegend(HighchartsMeta):
           * ``'area'``
           * ``'width'``
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._size_by
 
     @size_by.setter
     def size_by(self, value):
         if not value:
-            self._size_by = constants.DEFAULT_BUBBLE_LEGEND.get('size_by', 'area')
+            self._size_by = None
         else:
             value = validators.string(value, allow_empty = False)
             value = value.lower()
@@ -774,7 +752,7 @@ class BubbleLegend(HighchartsMeta):
             self._size_by = value
 
     @property
-    def size_by_absolute_value(self) -> bool:
+    def size_by_absolute_value(self) -> Optional[bool]:
         """If ``True``, the absolute value of z determines the size of the bubble. This
         means that with the default :meth:`BubbleLegend.z_threshold` of ``0``, a bubble of
         value ``-1`` will have the same size as a bubble of value ``1``, while a bubble of
@@ -782,27 +760,29 @@ class BubbleLegend(HighchartsMeta):
 
         Defaults to ``False``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
         """
         return self._size_by_absolute_value
 
     @size_by_absolute_value.setter
     def size_by_absolute_value(self, value):
-        self._size_by_absolute_value = bool(value)
+        if value is None:
+            self._size_by_absolute_value = None
+        else:
+            self._size_by_absolute_value = bool(value)
 
     @property
-    def z_index(self) -> int:
+    def z_index(self) -> Optional[int]:
         f"""The visual z index of the bubble legend. Defaults to
         ``{constants.DEFAULT_BUBBLE_LEGEND.get('z_index')}``.
 
-        :rtype: :class:`int <python:int>`
+        :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
         """
         return self._z_index
 
     @z_index.setter
     def z_index(self, value):
-        self._z_index = validators.integer(value, allow_empty = True) or \
-            constants.DEFAULT_BUBBLE_LEGEND.get('z_index', 1)
+        self._z_index = validators.integer(value, allow_empty = True)
 
     @property
     def z_threshold(self) -> Optional[int | float | Decimal]:
@@ -815,69 +795,53 @@ class BubbleLegend(HighchartsMeta):
 
     @z_threshold.setter
     def z_threshold(self, value):
-        self._z_threshold = validators.numeric(value, allow_empty = True) or \
-            constants.DEFAULT_BUBBLE_LEGEND.get('z_threshold', 0)
+        self._z_threshold = validators.numeric(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'border_color': as_dict.pop('borderColor',
-                                        constants.DEFAULT_BUBBLE_LEGEND.get('border_color')),
-            'border_width': as_dict.pop('borderWidth',
-                                        constants.DEFAULT_BUBBLE_LEGEND.get('border_width')),
-            'class_name': as_dict.pop('className',
-                                      constants.DEFAULT_BUBBLE_LEGEND.get('class_name')),
-            'color': as_dict.pop('color', constants.DEFAULT_BUBBLE_LEGEND.get('color')),
-            'connector_class_name': as_dict.pop('connectorClassName',
-                                                constants.DEFAULT_BUBBLE_LEGEND.get('connector_class_name')),
-            'connector_color': as_dict.pop('connectorColor',
-                                           constants.DEFAULT_BUBBLE_LEGEND.get('connector_color')),
-            'connector_distance': as_dict.pop('connectorDistance',
-                                              constants.DEFUALT_BUBBLE_LEGEND.get('connector_distance')),
-            'connector_width': as_dict.pop('connectorWidth',
-                                           constants.DEFAULT_BUBBLE_LEGEND.get('connector_width')),
-            'enabled': as_dict.pop('enabled',
-                                   constants.DEFAULT_BUBBLE_LEGEND.get('enabled')),
+            'border_color': as_dict.pop('borderColor', None),
+            'border_width': as_dict.pop('borderWidth', None),
+            'class_name': as_dict.pop('className', None),
+            'color': as_dict.pop('color', None),
+            'connector_class_name': as_dict.pop('connectorClassName', None),
+            'connector_color': as_dict.pop('connectorColor', None),
+            'connector_distance': as_dict.pop('connectorDistance', None),
+            'connector_width': as_dict.pop('connectorWidth', None),
+            'enabled': as_dict.pop('enabled', None),
             'labels': as_dict.pop('labels', None),
-            'legend_index': as_dict.pop('legendIndex',
-                                        constants.DEFAULT_BUBBLE_LEGEND.get('legend_index')),
-            'max_size': as_dict.pop('maxSize',
-                                    constants.DEFAULT_BUBBLE_LEGEND.get('max_size')),
-            'min_size': as_dict.pop('minSize',
-                                    constants.DEFAULT_BUBBLE_LEGEND.get('min_size')),
+            'legend_index': as_dict.pop('legendIndex', None),
+            'max_size': as_dict.pop('maxSize', None),
+            'min_size': as_dict.pop('minSize', None),
             'ranges': as_dict.pop('ranges', None),
-            'size_by': as_dict.pop('sizeBy',
-                                   constants.DEFAULT_BUBBLE_LEGEND.get('size_by')),
-            'size_by_absolute_value': as_dict.pop('sizeByAbsoluteValue',
-                                                  constants.DEFAULT_BUBBLE_LEGEND.get('size_by_absolute_value')),
-            'z_index': as_dict.pop('zIndex',
-                                   constants.DEFAULT_BUBBLE_LEGEND.get('z_index')),
-            'z_threshold': as_dict.pop('zThreshold',
-                                       constants.DEFAULT_BUBBLE_LEGEND.get('z_threshold'))
+            'size_by': as_dict.pop('sizeBy', None),
+            'size_by_absolute_value': as_dict.pop('sizeByAbsoluteValue', None),
+            'z_index': as_dict.pop('zIndex', None),
+            'z_threshold': as_dict.pop('zThreshold', None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
-            'border_color': self.border_color,
-            'border_width': self.border_width,
-            'class_name': self.class_name,
+            'borderColor': self.border_color,
+            'borderWidth': self.border_width,
+            'className': self.class_name,
             'color': self.color,
-            'connector_class_name': self.connector_class_name,
-            'connector_color': self.connector_color,
-            'connector_distance': self.connector_distance,
-            'connector_width': self.connector_width,
+            'connectorClassName': self.connector_class_name,
+            'connectorColor': self.connector_color,
+            'connectorDistance': self.connector_distance,
+            'connectorWidth': self.connector_width,
             'enabled': self.enabled,
             'labels': self.labels,
-            'legend_index': self.legend_index,
-            'max_size': self.max_size,
-            'min_size': self.min_size,
+            'legendIndex': self.legend_index,
+            'maxSize': self.max_size,
+            'minSize': self.min_size,
             'ranges': self.ranges,
-            'size_by': self.size_by,
-            'size_by_absolute_value': self.size_by_absolute_value,
-            'z_index': self.z_index,
-            'z_threshold': self.z_threshold
+            'sizeBy': self.size_by,
+            'sizeByAbsoluteValue': self.size_by_absolute_value,
+            'zIndex': self.z_index,
+            'zThreshold': self.z_threshold
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

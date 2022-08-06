@@ -1,3 +1,5 @@
+from typing import Optional
+
 from validator_collection import validators
 
 from highcharts import constants
@@ -11,60 +13,51 @@ class TableLanguageOptions(HighchartsMeta):
         self._table_summary = None
         self._view_as_data_table_button_text = None
 
-        self.table_summary = kwargs.pop('table_summary',
-                                        constants.DEFAULT_LANG_ACS_TABLE_SUMMARY)
+        self.table_summary = kwargs.pop('table_summary', None)
         self.view_as_data_table_button_text = kwargs.pop('view_as_data_table_button_text',
-                                                         constants.DEFAULT_LANG_ACS_TABLE_VIEW_AS_DATA_TABLE)
+                                                         None)
 
     @property
-    def table_summary(self) -> str:
+    def table_summary(self) -> Optional[str]:
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_TABLE_SUMMARY}'``
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._table_summary
 
     @table_summary.setter
     def table_summary(self, value):
-        if value == '':
-            self._table_summary = ''
-        else:
-            self._table_summary = validators.string(value, allow_empty = True) \
-                or constants.DEFAULT_LANG_ACS_TABLE_SUMMARY
+        self._table_summary = validators.string(value, allow_empty = True)
 
     @property
-    def view_as_data_table_button_text(self) -> str:
+    def view_as_data_table_button_text(self) -> Optional[str]:
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_TABLE_VIEW_AS_DATA_TABLE}'``
 
-        :rtype: :class:`str <python:str>`
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
         return self._view_as_data_table_button_text
 
     @view_as_data_table_button_text.setter
     def view_as_data_table_button_text(self, value):
-        if value == '':
-            self._view_as_data_table_button_text = ''
-        else:
-            self._view_as_data_table_button_text = validators.string(value, allow_empty = True)\
-                or constants.DEFAULT_LANG_ACS_TABLE_VIEW_AS_DATA_TABLE
+        self._view_as_data_table_button_text = validators.string(value,
+                                                                 allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'table_summary': as_dict.pop('tableSummary',
-                                         constants.DEFAULT_LANG_ACS_TABLE_SUMMARY),
+            'table_summary': as_dict.pop('tableSummary', None),
             'view_as_data_table_button_text': as_dict.pop('viewAsDataTableButtonText',
-                                                          constants.DEFAULT_LANG_ACS_TABLE_VIEW_AS_DATA_TABLE)
+                                                          None),
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'tableSummary': self.table_summary,
             'viewAsDataTableButtonText': self.view_as_data_table_button_text
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

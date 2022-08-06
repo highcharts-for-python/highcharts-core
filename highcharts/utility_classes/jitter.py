@@ -28,8 +28,8 @@ class Jitter(HighchartsMeta):
         self._x = None
         self._y = None
 
-        self.x = kwargs.pop('x', 0)
-        self.y = kwargs.pop('y', 0)
+        self.x = kwargs.pop('x', None)
+        self.y = kwargs.pop('y', None)
 
     @property
     def x(self) -> Optional[int | float | Decimal]:
@@ -62,8 +62,8 @@ class Jitter(HighchartsMeta):
             'y': as_dict.pop('y', None)
         })
 
-    def to_dict(self) -> Optional[dict]:
-        return self.trim_dict({
+    def _to_untrimmed_dict(self) -> dict:
+        return {
             'x': self.x,
             'y': self.y
-        })
+        }

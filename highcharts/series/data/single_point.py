@@ -105,7 +105,7 @@ class SinglePointBase(DataBase):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -124,7 +124,7 @@ class SinglePointBase(DataBase):
             'drilldown': self.drilldown,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class SinglePointData(SinglePointBase):
@@ -220,7 +220,7 @@ class SinglePointData(SinglePointBase):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -241,7 +241,7 @@ class SinglePointData(SinglePointBase):
             'y': self.y,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class SingleValueData(SinglePointBase):
@@ -336,7 +336,7 @@ class SingleValueData(SinglePointBase):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -356,7 +356,7 @@ class SingleValueData(SinglePointBase):
             'value': self.value,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class SingleXData(SinglePointBase):
@@ -452,7 +452,7 @@ class SingleXData(SinglePointBase):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -473,7 +473,7 @@ class SingleXData(SinglePointBase):
             'x': self.x,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class LabeledSingleXData(SinglePointBase):
@@ -566,7 +566,7 @@ class LabeledSingleXData(SinglePointBase):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -588,7 +588,7 @@ class LabeledSingleXData(SinglePointBase):
             'x': self.x,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class ConnectedSingleXData(SingleXData):
@@ -700,7 +700,7 @@ class ConnectedSingleXData(SingleXData):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -724,4 +724,4 @@ class ConnectedSingleXData(SingleXData):
             'connectorWidth': self.connector_width,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

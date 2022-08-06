@@ -139,7 +139,7 @@ class WordcloudData(DataBase):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -159,4 +159,4 @@ class WordcloudData(DataBase):
             'weight': self.weight,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

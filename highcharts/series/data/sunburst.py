@@ -191,7 +191,7 @@ class TreemapData(DataBase):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -213,7 +213,7 @@ class TreemapData(DataBase):
             'value': self.value
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class SunburstData(DataBase):
@@ -331,7 +331,7 @@ class SunburstData(DataBase):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -356,4 +356,4 @@ class SunburstData(DataBase):
             'sliced': self.sliced,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

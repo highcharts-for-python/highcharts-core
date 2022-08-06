@@ -26,13 +26,13 @@ class ScrollablePlotArea(HighchartsMeta):
     def __init__(self, **kwargs):
         self._minimum_height = None
         self._minimum_width = None
-        self._opacity = 0.85
+        self._opacity = None
         self._scroll_position_x = None
         self._scroll_position_y = None
 
         self.minimum_height = kwargs.pop('minimum_height', None)
         self.minimum_width = kwargs.pop('minimum_width', None)
-        self.opacity = kwargs.pop('opacity', 0.85)
+        self.opacity = kwargs.pop('opacity', None)
         self.scroll_position_x = kwargs.pop('scroll_position_x', None)
         self.scroll_position_y = kwargs.pop('scroll_position_y', None)
 
@@ -63,17 +63,17 @@ class ScrollablePlotArea(HighchartsMeta):
         self._minimum_width = validators.numeric(value, allow_empty = True)
 
     @property
-    def opacity(self) -> float:
+    def opacity(self) -> Optional[float]:
         """The opacity of the mask applied on one of the sides of the plot area, expressed
         as a value between ``0`` and ``1``. Defaults to ``0.85``.
 
-        :rtype: :class:`float <python:float>`
+        :rtype: :class:`float <python:float>` or :obj:`None <python:None>`
         """
         return self._opacity
 
     @opacity.setter
     def opacity(self, value):
-        self._opacity = validators.float(value, allow_empty = False)
+        self._opacity = validators.float(value, allow_empty = True)
 
     @property
     def scroll_position_x(self) -> Optional[float]:
@@ -122,14 +122,14 @@ class ScrollablePlotArea(HighchartsMeta):
         kwargs = {
             'minimum_height': as_dict.pop('minHeight', None),
             'minimum_width': as_dict.pop('minWidth', None),
-            'opacity': as_dict.pop('opacity', 0.85),
+            'opacity': as_dict.pop('opacity', None),
             'scroll_position_x': as_dict.pop('scrollPositionX', None),
             'scroll_position_y': as_dict.pop('scrollPositionY', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'minHeight': self.minimum_height,
             'minWidth': self.minimum_width,
@@ -138,4 +138,4 @@ class ScrollablePlotArea(HighchartsMeta):
             'scrollPositionY': self.scroll_position_y
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

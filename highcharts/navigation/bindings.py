@@ -117,7 +117,7 @@ class Binding(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'className': self.class_name,
             'init': self.init,
@@ -126,7 +126,7 @@ class Binding(HighchartsMeta):
             'end': self.end
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class CircleAnnotationBinding(Binding):
@@ -183,8 +183,6 @@ class RectangleAnnotationBinding(Binding):
         self._max_steps = 1
 
         super().__init__(**kwargs)
-
-
 
 
 class Bindings(HighchartsMeta):
@@ -279,7 +277,7 @@ class Bindings(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self):
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'circleAnnotation': self.circle_annotation,
             'ellipseAnnotation': self.ellipse_annotation,
@@ -287,4 +285,4 @@ class Bindings(HighchartsMeta):
             'retangleAnnotation': self.rectangle_annotation
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

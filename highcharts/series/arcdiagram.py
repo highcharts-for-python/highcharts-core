@@ -212,7 +212,7 @@ class NodeOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'color': self.color,
             'colorIndex': self.color_index,
@@ -223,7 +223,7 @@ class NodeOptions(HighchartsMeta):
             'offsetVertical': self.offset_vertical,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class ArcDiagramData(DataBase):
@@ -327,7 +327,7 @@ class ArcDiagramData(DataBase):
 
         return kwargs
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -346,7 +346,7 @@ class ArcDiagramData(DataBase):
             'weight': self.weight,
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class ArcDiagramSeries(SeriesBase, ArcDiagramOptions):
@@ -453,17 +453,17 @@ class ArcDiagramSeries(SeriesBase, ArcDiagramOptions):
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', False),
+            'allow_point_select': as_dict.pop('allowPointSelect', None),
             'animation': as_dict.pop('animation', None),
             'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', True),
+            'clip': as_dict.pop('clip', None),
             'color': as_dict.pop('color', None),
             'cursor': as_dict.pop('cursor', None),
             'custom': as_dict.pop('custom', None),
             'dash_style': as_dict.pop('dashStyle', None),
             'data_labels': as_dict.pop('dataLabels', None),
             'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', True),
+            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
             'events': as_dict.pop('events', None),
             'include_in_data_export': as_dict.pop('includeInDataExport', None),
             'keys': as_dict.pop('keys', None),
@@ -474,28 +474,28 @@ class ArcDiagramSeries(SeriesBase, ArcDiagramOptions):
             'opacity': as_dict.pop('opacity', None),
             'point': as_dict.pop('point', None),
             'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', False),
-            'show_checkbox': as_dict.pop('showCheckbox', False),
+            'selected': as_dict.pop('selected', None),
+            'show_checkbox': as_dict.pop('showCheckbox', None),
             'show_in_legend': as_dict.pop('showInLegend', None),
             'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
             'states': as_dict.pop('states', None),
             'threshold': as_dict.pop('threshold', None),
             'tooltip': as_dict.pop('tooltip', None),
             'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', True),
+            'visible': as_dict.pop('visible', None),
 
             'border_color': as_dict.pop('borderColor', None),
             'border_width': as_dict.pop('borderWidth', None),
-            'centered_links': as_dict.pop('centeredLinks', False),
-            'color_by_point': as_dict.pop('colorByPoint', True),
+            'centered_links': as_dict.pop('centeredLinks', None),
+            'color_by_point': as_dict.pop('colorByPoint', None),
             'color_index': as_dict.pop('colorIndex', None),
             'colors': as_dict.pop('colors', None),
-            'equal_nodes': as_dict.pop('equalNodes', False),
+            'equal_nodes': as_dict.pop('equalNodes', None),
             'levels': as_dict.pop('levels', None),
-            'link_opacity': as_dict.pop('linkOpacity', 0.5),
-            'min_link_width': as_dict.pop('minLinkWidth', 0),
-            'node_width': as_dict.pop('nodeWidth', 20),
-            'reversed': as_dict.pop('reversed', False),
+            'link_opacity': as_dict.pop('linkOpacity', None),
+            'min_link_width': as_dict.pop('minLinkWidth', None),
+            'node_width': as_dict.pop('nodeWidth', None),
+            'reversed': as_dict.pop('reversed', None),
             'sticky_tracking': as_dict.pop('stickyTracking', None),
 
             'data': as_dict.pop('data', None),
@@ -515,7 +515,7 @@ class ArcDiagramSeries(SeriesBase, ArcDiagramOptions):
 
         return kwargs
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'linkWeight': self.link_weight,
             'nodes': self.nodes,
@@ -526,4 +526,4 @@ class ArcDiagramSeries(SeriesBase, ArcDiagramOptions):
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed

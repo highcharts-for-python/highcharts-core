@@ -118,18 +118,18 @@ class BaseLevelOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'borderColor': self.border_color,
             'borderWidth': self.border_width,
             'dataLabels': self.data_labels,
             'level': self.level
         }
-        parent_as_dict = super().to_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class LevelOptions(BaseLevelOptions):
@@ -138,30 +138,33 @@ class LevelOptions(BaseLevelOptions):
 
     def __init__(self, **kwargs):
         self._color_by_point = None
-        self._link_opacity = 0.5
+        self._link_opacity = None
         self._states = None
 
-        self.color_by_point = kwargs.pop('color_by_point', True)
-        self.link_opacity = kwargs.pop('link_opacity', 0.5)
+        self.color_by_point = kwargs.pop('color_by_point', None)
+        self.link_opacity = kwargs.pop('link_opacity', None)
         self.states = kwargs.pop('states', None)
 
         super().__init__(**kwargs)
 
     @property
-    def color_by_point(self) -> bool:
+    def color_by_point(self) -> Optional[bool]:
         """When using automatic point colors pulled from the global colors or
         series-specific collections, this option determines whether the chart should
         receive one color per series (``False``) or one color per point (``True``).
 
         Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>`
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._color_by_point
 
     @color_by_point.setter
     def color_by_point(self, value):
-        self._color_by_point = bool(value)
+        if value is None:
+            self._color_by_point = None
+        else:
+            self._color_by_point = bool(value)
 
     @property
     def link_opacity(self) -> Optional[int | float | Decimal]:
@@ -199,25 +202,25 @@ class LevelOptions(BaseLevelOptions):
             'data_labels': as_dict.pop('dataLabels', None),
             'level': as_dict.pop('level', None),
 
-            'color_by_point': as_dict.pop('colorByPoint', True),
-            'link_opacity': as_dict.pop('linkOpacity', 0.5),
+            'color_by_point': as_dict.pop('colorByPoint', None),
+            'link_opacity': as_dict.pop('linkOpacity', None),
             'states': as_dict.pop('states', None)
         }
 
         return cls(**kwargs)
 
-    def to_dict(self) -> dict:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'colorByPoint': self.color_by_point,
             'dataLabels': self.data_labels,
             'linkOpacity': self.link_opacity,
             'states': self.states
         }
-        parent_as_dict = super().to_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class ColorVariation(HighchartsMeta):
@@ -265,13 +268,13 @@ class ColorVariation(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'key': self.key,
             'to': self.to
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class LevelSize(HighchartsMeta):
@@ -339,13 +342,13 @@ class LevelSize(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'unit': self.unit,
             'value': self.value
         }
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class SunburstLevelOptions(BaseLevelOptions):
@@ -486,7 +489,7 @@ class SunburstLevelOptions(BaseLevelOptions):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'borderDashStyle': self.border_dash_style,
             'color': self.color,
@@ -494,11 +497,11 @@ class SunburstLevelOptions(BaseLevelOptions):
             'levelSize': self.level_size
         }
 
-        parent_as_dict = super().to_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
 
 
 class TreemapLevelOptions(BaseLevelOptions):
@@ -683,7 +686,7 @@ class TreemapLevelOptions(BaseLevelOptions):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[dict]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'borderDashStyle': self.border_dash_style,
             'color': self.color,
@@ -692,8 +695,8 @@ class TreemapLevelOptions(BaseLevelOptions):
             'layoutStartingDirection': self.layout_starting_direction
         }
 
-        parent_as_dict = super().to_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
-        return self.trim_dict(untrimmed)
+        return untrimmed
