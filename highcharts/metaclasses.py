@@ -17,7 +17,9 @@ import esprima
 from esprima.error_handler import Error as ParseError
 from validator_collection import validators, checkers
 
-from highcharts import constants
+from highcharts import constants, errors
+from highcharts.utility_functions import serialize_to_js_literal, assemble_js_literal, \
+    get_key_value_pairs
 
 
 class HighchartsMeta(ABC):
@@ -149,7 +151,7 @@ class HighchartsMeta(ABC):
           information, please see :doc:`JSON Serialization and Deserialization`.
 
         :param encoding: The character encoding to apply to the resulting object. Defaults
-          to ``'utf8'``.
+          to ``'utf-8'``.
         :type encoding: :class:`str <python:str>`
 
         :returns: A JSON representation of the object compatible with the Highcharts
@@ -167,36 +169,123 @@ class HighchartsMeta(ABC):
 
         return as_json
 
-    def to_js_literal(self):
+    def to_js_literal(self,
+                      filename = None,
+                      encoding = 'utf-8') -> Optional[str]:
         """Return the object represented as a :class:`str <python:str>` containing the
         JavaScript object literal.
 
-        :rtype: :class:`str <python:str>`
+        :param filename: The name of a file to which the JavaScript object literal should
+          be persisted. Defaults to :obj:`None <python:None>`
+        :type filename: Path-like
+
+        :param encoding: The character encoding to apply to the resulting object. Defaults
+          to ``'utf-8'``.
+        :type encoding: :class:`str <python:str>`
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        as_dict = self.to_dict()
-        as_json = self.to_json()
+        if filename:
+            filename = validators.path(filename)
 
-        keys_possible_code = [(key, as_dict[key]) for key in as_dict
-                              if isinstance(as_dict[key], str) is True]
-        for item in keys_possible_code:
-            value = item[1]
-            try:
-                parse_result = esprima.parse(value)
-            except ParseError:
-                keys_possible_code.remove(item)
+        untrimmed = self._to_untrimmed_dict()
+        as_dict = {}
+        for key in untrimmed:
+            item = untrimmed[key]
+            serialized = serialize_to_js_literal(item, encoding = encoding)
+            if serialized:
+                as_dict[key] = serialized
 
-            first_obj = parse_result.get('body', None)
-            if not first_obj:
-                keys_possible_code.remove(item)
-            first_type = first_obj.get('type', None)
-            if first_type not in constants.ALLOWED_JS_LITERAL_TYPES:
-                keys_possible_code.remove(item)
+        as_str = assemble_js_literal(as_dict)
 
-        # TODO: IMPLEMENT THIS METHOD
+        if filename:
+            with open(filename, 'w', encoding = encoding) as file_:
+                file_.write(as_str)
 
-        raise NotImplementedError()
+        return as_str
 
+    @classmethod
+    def from_js_literal(cls,
+                        as_str_or_file,
+                        _break_loop_on_failure = False):
+        """Return a Python object representation of a Highcharts JavaScript object
+        literal.
 
+        :param as_str_or_file: The JavaScript object literal, represented either as a
+          :class:`str <python:str>` or as a filename which contains the JS object literal.
+        :type as_str_or_file: :class:`str <python:str>`
+
+        :param _break_loop_on_failure: If ``True``, will break any looping operations in
+          the event of a failure. Otherwise, will attempt to repair the failure. Defaults
+          to ``False``.
+        :type _break_loop_on_failure: :class:`bool <python:bool>`
+
+        :returns: A Python object representation of the Highcharts JavaScript object
+          literal.
+        :rtype: :class:`HighchartsMeta`
+        """
+        is_file = checkers.is_file(as_str_or_file)
+        if is_file:
+            with open(as_str_or_file, 'r') as file_:
+                as_str = file_.read()
+        else:
+            as_str = as_str_or_file
+
+        try:
+            parsed = esprima.parseScript(as_str, loc = True, range = True)
+        except ParseError:
+            parsed = esprima.parseModule(as_str, loc = True, range = True)
+
+        as_dict = {}
+        if not parsed.body:
+            return cls()
+
+        if len(parsed.body) > 1:
+            raise errors.HighchartsCollectionError(f'each JavaScript object literal is '
+                                                   f'expected to contain one object. '
+                                                   f'However, you attempted to parse '
+                                                   f'{len(parsed.body)} objects.')
+
+        body = parsed.body[0]
+        if not checkers.is_type(body, 'VariableDeclaration') and \
+           _break_loop_on_failure is False:
+            prefixed_str = f'var randomVariable = {as_str}'
+            return cls.from_js_literal(prefixed_str,
+                                       _break_loop_on_failure = True)
+        elif not checkers.is_type(body, 'VariableDeclaration'):
+            raise errors.HighchartsVariableDeclarationError('To parse a JavaScriot '
+                                                            'object literal, it is '
+                                                            'expected to be either a '
+                                                            'variable declaration or a'
+                                                            'standalone block statement.'
+                                                            'Input received did not '
+                                                            'conform.')
+        declarations = body.declarations
+        if not declarations:
+            return cls()
+
+        if len(declarations) > 1:
+            raise errors.HighchartsCollectionError(f'each JavaScript object literal is '
+                                                   f'expected to contain one object. '
+                                                   f'However, you attempted to parse '
+                                                   f'{len(parsed.body)} objects.')
+        object_expression = declarations[0].init
+        if not checkers.is_type(object_expression, 'ObjectExpression'):
+            raise errors.HighchartsParseError(f'Highcharts expects an object literal to '
+                                              f'to be defined as a standard '
+                                              f'ObjectExpression. Received: '
+                                              f'{type(object_expression)}')
+
+        properties = object_expression.properties
+        if not properties:
+            return cls()
+
+        key_value_pairs = [(x[0], x[1]) for x in get_key_value_pairs(properties, as_str)]
+
+        for pair in key_value_pairs:
+            as_dict[pair[0]] = pair[1]
+
+        return cls.from_dict(as_dict)
 
 
 class JavaScriptDict(UserDict):

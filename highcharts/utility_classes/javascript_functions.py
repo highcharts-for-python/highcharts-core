@@ -1,6 +1,6 @@
 from typing import Optional, List
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
 from highcharts import errors
 from highcharts.decorators import validate_types
@@ -18,6 +18,28 @@ class CallbackFunction(HighchartsMeta):
         self.function_name = kwargs.pop('function_name', None)
         self.arguments = kwargs.pop('arguments', None)
         self.body = kwargs.pop('body', None)
+
+    def __str__(self) -> str:
+        if self.function_name:
+            prefix = f'function {self.function_name}'
+        else:
+            prefix = 'function'
+        if self.arguments:
+            arguments = '('
+            for argument in self.arguments:
+                arguments += f'{argument},'
+            arguments = arguments[:-1]
+            arguments += ')'
+
+        as_str = f'{prefix}{arguments}'
+        as_str += ' {'
+        if self.body:
+            as_str += '\n'
+            as_str += self.body
+
+        as_str += '}'
+
+        return as_str
 
     @property
     def function_name(self) -> Optional[str]:
@@ -99,6 +121,58 @@ class CallbackFunction(HighchartsMeta):
             'arguments': self.arguments,
             'body': self.body
         }
+
+    def to_js_literal(self,
+                      filename = None,
+                      encoding = 'utf-8') -> Optional[str]:
+        if not self.body:
+            return None
+
+        if filename:
+            filename = validators.path(filename)
+
+        as_str = str(self)
+
+        if filename:
+            with open(filename, 'w', encoding = encoding) as file_:
+                file_.write(as_str)
+
+        return as_str
+
+    @classmethod
+    def _convert_from_js_ast(cls, property_definition, original_str):
+        """Create a :class:`CallbackFunction` instance from a
+        :class:`esprima.nodes.FunctionExpression` instance.
+
+        :param property_definition: The :class:`esprima.nodesFunctionExpression` instance,
+          including ``loc`` (indicating the line and column in the original string) and
+          ``range`` (indicating the character range for the property definition in the
+          original string).
+        :type property_definition: :class:`esprima.nodes.FunctionExpression`
+
+        :param original_str: The original :class:`str <python:str>` of the JavaScript from
+          which ``property_definition`` was parsed.
+        :type original_str: :class:`str <python:str>`
+
+        :returns: :class:`CallbackFunction`
+        """
+        if not checkers.is_type(property_definition, 'FunctionExpression'):
+            raise errors.HighchartsParseError(f'property_definition should contain a '
+                                              f'FunctionExpression instance. Received: '
+                                              f'{property_definition.__class__.__name__}')
+
+        body = property_definition.body
+        body_range = body.range
+        body_start = body_range[0]
+        body_end = body_range[1]
+
+        function_body = original_str[body_start:body_end]
+
+        arguments = [x.name for x in property_definition.params]
+
+        return cls(function_name = None,
+                   arguments = arguments,
+                   body = function_body)
 
 
 class JavaScriptClass(HighchartsMeta):
