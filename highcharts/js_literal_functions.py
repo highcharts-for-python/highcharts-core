@@ -6,7 +6,6 @@ import esprima
 from esprima.error_handler import Error as ParseError
 
 from highcharts import constants, errors
-from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
 def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
@@ -167,6 +166,8 @@ def convert_js_to_python(property_definition, original_str = None):
       The :class:`esprima.nodes.Property` objects are available in the ``value`` sub-item.
 
     """
+    from highcharts.utility_classes.javascript_functions import CallbackFunction
+
     if not checkers.is_type(property_definition, 'Property'):
         raise errors.HighchartsParseError(f'property_definition should contain a '
                                           f'Property instance. Received: '

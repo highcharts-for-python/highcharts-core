@@ -99,13 +99,12 @@ class HighchartsMeta(ABC):
         for key in untrimmed:
             value = untrimmed.get(key, None)
             if value and hasattr(value, 'to_dict'):
-                value_as_dict = value.to_dict()
-                trimmed_value = HighchartsMeta.trim_dict(value_as_dict)
+                trimmed_value = value.to_dict()
                 as_dict[key] = trimmed_value
             elif value == constants.EnforcedNull:
                 as_dict[key] = 'null'
             elif isinstance(value, dict):
-                as_dict[key] = HighchartsMeta.trim_dict(value_as_dict)
+                as_dict[key] = HighchartsMeta.trim_dict(value)
             elif value:
                 as_dict[key] = HighchartsMeta.trim_iterable(value)
 
