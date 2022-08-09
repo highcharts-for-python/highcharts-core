@@ -191,7 +191,6 @@ def test_trim_iterable(untrimmed, expected_type, expected_length, error):
 
 @pytest.mark.parametrize('error', [
     (None),
-    (TypeError),
 ])
 def test__mro_init(error):
 

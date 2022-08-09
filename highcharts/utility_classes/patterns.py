@@ -1,6 +1,6 @@
 from typing import Optional
 from decimal import Decimal
-from fraction import Fraction
+from fractions import Fraction
 
 from validator_collection import validators
 
