@@ -18,7 +18,7 @@ from esprima.error_handler import Error as ParseError
 from validator_collection import validators, checkers
 
 from highcharts import constants, errors
-from highcharts.utility_functions import serialize_to_js_literal, assemble_js_literal, \
+from highcharts.js_literal_functions import serialize_to_js_literal, assemble_js_literal,\
     get_key_value_pairs
 
 
@@ -29,6 +29,25 @@ class HighchartsMeta(ABC):
     def __init__(self, **kwargs):
         for key in kwargs:
             setattr(self, key, kwargs.get(key, None))
+
+    def __mro_init__(self, kwargs) -> None:
+        """Work through the ``self``'s multiple parent classes, executing the appropriate
+        constructor (``__init__()``) method for each parent.
+
+        :param self: The object whose parent constructors will be executed.
+
+        :param kwargs: The keyword arguments to pass to the constructor.
+        :type kwargs: :class:`dict <python:dict>`
+
+        """
+        classes = [x for x in self.__class__.mro()
+                   if x.__name__ != 'object']
+
+        for item in classes:
+            try:
+                super(item, self).__init__(**kwargs)
+            except NotImplementedError:
+                continue
 
     @abstractmethod
     def _to_untrimmed_dict(self) -> dict:

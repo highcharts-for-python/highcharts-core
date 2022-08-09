@@ -25,7 +25,7 @@ class ParetoSeries(SeriesBase, ParetoOptions):
 
         self.base_series = kwargs.pop('base_series', None)
 
-        mro_init(self, kwargs)
+        self.__mro_init__(kwargs)
 
     @property
     def base_series(self) -> Optional[int | str]:

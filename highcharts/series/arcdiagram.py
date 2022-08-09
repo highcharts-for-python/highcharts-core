@@ -370,7 +370,7 @@ class ArcDiagramSeries(SeriesBase, ArcDiagramOptions):
         self.nodes = kwargs.pop('nodes', None)
         self.offset = kwargs.pop('offset', None)
 
-        mro_init(self, kwargs)
+        self.__mro_init__(kwargs)
 
     @property
     def data(self) -> Optional[ArcDiagramData]:

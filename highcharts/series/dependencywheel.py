@@ -25,7 +25,7 @@ class DependencyWheelSeries(SeriesBase, DependencyWheelOptions):
 
         self.nodes = kwargs.pop('nodes', None)
 
-        mro_init(self, kwargs)
+        self.__mro_init__(kwargs)
 
     @property
     def data(self) -> Optional[List[WeightedConnectionData]]:

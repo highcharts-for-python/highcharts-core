@@ -14,7 +14,7 @@ class BaseBarSeries(SeriesBase, BaseBarOptions):
     """Base class used for all bar/column series."""
 
     def __init__(self, **kwargs):
-        mro_init(self, kwargs)
+        self.__mro_init__(kwargs)
 
     @property
     def data(self) -> Optional[List[BarData]]:
@@ -207,7 +207,7 @@ class BarSeries(BaseBarSeries, BarOptions):
     """
 
     def __init__(self, **kwargs):
-        mro_init(self, kwargs)
+        self.__mro_init__(kwargs)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -687,7 +687,7 @@ class WaterfallSeries(ColumnSeries, WaterfallOptions):
     """
 
     def __init__(self, **kwargs):
-        mro_init(self, kwargs)
+        self.__mro_init__(kwargs)
 
     @property
     def data(self) -> Optional[List[WaterfallData]]:
@@ -887,7 +887,7 @@ class WindBarbSeries(BarSeries, WindBarbOptions):
     """
 
     def __init__(self, **kwargs):
-        mro_init(self, kwargs)
+        self.__mro_init__(kwargs)
 
     @property
     def data(self) -> Optional[List[WindBarbData]]:
@@ -1097,7 +1097,7 @@ class XRangeSeries(BaseBarSeries, XRangeOptions):
     """
 
     def __init__(self, **kwargs):
-        mro_init(self, kwargs)
+        self.__mro_init__(kwargs)
 
     @property
     def data(self) -> Optional[List[XRangeData]]:
