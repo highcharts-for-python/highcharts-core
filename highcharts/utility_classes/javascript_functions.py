@@ -24,12 +24,14 @@ class CallbackFunction(HighchartsMeta):
             prefix = f'function {self.function_name}'
         else:
             prefix = 'function'
+
+        arguments = '('
         if self.arguments:
-            arguments = '('
             for argument in self.arguments:
                 arguments += f'{argument},'
             arguments = arguments[:-1]
-            arguments += ')'
+
+        arguments += ')'
 
         as_str = f'{prefix}{arguments}'
         as_str += ' {'
@@ -124,10 +126,7 @@ class CallbackFunction(HighchartsMeta):
 
     def to_js_literal(self,
                       filename = None,
-                      encoding = 'utf-8') -> Optional[str]:
-        if not self.body:
-            return None
-
+                      encoding = 'utf-8') -> str:
         if filename:
             filename = validators.path(filename)
 
@@ -144,7 +143,7 @@ class CallbackFunction(HighchartsMeta):
         """Create a :class:`CallbackFunction` instance from a
         :class:`esprima.nodes.FunctionExpression` instance.
 
-        :param property_definition: The :class:`esprima.nodesFunctionExpression` instance,
+        :param property_definition: The :class:`esprima.nodes.FunctionExpression` instance,
           including ``loc`` (indicating the line and column in the original string) and
           ``range`` (indicating the character range for the property definition in the
           original string).
@@ -156,21 +155,28 @@ class CallbackFunction(HighchartsMeta):
 
         :returns: :class:`CallbackFunction`
         """
-        if not checkers.is_type(property_definition, 'FunctionExpression'):
+        if not checkers.is_type(property_definition, ('FunctionDeclaration',
+                                                      'FunctionExpression')):
             raise errors.HighchartsParseError(f'property_definition should contain a '
-                                              f'FunctionExpression instance. Received: '
+                                              f'FunctionExpression or FunctionDeclaration'
+                                              ' instance. Received: '
                                               f'{property_definition.__class__.__name__}')
 
         body = property_definition.body
         body_range = body.range
-        body_start = body_range[0]
-        body_end = body_range[1]
+        body_start = body_range[0] + 1
+        body_end = body_range[1] - 1
+
+        if property_definition.type == 'FunctionDeclaration':
+            function_name = property_definition.id.name
+        else:
+            function_name = None
 
         function_body = original_str[body_start:body_end]
 
         arguments = [x.name for x in property_definition.params]
 
-        return cls(function_name = None,
+        return cls(function_name = function_name,
                    arguments = arguments,
                    body = function_body)
 

@@ -19,7 +19,7 @@ def mro_to_dict(obj):
 
     for item in classes:
         has_to_dict = hasattr(super(item, obj), 'to_dict')
-        if not hasattr(item, 'to_dict'):
+        if not has_to_dict:
             break
 
         try:
