@@ -1,6 +1,8 @@
 from typing import Optional, List
 
 from validator_collection import validators, checkers
+import esprima
+from esprima.error_handler import Error as ParseError
 
 from highcharts import errors
 from highcharts.decorators import validate_types
@@ -179,6 +181,81 @@ class CallbackFunction(HighchartsMeta):
         return cls(function_name = function_name,
                    arguments = arguments,
                    body = function_body)
+
+    @classmethod
+    def from_js_literal(cls,
+                        as_str_or_file,
+                        _break_loop_on_failure = False):
+        """Return a Python object representation of a Highcharts JavaScript object
+        literal.
+
+        :param as_str_or_file: The JavaScript object literal, represented either as a
+          :class:`str <python:str>` or as a filename which contains the JS object literal.
+        :type as_str_or_file: :class:`str <python:str>`
+
+        :param _break_loop_on_failure: If ``True``, will break any looping operations in
+          the event of a failure. Otherwise, will attempt to repair the failure. Defaults
+          to ``False``.
+        :type _break_loop_on_failure: :class:`bool <python:bool>`
+
+        :returns: A Python object representation of the Highcharts JavaScript object
+          literal.
+        :rtype: :class:`HighchartsMeta`
+        """
+        is_file = checkers.is_file(as_str_or_file)
+        if is_file:
+            with open(as_str_or_file, 'r') as file_:
+                as_str = file_.read()
+        else:
+            as_str = as_str_or_file
+
+        parsed, updated_str = cls._validate_js_function(as_str)
+        if parsed.body[0].type != 'FunctionDeclaration':
+            property_definition = parsed.body[0].declarations[0].init
+        else:
+            property_definition = parsed.body[0]
+
+        return cls._convert_from_js_ast(property_definition, updated_str)
+
+    @classmethod
+    def _validate_js_function(cls,
+                              as_str,
+                              range = True,
+                              _break_loop_on_failure = False):
+        """Parse a JavaScript function from within ``as_str``.
+
+        :param as_str: A string that potentially contains a JavaScript function.
+        :rtype: :class:`str <python:str>`
+
+        :param range: If ``True``, include each node's ``loc`` and ``range`` in the AST
+          produced. Defaults to ``True``.
+        :type range: :class:`bool <python:bool>`
+
+        :param _break_loop_on_failure: If ``True``, prevents
+
+        :returns: 2-member tuple, with the first being a parsed AST of the function and
+          the second being the string that ultimatley produced that parsed AST.
+        :rtype: :class:`tuple <python:tuple>` of :class:`esprima.nodes.Script`,
+          :class:`str <python:str>`
+        """
+        try:
+            parsed = esprima.parseScript(as_str, loc = range, range = range)
+        except ParseError:
+            try:
+                parsed = esprima.parseModule(as_str, loc = range, range = range)
+            except ParseError:
+                if not _break_loop_on_failure:
+                    as_str = f"""const testFunction = {as_str}"""
+                    return cls._validate_js_function(as_str,
+                                                     range = range,
+                                                     _break_loop_on_failure = True)
+                else:
+                    raise errors.HighchartsParseError('._validate_js_function() expects '
+                                                      'a str containing a valid '
+                                                      'JavaScript function. Could not '
+                                                      'find a valid function.')
+
+        return parsed, as_str
 
 
 class JavaScriptClass(HighchartsMeta):

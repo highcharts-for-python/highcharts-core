@@ -9,6 +9,7 @@ import esprima
 from esprima.error_handler import Error as ParseError
 
 from highcharts.utility_classes import javascript_functions as js_f
+from highcharts import errors
 
 
 def validate_js_function(as_str, _break_loop_on_failure = False, range = True):
@@ -216,3 +217,29 @@ def test_CallbackFunction_convert_from_js_ast(original_str, error):
         with pytest.raises(error):
             result = js_f.CallbackFunction._convert_from_js_ast(property_definition,
                                                                 updated_str)
+
+
+@pytest.mark.parametrize('original_str, error', [
+    ("""function() {}""", None),
+    ("""function(test1,test2) {\nreturn true;}""", None),
+    ("""function testFunction(test1,test2) {\nreturn true;}""", None),
+
+    (123, TypeError),
+    ("""const abc = 123;""", errors.HighchartsParseError),
+])
+def test_CallbackFunction_from_js_literal(original_str, error):
+    if not error:
+        unranged_result = js_f.CallbackFunction._validate_js_function(original_str,
+                                                                      range = False)
+        unranged_parsed = unranged_result[0]
+
+        result = js_f.CallbackFunction.from_js_literal(original_str)
+        assert result is not None
+        assert isinstance(result, js_f.CallbackFunction) is True
+        as_str = str(result)
+        result_parsed = js_f.CallbackFunction._validate_js_function(as_str, range = False)
+        as_str_parsed = result_parsed[0]
+        assert str(as_str_parsed) == str(unranged_parsed)
+    else:
+        with pytest.raises(error):
+            result = js_f.CallbackFunction.from_js_literal(original_str)

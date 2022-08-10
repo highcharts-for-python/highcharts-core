@@ -12,6 +12,7 @@ def validate_types(value,
                    allow_dict = True,
                    allow_json = True,
                    allow_none = True,
+                   allow_js_literal = True,
                    force_iterable = False,
                    function_name = None):
     """Validates that ``value`` is one or more of the allowed types, where the first
@@ -38,6 +39,11 @@ def validate_types(value,
     :param allow_none: If ``True``, will accept an empty or :obj:`None <python:None>`
       object as ``value``. Defaults to ``True``.
     :type allow_none: :class:`bool <python:bool>`
+
+    :param allow_js_literal: If ``True``, will accept a :class:`str <python:str>` object
+      as ``value``, under the assumption that it is deserializable as a JavaScript object
+      literal. Defaults to ``True``.
+    :type allow_js_literal: :class:`bool <python:bool>`
 
     :param force_iterable: If ``True``, will accept an iterable object as ``value``.
       Defaults to ``False`` (because most attributes are just singletons).
@@ -78,6 +84,8 @@ def validate_types(value,
                                               f'objects. Received a {type(item)}.')
 
     primary_type = types_list[0]
+    if not hasattr(primary_type, 'from_js_literal'):
+        allow_js_literal = False
 
     if allow_none and force_iterable and checkers.is_iterable(value) and not value:
         value = []
@@ -94,7 +102,13 @@ def validate_types(value,
                                               f'({primary_type.__name__}) '
                                               f'does not conform to the '
                                               f'HighchartsMeta interface')
-    elif allow_json and isinstance(value, (str, bytes)):
+    elif allow_js_literal and isinstance(value, str):
+        try:
+            value = primary_type.from_js_literal(value)
+        except ValueError:
+            pass
+
+    if allow_json and isinstance(value, (str, bytes)):
         try:
             value = primary_type.from_json(value)
         except AttributeError:
@@ -110,6 +124,7 @@ def validate_types(value,
                                 types = types,
                                 allow_dict = allow_dict,
                                 allow_json = allow_json,
+                                allow_js_literal = allow_js_literal,
                                 force_iterable = force_iterable)
                  for x in value]
     elif allow_none and not value:
@@ -119,34 +134,35 @@ def validate_types(value,
         if function_name:
             error_string = f'{function_name} ' + error_string
 
-        if allow_dict and allow_json and force_iterable and allow_none:
+        allow_js = allow_json or allow_js_literal
+        if allow_dict and allow_js and force_iterable and allow_none:
             error_string += ', dict, str, iterable, or empty object.'
-        elif allow_dict and allow_json and force_iterable:
+        elif allow_dict and allow_js and force_iterable:
             error_string += ', dict, str, or iterable object.'
-        elif allow_dict and allow_json and allow_none:
+        elif allow_dict and allow_js and allow_none:
             error_string += ', dict, str, or empty object.'
         elif allow_dict and force_iterable and allow_none:
             error_string += ', dict, iterable, or empty object.'
-        elif allow_dict and allow_json:
+        elif allow_dict and allow_js:
             error_string += ', dict, or str object.'
         elif allow_dict and force_iterable:
             error_string += ', dict, or iterable object.'
         elif allow_dict and allow_none:
             error_string += ', dict, or empty object.'
-        elif allow_json and force_iterable:
+        elif allow_js and force_iterable:
             error_string += ', str, or iterable object.'
-        elif allow_json and allow_none:
+        elif allow_js and allow_none:
             error_string += ', str, or empty object.'
         elif force_iterable and allow_none:
             error_string += ', iterable, or empty object.'
-        elif allow_json:
+        elif allow_js:
             error_string += ' or str object.'
         elif force_iterable:
             error_string += ' or iterable object.'
         elif allow_none:
             error_string += ' or empty object.'
 
-        error_string += f'Received {value.__class__.__name__}.'
+        error_string += f' Received {value.__class__.__name__}.'
 
         raise errors.HighchartsValueError(error_string)
 
@@ -157,6 +173,7 @@ def class_sensitive(types = None,
                     allow_dict = True,
                     allow_json = True,
                     allow_none = True,
+                    allow_js_literal = True,
                     force_iterable = False):
     """Validates that the values passed to a decorated function or method are
     de-serialized to the appropriate type.
@@ -179,6 +196,11 @@ def class_sensitive(types = None,
     :param allow_none: If ``True``, will accept an empty or :obj:`None <python:None>`
       object as ``value``. Defaults to ``True``.
     :type allow_none: :class:`bool <python:bool>`
+
+    :param allow_js_literal: If ``True``, will accept a :class:`str <python:str>` object
+      as ``value``, under the assumption that it is deserializable as a JavaScript object
+      literal. Defaults to ``True``.
+    :type allow_js_literal: :class:`bool <python:bool>`
 
     :param force_iterable: If ``True``, will accept an iterable object as ``value``.
       Defaults to ``False`` (because most attributes are just singletons).
@@ -226,6 +248,7 @@ def class_sensitive(types = None,
                                    allow_dict = allow_dict,
                                    allow_json = allow_json,
                                    allow_none = allow_none,
+                                   allow_js_literal = allow_js_literal,
                                    force_iterable = force_iterable,
                                    function_name = function_name)
 
