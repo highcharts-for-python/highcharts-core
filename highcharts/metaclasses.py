@@ -105,7 +105,7 @@ class HighchartsMeta(ABC):
                 as_dict[key] = 'null'
             elif isinstance(value, dict):
                 as_dict[key] = HighchartsMeta.trim_dict(value)
-            elif value:
+            elif value is not None:
                 as_dict[key] = HighchartsMeta.trim_iterable(value)
 
         return as_dict
@@ -223,6 +223,47 @@ class HighchartsMeta(ABC):
         return as_str
 
     @classmethod
+    def _validate_js_literal(cls,
+                             as_str,
+                             range = False,
+                             _break_loop_on_failure = False):
+        """Parse ``as_str`` as a valid JavaScript literal object.
+
+        :param as_str: The string to parse as a JavaScript literal object.
+        :type as_str: :class:`str <python:str>`
+
+        :param range: If ``True``, includes location and range data for each node in the
+          AST returned. Defaults to ``False``.
+        :type range: :class:`bool <python:bool>`
+
+        :param _break_loop_on_failure: If ``True``, will not loop if the method fails to
+          parse/validate ``as_str``. Defaults to ``False``.
+        :type _break_loop_on_failure: :class:`bool <python:bool>`
+
+        :returns: The parsed AST representation of ``as_str`` and the updated string.
+        :rtype: 2-member :class:`tuple <python:tuple>` of :class:`esprima.nodes.Script`
+          and :class:`str <python:str>`
+        """
+        try:
+            parsed = esprima.parseScript(as_str, loc = range, range = range)
+        except ParseError:
+            try:
+                parsed = esprima.parseModule(as_str, loc = range, range = range)
+            except ParseError:
+                if not _break_loop_on_failure:
+                    as_str = f"""var randomVariable = {as_str}"""
+                    return cls._validate_js_literal(as_str,
+                                                    range = range,
+                                                    _break_loop_on_failure = True)
+                else:
+                    raise errors.HighchartsParseError('._validate_js_function() expects '
+                                                      'a str containing a valid '
+                                                      'JavaScript function. Could not '
+                                                      'find a valid function.')
+
+        return parsed, as_str
+
+    @classmethod
     def from_js_literal(cls,
                         as_str_or_file,
                         _break_loop_on_failure = False):
@@ -249,10 +290,7 @@ class HighchartsMeta(ABC):
         else:
             as_str = as_str_or_file
 
-        try:
-            parsed = esprima.parseScript(as_str, loc = True, range = True)
-        except ParseError:
-            parsed = esprima.parseModule(as_str, loc = True, range = True)
+        parsed, updated_str = cls._validate_js_literal(as_str)
 
         as_dict = {}
         if not parsed.body:

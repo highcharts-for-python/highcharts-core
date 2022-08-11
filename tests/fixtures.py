@@ -53,3 +53,34 @@ def check_input_file(input_directory, input_value):
         input_value = input_file
 
     return input_value
+
+
+def to_camelCase(variable_name):
+    if '_' not in variable_name:
+        return variable_name
+
+    camel_case = ''
+    previous_character = ''
+    for character in variable_name:
+        if character != '_' and previous_character != '_':
+            camel_case += character
+            previous_character = character
+        elif character == '_':
+            previous_character = character
+        elif character != '_' and previous_character == '_':
+            camel_case += character.upper()
+            previous_character = character
+
+    return camel_case
+
+
+def to_js_dict(original):
+    as_dict = {}
+    for key in original:
+        if 'html' in key:
+            new_key = 'useHTML'
+        else:
+            new_key = to_camelCase(key)
+        as_dict[new_key] = original[key]
+
+    return as_dict

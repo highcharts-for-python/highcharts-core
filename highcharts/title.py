@@ -15,7 +15,7 @@ class Title(HighchartsMeta):
         self._floating = None
         self._margin = None
         self._style = None
-        self._text = 'Chart title'
+        self._text = None
         self._use_html = None
         self._vertical_align = None
         self._width_adjust = None
@@ -26,7 +26,7 @@ class Title(HighchartsMeta):
         self.floating = kwargs.pop('floating', None)
         self.margin = kwargs.pop('margin', None)
         self.style = kwargs.pop('style', None)
-        self.text = kwargs.pop('text', 'Chart title')
+        self.text = kwargs.pop('text', None)
         self.use_html = kwargs.pop('use_html', None)
         self.vertical_align = kwargs.pop('vertical_align', None)
         self.width_adjust = kwargs.pop('width_adjust', None)
@@ -51,11 +51,12 @@ class Title(HighchartsMeta):
 
     @align.setter
     def align(self, value):
-        value = validators.string(value, allow_empty = False)
-        value = value.lower()
-        if value not in ['left', 'center', 'right']:
-            raise errors.HighchartsValueError(f'align must be either "left", "center", or'
-                                              f' "right". Was: {value}')
+        value = validators.string(value, allow_empty = True)
+        if value:
+            value = value.lower()
+            if value not in ['left', 'center', 'right']:
+                raise errors.HighchartsValueError(f'align must be either "left", "center"'
+                                                  f', or "right". Was: {value}')
 
         self._align = value
 
@@ -198,11 +199,7 @@ class Title(HighchartsMeta):
 
     @x.setter
     def x(self, value):
-        value = validators.numeric(value, allow_empty = True)
-        if value is None:
-            self._x = 0
-        else:
-            self._x = value
+        self._x = validators.numeric(value, allow_empty = True)
 
     @property
     def y(self) -> Optional[int | float | Decimal]:
