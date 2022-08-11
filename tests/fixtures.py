@@ -84,3 +84,97 @@ def to_js_dict(original):
         as_dict[new_key] = original[key]
 
     return as_dict
+
+
+def Class__init__(cls, kwargs, error):
+    if not error:
+        result = cls(**kwargs)
+        assert result is not None
+        assert isinstance(result, cls) is True
+        for key in kwargs:
+            assert kwargs[key] == getattr(result, key)
+    else:
+        with pytest.raises(error):
+            result = cls(**kwargs)
+
+
+def Class__to_untrimmed_dict(cls, kwargs, error):
+    if not error:
+        instance = cls(**kwargs)
+        result = instance._to_untrimmed_dict()
+        assert result is not None
+        assert isinstance(result, dict) is True
+        for key in kwargs:
+            if '_' not in key:
+                assert kwargs[key] == result.get(key)
+            else:
+                if 'html' in key:
+                    assert kwargs[key] == result.get('useHTML')
+                else:
+                    assert kwargs[key] == result.get(to_camelCase(key))
+    else:
+        with pytest.raises(error):
+            instance = cls(**kwargs)
+            result = instance._to_untrimmed_dict()
+
+
+def Class_from_dict(cls, kwargs, error):
+    as_dict = to_js_dict(kwargs)
+
+    if not error:
+        instance = cls.from_dict(as_dict)
+        assert instance is not None
+        assert isinstance(instance, cls) is True
+        for key in kwargs:
+            assert kwargs[key] == getattr(instance, key)
+    else:
+        with pytest.raises(error):
+            instance = cls.from_dict(as_dict)
+
+
+def Class_to_dict(cls, kwargs, error):
+    expected = to_js_dict(kwargs)
+    for key in expected:
+        if expected[key] is None:
+            del expected[key]
+
+    if not error:
+        instance = cls(**kwargs)
+        result = instance.to_dict()
+        assert result is not None
+        assert isinstance(result, dict) is True
+        print(expected)
+        print(result)
+        assert checkers.are_dicts_equivalent(result, expected) is True
+    else:
+        with pytest.raises(error):
+            instance = cls(**kwargs)
+            result = instance.to_dict()
+
+
+def Class_from_js_literal(cls, input_files, filename, as_file, error):
+    input_file = check_input_file(input_files, filename)
+
+    with open(input_file, 'r') as file_:
+        as_str = file_.read()
+
+    if as_file:
+        input_string = input_file
+    else:
+        input_string = as_str
+
+    if not error:
+        parsed_original, original_str = cls._validate_js_literal(as_str)
+        result = cls.from_js_literal(input_string)
+        assert result is not None
+        assert isinstance(result, cls) is True
+
+        as_js_literal = result.to_js_literal()
+        parsed_output, output_str = cls._validate_js_literal(as_js_literal)
+        print(as_str)
+        print('-----------')
+        print(as_js_literal)
+        assert str(parsed_output) == str(parsed_original)
+    else:
+        with pytest.raises(error):
+            result = cls.from_js_literal(input_string)
