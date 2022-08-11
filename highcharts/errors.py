@@ -54,3 +54,10 @@ class HighchartsVariableDeclarationError(HighchartsParseError):
     declaration, and is unable to coerce the JavaScript code into a properly-formed
     variable declaration."""
     pass
+
+
+class HighchartsMissingClassNameError(JavaScriptError):
+    """:exc:`ValueError <python:ValueError>` encountered when trying to serialize a
+    JavaScriptClass instance to JavaScript, but the instance has no class_name provided.
+    """
+    pass

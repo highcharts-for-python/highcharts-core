@@ -145,10 +145,10 @@ class CallbackFunction(HighchartsMeta):
         """Create a :class:`CallbackFunction` instance from a
         :class:`esprima.nodes.FunctionExpression` instance.
 
-        :param property_definition: The :class:`esprima.nodes.FunctionExpression` instance,
-          including ``loc`` (indicating the line and column in the original string) and
-          ``range`` (indicating the character range for the property definition in the
-          original string).
+        :param property_definition: The :class:`esprima.nodes.FunctionExpression`
+          instance, including ``loc`` (indicating the line and column in the original
+          string) and ``range`` (indicating the character range for the property
+          definition in the original string).
         :type property_definition: :class:`esprima.nodes.FunctionExpression`
 
         :param original_str: The original :class:`str <python:str>` of the JavaScript from
@@ -158,25 +158,38 @@ class CallbackFunction(HighchartsMeta):
         :returns: :class:`CallbackFunction`
         """
         if not checkers.is_type(property_definition, ('FunctionDeclaration',
-                                                      'FunctionExpression')):
+                                                      'FunctionExpression',
+                                                      'MethodDefinition')):
             raise errors.HighchartsParseError(f'property_definition should contain a '
-                                              f'FunctionExpression or FunctionDeclaration'
-                                              ' instance. Received: '
+                                              f'FunctionExpression, FunctionDeclaration, '
+                                              'or MethodDefinition instance. Received: '
                                               f'{property_definition.__class__.__name__}')
 
-        body = property_definition.body
+        if property_definition.type != 'MethodDefinition':
+            body = property_definition.body
+        else:
+            body = property_definition.value.body
+
         body_range = body.range
         body_start = body_range[0] + 1
         body_end = body_range[1] - 1
 
         if property_definition.type == 'FunctionDeclaration':
             function_name = property_definition.id.name
+        elif property_definition.type == 'MethodDefinition':
+            function_name = property_definition.key.name
+        elif property_definition.type == 'FunctionExpression' and \
+             property_definition.id is not None:
+            function_name = property_definition.id.name
         else:
             function_name = None
 
         function_body = original_str[body_start:body_end]
 
-        arguments = [x.name for x in property_definition.params]
+        if property_definition.type == 'MethodDefinition':
+            arguments = [x.name for x in property_definition.value.params]
+        else:
+            arguments = [x.name for x in property_definition.params]
 
         return cls(function_name = function_name,
                    arguments = arguments,
@@ -210,10 +223,12 @@ class CallbackFunction(HighchartsMeta):
             as_str = as_str_or_file
 
         parsed, updated_str = cls._validate_js_function(as_str)
-        if parsed.body[0].type != 'FunctionDeclaration':
-            property_definition = parsed.body[0].declarations[0].init
-        else:
+        if parsed.body[0].type == 'FunctionDeclaration':
             property_definition = parsed.body[0]
+        elif parsed.body[0].type == 'MethodDefinition':
+            property_definition = parsed.body[0].body[0]
+        elif parsed.body[0].type != 'FunctionDeclaration':
+            property_definition = parsed.body[0].declarations[0].init
 
         return cls._convert_from_js_ast(property_definition, updated_str)
 
@@ -244,8 +259,13 @@ class CallbackFunction(HighchartsMeta):
             try:
                 parsed = esprima.parseModule(as_str, loc = range, range = range)
             except ParseError:
-                if not _break_loop_on_failure:
+                if not _break_loop_on_failure and as_str.startswith('function'):
                     as_str = f"""const testFunction = {as_str}"""
+                    return cls._validate_js_function(as_str,
+                                                     range = range,
+                                                     _break_loop_on_failure = True)
+                elif not _break_loop_on_failure:
+                    as_str = f"""const testFunction = function {as_str}"""
                     return cls._validate_js_function(as_str,
                                                      range = range,
                                                      _break_loop_on_failure = True)
@@ -262,9 +282,49 @@ class JavaScriptClass(HighchartsMeta):
     """Representation of a JavaScript class."""
 
     def __init__(self, **kwargs):
+        self._class_name = None
         self._methods = None
 
+        self.class_name = kwargs.pop('class_name', None)
         self.methods = kwargs.pop('methods', None)
+
+    def __str__(self) -> str:
+        if not self.class_name:
+            raise errors.HighchartsMissingClassNameError(f'Unable to serialize. The '
+                                                         f'JavaScriptClass instance has '
+                                                         f'no class_name provided.')
+        as_str = f'class {self.class_name} '
+        as_str += '{\n'
+        for method in self.methods or []:
+            method_str = f'{method.function_name}'
+            argument_str = '('
+            for argument in method.arguments or []:
+                argument_str += f'{argument},'
+            if method.arguments:
+                argument_str = argument_str[:-1]
+            argument_str += ') {\n'
+
+            method_str += argument_str
+
+            method_str += method.body + '\n}\n'
+
+            as_str += method_str
+
+        as_str += '}'
+
+        return as_str
+
+    @property
+    def class_name(self) -> Optional[str]:
+        """The name of the JavaScript class.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._class_name
+
+    @class_name.setter
+    def class_name(self, value):
+        self._class_name = validators.variable_name(value, allow_empty = True)
 
     @property
     def methods(self) -> Optional[List[CallbackFunction]]:
@@ -290,6 +350,10 @@ class JavaScriptClass(HighchartsMeta):
 
         :rtype: :class:`list <python:list>` of :class:`CallbackFunction`, or
           :obj:`None <python:None>`
+
+        :raises JavaScriptError: if one or more methods lacks a function name OR if there
+          is no ``constructor`` method included in
+          :meth:`.methods <JavaScriptClass.methods>`.
         """
         return self._methods
 
@@ -318,6 +382,7 @@ class JavaScriptClass(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
+            'class_name': as_dict.pop('className', None),
             'methods': as_dict.pop('methods', None)
         }
 
@@ -325,5 +390,96 @@ class JavaScriptClass(HighchartsMeta):
 
     def _to_untrimmed_dict(self) -> dict:
         return {
+            'className': self.class_name,
             'methods': self.methods
         }
+
+    @classmethod
+    def _convert_from_js_ast(cls, definition, original_str):
+        """Create a :class:`JavaScriptClass` instance from a
+        :class:`esprima.nodes.ClassDeclaration` instance.
+
+        :param property_definition: The :class:`esprima.nodes.ClassDeclaration` instance,
+          including ``loc`` (indicating the line and column in the original string) and
+          ``range`` (indicating the character range for the property definition in the
+          original string).
+        :type property_definition: :class:`esprima.nodes.ClassDeclaration`
+
+        :param original_str: The original :class:`str <python:str>` of the JavaScript from
+          which ``definition`` was parsed.
+        :type original_str: :class:`str <python:str>`
+
+        :returns: :class:`JavaScriptClass`
+        """
+        if not checkers.is_type(definition, ('ClassDeclaration')):
+            raise errors.HighchartsParseError(f'definition should contain a '
+                                              f'ClassDeclaration'
+                                              ' instance. Received: '
+                                              f'{definition.__class__.__name__}')
+
+        class_name = definition.id.name
+
+        method_definitions = [x for x in definition.body.body]
+        method_strings = []
+        for method in method_definitions:
+            method_start = method.range[0]
+            method_end = method.range[1]
+            method_string = original_str[method_start:method_end]
+            method_strings.append(method_string)
+
+        methods = [CallbackFunction.from_js_literal(x) for x in method_strings]
+
+        return cls(class_name = class_name,
+                   methods = methods)
+
+    @classmethod
+    def from_js_literal(cls,
+                        as_str_or_file):
+        """Return a Python object representation of a JavaScript class.
+
+        :param as_str_or_file: The JavaScript object literal, represented either as a
+          :class:`str <python:str>` or as a filename which contains the JS object literal.
+        :type as_str_or_file: :class:`str <python:str>`
+
+        :param _break_loop_on_failure: If ``True``, will break any looping operations in
+          the event of a failure. Otherwise, will attempt to repair the failure. Defaults
+          to ``False``.
+        :type _break_loop_on_failure: :class:`bool <python:bool>`
+
+        :returns: A Python object representation of the Highcharts JavaScript object
+          literal.
+        :rtype: :class:`HighchartsMeta`
+        """
+        is_file = checkers.is_file(as_str_or_file)
+        if is_file:
+            with open(as_str_or_file, 'r') as file_:
+                as_str = file_.read()
+        else:
+            as_str = as_str_or_file
+
+        try:
+            parsed = esprima.parseScript(as_str, range = True)
+        except ParseError:
+            try:
+                parsed = esprima.parseModule(as_str, range = True)
+            except ParseError:
+                raise errors.HighchartsParseError('unable to find a JavaScript class '
+                                                  'declaration in ``as_str``.')
+
+        definition = parsed.body[0]
+
+        return cls._convert_from_js_ast(definition, as_str)
+
+    def to_js_literal(self,
+                      filename = None,
+                      encoding = 'utf-8') -> str:
+        if filename:
+            filename = validators.path(filename)
+
+        as_str = str(self)
+
+        if filename:
+            with open(filename, 'w', encoding = encoding) as file_:
+                file_.write(as_str)
+
+        return as_str
