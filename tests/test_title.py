@@ -138,17 +138,17 @@ def test_to_dict(kwargs, error):
 
 
 @pytest.mark.parametrize('filename, as_file, error', [
-    ('title/title-01.js', False, None),
-    ('title/title-02.js', False, None),
+    ('title/01.js', False, None),
+    ('title/02.js', False, None),
 
-    ('title/title-error-01.js', False, errors.HighchartsValueError),
-    ('title/title-error-02.js', False, errors.HighchartsParseError),
+    ('title/error-01.js', False, errors.HighchartsValueError),
+    ('title/error-02.js', False, errors.HighchartsParseError),
 
-    ('title/title-01.js', True, None),
-    ('title/title-02.js', True, None),
+    ('title/01.js', True, None),
+    ('title/02.js', True, None),
 
-    ('title/title-error-01.js', True, errors.HighchartsValueError),
-    ('title/title-error-02.js', True, errors.HighchartsParseError),
+    ('title/error-01.js', True, errors.HighchartsValueError),
+    ('title/error-02.js', True, errors.HighchartsParseError),
 ])
 def test_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)

@@ -56,11 +56,12 @@ class Subtitle(HighchartsMeta):
 
     @align.setter
     def align(self, value):
-        value = validators.string(value, allow_empty = False)
-        value = value.lower()
-        if value not in ['left', 'center', 'right']:
-            raise errors.HighchartsValueError(f'align must be either "left", "center", or'
-                                              f' "right". Was: {value}')
+        value = validators.string(value, allow_empty = True)
+        if value:
+            value = value.lower()
+            if value not in ['left', 'center', 'right']:
+                raise errors.HighchartsValueError(f'align must be either "left", "center"'
+                                                  f', or "right". Was: {value}')
 
         self._align = value
 
@@ -181,11 +182,7 @@ class Subtitle(HighchartsMeta):
 
     @x.setter
     def x(self, value):
-        value = validators.numeric(value, allow_empty = True)
-        if value is None:
-            self._x = 0
-        else:
-            self._x = value
+        self._x = validators.numeric(value, allow_empty = True)
 
     @property
     def y(self) -> Optional[int | float | Decimal]:
