@@ -159,13 +159,15 @@ class CallbackFunction(HighchartsMeta):
         """
         if not checkers.is_type(property_definition, ('FunctionDeclaration',
                                                       'FunctionExpression',
-                                                      'MethodDefinition')):
+                                                      'MethodDefinition',
+                                                      'Property')):
             raise errors.HighchartsParseError(f'property_definition should contain a '
                                               f'FunctionExpression, FunctionDeclaration, '
-                                              'or MethodDefinition instance. Received: '
+                                              'MethodDefinition, or Property instance. '
+                                              f'Received: '
                                               f'{property_definition.__class__.__name__}')
 
-        if property_definition.type != 'MethodDefinition':
+        if property_definition.type not in ['MethodDefinition', 'Property']:
             body = property_definition.body
         else:
             body = property_definition.value.body
@@ -186,7 +188,7 @@ class CallbackFunction(HighchartsMeta):
 
         function_body = original_str[body_start:body_end]
 
-        if property_definition.type == 'MethodDefinition':
+        if property_definition.type in ['MethodDefinition', 'Property']:
             arguments = [x.name for x in property_definition.value.params]
         else:
             arguments = [x.name for x in property_definition.params]

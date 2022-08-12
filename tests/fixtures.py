@@ -92,6 +92,8 @@ def Class__init__(cls, kwargs, error):
         assert result is not None
         assert isinstance(result, cls) is True
         for key in kwargs:
+            if isinstance(kwargs[key], str) and kwargs[key].startswith('function'):
+                continue
             assert kwargs[key] == getattr(result, key)
     else:
         with pytest.raises(error):
@@ -105,6 +107,8 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
         assert result is not None
         assert isinstance(result, dict) is True
         for key in kwargs:
+            if isinstance(kwargs[key], str) and kwargs[key].startswith('function'):
+                continue
             if '_' not in key:
                 assert kwargs[key] == result.get(key)
             else:
@@ -126,6 +130,8 @@ def Class_from_dict(cls, kwargs, error):
         assert instance is not None
         assert isinstance(instance, cls) is True
         for key in kwargs:
+            if isinstance(kwargs[key], str) and kwargs[key].startswith('function'):
+                continue
             assert kwargs[key] == getattr(instance, key)
     else:
         with pytest.raises(error):
@@ -134,9 +140,18 @@ def Class_from_dict(cls, kwargs, error):
 
 def Class_to_dict(cls, kwargs, error):
     expected = to_js_dict(kwargs)
+    check_dicts = True
+    keys_to_delete = []
     for key in expected:
         if expected[key] is None:
-            del expected[key]
+            keys_to_delete.append(key)
+        if not checkers.is_type(expected[key], (str, int, float, bool, list, dict)):
+            check_dicts = False
+        elif isinstance(expected[key], str) and expected[key].startswith('function'):
+            check_dicts = False
+
+    for key in keys_to_delete:
+        del expected[key]
 
     if not error:
         instance = cls(**kwargs)
@@ -145,7 +160,8 @@ def Class_to_dict(cls, kwargs, error):
         assert isinstance(result, dict) is True
         print(expected)
         print(result)
-        assert checkers.are_dicts_equivalent(result, expected) is True
+        if check_dicts:
+            assert checkers.are_dicts_equivalent(result, expected) is True
     else:
         with pytest.raises(error):
             instance = cls(**kwargs)
@@ -164,16 +180,19 @@ def Class_from_js_literal(cls, input_files, filename, as_file, error):
         input_string = as_str
 
     if not error:
-        parsed_original, original_str = cls._validate_js_literal(as_str)
+        print('-------------------')
+        print('ORIGINAL VALIDATION')
+        parsed_original, original_str = cls._validate_js_literal(as_str, range = False)
+        print('-------------')
+        print('ORIGINAL CALL')
         result = cls.from_js_literal(input_string)
         assert result is not None
         assert isinstance(result, cls) is True
 
         as_js_literal = result.to_js_literal()
-        parsed_output, output_str = cls._validate_js_literal(as_js_literal)
-        print(as_str)
-        print('-----------')
-        print(as_js_literal)
+        print('-----------------')
+        print('RESULT VALIDATION')
+        parsed_output, output_str = cls._validate_js_literal(as_js_literal, range = False)
         assert str(parsed_output) == str(parsed_original)
     else:
         with pytest.raises(error):

@@ -300,3 +300,36 @@ def test__mro_init(error):
 
         with pytest.raises(error):
             child_instance.__mro_init__({})
+
+
+@pytest.mark.parametrize('cls, as_str, error', [
+    (TestClass, """{item1: function () {
+      // The first returned item is the header, subsequent items are the
+      // points
+      return ['<b>' + this.x + '</b>'].concat(
+          this.points ?
+              this.points.map(function (point) {
+                  return point.series.name + ': ' + point.y + 'm';
+              }) : []
+      );
+     }}""", None)
+])
+def test_from_js_literal(cls, as_str, error):
+    if not error:
+        print('-------------------')
+        print('ORIGINAL VALIDATION')
+        parsed_original, original_str = cls._validate_js_literal(as_str, range = False)
+        print('-------------')
+        print('ORIGINAL CALL')
+        result = cls.from_js_literal(as_str)
+        assert result is not None
+        assert isinstance(result, cls) is True
+
+        as_js_literal = result.to_js_literal()
+        print('-----------------')
+        print('RESULT VALIDATION')
+        parsed_output, output_str = cls._validate_js_literal(as_js_literal, range = False)
+        assert str(parsed_output) == str(parsed_original)
+    else:
+        with pytest.raises(error):
+            result = cls.from_js_literal(as_str)

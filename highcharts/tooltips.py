@@ -210,7 +210,7 @@ class Tooltip(HighchartsMeta):
         else:
             try:
                 self._border_radius = validators.string(value, allow_empty = True)
-            except ValueError:
+            except (TypeError, ValueError):
                 self._border_radius = validators.numeric(value, allow_empty = True)
 
     @property
@@ -303,7 +303,10 @@ class Tooltip(HighchartsMeta):
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(value)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @property
     def follow_pointer(self) -> Optional[bool]:
@@ -719,7 +722,10 @@ class Tooltip(HighchartsMeta):
 
     @shared.setter
     def shared(self, value):
-        self._shared = bool(value)
+        if value is None:
+            self._shared = None
+        else:
+            self._shared = bool(value)
 
     @property
     def snap(self) -> Optional[int | float | Decimal]:
@@ -892,44 +898,38 @@ class Tooltip(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'animation': as_dict.pop('animation', True),
+            'animation': as_dict.pop('animation', None),
             'background_color': as_dict.pop('backgroundColor', None),
             'border_color': as_dict.pop('borderColor', None),
-            'border_radius': as_dict.pop('borderRadius',
-                                         constants.DEFAULT_TOOLTIP.get('border_radius')),
-            'border_width': as_dict.pop('borderWidth',
-                                        constants.DEFAULT_TOOLTIP.get('border_width')),
+            'border_radius': as_dict.pop('borderRadius', None),
+            'border_width': as_dict.pop('borderWidth', None),
             'class_name': as_dict.pop('className', None),
             'cluster_format': as_dict.pop('clusterFormat', None),
             'date_time_label_formats': as_dict.pop('dateTimeLabelFormats', None),
-            'distance': as_dict.pop('distance',
-                                    constants.DEFAULT_TOOLTIP.get('distance')),
-            'enabled': as_dict.pop('enabled', True),
-            'follow_pointer': as_dict.pop('followPointer', False),
-            'follow_touch_move': as_dict.pop('followTouchMove', True),
-            'footer_format': as_dict.pop('footerFormat',
-                                         constants.DEFAULT_TOOLTIP.get('footer_format')),
+            'distance': as_dict.pop('distance', None),
+            'enabled': as_dict.pop('enabled', None),
+            'follow_pointer': as_dict.pop('followPointer', None),
+            'follow_touch_move': as_dict.pop('followTouchMove', None),
+            'footer_format': as_dict.pop('footerFormat', None),
             'formatter': as_dict.pop('formatter', None),
             'header_format': as_dict.pop('headerFormat', None),
-            'header_shape': as_dict.pop('headerShape',
-                                        constants.DEFAULT_TOOLTIP.get('header_shape')),
-            'hide_delay': as_dict.pop('hideDelay',
-                                      constants.DEFAULT_TOOLTIP.get('hide_delay')),
+            'header_shape': as_dict.pop('headerShape', None),
+            'hide_delay': as_dict.pop('hideDelay', None),
             'null_format': as_dict.pop('nullFormat', None),
             'null_formatter': as_dict.pop('nullFormatter', None),
             'outside': as_dict.pop('outside', None),
-            'padding': as_dict.pop('padding', constants.DEFAULT_TOOLTIP.get('padding')),
+            'padding': as_dict.pop('padding', None),
             'point_format': as_dict.pop('pointFormat', None),
             'point_formatter': as_dict.pop('pointFormatter', None),
             'positioner': as_dict.pop('positioner', None),
-            'shadow': as_dict.pop('shadow', True),
-            'shape': as_dict.pop('shape', constants.DEFAULT_TOOLTIP.get('shape')),
-            'shared': as_dict.pop('shared', False),
-            'snap': as_dict.pop('snap', constants.DEFAULT_TOOLTIP.get('snap')),
-            'split': as_dict.pop('split', False),
-            'stick_on_contact': as_dict.pop('stickOnContact', False),
+            'shadow': as_dict.pop('shadow', None),
+            'shape': as_dict.pop('shape', None),
+            'shared': as_dict.pop('shared', None),
+            'snap': as_dict.pop('snap', None),
+            'split': as_dict.pop('split', None),
+            'stick_on_contact': as_dict.pop('stickOnContact', None),
             'style': as_dict.pop('style', None),
-            'use_html': as_dict.pop('useHTML', False),
+            'use_html': as_dict.pop('useHTML', None),
             'value_decimals': as_dict.pop('valueDecimals', None),
             'value_prefix': as_dict.pop('valuePrefix', None),
             'value_suffix': as_dict.pop('valueSuffix', None),

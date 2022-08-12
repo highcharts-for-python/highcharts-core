@@ -225,7 +225,7 @@ class HighchartsMeta(ABC):
     @classmethod
     def _validate_js_literal(cls,
                              as_str,
-                             range = False,
+                             range = True,
                              _break_loop_on_failure = False):
         """Parse ``as_str`` as a valid JavaScript literal object.
 
@@ -336,7 +336,8 @@ class HighchartsMeta(ABC):
         if not properties:
             return cls()
 
-        key_value_pairs = [(x[0], x[1]) for x in get_key_value_pairs(properties, as_str)]
+        key_value_pairs = [(x[0], x[1]) for x in get_key_value_pairs(properties,
+                                                                     updated_str)]
 
         for pair in key_value_pairs:
             as_dict[pair[0]] = pair[1]
