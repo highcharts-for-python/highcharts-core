@@ -79,6 +79,8 @@ def to_js_dict(original):
     for key in original:
         if 'html' in key:
             new_key = 'useHTML'
+        elif 'utc' in key:
+            new_key = 'useUTC'
         else:
             new_key = to_camelCase(key)
         as_dict[new_key] = original[key]
@@ -93,6 +95,8 @@ def Class__init__(cls, kwargs, error):
         assert isinstance(result, cls) is True
         for key in kwargs:
             if isinstance(kwargs[key], str) and kwargs[key].startswith('function'):
+                continue
+            if isinstance(kwargs[key], str) and kwargs[key].startswith('class'):
                 continue
             assert kwargs[key] == getattr(result, key)
     else:
@@ -109,11 +113,15 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
         for key in kwargs:
             if isinstance(kwargs[key], str) and kwargs[key].startswith('function'):
                 continue
+            if isinstance(kwargs[key], str) and kwargs[key].startswith('class'):
+               continue
             if '_' not in key:
                 assert kwargs[key] == result.get(key)
             else:
                 if 'html' in key:
                     assert kwargs[key] == result.get('useHTML')
+                elif 'utc' in key:
+                    assert kwargs[key] == result.get('useUTC')
                 else:
                     assert kwargs[key] == result.get(to_camelCase(key))
     else:
@@ -132,6 +140,8 @@ def Class_from_dict(cls, kwargs, error):
         for key in kwargs:
             if isinstance(kwargs[key], str) and kwargs[key].startswith('function'):
                 continue
+            if isinstance(kwargs[key], str) and kwargs[key].startswith('class'):
+                continue
             assert kwargs[key] == getattr(instance, key)
     else:
         with pytest.raises(error):
@@ -148,6 +158,8 @@ def Class_to_dict(cls, kwargs, error):
         if not checkers.is_type(expected[key], (str, int, float, bool, list, dict)):
             check_dicts = False
         elif isinstance(expected[key], str) and expected[key].startswith('function'):
+            check_dicts = False
+        elif isinstance(expected[key], str) and expected[key].startswith('class'):
             check_dicts = False
 
     for key in keys_to_delete:
@@ -185,6 +197,7 @@ def Class_from_js_literal(cls, input_files, filename, as_file, error):
         parsed_original, original_str = cls._validate_js_literal(as_str, range = False)
         print('-------------')
         print('ORIGINAL CALL')
+        print(as_str)
         result = cls.from_js_literal(input_string)
         assert result is not None
         assert isinstance(result, cls) is True
@@ -192,6 +205,7 @@ def Class_from_js_literal(cls, input_files, filename, as_file, error):
         as_js_literal = result.to_js_literal()
         print('-----------------')
         print('RESULT VALIDATION')
+        print(as_js_literal)
         parsed_output, output_str = cls._validate_js_literal(as_js_literal, range = False)
         assert str(parsed_output) == str(parsed_original)
     else:

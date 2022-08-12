@@ -71,7 +71,7 @@ class HighchartsMeta(ABC):
 
         :rtype: iterable
         """
-        if not checkers.is_iterable(untrimmed):
+        if not checkers.is_iterable(untrimmed, forbid_literals = (str, bytes, dict)):
             return untrimmed
 
         trimmed = []
@@ -211,7 +211,7 @@ class HighchartsMeta(ABC):
         for key in untrimmed:
             item = untrimmed[key]
             serialized = serialize_to_js_literal(item, encoding = encoding)
-            if serialized:
+            if serialized is not None:
                 as_dict[key] = serialized
 
         as_str = assemble_js_literal(as_dict)

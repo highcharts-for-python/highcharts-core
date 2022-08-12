@@ -23,22 +23,22 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
     """
     if checkers.is_iterable(item, forbid_literals = (str, bytes, dict)):
         return [serialize_to_js_literal(x) for x in item]
+    elif hasattr(item, 'to_js_literal'):
+        return item.to_js_literal(encoding = encoding)
     elif isinstance(item, constants.EnforcedNullType) or item == 'null':
         return constants.EnforcedNull
+    elif isinstance(item, bool):
+        return item
     elif checkers.is_string(item):
         return item
     elif checkers.is_numeric(item) and not isinstance(item, Decimal):
         return item
     elif isinstance(item, Decimal):
         return float(item)
-    elif item is None:
-        return None
-    elif item is True or item is False:
-        return item
     elif checkers.is_type(item, ('CallbackFunction', dict)):
         return str(item)
-    elif hasattr(item, 'to_js_literal'):
-        return item.to_js_literal(encoding = encoding)
+    elif item is None:
+        return None
 
     return None
 
@@ -72,7 +72,7 @@ def attempt_variable_declaration(as_str):
     init = first_item.declarations[0].init
     if not init:
         return False
-    if init.type in ('FunctionExpression', 'ArrowFunctionExpression'):
+    if init.type in ('FunctionExpression', 'ArrowFunctionExpression', 'ClassExpression'):
         return True
     elif init.type == 'NewExpression':
         callee = init.callee
@@ -84,7 +84,7 @@ def attempt_variable_declaration(as_str):
     return False
 
 
-def is_js_function(as_str) -> bool:
+def is_js_function_or_class(as_str) -> bool:
     """Determine whether ``as_str`` is a JavaScript function or not.
 
     :param as_str: The string to evaluate.
@@ -112,15 +112,16 @@ def is_js_function(as_str) -> bool:
         return False
 
     first_item = body[0]
-    if first_item.type == 'FunctionDeclaration':
+    if first_item.type in ('FunctionDeclaration', 'ClassDeclaration'):
         return True
-    elif as_str.startswith('function'):
+    elif as_str.startswith('function') or as_str.startswith('class'):
         return attempt_variable_declaration(as_str)
     elif first_item.type == 'VariableDeclaration':
         init = first_item.declarations[0].init
         if not init:
             return False
-        if init.type in ('FunctionExpression', 'ArrowFunctionExpression'):
+        if init.type in ('FunctionExpression', 'ArrowFunctionExpression',
+                         'ClassExpression'):
             return True
         elif init.type == 'NewExpression':
             callee = init.callee
@@ -161,7 +162,7 @@ def assemble_js_literal(as_dict) -> Optional[str]:
         as_str += f"""  {key}: """
 
         if checkers.is_string(item):
-            if not is_js_function(item):
+            if not is_js_function_or_class(item):
                 as_str += f"""'{item}'"""
             else:
                 as_str += f"""{item}"""
@@ -224,7 +225,8 @@ def convert_js_property_to_python(property_definition, original_str = None):
       The :class:`esprima.nodes.Property` objects are available in the ``value`` sub-item.
 
     """
-    from highcharts.utility_classes.javascript_functions import CallbackFunction
+    from highcharts.utility_classes.javascript_functions import CallbackFunction, \
+        JavaScriptClass
 
     if not checkers.is_type(property_definition, 'Property'):
         raise errors.HighchartsParseError(f'property_definition should contain a '
@@ -260,6 +262,9 @@ def convert_js_property_to_python(property_definition, original_str = None):
         return as_dict
     elif property_definition.value.type == 'FunctionExpression':
         return CallbackFunction._convert_from_js_ast(property_definition, original_str)
+    elif property_definition.value.type == 'ClassExpression':
+        return JavaScriptClass._convert_from_js_ast(property_definition.value,
+                                                    original_str)
     else:
         raise errors.HighchartsParseError('unable to find a literal, array, or object '
                                           'definition')

@@ -413,9 +413,9 @@ class JavaScriptClass(HighchartsMeta):
 
         :returns: :class:`JavaScriptClass`
         """
-        if not checkers.is_type(definition, ('ClassDeclaration')):
+        if not checkers.is_type(definition, ('ClassDeclaration', 'ClassExpression')):
             raise errors.HighchartsParseError(f'definition should contain a '
-                                              f'ClassDeclaration'
+                                              f'ClassDeclaration or ClassExpression'
                                               ' instance. Received: '
                                               f'{definition.__class__.__name__}')
 

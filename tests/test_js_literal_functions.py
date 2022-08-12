@@ -41,16 +41,18 @@ def test_serialize_to_js_literal(item, expected_type, expected_value, error):
     ("""const testFunction = function() { return True; }""", True, None),
     ("""const testFunction = () => { return True; }""", True, None),
     ("""const testFunction = new Function('return True;')""", True, None),
+
+    ("""class TestClass { constructor() { return true; }};""", True, None),
     ("""let a = 123;""", False, None),
 ])
-def test_is_js_function(as_str, expected, error):
+def test_is_js_function_or_class(as_str, expected, error):
     if not error:
-        is_function = js.is_js_function(as_str)
+        is_function = js.is_js_function_or_class(as_str)
 
         assert is_function is expected
     else:
         with pytest.raises(error):
-            is_function = js.is_js_function(as_str)
+            is_function = js.is_js_function_or_class(as_str)
 
 
 @pytest.mark.parametrize('as_str, expected, error', [
