@@ -1,5 +1,5 @@
 from typing import Optional
-from deicmal import Decimal
+from decimal import Decimal
 
 from validator_collection import validators
 

@@ -619,7 +619,7 @@ class GenericTypeOptions(HighchartsMeta):
         """
         return self._show_checkbox
 
-    @show_checkbox.settter
+    @show_checkbox.setter
     def show_checkbox(self, value):
         if value is None:
             self._show_checkbox = None

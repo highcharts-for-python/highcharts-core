@@ -17,8 +17,8 @@ from validator_collection import validators, checkers
 from highcharts import constants, errors
 from highcharts.decorators import validate_types, class_sensitive
 from highcharts.metaclasses import HighchartsMeta
-from highcharts.utility_classes.gradient import Gradient
-from highcharts.utility_classes.pattern import Pattern
+from highcharts.utility_classes.gradients import Gradient
+from highcharts.utility_classes.patterns import Pattern
 from highcharts.utility_classes.javascript_functions import CallbackFunction
 
 
@@ -322,7 +322,7 @@ class ContextButtonConfiguration(ButtonConfiguration):
 
     @symbol.setter
     def symbol(self, value):
-        self.symbol = validators.string(value, allow_empty = True)
+        self._symbol = validators.string(value, allow_empty = True)
 
     @property
     def symbol_fill(self) -> Optional[str]:

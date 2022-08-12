@@ -390,6 +390,7 @@ class DataLabel(HighchartsMeta):
         else:
             self._crop = bool(value)
 
+    @property
     def defer(self) -> Optional[bool | int]:
         """Whether to defer displaying the data labels until the initial series animation
         has finished. If :obj:`None <python:None>`, behaves as if set to ``True``.

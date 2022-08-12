@@ -2,7 +2,7 @@ from typing import Optional, List
 
 from validator_collection import validators
 
-from highchart.decorators import class_sensitive
+from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
 
 

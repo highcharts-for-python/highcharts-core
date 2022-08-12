@@ -12,7 +12,7 @@ from highcharts.accessibility.high_contrast_theme import HighContrastTheme
 from highcharts.accessibility.keyboard_navigation import KeyboardNavigation
 from highcharts.accessibility.point import AccessibilityPoint
 from highcharts.accessibility.screen_reader_section import ScreenReaderSection
-from highcharts.accessibility.series import SeriesAccessibility
+from highcharts.accessibility.series import AccessibilitySeries
 
 
 class Accessibility(HighchartsMeta):
@@ -285,7 +285,7 @@ class Accessibility(HighchartsMeta):
         self._screen_reader_section = value
 
     @property
-    def series(self) -> Optional[SeriesAccessibility]:
+    def series(self) -> Optional[AccessibilitySeries]:
         """Accessibility options global to all data series.
 
         .. hint::
@@ -293,12 +293,12 @@ class Accessibility(HighchartsMeta):
           Individual series can also have specific accessibility options set.
 
         :returns: Global accessibility options applied to all data series.
-        :rtype: :class:`SeriesAccessibility` or :obj:`None <python:None>`
+        :rtype: :class:`AccessibilitySeries` or :obj:`None <python:None>`
         """
         return self._series
 
     @series.setter
-    @class_sensitive(SeriesAccessibility)
+    @class_sensitive(AccessibilitySeries)
     def series(self, value):
         self._series = value
 
@@ -370,5 +370,5 @@ __all__ = [
     'KeyboardNavigation',
     'AccessibilityPoint',
     'ScreenReaderSection',
-    'SeriesAccessibility'
+    'AccessibilitySeries'
 ]

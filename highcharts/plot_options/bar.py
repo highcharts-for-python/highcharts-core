@@ -7,7 +7,7 @@ from highcharts import constants, errors
 from highcharts.decorators import class_sensitive, validate_types
 from highcharts.plot_options.series import SeriesOptions
 from highcharts.utility_classes.gradients import Gradient
-from higcharts.utility_classes.patterns import Pattern
+from highcharts.utility_classes.patterns import Pattern
 from highcharts.utility_classes.data_grouping import DataGroupingOptions
 from highcharts.utility_classes.partial_fill import PartialFillOptions
 

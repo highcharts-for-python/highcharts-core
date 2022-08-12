@@ -130,7 +130,7 @@ class Condition(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def to_dict(self) -> Optional[str]:
+    def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'callback': self.callback,
             'maxHeight': self.max_height,

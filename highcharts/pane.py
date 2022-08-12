@@ -321,7 +321,7 @@ class Pane(HighchartsMeta):
             self._center = value
 
     @property
-    def end_angle(self) -> Optional(int | float | Decimal):
+    def end_angle(self) -> Optional[int | float | Decimal]:
         """The end angle of the polar X axis or gauge value axis, given in degrees where
         ``0`` is north. Defaults to :meth:`Pane.start_angle` if :obj:`None <python:None>`.
 
@@ -374,7 +374,7 @@ class Pane(HighchartsMeta):
                 self._size = validators.numeric(value)
 
     @property
-    def start_angle(self) -> Optional(int | float | Decimal):
+    def start_angle(self) -> Optional[int | float | Decimal]:
         f"""The start angle of the polar X axis or gauge value axis, given in degrees where
         ``0`` is north. Defaults to ``{constants.DEFAULT_PANE.get('start_angle')}``.
 

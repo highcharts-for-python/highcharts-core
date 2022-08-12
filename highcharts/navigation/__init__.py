@@ -2,12 +2,12 @@ from typing import Optional
 
 from validator_collection import validators
 
-from highchart import constants
-from highchart.decorators import class_sensitive
+from highcharts import constants
+from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.annotations import Annotation
 from highcharts.navigation.bindings import Bindings
-from highcharts.utility_classes.breadcrumbs import Breadcrumbs
+from highcharts.utility_classes.breadcrumbs import BreadcrumbOptions
 from highcharts.utility_classes.buttons import ButtonConfiguration
 from highcharts.utility_classes.events import NavigationEvents
 
@@ -79,7 +79,7 @@ class Navigation(HighchartsMeta):
         self._bindings_class_name = validators.string(value, allow_empty = True)
 
     @property
-    def breadcrumbs(self) -> Optional[Breadcrumbs]:
+    def breadcrumbs(self) -> Optional[BreadcrumbOptions]:
         """Options for breadcrumbs.
 
         .. note::
@@ -90,12 +90,12 @@ class Navigation(HighchartsMeta):
           tree-like series traversing, in
           :meth:`PlotOptions[series].breadbrumbs <Series.breadcrumbs>`.
 
-        :rtype: :class:`Breadcrumbs` or :obj:`None <python:None>`
+        :rtype: :class:`BreadcrumbOptions` or :obj:`None <python:None>`
         """
         return self._breadcrumbs
 
     @breadcrumbs.setter
-    @class_sensitive(Breadcrumbs)
+    @class_sensitive(BreadcrumbOptions)
     def breadcrumbs(self, value):
         self._breadcrumbs = value
 

@@ -176,7 +176,6 @@ class Time(HighchartsMeta):
             'timezone_offset': as_dict.pop('timezoneOffset', None),
             'use_utc': as_dict.pop('useUTC', None)
         }
-        print(f'use_utc: {kwargs.get("use_utc")}')
 
         return cls(**kwargs)
 

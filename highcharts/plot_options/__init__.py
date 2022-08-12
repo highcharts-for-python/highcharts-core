@@ -43,7 +43,7 @@ from highcharts.plot_options.gauge import SolidGaugeOptions
 from highcharts.plot_options.spline import SplineOptions
 from highcharts.plot_options.area import StreamGraphOptions
 from highcharts.plot_options.sunburst import SunburstOptions
-from highcharts.plot_options.tilemap import TilemapOptions
+from highcharts.plot_options.heatmap import TilemapOptions
 from highcharts.plot_options.timeline import TimelineOptions
 from highcharts.plot_options.treemap import TreemapOptions
 from highcharts.plot_options.pie import VariablePieOptions

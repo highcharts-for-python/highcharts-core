@@ -18,7 +18,7 @@ from highcharts.data import Data
 from highcharts.defs import MarkerDefinition
 from highcharts.drilldown import Drilldown
 from highcharts.exporting import Exporting
-from highcharts.lang import Language
+from highcharts.global_options.language import Language
 from highcharts.legend import Legend
 from highcharts.loading import Loading
 from highcharts.navigation import Navigation
@@ -31,9 +31,9 @@ from highcharts.subtitle import Subtitle
 from highcharts.time import Time
 from highcharts.title import Title
 from highcharts.tooltips import Tooltip
-from highcharts.x_axis import XAxis
-from highcharts.y_axis import YAxis
-from highcharts.z_axis import ZAxis
+from highcharts.axes.x_axis import XAxis
+from highcharts.axes.y_axis import YAxis
+from highcharts.axes.z_axis import ZAxis
 
 # Highcharts Stock Classes
 from highcharts.navigator import Navigator

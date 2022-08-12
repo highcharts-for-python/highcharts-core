@@ -4,8 +4,8 @@ from validator_collection import validators
 
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.decorators import class_sensitive
-from highcharts.keyboard_navigation.focus_border import FocusBorder
-from highcharts.keyboard_navigation.series_navigation import SeriesNavigation
+from highcharts.accessibility.keyboard_navigation.focus_border import FocusBorder
+from highcharts.accessibility.keyboard_navigation.series_navigation import SeriesNavigation
 
 
 class KeyboardNavigation(HighchartsMeta):

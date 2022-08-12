@@ -49,6 +49,15 @@ class HighchartsMeta(ABC):
             except NotImplementedError:
                 continue
 
+    def __eq__(self, other):
+        if self.__class__ != other.__class__:
+            return False
+
+        self_js_literal = self.to_js_literal()
+        other_js_literal = other.to_js_literal()
+
+        return self_js_literal == other_js_literal
+
     @abstractmethod
     def _to_untrimmed_dict(self) -> dict:
         """Generate the first-level of the :class:`dict <python:dict>` representation of
@@ -98,15 +107,22 @@ class HighchartsMeta(ABC):
         as_dict = {}
         for key in untrimmed:
             value = untrimmed.get(key, None)
-            if value and hasattr(value, 'to_dict'):
+            if isinstance(value, bool):
+                as_dict[key] = value
+            elif value and hasattr(value, 'to_dict'):
                 trimmed_value = value.to_dict()
-                as_dict[key] = trimmed_value
+                if trimmed_value:
+                    as_dict[key] = trimmed_value
             elif value == constants.EnforcedNull:
                 as_dict[key] = 'null'
             elif isinstance(value, dict):
-                as_dict[key] = HighchartsMeta.trim_dict(value)
+                trimmed_value = HighchartsMeta.trim_dict(value)
+                if trimmed_value:
+                    as_dict[key] = trimmed_value
             elif value is not None:
-                as_dict[key] = HighchartsMeta.trim_iterable(value)
+                trimmed_value = HighchartsMeta.trim_iterable(value)
+                if trimmed_value:
+                    as_dict[key] = trimmed_value
 
         return as_dict
 

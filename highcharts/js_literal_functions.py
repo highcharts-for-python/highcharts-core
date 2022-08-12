@@ -162,7 +162,8 @@ def assemble_js_literal(as_dict) -> Optional[str]:
         as_str += f"""  {key}: """
 
         if checkers.is_string(item):
-            if not is_js_function_or_class(item):
+            if not is_js_function_or_class(item) and not item.startswith('{') and \
+               not item.startswith('['):
                 as_str += f"""'{item}'"""
             else:
                 as_str += f"""{item}"""

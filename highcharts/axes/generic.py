@@ -14,6 +14,7 @@ from highcharts.utility_classes.javascript_functions import CallbackFunction
 from highcharts.axes.accessibility import AxisAccessibility
 from highcharts.axes.labels import AxisLabelOptions
 
+NoneType = type(None)
 
 class GenericAxis(HighchartsMeta):
     """Base class that is used for defining axis classes."""
@@ -1271,7 +1272,7 @@ class GenericAxis(HighchartsMeta):
             self._unique_names = bool(value)
 
     @property
-    def units(self) -> Optional[List[List[str | List[int | float | Decimal | constants.EnforcedNullType | type(None)]]]]:
+    def units(self) -> Optional[List[List[str | List[int | float | Decimal | constants.EnforcedNullType | NoneType]]]]:
         """An array determining what time intervals the data is allowed to be grouped to.
         Each array item is an array where the first value is the time unit expressed as a
         :class:`str <python:str>` and the second value is another array of allowed

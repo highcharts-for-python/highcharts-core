@@ -7,7 +7,7 @@ from highcharts.decorators import validate_types, class_sensitive
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.utility_classes.animation import AnimationOptions
 from highcharts.utility_classes.breadcrumbs import BreadcrumbOptions
-from highcharts.series import Series
+from highcharts.series.base import SeriesBase
 
 
 class Drilldown(HighchartsMeta):
@@ -149,17 +149,17 @@ class Drilldown(HighchartsMeta):
         self._breadcrumbs = value
 
     @property
-    def series(self) -> Optional[List[Series]]:
+    def series(self) -> Optional[List[SeriesBase]]:
         """An array of series configurations for the drilldown. These drilldown series are
         hidden by default. The drilldown series is linked to the parent series' point by
         its id.
 
-        :rtype: :class:`list <python:list>` of :class:`Series`
+        :rtype: :class:`list <python:list>` of :class:`SeriesBase`
         """
         return self._series
 
     @series.setter
-    @class_sensitive(Series, force_iterable = True)
+    @class_sensitive(SeriesBase, force_iterable = True)
     def series(self, value):
         self._series = value
 

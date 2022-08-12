@@ -9,6 +9,7 @@ Fixtures used by the SQLAthanor test suite.
 
 """
 import os
+from copy import deepcopy
 
 import pytest
 
@@ -88,42 +89,105 @@ def to_js_dict(original):
     return as_dict
 
 
+def does_kwarg_value_match_result(kwarg_value, result_value):
+    """Validate whether the value of ``kwarg_value`` matches the value of ``result_value``.
+
+    :returns: ``True`` if match, ``False`` if not
+    """
+    if isinstance(kwarg_value, dict) and not isinstance(result_value, dict):
+        result_cls = result_value.__class__
+        print(kwarg_value)
+        test_value = result_cls.from_dict(kwarg_value)
+
+        print(test_value.to_js_literal())
+        print(result_value.to_js_literal())
+
+        return test_value == result_value
+    elif checkers.is_iterable(kwarg_value):
+        if len(kwarg_value) != len(result_value):
+            return False
+        counter = 0
+        for item in kwarg_value:
+            result_item = result_value[counter]
+            item_match = does_kwarg_value_match_result(item, result_item)
+            if not item_match:
+                return False
+    else:
+        return kwarg_value == result_value
+
+    return True
+
+
+def trim_expected(expected):
+    """Remove keys from ``expected`` or its children that should not be evaluated."""
+    new_dict = {}
+    for key in expected:
+        if expected[key] is None:
+            continue
+        elif isinstance(expected[key], dict):
+            trimmed_value = trim_expected(expected[key])
+            if trimmed_value:
+                new_dict[key] = trimmed_value
+        elif checkers.is_iterable(expected[key]):
+            trimmed_value = []
+            for item in expected[key]:
+                trimmed_item = trim_expected(item)
+                if trimmed_item:
+                    trimmed_value.append(trimmed_item)
+
+            if trimmed_value:
+                new_dict[key] = trimmed_value
+        else:
+            new_dict[key] = expected[key]
+
+    return new_dict
+
+
 def Class__init__(cls, kwargs, error):
+    kwargs_copy = deepcopy(kwargs)
     if not error:
         result = cls(**kwargs)
+        print(kwargs_copy)
         assert result is not None
         assert isinstance(result, cls) is True
-        for key in kwargs:
-            if isinstance(kwargs[key], str) and kwargs[key].startswith('function'):
+        for key in kwargs_copy:
+            if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('function'):
                 continue
-            if isinstance(kwargs[key], str) and kwargs[key].startswith('class'):
+            if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('class'):
                 continue
-            assert kwargs[key] == getattr(result, key)
+
+            assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                 getattr(result, key)) is True
     else:
         with pytest.raises(error):
             result = cls(**kwargs)
 
 
 def Class__to_untrimmed_dict(cls, kwargs, error):
+    kwargs_copy = deepcopy(kwargs)
     if not error:
         instance = cls(**kwargs)
         result = instance._to_untrimmed_dict()
         assert result is not None
         assert isinstance(result, dict) is True
-        for key in kwargs:
-            if isinstance(kwargs[key], str) and kwargs[key].startswith('function'):
+        for key in kwargs_copy:
+            if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('function'):
                 continue
-            if isinstance(kwargs[key], str) and kwargs[key].startswith('class'):
-               continue
+            if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('class'):
+                continue
             if '_' not in key:
-                assert kwargs[key] == result.get(key)
+                assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                     result.get(key)) is True
             else:
                 if 'html' in key:
-                    assert kwargs[key] == result.get('useHTML')
+                    assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                         result.get('useHTML')) is True
                 elif 'utc' in key:
-                    assert kwargs[key] == result.get('useUTC')
+                    assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                         result.get('useUTC')) is True
                 else:
-                    assert kwargs[key] == result.get(to_camelCase(key))
+                    assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                         result.get(to_camelCase(key))) is True
     else:
         with pytest.raises(error):
             instance = cls(**kwargs)
@@ -131,7 +195,7 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
 
 
 def Class_from_dict(cls, kwargs, error):
-    as_dict = to_js_dict(kwargs)
+    as_dict = to_js_dict(deepcopy(kwargs))
 
     if not error:
         instance = cls.from_dict(as_dict)
@@ -142,28 +206,23 @@ def Class_from_dict(cls, kwargs, error):
                 continue
             if isinstance(kwargs[key], str) and kwargs[key].startswith('class'):
                 continue
-            assert kwargs[key] == getattr(instance, key)
+            assert does_kwarg_value_match_result(kwargs[key], getattr(instance, key))
     else:
         with pytest.raises(error):
             instance = cls.from_dict(as_dict)
 
 
 def Class_to_dict(cls, kwargs, error):
-    expected = to_js_dict(kwargs)
+    untrimmed_expected = to_js_dict(deepcopy(kwargs))
+    expected = trim_expected(untrimmed_expected)
     check_dicts = True
-    keys_to_delete = []
     for key in expected:
-        if expected[key] is None:
-            keys_to_delete.append(key)
         if not checkers.is_type(expected[key], (str, int, float, bool, list, dict)):
             check_dicts = False
         elif isinstance(expected[key], str) and expected[key].startswith('function'):
             check_dicts = False
         elif isinstance(expected[key], str) and expected[key].startswith('class'):
             check_dicts = False
-
-    for key in keys_to_delete:
-        del expected[key]
 
     if not error:
         instance = cls(**kwargs)
