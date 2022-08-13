@@ -13,7 +13,7 @@ from copy import deepcopy
 
 import pytest
 
-from validator_collection import checkers
+from validator_collection import checkers, validators
 
 
 class State(object):
@@ -96,13 +96,26 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
     """
     if isinstance(kwarg_value, dict) and not isinstance(result_value, dict):
         result_cls = result_value.__class__
-        print(kwarg_value)
-        test_value = result_cls.from_dict(kwarg_value)
+        try:
+            test_value = result_cls.from_dict(kwarg_value)
+        except AttributeError:
+            if not result_value and not kwarg_value:
+                return True
+            else:
+                return False
 
         print(test_value.to_js_literal())
         print(result_value.to_js_literal())
 
         return test_value == result_value
+    elif not isinstance(kwarg_value, (int, float)) and isinstance(result_value, (int, float)):
+        test_value = validators.numeric(kwarg_value)
+        return test_value == result_value
+    elif isinstance(kwarg_value, (int, float)) and not isinstance(result_value, (int, float)):
+        result_value = validators.numeric(result_value)
+        return test_value == result_value
+    elif isinstance(kwarg_value, dict):
+        return checkers.are_dicts_equivalent(kwarg_value, result_value)
     elif checkers.is_iterable(kwarg_value):
         if len(kwarg_value) != len(result_value):
             return False
@@ -112,6 +125,7 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
             item_match = does_kwarg_value_match_result(item, result_item)
             if not item_match:
                 return False
+            counter += 1
     else:
         return kwarg_value == result_value
 
@@ -121,6 +135,8 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
 def trim_expected(expected):
     """Remove keys from ``expected`` or its children that should not be evaluated."""
     new_dict = {}
+    if not isinstance(expected, dict):
+        return expected
     for key in expected:
         if expected[key] is None:
             continue
@@ -156,6 +172,10 @@ def Class__init__(cls, kwargs, error):
             if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('class'):
                 continue
 
+            kwarg_value = kwargs_copy[key]
+            result_value = getattr(result, key)
+            print(f'KWARG VALUE:\n{kwarg_value}')
+            print(f'RESULT VALUE:\n{result_value}')
             assert does_kwarg_value_match_result(kwargs_copy[key],
                                                  getattr(result, key)) is True
     else:
@@ -171,6 +191,11 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
         assert result is not None
         assert isinstance(result, dict) is True
         for key in kwargs_copy:
+            kwarg_value = kwargs_copy[key]
+            result_value = result.get(key)
+            print(f'KWARG VALUE:\n{kwarg_value}')
+            print(f'RESULT VALUE:\n{result_value}')
+
             if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('function'):
                 continue
             if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('class'):
@@ -206,6 +231,8 @@ def Class_from_dict(cls, kwargs, error):
                 continue
             if isinstance(kwargs[key], str) and kwargs[key].startswith('class'):
                 continue
+            kwarg_value = kwargs[key]
+            result_value = getattr(instance, key)
             assert does_kwarg_value_match_result(kwargs[key], getattr(instance, key))
     else:
         with pytest.raises(error):
@@ -232,7 +259,9 @@ def Class_to_dict(cls, kwargs, error):
         print(expected)
         print(result)
         if check_dicts:
-            assert checkers.are_dicts_equivalent(result, expected) is True
+            assert len(expected) == len(result)
+            for key in expected:
+                assert does_kwarg_value_match_result(expected[key], result.get(key))
     else:
         with pytest.raises(error):
             instance = cls(**kwargs)

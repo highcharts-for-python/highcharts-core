@@ -94,6 +94,9 @@ class HighchartsMeta(ABC):
             elif isinstance(item, dict):
                 if item:
                     trimmed.append(item)
+            elif checkers.is_iterable(item):
+                if item:
+                    trimmed.append(HighchartsMeta.trim_iterable(item))
             else:
                 trimmed.append(item)
 
@@ -122,10 +125,16 @@ class HighchartsMeta(ABC):
                 trimmed_value = HighchartsMeta.trim_dict(value)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
-            elif value is not None:
+            elif checkers.is_iterable(value, forbid_literals = (str, bytes, dict)):
                 trimmed_value = HighchartsMeta.trim_iterable(value)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
+            elif value:
+                trimmed_value = HighchartsMeta.trim_iterable(value)
+                if trimmed_value:
+                    as_dict[key] = trimmed_value
+            elif value in [0, 0., False]:
+                as_dict[key] = value
 
         return as_dict
 

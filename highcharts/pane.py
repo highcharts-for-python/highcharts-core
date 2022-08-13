@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from validator_collection import validators
 
-from highcharts import constants, errors
+from highcharts import constants, errors, utility_functions
 from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.utility_classes.gradients import Gradient
@@ -43,34 +43,7 @@ class PaneBackground(HighchartsMeta):
 
     @background_color.setter
     def background_color(self, value):
-        if not value:
-            self._background_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._background_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._background_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._background_color = Gradient.from_dict(value)
-                else:
-                    self._background_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._background_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._background_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._background_color = Pattern.from_dict(value)
-                else:
-                    self._background_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._background_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        self._background_color = utility_functions.validate_color(value)
 
     @property
     def border_color(self) -> Optional[str | Gradient | Pattern]:
@@ -86,34 +59,7 @@ class PaneBackground(HighchartsMeta):
 
     @border_color.setter
     def border_color(self, value):
-        if not value:
-            self._border_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._border_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._border_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._border_color = Gradient.from_dict(value)
-                else:
-                    self._border_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._border_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._border_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._border_color = Pattern.from_dict(value)
-                else:
-                    self._border_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._border_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        self._border_color = utility_functions.validate_color(value)
 
     @property
     def border_width(self) -> Optional[int | float | Decimal]:
@@ -220,19 +166,13 @@ class PaneBackground(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'background_color': as_dict.pop('backgroundColor',
-                                            constants.DEFAULT_PANE_BACKGROUND.get('background_color')),
-            'border_color': as_dict.pop('borderColor',
-                                        constants.DEFAULT_PANE_BACKGROUND.get('border_color')),
-            'border_width': as_dict.pop('borderWidth',
-                                        constants.DEFAULT_PANE_BACKGROUND.get('border_width')),
-            'class_name': as_dict.pop('className',
-                                      constants.DEFAULT_PANE_BACKGROUND.get('class_name')),
-            'inner_radius': as_dict.pop('innerRadius',
-                                        constants.DEFAULT_PANE_BACKGROUND.get('inner_radius')),
-            'outer_radius': as_dict.pop('outerRadius',
-                                        constants.DEFAULT_PANE_BACKGROUND.get('outer_radius')),
-            'shape': as_dict.pop('shape', constants.DEFAULT_PANE_BACKGROUND.get('shape'))
+            'background_color': as_dict.pop('backgroundColor', None),
+            'border_color': as_dict.pop('borderColor', None),
+            'border_width': as_dict.pop('borderWidth', None),
+            'class_name': as_dict.pop('className', None),
+            'inner_radius': as_dict.pop('innerRadius', None),
+            'outer_radius': as_dict.pop('outerRadius', None),
+            'shape': as_dict.pop('shape', None),
         }
 
         return cls(**kwargs)
@@ -303,22 +243,24 @@ class Pane(HighchartsMeta):
         if not value:
             self._center = None
         else:
-            value = [validators.iterable(x,
-                                         allow_empty = False,
-                                         minimum_length = 2,
-                                         maximum_length = 2)
-                     for x in validators.iterable(value, allow_empty = False)]
+            value = validators.iterable(value,
+                                        allow_empty = False,
+                                        minimum_length = 2,
+                                        maximum_length = 2)
+            validated = []
             for item in value:
                 try:
-                    item[0] = validators.string(item[0])
+                    item = validators.string(item)
+                    if '%' not in item:
+                        raise errors.HighchartsValueError('center expects either a '
+                                                          'numeric value or a percentage '
+                                                          'string. No "%"" symbol found.')
                 except ValueError:
-                    item[0] = validators.numeric(item[0])
-                try:
-                    item[1] = validators.string(item[1])
-                except ValueError:
-                    item[1] = validators.numeric(item[1])
+                    item = validators.numeric(item)
 
-            self._center = value
+                validated.append(item)
+
+            self._center = validated
 
     @property
     def end_angle(self) -> Optional[int | float | Decimal]:
@@ -369,8 +311,12 @@ class Pane(HighchartsMeta):
             self._size = None
         else:
             try:
-                self._size = validators.string(value)
-            except ValueError:
+                value = validators.string(value)
+                if '%' not in value:
+                    raise errors.HighchartsValueError('size expects either a number or '
+                                                      'a percentage string. No "%" '
+                                                      'symbol found.')
+            except (ValueError, TypeError):
                 self._size = validators.numeric(value)
 
     @property
@@ -390,11 +336,11 @@ class Pane(HighchartsMeta):
     def from_dict(cls, as_dict):
         kwargs = {
             'background': as_dict.pop('background', None),
-            'center': as_dict.pop('center', constants.DEFAULT_PANE.get('center')),
-            'end_angle': as_dict.pop('endAngle', constants.DEFAULT_PANE.get('end_angle')),
-            'inner_size': as_dict.pop('innerSize', constants.DEFAULT_PANE.get('inner_size')),
-            'size': as_dict.pop('size', constants.DEFAULT_PANE.get('size')),
-            'start_angle': as_dict.pop('startAngle', constants.DEFAULT_PANE.get('start_angle'))
+            'center': as_dict.pop('center', None),
+            'end_angle': as_dict.pop('endAngle', None),
+            'inner_size': as_dict.pop('innerSize', None),
+            'size': as_dict.pop('size', None),
+            'start_angle': as_dict.pop('startAngle', None),
         }
 
         return cls(**kwargs)
