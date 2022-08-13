@@ -1,5 +1,6 @@
 from typing import Optional
 from decimal import Decimal
+from collections import UserDict
 
 from validator_collection import checkers, validators
 import esprima
@@ -21,7 +22,7 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
       :obj:`None <python:None>` if ``item`` is not serializable.
     :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
     """
-    if checkers.is_iterable(item, forbid_literals = (str, bytes, dict)):
+    if checkers.is_iterable(item, forbid_literals = (str, bytes, dict, UserDict)):
         return [serialize_to_js_literal(x) for x in item]
     elif hasattr(item, 'to_js_literal'):
         return item.to_js_literal(encoding = encoding)
@@ -35,7 +36,7 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
         return item
     elif isinstance(item, Decimal):
         return float(item)
-    elif checkers.is_type(item, ('CallbackFunction', dict)):
+    elif checkers.is_type(item, ('CallbackFunction', dict, UserDict)):
         return str(item)
     elif item is None:
         return None
@@ -140,7 +141,7 @@ def get_js_literal(item) -> str:
     :rtype: :class:`str <python:str>`
     """
     as_str = ''
-    if checkers.is_iterable(item, forbid_literals = (str, bytes, dict)):
+    if checkers.is_iterable(item, forbid_literals = (str, bytes, dict, UserDict)):
         subitems = [get_js_literal(x) for x in item]
         as_str += '['
         subitem_counter = 0
@@ -336,7 +337,7 @@ def get_key_value_pairs(properties, original_str):
             raise errors.HighchartsParseError(f'properties should contain a list of '
                                               f'Property instances. Received: '
                                               f'{item.__class__.__name__}')
-        key = item.key.name
+        key = item.key.name or item.key.value
         if not key:
             raise errors.HighchartsMissingKeyError('property was not formed correctly, '
                                                    'specifically missing a key')

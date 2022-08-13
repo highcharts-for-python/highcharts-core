@@ -11,7 +11,8 @@ except ImportError:
         except ImportError:
             import json
 
-from validator_collection import validators
+from validator_collection import validators, errors as validator_errors
+
 
 from highcharts.decorators import validate_types, class_sensitive
 from highcharts.metaclasses import HighchartsMeta
@@ -27,7 +28,17 @@ class AttributeObject(UserDict):
 
     def __setitem__(self, key, item):
         if key not in self:
-            key = validators.variable_name(key, allow_empty = False)
+            try:
+                key = validators.variable_name(key, allow_empty = False)
+            except validator_errors.InvalidVariableNameError as error:
+                if '-' in key:
+                    try:
+                        test_key = key.replace('-', '_')
+                        validators.variable_name(test_key, allow_empty = False)
+                    except validator_errors.InvalidVariableNameError:
+                        raise error
+                else:
+                    raise error
 
         super().__setitem__(key, item)
 
@@ -64,6 +75,9 @@ class AttributeObject(UserDict):
         as_dict = json.loads(as_json)
 
         return cls.from_dict(as_dict)
+
+    def _to_untrimmed_dict(self) -> dict:
+        return self.data
 
     def to_dict(self) -> dict:
         """Generate a :class:`dict <python:dict>` representation of the object compatible
@@ -220,7 +234,17 @@ class ASTMap(UserDict):
 
     def __setitem__(self, key, item):
         if key not in self:
-            key = validators.variable_name(key, allow_empty = False)
+            try:
+                key = validators.variable_name(key, allow_empty = False)
+            except validator_errors.InvalidVariableNameError as error:
+                if '-' in key:
+                    try:
+                        test_key = key.replace('-', '_')
+                        validators.variable_name(test_key, allow_empty = False)
+                    except validator_errors.InvalidVariableNameError:
+                        raise error
+                else:
+                    raise error
 
         item = validate_types(item,
                               types = ASTNode,
@@ -261,6 +285,9 @@ class ASTMap(UserDict):
         as_dict = json.loads(as_json)
 
         return cls.from_dict(as_dict)
+
+    def _to_untrimmed_dict(self) -> dict:
+        return self.data
 
     def to_dict(self) -> dict:
         """Generate a :class:`dict <python:dict>` representation of the object compatible

@@ -10,6 +10,7 @@ Fixtures used by the SQLAthanor test suite.
 """
 import os
 from copy import deepcopy
+from collections import UserDict
 
 import pytest
 
@@ -94,7 +95,9 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
 
     :returns: ``True`` if match, ``False`` if not
     """
-    if isinstance(kwarg_value, dict) and not isinstance(result_value, dict):
+    if isinstance(kwarg_value, (dict,
+                                UserDict)) and not isinstance(result_value, (dict,
+                                                                             UserDict)):
         result_cls = result_value.__class__
         try:
             test_value = result_cls.from_dict(kwarg_value)
@@ -108,14 +111,26 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
         print(result_value.to_js_literal())
 
         return test_value == result_value
-    elif not isinstance(kwarg_value, (int, float)) and isinstance(result_value, (int, float)):
+    elif not isinstance(kwarg_value, (int, float)) and isinstance(result_value, (int,
+                                                                                 float)):
         test_value = validators.numeric(kwarg_value)
         return test_value == result_value
-    elif isinstance(kwarg_value, (int, float)) and not isinstance(result_value, (int, float)):
+    elif isinstance(kwarg_value, (int, float)) and not isinstance(result_value, (int,
+                                                                                 float)):
         result_value = validators.numeric(result_value)
         return test_value == result_value
-    elif isinstance(kwarg_value, dict):
+    elif isinstance(kwarg_value, dict) and isinstance(result_value, dict):
         return checkers.are_dicts_equivalent(kwarg_value, result_value)
+    elif isinstance(kwarg_value, (dict,
+                                  UserDict)) and isinstance(result_value, (dict,
+                                                                           UserDict)):
+        if len(kwarg_value) != len(result_value):
+            return False
+        for key in kwarg_value:
+            if kwarg_value.get(key) != result_value.get(key):
+                return False
+
+        return True
     elif checkers.is_iterable(kwarg_value):
         if len(kwarg_value) != len(result_value):
             return False

@@ -1,4 +1,5 @@
 from typing import Optional
+from decimal import Decimal
 
 from validator_collection import validators
 
@@ -75,7 +76,7 @@ class Position(HighchartsMeta):
             self._vertical_align = value
 
     @property
-    def x(self) -> Optional[int]:
+    def x(self) -> Optional[int | float | Decimal]:
         """The x position offset of the button. Defaults to ``-10``.
 
         :rtype: numeric or :obj:`None <python:None>`
@@ -84,10 +85,10 @@ class Position(HighchartsMeta):
 
     @x.setter
     def x(self, value):
-        value = validators.numeric(value, allow_empty = True)
+        self._x = validators.numeric(value, allow_empty = True)
 
     @property
-    def y(self) -> Optional[int]:
+    def y(self) -> Optional[int | float | Decimal]:
         """The y position offset of the button. Defaults to ``10``.
 
         :rtype: numeric or :obj:`None <python:None>`
@@ -96,7 +97,7 @@ class Position(HighchartsMeta):
 
     @y.setter
     def y(self, value):
-        value = validators.numeric(value, allow_empty = True)
+        self._y = validators.numeric(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):

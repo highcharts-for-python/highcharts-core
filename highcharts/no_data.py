@@ -94,7 +94,7 @@ class NoData(HighchartsMeta):
             'attr': as_dict.pop('attr', None),
             'position': as_dict.pop('position', None),
             'style': as_dict.pop('style', None),
-            'use_html': as_dict.pop('useHTML', False)
+            'use_html': as_dict.pop('useHTML', None)
         }
 
         return cls(**kwargs)
