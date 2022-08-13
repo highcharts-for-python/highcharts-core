@@ -89,8 +89,11 @@ class HighchartsMeta(ABC):
                 trimmed.append('null')
             elif hasattr(item, 'to_dict'):
                 item_as_dict = item.to_dict()
-                trimmed_item = HighchartsMeta.trim_dict(item_as_dict)
-                trimmed.append(trimmed_item)
+                if item_as_dict:
+                    trimmed.append(item_as_dict)
+            elif isinstance(item, dict):
+                if item:
+                    trimmed.append(item)
             else:
                 trimmed.append(item)
 

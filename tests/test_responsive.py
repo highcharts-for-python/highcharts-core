@@ -2,6 +2,8 @@
 
 import pytest
 
+from json.decoder import JSONDecodeError
+
 from highcharts.responsive import Responsive as cls
 from highcharts import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
@@ -28,13 +30,11 @@ STANDARD_PARAMS = [
 
 @pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
 def test__init__(kwargs, error):
-    print(kwargs)
     Class__init__(cls, kwargs, error)
 
 
 @pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
 def test__to_untrimmed_dict(kwargs, error):
-    print(kwargs)
     Class__to_untrimmed_dict(cls, kwargs, error)
 
 
@@ -48,20 +48,26 @@ def test_to_dict(kwargs, error):
     Class_to_dict(cls, kwargs, error)
 
 
-"""
 @pytest.mark.parametrize('filename, as_file, error', [
     ('responsive/01.js', False, None),
     ('responsive/02.js', False, None),
 
-    ('responsive/error-01.js', False, errors.HighchartsValueError),
-    ('responsive/error-02.js', False, errors.HighchartsParseError),
+    ('responsive/error-01.js', False, (errors.HighchartsValueError,
+                                       errors.HighchartsParseError,
+                                       JSONDecodeError)),
+    ('responsive/error-02.js', False, (errors.HighchartsValueError,
+                                       errors.HighchartsParseError,
+                                       JSONDecodeError)),
 
     ('responsive/01.js', True, None),
     ('responsive/02.js', True, None),
 
-    ('responsive/error-01.js', True, errors.HighchartsValueError),
-    ('responsive/error-02.js', True, errors.HighchartsParseError),
+    ('responsive/error-01.js', True, (errors.HighchartsValueError,
+                                      errors.HighchartsParseError,
+                                      JSONDecodeError)),
+    ('responsive/error-02.js', True, (errors.HighchartsValueError,
+                                      errors.HighchartsParseError,
+                                      JSONDecodeError)),
 ])
 def test_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
-"""

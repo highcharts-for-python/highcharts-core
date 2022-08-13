@@ -133,6 +133,42 @@ def is_js_function_or_class(as_str) -> bool:
     return False
 
 
+def get_js_literal(item) -> str:
+    """Convert the value of ``item`` into a JavaScript literal string.
+
+    :returns: The JavaScript literal string.
+    :rtype: :class:`str <python:str>`
+    """
+    as_str = ''
+    if checkers.is_iterable(item, forbid_literals = (str, bytes, dict)):
+        subitems = [get_js_literal(x) for x in item]
+        as_str += '['
+        subitem_counter = 0
+        for subitem in subitems:
+            subitem_counter += 1
+            as_str += f"""{subitem}"""
+            if subitem_counter < len(subitems):
+                as_str += ',\n'
+        as_str += ']'
+    elif checkers.is_string(item):
+        if item.startswith('{') or item.startswith('['):
+            as_str += f"""{item}"""
+        elif not is_js_function_or_class(item):
+            as_str += f"""'{item}'"""
+        else:
+            as_str += f"""{item}"""
+    elif item == constants.EnforcedNull:
+        as_str += """null"""
+    elif item is True:
+        as_str += """true"""
+    elif item is False:
+        as_str += """false"""
+    else:
+        as_str += f"""{item}"""
+
+    return as_str
+
+
 def assemble_js_literal(as_dict) -> Optional[str]:
     """Convert ``as_dict`` into a JavaScript object literal string.
 
@@ -161,20 +197,7 @@ def assemble_js_literal(as_dict) -> Optional[str]:
 
         as_str += f"""  {key}: """
 
-        if checkers.is_string(item):
-            if not is_js_function_or_class(item) and not item.startswith('{') and \
-               not item.startswith('['):
-                as_str += f"""'{item}'"""
-            else:
-                as_str += f"""{item}"""
-        elif item == constants.EnforcedNull:
-            as_str += """null"""
-        elif item is True:
-            as_str += """true"""
-        elif item is False:
-            as_str += """false"""
-        else:
-            as_str += f"""{item}"""
+        as_str += get_js_literal(item)
 
         if current_key < keys:
             as_str += ',\n'
@@ -279,13 +302,20 @@ def convert_js_to_python(javascript, original_str = None):
       The :class:`esprima.nodes.Property` objects are available in the ``value`` sub-item.
 
     """
-    if not checkers.is_type(javascript, ('Property', 'Literal')):
+    if javascript.type not in ('Property', 'Literal', 'ObjectExpression'):
         raise errors.HighchartsParseError(f'javascript should contain a '
-                                          f'Property or Literal instance. Received: '
-                                          f'{javascript.__class__.__name__}')
+                                          f'Property, Literal, or ObjectExpression '
+                                          f'instance. Received: {javascript.type}')
 
     if checkers.is_type(javascript, 'Property'):
         return convert_js_property_to_python(javascript, original_str)
+    elif checkers.is_type(javascript, 'ObjectExpression'):
+        as_dict = {}
+        key_value_pairs = get_key_value_pairs(javascript.properties, original_str)
+        for pair in key_value_pairs:
+            as_dict[pair[0]] = pair[1]
+
+        return as_dict
     else:
         return convert_js_literal_to_python(javascript, original_str)
 
