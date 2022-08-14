@@ -29,7 +29,7 @@ class AttributeObject(UserDict):
     def __setitem__(self, key, item):
         validate_key = False
         try:
-            key in self
+            validate_key = key not in self
         except AttributeError:
             validate_key = True
 
