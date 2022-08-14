@@ -132,6 +132,7 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
 
         return True
     elif checkers.is_iterable(kwarg_value):
+        print('is iterable')
         if len(kwarg_value) != len(result_value):
             return False
         counter = 0
@@ -142,6 +143,7 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
                 return False
             counter += 1
     else:
+        print('running else')
         return kwarg_value == result_value
 
     return True
@@ -208,6 +210,7 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
         for key in kwargs_copy:
             kwarg_value = kwargs_copy[key]
             result_value = result.get(key)
+            print(f'checking key: {key}')
             print(f'KWARG VALUE:\n{kwarg_value}')
             print(f'RESULT VALUE:\n{result_value}')
 
@@ -225,6 +228,9 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
                 elif 'utc' in key:
                     assert does_kwarg_value_match_result(kwargs_copy[key],
                                                          result.get('useUTC')) is True
+                elif isinstance(instance, UserDict):
+                    assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                         result.get(key)) is True
                 else:
                     assert does_kwarg_value_match_result(kwargs_copy[key],
                                                          result.get(to_camelCase(key))) is True
@@ -273,6 +279,8 @@ def Class_to_dict(cls, kwargs, error):
         assert isinstance(result, dict) is True
         print(expected)
         print(result)
+        if checkers.is_type(instance, ('MarkerAttributeObject')):
+            check_dicts = False
         if check_dicts:
             assert len(expected) == len(result)
             for key in expected:

@@ -27,7 +27,13 @@ class AttributeObject(UserDict):
     """
 
     def __setitem__(self, key, item):
-        if key not in self:
+        validate_key = False
+        try:
+            key in self
+        except AttributeError:
+            validate_key = True
+
+        if validate_key:
             try:
                 key = validators.variable_name(key, allow_empty = False)
             except validator_errors.InvalidVariableNameError as error:

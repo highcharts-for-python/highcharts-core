@@ -17,19 +17,19 @@ class MarkerAttributeObject(AttributeObject):
     """
 
     def __init__(self, *args, **kwargs):
-        self._id = None
-        self._ref_x = None
-        self._ref_y = None
-        self._marker_width = 10
-        self._marker_height = 10
+        super().__init__(*args, **kwargs)
+
+        self['id'] = None
+        self['refX'] = None
+        self['refY'] = None
+        self['markerWidth'] = None
+        self['markerHeight'] = None
 
         self.id = kwargs.pop('id', None)
-        self.ref_x = kwargs.pop('refX', None)
-        self.ref_y = kwargs.pop('refY', None)
-        self.marker_width = kwargs.pop('marker_width', 10)
-        self.marker_height = kwargs.pop('marker_height', 10)
-
-        super().__init__(*args, **kwargs)
+        self.ref_x = kwargs.pop('ref_x', None)
+        self.ref_y = kwargs.pop('ref_y', None)
+        self.marker_width = kwargs.pop('marker_width', None)
+        self.marker_height = kwargs.pop('marker_height', None)
 
     @property
     def id(self) -> Optional[str]:
@@ -37,12 +37,11 @@ class MarkerAttributeObject(AttributeObject):
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return self._id
+        return self['id']
 
     @id.setter
     def id(self, value):
         value = validators.string(value, allow_empty = True)
-        self._id = value
         self['id'] = value
 
     @property
@@ -55,12 +54,11 @@ class MarkerAttributeObject(AttributeObject):
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return self._ref_x
+        return self.get('refX')
 
     @ref_x.setter
     def ref_x(self, value):
         value = validators.integer(value, allow_empty = True, coerce_value = True)
-        self._ref_x = value
         self['refX'] = value
 
     @property
@@ -73,12 +71,11 @@ class MarkerAttributeObject(AttributeObject):
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return self._ref_y
+        return self['refY']
 
     @ref_y.setter
     def ref_y(self, value):
         value = validators.integer(value, allow_empty = True, coerce_value = True)
-        self._ref_y = value
         self['refY'] = value
 
     @property
@@ -87,12 +84,11 @@ class MarkerAttributeObject(AttributeObject):
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return self._marker_width
+        return self['markerWidth']
 
     @marker_width.setter
     def marker_width(self, value):
         value = validators.integer(value, allow_empty = True, coerce_value = True)
-        self._marker_width = value
         self['markerWidth'] = value
 
     @property
@@ -101,12 +97,11 @@ class MarkerAttributeObject(AttributeObject):
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return self._marker_height
+        return self['markerHeight']
 
     @marker_height.setter
     def marker_height(self, value):
         value = validators.integer(value, allow_empty = True, coerce_value = True)
-        self._marker_height = value
         self['markerHeight'] = value
 
 
@@ -131,7 +126,7 @@ class MarkerASTNode(ASTNode):
         self._attributes = value
 
     @property
-    def children(self) -> List:
+    def children(self) -> Optional[List[ASTNode]]:
         """Collection of :class:`ASTNode` instances that should be considered children
         of this node.
 
