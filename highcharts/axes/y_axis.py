@@ -53,34 +53,8 @@ class YAxis(XAxis):
 
     @max_color.setter
     def max_color(self, value):
-        if not value:
-            self._max_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._max_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._max_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._max_color = Gradient.from_dict(value)
-                else:
-                    self._max_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._max_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._max_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._max_color = Pattern.from_dict(value)
-                else:
-                    self._max_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._max_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._max_color = utility_functions.validate_color(value)
 
     @property
     def min_color(self) -> Optional[str | Gradient | Pattern]:
@@ -102,34 +76,8 @@ class YAxis(XAxis):
 
     @min_color.setter
     def min_color(self, value):
-        if not value:
-            self._min_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._min_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._min_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._min_color = Gradient.from_dict(value)
-                else:
-                    self._min_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._min_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._min_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._min_color = Pattern.from_dict(value)
-                else:
-                    self._min_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._min_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._min_color = utility_functions.validate_color(value)
 
     @property
     def stack_labels(self) -> Optional[DataLabel]:

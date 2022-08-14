@@ -119,24 +119,8 @@ class BoxPlotOptions(BarOptions):
 
     @median_color.setter
     def median_color(self, value):
-        if not value:
-            self._median_color = None
-        elif isinstance(value, (Gradient)):
-            self._median_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._median_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._median_color = Gradient.from_dict(value)
-                else:
-                    self._median_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._median_color = Gradient(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._median_color = utility_functions.validate_color(value)
 
     @property
     def median_dash_style(self) -> Optional[str]:
@@ -250,34 +234,8 @@ class BoxPlotOptions(BarOptions):
 
     @whisker_color.setter
     def whisker_color(self, value):
-        if not value:
-            self._whisker_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._whisker_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._whisker_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._whisker_color = Gradient.from_dict(value)
-                else:
-                    self._whisker_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._whisker_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._whisker_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._whisker_color = Pattern.from_dict(value)
-                else:
-                    self._whisker_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._whisker_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._whisker_color = utility_functions.validate_color(value)
 
     @property
     def whisker_dash_style(self) -> Optional[str]:

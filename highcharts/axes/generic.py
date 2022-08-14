@@ -252,34 +252,8 @@ class GenericAxis(HighchartsMeta):
 
     @grid_line_color.setter
     def grid_line_color(self, value):
-        if not value:
-            self._grid_line_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._grid_line_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._grid_line_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._grid_line_color = Gradient.from_dict(value)
-                else:
-                    self._grid_line_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._grid_line_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._grid_line_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._grid_line_color = Pattern.from_dict(value)
-                else:
-                    self._grid_line_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._grid_line_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._grid_line_color = utility_functions.validate_color(value)
 
     @property
     def grid_line_dash_style(self) -> Optional[str]:
@@ -511,34 +485,8 @@ class GenericAxis(HighchartsMeta):
 
     @minor_grid_line_color.setter
     def minor_grid_line_color(self, value):
-        if not value:
-            self._minor_grid_line_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._minor_grid_line_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._minor_grid_line_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._minor_grid_line_color = Gradient.from_dict(value)
-                else:
-                    self._minor_grid_line_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._minor_grid_line_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._minor_grid_line_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._minor_grid_line_color = Pattern.from_dict(value)
-                else:
-                    self._minor_grid_line_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._minor_grid_line_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._minor_grid_line_color = utility_functions.validate_color(value)
 
     @property
     def minor_grid_line_dash_style(self) -> Optional[str]:
@@ -599,34 +547,8 @@ class GenericAxis(HighchartsMeta):
 
     @minor_tick_color.setter
     def minor_tick_color(self, value):
-        if not value:
-            self._minor_tick_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._minor_tick_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._minor_tick_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._minor_tick_color = Gradient.from_dict(value)
-                else:
-                    self._minor_tick_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._minor_tick_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._minor_tick_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._minor_tick_color = Pattern.from_dict(value)
-                else:
-                    self._minor_tick_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._minor_tick_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._minor_tick_color = utility_functions.validate_color(value)
 
     @property
     def minor_tick_interval(self) -> Optional[str | int | float | Decimal]:
@@ -987,34 +909,8 @@ class GenericAxis(HighchartsMeta):
 
     @tick_color.setter
     def tick_color(self, value):
-        if not value:
-            self._tick_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._tick_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._tick_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._tick_color = Gradient.from_dict(value)
-                else:
-                    self._tick_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._tick_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._tick_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._tick_color = Pattern.from_dict(value)
-                else:
-                    self._tick_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._tick_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._tick_color = utility_functions.validate_color(value)
 
     @property
     def tick_interval(self) -> Optional[int | float | Decimal]:

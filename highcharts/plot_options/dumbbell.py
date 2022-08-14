@@ -405,35 +405,8 @@ class DumbbellOptions(GenericTypeOptions):
 
     @line_color.setter
     def line_color(self, value):
-        if not value:
-            self._line_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._line_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._line_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._line_color = Gradient.from_dict(value)
-                else:
-                    self._line_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._line_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._line_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._line_color = Pattern.from_dict(value)
-                else:
-                    self._line_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._line_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to an '
-                                              f'EnforcedNullType, string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._line_color = utility_functions.validate_color(value)
 
     @property
     def low_color(self) -> Optional[str | Gradient | Pattern]:
@@ -446,35 +419,8 @@ class DumbbellOptions(GenericTypeOptions):
 
     @low_color.setter
     def low_color(self, value):
-        if not value:
-            self._low_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._low_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._low_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._low_color = Gradient.from_dict(value)
-                else:
-                    self._low_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._low_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._low_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._low_color = Pattern.from_dict(value)
-                else:
-                    self._low_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._low_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to an '
-                                              f'string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._low_color = utility_functions.validate_color(value)
 
     @property
     def negative_color(self) -> Optional[str | Gradient | Pattern]:
@@ -493,35 +439,8 @@ class DumbbellOptions(GenericTypeOptions):
 
     @negative_color.setter
     def negative_color(self, value):
-        if not value:
-            self._negative_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._negative_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._negative_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._negative_color = Gradient.from_dict(value)
-                else:
-                    self._negative_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._negative_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._negative_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._negative_color = Pattern.from_dict(value)
-                else:
-                    self._negative_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._negative_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to an '
-                                              f'EnforcedNullType, string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._negative_color = utility_functions.validate_color(value)
 
     @property
     def negative_fill_color(self) -> Optional[str | Gradient | Pattern]:
@@ -534,35 +453,8 @@ class DumbbellOptions(GenericTypeOptions):
 
     @negative_fill_color.setter
     def negative_fill_color(self, value):
-        if not value:
-            self._negative_fill_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._negative_fill_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._negative_fill_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._negative_fill_color = Gradient.from_dict(value)
-                else:
-                    self._negative_fill_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._negative_fill_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._negative_fill_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._negative_fill_color = Pattern.from_dict(value)
-                else:
-                    self._negative_fill_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._negative_fill_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to an '
-                                              f'EnforcedNullType, string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._negative_fill_color = utility_functions.validate_color(value)
 
     @property
     def point_interval(self) -> Optional[int | float | Decimal]:

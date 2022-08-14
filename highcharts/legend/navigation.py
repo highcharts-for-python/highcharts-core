@@ -51,34 +51,8 @@ class LegendNavigation(HighchartsMeta):
 
     @active_color.setter
     def active_color(self, value):
-        if not value:
-            self._active_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._active_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._active_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._active_color = Gradient.from_dict(value)
-                else:
-                    self._active_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._active_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._active_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._active_color = Pattern.from_dict(value)
-                else:
-                    self._active_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._active_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._active_color = utility_functions.validate_color(value)
 
     @property
     def animation(self) -> Optional[bool | AnimationOptions]:
@@ -145,34 +119,8 @@ class LegendNavigation(HighchartsMeta):
 
     @inactive_color.setter
     def inactive_color(self, value):
-        if not value:
-            self._inactive_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._inactive_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._inactive_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._inactive_color = Gradient.from_dict(value)
-                else:
-                    self._inactive_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._inactive_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._inactive_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._inactive_color = Pattern.from_dict(value)
-                else:
-                    self._inactive_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._inactive_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._inactive_color = utility_functions.validate_color(value)
 
     @property
     def style(self) -> Optional[str]:

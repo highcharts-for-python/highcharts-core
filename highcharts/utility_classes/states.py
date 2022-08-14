@@ -52,34 +52,8 @@ class HoverState(HighchartsMeta):
 
     @border_color.setter
     def border_color(self, value):
-        if not value:
-            self._border_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._border_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._border_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._border_color = Gradient.from_dict(value)
-                else:
-                    self._border_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._border_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._border_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._border_color = Pattern.from_dict(value)
-                else:
-                    self._border_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._border_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._border_color = utility_functions.validate_color(value)
 
     @property
     def brightness(self) -> Optional[int | float | Decimal]:
@@ -106,34 +80,8 @@ class HoverState(HighchartsMeta):
 
     @color.setter
     def color(self, value):
-        if not value:
-            self._color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._color = Gradient.from_dict(value)
-                else:
-                    self._color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._color = Pattern.from_dict(value)
-                else:
-                    self._color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._color = utility_functions.validate_color(value)
 
     @property
     def color(self) -> Optional[str]:
@@ -340,34 +288,8 @@ class SelectState(HighchartsMeta):
 
     @border_color.setter
     def border_color(self, value):
-        if not value:
-            self._border_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._border_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._border_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._border_color = Gradient.from_dict(value)
-                else:
-                    self._border_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._border_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._border_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._border_color = Pattern.from_dict(value)
-                else:
-                    self._border_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._border_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._border_color = utility_functions.validate_color(value)
 
     @property
     def color(self) -> Optional[str | Gradient | Pattern]:
@@ -380,46 +302,8 @@ class SelectState(HighchartsMeta):
 
     @color.setter
     def color(self, value):
-        if not value:
-            self._color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._color = Gradient.from_dict(value)
-                else:
-                    self._color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._color = Pattern.from_dict(value)
-                else:
-                    self._color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
-
-    @property
-    def color(self) -> Optional[str]:
-        """A specific color for the hovered point.
-
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
-        """
-        return self._color
-
-    @color.setter
-    def color(self, value):
-        self._color = validators.string(value, allow_empty = True)
+        from highcharts import utility_functions
+        self._color = utility_functions.validate_color(value)
 
     @property
     def enabled(self) -> Optional[bool]:

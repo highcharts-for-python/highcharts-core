@@ -126,34 +126,8 @@ class NumericAxis(GenericAxis):
 
     @alternate_grid_color.setter
     def alternate_grid_color(self, value):
-        if not value:
-            self._alternate_grid_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._alternate_grid_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._alternate_grid_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._alternate_grid_color = Gradient.from_dict(value)
-                else:
-                    self._alternate_grid_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._alternate_grid_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._alternate_grid_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._alternate_grid_color = Pattern.from_dict(value)
-                else:
-                    self._alternate_grid_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._alternate_grid_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._alternate_grid_color = utility_functions.validate_color(value)
 
     @property
     def breaks(self) -> Optional[List[AxisBreak]]:

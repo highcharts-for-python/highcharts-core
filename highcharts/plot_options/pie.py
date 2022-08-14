@@ -86,34 +86,8 @@ class PieOptions(GenericTypeOptions):
 
     @border_color.setter
     def border_color(self, value):
-        if not value:
-            self._border_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._border_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._border_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._border_color = Gradient.from_dict(value)
-                else:
-                    self._border_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._border_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._border_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._border_color = Pattern.from_dict(value)
-                else:
-                    self._border_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._border_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._border_color = utility_functions.validate_color(value)
 
     @property
     def border_width(self) -> Optional[int | float | Decimal]:
@@ -307,34 +281,8 @@ class PieOptions(GenericTypeOptions):
 
     @fill_color.setter
     def fill_color(self, value):
-        if not value:
-            self._fill_color = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._fill_color = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._fill_color = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._fill_color = Gradient.from_dict(value)
-                else:
-                    self._fill_color = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._fill_color = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._fill_color = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._fill_color = Pattern.from_dict(value)
-                else:
-                    self._fill_color = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._fill_color = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        from highcharts import utility_functions
+        self._fill_color = utility_functions.validate_color(value)
 
     @property
     def ignore_hidden_point(self) -> Optional[bool]:
