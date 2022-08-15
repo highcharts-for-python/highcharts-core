@@ -1,4 +1,5 @@
 import tempfile
+import os
 from typing import Optional, List
 from decimal import Decimal
 
@@ -833,7 +834,7 @@ class Data(HighchartsMeta):
                      as_df,
                      data_kwargs = None,
                      pyspark_kwargs = None,
-                     use_repartition = True):
+                     consolidation = 'repartition'):
         """Create a :class:`Data` instance from a PySpark
         :class:`DataFrame <pyspark:sql.DataFrame>`.
 
@@ -873,19 +874,23 @@ class Data(HighchartsMeta):
 
         :type pyspark_kwargs: :class:`dict <python:dict>`
 
-        :param use_repartition: If ``True``, will consolidate your PySpark
+        :param consolidation: If ``'repartition'``, will repartition your PySpark
           :class:`DataFrame <pyspark:pyspark.sql.DataFrame>` into a single unpartitioned
-          table prior to the generation of a CSV dataset. Defaults to ``True``.
+          table prior to the generation of a CSV dataset. If ``'coalesce'``, will
+          coalesce your PySpark :class:`DataFrame <pyspark:pyspark.sql.DataFrame>` into
+          a single unpartitioned table prior to the generation of a CSV dataset. If
+          :obj:`None <python:None>`, will not apply any consolidation to the
+          :class:`DataFrame <pyspark:pyspark.sql.DataFrame>`. Defaults to ``'coalesce'``.
 
           .. hint::
 
-            Setting this value to ``True`` is particularly useful if you are working on
-            your :class:`DataFrame <pyspark:pyspark.sql.DataFrame>` in multiple Spark
+            Setting this value to ``'coalesce'`` is particularly useful if you are working
+            on your :class:`DataFrame <pyspark:pyspark.sql.DataFrame>` in multiple Spark
             nodes to prevent loss of data.
 
-            Setting this value to ``False`` may provide a boost to performance, however
-            use with caution as it may lead to unexpected data loss or errors if using
-            multiple Spark nodes.
+            Setting this value to :obj:`None <python:None>` may provide a boost to
+            performance, however use with caution as it may lead to unexpected data loss
+            or errors if using multiple Spark nodes.
 
         :returns: A :class:`Data` instance.
         """
@@ -904,8 +909,10 @@ class Data(HighchartsMeta):
         with tempfile.NamedTemporaryFile() as csv_file:
             pyspark_kwargs['path'] = csv_file.name
 
-            if use_repartition:
+            if consolidation == 'repartition':
                 as_df.repartition(1).write.csv(**pyspark_kwargs)
+            elif consolidation:
+                as_df.coalesce(1).write.csv(**pyspark_kwargs)
             else:
                 as_df.write.csv(**pyspark_kwargs)
 
@@ -913,72 +920,5 @@ class Data(HighchartsMeta):
             data_kwargs['csv'] = csv_file.read()
 
         data_kwargs['table'] = None
-
-        return cls(**data_kwargs)
-
-    @classmethod
-    def from_koalas(cls,
-                    as_df,
-                    represent_as = 'csv',
-                    data_kwargs = None,
-                    koalas_kwargs = None):
-        """Create a :class:`Data` instance from a Koalas
-        :class:`DataFrame <koalas:DataFrame>`.
-
-        :param as_df: The :class:`DataFrame <koalas:DataFrame>` from which to create the
-          :class:`Data` instance.
-        :type as_df: :class:`DataFrame <koalas:DataFrame>`
-
-        :param represent_as: The format to which ``as_df`` should be serialized. Accepts
-          ``'csv'`` or ``'html'``. Defaults to ``'csv'``.
-        :type represent_as: :class:`str <python:str>`
-
-        :param data_kwargs: Additional keyword arguments to pass to the :class:`Data`
-          constructor (``__init__()``) method. Defaults to :obj:`None <python:None>`.
-        :type data_kwargs: :class:`dict <python:dict>`
-
-        :param koalas_kwargs: Keyword arguments to pass to the Pandas
-          :meth:`DataFrame.to_csv() <koalas:DataFrame.to_csv>` or
-          :meth:`DataFrame.to_html() <koalas:DataFrame.to_html>` methods. Defaults to
-          :obj:`None <python:None>`.
-        :type koalas_kwargs: :class:`dict <python:dict>`
-
-        .. note::
-
-          To prevent unexpected behavior, if ``represent_as`` is set to ``'csv'``, the
-          :meth:`Data.table` property will be set to :obj:`None <python:None>`. If
-          ``represent_as`` is set to ``'html'``, the :meth:`Data.csv` property will be set
-          to :obj:`None <python:None>`.
-
-        :returns: A :class:`Data` instance.
-        """
-        from koalas import DataFrame
-
-        if not data_kwargs:
-            data_kwargs = {}
-        if not koalas_kwargs:
-            koalas_kwargs = {}
-
-        if not isinstance(as_df, DataFrame):
-            raise errors.HighchartsValueError(f'as_df must be a Koalas DataFrame.'
-                                              f'Was: {as_df.__class__.__name__}')
-
-        represent_as = validators.string(represent_as, allow_empty = True) or 'csv'
-        represent_as = represent_as.lower()
-        if represent_as not in ['csv', 'html']:
-            raise errors.HighchartsValueError(f'represent_as expects either "csv" or '
-                                              f'"html". Received: {represent_as}')
-        if represent_as == 'csv':
-            koalas_kwargs['path_or_buf'] = None
-            as_csv = as_df.to_csv(**koalas_kwargs)
-
-            data_kwargs['csv'] = as_csv
-            data_kwargs['table'] = None
-        else:
-            koalas_kwargs['buf'] = None
-            as_table = as_df.to_html(**koalas_kwargs)
-
-            data_kwargs['csv'] = None
-            data_kwargs['table'] = as_table
 
         return cls(**data_kwargs)

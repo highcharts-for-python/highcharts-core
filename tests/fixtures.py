@@ -34,6 +34,17 @@ def state(request):
 
 
 @pytest.fixture
+def run_pyspark_tests(request):
+    """Return the ``--pyspark`` command-line option."""
+    value = request.config.getoption("--pyspark")
+    value = value.lower()
+    if value in ['false', False, 0, 'no', 'no']:
+        return False
+    else:
+        return True
+
+
+@pytest.fixture
 def input_files(request):
     """Return the ``--inputs`` command-line option."""
     return request.config.getoption("--inputs")
@@ -60,6 +71,9 @@ def check_input_file(input_directory, input_value):
 def to_camelCase(variable_name):
     if '_' not in variable_name:
         return variable_name
+
+    if 'url' in variable_name:
+        variable_name = variable_name.replace('url', 'URL')
 
     camel_case = ''
     previous_character = ''
@@ -228,6 +242,13 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
                 elif 'utc' in key:
                     assert does_kwarg_value_match_result(kwargs_copy[key],
                                                          result.get('useUTC')) is True
+                elif 'url' in key:
+                    updated_key = key.replace('url', 'URL')
+                    matches = does_kwarg_value_match_result(
+                        kwargs_copy[key],
+                        result.get(to_camelCase(updated_key))
+                    )
+                    assert matches is True
                 elif isinstance(instance, UserDict):
                     assert does_kwarg_value_match_result(kwargs_copy[key],
                                                          result.get(key)) is True
