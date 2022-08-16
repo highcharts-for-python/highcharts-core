@@ -249,6 +249,9 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
                         result.get(to_camelCase(updated_key))
                     )
                     assert matches is True
+                elif key == 'pattern_options':
+                    assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                         result.get('pattern')) is True
                 elif isinstance(instance, UserDict):
                     assert does_kwarg_value_match_result(kwargs_copy[key],
                                                          result.get(key)) is True
@@ -274,8 +277,13 @@ def Class_from_dict(cls, kwargs, error):
             if isinstance(kwargs[key], str) and kwargs[key].startswith('class'):
                 continue
             kwarg_value = kwargs[key]
-            result_value = getattr(instance, key)
-            assert does_kwarg_value_match_result(kwargs[key], getattr(instance, key))
+            if key in ['pattern_options', 'patternOptions']:
+                result_value = getattr(instance, 'pattern_options')
+            else:
+                result_value = getattr(instance, key)
+            print(kwarg_value)
+            print(result_value)
+            assert does_kwarg_value_match_result(kwarg_value, result_value)
     else:
         with pytest.raises(error):
             instance = cls.from_dict(as_dict)
@@ -305,7 +313,11 @@ def Class_to_dict(cls, kwargs, error):
         if check_dicts:
             assert len(expected) == len(result)
             for key in expected:
-                assert does_kwarg_value_match_result(expected[key], result.get(key))
+                if key == 'patternOptions':
+                    assert does_kwarg_value_match_result(expected[key],
+                                                         result.get('pattern')) is True
+                else:
+                    assert does_kwarg_value_match_result(expected[key], result.get(key))
     else:
         with pytest.raises(error):
             instance = cls(**kwargs)
@@ -337,6 +349,9 @@ def Class_from_js_literal(cls, input_files, filename, as_file, error):
         as_js_literal = result.to_js_literal()
         print('-----------------')
         print('RESULT VALIDATION')
+        if 'pattern:' in as_js_literal:
+            as_js_literal = as_js_literal.replace('pattern:', 'patternOptions:')
+
         print(as_js_literal)
         parsed_output, output_str = cls._validate_js_literal(as_js_literal, range = False)
         assert str(parsed_output) == str(parsed_original)

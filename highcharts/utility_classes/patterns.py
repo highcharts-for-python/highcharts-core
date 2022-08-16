@@ -27,7 +27,7 @@ class PatternOptions(HighchartsMeta):
         self._y = None
 
         self.aspect_ratio = kwargs.pop('aspect_ratio', None)
-        self.background_color = kwargs.pop('backgorund_color', None)
+        self.background_color = kwargs.pop('background_color', None)
         self.color = kwargs.pop('color', None)
         self.height = kwargs.pop('height', None)
         self.id = kwargs.pop('id', None)
@@ -267,7 +267,7 @@ class PatternOptions(HighchartsMeta):
             'image': self.image,
             'opacity': self.opacity,
             'path': self.path,
-            'patternTransform': self.patternTransform,
+            'patternTransform': self.pattern_transform,
             'width': self.width,
             'x': self.x,
             'y': self.y
@@ -335,9 +335,12 @@ class Pattern(HighchartsMeta):
 
     @classmethod
     def from_dict(cls, as_dict):
+        pattern_options = as_dict.pop('pattern', None) or \
+                          as_dict.pop('pattern_options', None) or \
+                          as_dict.pop('patternOptions', None)
         kwargs = {
             'animation': as_dict.pop('animation', None),
-            'pattern_options': as_dict.pop('pattern', None),
+            'pattern_options': pattern_options,
             'pattern_index': as_dict.pop('patternIndex', None)
         }
         return cls(**kwargs)
