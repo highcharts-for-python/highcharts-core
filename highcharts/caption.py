@@ -36,6 +36,8 @@ class Caption(HighchartsMeta):
         self.text = kwargs.pop('text', None)
         self.use_html = kwargs.pop('use_html', None)
         self.vertical_align = kwargs.pop('vertical_align', None)
+        self.x = kwargs.pop('x', None)
+        self.y = kwargs.pop('y', None)
 
     @property
     def align(self) -> Optional[str]:
@@ -54,11 +56,14 @@ class Caption(HighchartsMeta):
 
     @align.setter
     def align(self, value):
-        value = validators.string(value, allow_empty = False)
-        value = value.lower()
-        if value not in ['left', 'center', 'right']:
-            raise errors.HighchartsValueError(f'align must be either "left", "center", or'
-                                              f' "right". Was: {value}')
+        if not value:
+            self._align = None
+        else:
+            value = validators.string(value, allow_empty = False)
+            value = value.lower()
+            if value not in ['left', 'center', 'right']:
+                raise errors.HighchartsValueError(f'align must be either "left", '
+                                                  f'"center", or "right". Was: {value}')
 
         self._align = value
 
@@ -174,7 +179,7 @@ class Caption(HighchartsMeta):
 
     @x.setter
     def x(self, value):
-        value = validators.numeric(value, allow_empty = True)
+        self._x = validators.numeric(value, allow_empty = True)
 
     @property
     def y(self) -> Optional[int]:

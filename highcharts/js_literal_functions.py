@@ -268,6 +268,24 @@ def convert_js_property_to_python(property_definition, original_str = None):
         else:
             raise errors.HighchartsParseError(f'unexpected parse error when '
                                               f'interpreting:\n{property_definition}')
+    elif property_definition.value.type == 'UnaryExpression':
+        property_value = property_definition.value
+        operator = property_value.operator
+        if operator == '-':
+            multiple = -1
+        else:
+            multiple = 1
+        argument_type = property_value.argument.type
+        if argument_type not in ['Literal']:
+            raise errors.HighchartsParseError(f'unable to find a Literal value within'
+                                              f'a Unary expression. Found: '
+                                              f'{argument_type}')
+        value = property_value.argument.value
+        if checkers.is_numeric(value):
+            return value * multiple
+        else:
+            return value
+
     elif property_definition.value.type == 'Identifier':
         if property_definition.value.name == 'undefined':
             return None
