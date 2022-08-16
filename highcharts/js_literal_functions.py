@@ -321,10 +321,14 @@ def convert_js_to_python(javascript, original_str = None):
       The :class:`esprima.nodes.Property` objects are available in the ``value`` sub-item.
 
     """
-    if javascript.type not in ('Property', 'Literal', 'ObjectExpression'):
+    if javascript.type not in ('Property',
+                               'Literal',
+                               'ObjectExpression',
+                               'ArrayExpression'):
         raise errors.HighchartsParseError(f'javascript should contain a '
-                                          f'Property, Literal, or ObjectExpression '
-                                          f'instance. Received: {javascript.type}')
+                                          f'Property, Literal, ObjectExpression, '
+                                          f'ArrayExpression instance. Received: '
+                                          f'{javascript.type}')
 
     if checkers.is_type(javascript, 'Property'):
         return convert_js_property_to_python(javascript, original_str)
@@ -335,6 +339,9 @@ def convert_js_to_python(javascript, original_str = None):
             as_dict[pair[0]] = pair[1]
 
         return as_dict
+    elif checkers.is_type(javascript, 'ArrayExpression'):
+        return [convert_js_to_python(x, original_str)
+                for x in javascript.elements]
     else:
         return convert_js_literal_to_python(javascript, original_str)
 

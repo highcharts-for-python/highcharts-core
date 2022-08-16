@@ -15,10 +15,10 @@ class LinearGradient(HighchartsMeta):
         self._y1 = None
         self._y2 = None
 
-        self.x1 = kwargs.pop('x1', None)
-        self.x2 = kwargs.pop('x2', None)
-        self.y1 = kwargs.pop('y1', None)
-        self.y2 = kwargs.pop('y2', None)
+        self.x1 = kwargs.get('x1', None)
+        self.x2 = kwargs.get('x2', None)
+        self.y1 = kwargs.get('y1', None)
+        self.y2 = kwargs.get('y2', None)
 
     @property
     def x1(self) -> Optional[float]:
@@ -83,10 +83,10 @@ class LinearGradient(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'x1': as_dict.pop('x1', None),
-            'x2': as_dict.pop('x2', None),
-            'y1': as_dict.pop('y1', None),
-            'y2': as_dict.pop('y2', None)
+            'x1': as_dict.get('x1', None),
+            'x2': as_dict.get('x2', None),
+            'y1': as_dict.get('y1', None),
+            'y2': as_dict.get('y2', None)
         }
 
         return cls(**kwargs)
@@ -110,9 +110,9 @@ class RadialGradient(HighchartsMeta):
         self._cy = None
         self._r = None
 
-        self.cx = kwargs.pop('cx', None)
-        self.cy = kwargs.pop('cy', None)
-        self.r = kwargs.pop('r', None)
+        self.cx = kwargs.get('cx', None)
+        self.cy = kwargs.get('cy', None)
+        self.r = kwargs.get('r', None)
 
     @property
     def cx(self) -> Optional[float]:
@@ -164,9 +164,9 @@ class RadialGradient(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'cx': as_dict.pop('cx', None),
-            'cy': as_dict.pop('cy', None),
-            'r': as_dict.pop('r', None)
+            'cx': as_dict.get('cx', None),
+            'cy': as_dict.get('cy', None),
+            'r': as_dict.get('r', None)
         }
 
         return cls(**kwargs)
@@ -189,9 +189,9 @@ class Gradient(HighchartsMeta):
         self._radial_gradient = None
         self._stops = None
 
-        self.linear_gradient = kwargs.pop('linear_gradient', None)
-        self.radial_gradient = kwargs.pop('radial_gradient', None)
-        self.stops = kwargs.pop('stops', None)
+        self.linear_gradient = kwargs.get('linear_gradient', None)
+        self.radial_gradient = kwargs.get('radial_gradient', None)
+        self.stops = kwargs.get('stops', None)
 
     @property
     def linear_gradient(self) -> Optional[LinearGradient]:
@@ -243,7 +243,7 @@ class Gradient(HighchartsMeta):
         else:
             stops = []
             for item in value:
-                stop = validators.iterable(value,
+                stop = validators.iterable(item,
                                            allow_empty = False,
                                            minimum_length = 2,
                                            maximum_length = 2)
@@ -258,9 +258,9 @@ class Gradient(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'linear_gradient': as_dict.pop('linearGradient', None),
-            'radial_gradient': as_dict.pop('radialGradient', None),
-            'stops': as_dict.pop('stops', None)
+            'linear_gradient': as_dict.get('linearGradient', None),
+            'radial_gradient': as_dict.get('radialGradient', None),
+            'stops': as_dict.get('stops', None)
         }
 
         return cls(**kwargs)
