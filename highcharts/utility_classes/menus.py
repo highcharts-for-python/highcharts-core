@@ -11,8 +11,12 @@ except ImportError:
         except ImportError:
             import json
 
-from validator_collection import validators
+import esprima
+from esprima.error_handler import Error as ParseError
 
+from validator_collection import validators, errors as validator_errors
+
+from highcharts import errors
 from highcharts.decorators import class_sensitive, validate_types
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.utility_classes.javascript_functions import CallbackFunction
@@ -27,10 +31,10 @@ class MenuItem(HighchartsMeta):
         self._text_key = None
         self._separator = False
 
-        self.onclick = kwargs.pop('onclick', None)
-        self.text = kwargs.pop('text', None)
-        self.text_key = kwargs.pop('text_key', None)
-        self.separator = kwargs.pop('separator', None)
+        self.onclick = kwargs.get('onclick', None)
+        self.text = kwargs.get('text', None)
+        self.text_key = kwargs.get('text_key', None)
+        self.separator = kwargs.get('separator', None)
 
     @property
     def onclick(self) -> Optional[CallbackFunction]:
@@ -90,10 +94,10 @@ class MenuItem(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'onclick': as_dict.pop('onclick', None),
-            'text': as_dict.pop('text', None),
-            'text_key': as_dict.pop('textKey', None),
-            'separator': as_dict.pop('separator', None)
+            'onclick': as_dict.get('onclick', None),
+            'text': as_dict.get('text', None),
+            'text_key': as_dict.get('textKey', None),
+            'separator': as_dict.get('separator', None)
         }
 
         return cls(**kwargs)
@@ -120,8 +124,24 @@ class MenuObject(UserDict):
     """
 
     def __setitem__(self, key, item):
-        if key not in self:
-            key = validators.variable_name(key, allow_empty = False)
+        validate_key = False
+        try:
+            validate_key = key not in self
+        except AttributeError:
+            validate_key = True
+
+        if validate_key:
+            try:
+                key = validators.variable_name(key, allow_empty = False)
+            except validator_errors.InvalidVariableNameError as error:
+                if '-' in key:
+                    try:
+                        test_key = key.replace('-', '_')
+                        validators.variable_name(test_key, allow_empty = False)
+                    except validator_errors.InvalidVariableNameError:
+                        raise error
+                else:
+                    raise error
 
         item = validate_types(item,
                               types = MenuItem,
@@ -162,6 +182,9 @@ class MenuObject(UserDict):
         as_dict = json.loads(as_json)
 
         return cls.from_dict(as_dict)
+
+    def _to_untrimmed_dict(self) -> dict:
+        return self.data
 
     def to_dict(self) -> dict:
         """Generate a :class:`dict <python:dict>` representation of the object compatible
@@ -207,3 +230,44 @@ class MenuObject(UserDict):
             as_json = json.dumps(as_dict)
 
         return as_json
+
+    @classmethod
+    def _validate_js_literal(cls,
+                             as_str,
+                             range = True,
+                             _break_loop_on_failure = False):
+        """Parse ``as_str`` as a valid JavaScript literal object.
+
+        :param as_str: The string to parse as a JavaScript literal object.
+        :type as_str: :class:`str <python:str>`
+
+        :param range: If ``True``, includes location and range data for each node in the
+          AST returned. Defaults to ``False``.
+        :type range: :class:`bool <python:bool>`
+
+        :param _break_loop_on_failure: If ``True``, will not loop if the method fails to
+          parse/validate ``as_str``. Defaults to ``False``.
+        :type _break_loop_on_failure: :class:`bool <python:bool>`
+
+        :returns: The parsed AST representation of ``as_str`` and the updated string.
+        :rtype: 2-member :class:`tuple <python:tuple>` of :class:`esprima.nodes.Script`
+          and :class:`str <python:str>`
+        """
+        try:
+            parsed = esprima.parseScript(as_str, loc = range, range = range)
+        except ParseError:
+            try:
+                parsed = esprima.parseModule(as_str, loc = range, range = range)
+            except ParseError:
+                if not _break_loop_on_failure:
+                    as_str = f"""var randomVariable = {as_str}"""
+                    return cls._validate_js_literal(as_str,
+                                                    range = range,
+                                                    _break_loop_on_failure = True)
+                else:
+                    raise errors.HighchartsParseError('._validate_js_function() expects '
+                                                      'a str containing a valid '
+                                                      'JavaScript function. Could not '
+                                                      'find a valid function.')
+
+        return parsed, as_str
