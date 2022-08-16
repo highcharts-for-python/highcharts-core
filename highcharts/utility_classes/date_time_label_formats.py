@@ -22,14 +22,14 @@ class DateTimeLabelFormats(HighchartsMeta):
         self._week = None
         self._year = None
 
-        self.day = kwargs.pop('day', None)
-        self.hour = kwargs.pop('hour', None)
-        self.millisecond = kwargs.pop('millisecond', None)
-        self.minute = kwargs.pop('minute', None)
-        self.month = kwargs.pop('month', None)
-        self.second = kwargs.pop('second', None)
-        self.week = kwargs.pop('week', None)
-        self.year = kwargs.pop('year', None)
+        self.day = kwargs.get('day', None)
+        self.hour = kwargs.get('hour', None)
+        self.millisecond = kwargs.get('millisecond', None)
+        self.minute = kwargs.get('minute', None)
+        self.month = kwargs.get('month', None)
+        self.second = kwargs.get('second', None)
+        self.week = kwargs.get('week', None)
+        self.year = kwargs.get('year', None)
 
     @property
     def day(self) -> Optional[str]:
@@ -138,14 +138,14 @@ class DateTimeLabelFormats(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'day': as_dict.pop('day', None),
-            'hour': as_dict.pop('hour', None),
-            'millisecond': as_dict.pop('millisecond', None),
-            'minute': as_dict.pop('minute', None),
-            'month': as_dict.pop('month', None),
-            'second': as_dict.pop('second', None),
-            'week': as_dict.pop('week', None),
-            'year': as_dict.pop('year', None),
+            'day': as_dict.get('day', None),
+            'hour': as_dict.get('hour', None),
+            'millisecond': as_dict.get('millisecond', None),
+            'minute': as_dict.get('minute', None),
+            'month': as_dict.get('month', None),
+            'second': as_dict.get('second', None),
+            'week': as_dict.get('week', None),
+            'year': as_dict.get('year', None),
         }
 
         return cls(**kwargs)
