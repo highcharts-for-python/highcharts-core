@@ -26,16 +26,16 @@ class Marker(HighchartsMeta):
         self._symbol = None
         self._width = None
 
-        self.enabled = kwargs.pop('enabled', None)
-        self.enabled_threshold = kwargs.pop('enabled_threshold', None)
-        self.fill_color = kwargs.pop('fill_color', None)
-        self.height = kwargs.pop('height', None)
-        self.line_color = kwargs.pop('line_color', None)
-        self.line_width = kwargs.pop('line_width', None)
-        self.radius = kwargs.pop('radius', None)
-        self.states = kwargs.pop('states', None)
-        self.symbol = kwargs.pop('symbol', None)
-        self.width = kwargs.pop('width', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.enabled_threshold = kwargs.get('enabled_threshold', None)
+        self.fill_color = kwargs.get('fill_color', None)
+        self.height = kwargs.get('height', None)
+        self.line_color = kwargs.get('line_color', None)
+        self.line_width = kwargs.get('line_width', None)
+        self.radius = kwargs.get('radius', None)
+        self.states = kwargs.get('states', None)
+        self.symbol = kwargs.get('symbol', None)
+        self.width = kwargs.get('width', None)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -231,16 +231,16 @@ class Marker(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'enabled': as_dict.pop('enabled', None),
-            'enabled_threshold': as_dict.pop('enabledThreshold', None),
-            'fill_color': as_dict.pop('fillColor', None),
-            'height': as_dict.pop('height', None),
-            'line_color': as_dict.pop('lineColor', None),
-            'line_width': as_dict.pop('lineWidth', None),
-            'radius': as_dict.pop('radius', None),
-            'states': as_dict.pop('states', None),
-            'symbol': as_dict.pop('symbol', None),
-            'width': as_dict.pop('width', None)
+            'enabled': as_dict.get('enabled', None),
+            'enabled_threshold': as_dict.get('enabledThreshold', None),
+            'fill_color': as_dict.get('fillColor', None),
+            'height': as_dict.get('height', None),
+            'line_color': as_dict.get('lineColor', None),
+            'line_width': as_dict.get('lineWidth', None),
+            'radius': as_dict.get('radius', None),
+            'states': as_dict.get('states', None),
+            'symbol': as_dict.get('symbol', None),
+            'width': as_dict.get('width', None)
         }
 
         return cls(**kwargs)
