@@ -29,7 +29,7 @@ class ChartEvents(HighchartsMeta):
         for attribute in dir(self):
             if attribute.startswith('_') and not attribute.startswith('__'):
                 non_private_name = attribute[1:]
-                setattr(self, non_private_name, kwargs.pop(non_private_name, None))
+                setattr(self, non_private_name, kwargs.get(non_private_name, None))
 
     @property
     def add_series(self) -> Optional[CallbackFunction]:
@@ -280,19 +280,19 @@ class ChartEvents(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'add_series': as_dict.pop('addSeries', None),
-            'after_print': as_dict.pop('afterPrint', None),
-            'before_print': as_dict.pop('beforePrint', None),
-            'click': as_dict.pop('click', None),
-            'drilldown': as_dict.pop('drilldown', None),
-            'drillup': as_dict.pop('drillup', None),
-            'drillupall': as_dict.pop('drillupall', None),
-            'export_data': as_dict.pop('exportData', None),
-            'fullscreen_close': as_dict.pop('fullscreenClose', None),
-            'fullscreen_open': as_dict.pop('fullscreenOpen', None),
-            'load': as_dict.pop('load', None),
-            'redraw': as_dict.pop('redraw', None),
-            'selection': as_dict.pop('selection', None)
+            'add_series': as_dict.get('addSeries', None),
+            'after_print': as_dict.get('afterPrint', None),
+            'before_print': as_dict.get('beforePrint', None),
+            'click': as_dict.get('click', None),
+            'drilldown': as_dict.get('drilldown', None),
+            'drillup': as_dict.get('drillup', None),
+            'drillupall': as_dict.get('drillupall', None),
+            'export_data': as_dict.get('exportData', None),
+            'fullscreen_close': as_dict.get('fullscreenClose', None),
+            'fullscreen_open': as_dict.get('fullscreenOpen', None),
+            'load': as_dict.get('load', None),
+            'redraw': as_dict.get('redraw', None),
+            'selection': as_dict.get('selection', None)
         }
 
         return cls(**kwargs)
@@ -326,7 +326,7 @@ class BreadcrumbEvents(HighchartsMeta):
         for attribute in dir(self):
             if attribute.startswith('_') and not attribute.startswith('__'):
                 non_private_name = attribute[1:]
-                setattr(self, non_private_name, kwargs.pop(non_private_name, None))
+                setattr(self, non_private_name, kwargs.get(non_private_name, None))
 
     @property
     def click(self) -> Optional[CallbackFunction]:
@@ -356,7 +356,7 @@ class BreadcrumbEvents(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'click': as_dict.pop('click', None)
+            'click': as_dict.get('click', None)
         }
 
         return cls(**kwargs)
@@ -381,7 +381,7 @@ class NavigationEvents(HighchartsMeta):
         for attribute in dir(self):
             if attribute.startswith('_') and not attribute.startswith('__'):
                 non_private_name = attribute[1:]
-                setattr(self, non_private_name, kwargs.pop(non_private_name, None))
+                setattr(self, non_private_name, kwargs.get(non_private_name, None))
 
     @property
     def close_popup(self) -> Optional[CallbackFunction]:
@@ -440,10 +440,10 @@ class NavigationEvents(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'close_popup': as_dict.pop('closePopup', None),
-            'deselect_button': as_dict.pop('deselectButton', None),
-            'select_button': as_dict.pop('selectButton', None),
-            'show_popup': as_dict.pop('showPopup', None)
+            'close_popup': as_dict.get('closePopup', None),
+            'deselect_button': as_dict.get('deselectButton', None),
+            'select_button': as_dict.get('selectButton', None),
+            'show_popup': as_dict.get('showPopup', None)
         }
 
         return cls(**kwargs)
@@ -474,16 +474,16 @@ class PointEvents(HighchartsMeta):
         self._unselect = None
         self._update = None
 
-        self.click = kwargs.pop('click', None)
-        self.drag = kwargs.pop('drag', None)
-        self.drag_start = kwargs.pop('drag_start', None)
-        self.drop = kwargs.pop('drop', None)
-        self.mouse_out = kwargs.pop('mouse_out', None)
-        self.mouse_over = kwargs.pop('mouse_over', None)
-        self.remove = kwargs.pop('remove', None)
-        self.select = kwargs.pop('select', None)
-        self.unselect = kwargs.pop('unselect', None)
-        self.update = kwargs.pop('update', None)
+        self.click = kwargs.get('click', None)
+        self.drag = kwargs.get('drag', None)
+        self.drag_start = kwargs.get('drag_start', None)
+        self.drop = kwargs.get('drop', None)
+        self.mouse_out = kwargs.get('mouse_out', None)
+        self.mouse_over = kwargs.get('mouse_over', None)
+        self.remove = kwargs.get('remove', None)
+        self.select = kwargs.get('select', None)
+        self.unselect = kwargs.get('unselect', None)
+        self.update = kwargs.get('update', None)
 
     @property
     def click(self) -> Optional[CallbackFunction]:
@@ -662,16 +662,16 @@ class PointEvents(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'click': as_dict.pop('click', None),
-            'drag': as_dict.pop('drag', None),
-            'drag_start': as_dict.pop('dragStart', None),
-            'drop': as_dict.pop('drop', None),
-            'mouse_out': as_dict.pop('mouseOut', None),
-            'mouse_over': as_dict.pop('mouseOver', None),
-            'remove': as_dict.pop('remove', None),
-            'select': as_dict.pop('select', None),
-            'unselect': as_dict.pop('unselect', None),
-            'update': as_dict.pop('update', None)
+            'click': as_dict.get('click', None),
+            'drag': as_dict.get('drag', None),
+            'drag_start': as_dict.get('dragStart', None),
+            'drop': as_dict.get('drop', None),
+            'mouse_out': as_dict.get('mouseOut', None),
+            'mouse_over': as_dict.get('mouseOver', None),
+            'remove': as_dict.get('remove', None),
+            'select': as_dict.get('select', None),
+            'unselect': as_dict.get('unselect', None),
+            'update': as_dict.get('update', None)
         }
 
         return cls(**kwargs)
@@ -706,14 +706,14 @@ class SeriesEvents(HighchartsMeta):
         self._mouse_over = None
         self._show = None
 
-        self.after_animate = kwargs.pop('after_animate', None)
-        self.checkbox_click = kwargs.pop('checkbox_click', None)
-        self.click = kwargs.pop('click', None)
-        self.hide = kwargs.pop('hide', None)
-        self.legend_item_click = kwargs.pop('legend_item_click', None)
-        self.mouse_out = kwargs.pop('mouse_out', None)
-        self.mouse_over = kwargs.pop('mouse_over', None)
-        self.show = kwargs.pop('show', None)
+        self.after_animate = kwargs.get('after_animate', None)
+        self.checkbox_click = kwargs.get('checkbox_click', None)
+        self.click = kwargs.get('click', None)
+        self.hide = kwargs.get('hide', None)
+        self.legend_item_click = kwargs.get('legend_item_click', None)
+        self.mouse_out = kwargs.get('mouse_out', None)
+        self.mouse_over = kwargs.get('mouse_over', None)
+        self.show = kwargs.get('show', None)
 
     @property
     def after_animate(self) -> Optional[CallbackFunction]:
@@ -850,14 +850,14 @@ class SeriesEvents(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'after_animate': as_dict.pop('afterAnimate', None),
-            'checkbox_click': as_dict.pop('checkboxClick', None),
-            'click': as_dict.pop('click', None),
-            'hide': as_dict.pop('hide', None),
-            'legend_item_click': as_dict.pop('legendItemClick', None),
-            'mouse_out': as_dict.pop('mouseOut', None),
-            'mouse_over': as_dict.pop('mouseOver', None),
-            'show': as_dict.pop('show', None)
+            'after_animate': as_dict.get('afterAnimate', None),
+            'checkbox_click': as_dict.get('checkboxClick', None),
+            'click': as_dict.get('click', None),
+            'hide': as_dict.get('hide', None),
+            'legend_item_click': as_dict.get('legendItemClick', None),
+            'mouse_out': as_dict.get('mouseOut', None),
+            'mouse_over': as_dict.get('mouseOver', None),
+            'show': as_dict.get('show', None)
         }
 
         return cls(**kwargs)
@@ -883,7 +883,7 @@ class ClusterEvents(HighchartsMeta):
     def __init__(self, **kwargs):
         self._drill_to_cluster = None
 
-        self.drill_to_cluster = kwargs.pop('drill_to_cluster', None)
+        self.drill_to_cluster = kwargs.get('drill_to_cluster', None)
 
     @property
     def drill_to_cluster(self) -> Optional[CallbackFunction]:
@@ -905,14 +905,14 @@ class ClusterEvents(HighchartsMeta):
 
     @classmethod
     def from_dict(cls, as_dict):
-        return cls({
-            'drill_to_cluster': as_dict.pop('drillToCluster', None)
-        })
+        return cls(drill_to_cluster = as_dict.get('drillToCluster', None))
 
     def _to_untrimmed_dict(self) -> dict:
-        return self.trim_dict({
+        untrimmed = {
             'drillToCluster': self.drill_to_cluster
-        })
+        }
+
+        return untrimmed
 
 
 class AxisEvents(HighchartsMeta):
@@ -925,11 +925,11 @@ class AxisEvents(HighchartsMeta):
         self._point_in_break = None
         self._set_extremes = None
 
-        self.after_breaks = kwargs.pop('after_breaks', None)
-        self.after_set_extremes = kwargs.pop('after_set_extremes', None)
-        self.point_breaks = kwargs.pop('point_breaks', None)
-        self.point_in_break = kwargs.pop('point_in_break', None)
-        self.set_extremes = kwargs.pop('set_extremes', None)
+        self.after_breaks = kwargs.get('after_breaks', None)
+        self.after_set_extremes = kwargs.get('after_set_extremes', None)
+        self.point_break = kwargs.get('point_break', None)
+        self.point_in_break = kwargs.get('point_in_break', None)
+        self.set_extremes = kwargs.get('set_extremes', None)
 
     @property
     def after_breaks(self) -> Optional[CallbackFunction]:
@@ -996,7 +996,7 @@ class AxisEvents(HighchartsMeta):
     @point_in_break.setter
     @class_sensitive(CallbackFunction)
     def point_in_break(self, value):
-        self._point_break = value
+        self._point_in_break = value
 
     @property
     def set_extremes(self) -> Optional[CallbackFunction]:
@@ -1025,11 +1025,11 @@ class AxisEvents(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'after_breaks': as_dict.pop('after_breaks', None),
-            'after_set_extremes': as_dict.pop('after_set_extremes', None),
-            'point_break': as_dict.pop('point_break', None),
-            'point_in_break': as_dict.pop('point_in_break', None),
-            'set_extremes': as_dict.pop('set_extremes', None)
+            'after_breaks': as_dict.get('afterBreaks', None),
+            'after_set_extremes': as_dict.get('afterSetExtremes', None),
+            'point_break': as_dict.get('pointBreak', None),
+            'point_in_break': as_dict.get('pointInBreak', None),
+            'set_extremes': as_dict.get('setExtremes', None)
         }
 
         return cls(**kwargs)
@@ -1055,10 +1055,10 @@ class MouseEvents(HighchartsMeta):
         self._mouseout = None
         self._mouseover = None
 
-        self.click = kwargs.pop('click', None)
-        self.mousemove = kwargs.pop('mousemove', None)
-        self.mouseout = kwargs.pop('mouseout', None)
-        self.mouseover = kwargs.pop('mouseover', None)
+        self.click = kwargs.get('click', None)
+        self.mousemove = kwargs.get('mousemove', None)
+        self.mouseout = kwargs.get('mouseout', None)
+        self.mouseover = kwargs.get('mouseover', None)
 
     @property
     def click(self) -> Optional[CallbackFunction]:
@@ -1121,10 +1121,10 @@ class MouseEvents(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'click': as_dict.pop('click', None),
-            'mousemove': as_dict.pop('mousemove', None),
-            'mouseout': as_dict.pop('mouseout', None),
-            'mouseover': as_dict.pop('mouseover', None)
+            'click': as_dict.get('click', None),
+            'mousemove': as_dict.get('mousemove', None),
+            'mouseout': as_dict.get('mouseout', None),
+            'mouseover': as_dict.get('mouseover', None)
         }
 
         return cls(**kwargs)
