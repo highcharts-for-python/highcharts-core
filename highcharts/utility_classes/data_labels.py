@@ -169,7 +169,7 @@ class DataLabel(HighchartsMeta):
     @property
     def align(self) -> Optional[str]:
         f"""The alignment of the data label compared to the point. Defaults to
-        ``'{constants.DEFAULT_LABEL.get('align', None)}'``.
+        ``'{constants.DEFAULT_DATA_LABEL.get('align', None)}'``.
 
         Accepts:
 
@@ -565,7 +565,7 @@ class DataLabel(HighchartsMeta):
         f"""The padding within the border box when either
         :meth:`DataLabel.border_width` or :meth:`DataLabel.background_color` is set.
 
-        Defaults to ``{constants.DEFAULT_LABEL.get('padding')}``.
+        Defaults to ``{constants.DEFAULT_DATA_LABEL.get('padding')}``.
 
         :returns: The padding to apply to the data label.
         :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
@@ -620,6 +620,10 @@ class DataLabel(HighchartsMeta):
         :rtype: numeric or :obj:`None <python:None>`
         """
         return self._rotation
+
+    @rotation.setter
+    def rotation(self, value):
+        self._rotation = validators.numeric(value, allow_empty = True)
 
     @property
     def shadow(self) -> Optional[bool | ShadowOptions]:
@@ -727,7 +731,7 @@ class DataLabel(HighchartsMeta):
     @text_path.setter
     @class_sensitive(TextPath)
     def text_path(self, value):
-        self.text_path = value
+        self._text_path = value
 
     @property
     def use_html(self) -> Optional[bool]:

@@ -8,7 +8,7 @@ from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
-from highcharts.utility_classes.labels import DataLabel, NodeDataLabel
+from highcharts.utility_classes.data_labels import DataLabel, NodeDataLabel
 
 
 class NodeOptions(HighchartsMeta):
@@ -204,7 +204,7 @@ class DependencyWheelNodeOptions(NodeOptions):
         self.column = kwargs.pop('column', None)
         self.level = kwargs.pop('level', None)
 
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
 
     @property
     def column(self) -> Optional[int]:
@@ -290,16 +290,12 @@ class OrganizationNodeOptions(DependencyWheelNodeOptions):
     """Variant of :class:`NodeOptions` for use in :class:`OrganizationSeries`."""
 
     def __init__(self, **kwargs):
-        self._column = None
         self._image = None
         self._layout = None
-        self._level = None
         self._title = None
 
-        self.column = kwargs.pop('column', None)
         self.image = kwargs.pop('image', None)
         self.layout = kwargs.pop('layout', None)
-        self.level = kwargs.pop('level', None)
         self.title = kwargs.pop('title', None)
 
         super().__init__(**kwargs)
