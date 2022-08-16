@@ -12,9 +12,9 @@ class CreditStyleOptions(HighchartsMeta):
     """CSS styles that are applicable to the :class:`Credits` label."""
 
     def __init__(self, **kwargs):
-        self._color = kwargs.pop('color', None)
-        self._cursor = kwargs.pop('cursor', None)
-        self._font_size = kwargs.pop('font_size', None)
+        self._color = None
+        self._cursor = None
+        self._font_size = None
 
         self.color = kwargs.pop('color', None)
         self.cursor = kwargs.pop('cursor', None)
@@ -59,9 +59,9 @@ class CreditStyleOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'color': as_dict.pop('color', '#999999'),
-            'cursor': as_dict.pop('cursor', 'pointer'),
-            'font_size': as_dict.pop('fontSize', '9px')
+            'color': as_dict.pop('color', None),
+            'cursor': as_dict.pop('cursor', None),
+            'font_size': as_dict.pop('fontSize', None)
         }
 
         return cls(**kwargs)
@@ -104,7 +104,10 @@ class Credits(HighchartsMeta):
 
     @enabled.setter
     def enabled(self, value):
-        self._enabled = bool(value)
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
 
     @property
     def href(self) -> Optional[str]:
@@ -119,10 +122,7 @@ class Credits(HighchartsMeta):
 
     @href.setter
     def href(self, value):
-        try:
-            self._href = validators.url(value, allow_empty = True)
-        except ValueError:
-            self._href = validators.path(value, allow_empty = True)
+        self._href = validators.url(value, allow_empty = True)
 
     @property
     def position(self) -> Optional[Position]:
@@ -172,11 +172,11 @@ class Credits(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'enabled': as_dict.pop('enabled', True),
-            'href': as_dict.pop('href', constants.DEFAULT_CREDITS_HREF),
-            'position': as_dict.pop('position', Position()),
-            'style': as_dict.pop('style', constants.DEFAULT_CREDITS_STYLE),
-            'text': as_dict.pop('text', constants.DEFAULT_CREDITS_TEXT)
+            'enabled': as_dict.pop('enabled', None),
+            'href': as_dict.pop('href', None),
+            'position': as_dict.pop('position', None),
+            'style': as_dict.pop('style', None),
+            'text': as_dict.pop('text', None)
         }
 
         return cls(**kwargs)
