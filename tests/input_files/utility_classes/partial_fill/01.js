@@ -1,0 +1,3 @@
+{
+    fill: '#cccccc'
+}
