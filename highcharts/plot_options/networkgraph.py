@@ -8,7 +8,7 @@ from highcharts.decorators import class_sensitive, validate_types
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.plot_options.generic import GenericTypeOptions
 from highcharts.plot_options.link import LinkOptions
-from highcharts.plot_options.zones import Zone
+from highcharts.utility_classes.zones import Zone
 from highcharts.utility_classes.shadows import ShadowOptions
 from highcharts.utility_classes.javascript_functions import CallbackFunction
 

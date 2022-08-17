@@ -10,7 +10,7 @@ from highcharts.utility_classes.data_labels import DataLabel
 from highcharts.utility_classes.events import ClusterEvents
 from highcharts.utility_classes.markers import Marker
 from highcharts.utility_classes.states import States
-from highcharts.plot_options.zones import ClusterZone
+from highcharts.utility_classes.zones import ClusterZone
 
 
 class VectorLayoutAlgorithm(HighchartsMeta):
@@ -23,11 +23,11 @@ class VectorLayoutAlgorithm(HighchartsMeta):
         self._kmeans_threshold = None
         self._type = None
 
-        self.distance = kwargs.pop('distance', None)
-        self.grid_size = kwargs.pop('grid_size', None)
-        self.iterations = kwargs.pop('iterations', None)
-        self.kmeans_threshold = kwargs.pop('kmeans_threshold', None)
-        self.type = kwargs.pop('type', None)
+        self.distance = kwargs.get('distance', None)
+        self.grid_size = kwargs.get('grid_size', None)
+        self.iterations = kwargs.get('iterations', None)
+        self.kmeans_threshold = kwargs.get('kmeans_threshold', None)
+        self.type = kwargs.get('type', None)
 
     @property
     def distance(self) -> Optional[str | int | float | Decimal]:
@@ -77,7 +77,7 @@ class VectorLayoutAlgorithm(HighchartsMeta):
                 value = validators.string(value)
                 if '%' not in value:
                     raise ValueError
-            except ValueError:
+            except (TypeError, ValueError):
                 value = validators.numeric(value, minimum = 0)
 
             self._grid_size = value
@@ -196,11 +196,11 @@ class VectorLayoutAlgorithm(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'distance': as_dict.pop('distance', None),
-            'grid_size': as_dict.pop('gridSize', None),
-            'iterations': as_dict.pop('iterations', None),
-            'kmeans_threshold': as_dict.pop('kmeansThreshold', None),
-            'type': as_dict.pop('type', None)
+            'distance': as_dict.get('distance', None),
+            'grid_size': as_dict.get('gridSize', None),
+            'iterations': as_dict.get('iterations', None),
+            'kmeans_threshold': as_dict.get('kmeansThreshold', None),
+            'type': as_dict.get('type', None)
         }
 
         return cls(**kwargs)
@@ -248,17 +248,17 @@ class ClusterOptions(HighchartsMeta):
         self._states = None
         self._zones = None
 
-        self.allow_overlap = kwargs.pop('allow_overlap', None)
-        self.animation = kwargs.pop('animation', None)
-        self.data_labels = kwargs.pop('data_labels', None)
-        self.drill_to_cluster = kwargs.pop('drill_to_cluster', None)
-        self.enabled = kwargs.pop('enabled', None)
-        self.events = kwargs.pop('events', None)
-        self.layout_algorithm = kwargs.pop('layout_algorithm', None)
-        self.marker = kwargs.pop('marker', None)
-        self.minimum_cluster_size = kwargs.pop('minimum_cluster_size', None)
-        self.states = kwargs.pop('states', None)
-        self.zones = kwargs.pop('zones', None)
+        self.allow_overlap = kwargs.get('allow_overlap', None)
+        self.animation = kwargs.get('animation', None)
+        self.data_labels = kwargs.get('data_labels', None)
+        self.drill_to_cluster = kwargs.get('drill_to_cluster', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.events = kwargs.get('events', None)
+        self.layout_algorithm = kwargs.get('layout_algorithm', None)
+        self.marker = kwargs.get('marker', None)
+        self.minimum_cluster_size = kwargs.get('minimum_cluster_size', None)
+        self.states = kwargs.get('states', None)
+        self.zones = kwargs.get('zones', None)
 
     @property
     def allow_overlap(self) -> Optional[bool]:
@@ -430,17 +430,17 @@ class ClusterOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'allow_overlap': as_dict.pop('allowOverlap', None),
-            'animation': as_dict.pop('animation', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drill_to_cluster': as_dict.pop('drillToCluster', None),
-            'enabled': as_dict.pop('enabled', None),
-            'events': as_dict.pop('events', None),
-            'layout_algorithm': as_dict.pop('layoutAlgorithm', None),
-            'marker': as_dict.pop('marker', None),
-            'minimum_cluster_size': as_dict.pop('minimumClusterSize', None),
-            'states': as_dict.pop('states', None),
-            'zones': as_dict.pop('zones', None)
+            'allow_overlap': as_dict.get('allowOverlap', None),
+            'animation': as_dict.get('animation', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drill_to_cluster': as_dict.get('drillToCluster', None),
+            'enabled': as_dict.get('enabled', None),
+            'events': as_dict.get('events', None),
+            'layout_algorithm': as_dict.get('layoutAlgorithm', None),
+            'marker': as_dict.get('marker', None),
+            'minimum_cluster_size': as_dict.get('minimumClusterSize', None),
+            'states': as_dict.get('states', None),
+            'zones': as_dict.get('zones', None)
         }
 
         return cls(**kwargs)

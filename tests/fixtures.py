@@ -110,9 +110,12 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
 
     :returns: ``True`` if match, ``False`` if not
     """
+    print(f'EVALUATING KWARG_VALUE:\n{kwarg_value}')
+    print(f'  against {result_value}')
     if isinstance(kwarg_value, (dict,
                                 UserDict)) and not isinstance(result_value, (dict,
                                                                              UserDict)):
+        print('- converting KWARG dict back to object INSTANCE')
         result_cls = result_value.__class__
         try:
             test_value = result_cls.from_dict(kwarg_value)
@@ -122,48 +125,67 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
             else:
                 return False
 
+        ('-- converted INSTANCE as JS literal:')
         print(test_value.to_js_literal())
+        print('-- original result as JS literal:')
         print(result_value.to_js_literal())
 
         return test_value == result_value
     elif not isinstance(kwarg_value, (int, float)) and isinstance(result_value, (int,
                                                                                  float)):
+        print('- converting KWARG value into numeric')
         test_value = validators.numeric(kwarg_value)
         return test_value == result_value
     elif isinstance(kwarg_value, (int, float)) and not isinstance(result_value, (int,
                                                                                  float)):
+        print('- converting RESULT value into numeric')
         result_value = validators.numeric(result_value)
         return test_value == result_value
-    elif isinstance(kwarg_value, dict) and isinstance(result_value, dict):
-        return checkers.are_dicts_equivalent(kwarg_value, result_value)
     elif isinstance(kwarg_value, (dict,
                                   UserDict)) and isinstance(result_value, (dict,
                                                                            UserDict)):
+        print('- checking two dict objects')
         if len(kwarg_value) != len(result_value):
+            print('-- len does not match')
             return False
         for key in kwarg_value:
-            if kwarg_value.get(key) != result_value.get(key):
+            matches = does_kwarg_value_match_result(kwarg_value.get(key),
+                                                    result_value.get(key))
+            if not matches:
+                print(f'-- dict key ({key}) does not match')
                 return False
 
         return True
     elif checkers.is_iterable(kwarg_value):
-        print('is iterable')
+        print('- evaluating a KWARG value that is iterable')
         if len(kwarg_value) != len(result_value):
+            print('-- len does not match')
             return False
         counter = 0
         for item in kwarg_value:
+            print('-- processing items in KWARG iterable')
             result_item = result_value[counter]
+            print(f'-- evaluating:\n   {item}')
+            print(f'-- against:\n   {result_item}')
             item_match = does_kwarg_value_match_result(item, result_item)
             if not item_match:
+                print('-- DOES NOT MATCH')
                 return False
             counter += 1
     elif kwarg_value is None and result_value is not None:
+        print('- converting None to "null" to check')
         if result_value == 'null' or isinstance(result_value, constants.EnforcedNullType):
             return True
         else:
             return False
+    elif isinstance(kwarg_value, str) and isinstance(result_value, dict):
+        print('- checking function string against function dict')
+        if 'body' in result_value and kwarg_value.startswith('function'):
+            return True
+        else:
+            return False
     else:
-        print('running else')
+        print('- falling back to simple equivalency check')
         return kwarg_value == result_value
 
     return True
@@ -323,7 +345,8 @@ def Class_to_dict(cls, kwargs, error):
                     assert does_kwarg_value_match_result(expected[key],
                                                          result.get('pattern')) is True
                 else:
-                    assert does_kwarg_value_match_result(expected[key], result.get(key))
+                    assert does_kwarg_value_match_result(expected[key],
+                                                         result.get(key)) is True
     else:
         with pytest.raises(error):
             instance = cls(**kwargs)

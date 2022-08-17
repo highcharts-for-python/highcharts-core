@@ -11,7 +11,7 @@ from highcharts.utility_classes.patterns import Pattern
 from highcharts.utility_classes.shadows import ShadowOptions
 from highcharts.plot_options.data_sorting import DataSorting
 from highcharts.plot_options.drag_drop import HighLowDragDropOptions
-from highcharts.plot_options.zones import Zone
+from highcharts.utility_classes.zones import Zone
 
 
 class DumbbellOptions(GenericTypeOptions):

@@ -9,9 +9,9 @@ from highcharts.plot_options.generic import GenericTypeOptions
 from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
 from highcharts.utility_classes.shadows import ShadowOptions
+from highcharts.utility_classes.zones import Zone
 from highcharts.plot_options.data_sorting import DataSorting
 from highcharts.plot_options.drag_drop import DragDropOptions
-from highcharts.plot_options.zones import Zone
 
 
 class SeriesOptions(GenericTypeOptions):

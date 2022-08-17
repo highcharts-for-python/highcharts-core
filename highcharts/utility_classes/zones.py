@@ -26,11 +26,11 @@ class Zone(HighchartsMeta):
         self._fill_color = None
         self._value = None
 
-        self.class_name = kwargs.pop('class_name', None)
-        self.color = kwargs.pop('color', None)
-        self.dash_style = kwargs.pop('dash_style', None)
-        self.fill_color = kwargs.pop('fill_color', None)
-        self.value = kwargs.pop('value', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.color = kwargs.get('color', None)
+        self.dash_style = kwargs.get('dash_style', None)
+        self.fill_color = kwargs.get('fill_color', None)
+        self.value = kwargs.get('value', None)
 
     @property
     def class_name(self) -> Optional[str]:
@@ -125,11 +125,11 @@ class Zone(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'fill_color': as_dict.pop('fillColor', None),
-            'value': as_dict.pop('value', None)
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'fill_color': as_dict.get('fillColor', None),
+            'value': as_dict.get('value', None)
         }
 
         return cls(**kwargs)
@@ -155,10 +155,10 @@ class ClusterZone(HighchartsMeta):
         self._marker = None
         self._to = None
 
-        self.class_name = kwargs.pop('class_name', None)
-        self.from_ = kwargs.pop('from', None)
-        self.marker = kwargs.pop('marker', None)
-        self.to = kwargs.pop('to', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.from_ = kwargs.get('from_', None)
+        self.marker = kwargs.get('marker', None)
+        self.to = kwargs.get('to', None)
 
     @property
     def class_name(self) -> Optional[str]:
@@ -216,10 +216,10 @@ class ClusterZone(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'class_name': as_dict.pop('className', None),
-            'from_': as_dict.pop('from', None),
-            'marker': as_dict.pop('marker', None),
-            'to': as_dict.pop('to', None)
+            'class_name': as_dict.get('className', None),
+            'from_': as_dict.get('from', None),
+            'marker': as_dict.get('marker', None),
+            'to': as_dict.get('to', None)
         }
 
         return cls(**kwargs)

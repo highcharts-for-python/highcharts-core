@@ -6,7 +6,7 @@ from validator_collection import validators
 from highcharts import errors
 from highcharts.decorators import class_sensitive, validate_types
 from highcharts.plot_options.generic import GenericTypeOptions
-from highcharts.plot_options.zones import Zone
+from highcharts.utility_classes.zones import Zone
 from highcharts.plot_options.levels import TreemapLevelOptions
 from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
