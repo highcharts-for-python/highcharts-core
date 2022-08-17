@@ -12,11 +12,13 @@ class Binding(HighchartsMeta):
     _class_name_default = None
     _max_steps = None
 
-    def __init__(self, **kwargs):
+    def _private_setup(self, **kwargs):
         self._class_name_default = None
         self._max_steps = None
 
-        self._class_name = None
+    def __init__(self, **kwargs):
+        self._private_setup(**kwargs)
+
         self._init = None
         self._start = None
         self._steps = None
@@ -25,14 +27,14 @@ class Binding(HighchartsMeta):
         # Seems to be an out-dated functionality and is deprecated.
         # self._annotations_options = None
 
-        self.class_name = kwargs.pop('class_name', self._class_name_default)
-        self.init = kwargs.pop('init', None)
-        self.start = kwargs.pop('start', None)
-        self.steps = kwargs.pop('steps', None)
-        self.end = kwargs.pop('end', None)
+        self.class_name = kwargs.get('class_name', self._class_name_default)
+        self.init = kwargs.get('init', None)
+        self.start = kwargs.get('start', None)
+        self.steps = kwargs.get('steps', None)
+        self.end = kwargs.get('end', None)
 
         # Seems to be an out-dated functionality and is deprecated.
-        # self.annotations_options = kwargs.pop('annotations_options', None)
+        # self.annotations_options = kwargs.get('annotations_options', None)
 
     @property
     def class_name(self) -> Optional[str]:
@@ -89,9 +91,8 @@ class Binding(HighchartsMeta):
         if not value:
             self._steps = None
         else:
-            self._steps = [validators.string(x)
-                           for x in validators.iterable(value,
-                                                        maximum_length = self._max_steps)]
+            value = validators.iterable(value, maximum_length = self._max_steps)
+            self._steps = [validators.string(x) for x in value]
 
     @property
     def end(self) -> Optional[str]:
@@ -108,11 +109,11 @@ class Binding(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'class_name': as_dict.pop('className', cls._class_name_default),
-            'init': as_dict.pop('init', None),
-            'start': as_dict.pop('start', None),
-            'steps': as_dict.pop('steps', None),
-            'end': as_dict.pop('end', None)
+            'class_name': as_dict.get('className', cls._class_name_default),
+            'init': as_dict.get('init', None),
+            'start': as_dict.get('start', None),
+            'steps': as_dict.get('steps', None),
+            'end': as_dict.get('end', None)
         }
 
         return cls(**kwargs)
@@ -136,10 +137,11 @@ class CircleAnnotationBinding(Binding):
     _class_name_default = 'highcharts-circle-annotation'
     _max_steps = 1
 
-    def __init__(self, **kwargs):
+    def _private_setup(self, **kwargs):
         self._class_name_default = 'highcharts-circle-annotation'
         self._max_steps = 1
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
 
@@ -151,10 +153,11 @@ class EllipseAnnotationBinding(Binding):
     _class_name_default = 'highcharts-ellipse-annotation'
     _max_steps = 2
 
-    def __init__(self, **kwargs):
+    def _private_setup(self, **kwargs):
         self._class_name_default = 'highcharts-ellipse-annotation'
         self._max_steps = 2
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
 
@@ -164,10 +167,11 @@ class LabelAnnotationBinding(Binding):
     _class_name_default = 'highcharts-label-annotation'
     _max_steps = 0
 
-    def __init__(self, **kwargs):
+    def _private_setup(self, **kwargs):
         self._class_name_default = 'highcharts-label-annotation'
         self._max_steps = 0
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
 
@@ -178,10 +182,11 @@ class RectangleAnnotationBinding(Binding):
     _class_name_default = 'highcharts-rectangle-annotation'
     _max_steps = 1
 
-    def __init__(self, **kwargs):
+    def _private_setup(self, **kwargs):
         self._class_name_default = 'highcharts-rectangle-annotation'
         self._max_steps = 1
 
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
 
@@ -205,10 +210,10 @@ class Bindings(HighchartsMeta):
         self._label_annotation = None
         self._rectangle_annotation = None
 
-        self.circle_annotation = kwargs.pop('circle_annotation', None)
-        self.ellipse_annotation = kwargs.pop('ellipse_annotation', None)
-        self.label_annotation = kwargs.pop('label_annotation', None)
-        self.rectangle_annotation = kwargs.pop('rectangle_annotation', None)
+        self.circle_annotation = kwargs.get('circle_annotation', None)
+        self.ellipse_annotation = kwargs.get('ellipse_annotation', None)
+        self.label_annotation = kwargs.get('label_annotation', None)
+        self.rectangle_annotation = kwargs.get('rectangle_annotation', None)
 
     @property
     def circle_annotation(self) -> Optional[CircleAnnotationBinding]:
@@ -269,10 +274,10 @@ class Bindings(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'circle_annotation': as_dict.pop('circleAnnotation', None),
-            'ellipse_annotation': as_dict.pop('ellipseAnnotation', None),
-            'label_annotation': as_dict.pop('labelAnnotation', None),
-            'rectangle_annotation': as_dict.pop('rectangleAnnotation', None)
+            'circle_annotation': as_dict.get('circleAnnotation', None),
+            'ellipse_annotation': as_dict.get('ellipseAnnotation', None),
+            'label_annotation': as_dict.get('labelAnnotation', None),
+            'rectangle_annotation': as_dict.get('rectangleAnnotation', None)
         }
 
         return cls(**kwargs)
@@ -282,7 +287,7 @@ class Bindings(HighchartsMeta):
             'circleAnnotation': self.circle_annotation,
             'ellipseAnnotation': self.ellipse_annotation,
             'labelAnnotation': self.label_annotation,
-            'retangleAnnotation': self.rectangle_annotation
+            'rectangleAnnotation': self.rectangle_annotation
         }
 
         return untrimmed

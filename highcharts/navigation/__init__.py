@@ -26,13 +26,13 @@ class Navigation(HighchartsMeta):
         self._events = None
         self._icons_url = None
 
-        self.annotation_options = kwargs.pop('annotation_options', None)
-        self.bindings = kwargs.pop('bindings', None)
-        self.bindings_class_name = kwargs.pop('bindings_class_name', None)
-        self.breadcrumbs = kwargs.pop('breadcrumbs', None)
-        self.button_options = kwargs.pop('button_options', None)
-        self.events = kwargs.pop('events', None)
-        self.icons_url = kwargs.pop('icons_url', None)
+        self.annotation_options = kwargs.get('annotation_options', None)
+        self.bindings = kwargs.get('bindings', None)
+        self.bindings_class_name = kwargs.get('bindings_class_name', None)
+        self.breadcrumbs = kwargs.get('breadcrumbs', None)
+        self.button_options = kwargs.get('button_options', None)
+        self.events = kwargs.get('events', None)
+        self.icons_url = kwargs.get('icons_url', None)
 
     @property
     def annotation_options(self) -> Optional[Annotation]:
@@ -143,13 +143,13 @@ class Navigation(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'annotation_options': as_dict.pop('annotationOptions', None),
-            'bindings': as_dict.pop('bindings', None),
-            'bindings_class_name': as_dict.pop('bindingsClassName', None),
-            'breadcrumbs': as_dict.pop('breadcrumbs', None),
-            'button_options': as_dict.pop('buttonOptions', None),
-            'events': as_dict.pop('events', None),
-            'icons_url': as_dict.pop('iconsURL', None),
+            'annotation_options': as_dict.get('annotationOptions', None),
+            'bindings': as_dict.get('bindings', None),
+            'bindings_class_name': as_dict.get('bindingsClassName', None),
+            'breadcrumbs': as_dict.get('breadcrumbs', None),
+            'button_options': as_dict.get('buttonOptions', None),
+            'events': as_dict.get('events', None),
+            'icons_url': as_dict.get('iconsURL', None),
         }
 
         return cls(**kwargs)
