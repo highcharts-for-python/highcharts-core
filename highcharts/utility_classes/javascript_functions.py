@@ -17,9 +17,9 @@ class CallbackFunction(HighchartsMeta):
         self._arguments = None
         self._body = None
 
-        self.function_name = kwargs.pop('function_name', None)
-        self.arguments = kwargs.pop('arguments', None)
-        self.body = kwargs.pop('body', None)
+        self.function_name = kwargs.get('function_name', None)
+        self.arguments = kwargs.get('arguments', None)
+        self.body = kwargs.get('body', None)
 
     def __str__(self) -> str:
         if self.function_name:
@@ -112,9 +112,9 @@ class CallbackFunction(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'function_name': as_dict.pop('function_name', None),
-            'arguments': as_dict.pop('arguments', None),
-            'body': as_dict.pop('body', None)
+            'function_name': as_dict.get('function_name', None),
+            'arguments': as_dict.get('arguments', None),
+            'body': as_dict.get('body', None)
         }
 
         return cls(**kwargs)
@@ -287,8 +287,8 @@ class JavaScriptClass(HighchartsMeta):
         self._class_name = None
         self._methods = None
 
-        self.class_name = kwargs.pop('class_name', None)
-        self.methods = kwargs.pop('methods', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.methods = kwargs.get('methods', None)
 
     def __str__(self) -> str:
         if not self.class_name:
@@ -384,8 +384,8 @@ class JavaScriptClass(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'class_name': as_dict.pop('className', None),
-            'methods': as_dict.pop('methods', None)
+            'class_name': as_dict.get('className', None),
+            'methods': as_dict.get('methods', None)
         }
 
         return cls(**kwargs)

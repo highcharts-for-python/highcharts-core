@@ -28,9 +28,9 @@ class Filter(HighchartsMeta):
         self._property = None
         self._value = None
 
-        self.operator = kwargs.pop('operator', None)
-        self.property_ = kwargs.pop('property_', None)
-        self.value = kwargs.pop('value', None)
+        self.operator = kwargs.get('operator', None)
+        self.property_ = kwargs.get('property_', None)
+        self.value = kwargs.get('value', None)
 
     @property
     def operator(self) -> Optional[str]:
@@ -69,7 +69,7 @@ class Filter(HighchartsMeta):
         self._property = validators.string(value, allow_empty = True)
 
     @property
-    def value(self) -> Optional[str]:
+    def value(self) -> Optional[int | float | Decimal]:
         """The value to compare against. Defaults to :obj:`None <python:None>`.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
@@ -78,14 +78,14 @@ class Filter(HighchartsMeta):
 
     @value.setter
     def value(self, value_):
-        self._value = validators.string(value_, allow_empty = True)
+        self._value = validators.numeric(value_, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'operator': as_dict.pop('operator', None),
-            'property_': as_dict.pop('property', None),
-            'value': as_dict.pop('value', None)
+            'operator': as_dict.get('operator', None),
+            'property_': as_dict.get('property', None),
+            'value': as_dict.get('value', None)
         }
 
         return cls(**kwargs)
@@ -134,37 +134,37 @@ class DataLabel(HighchartsMeta):
         self._y = None
         self._z = None
 
-        self.align = kwargs.pop('align', None)
-        self.allow_overlap = kwargs.pop('allow_overlap', None)
-        self.animation = kwargs.pop('animation', None)
-        self.background_color = kwargs.pop('background_color', None)
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_radius = kwargs.pop('border_radius', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.class_name = kwargs.pop('class_name', None)
-        self.color = kwargs.pop('color', None)
-        self.crop = kwargs.pop('crop', None)
-        self.defer = kwargs.pop('defer', None)
-        self.enabled = kwargs.pop('enabled', None)
-        self.filter = kwargs.pop('filter', None)
-        self.format = kwargs.pop('format', None)
-        self.formatter = kwargs.pop('formatter', None)
-        self.inside = kwargs.pop('inside', None)
-        self.null_format = kwargs.pop('null_format', None)
-        self.null_formatter = kwargs.pop('null_formatter', None)
-        self.overflow = kwargs.pop('overflow', None)
-        self.padding = kwargs.pop('padding', None)
-        self.position = kwargs.pop('position', None)
-        self.rotation = kwargs.pop('rotation', None)
-        self.shadow = kwargs.pop('shadow', None)
-        self.shape = kwargs.pop('shape', None)
-        self.style = kwargs.pop('style', None)
-        self.text_path = kwargs.pop('text_path', None)
-        self.use_html = kwargs.pop('use_html', None)
-        self.vertical_align = kwargs.pop('vertical_align', None)
-        self.x = kwargs.pop('x', None)
-        self.y = kwargs.pop('y', None)
-        self.z = kwargs.pop('z', None)
+        self.align = kwargs.get('align', None)
+        self.allow_overlap = kwargs.get('allow_overlap', None)
+        self.animation = kwargs.get('animation', None)
+        self.background_color = kwargs.get('background_color', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_radius = kwargs.get('border_radius', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.color = kwargs.get('color', None)
+        self.crop = kwargs.get('crop', None)
+        self.defer = kwargs.get('defer', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.filter = kwargs.get('filter', None)
+        self.format = kwargs.get('format', None)
+        self.formatter = kwargs.get('formatter', None)
+        self.inside = kwargs.get('inside', None)
+        self.null_format = kwargs.get('null_format', None)
+        self.null_formatter = kwargs.get('null_formatter', None)
+        self.overflow = kwargs.get('overflow', None)
+        self.padding = kwargs.get('padding', None)
+        self.position = kwargs.get('position', None)
+        self.rotation = kwargs.get('rotation', None)
+        self.shadow = kwargs.get('shadow', None)
+        self.shape = kwargs.get('shape', None)
+        self.style = kwargs.get('style', None)
+        self.text_path = kwargs.get('text_path', None)
+        self.use_html = kwargs.get('use_html', None)
+        self.vertical_align = kwargs.get('vertical_align', None)
+        self.x = kwargs.get('x', None)
+        self.y = kwargs.get('y', None)
+        self.z = kwargs.get('z', None)
 
     @property
     def align(self) -> Optional[str]:
@@ -808,7 +808,7 @@ class DataLabel(HighchartsMeta):
 
     @y.setter
     def y(self, value):
-        value = validators.numeric(value, allow_empty = True)
+        self._y = validators.numeric(value, allow_empty = True)
 
     @property
     def z(self) -> Optional[int]:
@@ -832,37 +832,37 @@ class DataLabel(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.pop('align', None),
-            'allow_overlap': as_dict.pop('allowOverlap', None),
-            'animation': as_dict.pop('animation', None),
-            'background_color': as_dict.pop('backgroundColor', None),
-            'border_color': as_dict.pop('borderColor', None),
-            'border_radius': as_dict.pop('borderRadius', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'crop': as_dict.pop('crop', None),
-            'defer': as_dict.pop('defer', None),
-            'enabled': as_dict.pop('enabled', None),
-            'filter': as_dict.pop('filter', None),
-            'format': as_dict.pop('format', None),
-            'formatter': as_dict.pop('formatter', None),
-            'inside': as_dict.pop('inside', None),
-            'null_format': as_dict.pop('nullFormat', None),
-            'null_formatter': as_dict.pop('nullFormatter', None),
-            'overflow': as_dict.pop('overflow', None),
-            'padding': as_dict.pop('padding', None),
-            'position': as_dict.pop('position', None),
-            'rotation': as_dict.pop('rotation', None),
-            'shadow': as_dict.pop('shadow', None),
-            'shape': as_dict.pop('shape', None),
-            'style': as_dict.pop('style', None),
-            'text_path': as_dict.pop('textPath', None),
-            'use_html': as_dict.pop('useHTML', None),
-            'vertical_align': as_dict.pop('verticalAlign', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
-            'z': as_dict.pop('z', None),
+            'align': as_dict.get('align', None),
+            'allow_overlap': as_dict.get('allowOverlap', None),
+            'animation': as_dict.get('animation', None),
+            'background_color': as_dict.get('backgroundColor', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'crop': as_dict.get('crop', None),
+            'defer': as_dict.get('defer', None),
+            'enabled': as_dict.get('enabled', None),
+            'filter': as_dict.get('filter', None),
+            'format': as_dict.get('format', None),
+            'formatter': as_dict.get('formatter', None),
+            'inside': as_dict.get('inside', None),
+            'null_format': as_dict.get('nullFormat', None),
+            'null_formatter': as_dict.get('nullFormatter', None),
+            'overflow': as_dict.get('overflow', None),
+            'padding': as_dict.get('padding', None),
+            'position': as_dict.get('position', None),
+            'rotation': as_dict.get('rotation', None),
+            'shadow': as_dict.get('shadow', None),
+            'shape': as_dict.get('shape', None),
+            'style': as_dict.get('style', None),
+            'text_path': as_dict.get('textPath', None),
+            'use_html': as_dict.get('useHTML', None),
+            'vertical_align': as_dict.get('verticalAlign', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
+            'z': as_dict.get('z', None),
         }
 
         return cls(**kwargs)
@@ -901,9 +901,8 @@ class DataLabel(HighchartsMeta):
             'y': self.y,
             'z': self.z
         }
-        as_dict = self.trim_dict(untrimmed)
 
-        return as_dict
+        return untrimmed
 
 
 class NodeDataLabel(DataLabel):
@@ -913,8 +912,8 @@ class NodeDataLabel(DataLabel):
         self._node_format = None
         self._node_formatter = None
 
-        self.node_format = kwargs.pop('node_format', None)
-        self.node_formatter = kwargs.pop('node_formatter', None)
+        self.node_format = kwargs.get('node_format', None)
+        self.node_formatter = kwargs.get('node_formatter', None)
 
         super().__init__(**kwargs)
 
@@ -953,40 +952,40 @@ class NodeDataLabel(DataLabel):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.pop('align', None),
-            'allow_overlap': as_dict.pop('allowOverlap', None),
-            'animation': as_dict.pop('animation', None),
-            'background_color': as_dict.pop('backgroundColor', None),
-            'border_color': as_dict.pop('borderColor', None),
-            'border_radius': as_dict.pop('borderRadius', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'crop': as_dict.pop('crop', None),
-            'defer': as_dict.pop('defer', None),
-            'enabled': as_dict.pop('enabled', None),
-            'filter': as_dict.pop('filter', None),
-            'format': as_dict.pop('format', None),
-            'formatter': as_dict.pop('formatter', None),
-            'inside': as_dict.pop('inside', None),
-            'null_format': as_dict.pop('nullFormat', None),
-            'null_formatter': as_dict.pop('nullFormatter', None),
-            'overflow': as_dict.pop('overflow', None),
-            'padding': as_dict.pop('padding', None),
-            'position': as_dict.pop('position', None),
-            'rotation': as_dict.pop('rotation', None),
-            'shadow': as_dict.pop('shadow', None),
-            'shape': as_dict.pop('shape', None),
-            'style': as_dict.pop('style', None),
-            'text_path': as_dict.pop('textPath', None),
-            'use_html': as_dict.pop('useHTML', None),
-            'vertical_align': as_dict.pop('verticalAlign', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
-            'z': as_dict.pop('z', None),
+            'align': as_dict.get('align', None),
+            'allow_overlap': as_dict.get('allowOverlap', None),
+            'animation': as_dict.get('animation', None),
+            'background_color': as_dict.get('backgroundColor', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'crop': as_dict.get('crop', None),
+            'defer': as_dict.get('defer', None),
+            'enabled': as_dict.get('enabled', None),
+            'filter': as_dict.get('filter', None),
+            'format': as_dict.get('format', None),
+            'formatter': as_dict.get('formatter', None),
+            'inside': as_dict.get('inside', None),
+            'null_format': as_dict.get('nullFormat', None),
+            'null_formatter': as_dict.get('nullFormatter', None),
+            'overflow': as_dict.get('overflow', None),
+            'padding': as_dict.get('padding', None),
+            'position': as_dict.get('position', None),
+            'rotation': as_dict.get('rotation', None),
+            'shadow': as_dict.get('shadow', None),
+            'shape': as_dict.get('shape', None),
+            'style': as_dict.get('style', None),
+            'text_path': as_dict.get('textPath', None),
+            'use_html': as_dict.get('useHTML', None),
+            'vertical_align': as_dict.get('verticalAlign', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
+            'z': as_dict.get('z', None),
 
-            'node_format': as_dict.pop('nodeFormat', None),
-            'node_formatter': as_dict.pop('nodeFormatter', None),
+            'node_format': as_dict.get('nodeFormat', None),
+            'node_formatter': as_dict.get('nodeFormatter', None),
         }
 
         return cls(**kwargs)
