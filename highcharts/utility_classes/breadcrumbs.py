@@ -18,8 +18,8 @@ class Separator(HighchartsMeta):
         self._style = None
         self._text = None
 
-        self.style = kwargs.pop('style', None)
-        self.text = kwargs.pop('text', None)
+        self.style = kwargs.get('style', None)
+        self.text = kwargs.get('text', None)
 
     @property
     def style(self) -> Optional[dict]:
@@ -49,8 +49,8 @@ class Separator(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'style': as_dict.pop('style', None),
-            'text': as_dict.pop('text', None),
+            'style': as_dict.get('style', None),
+            'text': as_dict.get('text', None),
         }
 
         return cls(**kwargs)
@@ -84,20 +84,20 @@ class BreadcrumbOptions(HighchartsMeta):
         self._use_html = None
         self._z_index = None
 
-        self.button_spacing = kwargs.pop('button_spacing', None)
-        self.button_theme = kwargs.pop('button_theme', None)
-        self.events = kwargs.pop('events', None)
-        self.floating = kwargs.pop('floating', None)
-        self.format = kwargs.pop('format', None)
-        self.formatter = kwargs.pop('formatter', None)
-        self.position = kwargs.pop('position', None)
-        self.relative_to = kwargs.pop('relative_to', None)
-        self.rtl = kwargs.pop('rtl', None)
-        self.separator = kwargs.pop('separator', None)
-        self.show_full_path = kwargs.pop('show_full_path', None)
-        self.style = kwargs.pop('style', None)
-        self.use_html = kwargs.pop('use_html', None)
-        self.z_index = kwargs.pop('z_index', None)
+        self.button_spacing = kwargs.get('button_spacing', None)
+        self.button_theme = kwargs.get('button_theme', None)
+        self.events = kwargs.get('events', None)
+        self.floating = kwargs.get('floating', None)
+        self.format = kwargs.get('format', None)
+        self.formatter = kwargs.get('formatter', None)
+        self.position = kwargs.get('position', None)
+        self.relative_to = kwargs.get('relative_to', None)
+        self.rtl = kwargs.get('rtl', None)
+        self.separator = kwargs.get('separator', None)
+        self.show_full_path = kwargs.get('show_full_path', None)
+        self.style = kwargs.get('style', None)
+        self.use_html = kwargs.get('use_html', None)
+        self.z_index = kwargs.get('z_index', None)
 
     @property
     def button_spacing(self) -> Optional[int | float | Decimal]:
@@ -321,25 +321,25 @@ class BreadcrumbOptions(HighchartsMeta):
 
     @z_index.setter
     def z_index(self, value):
-        value = validators.integer(value, allow_empty = True)
+        self._z_index = validators.integer(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'button_spacing': as_dict.pop('buttonSpacing', None),
-            'button_theme': as_dict.pop('buttonTheme', None),
-            'events': as_dict.pop('events', None),
-            'floating': as_dict.pop('floating', None),
-            'format': as_dict.pop('format', None),
-            'formatter': as_dict.pop('formatter', None),
-            'position': as_dict.pop('position', None),
-            'relative_to': as_dict.pop('relativeTo', None),
-            'rtl': as_dict.pop('rtl', None),
-            'separator': as_dict.pop('separator', None),
-            'show_full_path': as_dict.pop('showFullPath', None),
-            'style': as_dict.pop('style', None),
-            'use_html': as_dict.pop('useHTML', None),
-            'z_index': as_dict.pop('zIndex', None),
+            'button_spacing': as_dict.get('buttonSpacing', None),
+            'button_theme': as_dict.get('buttonTheme', None),
+            'events': as_dict.get('events', None),
+            'floating': as_dict.get('floating', None),
+            'format': as_dict.get('format', None),
+            'formatter': as_dict.get('formatter', None),
+            'position': as_dict.get('position', None),
+            'relative_to': as_dict.get('relativeTo', None),
+            'rtl': as_dict.get('rtl', None),
+            'separator': as_dict.get('separator', None),
+            'show_full_path': as_dict.get('showFullPath', None),
+            'style': as_dict.get('style', None),
+            'use_html': as_dict.get('useHTML', None),
+            'z_index': as_dict.get('zIndex', None),
         }
 
         return cls(**kwargs)
