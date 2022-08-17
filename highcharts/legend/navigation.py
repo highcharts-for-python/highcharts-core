@@ -30,12 +30,12 @@ class LegendNavigation(HighchartsMeta):
         self._inactive_color = None
         self._style = None
 
-        self.active_color = kwargs.pop('active_color', None)
-        self.animation = kwargs.pop('animation', None)
-        self.arrow_size = kwargs.pop('arrow_size', None)
-        self.enabled = kwargs.pop('enabled', None)
-        self.inactive_color = kwargs.pop('inactive_color', None)
-        self.style = kwargs.pop('style', None)
+        self.active_color = kwargs.get('active_color', None)
+        self.animation = kwargs.get('animation', None)
+        self.arrow_size = kwargs.get('arrow_size', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.inactive_color = kwargs.get('inactive_color', None)
+        self.style = kwargs.get('style', None)
 
     @property
     def active_color(self) -> Optional[str | Gradient | Pattern]:
@@ -70,7 +70,7 @@ class LegendNavigation(HighchartsMeta):
 
     @animation.setter
     def animation(self, value):
-        if value is None:
+        if not value:
             self._animation = None
         elif value is True:
             self._animation = True
@@ -137,12 +137,12 @@ class LegendNavigation(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'active_color': as_dict.pop('activeColor', None),
-            'animation': as_dict.pop('animation', None),
-            'arrow_size': as_dict.pop('arrowSize', None),
-            'enabled': as_dict.pop('enabled', None),
-            'inactive_color': as_dict.pop('inactiveColor', None),
-            'style': as_dict.pop('style', None),
+            'active_color': as_dict.get('activeColor', None),
+            'animation': as_dict.get('animation', None),
+            'arrow_size': as_dict.get('arrowSize', None),
+            'enabled': as_dict.get('enabled', None),
+            'inactive_color': as_dict.get('inactiveColor', None),
+            'style': as_dict.get('style', None),
         }
         return cls(**kwargs)
 
