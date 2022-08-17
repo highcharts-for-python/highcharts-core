@@ -10,7 +10,7 @@ class LegendKeyboardNavigation(HighchartsMeta):
     def __init__(self, **kwargs):
         self._enabled = None
 
-        self.enabled = kwargs.pop('enabled', None)
+        self.enabled = kwargs.get('enabled', None)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -29,7 +29,7 @@ class LegendKeyboardNavigation(HighchartsMeta):
 
     @classmethod
     def from_dict(cls, as_dict):
-        return cls(enabled = as_dict.pop('enabled', None))
+        return cls(enabled = as_dict.get('enabled', None))
 
     def _to_untrimmed_dict(self) -> dict:
         return {
@@ -50,8 +50,8 @@ class LegendAccessibilityOptions(HighchartsMeta):
         self._enabled = None
         self._keyboard_navigation = None
 
-        self.enabled = kwargs.pop('enabled', None)
-        self.keyboard_navigation = kwargs.pop('keyboard_navigation', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.keyboard_navigation = kwargs.get('keyboard_navigation', None)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -85,8 +85,8 @@ class LegendAccessibilityOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'enabled': as_dict.pop('enabled', None),
-            'keyboard_navigation': as_dict.pop('keyboardNavigation', None)
+            'enabled': as_dict.get('enabled', None),
+            'keyboard_navigation': as_dict.get('keyboardNavigation', None)
         }
 
         return cls(**kwargs)

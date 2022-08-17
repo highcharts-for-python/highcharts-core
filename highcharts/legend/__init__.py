@@ -70,46 +70,46 @@ class Legend(HighchartsMeta):
         self._x = None
         self._y = None
 
-        self.accessibility = kwargs.pop('accessibility', None)
-        self.align = kwargs.pop('align', None)
-        self.align_columns = kwargs.pop('align_columns', None)
-        self.background_color = kwargs.pop('background_color', None)
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.border_radius = kwargs.pop('border_radius', None)
-        self.bubble_legend = kwargs.pop('bubble_legend', None)
-        self.class_name = kwargs.pop('class_name', None)
-        self.enabled = kwargs.pop('enabled', None)
-        self.floating = kwargs.pop('floating', None)
-        self.item_checkbox_style = kwargs.pop('item_checkbox_style', None)
-        self.item_distance = kwargs.pop('item_distance', None)
-        self.item_hidden_style = kwargs.pop('item_hidden_style', None)
-        self.item_hover_style = kwargs.pop('item_hover_style', None)
-        self.item_margin_bottom = kwargs.pop('item_margin_bottom', None)
-        self.item_margin_top = kwargs.pop('item_margin_top', None)
-        self.item_style = kwargs.pop('item_style', None)
-        self.item_width = kwargs.pop('item_width', None)
-        self.label_format = kwargs.pop('label_format', None)
-        self.label_formatter = kwargs.pop('label_formatter', None)
-        self.layout = kwargs.pop('layout', None)
-        self.margin = kwargs.pop('margin', None)
-        self.max_height = kwargs.pop('max_height', None)
-        self.navigation = kwargs.pop('navigation', None)
-        self.padding = kwargs.pop('padding', None)
-        self.reversed = kwargs.pop('reversed', None)
-        self.rtl = kwargs.pop('rtl', None)
-        self.shadow = kwargs.pop('shadow', None)
-        self.square_symbol = kwargs.pop('square_symbol', None)
-        self.symbol_height = kwargs.pop('symbol_height', None)
-        self.symbol_padding = kwargs.pop('symbol_padding', None)
-        self.symbol_radius = kwargs.pop('symbol_radius', None)
-        self.symbol_width = kwargs.pop('symbol_width', None)
-        self.title = kwargs.pop('title', None)
-        self.use_html = kwargs.pop('use_html', None)
-        self.vertical_align = kwargs.pop('vertical_align', None)
-        self.width = kwargs.pop('width', None)
-        self.x = kwargs.pop('x', None)
-        self.y = kwargs.pop('y', None)
+        self.accessibility = kwargs.get('accessibility', None)
+        self.align = kwargs.get('align', None)
+        self.align_columns = kwargs.get('align_columns', None)
+        self.background_color = kwargs.get('background_color', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.border_radius = kwargs.get('border_radius', None)
+        self.bubble_legend = kwargs.get('bubble_legend', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.floating = kwargs.get('floating', None)
+        self.item_checkbox_style = kwargs.get('item_checkbox_style', None)
+        self.item_distance = kwargs.get('item_distance', None)
+        self.item_hidden_style = kwargs.get('item_hidden_style', None)
+        self.item_hover_style = kwargs.get('item_hover_style', None)
+        self.item_margin_bottom = kwargs.get('item_margin_bottom', None)
+        self.item_margin_top = kwargs.get('item_margin_top', None)
+        self.item_style = kwargs.get('item_style', None)
+        self.item_width = kwargs.get('item_width', None)
+        self.label_format = kwargs.get('label_format', None)
+        self.label_formatter = kwargs.get('label_formatter', None)
+        self.layout = kwargs.get('layout', None)
+        self.margin = kwargs.get('margin', None)
+        self.max_height = kwargs.get('max_height', None)
+        self.navigation = kwargs.get('navigation', None)
+        self.padding = kwargs.get('padding', None)
+        self.reversed = kwargs.get('reversed', None)
+        self.rtl = kwargs.get('rtl', None)
+        self.shadow = kwargs.get('shadow', None)
+        self.square_symbol = kwargs.get('square_symbol', None)
+        self.symbol_height = kwargs.get('symbol_height', None)
+        self.symbol_padding = kwargs.get('symbol_padding', None)
+        self.symbol_radius = kwargs.get('symbol_radius', None)
+        self.symbol_width = kwargs.get('symbol_width', None)
+        self.title = kwargs.get('title', None)
+        self.use_html = kwargs.get('use_html', None)
+        self.vertical_align = kwargs.get('vertical_align', None)
+        self.width = kwargs.get('width', None)
+        self.x = kwargs.get('x', None)
+        self.y = kwargs.get('y', None)
 
     @property
     def accessibility(self) -> Optional[LegendAccessibilityOptions]:
@@ -817,10 +817,15 @@ class Legend(HighchartsMeta):
             self._width = None
         else:
             try:
-                self._width = validators.string(value)
-            except ValueError:
-                self._width = validators.numeric(value,
-                                                 minimum = 0)
+                value = validators.string(value)
+                if '%' not in value:
+                    raise errors.HighchartsValueError(f'if width is a string, it is '
+                                                      f'expected to be a percentage of '
+                                                      f'the chart area. No % sign found '
+                                                      f'in value: {value}')
+                self._width = value
+            except (TypeError, ValueError):
+                self._width = validators.numeric(value, minimum = 0)
 
     @property
     def x(self) -> Optional[int]:
@@ -838,7 +843,7 @@ class Legend(HighchartsMeta):
 
     @x.setter
     def x(self, value):
-        value = validators.numeric(value, allow_empty = True)
+        self._x = validators.numeric(value, allow_empty = True)
 
     @property
     def y(self) -> Optional[int]:
@@ -856,51 +861,51 @@ class Legend(HighchartsMeta):
 
     @y.setter
     def y(self, value):
-        value = validators.numeric(value, allow_empty = True)
+        self._y = validators.numeric(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'align': as_dict.pop('align', None),
-            'align_columns': as_dict.pop('alignColumns', None),
-            'background_color': as_dict.pop('backgroundColor', None),
-            'border_color': as_dict.pop('borderColor', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'border_radius': as_dict.pop('borderRadius', None),
-            'bubble_legend': as_dict.pop('bubbleLegend', None),
-            'class_name': as_dict.pop('className', None),
-            'enabled': as_dict.pop('enabled', None),
-            'floating': as_dict.pop('floating', None),
-            'item_checkbox_style': as_dict.pop('itemCheckboxStyle', None),
-            'item_distance': as_dict.pop('itemDistance', None),
-            'item_hidden_style': as_dict.pop('itemHiddenStyle', None),
-            'item_hover_style': as_dict.pop('itemHoverStyle', None),
-            'item_margin_bottom': as_dict.pop('itemMarginBottom', None),
-            'item_margin_top': as_dict.pop('itemMarginTop', None),
-            'item_style': as_dict.pop('itemStyle', None),
-            'item_width': as_dict.pop('itemWidth', None),
-            'label_format': as_dict.pop('labelFormat', None),
-            'label_formatter': as_dict.pop('labelFormatter', None),
-            'layout': as_dict.pop('layout', None),
-            'margin': as_dict.pop('margin', None),
-            'max_height': as_dict.pop('maxHeight', None),
-            'navigation': as_dict.pop('navigation', None),
-            'padding': as_dict.pop('padding', None),
-            'reversed': as_dict.pop('reversed', None),
-            'rtl': as_dict.pop('rtl', None),
-            'shadow': as_dict.pop('shadow', None),
-            'square_symbol': as_dict.pop('squareSymbol', None),
-            'symbol_height': as_dict.pop('symbolHeight', None),
-            'symbol_padding': as_dict.pop('symbolPadding', None),
-            'symbol_radius': as_dict.pop('symbolRadius', None),
-            'symbol_width': as_dict.pop('symbolWidth', None),
-            'title': as_dict.pop('title', None),
-            'use_html': as_dict.pop('useHTML', None),
-            'vertical_align': as_dict.pop('verticalAlign', None),
-            'width': as_dict.pop('width', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'align': as_dict.get('align', None),
+            'align_columns': as_dict.get('alignColumns', None),
+            'background_color': as_dict.get('backgroundColor', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'bubble_legend': as_dict.get('bubbleLegend', None),
+            'class_name': as_dict.get('className', None),
+            'enabled': as_dict.get('enabled', None),
+            'floating': as_dict.get('floating', None),
+            'item_checkbox_style': as_dict.get('itemCheckboxStyle', None),
+            'item_distance': as_dict.get('itemDistance', None),
+            'item_hidden_style': as_dict.get('itemHiddenStyle', None),
+            'item_hover_style': as_dict.get('itemHoverStyle', None),
+            'item_margin_bottom': as_dict.get('itemMarginBottom', None),
+            'item_margin_top': as_dict.get('itemMarginTop', None),
+            'item_style': as_dict.get('itemStyle', None),
+            'item_width': as_dict.get('itemWidth', None),
+            'label_format': as_dict.get('labelFormat', None),
+            'label_formatter': as_dict.get('labelFormatter', None),
+            'layout': as_dict.get('layout', None),
+            'margin': as_dict.get('margin', None),
+            'max_height': as_dict.get('maxHeight', None),
+            'navigation': as_dict.get('navigation', None),
+            'padding': as_dict.get('padding', None),
+            'reversed': as_dict.get('reversed', None),
+            'rtl': as_dict.get('rtl', None),
+            'shadow': as_dict.get('shadow', None),
+            'square_symbol': as_dict.get('squareSymbol', None),
+            'symbol_height': as_dict.get('symbolHeight', None),
+            'symbol_padding': as_dict.get('symbolPadding', None),
+            'symbol_radius': as_dict.get('symbolRadius', None),
+            'symbol_width': as_dict.get('symbolWidth', None),
+            'title': as_dict.get('title', None),
+            'use_html': as_dict.get('useHTML', None),
+            'vertical_align': as_dict.get('verticalAlign', None),
+            'width': as_dict.get('width', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
         }
 
         return cls(**kwargs)
