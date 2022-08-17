@@ -12,9 +12,9 @@ except ImportError:
         except ImportError:
             import json
 
-from validator_collection import validators, checkers
+from validator_collection import validators, checkers, errors as validator_errors
 
-from highcharts import constants, errors
+from highcharts import constants, errors, utility_functions
 from highcharts.decorators import validate_types, class_sensitive
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.utility_classes.gradients import Gradient
@@ -29,8 +29,8 @@ class ButtonTheme(HighchartsMeta):
         self._fill = None
         self._stroke = None
 
-        self.fill = kwargs.pop('fill', None)
-        self.stroke = kwargs.pop('stroke', None)
+        self.fill = kwargs.get('fill', None)
+        self.stroke = kwargs.get('stroke', None)
 
     @property
     def fill(self) -> Optional[str | Gradient | Pattern]:
@@ -44,34 +44,7 @@ class ButtonTheme(HighchartsMeta):
 
     @fill.setter
     def fill(self, value):
-        if not value:
-            self._fill = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._fill = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._fill = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._fill = Gradient.from_dict(value)
-                else:
-                    self._fill = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._fill = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._fill = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._fill = Pattern.from_dict(value)
-                else:
-                    self._fill = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._fill = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        self._fill = utility_functions.validate_color(value)
 
     @property
     def stroke(self) -> Optional[str]:
@@ -88,8 +61,8 @@ class ButtonTheme(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'fill': as_dict.pop('fill', None),
-            'stroke': as_dict.pop('stroke', None)
+            'fill': as_dict.get('fill', None),
+            'stroke': as_dict.get('stroke', None)
         }
 
         return cls(**kwargs)
@@ -112,10 +85,10 @@ class ButtonConfiguration(HighchartsMeta):
         self._theme = None
         self._y = None
 
-        self.enabled = kwargs.pop('enabled', None)
-        self.text = kwargs.pop('text', None)
-        self.theme = kwargs.pop('theme', None)
-        self.y = kwargs.pop('y', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.text = kwargs.get('text', None)
+        self.theme = kwargs.get('theme', None)
+        self.y = kwargs.get('y', None)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -177,10 +150,10 @@ class ButtonConfiguration(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'enabled': as_dict.pop('enabled', None),
-            'text': as_dict.pop('text', None),
-            'theme': as_dict.pop('theme', None),
-            'y': as_dict.pop('y', None)
+            'enabled': as_dict.get('enabled', None),
+            'text': as_dict.get('text', None),
+            'theme': as_dict.get('theme', None),
+            'y': as_dict.get('y', None)
         }
 
         return cls(**kwargs)
@@ -209,14 +182,14 @@ class ContextButtonConfiguration(ButtonConfiguration):
         self._title_key = None
         self._x = None
 
-        self.class_name = kwargs.pop('class_name', None)
-        self.menu_class_name = kwargs.pop('menu_class_name', None)
-        self.menu_items = kwargs.pop('menu_items', None)
-        self.onclick = kwargs.pop('onclick', None)
-        self.symbol = kwargs.pop('symbol', 'menu')
-        self.symbol_fill = kwargs.pop('symbol_fill', None)
-        self.title_key = kwargs.pop('title_key', None)
-        self.x = kwargs.pop('x', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.menu_class_name = kwargs.get('menu_class_name', None)
+        self.menu_items = kwargs.get('menu_items', None)
+        self.onclick = kwargs.get('onclick', None)
+        self.symbol = kwargs.get('symbol', None)
+        self.symbol_fill = kwargs.get('symbol_fill', None)
+        self.title_key = kwargs.get('title_key', None)
+        self.x = kwargs.get('x', None)
 
         super().__init__(**kwargs)
 
@@ -338,7 +311,7 @@ class ContextButtonConfiguration(ButtonConfiguration):
 
     @property
     def title_key(self) -> Optional[str]:
-        """The The key to a :class:`Options.language` option setting that is used for the
+        """The key to a :class:`Options.language` option setting that is used for the
         button's title tooltip.
 
         When the key is ``'contextButtonTitle'``, it refers to
@@ -368,18 +341,18 @@ class ContextButtonConfiguration(ButtonConfiguration):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'class_name': as_dict.pop('className', None),
-            'enabled': as_dict.pop('enabled', None),
-            'menu_class_name': as_dict.pop('menuClassName', None),
-            'menu_items': as_dict.pop('menuItems', None),
-            'onclick': as_dict.pop('onclick', None),
-            'symbol': as_dict.pop('symbol', None),
-            'symbol_fill': as_dict.pop('symbolFill', None),
-            'text': as_dict.pop('text', None),
-            'theme': as_dict.pop('theme', None),
-            'title_key': as_dict('titleKey', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
+            'class_name': as_dict.get('className', None),
+            'enabled': as_dict.get('enabled', None),
+            'menu_class_name': as_dict.get('menuClassName', None),
+            'menu_items': as_dict.get('menuItems', None),
+            'onclick': as_dict.get('onclick', None),
+            'symbol': as_dict.get('symbol', None),
+            'symbol_fill': as_dict.get('symbolFill', None),
+            'text': as_dict.get('text', None),
+            'theme': as_dict.get('theme', None),
+            'title_key': as_dict.get('titleKey', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
         }
 
         return cls(**kwargs)
@@ -389,13 +362,13 @@ class ContextButtonConfiguration(ButtonConfiguration):
             'className': self.class_name,
             'enabled': self.enabled,
             'menuClassName': self.menu_class_name,
-            'menu_items': self.menu_items,
+            'menuItems': self.menu_items,
             'onclick': self.onclick,
             'symbol': self.symbol,
             'symbolFill': self.symbol_fill,
             'text': self.text,
             'theme': self.theme,
-            'title_key': self.title_key,
+            'titleKey': self.title_key,
             'x': self.x,
             'y': self.y
         }
@@ -414,8 +387,24 @@ class ExportingButtons(UserDict):
     """
 
     def __setitem__(self, key, item):
-        if key not in self:
-            key = validators.variable_name(key, allow_empty = False)
+        validate_key = False
+        try:
+            validate_key = key not in self
+        except AttributeError:
+            validate_key = True
+
+        if validate_key:
+            try:
+                key = validators.variable_name(key, allow_empty = False)
+            except validator_errors.InvalidVariableNameError as error:
+                if '-' in key:
+                    try:
+                        test_key = key.replace('-', '_')
+                        validators.variable_name(test_key, allow_empty = False)
+                    except validator_errors.InvalidVariableNameError:
+                        raise error
+                else:
+                    raise error
 
         item = validate_types(item,
                               types = ButtonConfiguration,
@@ -456,6 +445,9 @@ class ExportingButtons(UserDict):
         as_dict = json.loads(as_json)
 
         return cls.from_dict(as_dict)
+
+    def _to_untrimmed_dict(self) -> dict:
+        return self.data
 
     def to_dict(self) -> dict:
         """Generate a :class:`dict <python:dict>` representation of the object compatible

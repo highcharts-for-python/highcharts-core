@@ -111,7 +111,7 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
     :returns: ``True`` if match, ``False`` if not
     """
     print(f'EVALUATING KWARG_VALUE:\n{kwarg_value}')
-    print(f'  against {result_value}')
+    print(f'  against\n    {result_value}')
     if isinstance(kwarg_value, (dict,
                                 UserDict)) and not isinstance(result_value, (dict,
                                                                              UserDict)):
