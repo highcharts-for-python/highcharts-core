@@ -15,6 +15,7 @@ from collections import UserDict
 import pytest
 
 from validator_collection import checkers, validators
+from highcharts import constants
 
 
 class State(object):
@@ -156,6 +157,11 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
             if not item_match:
                 return False
             counter += 1
+    elif kwarg_value is None and result_value is not None:
+        if result_value == 'null' or isinstance(result_value, constants.EnforcedNullType):
+            return True
+        else:
+            return False
     else:
         print('running else')
         return kwarg_value == result_value
