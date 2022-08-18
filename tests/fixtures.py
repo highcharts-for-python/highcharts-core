@@ -92,14 +92,32 @@ def to_camelCase(variable_name):
 
 
 def to_js_dict(original):
+    print(f'\n{original}\n')
     as_dict = {}
     for key in original:
         if 'html' in key:
             new_key = 'useHTML'
         elif 'utc' in key:
             new_key = 'useUTC'
+        elif '_csv' in key:
+            new_key = 'downloadCSV'
+        elif '_jpeg' in key:
+            new_key = 'downloadJPEG'
+        elif '_pdf' in key:
+            new_key = 'downloadPDF'
+        elif '_png' in key:
+            new_key = 'downloadPNG'
+        elif '_svg' in key:
+            new_key = 'downloadSVG'
+        elif '_xls' in key:
+            new_key = 'downloadXLS'
+        elif key == 'drillup_text':
+            new_key = 'drillUpText'
+        elif key == 'thousands_separator':
+            new_key = 'thousandsSep'
         else:
             new_key = to_camelCase(key)
+
         as_dict[new_key] = original[key]
 
     return as_dict
@@ -276,6 +294,46 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
                         kwargs_copy[key],
                         result.get(to_camelCase(updated_key))
                     )
+                    assert matches is True
+                elif '_csv' in key:
+                    new_key = 'downloadCSV'
+                    matches = does_kwarg_value_match_result(kwargs_copy[key],
+                                                            result.get(new_key))
+                    assert matches is True
+                elif '_jpeg' in key:
+                    new_key = 'downloadJPEG'
+                    matches = does_kwarg_value_match_result(kwargs_copy[key],
+                                                            result.get(new_key))
+                    assert matches is True
+                elif '_pdf' in key:
+                    new_key = 'downloadPDF'
+                    matches = does_kwarg_value_match_result(kwargs_copy[key],
+                                                            result.get(new_key))
+                    assert matches is True
+                elif '_png' in key:
+                    new_key = 'downloadPNG'
+                    matches = does_kwarg_value_match_result(kwargs_copy[key],
+                                                            result.get(new_key))
+                    assert matches is True
+                elif '_svg' in key:
+                    new_key = 'downloadSVG'
+                    matches = does_kwarg_value_match_result(kwargs_copy[key],
+                                                            result.get(new_key))
+                    assert matches is True
+                elif '_xls' in key:
+                    new_key = 'downloadXLS'
+                    matches = does_kwarg_value_match_result(kwargs_copy[key],
+                                                            result.get(new_key))
+                    assert matches is True
+                elif key == 'drillup_text':
+                    new_key = 'drillUpText'
+                    matches = does_kwarg_value_match_result(kwargs_copy[key],
+                                                            result.get(new_key))
+                    assert matches is True
+                elif key == 'thousands_separator':
+                    new_key = 'thousandsSep'
+                    matches = does_kwarg_value_match_result(kwargs_copy[key],
+                                                            result.get(new_key))
                     assert matches is True
                 elif key == 'pattern_options':
                     assert does_kwarg_value_match_result(kwargs_copy[key],

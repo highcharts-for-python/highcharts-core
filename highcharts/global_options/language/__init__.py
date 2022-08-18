@@ -38,7 +38,7 @@ class Language(HighchartsMeta):
         self._hide_data = None
         self._invalid_date = None
         self._loading = None
-        self._main_breadcumb = None
+        self._main_breadcrumb = None
         self._months = None
         self._navigation = None
         self._no_data = None
@@ -54,36 +54,36 @@ class Language(HighchartsMeta):
         self._view_fullscreen = None
         self._weekdays = None
 
-        self.accessibility = kwargs.pop('accessibility', None)
-        self.context_button_title = kwargs.pop('context_button_title', None)
-        self.decimal_point = kwargs.pop('decimal_point', None)
-        self.download_csv = kwargs.pop('download_csv', None)
-        self.download_jpeg = kwargs.pop('download_jpeg', None)
-        self.download_pdf = kwargs.pop('download_pdf', None)
-        self.download_png = kwargs.pop('download_png', None)
-        self.download_svg = kwargs.pop('download_svg', None)
-        self.download_xls = kwargs.pop('download_xls', None)
-        self.drillup_text = kwargs.pop('drillup_text', None)
-        self.exit_fullscreen = kwargs.pop('exit_fullscreen', None)
-        self.export_data = kwargs.pop('export_data', None)
-        self.hide_data = kwargs.pop('hide_data', None)
-        self.invalid_date = kwargs.pop('invalid_date', None)
-        self.loading = kwargs.pop('loading', None)
-        self.main_breadcumb = kwargs.pop('main_breadcrumb', None)
-        self.months = kwargs.pop('months', None)
-        self.navigation = kwargs.pop('navigation', None)
-        self.no_data = kwargs.pop('no_data', None)
-        self.numeric_symbol_magnitude = kwargs.pop('numeric_symbol_magnitude', None)
-        self.numeric_symbols = kwargs.pop('numeric_symbols', None)
-        self.print_chart = kwargs.pop('print_chart', None)
-        self.reset_zoom = kwargs.pop('reset_zoom', None)
-        self.reset_zoom_title = kwargs.pop('reset_zoom_title', None)
-        self.short_months = kwargs.pop('short_months', None)
-        self.short_weekdays = kwargs.pop('short_weekdays', None)
-        self.thousands_separator = kwargs.pop('thousands_separator', None)
-        self.view_data = kwargs.pop('view_data', None)
-        self.view_fullscreen = kwargs.pop('view_fullscreen', None)
-        self.weekdays = kwargs.pop('weekdays', None)
+        self.accessibility = kwargs.get('accessibility', None)
+        self.context_button_title = kwargs.get('context_button_title', None)
+        self.decimal_point = kwargs.get('decimal_point', None)
+        self.download_csv = kwargs.get('download_csv', None)
+        self.download_jpeg = kwargs.get('download_jpeg', None)
+        self.download_pdf = kwargs.get('download_pdf', None)
+        self.download_png = kwargs.get('download_png', None)
+        self.download_svg = kwargs.get('download_svg', None)
+        self.download_xls = kwargs.get('download_xls', None)
+        self.drillup_text = kwargs.get('drillup_text', None)
+        self.exit_fullscreen = kwargs.get('exit_fullscreen', None)
+        self.export_data = kwargs.get('export_data', None)
+        self.hide_data = kwargs.get('hide_data', None)
+        self.invalid_date = kwargs.get('invalid_date', None)
+        self.loading = kwargs.get('loading', None)
+        self.main_breadcrumb = kwargs.get('main_breadcrumb', None)
+        self.months = kwargs.get('months', None)
+        self.navigation = kwargs.get('navigation', None)
+        self.no_data = kwargs.get('no_data', None)
+        self.numeric_symbol_magnitude = kwargs.get('numeric_symbol_magnitude', None)
+        self.numeric_symbols = kwargs.get('numeric_symbols', None)
+        self.print_chart = kwargs.get('print_chart', None)
+        self.reset_zoom = kwargs.get('reset_zoom', None)
+        self.reset_zoom_title = kwargs.get('reset_zoom_title', None)
+        self.short_months = kwargs.get('short_months', None)
+        self.short_weekdays = kwargs.get('short_weekdays', None)
+        self.thousands_separator = kwargs.get('thousands_separator', None)
+        self.view_data = kwargs.get('view_data', None)
+        self.view_fullscreen = kwargs.get('view_fullscreen', None)
+        self.weekdays = kwargs.get('weekdays', None)
 
     @property
     def accessibility(self) -> Optional[AccessibilityLanguageOptions]:
@@ -132,7 +132,7 @@ class Language(HighchartsMeta):
     @property
     def decimal_point(self) -> Optional[str]:
         f"""Decimal point used in (JavaScript) ``Highcharts.numberFormat``. Defaults to
-        ``'{constants.DEFAULT_LANG_DECIMAL_POINT}'``.
+        ``.``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
@@ -316,7 +316,7 @@ class Language(HighchartsMeta):
         return self._main_breadcrumb
 
     @main_breadcrumb.setter
-    def main_breadcrum(self, value):
+    def main_breadcrumb(self, value):
         self._main_breadcrumb = validators.string(value, allow_empty = True)
 
     @property
@@ -601,36 +601,36 @@ class Language(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'context_button_title': as_dict.pop('contextButtonTitle', None),
-            'decimal_point': as_dict.pop('decimalPoint', None),
-            'download_csv': as_dict.pop('downloadCSV', None),
-            'download_jpeg': as_dict.pop('downloadJPEG', None),
-            'download_pdf': as_dict.pop('downloadPDF', None),
-            'download_png': as_dict.pop('downloadPNG', None),
-            'download_svg': as_dict.pop('downloadSVG', None),
-            'download_xls': as_dict.pop('downloadXLS', None),
-            'drillup_text': as_dict.pop('drillUpText', None),
-            'exit_fullscreen': as_dict.pop('exitFullscreen', None),
-            'export_data': as_dict.pop('exportData', None),
-            'hide_data': as_dict.pop('hideData', None),
-            'invalid_date': as_dict.pop('invalidDate', None),
-            'loading': as_dict.pop('loading', None),
-            'main_breadcumb': as_dict.pop('mainBreadcrumb', None),
-            'months': as_dict.pop('months', None),
-            'navigation': as_dict.pop('navigation', None),
-            'no_data': as_dict.pop('noData', None),
-            'numeric_symbol_magnitude': as_dict.pop('numericSymbolMagnitude', None),
-            'numeric_symbols': as_dict.pop('numericSymbols', None),
-            'print_chart': as_dict.pop('printChart', None),
-            'reset_zoom': as_dict.pop('resetZoom', None),
-            'reset_zoom_title': as_dict.pop('resetZoomTitle', None),
-            'short_months': as_dict.pop('shortMonths', None),
-            'short_weekdays': as_dict.pop('shortWeekdays', None),
-            'thousands_separator': as_dict.pop('thousandsSep', None),
-            'view_data': as_dict.pop('viewData', None),
-            'view_fullscreen': as_dict.pop('viewFullscreen', None),
-            'weekdays': as_dict.pop('weekdays',  None),
+            'accessibility': as_dict.get('accessibility', None),
+            'context_button_title': as_dict.get('contextButtonTitle', None),
+            'decimal_point': as_dict.get('decimalPoint', None),
+            'download_csv': as_dict.get('downloadCSV', None),
+            'download_jpeg': as_dict.get('downloadJPEG', None),
+            'download_pdf': as_dict.get('downloadPDF', None),
+            'download_png': as_dict.get('downloadPNG', None),
+            'download_svg': as_dict.get('downloadSVG', None),
+            'download_xls': as_dict.get('downloadXLS', None),
+            'drillup_text': as_dict.get('drillUpText', None),
+            'exit_fullscreen': as_dict.get('exitFullscreen', None),
+            'export_data': as_dict.get('exportData', None),
+            'hide_data': as_dict.get('hideData', None),
+            'invalid_date': as_dict.get('invalidDate', None),
+            'loading': as_dict.get('loading', None),
+            'main_breadcrumb': as_dict.get('mainBreadcrumb', None),
+            'months': as_dict.get('months', None),
+            'navigation': as_dict.get('navigation', None),
+            'no_data': as_dict.get('noData', None),
+            'numeric_symbol_magnitude': as_dict.get('numericSymbolMagnitude', None),
+            'numeric_symbols': as_dict.get('numericSymbols', None),
+            'print_chart': as_dict.get('printChart', None),
+            'reset_zoom': as_dict.get('resetZoom', None),
+            'reset_zoom_title': as_dict.get('resetZoomTitle', None),
+            'short_months': as_dict.get('shortMonths', None),
+            'short_weekdays': as_dict.get('shortWeekdays', None),
+            'thousands_separator': as_dict.get('thousandsSep', None),
+            'view_data': as_dict.get('viewData', None),
+            'view_fullscreen': as_dict.get('viewFullscreen', None),
+            'weekdays': as_dict.get('weekdays',  None),
         }
 
         return cls(**kwargs)
@@ -652,7 +652,7 @@ class Language(HighchartsMeta):
             'hideData': self.hide_data,
             'invalidDate': self.invalid_date,
             'loading': self.loading,
-            'mainBreadcumb': self.main_breadcrumb,
+            'mainBreadcrumb': self.main_breadcrumb,
             'months': self.months,
             'navigation': self.navigation,
             'noData': self.no_data,
@@ -668,4 +668,5 @@ class Language(HighchartsMeta):
             'viewFullscreen': self.view_fullscreen,
             'weekdays': self.weekdays
         }
+
         return untrimmed
