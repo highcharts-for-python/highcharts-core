@@ -109,103 +109,103 @@ class PopupLanguageOptions(HighchartsMeta):
         self._volume = None
         self._x_axis_unit = None
 
-        self.add_button = kwargs.pop('add_button', None)
-        self.algorithm = kwargs.pop('algorithm', None)
-        self.arrow_infinity_line = kwargs.pop('arrow_infinity_line', None)
-        self.arrow_ray = kwargs.pop('arrow_ray', None)
-        self.arrow_segment = kwargs.pop('arrow_segment', None)
-        self.average = kwargs.pop('average', None)
-        self.background = kwargs.pop('background', None)
-        self.background_color = kwargs.pop('background_color', None)
-        self.background_colors = kwargs.pop('background_colors', None)
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_radius = kwargs.pop('border_radius', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.bottom_band = kwargs.pop('bottom_band', None)
-        self.circle = kwargs.pop('circle', None)
-        self.clear_filter = kwargs.pop('clear_filter', None)
-        self.color = kwargs.pop('color', None)
-        self.connector = kwargs.pop('connector', None)
-        self.crooked3 = kwargs.pop('crooked3', None)
-        self.crooked5 = kwargs.pop('crooked5', None)
-        self.crosshairX = kwargs.pop('crosshairX', None)
-        self.crosshairY = kwargs.pop('crosshairY', None)
-        self.decimals = kwargs.pop('decimals', None)
-        self.deviation = kwargs.pop('deviation', None)
-        self.edit_button = kwargs.pop('edit_button', None)
-        self.elliott3 = kwargs.pop('elliott3', None)
-        self.elliott5 = kwargs.pop('elliott5', None)
-        self.ellipse = kwargs.pop('ellipse', None)
-        self.factor = kwargs.pop('factor', None)
-        self.fast_avg_period = kwargs.pop('fast_avg_period', None)
-        self.fibonacci = kwargs.pop('fibonacci', None)
-        self.fibonacci_time_zones = kwargs.pop('fibonacci_time_zones', None)
-        self.fill = kwargs.pop('fill', None)
-        self.flags = kwargs.pop('flags', None)
-        self.font_size = kwargs.pop('font_size', None)
-        self.format = kwargs.pop('format', None)
-        self.height = kwargs.pop('height', None)
-        self.high_index = kwargs.pop('high_index', None)
-        self.horizontal_line = kwargs.pop('horizontal_line', None)
-        self.increment = kwargs.pop('increment', None)
-        self.index = kwargs.pop('index', None)
-        self.infinity_line = kwargs.pop('infinity_line', None)
-        self.initial_acceleration_factor = kwargs.pop('initial_acceleration_factor', None)
-        self.inner_background = kwargs.pop('inner_background', None)
-        self.label = kwargs.pop('label', None)
-        self.label_options = kwargs.pop('label_options', None)
-        self.labels = kwargs.pop('labels', None)
-        self.line = kwargs.pop('line', None)
-        self.lines = kwargs.pop('lines', None)
-        self.long_period = kwargs.pop('long_period', None)
-        self.low_index = kwargs.pop('low_index', None)
-        self.max_acceleration_factor = kwargs.pop('max_acceleration_factor', None)
-        self.measure = kwargs.pop('measure', None)
-        self.measure_x = kwargs.pop('measure_x', None)
-        self.measure_xy = kwargs.pop('measure_xy', None)
-        self.measure_y = kwargs.pop('measure_y', None)
-        self.multiplier = kwargs.pop('multiplier', None)
-        self.multiplier_atr = kwargs.pop('multiplier_atr', None)
-        self.name = kwargs.pop('name', None)
-        self.no_filter_match = kwargs.pop('no_filter_match', None)
-        self.outer_background = kwargs.pop('outer_background', None)
-        self.padding = kwargs.pop('padding', None)
-        self.parallel_channel = kwargs.pop('parallel_channel', None)
-        self.period = kwargs.pop('period', None)
-        self.period_atr = kwargs.pop('period_atr', None)
-        self.periods = kwargs.pop('periods', None)
-        self.period_senkou_span_b = kwargs.pop('period_senkou_span_b', None)
-        self.period_tenkan = kwargs.pop('period_tenkan', None)
-        self.pitchfork = kwargs.pop('pitchfork', None)
-        self.ranges = kwargs.pop('ranges', None)
-        self.ray = kwargs.pop('ray', None)
-        self.rectangle = kwargs.pop('rectangle', None)
-        self.remove_button = kwargs.pop('remove_button', None)
-        self.save_button = kwargs.pop('save_button', None)
-        self.search_indicators = kwargs.pop('search_indicators', None)
-        self.segment = kwargs.pop('segment', None)
-        self.series = kwargs.pop('series', None)
-        self.shape_options = kwargs.pop('shape_options', None)
-        self.shapes = kwargs.pop('shapes', None)
-        self.short_period = kwargs.pop('short_period', None)
-        self.signal_period = kwargs.pop('signal_period', None)
-        self.simple_shapes = kwargs.pop('simple_shapes', None)
-        self.slow_avg_period = kwargs.pop('slow_avg_period', None)
-        self.standard_deviation = kwargs.pop('standard_deviation', None)
-        self.stroke = kwargs.pop('stroke', None)
-        self.stroke_width = kwargs.pop('stroke_width', None)
-        self.style = kwargs.pop('style', None)
-        self.time_cycles = kwargs.pop('time_cycles', None)
-        self.title = kwargs.pop('title', None)
-        self.top_band = kwargs.pop('top_band', None)
-        self.tunnel = kwargs.pop('tunnel', None)
-        self.type_options = kwargs.pop('type_options', None)
-        self.vertical_arrow = kwargs.pop('vertical_arrow', None)
-        self.vertical_counter = kwargs.pop('vertical_counter', None)
-        self.vertical_label = kwargs.pop('vertical_label', None)
-        self.vertical_line = kwargs.pop('vertical_line', None)
-        self.volume = kwargs.pop('volume', None)
-        self.x_axis_unit = kwargs.pop('x_axis_unit', None)
+        self.add_button = kwargs.get('add_button', None)
+        self.algorithm = kwargs.get('algorithm', None)
+        self.arrow_infinity_line = kwargs.get('arrow_infinity_line', None)
+        self.arrow_ray = kwargs.get('arrow_ray', None)
+        self.arrow_segment = kwargs.get('arrow_segment', None)
+        self.average = kwargs.get('average', None)
+        self.background = kwargs.get('background', None)
+        self.background_color = kwargs.get('background_color', None)
+        self.background_colors = kwargs.get('background_colors', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_radius = kwargs.get('border_radius', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.bottom_band = kwargs.get('bottom_band', None)
+        self.circle = kwargs.get('circle', None)
+        self.clear_filter = kwargs.get('clear_filter', None)
+        self.color = kwargs.get('color', None)
+        self.connector = kwargs.get('connector', None)
+        self.crooked3 = kwargs.get('crooked3', None)
+        self.crooked5 = kwargs.get('crooked5', None)
+        self.crosshairX = kwargs.get('crosshairX', None)
+        self.crosshairY = kwargs.get('crosshairY', None)
+        self.decimals = kwargs.get('decimals', None)
+        self.deviation = kwargs.get('deviation', None)
+        self.edit_button = kwargs.get('edit_button', None)
+        self.elliott3 = kwargs.get('elliott3', None)
+        self.elliott5 = kwargs.get('elliott5', None)
+        self.ellipse = kwargs.get('ellipse', None)
+        self.factor = kwargs.get('factor', None)
+        self.fast_avg_period = kwargs.get('fast_avg_period', None)
+        self.fibonacci = kwargs.get('fibonacci', None)
+        self.fibonacci_time_zones = kwargs.get('fibonacci_time_zones', None)
+        self.fill = kwargs.get('fill', None)
+        self.flags = kwargs.get('flags', None)
+        self.font_size = kwargs.get('font_size', None)
+        self.format = kwargs.get('format', None)
+        self.height = kwargs.get('height', None)
+        self.high_index = kwargs.get('high_index', None)
+        self.horizontal_line = kwargs.get('horizontal_line', None)
+        self.increment = kwargs.get('increment', None)
+        self.index = kwargs.get('index', None)
+        self.infinity_line = kwargs.get('infinity_line', None)
+        self.initial_acceleration_factor = kwargs.get('initial_acceleration_factor', None)
+        self.inner_background = kwargs.get('inner_background', None)
+        self.label = kwargs.get('label', None)
+        self.label_options = kwargs.get('label_options', None)
+        self.labels = kwargs.get('labels', None)
+        self.line = kwargs.get('line', None)
+        self.lines = kwargs.get('lines', None)
+        self.long_period = kwargs.get('long_period', None)
+        self.low_index = kwargs.get('low_index', None)
+        self.max_acceleration_factor = kwargs.get('max_acceleration_factor', None)
+        self.measure = kwargs.get('measure', None)
+        self.measure_x = kwargs.get('measure_x', None)
+        self.measure_xy = kwargs.get('measure_xy', None)
+        self.measure_y = kwargs.get('measure_y', None)
+        self.multiplier = kwargs.get('multiplier', None)
+        self.multiplier_atr = kwargs.get('multiplier_atr', None)
+        self.name = kwargs.get('name', None)
+        self.no_filter_match = kwargs.get('no_filter_match', None)
+        self.outer_background = kwargs.get('outer_background', None)
+        self.padding = kwargs.get('padding', None)
+        self.parallel_channel = kwargs.get('parallel_channel', None)
+        self.period = kwargs.get('period', None)
+        self.period_atr = kwargs.get('period_atr', None)
+        self.periods = kwargs.get('periods', None)
+        self.period_senkou_span_b = kwargs.get('period_senkou_span_b', None)
+        self.period_tenkan = kwargs.get('period_tenkan', None)
+        self.pitchfork = kwargs.get('pitchfork', None)
+        self.ranges = kwargs.get('ranges', None)
+        self.ray = kwargs.get('ray', None)
+        self.rectangle = kwargs.get('rectangle', None)
+        self.remove_button = kwargs.get('remove_button', None)
+        self.save_button = kwargs.get('save_button', None)
+        self.search_indicators = kwargs.get('search_indicators', None)
+        self.segment = kwargs.get('segment', None)
+        self.series = kwargs.get('series', None)
+        self.shape_options = kwargs.get('shape_options', None)
+        self.shapes = kwargs.get('shapes', None)
+        self.short_period = kwargs.get('short_period', None)
+        self.signal_period = kwargs.get('signal_period', None)
+        self.simple_shapes = kwargs.get('simple_shapes', None)
+        self.slow_avg_period = kwargs.get('slow_avg_period', None)
+        self.standard_deviation = kwargs.get('standard_deviation', None)
+        self.stroke = kwargs.get('stroke', None)
+        self.stroke_width = kwargs.get('stroke_width', None)
+        self.style = kwargs.get('style', None)
+        self.time_cycles = kwargs.get('time_cycles', None)
+        self.title = kwargs.get('title', None)
+        self.top_band = kwargs.get('top_band', None)
+        self.tunnel = kwargs.get('tunnel', None)
+        self.type_options = kwargs.get('type_options', None)
+        self.vertical_arrow = kwargs.get('vertical_arrow', None)
+        self.vertical_counter = kwargs.get('vertical_counter', None)
+        self.vertical_label = kwargs.get('vertical_label', None)
+        self.vertical_line = kwargs.get('vertical_line', None)
+        self.volume = kwargs.get('volume', None)
+        self.x_axis_unit = kwargs.get('x_axis_unit', None)
 
     @property
     def add_button(self) -> Optional[str]:
@@ -1382,103 +1382,103 @@ class PopupLanguageOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'add_button': as_dict.pop('addButton', None),
-            'algorithm': as_dict.pop('algorithm', None),
-            'arrow_infinity_line': as_dict.pop('arrowInfinityLine', None),
-            'arrow_ray': as_dict.pop('arrowRay', None),
-            'arrow_segment': as_dict.pop('arrowSegment', None),
-            'average': as_dict.pop('average', None),
-            'background': as_dict.pop('background', None),
-            'background_color': as_dict.pop('backgroundColor', None),
-            'background_colors': as_dict.pop('backgroundColors', None),
-            'border_color': as_dict.pop('borderColor', None),
-            'border_radius': as_dict.pop('borderRadius', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'bottom_band': as_dict.pop('bottomBand', None),
-            'circle': as_dict.pop('circle', None),
-            'clear_filter': as_dict.pop('clearFilter', None),
-            'color': as_dict.pop('color', None),
-            'connector': as_dict.pop('connector', None),
-            'crooked3': as_dict.pop('crooked3', None),
-            'crooked5': as_dict.pop('crooked5', None),
-            'crosshairX': as_dict.pop('crosshairX', None),
-            'crosshairY': as_dict.pop('crosshairY', None),
-            'decimals': as_dict.pop('decimals', None),
-            'deviation': as_dict.pop('deviation', None),
-            'edit_button': as_dict.pop('editButton', None),
-            'elliott3': as_dict.pop('elliott3', None),
-            'elliott5': as_dict.pop('elliott5', None),
-            'ellipse': as_dict.pop('ellipse', None),
-            'factor': as_dict.pop('factor', None),
-            'fast_avg_period': as_dict.pop('fastAvgPeriod', None),
-            'fibonacci': as_dict.pop('fibonacci', None),
-            'fibonacci_time_zones': as_dict.pop('fibonacciTimeZones', None),
-            'fill': as_dict.pop('fill', None),
-            'flags': as_dict.pop('flags', None),
-            'font_size': as_dict.pop('fontSize', None),
-            'format': as_dict.pop('format', None),
-            'height': as_dict.pop('height', None),
-            'high_index': as_dict.pop('highIndex', None),
-            'horizontal_line': as_dict.pop('horizontalLine', None),
-            'increment': as_dict.pop('increment', None),
-            'index': as_dict.pop('index', None),
-            'infinity_line': as_dict.pop('infinityLine', None),
-            'initial_acceleration_factor': as_dict.pop('initialAccelerationFactor', None),
-            'inner_background': as_dict.pop('innerBackground', None),
-            'label': as_dict.pop('label', None),
-            'label_options': as_dict.pop('labelOptions', None),
-            'labels': as_dict.pop('labels', None),
-            'line': as_dict.pop('line', None),
-            'lines': as_dict.pop('lines', None),
-            'long_period': as_dict.pop('longPeriod', None),
-            'low_index': as_dict.pop('lowIndex', None),
-            'max_acceleration_factor': as_dict.pop('maxAccelerationFactor', None),
-            'measure': as_dict.pop('measure', None),
-            'measure_x': as_dict.pop('measureX', None),
-            'measure_xy': as_dict.pop('measureXY', None),
-            'measure_y': as_dict.pop('measureY', None),
-            'multiplier': as_dict.pop('multiplier', None),
-            'multiplier_atr': as_dict.pop('multiplierATR', None),
-            'name': as_dict.pop('name', None),
-            'no_filter_match': as_dict.pop('noFilterMatch', None),
-            'outer_background': as_dict.pop('outerBackground', None),
-            'padding': as_dict.pop('padding', None),
-            'parallel_channel': as_dict.pop('parallelChannel', None),
-            'period': as_dict.pop('period', None),
-            'period_atr': as_dict.pop('periodATR', None),
-            'periods': as_dict.pop('periods', None),
-            'period_senkou_span_b': as_dict.pop('periodSenkouSpanB', None),
-            'period_tenkan': as_dict.pop('periodTenkan', None),
-            'pitchfork': as_dict.pop('pitchfork', None),
-            'ranges': as_dict.pop('ranges', None),
-            'ray': as_dict.pop('ray', None),
-            'rectangle': as_dict.pop('rectangle', None),
-            'remove_button': as_dict.pop('removeButton', None),
-            'save_button': as_dict.pop('saveButton', None),
-            'search_indicators': as_dict.pop('searchIndicators', None),
-            'segment': as_dict.pop('segment', None),
-            'series': as_dict.pop('series', None),
-            'shape_options': as_dict.pop('shapeOptions', None),
-            'shapes': as_dict.pop('shapes', None),
-            'short_period': as_dict.pop('shortPeriod', None),
-            'signal_period': as_dict.pop('signalPeriod', None),
-            'simple_shapes': as_dict.pop('simpleShapes', None),
-            'slow_avg_period': as_dict.pop('slowAvgPeriod', None),
-            'standard_deviation': as_dict.pop('standardDeviation', None),
-            'stroke': as_dict.pop('stroke', None),
-            'stroke_width': as_dict.pop('strokeWidth', None),
-            'style': as_dict.pop('style', None),
-            'time_cycles': as_dict.pop('timeCycles', None),
-            'title': as_dict.pop('title', None),
-            'top_band': as_dict.pop('topBand', None),
-            'tunnel': as_dict.pop('tunnel', None),
-            'type_options': as_dict.pop('typeOptions', None),
-            'vertical_arrow': as_dict.pop('verticalArrow', None),
-            'vertical_counter': as_dict.pop('verticalCounter', None),
-            'vertical_label': as_dict.pop('verticalLabel', None),
-            'vertical_line': as_dict.pop('verticalLine', None),
-            'volume': as_dict.pop('volume', None),
-            'x_axis_unit': as_dict.pop('xAxisUnit', None),
+            'add_button': as_dict.get('addButton', None),
+            'algorithm': as_dict.get('algorithm', None),
+            'arrow_infinity_line': as_dict.get('arrowInfinityLine', None),
+            'arrow_ray': as_dict.get('arrowRay', None),
+            'arrow_segment': as_dict.get('arrowSegment', None),
+            'average': as_dict.get('average', None),
+            'background': as_dict.get('background', None),
+            'background_color': as_dict.get('backgroundColor', None),
+            'background_colors': as_dict.get('backgroundColors', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'bottom_band': as_dict.get('bottomBand', None),
+            'circle': as_dict.get('circle', None),
+            'clear_filter': as_dict.get('clearFilter', None),
+            'color': as_dict.get('color', None),
+            'connector': as_dict.get('connector', None),
+            'crooked3': as_dict.get('crooked3', None),
+            'crooked5': as_dict.get('crooked5', None),
+            'crosshairX': as_dict.get('crosshairX', None),
+            'crosshairY': as_dict.get('crosshairY', None),
+            'decimals': as_dict.get('decimals', None),
+            'deviation': as_dict.get('deviation', None),
+            'edit_button': as_dict.get('editButton', None),
+            'elliott3': as_dict.get('elliott3', None),
+            'elliott5': as_dict.get('elliott5', None),
+            'ellipse': as_dict.get('ellipse', None),
+            'factor': as_dict.get('factor', None),
+            'fast_avg_period': as_dict.get('fastAvgPeriod', None),
+            'fibonacci': as_dict.get('fibonacci', None),
+            'fibonacci_time_zones': as_dict.get('fibonacciTimeZones', None),
+            'fill': as_dict.get('fill', None),
+            'flags': as_dict.get('flags', None),
+            'font_size': as_dict.get('fontSize', None),
+            'format': as_dict.get('format', None),
+            'height': as_dict.get('height', None),
+            'high_index': as_dict.get('highIndex', None),
+            'horizontal_line': as_dict.get('horizontalLine', None),
+            'increment': as_dict.get('increment', None),
+            'index': as_dict.get('index', None),
+            'infinity_line': as_dict.get('infinityLine', None),
+            'initial_acceleration_factor': as_dict.get('initialAccelerationFactor', None),
+            'inner_background': as_dict.get('innerBackground', None),
+            'label': as_dict.get('label', None),
+            'label_options': as_dict.get('labelOptions', None),
+            'labels': as_dict.get('labels', None),
+            'line': as_dict.get('line', None),
+            'lines': as_dict.get('lines', None),
+            'long_period': as_dict.get('longPeriod', None),
+            'low_index': as_dict.get('lowIndex', None),
+            'max_acceleration_factor': as_dict.get('maxAccelerationFactor', None),
+            'measure': as_dict.get('measure', None),
+            'measure_x': as_dict.get('measureX', None),
+            'measure_xy': as_dict.get('measureXY', None),
+            'measure_y': as_dict.get('measureY', None),
+            'multiplier': as_dict.get('multiplier', None),
+            'multiplier_atr': as_dict.get('multiplierATR', None),
+            'name': as_dict.get('name', None),
+            'no_filter_match': as_dict.get('noFilterMatch', None),
+            'outer_background': as_dict.get('outerBackground', None),
+            'padding': as_dict.get('padding', None),
+            'parallel_channel': as_dict.get('parallelChannel', None),
+            'period': as_dict.get('period', None),
+            'period_atr': as_dict.get('periodATR', None),
+            'periods': as_dict.get('periods', None),
+            'period_senkou_span_b': as_dict.get('periodSenkouSpanB', None),
+            'period_tenkan': as_dict.get('periodTenkan', None),
+            'pitchfork': as_dict.get('pitchfork', None),
+            'ranges': as_dict.get('ranges', None),
+            'ray': as_dict.get('ray', None),
+            'rectangle': as_dict.get('rectangle', None),
+            'remove_button': as_dict.get('removeButton', None),
+            'save_button': as_dict.get('saveButton', None),
+            'search_indicators': as_dict.get('searchIndicators', None),
+            'segment': as_dict.get('segment', None),
+            'series': as_dict.get('series', None),
+            'shape_options': as_dict.get('shapeOptions', None),
+            'shapes': as_dict.get('shapes', None),
+            'short_period': as_dict.get('shortPeriod', None),
+            'signal_period': as_dict.get('signalPeriod', None),
+            'simple_shapes': as_dict.get('simpleShapes', None),
+            'slow_avg_period': as_dict.get('slowAvgPeriod', None),
+            'standard_deviation': as_dict.get('standardDeviation', None),
+            'stroke': as_dict.get('stroke', None),
+            'stroke_width': as_dict.get('strokeWidth', None),
+            'style': as_dict.get('style', None),
+            'time_cycles': as_dict.get('timeCycles', None),
+            'title': as_dict.get('title', None),
+            'top_band': as_dict.get('topBand', None),
+            'tunnel': as_dict.get('tunnel', None),
+            'type_options': as_dict.get('typeOptions', None),
+            'vertical_arrow': as_dict.get('verticalArrow', None),
+            'vertical_counter': as_dict.get('verticalCounter', None),
+            'vertical_label': as_dict.get('verticalLabel', None),
+            'vertical_line': as_dict.get('verticalLine', None),
+            'volume': as_dict.get('volume', None),
+            'x_axis_unit': as_dict.get('xAxisUnit', None),
         }
 
         return cls(**kwargs)
@@ -1513,7 +1513,7 @@ class PopupLanguageOptions(HighchartsMeta):
             'elliott5': self.elliott5,
             'ellipse': self.ellipse,
             'factor': self.factor,
-            'fast_avg_period': self.fast_avg_period,
+            'fastAvgPeriod': self.fast_avg_period,
             'fibonacci': self.fibonacci,
             'fibonacciTimeZones': self.fibonacci_time_zones,
             'fill': self.fill,
@@ -1600,7 +1600,7 @@ class NavigationLanguageOptions(HighchartsMeta):
     def __init__(self, **kwargs):
         self._popup = None
 
-        self.popup = kwargs.pop('popup', None)
+        self.popup = kwargs.get('popup', None)
 
     @property
     def popup(self) -> Optional[PopupLanguageOptions]:
@@ -1617,7 +1617,7 @@ class NavigationLanguageOptions(HighchartsMeta):
 
     @classmethod
     def from_dict(cls, as_dict):
-        return cls(popup = as_dict.pop('popup', None))
+        return cls(popup = as_dict.get('popup', None))
 
     def _to_untrimmed_dict(self) -> dict:
         return {

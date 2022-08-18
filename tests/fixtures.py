@@ -111,10 +111,14 @@ def to_js_dict(original):
             new_key = 'downloadSVG'
         elif '_xls' in key:
             new_key = 'downloadXLS'
+        elif '_atr' in key:
+            new_key = key.replace('_atr', 'ATR')
         elif key == 'drillup_text':
             new_key = 'drillUpText'
         elif key == 'thousands_separator':
             new_key = 'thousandsSep'
+        elif key == 'measure_xy':
+            new_key = 'measureXY'
         else:
             new_key = to_camelCase(key)
 
@@ -167,6 +171,7 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
             print('-- len does not match')
             return False
         for key in kwarg_value:
+            print(f'CHECKING: {key}')
             matches = does_kwarg_value_match_result(kwarg_value.get(key),
                                                     result_value.get(key))
             if not matches:
@@ -244,6 +249,7 @@ def Class__init__(cls, kwargs, error):
         assert result is not None
         assert isinstance(result, cls) is True
         for key in kwargs_copy:
+            print(f'CHECKING: {key}')
             if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('function'):
                 continue
             if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('class'):
@@ -270,7 +276,7 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
         for key in kwargs_copy:
             kwarg_value = kwargs_copy[key]
             result_value = result.get(key)
-            print(f'checking key: {key}')
+            print(f'CHECKING: {key}')
             print(f'KWARG VALUE:\n{kwarg_value}')
             print(f'RESULT VALUE:\n{result_value}')
 
@@ -283,12 +289,15 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
                                                      result.get(key)) is True
             else:
                 if 'html' in key:
+                    print(f'CHECKING: {key}')
                     assert does_kwarg_value_match_result(kwargs_copy[key],
                                                          result.get('useHTML')) is True
                 elif 'utc' in key:
+                    print(f'CHECKING: {key}')
                     assert does_kwarg_value_match_result(kwargs_copy[key],
                                                          result.get('useUTC')) is True
                 elif 'url' in key:
+                    print(f'CHECKING: {key}')
                     updated_key = key.replace('url', 'URL')
                     matches = does_kwarg_value_match_result(
                         kwargs_copy[key],
@@ -296,52 +305,75 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
                     )
                     assert matches is True
                 elif '_csv' in key:
+                    print(f'CHECKING: {key}')
                     new_key = 'downloadCSV'
                     matches = does_kwarg_value_match_result(kwargs_copy[key],
                                                             result.get(new_key))
                     assert matches is True
                 elif '_jpeg' in key:
+                    print(f'CHECKING: {key}')
                     new_key = 'downloadJPEG'
                     matches = does_kwarg_value_match_result(kwargs_copy[key],
                                                             result.get(new_key))
                     assert matches is True
                 elif '_pdf' in key:
+                    print(f'CHECKING: {key}')
                     new_key = 'downloadPDF'
                     matches = does_kwarg_value_match_result(kwargs_copy[key],
                                                             result.get(new_key))
                     assert matches is True
                 elif '_png' in key:
+                    print(f'CHECKING: {key}')
                     new_key = 'downloadPNG'
                     matches = does_kwarg_value_match_result(kwargs_copy[key],
                                                             result.get(new_key))
                     assert matches is True
                 elif '_svg' in key:
+                    print(f'CHECKING: {key}')
                     new_key = 'downloadSVG'
                     matches = does_kwarg_value_match_result(kwargs_copy[key],
                                                             result.get(new_key))
                     assert matches is True
                 elif '_xls' in key:
+                    print(f'CHECKING: {key}')
                     new_key = 'downloadXLS'
                     matches = does_kwarg_value_match_result(kwargs_copy[key],
                                                             result.get(new_key))
                     assert matches is True
+                elif '_atr' in key:
+                    print(f'CHECKING: {key}')
+                    new_key = key.replace('_atr', 'ATR')
+                    matches = does_kwarg_value_match_result(kwargs_copy[key],
+                                                            result.get(new_key))
+                    assert matches is True
                 elif key == 'drillup_text':
+                    print(f'CHECKING: {key}')
                     new_key = 'drillUpText'
                     matches = does_kwarg_value_match_result(kwargs_copy[key],
                                                             result.get(new_key))
                     assert matches is True
                 elif key == 'thousands_separator':
+                    print(f'CHECKING: {key}')
                     new_key = 'thousandsSep'
                     matches = does_kwarg_value_match_result(kwargs_copy[key],
                                                             result.get(new_key))
                     assert matches is True
+                elif key == 'measure_xy':
+                    print(f'CHECKING: {key}')
+                    new_key = 'measureXY'
+                    matches = does_kwarg_value_match_result(kwargs_copy[key],
+                                                            result.get(new_key))
+                    assert matches is True
                 elif key == 'pattern_options':
+                    print(f'CHECKING: {key}')
                     assert does_kwarg_value_match_result(kwargs_copy[key],
                                                          result.get('pattern')) is True
                 elif isinstance(instance, UserDict):
+                    print(f'CHECKING: {key}')
                     assert does_kwarg_value_match_result(kwargs_copy[key],
                                                          result.get(key)) is True
                 else:
+                    print(f'CHECKING: {key}')
                     assert does_kwarg_value_match_result(kwargs_copy[key],
                                                          result.get(to_camelCase(key))) is True
     else:
@@ -358,6 +390,7 @@ def Class_from_dict(cls, kwargs, error):
         assert instance is not None
         assert isinstance(instance, cls) is True
         for key in kwargs:
+            print(f'CHECKING: {key}')
             if isinstance(kwargs[key], str) and kwargs[key].startswith('function'):
                 continue
             if isinstance(kwargs[key], str) and kwargs[key].startswith('class'):
@@ -399,6 +432,7 @@ def Class_to_dict(cls, kwargs, error):
         if check_dicts:
             assert len(expected) == len(result)
             for key in expected:
+                print(f'CHECKING: {key}')
                 if key == 'patternOptions':
                     assert does_kwarg_value_match_result(expected[key],
                                                          result.get('pattern')) is True
