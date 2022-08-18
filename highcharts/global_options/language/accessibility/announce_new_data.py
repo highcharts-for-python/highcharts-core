@@ -30,12 +30,12 @@ class AnnounceNewDataLanguageOptions(HighchartsMeta):
         self._new_series_announce_multiple = None
         self._new_series_announce_single = None
 
-        self.new_data_announce = kwargs.pop('new_data_announce', None)
-        self.new_point_announce_multiple = kwargs.pop('new_point_announce_multiple', None)
-        self.new_point_announce_single = kwargs.pop('new_point_announce_single', None)
-        self.new_series_announce_multiple = kwargs.pop('new_series_announce_multiple',
+        self.new_data_announce = kwargs.get('new_data_announce', None)
+        self.new_point_announce_multiple = kwargs.get('new_point_announce_multiple', None)
+        self.new_point_announce_single = kwargs.get('new_point_announce_single', None)
+        self.new_series_announce_multiple = kwargs.get('new_series_announce_multiple',
                                                        None)
-        self.new_series_announce_single = kwargs.pop('new_series_announce_single', None)
+        self.new_series_announce_single = kwargs.get('new_series_announce_single', None)
 
     @property
     def new_data_announce(self) -> Optional[str]:
@@ -105,12 +105,12 @@ class AnnounceNewDataLanguageOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'new_data_announce': as_dict.pop('newDataAnnounce', None),
-            'new_point_announce_multiple': as_dict.pop('newPointAnnounceMultiple', None),
-            'new_point_announce_single': as_dict.pop('newPointAnnounceSingle', None),
-            'new_series_announce_multiple': as_dict.pop('newSeriesAnnounceMultiple',
+            'new_data_announce': as_dict.get('newDataAnnounce', None),
+            'new_point_announce_multiple': as_dict.get('newPointAnnounceMultiple', None),
+            'new_point_announce_single': as_dict.get('newPointAnnounceSingle', None),
+            'new_series_announce_multiple': as_dict.get('newSeriesAnnounceMultiple',
                                                         None),
-            'new_series_announce_single': as_dict.pop('newSeriesAnnounceSingle', None)
+            'new_series_announce_single': as_dict.get('newSeriesAnnounceSingle', None)
         }
 
         return cls(**kwargs)

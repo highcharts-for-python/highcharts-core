@@ -22,15 +22,15 @@ class SeriesTypeDescriptions(HighchartsMeta):
         self._pyramid = None
         self._waterfall = None
 
-        self.arearange = kwargs.pop('arearange', None)
-        self.areasplinerange = kwargs.pop('areasplinerange', None)
-        self.boxplot = kwargs.pop('boxplot', None)
-        self.bubble = kwargs.pop('bubble', None)
-        self.columnrange = kwargs.pop('columnrange', None)
-        self.errorbar = kwargs.pop('errorbar', None)
-        self.funnel = kwargs.pop('funnel', None)
-        self.pyramid = kwargs.pop('pyramid', None)
-        self.waterfall = kwargs.pop('waterfall', None)
+        self.arearange = kwargs.get('arearange', None)
+        self.areasplinerange = kwargs.get('areasplinerange', None)
+        self.boxplot = kwargs.get('boxplot', None)
+        self.bubble = kwargs.get('bubble', None)
+        self.columnrange = kwargs.get('columnrange', None)
+        self.errorbar = kwargs.get('errorbar', None)
+        self.funnel = kwargs.get('funnel', None)
+        self.pyramid = kwargs.get('pyramid', None)
+        self.waterfall = kwargs.get('waterfall', None)
 
     @property
     def arearange(self) -> Optional[str]:
@@ -145,15 +145,15 @@ class SeriesTypeDescriptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'arearange': as_dict.pop('arearange', None),
-            'areasplinerange': as_dict.pop('areasplinerange', None),
-            'boxplot': as_dict.pop('boxplot', None),
-            'bubble': as_dict.pop('bubble', None),
-            'columnrange': as_dict.pop('columnrange', None),
-            'errorbar': as_dict.pop('errorbar', None),
-            'funnel': as_dict.pop('funnel', None),
-            'pyramid': as_dict.pop('pyramid', None),
-            'waterfall': as_dict.pop('waterfall', None),
+            'arearange': as_dict.get('arearange', None),
+            'areasplinerange': as_dict.get('areasplinerange', None),
+            'boxplot': as_dict.get('boxplot', None),
+            'bubble': as_dict.get('bubble', None),
+            'columnrange': as_dict.get('columnrange', None),
+            'errorbar': as_dict.get('errorbar', None),
+            'funnel': as_dict.get('funnel', None),
+            'pyramid': as_dict.get('pyramid', None),
+            'waterfall': as_dict.get('waterfall', None),
         }
 
         return cls(**kwargs)
@@ -221,53 +221,53 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
         self._spline = None
         self._spline_combination = None
 
-        self.bar = kwargs.pop('bar',
+        self.bar = kwargs.get('bar',
                               constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('bar'))
-        self.bar_combination = kwargs.pop('bar_combination',
+        self.bar_combination = kwargs.get('bar_combination',
                                           constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('bar_combination'))
-        self.boxplot = kwargs.pop('boxplot',
+        self.boxplot = kwargs.get('boxplot',
                                   constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('boxplot'))
-        self.boxplot_combination = kwargs.pop('boxplot_combination',
+        self.boxplot_combination = kwargs.get('boxplot_combination',
                                               constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('boxplot_combination'))
-        self.bubble = kwargs.pop('bubble',
+        self.bubble = kwargs.get('bubble',
                                  constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('bubble'))
-        self.bubble_combination = kwargs.pop('bubble_combination',
+        self.bubble_combination = kwargs.get('bubble_combination',
                                              constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('bubble_combination'))
-        self.column = kwargs.pop('column',
+        self.column = kwargs.get('column',
                                   constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('column'))
-        self.column_combination = kwargs.pop('column_combination',
+        self.column_combination = kwargs.get('column_combination',
                                              constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('column_combination'))
-        self.default = kwargs.pop('default',
+        self.default = kwargs.get('default',
                                    constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('default'))
-        self.default_combination = kwargs.pop('default_combination',
+        self.default_combination = kwargs.get('default_combination',
                                               constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('default_combination'))
-        self.line = kwargs.pop('line',
+        self.line = kwargs.get('line',
                                 constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('line'))
-        self.line_combination = kwargs.pop('line_combination',
+        self.line_combination = kwargs.get('line_combination',
                                            constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('line_combination'))
-        self.map = kwargs.pop('map',
+        self.map = kwargs.get('map',
                                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('map'))
-        self.map_combination = kwargs.pop('map_combination',
+        self.map_combination = kwargs.get('map_combination',
                                           constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('map_combination'))
-        self.mapbubble = kwargs.pop('mapbubble',
+        self.mapbubble = kwargs.get('mapbubble',
                                      constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('mapbubble'))
-        self.mapbubble_combination = kwargs.pop('mapbubble_combination',
+        self.mapbubble_combination = kwargs.get('mapbubble_combination',
                                                 constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('mapbubble_combination'))
-        self.mapline = kwargs.pop('mapline',
+        self.mapline = kwargs.get('mapline',
                                    constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('mapline'))
-        self.mapline_combination = kwargs.pop('mapline_combination',
+        self.mapline_combination = kwargs.get('mapline_combination',
                                               constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('mapline_combination'))
-        self.pie = kwargs.pop('pie',
+        self.pie = kwargs.get('pie',
                                constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('pie'))
-        self.pie_combination = kwargs.pop('pie_combination',
+        self.pie_combination = kwargs.get('pie_combination',
                                           constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('pie_combination'))
-        self.scatter = kwargs.pop('scatter',
+        self.scatter = kwargs.get('scatter',
                                    constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('scatter'))
-        self.scatter_combination = kwargs.pop('scatter_combination',
+        self.scatter_combination = kwargs.get('scatter_combination',
                                               constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('scatter_combination'))
-        self.spline = kwargs.pop('spline',
+        self.spline = kwargs.get('spline',
                                   constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('spline'))
-        self.spline_combination = kwargs.pop('spline_combination',
+        self.spline_combination = kwargs.get('spline_combination',
                                              constants.DEFAULT_LANG_ACS_SERIES_SUMMARY.get('spline_combination'))
 
     @property
@@ -573,30 +573,30 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'bar': as_dict.pop('bar', None),
-            'bar_combination': as_dict.pop('barCombination', None),
-            'boxplot': as_dict.pop('boxplot', None),
-            'boxplot_combination': as_dict.pop('boxplotCombination', None),
-            'bubble': as_dict.pop('bubble', None),
-            'bubble_combination': as_dict.pop('bubbleCombination', None),
-            'column': as_dict.pop('column', None),
-            'column_combination': as_dict.pop('columnCombination', None),
-            'default': as_dict.pop('default', None),
-            'default_combination': as_dict.pop('defaultCombination', None),
-            'line': as_dict.pop('line', None),
-            'line_combination': as_dict.pop('lineCombination', None),
-            'map': as_dict.pop('map', None),
-            'map_combination': as_dict.pop('mapCombination', None),
-            'mapbubble': as_dict.pop('mapbubble', None),
-            'mapbubble_combination': as_dict.pop('mapbubbleCombination', None),
-            'mapline': as_dict.pop('mapline', None),
-            'mapline_combination': as_dict.pop('maplineCombination', None),
-            'pie': as_dict.pop('pie', None),
-            'pie_combination': as_dict.pop('pieCombination', None),
-            'scatter': as_dict.pop('scatter', None),
-            'scatter_combination': as_dict.pop('scatterCombination', None),
-            'spline': as_dict.pop('spline', None),
-            'spline_combination': as_dict.pop('splineCombination', None),
+            'bar': as_dict.get('bar', None),
+            'bar_combination': as_dict.get('barCombination', None),
+            'boxplot': as_dict.get('boxplot', None),
+            'boxplot_combination': as_dict.get('boxplotCombination', None),
+            'bubble': as_dict.get('bubble', None),
+            'bubble_combination': as_dict.get('bubbleCombination', None),
+            'column': as_dict.get('column', None),
+            'column_combination': as_dict.get('columnCombination', None),
+            'default': as_dict.get('default', None),
+            'default_combination': as_dict.get('defaultCombination', None),
+            'line': as_dict.get('line', None),
+            'line_combination': as_dict.get('lineCombination', None),
+            'map': as_dict.get('map', None),
+            'map_combination': as_dict.get('mapCombination', None),
+            'mapbubble': as_dict.get('mapbubble', None),
+            'mapbubble_combination': as_dict.get('mapbubbleCombination', None),
+            'mapline': as_dict.get('mapline', None),
+            'mapline_combination': as_dict.get('maplineCombination', None),
+            'pie': as_dict.get('pie', None),
+            'pie_combination': as_dict.get('pieCombination', None),
+            'scatter': as_dict.get('scatter', None),
+            'scatter_combination': as_dict.get('scatterCombination', None),
+            'spline': as_dict.get('spline', None),
+            'spline_combination': as_dict.get('splineCombination', None),
         }
 
         return cls(**kwargs)
@@ -650,13 +650,13 @@ class SeriesLanguageOptions(HighchartsMeta):
         self._x_axis_description = None
         self._y_axis_description = None
 
-        self.description = kwargs.pop('description', None)
-        self.null_point_value = kwargs.pop('null_point_value', None)
-        self.point_annotations_description = kwargs.pop('point_annotations_description',
+        self.description = kwargs.get('description', None)
+        self.null_point_value = kwargs.get('null_point_value', None)
+        self.point_annotations_description = kwargs.get('point_annotations_description',
                                                         None)
-        self.summary = kwargs.pop('summary', None)
-        self.x_axis_description = kwargs.pop('x_axis_description', None)
-        self.y_axis_description = kwargs.pop('y_axis_description', None)
+        self.summary = kwargs.get('summary', None)
+        self.x_axis_description = kwargs.get('x_axis_description', None)
+        self.y_axis_description = kwargs.get('y_axis_description', None)
 
     @property
     def description(self) -> Optional[str]:
@@ -760,13 +760,13 @@ class SeriesLanguageOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'description': as_dict.pop('description', None),
-            'null_point_value': as_dict.pop('nullPointValue', None),
-            'point_annotations_description': as_dict.pop('pointAnnotationsDescription',
+            'description': as_dict.get('description', None),
+            'null_point_value': as_dict.get('nullPointValue', None),
+            'point_annotations_description': as_dict.get('pointAnnotationsDescription',
                                                          None),
-            'summary': as_dict.pop('summary', None),
-            'x_axis_description': as_dict.pop('xAxisDescription', None),
-            'y_axis_description': as_dict.pop('yAxisDescription', None),
+            'summary': as_dict.get('summary', None),
+            'x_axis_description': as_dict.get('xAxisDescription', None),
+            'y_axis_description': as_dict.get('yAxisDescription', None),
         }
 
         return cls(**kwargs)

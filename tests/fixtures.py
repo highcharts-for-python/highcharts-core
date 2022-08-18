@@ -115,6 +115,8 @@ def to_js_dict(original):
             new_key = key.replace('_atr', 'ATR')
         elif key == 'drillup_text':
             new_key = 'drillUpText'
+        elif key == 'drillup_button':
+            new_key = 'drillUpButton'
         elif key == 'thousands_separator':
             new_key = 'thousandsSep'
         elif key == 'measure_xy':
@@ -349,6 +351,12 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
                 elif key == 'drillup_text':
                     print(f'CHECKING: {key}')
                     new_key = 'drillUpText'
+                    matches = does_kwarg_value_match_result(kwargs_copy[key],
+                                                            result.get(new_key))
+                    assert matches is True
+                elif key == 'drillup_button':
+                    print(f'CHECKING: {key}')
+                    new_key = 'drillUpButton'
                     matches = does_kwarg_value_match_result(kwargs_copy[key],
                                                             result.get(new_key))
                     assert matches is True

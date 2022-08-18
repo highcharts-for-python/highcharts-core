@@ -15,8 +15,8 @@ class SonificationLanguageOptions(HighchartsMeta):
         self._play_as_sound_button_text = None
         self._play_as_sound_click_announcement = None
 
-        self.play_as_sound_button_text = kwargs.pop('play_as_sound_button_text', None)
-        self.play_as_sound_click_announcement = kwargs.pop(
+        self.play_as_sound_button_text = kwargs.get('play_as_sound_button_text', None)
+        self.play_as_sound_click_announcement = kwargs.get(
             'play_as_sound_click_announcement',
             None
         )
@@ -51,8 +51,8 @@ class SonificationLanguageOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'play_as_sound_button_text': as_dict.pop('playAsSoundButtonText', None),
-            'play_as_sound_click_announcement': as_dict.pop(
+            'play_as_sound_button_text': as_dict.get('playAsSoundButtonText', None),
+            'play_as_sound_click_announcement': as_dict.get(
                 'playAsSoundClickAnnouncement',
                 None
             ),

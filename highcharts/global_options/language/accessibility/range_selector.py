@@ -15,10 +15,10 @@ class RangeSelectorLanguageOptions(HighchartsMeta):
         self._max_input_label = None
         self._min_input_label = None
 
-        self.click_button_announcement = kwargs.pop('click_button_announcement', None)
-        self.dropdown_label = kwargs.pop('dropdown_label', None)
-        self.max_input_label = kwargs.pop('max_input_label', None)
-        self.min_input_label = kwargs.pop('min_input_label', None)
+        self.click_button_announcement = kwargs.get('click_button_announcement', None)
+        self.dropdown_label = kwargs.get('dropdown_label', None)
+        self.max_input_label = kwargs.get('max_input_label', None)
+        self.min_input_label = kwargs.get('min_input_label', None)
 
     @property
     def click_button_announcement(self) -> Optional[str]:
@@ -75,10 +75,10 @@ class RangeSelectorLanguageOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'click_button_announcement': as_dict.pop('clickButtonAnnouncement', None),
-            'dropdown_label': as_dict.pop('dropdownLabel', None),
-            'max_input_label': as_dict.pop('maxInputLabel', None),
-            'min_input_label': as_dict.pop('minInputLabel', None),
+            'click_button_announcement': as_dict.get('clickButtonAnnouncement', None),
+            'dropdown_label': as_dict.get('dropdownLabel', None),
+            'max_input_label': as_dict.get('maxInputLabel', None),
+            'min_input_label': as_dict.get('minInputLabel', None),
         }
 
         return cls(**kwargs)

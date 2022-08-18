@@ -1,0 +1,33 @@
+{
+    description: 'Description goes here',
+    nullPointValue: 'Null point value',
+    pointAnnotationsDescription: 'Point annotations description',
+    summary: {
+        bar: 'Bar',
+        barCombination: 'Bar combo',
+        boxplot: 'Boxplot',
+        boxplotCombination: 123,
+        bubble: 'Bubble',
+        bubbleCombination: 'bubble combination',
+        column: 'column',
+        columnCombination: 'column_combination',
+        default: 'Default summary',
+        defaultCombination: 'Default combination',
+        line: 'Line',
+        lineCombination: 'Line combination',
+        map: 'Map',
+        mapCombination: 'Map combo',
+        mapbubble: 'Map Bubble',
+        mapbubbleCombination: 'Mapbubble Combo',
+        mapline: 'Map/Line',
+        maplineCombination: 'Map/Line Combo',
+        pie: 'Pie',
+        pieCombination: 'Pie Combo',
+        scatter: 'Scatter',
+        scatterCombination: 'Scatter Combo',
+        spline: 'Spline',
+        splineCombination: 'Spline Combination'
+    },
+    xAxisDescription: 'X-Axis description',
+    yAxisDescription: 'Y-Axis description'
+}

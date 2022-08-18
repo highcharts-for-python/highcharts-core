@@ -13,8 +13,8 @@ class TableLanguageOptions(HighchartsMeta):
         self._table_summary = None
         self._view_as_data_table_button_text = None
 
-        self.table_summary = kwargs.pop('table_summary', None)
-        self.view_as_data_table_button_text = kwargs.pop('view_as_data_table_button_text',
+        self.table_summary = kwargs.get('table_summary', None)
+        self.view_as_data_table_button_text = kwargs.get('view_as_data_table_button_text',
                                                          None)
 
     @property
@@ -47,8 +47,8 @@ class TableLanguageOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'table_summary': as_dict.pop('tableSummary', None),
-            'view_as_data_table_button_text': as_dict.pop('viewAsDataTableButtonText',
+            'table_summary': as_dict.get('tableSummary', None),
+            'view_as_data_table_button_text': as_dict.get('viewAsDataTableButtonText',
                                                           None),
         }
 

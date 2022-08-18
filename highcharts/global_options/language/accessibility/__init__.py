@@ -54,26 +54,26 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         self._thousands_separator = None
         self._zoom = None
 
-        self.announce_new_data = kwargs.pop('announce_new_data', None)
-        self.axis = kwargs.pop('axis', None)
-        self.chart_container_label = kwargs.pop('chart_container_label', None)
-        self.chart_types = kwargs.pop('chart_types', None)
-        self.credits = kwargs.pop('credits', None)
-        self.default_chart_title = kwargs.pop('default_chart_title', None)
-        self.drillup_button = kwargs.pop('drillup_button', None)
-        self.exporting = kwargs.pop('exporting', None)
-        self.graphic_container_label = kwargs.pop('graphic_container_label', None)
-        self.legend = kwargs.pop('legend', None)
-        self.range_selector = kwargs.pop('range_selector', None)
-        self.screen_reader_section = kwargs.pop('screen_reader_section', None)
-        self.series = kwargs.pop('series', None)
-        self.series_type_description = kwargs.pop('series_type_description', None)
-        self.sonification = kwargs.pop('sonification', None)
-        self.svg_container_label = kwargs.pop('svg_container_label', None)
-        self.svg_container_title = kwargs.pop('svg_container_title', None)
-        self.table = kwargs.pop('table', None)
-        self.thousands_separator = kwargs.pop('thousands_separator', None)
-        self.zoom = kwargs.pop('zoom', None)
+        self.announce_new_data = kwargs.get('announce_new_data', None)
+        self.axis = kwargs.get('axis', None)
+        self.chart_container_label = kwargs.get('chart_container_label', None)
+        self.chart_types = kwargs.get('chart_types', None)
+        self.credits = kwargs.get('credits', None)
+        self.default_chart_title = kwargs.get('default_chart_title', None)
+        self.drillup_button = kwargs.get('drillup_button', None)
+        self.exporting = kwargs.get('exporting', None)
+        self.graphic_container_label = kwargs.get('graphic_container_label', None)
+        self.legend = kwargs.get('legend', None)
+        self.range_selector = kwargs.get('range_selector', None)
+        self.screen_reader_section = kwargs.get('screen_reader_section', None)
+        self.series = kwargs.get('series', None)
+        self.series_type_description = kwargs.get('series_type_description', None)
+        self.sonification = kwargs.get('sonification', None)
+        self.svg_container_label = kwargs.get('svg_container_label', None)
+        self.svg_container_title = kwargs.get('svg_container_title', None)
+        self.table = kwargs.get('table', None)
+        self.thousands_separator = kwargs.get('thousands_separator', None)
+        self.zoom = kwargs.get('zoom', None)
 
     @property
     def announce_new_data(self) -> Optional[AnnounceNewDataLanguageOptions]:
@@ -391,26 +391,26 @@ class AccessibilityLanguageOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'announce_new_data': as_dict.pop('announceNewData', None),
-            'axis': as_dict.pop('axis', None),
-            'chart_container_label': as_dict.pop('chartContainerLabel', None),
-            'chart_types': as_dict.pop('chartTypes', None),
-            'credits': as_dict.pop('credits', None),
-            'default_chart_title': as_dict.pop('defaultChartTitle', None),
-            'drillup_button': as_dict.pop('drillUpButton', None),
-            'exporting': as_dict.pop('exporting', None),
-            'graphic_container_label': as_dict.pop('graphicContainerLabel', None),
-            'legend': as_dict.pop('legend', None),
-            'range_selector': as_dict.pop('rangeSelector', None),
-            'screen_reader_section': as_dict.pop('screenReaderSection', None),
-            'series': as_dict.pop('series', None),
-            'series_type_description': as_dict.pop('seriesTypeDescription', None),
-            'sonification': as_dict.pop('sonification', None),
-            'svg_container_label': as_dict.pop('svgContainerLabel', None),
-            'svg_container_title': as_dict.pop('svgContainerTitle', None),
-            'table': as_dict.pop('table', None),
-            'thousands_separator': as_dict.pop('thousandsSep', None),
-            'zoom': as_dict.pop('zoom', None)
+            'announce_new_data': as_dict.get('announceNewData', None),
+            'axis': as_dict.get('axis', None),
+            'chart_container_label': as_dict.get('chartContainerLabel', None),
+            'chart_types': as_dict.get('chartTypes', None),
+            'credits': as_dict.get('credits', None),
+            'default_chart_title': as_dict.get('defaultChartTitle', None),
+            'drillup_button': as_dict.get('drillUpButton', None),
+            'exporting': as_dict.get('exporting', None),
+            'graphic_container_label': as_dict.get('graphicContainerLabel', None),
+            'legend': as_dict.get('legend', None),
+            'range_selector': as_dict.get('rangeSelector', None),
+            'screen_reader_section': as_dict.get('screenReaderSection', None),
+            'series': as_dict.get('series', None),
+            'series_type_description': as_dict.get('seriesTypeDescription', None),
+            'sonification': as_dict.get('sonification', None),
+            'svg_container_label': as_dict.get('svgContainerLabel', None),
+            'svg_container_title': as_dict.get('svgContainerTitle', None),
+            'table': as_dict.get('table', None),
+            'thousands_separator': as_dict.get('thousandsSep', None),
+            'zoom': as_dict.get('zoom', None)
         }
 
         return cls(**kwargs)
@@ -423,7 +423,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
             'chartTypes': self.chart_types,
             'credits': self.credits,
             'defaultChartTitle': self.default_chart_title,
-            'drillupButton': self.drillup_button,
+            'drillUpButton': self.drillup_button,
             'exporting': self.exporting,
             'graphicContainerLabel': self.graphic_container_label,
             'legend': self.legend,

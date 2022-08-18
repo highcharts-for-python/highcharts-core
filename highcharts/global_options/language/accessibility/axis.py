@@ -21,16 +21,16 @@ class AxisLanguageOptions(HighchartsMeta):
         self._y_axis_description_plural = None
         self._y_axis_description_singular = None
 
-        self.range_categories = kwargs.pop('range_categories', None)
-        self.range_from_to = kwargs.pop('range_from_to', None)
-        self.time_range_days = kwargs.pop('time_range_days', None)
-        self.time_range_hours = kwargs.pop('time_range_hours', None)
-        self.time_range_minutes = kwargs.pop('time_range_minutes', None)
-        self.time_range_seconds = kwargs.pop('time_range_seconds', None)
-        self.x_axis_description_plural = kwargs.pop('x_axis_description_plural', None)
-        self.x_axis_description_singular = kwargs.pop('x_axis_description_singular', None)
-        self.y_axis_description_plural = kwargs.pop('y_axis_description_plural', None)
-        self.y_axis_description_singular = kwargs.pop('y_axis_description_singular', None)
+        self.range_categories = kwargs.get('range_categories', None)
+        self.range_from_to = kwargs.get('range_from_to', None)
+        self.time_range_days = kwargs.get('time_range_days', None)
+        self.time_range_hours = kwargs.get('time_range_hours', None)
+        self.time_range_minutes = kwargs.get('time_range_minutes', None)
+        self.time_range_seconds = kwargs.get('time_range_seconds', None)
+        self.x_axis_description_plural = kwargs.get('x_axis_description_plural', None)
+        self.x_axis_description_singular = kwargs.get('x_axis_description_singular', None)
+        self.y_axis_description_plural = kwargs.get('y_axis_description_plural', None)
+        self.y_axis_description_singular = kwargs.get('y_axis_description_singular', None)
 
     @property
     def range_categories(self) -> Optional[str]:
@@ -155,16 +155,16 @@ class AxisLanguageOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'range_categories': as_dict.pop('rangeCategories', None),
-            'range_from_to': as_dict.pop('rangeFromTo', None),
-            'time_range_days': as_dict.pop('timeRangeDays', None),
-            'time_range_hours': as_dict.pop('timeRangeHours', None),
-            'time_range_minutes': as_dict.pop('timeRangeMinutes', None),
-            'time_range_seconds': as_dict.pop('timeRangeSeconds', None),
-            'x_axis_description_plural': as_dict.pop('xAxisDescriptionPlural', None),
-            'x_axis_description_singular': as_dict.pop('xAxisDescriptionSingular', None),
-            'y_axis_description_plural': as_dict.pop('yAxisDescriptionPlural', None),
-            'y_axis_description_singular': as_dict.pop('yAxisDescriptionSingular', None),
+            'range_categories': as_dict.get('rangeCategories', None),
+            'range_from_to': as_dict.get('rangeFromTo', None),
+            'time_range_days': as_dict.get('timeRangeDays', None),
+            'time_range_hours': as_dict.get('timeRangeHours', None),
+            'time_range_minutes': as_dict.get('timeRangeMinutes', None),
+            'time_range_seconds': as_dict.get('timeRangeSeconds', None),
+            'x_axis_description_plural': as_dict.get('xAxisDescriptionPlural', None),
+            'x_axis_description_singular': as_dict.get('xAxisDescriptionSingular', None),
+            'y_axis_description_plural': as_dict.get('yAxisDescriptionPlural', None),
+            'y_axis_description_singular': as_dict.get('yAxisDescriptionSingular', None),
         }
         return cls(**kwargs)
 

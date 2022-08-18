@@ -14,9 +14,9 @@ class ZoomLanguageOptions(HighchartsMeta):
         self._map_zoom_out = None
         self._reset_zoom_button = None
 
-        self.map_zoom_in = kwargs.pop('map_zoom_in', None)
-        self.map_zoom_out = kwargs.pop('map_zoom_out', None)
-        self.reset_zoom_button = kwargs.pop('reset_zoom_button', None)
+        self.map_zoom_in = kwargs.get('map_zoom_in', None)
+        self.map_zoom_out = kwargs.get('map_zoom_out', None)
+        self.reset_zoom_button = kwargs.get('reset_zoom_button', None)
 
     @property
     def map_zoom_in(self) -> Optional[str]:
@@ -60,9 +60,9 @@ class ZoomLanguageOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'map_zoom_in': as_dict.pop('mapZoomIn', None),
-            'map_zoom_out': as_dict.pop('mapZoomOut', None),
-            'reset_zoom_button': as_dict.pop('resetZoomButton', None),
+            'map_zoom_in': as_dict.get('mapZoomIn', None),
+            'map_zoom_out': as_dict.get('mapZoomOut', None),
+            'reset_zoom_button': as_dict.get('resetZoomButton', None),
         }
 
         return cls(**kwargs)

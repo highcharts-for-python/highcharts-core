@@ -14,9 +14,9 @@ class LegendLanguageOptions(HighchartsMeta):
         self._legend_label = None
         self._legend_label_no_title = None
 
-        self.legend_item = kwargs.pop('legend_item', None)
-        self.legend_label = kwargs.pop('legend_label', None)
-        self.legend_label_no_title = kwargs.pop('legend_label_no_title', None)
+        self.legend_item = kwargs.get('legend_item', None)
+        self.legend_label = kwargs.get('legend_label', None)
+        self.legend_label_no_title = kwargs.get('legend_label_no_title', None)
 
     @property
     def legend_item(self) -> Optional[str]:
@@ -57,9 +57,9 @@ class LegendLanguageOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'legend_item': as_dict.pop('legendItem', None),
-            'legend_label': as_dict.pop('legendLabel', None),
-            'legend_label_no_title': as_dict.pop('legendLabelNoTitle', None),
+            'legend_item': as_dict.get('legendItem', None),
+            'legend_label': as_dict.get('legendLabel', None),
+            'legend_label_no_title': as_dict.get('legendLabelNoTitle', None),
         }
         return cls(**kwargs)
 

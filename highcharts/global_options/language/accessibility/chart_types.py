@@ -44,28 +44,28 @@ class ChartTypesLanguageOptions(HighchartsMeta):
         self._spline_single = None
         self._unknown_map = None
 
-        self.bar_multiple = kwargs.pop('bar_multiple', None)
-        self.bar_single = kwargs.pop('bar_single', None)
-        self.boxplot_multiple = kwargs.pop('boxplot_multiple', None)
-        self.boxplot_single = kwargs.pop('boxplot_single', None)
-        self.bubble_multiple = kwargs.pop('bubble_multiple', None)
-        self.bubble_single = kwargs.pop('bubble_single', None)
-        self.column_multiple = kwargs.pop('column_multiple', None)
-        self.column_single = kwargs.pop('column_single', None)
-        self.combination_chart = kwargs.pop('combination_chart', None)
-        self.default_multiple = kwargs.pop('default_multiple', None)
-        self.default_single = kwargs.pop('default_single', None)
-        self.empty_chart = kwargs.pop('empty_chart', None)
-        self.line_multiple = kwargs.pop('line_multiple', None)
-        self.line_single = kwargs.pop('line_single', None)
-        self.map_type_description = kwargs.pop('map_type_description', None)
-        self.pie_multiple = kwargs.pop('pie_multiple', None)
-        self.pie_single = kwargs.pop('pie_single', None)
-        self.scatter_multiple = kwargs.pop('scatter_multiple', None)
-        self.scatter_single = kwargs.pop('scatter_single', None)
-        self.spline_multiple = kwargs.pop('spline_multiple', None)
-        self.spline_single = kwargs.pop('spline_single', None)
-        self.unknown_map = kwargs.pop('unknown_map', None)
+        self.bar_multiple = kwargs.get('bar_multiple', None)
+        self.bar_single = kwargs.get('bar_single', None)
+        self.boxplot_multiple = kwargs.get('boxplot_multiple', None)
+        self.boxplot_single = kwargs.get('boxplot_single', None)
+        self.bubble_multiple = kwargs.get('bubble_multiple', None)
+        self.bubble_single = kwargs.get('bubble_single', None)
+        self.column_multiple = kwargs.get('column_multiple', None)
+        self.column_single = kwargs.get('column_single', None)
+        self.combination_chart = kwargs.get('combination_chart', None)
+        self.default_multiple = kwargs.get('default_multiple', None)
+        self.default_single = kwargs.get('default_single', None)
+        self.empty_chart = kwargs.get('empty_chart', None)
+        self.line_multiple = kwargs.get('line_multiple', None)
+        self.line_single = kwargs.get('line_single', None)
+        self.map_type_description = kwargs.get('map_type_description', None)
+        self.pie_multiple = kwargs.get('pie_multiple', None)
+        self.pie_single = kwargs.get('pie_single', None)
+        self.scatter_multiple = kwargs.get('scatter_multiple', None)
+        self.scatter_single = kwargs.get('scatter_single', None)
+        self.spline_multiple = kwargs.get('spline_multiple', None)
+        self.spline_single = kwargs.get('spline_single', None)
+        self.unknown_map = kwargs.get('unknown_map', None)
 
     @property
     def bar_multiple(self) -> Optional[str]:
@@ -339,29 +339,28 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'bar_multiple': as_dict.pop('barMultiple', None),
-            'bar_single': as_dict.pop('barSingle', None),
-            'boxplot_multiple': as_dict.pop('boxplotMultiple', None),
-            'boxplot_single': as_dict.pop('boxplotSingle', None),
-            'bubble_multiple': as_dict.pop('bubbleMultiple', None),
-            'bubble_single': as_dict.pop('bubbleSingle', None),
-            'column_multiple': as_dict.pop('columnMultiple', None),
-            'column_single': as_dict.pop('columnSingle', None),
-            'combination_multiple': as_dict.pop('combinationMultiple', None),
-            'combination_single': as_dict.pop('combinationSingle', None),
-            'default_multiple': as_dict.pop('defaultMultiple', None),
-            'default_single': as_dict.pop('defaultSingle', None),
-            'empty_chart': as_dict.pop('emptyChart', None),
-            'line_multiple': as_dict.pop('lineMultiple', None),
-            'line_single': as_dict.pop('lineSingle', None),
-            'map_type_description': as_dict.pop('mapTypeDescription', None),
-            'pie_multiple': as_dict.pop('pieMultiple', None),
-            'pie_single': as_dict.pop('pieSingle', None),
-            'scatter_multiple': as_dict.pop('scatterMultiple', None),
-            'scatter_single': as_dict.pop('scatterSingle', None),
-            'spline_multiple': as_dict.pop('splineMultiple', None),
-            'spline_single': as_dict.pop('splineSingle', None),
-            'unknown_map': as_dict.pop('unknownMap', None),
+            'bar_multiple': as_dict.get('barMultiple', None),
+            'bar_single': as_dict.get('barSingle', None),
+            'boxplot_multiple': as_dict.get('boxplotMultiple', None),
+            'boxplot_single': as_dict.get('boxplotSingle', None),
+            'bubble_multiple': as_dict.get('bubbleMultiple', None),
+            'bubble_single': as_dict.get('bubbleSingle', None),
+            'column_multiple': as_dict.get('columnMultiple', None),
+            'column_single': as_dict.get('columnSingle', None),
+            'combination_chart': as_dict.get('combinationChart', None),
+            'default_multiple': as_dict.get('defaultMultiple', None),
+            'default_single': as_dict.get('defaultSingle', None),
+            'empty_chart': as_dict.get('emptyChart', None),
+            'line_multiple': as_dict.get('lineMultiple', None),
+            'line_single': as_dict.get('lineSingle', None),
+            'map_type_description': as_dict.get('mapTypeDescription', None),
+            'pie_multiple': as_dict.get('pieMultiple', None),
+            'pie_single': as_dict.get('pieSingle', None),
+            'scatter_multiple': as_dict.get('scatterMultiple', None),
+            'scatter_single': as_dict.get('scatterSingle', None),
+            'spline_multiple': as_dict.get('splineMultiple', None),
+            'spline_single': as_dict.get('splineSingle', None),
+            'unknown_map': as_dict.get('unknownMap', None),
         }
 
         return cls(**kwargs)
@@ -376,8 +375,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
             'bubbleSingle': self.bubble_single,
             'columnMultiple': self.column_multiple,
             'columnSingle': self.column_single,
-            'combinationMultiple': self.combination_multiple,
-            'combinationSingle': self.combination_single,
+            'combinationChart': self.combination_chart,
             'defaultMultiple': self.default_multiple,
             'defaultSingle': self.default_single,
             'emptyChart': self.empty_chart,

@@ -13,8 +13,8 @@ class ExportingLanguageOptions(HighchartsMeta):
         self._chart_menu_label = None
         self._menu_button_label = None
 
-        self.chart_menu_label = kwargs.pop('chart_menu_label', None)
-        self.menu_button_label = kwargs.pop('menu_button_label', None)
+        self.chart_menu_label = kwargs.get('chart_menu_label', None)
+        self.menu_button_label = kwargs.get('menu_button_label', None)
 
     @property
     def chart_menu_label(self) -> Optional[str]:
@@ -43,8 +43,8 @@ class ExportingLanguageOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'chart_menu_label': as_dict.pop('chartMenuLabel', None),
-            'menu_button_label': as_dict.pop('menuButtonLabel', None),
+            'chart_menu_label': as_dict.get('chartMenuLabel', None),
+            'menu_button_label': as_dict.get('menuButtonLabel', None),
         }
 
         return cls(**kwargs)

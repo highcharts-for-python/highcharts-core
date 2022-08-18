@@ -16,10 +16,10 @@ class ScreenReaderSectionAnnotationLanguage(HighchartsMeta):
         self._description_single_point = None
         self._heading = None
 
-        self.description_multiple_points = kwargs.pop('description_multiple_points', None)
-        self.description_no_points = kwargs.pop('description_no_points', None)
-        self.description_single_point = kwargs.pop('description_single_point', None)
-        self.heading = kwargs.pop('heading', None)
+        self.description_multiple_points = kwargs.get('description_multiple_points', None)
+        self.description_no_points = kwargs.get('description_no_points', None)
+        self.description_single_point = kwargs.get('description_single_point', None)
+        self.heading = kwargs.get('heading', None)
 
     @property
     def description_multiple_points(self) -> Optional[str]:
@@ -77,10 +77,10 @@ class ScreenReaderSectionAnnotationLanguage(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'description_multiple_points': as_dict.pop('descriptionMultiplePoints', None),
-            'description_no_points': as_dict.pop('descriptionNoPoints', None),
-            'description_single_point': as_dict.pop('descriptionSinglePoint', None),
-            'heading': as_dict.pop('heading', None),
+            'description_multiple_points': as_dict.get('descriptionMultiplePoints', None),
+            'description_no_points': as_dict.get('descriptionNoPoints', None),
+            'description_single_point': as_dict.get('descriptionSinglePoint', None),
+            'heading': as_dict.get('heading', None),
         }
 
         return cls(**kwargs)
@@ -106,10 +106,10 @@ class ScreenReaderSectionLanguageOptions(HighchartsMeta):
         self._before_region_label = None
         self._end_of_chart_marker = None
 
-        self.after_region_label = kwargs.pop('after_region_label', None)
-        self.annotations = kwargs.pop('annotations', None)
-        self.before_region_label = kwargs.pop('before_region_label', None)
-        self.end_of_chart_marker = kwargs.pop('end_of_chart_marker', None)
+        self.after_region_label = kwargs.get('after_region_label', None)
+        self.annotations = kwargs.get('annotations', None)
+        self.before_region_label = kwargs.get('before_region_label', None)
+        self.end_of_chart_marker = kwargs.get('end_of_chart_marker', None)
 
     @property
     def after_region_label(self) -> Optional[str]:
@@ -166,10 +166,10 @@ class ScreenReaderSectionLanguageOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'after_region_label': as_dict.pop('afterRegionLabel', None),
-            'annotations': as_dict.pop('annotations', None),
-            'before_region_label': as_dict.pop('beforeRegionLabel', None),
-            'end_of_chart_marker': as_dict.pop('endOfChartMarker', None),
+            'after_region_label': as_dict.get('afterRegionLabel', None),
+            'annotations': as_dict.get('annotations', None),
+            'before_region_label': as_dict.get('beforeRegionLabel', None),
+            'end_of_chart_marker': as_dict.get('endOfChartMarker', None),
         }
 
         return cls(**kwargs)
