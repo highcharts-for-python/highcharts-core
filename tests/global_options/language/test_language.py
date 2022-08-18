@@ -83,6 +83,13 @@ STANDARD_PARAMS = [
           'Sun'
       ]
     }, None),
+    ({
+      'export_data': {
+        'annotationHeader': 'some string',
+        'categoryDatetimeHeader': 'some string',
+        'categoryHeader': 'a different string'
+      }
+    }, None),
 ]
 
 

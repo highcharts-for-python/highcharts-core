@@ -14,9 +14,9 @@ class ExportDataLanguageOptions(HighchartsMeta):
         self._category_datetime_header = None
         self._category_header = None
 
-        self.annotation_header = kwargs.pop('annotation_header', None)
-        self.category_datetime_header = kwargs.pop('category_datetime_header', None)
-        self.category_header = kwargs.pop('category_header', None)
+        self.annotation_header = kwargs.get('annotation_header', None)
+        self.category_datetime_header = kwargs.get('category_datetime_header', None)
+        self.category_header = kwargs.get('category_header', None)
 
     @property
     def annotation_header(self) -> Optional[str]:
@@ -60,9 +60,9 @@ class ExportDataLanguageOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'annotation_header': as_dict.pop('annotationHeader', None),
-            'category_datetime_header': as_dict.pop('categoryDatetimeHeader', None),
-            'category_header': as_dict.pop('categoryHeader', None),
+            'annotation_header': as_dict.get('annotationHeader', None),
+            'category_datetime_header': as_dict.get('categoryDatetimeHeader', None),
+            'category_header': as_dict.get('categoryHeader', None),
         }
 
         return cls(**kwargs)
