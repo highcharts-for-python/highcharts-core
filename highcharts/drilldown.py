@@ -33,13 +33,13 @@ class Drilldown(HighchartsMeta):
         self._drillup_button = None
         self._series = None
 
-        self.active_axis_label_style = kwargs.pop('active_axis_label_style', None)
-        self.active_data_label_style = kwargs.pop('active_data_label_style', None)
-        self.allow_point_drilldown = kwargs.pop('allow_point_drilldown', None)
-        self.animation = kwargs.pop('animation', None)
-        self.breadcrumbs = kwargs.pop('breadcrumbs', None)
-        self.drillup_button = kwargs.pop('drillup_button', None)
-        self.series = kwargs.pop('series', None)
+        self.active_axis_label_style = kwargs.get('active_axis_label_style', None)
+        self.active_data_label_style = kwargs.get('active_data_label_style', None)
+        self.allow_point_drilldown = kwargs.get('allow_point_drilldown', None)
+        self.animation = kwargs.get('animation', None)
+        self.breadcrumbs = kwargs.get('breadcrumbs', None)
+        self.drillup_button = kwargs.get('drillup_button', None)
+        self.series = kwargs.get('series', None)
 
     @property
     def active_axis_label_style(self) -> Optional[dict]:
@@ -83,7 +83,7 @@ class Drilldown(HighchartsMeta):
 
     @active_data_label_style.setter
     def active_data_label_style(self, value):
-        self._value = validators.dict(value, allow_empty = True)
+        self._active_data_label_style = validators.dict(value, allow_empty = True)
 
     @property
     def allow_point_drilldown(self) -> Optional[bool]:
@@ -166,12 +166,12 @@ class Drilldown(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'active_axis_label_style': as_dict.pop('activeAxisLabelStyle', None),
-            'active_data_label_style': as_dict.pop('activeDataLabelStyle', None),
-            'allow_point_drilldown': as_dict.pop('allowPointDrilldown', None),
-            'animation': as_dict.pop('animation', None),
-            'breadcrumbs': as_dict.pop('breadcrumbs', None),
-            'series': as_dict.pop('series', None)
+            'active_axis_label_style': as_dict.get('activeAxisLabelStyle', None),
+            'active_data_label_style': as_dict.get('activeDataLabelStyle', None),
+            'allow_point_drilldown': as_dict.get('allowPointDrilldown', None),
+            'animation': as_dict.get('animation', None),
+            'breadcrumbs': as_dict.get('breadcrumbs', None),
+            'series': as_dict.get('series', None)
         }
 
         return cls(**kwargs)
@@ -180,7 +180,7 @@ class Drilldown(HighchartsMeta):
         untrimmed = {
             'activeAxisLabelStyle': self.active_axis_label_style,
             'activeDataLabelStyle': self.active_data_label_style,
-            'allowPointDrilldown': self.allowPointDrilldown,
+            'allowPointDrilldown': self.allow_point_drilldown,
             'animation': self.animation,
             'breadcrumbs': self.breadcrumbs,
             'series': self.series
