@@ -1,3 +1,4 @@
+import string
 from typing import Optional
 from decimal import Decimal
 from collections import UserDict
@@ -159,6 +160,8 @@ def get_js_literal(item) -> str:
     elif checkers.is_string(item):
         if item.startswith('{') or item.startswith('['):
             as_str += f"""{item}"""
+        elif item in string.whitespace:
+            as_str += f"""`{item}`"""
         elif not is_js_function_or_class(item):
             as_str += f"""'{item}'"""
         else:
@@ -281,6 +284,17 @@ def convert_js_property_to_python(property_definition, original_str = None):
         else:
             raise errors.HighchartsParseError(f'unexpected parse error when '
                                               f'interpreting:\n{property_definition}')
+    elif property_definition.value.type == 'TemplateLiteral':
+        template_elements = property_definition.value.quasis
+        if template_elements:
+            element = template_elements[0]
+            if element.type == 'TemplateElement':
+                return element.value.cooked
+            else:
+                raise errors.HighchartsParseError('unable to properly parse a '
+                                                  'TemplateLiteral. Specifically could '
+                                                  'not find a TemplateElement where one '
+                                                  'was expected.')
     elif property_definition.value.type == 'UnaryExpression':
         property_value = property_definition.value
         operator = property_value.operator

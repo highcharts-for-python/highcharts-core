@@ -15,8 +15,8 @@ class CSVAnnotationOptions(HighchartsMeta):
         self._item_delimiter = None
         self._join = None
 
-        self.item_delimiter = kwargs.pop('item_delimiter', None)
-        self.join = kwargs.pop('join', None)
+        self.item_delimiter = kwargs.get('item_delimiter', None)
+        self.join = kwargs.get('join', None)
 
     @property
     def item_delimiter(self) -> Optional[str]:
@@ -50,7 +50,7 @@ class CSVAnnotationOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'item_delimiter': as_dict.pop('itemDelimiter', None),
+            'item_delimiter': as_dict.get('itemDelimiter', None),
             'join': as_dict.pop('join', None)
         }
 
@@ -89,12 +89,12 @@ class ExportingCSV(HighchartsMeta):
         self._item_delimiter = None
         self._line_delimiter = None
 
-        self.annotations = kwargs.pop('annotations', None)
-        self.column_header_formatter = kwargs.pop('column_header_formatter', None)
-        self.date_format = kwargs.pop('date_format', None)
-        self.decimal_point = kwargs.pop('decimal_point', None)
-        self.item_delimiter = kwargs.pop('item_delimiter', None)
-        self.line_delimiter = kwargs.pop('line_delimiter', None)
+        self.annotations = kwargs.get('annotations', None)
+        self.column_header_formatter = kwargs.get('column_header_formatter', None)
+        self.date_format = kwargs.get('date_format', None)
+        self.decimal_point = kwargs.get('decimal_point', None)
+        self.item_delimiter = kwargs.get('item_delimiter', None)
+        self.line_delimiter = kwargs.get('line_delimiter', None)
 
     @property
     def annotations(self) -> Optional[CSVAnnotationOptions]:
@@ -102,7 +102,7 @@ class ExportingCSV(HighchartsMeta):
 
         :rtype: :class:`CSVAnnotationOption`
         """
-        return self._annotatations
+        return self._annotations
 
     @annotations.setter
     @class_sensitive(CSVAnnotationOptions)
@@ -218,12 +218,12 @@ class ExportingCSV(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'annotations': as_dict.pop('annotations', None),
-            'column_header_formatter': as_dict.pop('columnHeaderFormatter', None),
-            'date_format': as_dict.pop('dateFormat', None),
-            'decimal_point': as_dict.pop('decimalPoint', None),
-            'item_delimiter': as_dict.pop('itemDelimiter', None),
-            'line_delimiter': as_dict.pop('lineDelimiter', None),
+            'annotations': as_dict.get('annotations', None),
+            'column_header_formatter': as_dict.get('columnHeaderFormatter', None),
+            'date_format': as_dict.get('dateFormat', None),
+            'decimal_point': as_dict.get('decimalPoint', None),
+            'item_delimiter': as_dict.get('itemDelimiter', None),
+            'line_delimiter': as_dict.get('lineDelimiter', None),
         }
 
         return cls(**kwargs)
@@ -235,7 +235,7 @@ class ExportingCSV(HighchartsMeta):
             'dateFormat': self.date_format,
             'decimalPoint': self.decimal_point,
             'itemDelimiter': self.item_delimiter,
-            'line_delimiter': self.line_delimiter
+            'lineDelimiter': self.line_delimiter
         }
 
         return untrimmed

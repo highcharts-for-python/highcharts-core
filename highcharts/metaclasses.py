@@ -285,10 +285,10 @@ class HighchartsMeta(ABC):
                                                     range = range,
                                                     _break_loop_on_failure = True)
                 else:
-                    raise errors.HighchartsParseError('._validate_js_function() expects '
+                    raise errors.HighchartsParseError('._validate_js_literal() expects '
                                                       'a str containing a valid '
-                                                      'JavaScript function. Could not '
-                                                      'find a valid function.')
+                                                      'JavaScript literal object. Could '
+                                                      'not find a valid literal.')
 
         return parsed, as_str
 
