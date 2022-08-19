@@ -16,7 +16,7 @@ from validator_collection import validators, checkers, errors as validator_error
 
 from highcharts import constants, errors, utility_functions
 from highcharts.decorators import validate_types, class_sensitive
-from highcharts.metaclasses import HighchartsMeta
+from highcharts.metaclasses import HighchartsMeta, JavaScriptDict
 from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
 from highcharts.utility_classes.javascript_functions import CallbackFunction
@@ -376,7 +376,7 @@ class ContextButtonConfiguration(ButtonConfiguration):
         return untrimmed
 
 
-class ExportingButtons(UserDict):
+class ExportingButtons(JavaScriptDict):
     """Special :class:`dict <python:dict>` class used to construct a collection of
     Highcharts button configurations. Each key represents the identifier of a button,
     while the object is a configuration of that button's settings.
@@ -385,111 +385,5 @@ class ExportingButtons(UserDict):
     :class:`ButtonConfiguration`.
 
     """
-
-    def __setitem__(self, key, item):
-        validate_key = False
-        try:
-            validate_key = key not in self
-        except AttributeError:
-            validate_key = True
-
-        if validate_key:
-            try:
-                key = validators.variable_name(key, allow_empty = False)
-            except validator_errors.InvalidVariableNameError as error:
-                if '-' in key:
-                    try:
-                        test_key = key.replace('-', '_')
-                        validators.variable_name(test_key, allow_empty = False)
-                    except validator_errors.InvalidVariableNameError:
-                        raise error
-                else:
-                    raise error
-
-        item = validate_types(item,
-                              types = ButtonConfiguration,
-                              allow_none = False)
-
-        super().__setitem__(key, item)
-
-    @classmethod
-    def from_dict(cls, as_dict):
-        """Construct an instance of the class from a :class:`dict <python:dict>` object.
-
-        :param as_dict: A :class:`dict <python:dict>` representation of the object.
-        :type as_dict: :class:`dict <python:dict>`
-
-        :returns: A Python object representation of ``as_dict``.
-        :rtype: :class:`JavaScriptDict`
-        """
-        as_dict = validators.dict(as_dict, allow_empty = True)
-        if not as_dict:
-            return cls()
-
-        as_obj = cls()
-        for key in as_dict:
-            as_obj[key] = as_dict.get(key, None)
-
-        return as_obj
-
-    @classmethod
-    def from_json(cls, as_json):
-        """Construct an instance of the class from a JSON string.
-
-        :param as_json: The JSON string for the object.
-        :type as_json: :class:`str <python:str>` or :class:`bytes <python:bytes>`
-
-        :returns: A Python objcet representation of ``as_json``.
-        :rtype: :class:`HighchartsMeta`
-        """
-        as_dict = json.loads(as_json)
-
-        return cls.from_dict(as_dict)
-
-    def _to_untrimmed_dict(self) -> dict:
-        return self.data
-
-    def to_dict(self) -> dict:
-        """Generate a :class:`dict <python:dict>` representation of the object compatible
-        with the Highcharts JavaScript library.
-
-        .. note::
-
-          The :class:`dict <python:dict>` representation has a property structure and
-          naming convention that is *intentionally* consistent with the Highcharts
-          JavaScript library. This is not Pythonic, but it makes managing the interplay
-          between the two languages much, much simpler.
-
-        :returns: A :class:`dict <python:dict>` representation of the object.
-        :rtype: :class:`dict <python:dict>`
-        """
-        return self.data
-
-    def to_json(self, encoding = 'utf-8'):
-        """Generate a JSON string/byte string representation of the object compatible with
-        the Highcharts JavaScript library.
-
-        .. note::
-
-          This method will either return a standard :class:`str <python:str>` or a
-          :class:`bytes <python:bytes>` object depending on the JSON serialization library
-          you are using. For example, if your environment has
-          `orjson <https://github.com/ijl/orjson>`_, the result will be a
-          :class:`bytes <python:bytes>` representation of the string. For more
-          information, please see :doc:`JSON Serialization and Deserialization`.
-
-        :param encoding: The character encoding to apply to the resulting object. Defaults
-          to ``'utf8'``.
-        :type encoding: :class:`str <python:str>`
-
-        :returns: A JSON representation of the object compatible with the Highcharts
-          library.
-        :rtype: :class:`str <python:str>` or :class:`bytes <python:bytes>`
-        """
-        as_dict = self.to_dict()
-        try:
-            as_json = json.dumps(as_dict, encoding = encoding)
-        except TypeError:
-            as_json = json.dumps(as_dict)
-
-        return as_json
+    _valid_value_types = ButtonConfiguration
+    _allow_empty_value = True

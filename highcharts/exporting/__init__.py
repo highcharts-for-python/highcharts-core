@@ -23,7 +23,7 @@ class ExportingAccessibilityOptions(HighchartsMeta):
     def __init_(self, **kwargs):
         self._enabled = None
 
-        self.enabled = kwargs.pop('enabled', None)
+        self.enabled = kwargs.get('enabled', None)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -45,9 +45,11 @@ class ExportingAccessibilityOptions(HighchartsMeta):
 
     @classmethod
     def from_dict(cls, as_dict):
-        return {
-            'enabled': as_dict.pop('enabled', None)
+        kwargs = {
+            'enabled': as_dict.get('enabled', None)
         }
+
+        return cls(**kwargs)
 
     def _to_untrimmed_dict(self) -> dict:
         return {
@@ -84,30 +86,30 @@ class Exporting(HighchartsMeta):
         self._use_rowspan_headers = None
         self._width = None
 
-        self.accessibility = kwargs.pop('accessibility', None)
-        self.allow_html = kwargs.pop('allow_html', None)
-        self.buttons = kwargs.pop('buttons', None)
-        self.chart_options = kwargs.pop('chart_options', None)
-        self.csv = kwargs.pop('csv', None)
-        self.enabled = kwargs.pop('enabled', None)
-        self.error = kwargs.pop('error', None)
-        self.fallback_to_export_server = kwargs.pop('fallback_to_export_server', None)
-        self.filename = kwargs.pop('filename', None)
-        self.form_attributes = kwargs.pop('form_attributes', None)
-        self.lib_url = kwargs.pop('lib_url', None)
-        self.menu_item_definitions = kwargs.pop('menu_item_definitions', None)
-        self.pdf_font = kwargs.pop('pdf_font', None)
-        self.print_max_width = kwargs.pop('print_max_width', None)
-        self.scale = kwargs.pop('scale', None)
-        self.show_table = kwargs.pop('show_table', None)
-        self.source_height = kwargs.pop('source_height', None)
-        self.source_width = kwargs.pop('source_width', None)
-        self.table_caption = kwargs.pop('table_caption', None)
-        self.type = kwargs.pop('type', None)
-        self.url = kwargs.pop('url', None)
-        self.use_multi_level_headers = kwargs.pop('use_multi_level_headers', None)
-        self.use_rowspan_headers = kwargs.pop('use_rowspan_headers', None)
-        self.width = kwargs.pop('width', None)
+        self.accessibility = kwargs.get('accessibility', None)
+        self.allow_html = kwargs.get('allow_html', None)
+        self.buttons = kwargs.get('buttons', None)
+        self.chart_options = kwargs.get('chart_options', None)
+        self.csv = kwargs.get('csv', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.error = kwargs.get('error', None)
+        self.fallback_to_export_server = kwargs.get('fallback_to_export_server', None)
+        self.filename = kwargs.get('filename', None)
+        self.form_attributes = kwargs.get('form_attributes', None)
+        self.lib_url = kwargs.get('lib_url', None)
+        self.menu_item_definitions = kwargs.get('menu_item_definitions', None)
+        self.pdf_font = kwargs.get('pdf_font', None)
+        self.print_max_width = kwargs.get('print_max_width', None)
+        self.scale = kwargs.get('scale', None)
+        self.show_table = kwargs.get('show_table', None)
+        self.source_height = kwargs.get('source_height', None)
+        self.source_width = kwargs.get('source_width', None)
+        self.table_caption = kwargs.get('table_caption', None)
+        self.type = kwargs.get('type', None)
+        self.url = kwargs.get('url', None)
+        self.use_multi_level_headers = kwargs.get('use_multi_level_headers', None)
+        self.use_rowspan_headers = kwargs.get('use_rowspan_headers', None)
+        self.width = kwargs.get('width', None)
 
     @property
     def accessibility(self) -> Optional[ExportingAccessibilityOptions]:
@@ -349,6 +351,10 @@ class Exporting(HighchartsMeta):
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._lib_url
+
+    @lib_url.setter
+    def lib_url(self, value):
+        self._lib_url = validators.url(value, allow_empty = True)
 
     @property
     def menu_item_definitions(self) -> Optional[MenuObject]:
@@ -633,30 +639,30 @@ class Exporting(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_html': as_dict.pop('allowHTML', None),
-            'buttons': as_dict.pop('buttons', None),
-            'chart_options': as_dict.pop('chartOptions', None),
-            'csv': as_dict.pop('csv', None),
-            'enabled': as_dict.pop('enabled', None),
-            'error': as_dict.pop('error', None),
-            'fallback_to_export_server': as_dict.pop('fallbackToExportServer', None),
-            'filename': as_dict.pop('filename', None),
-            'form_attributes': as_dict.pop('formAttributes', None),
-            'lib_url': as_dict.pop('libURL', None),
-            'menu_item_definitions': as_dict.pop('menuItemDefinitions', None),
-            'pdf_font': as_dict.pop('pdfFont', None),
-            'print_max_width': as_dict.pop('printMaxWidth', None),
-            'scale': as_dict.pop('scale', None),
-            'show_table': as_dict.pop('showTable', None),
-            'source_height': as_dict.pop('sourceHeight', None),
-            'source_width': as_dict.pop('sourceWidth', None),
-            'table_caption': as_dict.pop('tableCaption', None),
-            'type': as_dict.pop('type', None),
-            'url': as_dict.pop('url', None),
-            'use_multi_level_headers': as_dict.pop('useMultiLevelHeaders', None),
-            'use_rowspan_headers': as_dict.pop('useRowspanHeaders', None),
-            'width': as_dict.pop('width', None)
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_html': as_dict.get('allowHTML', None),
+            'buttons': as_dict.get('buttons', None),
+            'chart_options': as_dict.get('chartOptions', None),
+            'csv': as_dict.get('csv', None),
+            'enabled': as_dict.get('enabled', None),
+            'error': as_dict.get('error', None),
+            'fallback_to_export_server': as_dict.get('fallbackToExportServer', None),
+            'filename': as_dict.get('filename', None),
+            'form_attributes': as_dict.get('formAttributes', None),
+            'lib_url': as_dict.get('libURL', None),
+            'menu_item_definitions': as_dict.get('menuItemDefinitions', None),
+            'pdf_font': as_dict.get('pdfFont', None),
+            'print_max_width': as_dict.get('printMaxWidth', None),
+            'scale': as_dict.get('scale', None),
+            'show_table': as_dict.get('showTable', None),
+            'source_height': as_dict.get('sourceHeight', None),
+            'source_width': as_dict.get('sourceWidth', None),
+            'table_caption': as_dict.get('tableCaption', None),
+            'type': as_dict.get('type', None),
+            'url': as_dict.get('url', None),
+            'use_multi_level_headers': as_dict.get('useMultiLevelHeaders', None),
+            'use_rowspan_headers': as_dict.get('useRowspanHeaders', None),
+            'width': as_dict.get('width', None)
         }
 
         return cls(**kwargs)
@@ -684,7 +690,7 @@ class Exporting(HighchartsMeta):
             'tableCaption': self.table_caption,
             'type': self.type,
             'url': self.url,
-            'useMultiLevelheaders': self.use_multi_level_headers,
+            'useMultiLevelHeaders': self.use_multi_level_headers,
             'useRowspanHeaders': self.use_rowspan_headers,
             'width': self.width
         }

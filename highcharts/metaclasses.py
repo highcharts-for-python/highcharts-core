@@ -15,9 +15,10 @@ except ImportError:
 
 import esprima
 from esprima.error_handler import Error as ParseError
-from validator_collection import validators, checkers
+from validator_collection import validators, checkers, errors as validator_errors
 
 from highcharts import constants, errors
+from highcharts.decorators import validate_types
 from highcharts.js_literal_functions import serialize_to_js_literal, assemble_js_literal,\
     get_key_value_pairs
 
@@ -385,41 +386,35 @@ class JavaScriptDict(UserDict):
     as JavaScript code.
 
     """
+    _valid_value_types = None
+    _allow_empty_value = True
 
     def __setitem__(self, key, item):
-        if key not in self:
-            key = validators.variable_name(key, allow_empty = False)
+        validate_key = False
+        try:
+            validate_key = key not in self
+        except AttributeError:
+            validate_key = True
 
-        item = validators.string(item, allow_empty = True)
+        if validate_key:
+            try:
+                key = validators.variable_name(key, allow_empty = False)
+            except validator_errors.InvalidVariableNameError as error:
+                if '-' in key:
+                    try:
+                        test_key = key.replace('-', '_')
+                        validators.variable_name(test_key, allow_empty = False)
+                    except validator_errors.InvalidVariableNameError:
+                        raise error
+                else:
+                    raise error
+
+        if self._valid_value_types:
+            item = validate_types(item,
+                                  types = self._valid_value_types,
+                                  allow_none = self._allow_empty_value)
 
         super().__setitem__(key, item)
-
-    def __str__(self):
-        """Serializes the instance to a :class:`str <python:str>`, however applying
-        special logic to ensure that the string can be executed as valid JavaScript code.
-        These rules are as follows:
-
-          #. Keys are not wrapped in single or double-quotes.
-          #. Line indententation for keys is based on the JAVASCRIPT_INDENT_SPACES
-             environment variable.
-          #. Values are not wrapped in quotes (unlike JSON) so that they can be executed.
-
-        .. hint::
-
-          If you need a JSON represnetation of this class, you can call the
-          :meth:`to_dict() <JavaScriptDict.to_dict>` method, which serializes to a
-          standard JSON syntax.
-
-        :returns: An executable JavaScript code snippet expressed as a string.
-        :rtype: :class:`str <python:str>`
-        """
-        as_str = '{\n'
-        for key in self:
-            item = self[key]
-            as_str += f'\n{constants.JAVASCRIPT_INDENT}{key}: {item}'
-        as_str += '\n};'
-
-        return as_str
 
     @classmethod
     def from_dict(cls, as_dict):
@@ -454,6 +449,9 @@ class JavaScriptDict(UserDict):
         as_dict = json.loads(as_json)
 
         return cls.from_dict(as_dict)
+
+    def _to_untrimmed_dict(self) -> dict:
+        return self.data
 
     def to_dict(self):
         """Generate a :class:`dict <python:dict>` representation of the object compatible
@@ -499,3 +497,79 @@ class JavaScriptDict(UserDict):
             as_json = json.dumps(as_dict)
 
         return as_json
+
+    def to_js_literal(self,
+                      filename = None,
+                      encoding = 'utf-8') -> Optional[str]:
+        """Return the object represented as a :class:`str <python:str>` containing the
+        JavaScript object literal.
+
+        :param filename: The name of a file to which the JavaScript object literal should
+          be persisted. Defaults to :obj:`None <python:None>`
+        :type filename: Path-like
+
+        :param encoding: The character encoding to apply to the resulting object. Defaults
+          to ``'utf-8'``.
+        :type encoding: :class:`str <python:str>`
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        if filename:
+            filename = validators.path(filename)
+
+        untrimmed = self._to_untrimmed_dict()
+        as_dict = {}
+        for key in untrimmed:
+            item = untrimmed[key]
+            serialized = serialize_to_js_literal(item, encoding = encoding)
+            if serialized is not None:
+                as_dict[key] = serialized
+
+        as_str = assemble_js_literal(as_dict, keys_as_strings = True)
+
+        if filename:
+            with open(filename, 'w', encoding = encoding) as file_:
+                file_.write(as_str)
+
+        return as_str
+
+    @classmethod
+    def _validate_js_literal(cls,
+                             as_str,
+                             range = True,
+                             _break_loop_on_failure = False):
+        """Parse ``as_str`` as a valid JavaScript literal object.
+
+        :param as_str: The string to parse as a JavaScript literal object.
+        :type as_str: :class:`str <python:str>`
+
+        :param range: If ``True``, includes location and range data for each node in the
+          AST returned. Defaults to ``False``.
+        :type range: :class:`bool <python:bool>`
+
+        :param _break_loop_on_failure: If ``True``, will not loop if the method fails to
+          parse/validate ``as_str``. Defaults to ``False``.
+        :type _break_loop_on_failure: :class:`bool <python:bool>`
+
+        :returns: The parsed AST representation of ``as_str`` and the updated string.
+        :rtype: 2-member :class:`tuple <python:tuple>` of :class:`esprima.nodes.Script`
+          and :class:`str <python:str>`
+        """
+        try:
+            parsed = esprima.parseScript(as_str, loc = range, range = range)
+        except ParseError:
+            try:
+                parsed = esprima.parseModule(as_str, loc = range, range = range)
+            except ParseError:
+                if not _break_loop_on_failure:
+                    as_str = f"""var randomVariable = {as_str}"""
+                    return cls._validate_js_literal(as_str,
+                                                    range = range,
+                                                    _break_loop_on_failure = True)
+                else:
+                    raise errors.HighchartsParseError('._validate_js_function() expects '
+                                                      'a str containing a valid '
+                                                      'JavaScript function. Could not '
+                                                      'find a valid function.')
+
+        return parsed, as_str

@@ -23,7 +23,7 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
     :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
     """
     if checkers.is_iterable(item, forbid_literals = (str, bytes, dict, UserDict)):
-        return [serialize_to_js_literal(x) for x in item]
+        return [serialize_to_js_literal(x, encoding = encoding) for x in item]
     elif hasattr(item, 'to_js_literal'):
         return item.to_js_literal(encoding = encoding)
     elif isinstance(item, constants.EnforcedNullType) or item == 'null':
@@ -36,8 +36,13 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
         return item
     elif isinstance(item, Decimal):
         return float(item)
-    elif checkers.is_type(item, ('CallbackFunction', dict, UserDict)):
+    elif checkers.is_type(item, ('CallbackFunction')):
         return str(item)
+    elif checkers.is_type(item, (dict, UserDict)):
+        as_dict = {}
+        for key in item:
+            as_dict[key] = serialize_to_js_literal(item[key], encoding = encoding)
+        return str(as_dict)
     elif item is None:
         return None
 
@@ -170,11 +175,16 @@ def get_js_literal(item) -> str:
     return as_str
 
 
-def assemble_js_literal(as_dict) -> Optional[str]:
+def assemble_js_literal(as_dict, keys_as_strings = False) -> Optional[str]:
     """Convert ``as_dict`` into a JavaScript object literal string.
 
     :param as_dict: A :class:`dict <python:dict>` representation of the JavaScript object.
     :type as_dict: :class:`dict <pythoN:dict>`
+
+    :param keys_as_strings: if ``True``, will return the keys as string values (wrapped
+      in quotation marks). If ``False``, will return the keys as object literals. Defaults
+      to ``False``.
+    :type keys_as_strings: :class:`bool <python:bool>`
 
     :returns: The JavaScript object literal representation of ``as_dict``.
     :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
@@ -196,7 +206,10 @@ def assemble_js_literal(as_dict) -> Optional[str]:
             ended_on_None = True
             continue
 
-        as_str += f"""  {key}: """
+        if keys_as_strings:
+            as_str += f"""  '{key}': """
+        else:
+            as_str += f"""  {key}: """
 
         as_str += get_js_literal(item)
 

@@ -95,8 +95,10 @@ def to_js_dict(original):
     print(f'\n{original}\n')
     as_dict = {}
     for key in original:
-        if 'html' in key:
+        if 'use_html' in key:
             new_key = 'useHTML'
+        elif key == 'allow_html':
+            new_key = 'allowHTML'
         elif 'utc' in key:
             new_key = 'useUTC'
         elif '_csv' in key:
@@ -290,10 +292,14 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
                 assert does_kwarg_value_match_result(kwargs_copy[key],
                                                      result.get(key)) is True
             else:
-                if 'html' in key:
+                if 'use_html' in key:
                     print(f'CHECKING: {key}')
                     assert does_kwarg_value_match_result(kwargs_copy[key],
                                                          result.get('useHTML')) is True
+                elif key == 'allow_html':
+                    print(f'CHECKING: {key}')
+                    assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                         result.get('allowHTML')) is True
                 elif 'utc' in key:
                     print(f'CHECKING: {key}')
                     assert does_kwarg_value_match_result(kwargs_copy[key],
