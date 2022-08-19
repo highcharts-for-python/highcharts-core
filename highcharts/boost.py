@@ -18,12 +18,12 @@ class BoostDebug(HighchartsMeta):
         self._time_series_processing = None
         self._time_setup = None
 
-        self.show_skip_summary = kwargs.pop('show_skip_summary', None)
-        self.time_buffer_copy = kwargs.pop('time_buffer_copy', None)
-        self.time_kd_tree = kwargs.pop('time_kd_tree', None)
-        self.time_rendering = kwargs.pop('time_rendering', None)
-        self.time_series_processing = kwargs.pop('time_series_processing', None)
-        self.time_setup = kwargs.pop('time_setup', None)
+        self.show_skip_summary = kwargs.get('show_skip_summary', None)
+        self.time_buffer_copy = kwargs.get('time_buffer_copy', None)
+        self.time_kd_tree = kwargs.get('time_kd_tree', None)
+        self.time_rendering = kwargs.get('time_rendering', None)
+        self.time_series_processing = kwargs.get('time_series_processing', None)
+        self.time_setup = kwargs.get('time_setup', None)
 
     @property
     def show_skip_summary(self) -> Optional[bool]:
@@ -137,12 +137,12 @@ class BoostDebug(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'show_skip_summary': as_dict.pop('showSkipSummary', None),
-            'time_buffer_copy': as_dict.pop('timeBufferCopy', None),
-            'time_kd_tree': as_dict.pop('timeKDTree', None),
-            'time_rendering': as_dict.pop('timeRendering', None),
-            'time_series_processing': as_dict.pop('timeSeriesProcessing', None),
-            'time_setup': as_dict.pop('timeSetup', None),
+            'show_skip_summary': as_dict.get('showSkipSummary', None),
+            'time_buffer_copy': as_dict.get('timeBufferCopy', None),
+            'time_kd_tree': as_dict.get('timeKDTree', None),
+            'time_rendering': as_dict.get('timeRendering', None),
+            'time_series_processing': as_dict.get('timeSeriesProcessing', None),
+            'time_setup': as_dict.get('timeSetup', None),
         }
 
         return cls(**kwargs)
@@ -185,13 +185,13 @@ class Boost(HighchartsMeta):
         self._use_gpu_translations = None
         self._use_preallocated = None
 
-        self.allow_force = kwargs.pop('allow_force', None)
-        self.debug = kwargs.pop('debug', None)
-        self.enabled = kwargs.pop('enabled', None)
-        self.pixel_ratio = kwargs.pop('pixel_ratio', None)
-        self.series_threshold = kwargs.pop('series_threshold', None)
-        self.use_gpu_translations = kwargs.pop('use_gpu_translations', None)
-        self.use_preallocated = kwargs.pop('use_preallocated', None)
+        self.allow_force = kwargs.get('allow_force', None)
+        self.debug = kwargs.get('debug', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.pixel_ratio = kwargs.get('pixel_ratio', None)
+        self.series_threshold = kwargs.get('series_threshold', None)
+        self.use_gpu_translations = kwargs.get('use_gpu_translations', None)
+        self.use_preallocated = kwargs.get('use_preallocated', None)
 
     @property
     def allow_force(self) -> Optional[bool]:
@@ -338,7 +338,7 @@ class Boost(HighchartsMeta):
         :returns: Flag indicating whether pre-allocation of vertex buffers is enabled.
         :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
-        return self._use_preallocation
+        return self._use_preallocated
 
     @use_preallocated.setter
     def use_preallocated(self, value):
@@ -350,13 +350,13 @@ class Boost(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'allow_force': as_dict.pop('allowForce', None),
-            'debug': as_dict.pop('debug', None),
-            'enabled': as_dict.pop('enabled', None),
-            'pixel_ratio': as_dict.pop('pixelRatio', None),
-            'series_threshold': as_dict.pop('seriesThreshold', None),
-            'use_gpu_translations': as_dict.pop('useGPUTranslations', None),
-            'use_preallocated': as_dict.pop('usePreallocated', None),
+            'allow_force': as_dict.get('allowForce', None),
+            'debug': as_dict.get('debug', None),
+            'enabled': as_dict.get('enabled', None),
+            'pixel_ratio': as_dict.get('pixelRatio', None),
+            'series_threshold': as_dict.get('seriesThreshold', None),
+            'use_gpu_translations': as_dict.get('useGPUTranslations', None),
+            'use_preallocated': as_dict.get('usePreallocated', None),
         }
 
         return cls(**kwargs)

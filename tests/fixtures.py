@@ -123,6 +123,8 @@ def to_js_dict(original):
             new_key = 'thousandsSep'
         elif key == 'measure_xy':
             new_key = 'measureXY'
+        elif key == 'use_gpu_translations':
+            new_key = 'useGPUTranslations'
         else:
             new_key = to_camelCase(key)
 
@@ -341,6 +343,21 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
                         result.get(to_camelCase(updated_key))
                     )
                     assert matches is True
+                elif '_kd_tree' in key:
+                    updated_key = key.replace('_kd_tree', 'KDTree')
+                    matches = does_kwarg_value_match_result(
+                        kwargs_copy[key],
+                        result.get(to_camelCase(updated_key))
+                    )
+                    assert matches is True
+                elif key == 'use_gpu_translations':
+                    updated_key = 'useGPUTranslations'
+                    print(f'using key: {updated_key}')
+                    matches = does_kwarg_value_match_result(
+                        kwargs_copy[key],
+                        result.get(to_camelCase(updated_key))
+                    )
+                    assert matches is True
                 elif '_csv' in key:
                     print(f'CHECKING: {key}')
                     new_key = 'downloadCSV'
@@ -509,7 +526,6 @@ def Class_from_dict(cls, kwargs, error):
                     assert does_kwarg_value_match_result(kwargs[key],
                                                          getattr(instance, 'margin_left'))
             else:
-                print('running else')
                 kwarg_value = kwargs[key]
                 if key in ['pattern_options', 'patternOptions']:
                     result_value = getattr(instance, 'pattern_options')
