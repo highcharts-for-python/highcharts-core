@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from validator_collection import validators, checkers
 
-from highcharts import errors, constants
+from highcharts import errors, constants, utility_functions
 from highcharts.decorators import class_sensitive, validate_types
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.utility_classes.javascript_functions import CallbackFunction
@@ -37,8 +37,8 @@ class PanningOptions(HighchartsMeta):
         self._enabled = None
         self._type = None
 
-        self.enabled = kwargs.pop('enabled', None)
-        self.type = kwargs.pop('type', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.type = kwargs.get('type', None)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -86,8 +86,8 @@ class PanningOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'enabled': as_dict.pop('enabled', None),
-            'type': as_dict.pop('type', None)
+            'enabled': as_dict.get('enabled', None),
+            'type': as_dict.get('type', None)
         }
 
         return cls(**kwargs)
@@ -99,7 +99,7 @@ class PanningOptions(HighchartsMeta):
         }
 
 
-class Chart(HighchartsMeta):
+class ChartOptions(HighchartsMeta):
     """Configuration settings that apply to a chart."""
 
     def __init__(self, **kwargs):
@@ -154,56 +154,60 @@ class Chart(HighchartsMeta):
         self._zoom_key = None
         self._zoom_type = None
 
-        self.align_thresholds = kwargs.pop('align_thresholds', None)
-        self.align_ticks = kwargs.pop('align_ticks', None)
-        self.allow_mutating_data = kwargs.pop('allow_mutating_data', None)
-        self.animation = kwargs.pop('animation', None)
-        self.background_color = kwargs.pop('background_color', None)
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_radius = kwargs.pop('border_radius', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.class_name = kwargs.pop('class_name', None)
-        self.color_count = kwargs.pop('color_count', None)
-        self.display_errors = kwargs.pop('display_errors', None)
-        self.events = kwargs.pop('events', None)
-        self.height = kwargs.pop('height', None)
-        self.ignore_hidden_series = kwargs.pop('ignore_hidden_series', None)
-        self.inverted = kwargs.pop('inverted', None)
-        self.margin_bottom = kwargs.pop('margin_bottom', None)
-        self.margin_left = kwargs.pop('margin_left', None)
-        self.margin_right = kwargs.pop('margin_right', None)
-        self.margin_top = kwargs.pop('margin_top', None)
-        self.number_formatter = kwargs.pop('number_formatter', None)
-        self.options_3d = kwargs.pop('options_3d', None)
-        self.pan_key = kwargs.pop('pan_key', None)
-        self.panning = kwargs.pop('panning', None)
-        self.parallel_axes = kwargs.pop('parallel_axes', None)
-        self.parallel_coordinates = kwargs.pop('parallel_coordinates', None)
-        self.pinch_type = kwargs.pop('pinch_type', None)
-        self.plot_background_color = kwargs.pop('plot_background_color', None)
-        self.plot_background_image = kwargs.pop('plot_background_image', None)
-        self.plot_border_color = kwargs.pop('plot_border_color', None)
-        self.plot_border_width = kwargs.pop('plot_border_width', None)
-        self.plot_shadow = kwargs.pop('plot_shadow', None)
-        self.polar = kwargs.pop('polar', None)
-        self.reflow = kwargs.pop('reflow', None)
-        self.render_to = kwargs.pop('render_to', None)
-        self.reset_zoom_button = kwargs.pop('reset_zoom_button', None)
-        self.scrollable_plot_area = kwargs.pop('scrollable_plot_area', None)
-        self.selection_marker_fill = kwargs.pop('selection_marker_fill', None)
-        self.shadow = kwargs.pop('shadow', None)
-        self.show_axes = kwargs.pop('show_axes', None)
-        self.spacing_bottom = kwargs.pop('spacing_bottom', None)
-        self.spacing_left = kwargs.pop('spacing_left', None)
-        self.spacing_top = kwargs.pop('spacing_top', None)
-        self.spacing_right = kwargs.pop('spacing_right', None)
-        self.style = kwargs.pop('style', None)
-        self.styled_mode = kwargs.pop('styled_mode', None)
-        self.type = kwargs.pop('type', None)
-        self.width = kwargs.pop('width', None)
-        self.zoom_by_single_touch = kwargs.pop('zoom_by_single_touch', None)
-        self.zoom_key = kwargs.pop('zoom_key', None)
-        self.zoom_type = kwargs.pop('zoom_type', None)
+        self.align_thresholds = kwargs.get('align_thresholds', None)
+        self.align_ticks = kwargs.get('align_ticks', None)
+        self.allow_mutating_data = kwargs.get('allow_mutating_data', None)
+        self.animation = kwargs.get('animation', None)
+        self.background_color = kwargs.get('background_color', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_radius = kwargs.get('border_radius', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.color_count = kwargs.get('color_count', None)
+        self.display_errors = kwargs.get('display_errors', None)
+        self.events = kwargs.get('events', None)
+        self.height = kwargs.get('height', None)
+        self.ignore_hidden_series = kwargs.get('ignore_hidden_series', None)
+        self.inverted = kwargs.get('inverted', None)
+        self.margin = kwargs.get('margin', None)
+        if not kwargs.get('margin', None):
+            self.margin_bottom = kwargs.get('margin_bottom', None)
+            self.margin_left = kwargs.get('margin_left', None)
+            self.margin_right = kwargs.get('margin_right', None)
+            self.margin_top = kwargs.get('margin_top', None)
+        self.number_formatter = kwargs.get('number_formatter', None)
+        self.options_3d = kwargs.get('options_3d', None)
+        self.pan_key = kwargs.get('pan_key', None)
+        self.panning = kwargs.get('panning', None)
+        self.parallel_axes = kwargs.get('parallel_axes', None)
+        self.parallel_coordinates = kwargs.get('parallel_coordinates', None)
+        self.pinch_type = kwargs.get('pinch_type', None)
+        self.plot_background_color = kwargs.get('plot_background_color', None)
+        self.plot_background_image = kwargs.get('plot_background_image', None)
+        self.plot_border_color = kwargs.get('plot_border_color', None)
+        self.plot_border_width = kwargs.get('plot_border_width', None)
+        self.plot_shadow = kwargs.get('plot_shadow', None)
+        self.polar = kwargs.get('polar', None)
+        self.reflow = kwargs.get('reflow', None)
+        self.render_to = kwargs.get('render_to', None)
+        self.reset_zoom_button = kwargs.get('reset_zoom_button', None)
+        self.scrollable_plot_area = kwargs.get('scrollable_plot_area', None)
+        self.selection_marker_fill = kwargs.get('selection_marker_fill', None)
+        self.shadow = kwargs.get('shadow', None)
+        self.show_axes = kwargs.get('show_axes', None)
+        self.spacing = kwargs.get('spacing', None)
+        if not kwargs.get('spacing', None):
+            self.spacing_bottom = kwargs.get('spacing_bottom', None)
+            self.spacing_left = kwargs.get('spacing_left', None)
+            self.spacing_top = kwargs.get('spacing_top', None)
+            self.spacing_right = kwargs.get('spacing_right', None)
+        self.style = kwargs.get('style', None)
+        self.styled_mode = kwargs.get('styled_mode', None)
+        self.type = kwargs.get('type', None)
+        self.width = kwargs.get('width', None)
+        self.zoom_by_single_touch = kwargs.get('zoom_by_single_touch', None)
+        self.zoom_key = kwargs.get('zoom_key', None)
+        self.zoom_type = kwargs.get('zoom_type', None)
 
     @property
     def align_thresholds(self) -> Optional[bool]:
@@ -337,7 +341,7 @@ class Chart(HighchartsMeta):
         f"""The background color or gradient for the outer chart area. Defaults to
         ``'{constants.DEFAULT_CHART_BACKGROUND_COLOR}'``.
 
-        :returns: The backgorund color for the outer chart area.
+        :returns: The background color for the outer chart area.
         :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
           :obj:`None <python:None>`
         """
@@ -459,23 +463,20 @@ class Chart(HighchartsMeta):
 
     @property
     def height(self) -> Optional[constants.EnforcedNullType | int | float | Decimal | str]:
-        """An explicit height for the chart.
-
-        Defaults to :class:`EnforcedNull <EnforcedNullType>`` which indicates
-        a JavaScript value of ``null`` (as opposed to :obj:`None <python:None>`) which
-        results in ``undefined`` when converted JavaScript.
+        """An explicit height for the chart. Defaults to :obj:`None <python:None>`.
 
         If a number, the height is given in pixels. If given a percentage string (for
         example ``'56%'``), the height is given as the percentage of the actual chart
         width. This allows for preserving the aspect ratio across responsive sizes.
 
-        By default (when null) the height is calculated from the offset height of the
-        containing element, or 400 pixels if the containing element's height is 0.
+        By default (when :obj:`None python:None>`) the height is calculated from the
+        offset height of the containing element, or 400 pixels if the containing element's
+        height is 0.
 
         :rtype: :class:`EnforcedNullType` or numeric or :class:`str <python:str>` or
           :obj:`None <python:None>`
         """
-        return self._height or constants.EnforcedNull
+        return self._height
 
     @height.setter
     def height(self, value):
@@ -856,7 +857,7 @@ class Chart(HighchartsMeta):
         f"""The background color or gradient for the plot area. Defaults to
         ``'{constants.DEFAULT_CHART_PLOT_BACKGROUND_COLOR}'``.
 
-        :returns: The backgorund color for the plot area.
+        :returns: The background color for the plot area.
         :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
           :obj:`None <python:None>`
         """
@@ -892,13 +893,13 @@ class Chart(HighchartsMeta):
     @plot_background_image.setter
     def plot_background_image(self, value):
         if not value:
-            self._src = None
+            self._plot_background_image = None
         else:
             try:
-                self._src = validators.url(value)
+                self._plot_background_image = validators.url(value)
             except ValueError:
                 try:
-                    self._src = validators.path(value)
+                    self._plot_background_image = validators.path(value)
                 except ValueError:
                     raise errors.HighchartsValueError(f'value provided ({value}) not a '
                                                       f'valid URL or path')
@@ -1069,34 +1070,7 @@ class Chart(HighchartsMeta):
 
     @selection_marker_fill.setter
     def selection_marker_fill(self, value):
-        if not value:
-            self._selection_marker_fill = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._selection_marker_fill = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._selection_marker_fill = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._selection_marker_fill = Gradient.from_dict(value)
-                else:
-                    self._selection_marker_fill = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._selection_marker_fill = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._selection_marker_fill = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._selection_marker_fill = Pattern.from_dict(value)
-                else:
-                    self._selection_marker_fill = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._selection_marker_fill = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        self._selection_marker_fill = utility_functions.validate_color(value)
 
     @property
     def shadow(self) -> Optional[bool | ShadowOptions]:
@@ -1187,11 +1161,13 @@ class Chart(HighchartsMeta):
                                                   f' or an iterable of four values. '
                                                   f'Received an iterable of {len(value)} '
                                                   f'values ({value})')
+            value = [validators.numeric(x) for x in value]
             self.spacing_top = value[0]
             self.spacing_right = value[1]
             self.spacing_bottom = value[2]
             self.spacing_left = value[3]
         else:
+            value = validators.numeric(value, allow_empty = False)
             self.spacing_top = value
             self.spacing_right = value
             self.spacing_bottom = value
@@ -1390,13 +1366,33 @@ class Chart(HighchartsMeta):
 
           This should be set to a different key than :meth:`Chart.pan_key`.
 
+        Accepts the following values:
+
+          * ``'alt'``
+          * ``'ctrl'``
+          * ``'meta'`` (the command key on Mac and Windows key on Windows)
+          * ``'shift'``.
+
+        The keys are mapped directly to the key properties of the click event argument
+        (``event.altKey``, ``event.ctrlKey``, ``event.metaKey``, and ``event.shiftKey``).
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._zoom_key
 
     @zoom_key.setter
     def zoom_key(self, value):
-        self._zoom_key = validators.string(value, allow_empty = True)
+        if not value:
+            self._zoom_key = None
+        else:
+            value = validators.string(value)
+            value = value.lower()
+            if value not in ['alt', 'ctrl', 'meta', 'shift']:
+                raise errors.HighchartsValueError(f'pan_key expects a value of "alt", '
+                                                  f'"ctrl", "meta", or "shift". Was: '
+                                                  f'{value}')
+
+            self._zoom_key = value
 
     @property
     def zoom_type(self) -> Optional[str]:
@@ -1430,58 +1426,58 @@ class Chart(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'align_thresholds': as_dict.pop('alignThresholds', None),
-            'align_ticks': as_dict.pop('alignTicks', None),
-            'allow_mutating_data': as_dict.pop('allowMutatingData', None),
-            'animation': as_dict.pop('animation', None),
-            'background_color': as_dict.pop('backgroundColor', None),
-            'border_color': as_dict.pop('borderColor', None),
-            'border_radius': as_dict.pop('borderRadius', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'class_name': as_dict.pop('className', None),
-            'color_count': as_dict.pop('colorCount', None),
-            'display_errors': as_dict.pop('displayErrors', None),
-            'events': as_dict.pop('events', None),
-            'height': as_dict.pop('height', None),
-            'ignore_hidden_series': as_dict.pop('ignoreHiddenSeries', None),
-            'inverted': as_dict.pop('inverted', None),
-            'margin': as_dict.pop('margin', None),
-            'margin_bottom': as_dict.pop('marginBottom', None),
-            'margin_left': as_dict.pop('marginLeft', None),
-            'margin_right': as_dict.pop('marginRight', None),
-            'margin_top': as_dict.pop('marginTop', None),
-            'number_formatter': as_dict.pop('numberFormatter', None),
-            'options_3d': as_dict.pop('options3d', None),
-            'pan_key': as_dict.pop('panKey', None),
-            'panning': as_dict.pop('panning', None),
-            'parallel_axes': as_dict.pop('parallelAxes', None),
-            'parallel_coordinates': as_dict.pop('parallelCoordinates', None),
-            'pinch_type': as_dict.pop('pinchType', None),
-            'plot_background_color': as_dict.pop('plotBackgroundColor', None),
-            'plot_background_image': as_dict.pop('plotBackgroundImage', None),
-            'plot_border_color': as_dict.pop('plotBorderColor', None),
-            'plot_border_width': as_dict.pop('plotBorderWidth', None),
-            'plot_shadow': as_dict.pop('plotShadow', None),
-            'polar': as_dict.pop('polar', None),
-            'reflow': as_dict.pop('reflow', None),
-            'render_to': as_dict.pop('renderTo', None),
-            'reset_zoom_button': as_dict.pop('resetZoomButton', None),
-            'scollable_plot_area': as_dict.pop('scrollablePlotArea', None),
-            'selection_marker_fill': as_dict.pop('selectionMarkerFill', None),
-            'shadow': as_dict.pop('shadow', None),
-            'show_axes': as_dict.pop('showAxes', None),
-            'spacing': as_dict.pop('spacing', None),
-            'spacing_bottom': as_dict.pop('spacingBottom', None),
-            'spacing_left': as_dict.pop('spacingLeft', None),
-            'spacing_top': as_dict.pop('spacingTop', None),
-            'spacing_right': as_dict.pop('spacingRight', None),
-            'style': as_dict.pop('style', None),
-            'styled_mode': as_dict.pop('styledMode', None),
-            'type': as_dict.pop('type', None),
-            'width': as_dict.pop('width', None),
-            'zoom_by_single_touch': as_dict.pop('zoomBySingleTouch', None),
-            'zoom_key': as_dict.pop('zoomKey', None),
-            'zoom_type': as_dict.pop('zoomType', None)
+            'align_thresholds': as_dict.get('alignThresholds', None),
+            'align_ticks': as_dict.get('alignTicks', None),
+            'allow_mutating_data': as_dict.get('allowMutatingData', None),
+            'animation': as_dict.get('animation', None),
+            'background_color': as_dict.get('backgroundColor', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'class_name': as_dict.get('className', None),
+            'color_count': as_dict.get('colorCount', None),
+            'display_errors': as_dict.get('displayErrors', None),
+            'events': as_dict.get('events', None),
+            'height': as_dict.get('height', None),
+            'ignore_hidden_series': as_dict.get('ignoreHiddenSeries', None),
+            'inverted': as_dict.get('inverted', None),
+            'margin': as_dict.get('margin', None),
+            'margin_bottom': as_dict.get('marginBottom', None),
+            'margin_left': as_dict.get('marginLeft', None),
+            'margin_right': as_dict.get('marginRight', None),
+            'margin_top': as_dict.get('marginTop', None),
+            'number_formatter': as_dict.get('numberFormatter', None),
+            'options_3d': as_dict.get('options3d', None),
+            'pan_key': as_dict.get('panKey', None),
+            'panning': as_dict.get('panning', None),
+            'parallel_axes': as_dict.get('parallelAxes', None),
+            'parallel_coordinates': as_dict.get('parallelCoordinates', None),
+            'pinch_type': as_dict.get('pinchType', None),
+            'plot_background_color': as_dict.get('plotBackgroundColor', None),
+            'plot_background_image': as_dict.get('plotBackgroundImage', None),
+            'plot_border_color': as_dict.get('plotBorderColor', None),
+            'plot_border_width': as_dict.get('plotBorderWidth', None),
+            'plot_shadow': as_dict.get('plotShadow', None),
+            'polar': as_dict.get('polar', None),
+            'reflow': as_dict.get('reflow', None),
+            'render_to': as_dict.get('renderTo', None),
+            'reset_zoom_button': as_dict.get('resetZoomButton', None),
+            'scrollable_plot_area': as_dict.get('scrollablePlotArea', None),
+            'selection_marker_fill': as_dict.get('selectionMarkerFill', None),
+            'shadow': as_dict.get('shadow', None),
+            'show_axes': as_dict.get('showAxes', None),
+            'spacing': as_dict.get('spacing', None),
+            'spacing_bottom': as_dict.get('spacingBottom', None),
+            'spacing_left': as_dict.get('spacingLeft', None),
+            'spacing_top': as_dict.get('spacingTop', None),
+            'spacing_right': as_dict.get('spacingRight', None),
+            'style': as_dict.get('style', None),
+            'styled_mode': as_dict.get('styledMode', None),
+            'type': as_dict.get('type', None),
+            'width': as_dict.get('width', None),
+            'zoom_by_single_touch': as_dict.get('zoomBySingleTouch', None),
+            'zoom_key': as_dict.get('zoomKey', None),
+            'zoom_type': as_dict.get('zoomType', None)
         }
 
         return cls(**kwargs)

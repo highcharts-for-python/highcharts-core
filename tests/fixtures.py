@@ -258,13 +258,41 @@ def Class__init__(cls, kwargs, error):
                 continue
             if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('class'):
                 continue
-
-            kwarg_value = kwargs_copy[key]
-            result_value = getattr(result, key)
-            print(f'KWARG VALUE:\n{kwarg_value}')
-            print(f'RESULT VALUE:\n{result_value}')
-            assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                 getattr(result, key)) is True
+            elif key == 'margin' and checkers.is_type(result, 'ChartOptions'):
+                print(f'CHECKING: {key}, which gets split over other values')
+                if checkers.is_iterable(kwargs_copy[key]):
+                    print('is iterable')
+                    assert does_kwarg_value_match_result(kwargs_copy[key][0],
+                                                         getattr(result, 'margin_top'))
+                    assert does_kwarg_value_match_result(kwargs_copy[key][1],
+                                                         getattr(result, 'margin_right'))
+                    assert does_kwarg_value_match_result(kwargs_copy[key][2],
+                                                         getattr(result, 'margin_bottom'))
+                    assert does_kwarg_value_match_result(kwargs_copy[key][3],
+                                                         getattr(result, 'margin_left'))
+                elif kwargs_copy[key]:
+                    print('not iterable')
+                    print('checking margin_top')
+                    print(result.margin_top)
+                    assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                         getattr(result, 'margin_top'))
+                    print('checking margin_right')
+                    assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                         getattr(result, 'margin_right'))
+                    print('checking margin_bottom')
+                    assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                         getattr(result, 'margin_bottom'))
+                    print('checking margin_left')
+                    assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                         getattr(result, 'margin_left'))
+            else:
+                print('not margin')
+                kwarg_value = kwargs_copy[key]
+                result_value = getattr(result, key)
+                print(f'KWARG VALUE:\n{kwarg_value}')
+                print(f'RESULT VALUE:\n{result_value}')
+                assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                     getattr(result, key)) is True
     else:
         with pytest.raises(error):
             result = cls(**kwargs)
@@ -288,7 +316,8 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
                 continue
             if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('class'):
                 continue
-            if '_' not in key:
+            if '_' not in key and (key != 'margin' and not checkers.is_type(instance,
+                                                                            'ChartOptions')):
                 assert does_kwarg_value_match_result(kwargs_copy[key],
                                                      result.get(key)) is True
             else:
@@ -386,6 +415,50 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
                     print(f'CHECKING: {key}')
                     assert does_kwarg_value_match_result(kwargs_copy[key],
                                                          result.get(key)) is True
+                elif key == 'margin' and checkers.is_type(instance, 'ChartOptions'):
+                    print(f'CHECKING: {key}, which gets split over other values')
+                    if checkers.is_iterable(kwargs_copy[key]):
+                        assert does_kwarg_value_match_result(kwargs_copy[key][0],
+                                                             result.get('marginTop'))
+                        assert does_kwarg_value_match_result(kwargs_copy[key][1],
+                                                             result.get('marginRight'))
+                        assert does_kwarg_value_match_result(kwargs_copy[key][2],
+                                                             result.get('marginBottom'))
+                        assert does_kwarg_value_match_result(kwargs_copy[key][3],
+                                                             result.get('marginLeft'))
+                    elif kwargs_copy[key]:
+                        print('EVALUATING single margin value to list')
+                        assert does_kwarg_value_match_result([kwargs_copy[key],
+                                                              kwargs_copy[key],
+                                                              kwargs_copy[key],
+                                                              kwargs_copy[key]],
+                                                             result.get('margin'))
+                        assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                             result.get('marginTop'))
+                        assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                             result.get('marginRight'))
+                        assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                             result.get('marginBottom'))
+                        assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                             result.get('marginLeft'))
+                elif key == 'spacing' and checkers.is_type(instance, 'ChartOptions'):
+                    print(f'CHECKING: {key}, which gets split over other values')
+                    if checkers.is_iterable(kwargs_copy[key]):
+                        assert does_kwarg_value_match_result(kwargs_copy[key][0],
+                                                             result.get('spacingTop'))
+                        assert does_kwarg_value_match_result(kwargs_copy[key][1],
+                                                             result.get('spacingRight'))
+                        assert does_kwarg_value_match_result(kwargs_copy[key][2],
+                                                             result.get('spacingBottom'))
+                        assert does_kwarg_value_match_result(kwargs_copy[key][3],
+                                                             result.get('spacingLeft'))
+                    elif kwargs_copy[key]:
+                        print('EVALUATING single spacing value to list')
+                        assert does_kwarg_value_match_result([kwargs_copy[key],
+                                                              kwargs_copy[key],
+                                                              kwargs_copy[key],
+                                                              kwargs_copy[key]],
+                                                             result.get('spacing'))
                 else:
                     print(f'CHECKING: {key}')
                     assert does_kwarg_value_match_result(kwargs_copy[key],
@@ -409,14 +482,42 @@ def Class_from_dict(cls, kwargs, error):
                 continue
             if isinstance(kwargs[key], str) and kwargs[key].startswith('class'):
                 continue
-            kwarg_value = kwargs[key]
-            if key in ['pattern_options', 'patternOptions']:
-                result_value = getattr(instance, 'pattern_options')
+            elif key == 'margin' and checkers.is_type(instance, 'ChartOptions'):
+                print(f'CHECKING: {key}, which gets split over other values')
+                if checkers.is_iterable(kwargs[key]):
+                    print('is iterable')
+                    assert does_kwarg_value_match_result(kwargs[key][0],
+                                                         getattr(instance, 'margin_top'))
+                    assert does_kwarg_value_match_result(kwargs[key][1],
+                                                         getattr(instance, 'margin_right'))
+                    assert does_kwarg_value_match_result(kwargs[key][2],
+                                                         getattr(instance, 'margin_bottom'))
+                    assert does_kwarg_value_match_result(kwargs[key][3],
+                                                         getattr(instance, 'margin_left'))
+                elif kwargs[key]:
+                    print('not iterable')
+                    print('checking margin_top')
+                    assert does_kwarg_value_match_result(kwargs[key],
+                                                         getattr(instance, 'margin_top'))
+                    print('checking margin_right')
+                    assert does_kwarg_value_match_result(kwargs[key],
+                                                         getattr(instance, 'margin_right'))
+                    print('checking margin_bottom')
+                    assert does_kwarg_value_match_result(kwargs[key],
+                                                         getattr(instance, 'margin_bottom'))
+                    print('checking margin_left')
+                    assert does_kwarg_value_match_result(kwargs[key],
+                                                         getattr(instance, 'margin_left'))
             else:
-                result_value = getattr(instance, key)
-            print(kwarg_value)
-            print(result_value)
-            assert does_kwarg_value_match_result(kwarg_value, result_value)
+                print('running else')
+                kwarg_value = kwargs[key]
+                if key in ['pattern_options', 'patternOptions']:
+                    result_value = getattr(instance, 'pattern_options')
+                else:
+                    result_value = getattr(instance, key)
+                print(kwarg_value)
+                print(result_value)
+                assert does_kwarg_value_match_result(kwarg_value, result_value)
     else:
         with pytest.raises(error):
             instance = cls.from_dict(as_dict)

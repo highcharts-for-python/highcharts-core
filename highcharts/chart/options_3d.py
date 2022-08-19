@@ -18,9 +18,9 @@ class PanelOptions(HighchartsMeta):
         self._size = None
         self._visible = None
 
-        self.color = kwargs.pop('color', None)
-        self.size = kwargs.pop('size', None)
-        self.visible = kwargs.pop('default', None)
+        self.color = kwargs.get('color', None)
+        self.size = kwargs.get('size', None)
+        self.visible = kwargs.get('visible', None)
 
     @property
     def color(self) -> Optional[str | Gradient | Pattern]:
@@ -82,13 +82,14 @@ class PanelOptions(HighchartsMeta):
                 raise errors.HighchartsValueError(f'visible access either True, False, '
                                                   f'"auto", or "default". Received: '
                                                   f'{value}')
+            self._visible = value
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'color': as_dict.pop('color', None),
-            'size': as_dict.pop('size', None),
-            'visible': as_dict.pop('visible', None),
+            'color': as_dict.get('color', None),
+            'size': as_dict.get('size', None),
+            'visible': as_dict.get('visible', None),
         }
 
         return cls(**kwargs)
@@ -116,14 +117,14 @@ class Frame(HighchartsMeta):
         self._top = None
         self._visible = None
 
-        self.back = kwargs.pop('back', None)
-        self.bottom = kwargs.pop('bottom', None)
-        self.front = kwargs.pop('front', None)
-        self.left = kwargs.pop('left', None)
-        self.right = kwargs.pop('right', None)
-        self.size = kwargs.pop('size', None)
-        self.top = kwargs.pop('top', None)
-        self.visible = kwargs.pop('visible', None)
+        self.back = kwargs.get('back', None)
+        self.bottom = kwargs.get('bottom', None)
+        self.front = kwargs.get('front', None)
+        self.left = kwargs.get('left', None)
+        self.right = kwargs.get('right', None)
+        self.size = kwargs.get('size', None)
+        self.top = kwargs.get('top', None)
+        self.visible = kwargs.get('visible', None)
 
     @property
     def back(self) -> Optional[PanelOptions]:
@@ -248,17 +249,19 @@ class Frame(HighchartsMeta):
                                                   f'"auto", or "default". Received: '
                                                   f'{value}')
 
+            self._visible = value
+
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'back': as_dict.pop('back', None),
-            'bottom': as_dict.pop('bottom', None),
-            'front': as_dict.pop('front', None),
-            'left': as_dict.pop('left', None),
-            'right': as_dict.pop('right', None),
-            'size': as_dict.pop('size', None),
-            'top': as_dict.pop('top', None),
-            'visible': as_dict.pop('visible', None),
+            'back': as_dict.get('back', None),
+            'bottom': as_dict.get('bottom', None),
+            'front': as_dict.get('front', None),
+            'left': as_dict.get('left', None),
+            'right': as_dict.get('right', None),
+            'size': as_dict.get('size', None),
+            'top': as_dict.get('top', None),
+            'visible': as_dict.get('visible', None),
         }
 
         return cls(**kwargs)
@@ -297,14 +300,14 @@ class Options3D(HighchartsMeta):
         self._frame = None
         self._view_distance = None
 
-        self.alpha = kwargs.pop('alpha', None)
-        self.axis_label_position = kwargs.pop('axis_label_position', None)
-        self.beta = kwargs.pop('beta', None)
-        self.depth = kwargs.pop('depth', None)
-        self.enabled = kwargs.pop('enabled', None)
-        self.fit_to_plot = kwargs.pop('fit_to_plot', None)
-        self.frame = kwargs.pop('frame', None)
-        self.view_distance = kwargs.pop('view_distance', None)
+        self.alpha = kwargs.get('alpha', None)
+        self.axis_label_position = kwargs.get('axis_label_position', None)
+        self.beta = kwargs.get('beta', None)
+        self.depth = kwargs.get('depth', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.fit_to_plot = kwargs.get('fit_to_plot', None)
+        self.frame = kwargs.get('frame', None)
+        self.view_distance = kwargs.get('view_distance', None)
 
     @property
     def alpha(self) -> Optional[int | float | Decimal]:
@@ -316,7 +319,7 @@ class Options3D(HighchartsMeta):
 
     @alpha.setter
     def alpha(self, value):
-        self._alpha = validators.integer(value, allow_empty = True)
+        self._alpha = validators.numeric(value, allow_empty = True)
 
     @property
     def axis_label_position(self) -> Optional[constants.EnforcedNullType | str]:
@@ -355,7 +358,7 @@ class Options3D(HighchartsMeta):
 
     @beta.setter
     def beta(self, value):
-        self._beta = validators.integer(value, allow_empty = True)
+        self._beta = validators.numeric(value, allow_empty = True)
 
     @property
     def depth(self) -> Optional[int | float | Decimal]:
@@ -367,7 +370,7 @@ class Options3D(HighchartsMeta):
 
     @depth.setter
     def depth(self, value):
-        self._depth = validators.integer(value, allow_empty = True)
+        self._depth = validators.numeric(value, allow_empty = True)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -438,14 +441,14 @@ class Options3D(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'alpha': as_dict.pop('alpha', None),
-            'axis_label_position': as_dict.pop('axisLabelPosition', None),
-            'beta': as_dict.pop('beta', None),
-            'depth': as_dict.pop('depth', None),
-            'enabled': as_dict.pop('enabled', None),
-            'fit_to_plot': as_dict.pop('fitToPlot', None),
-            'frame': as_dict.pop('frame', None),
-            'view_distance': as_dict.pop('viewDistance', None),
+            'alpha': as_dict.get('alpha', None),
+            'axis_label_position': as_dict.get('axisLabelPosition', None),
+            'beta': as_dict.get('beta', None),
+            'depth': as_dict.get('depth', None),
+            'enabled': as_dict.get('enabled', None),
+            'fit_to_plot': as_dict.get('fitToPlot', None),
+            'frame': as_dict.get('frame', None),
+            'view_distance': as_dict.get('viewDistance', None),
         }
 
         return cls(**kwargs)

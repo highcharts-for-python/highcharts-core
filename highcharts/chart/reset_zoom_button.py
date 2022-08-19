@@ -17,9 +17,9 @@ class ResetZoomButtonOptions(HighchartsMeta):
         self._relative_to = None
         self._theme = None
 
-        self.position = kwargs.pop('position', None)
-        self.relative_to = kwargs.pop('relative_to', None)
-        self.theme = kwargs.pop('theme', None)
+        self.position = kwargs.get('position', None)
+        self.relative_to = kwargs.get('relative_to', None)
+        self.theme = kwargs.get('theme', None)
 
     @property
     def position(self) -> Optional[Position]:
@@ -84,9 +84,9 @@ class ResetZoomButtonOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'position': as_dict.pop('position', None),
-            'relative_to': as_dict.pop('relativeTo', None),
-            'theme': as_dict.pop('theme', None),
+            'position': as_dict.get('position', None),
+            'relative_to': as_dict.get('relativeTo', None),
+            'theme': as_dict.get('theme', None),
         }
 
         return cls(**kwargs)

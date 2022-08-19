@@ -30,11 +30,11 @@ class ScrollablePlotArea(HighchartsMeta):
         self._scroll_position_x = None
         self._scroll_position_y = None
 
-        self.minimum_height = kwargs.pop('minimum_height', None)
-        self.minimum_width = kwargs.pop('minimum_width', None)
-        self.opacity = kwargs.pop('opacity', None)
-        self.scroll_position_x = kwargs.pop('scroll_position_x', None)
-        self.scroll_position_y = kwargs.pop('scroll_position_y', None)
+        self.minimum_height = kwargs.get('minimum_height', None)
+        self.minimum_width = kwargs.get('minimum_width', None)
+        self.opacity = kwargs.get('opacity', None)
+        self.scroll_position_x = kwargs.get('scroll_position_x', None)
+        self.scroll_position_y = kwargs.get('scroll_position_y', None)
 
     @property
     def minimum_height(self) -> Optional[int | float | Decimal]:
@@ -120,11 +120,11 @@ class ScrollablePlotArea(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'minimum_height': as_dict.pop('minHeight', None),
-            'minimum_width': as_dict.pop('minWidth', None),
-            'opacity': as_dict.pop('opacity', None),
-            'scroll_position_x': as_dict.pop('scrollPositionX', None),
-            'scroll_position_y': as_dict.pop('scrollPositionY', None)
+            'minimum_height': as_dict.get('minHeight', None),
+            'minimum_width': as_dict.get('minWidth', None),
+            'opacity': as_dict.get('opacity', None),
+            'scroll_position_x': as_dict.get('scrollPositionX', None),
+            'scroll_position_y': as_dict.get('scrollPositionY', None)
         }
 
         return cls(**kwargs)

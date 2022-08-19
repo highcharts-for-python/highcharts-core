@@ -11,7 +11,7 @@ from highcharts.accessibility import Accessibility
 from highcharts.annotations import Annotation
 from highcharts.boost import Boost
 from highcharts.caption import Caption
-from highcharts.chart import Chart
+from highcharts.chart import ChartOptions
 from highcharts.axes.color_axis import ColorAxis
 from highcharts.credits import Credits
 from highcharts.data import Data
@@ -161,7 +161,7 @@ class Options(HighchartsMeta):
         self._caption = value
 
     @property
-    def chart(self) -> Optional[Chart]:
+    def chart(self) -> Optional[ChartOptions]:
         """General options for the chart.
 
         .. note::
@@ -169,13 +169,14 @@ class Options(HighchartsMeta):
           This property is perhaps one of the most important properties you will use when
           configuring your Highcharts data visualization.
 
-        :returns: A :class:`Chart` configuration object or :obj:`None <python:None>`
-        :rtype: :class:`Chart` or :obj:`None <python:None>`
+        :returns: A :class:`ChartOptions` configuration object or
+          :obj:`None <python:None>`
+        :rtype: :class:`ChartOptions` or :obj:`None <python:None>`
         """
         return self._chart
 
     @chart.setter
-    @class_sensitive(Chart)
+    @class_sensitive(ChartOptions)
     def chart(self, value):
         self._chart = value
 
