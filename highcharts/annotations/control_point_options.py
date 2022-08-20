@@ -11,7 +11,7 @@ class AnnotationControlPointOption(HighchartsMeta):
     def __init__(self, **kwargs):
         self._positioner = None
 
-        self.positioner = kwargs.pop('positioner', None)
+        self.positioner = kwargs.get('positioner', None)
 
     @property
     def positioner(self) -> Optional[CallbackFunction]:
@@ -34,7 +34,7 @@ class AnnotationControlPointOption(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'positioner': as_dict.pop('positioner', None)
+            'positioner': as_dict.get('positioner', None)
         }
 
         return cls(**kwargs)

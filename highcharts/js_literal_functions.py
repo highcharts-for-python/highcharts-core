@@ -352,11 +352,13 @@ def convert_js_to_python(javascript, original_str = None):
                                'Literal',
                                'ObjectExpression',
                                'ArrayExpression',
-                               'UnaryExpression'):
+                               'UnaryExpression',
+                               'FunctionExpression'):
         raise errors.HighchartsParseError(f'javascript should contain a '
                                           f'Property, Literal, ObjectExpression, '
-                                          f'ArrayExpression, or UnaryExpression instance. '
-                                          f'Received: {javascript.type}')
+                                          f'ArrayExpression, UnaryExpression, or '
+                                          f'FunctionExpression instance. Received: '
+                                          f'{javascript.type}')
 
     if checkers.is_type(javascript, 'Property'):
         return convert_js_property_to_python(javascript, original_str)
@@ -376,6 +378,13 @@ def convert_js_to_python(javascript, original_str = None):
             multiple = -1
         converted_value = convert_js_literal_to_python(javascript.argument, original_str)
         return converted_value * multiple
+    elif checkers.is_type(javascript, 'FunctionExpression'):
+        from highcharts.utility_classes.javascript_functions import CallbackFunction
+
+        start_char = javascript.range[0]
+        end_char = javascript.range[1]
+        function_as_str = original_str[start_char:end_char]
+        return CallbackFunction.from_js_literal(function_as_str)
     else:
         return convert_js_literal_to_python(javascript, original_str)
 

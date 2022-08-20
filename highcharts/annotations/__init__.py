@@ -33,18 +33,18 @@ class Annotation(HighchartsMeta):
         self._visible = None
         self._z_index = None
 
-        self.animation = kwargs.pop('animation', None)
-        self.control_point_options = kwargs.pop('control_point_options', None)
-        self.crop = kwargs.pop('crop', None)
-        self.draggable = kwargs.pop('draggable', None)
-        self.events = kwargs.pop('events', None)
-        self.id = kwargs.pop('id', None)
-        self.label_options = kwargs.pop('label_options', None)
-        self.labels = kwargs.pop('labels', None)
-        self.shape_options = kwargs.pop('shape_options', None)
-        self.shapes = kwargs.pop('shapes', None)
-        self.visible = kwargs.pop('visible', None)
-        self.z_index = kwargs.pop('z_index', None)
+        self.animation = kwargs.get('animation', None)
+        self.control_point_options = kwargs.get('control_point_options', None)
+        self.crop = kwargs.get('crop', None)
+        self.draggable = kwargs.get('draggable', None)
+        self.events = kwargs.get('events', None)
+        self.id = kwargs.get('id', None)
+        self.label_options = kwargs.get('label_options', None)
+        self.labels = kwargs.get('labels', None)
+        self.shape_options = kwargs.get('shape_options', None)
+        self.shapes = kwargs.get('shapes', None)
+        self.visible = kwargs.get('visible', None)
+        self.z_index = kwargs.get('z_index', None)
 
     @property
     def animation(self) -> Optional[AnnotationAnimation]:
@@ -275,18 +275,18 @@ class Annotation(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'animation': as_dict.pop('animation', None),
-            'control_point_options': as_dict.pop('controlPointOptions', None),
-            'crop': as_dict.pop('crop', None),
-            'draggable': as_dict.pop('draggable', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_options': as_dict.pop('labelOptions', None),
-            'labels': as_dict.pop('labels', None),
-            'shape_options': as_dict.pop('shapeOptions', None),
-            'shapes': as_dict.pop('shapes', None),
-            'visible': as_dict.pop('visible', None),
-            'z_index': as_dict.pop('zIndex', None),
+            'animation': as_dict.get('animation', None),
+            'control_point_options': as_dict.get('controlPointOptions', None),
+            'crop': as_dict.get('crop', None),
+            'draggable': as_dict.get('draggable', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_options': as_dict.get('labelOptions', None),
+            'labels': as_dict.get('labels', None),
+            'shape_options': as_dict.get('shapeOptions', None),
+            'shapes': as_dict.get('shapes', None),
+            'visible': as_dict.get('visible', None),
+            'z_index': as_dict.get('zIndex', None),
         }
         return cls(**kwargs)
 

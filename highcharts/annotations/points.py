@@ -16,10 +16,10 @@ class AnnotationPoint(HighchartsMeta):
         self._y = None
         self._y_axis = None
 
-        self.x = kwargs.pop('x', None)
-        self.x_axis = kwargs.pop('x_axis', None)
-        self.y = kwargs.pop('y', None)
-        self.y_axis = kwargs.pop('y_axis', None)
+        self.x = kwargs.get('x', None)
+        self.x_axis = kwargs.get('x_axis', None)
+        self.y = kwargs.get('y', None)
+        self.y_axis = kwargs.get('y_axis', None)
 
     @property
     def x(self) -> Optional[int | float | Decimal]:
@@ -58,7 +58,7 @@ class AnnotationPoint(HighchartsMeta):
             try:
                 try:
                     self._x_axis = validators.integer(value)
-                except ValueError:
+                except (ValueError, TypeError):
                     self._x_axis = validators.string(value)
             except ValueError:
                 raise errors.HighchartsValueError('Unable to resolve value to a '
@@ -101,7 +101,7 @@ class AnnotationPoint(HighchartsMeta):
             try:
                 try:
                     self._y_axis = validators.integer(value)
-                except ValueError:
+                except (ValueError, TypeError):
                     self._y_axis = validators.string(value)
             except ValueError:
                 raise errors.HighchartsValueError('Unable to resolve value to a '
@@ -110,10 +110,10 @@ class AnnotationPoint(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'x': as_dict.pop('x', None),
-            'x_axis': as_dict.pop('xAxis', None),
-            'y': as_dict.pop('y', None),
-            'y_axis': as_dict.pop('yAxis', None)
+            'x': as_dict.get('x', None),
+            'x_axis': as_dict.get('xAxis', None),
+            'y': as_dict.get('y', None),
+            'y_axis': as_dict.get('yAxis', None)
         }
 
         return cls(**kwargs)

@@ -15,10 +15,10 @@ class AnnotationEvent(HighchartsMeta):
         self._click = None
         self._remove = None
 
-        self.add = kwargs.pop('add', None)
-        self.after_update = kwargs.pop('after_update', None)
-        self.click = kwargs.pop('click', None)
-        self.remove = kwargs.pop('remove', None)
+        self.add = kwargs.get('add', None)
+        self.after_update = kwargs.get('after_update', None)
+        self.click = kwargs.get('click', None)
+        self.remove = kwargs.get('remove', None)
 
     @property
     def add(self) -> Optional[CallbackFunction]:
@@ -81,10 +81,10 @@ class AnnotationEvent(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'add': as_dict.pop('add', None),
-            'after_update': as_dict.pop('afterUpdate', None),
-            'click': as_dict.pop('click', None),
-            'remove': as_dict.pop('remove', None)
+            'add': as_dict.get('add', None),
+            'after_update': as_dict.get('afterUpdate', None),
+            'click': as_dict.get('click', None),
+            'remove': as_dict.get('remove', None)
         }
 
         return cls(**kwargs)
@@ -97,4 +97,4 @@ class AnnotationEvent(HighchartsMeta):
             'remove': self.remove
         }
 
-        return as_dict
+        return untrimmed

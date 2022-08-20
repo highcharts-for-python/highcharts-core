@@ -19,7 +19,7 @@ class AnnotationLabelOptionAccessibility(HighchartsMeta):
     def __init__(self, **kwargs):
         self._description = None
 
-        self.description = kwargs.pop('description', None)
+        self.description = kwargs.get('description', None)
 
     @property
     def description(self) -> Optional[str]:
@@ -33,12 +33,12 @@ class AnnotationLabelOptionAccessibility(HighchartsMeta):
 
     @description.setter
     def description(self, value):
-        self._value = validators.string(value, allow_empty = True)
+        self._description = validators.string(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'description': as_dict.pop('description', None)
+            'description': as_dict.get('description', None)
         }
 
         return cls(**kwargs)
@@ -73,35 +73,34 @@ class LabelOptions(HighchartsMeta):
         self._shadow = None
         self._shape = None
         self._style = None
-        self._text = None
         self._use_html = None
         self._vertical_align = None
         self._x = None
         self._y = None
 
-        self.accessibility = kwargs.pop('accessibility', None)
-        self.align = kwargs.pop('align', None)
-        self.allow_overlap = kwargs.pop('allow_overlap', None)
-        self.background_color = kwargs.pop('background_color', None)
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_radius = kwargs.pop('border_radius', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.class_name = kwargs.pop('class_name', None)
-        self.crop = kwargs.pop('crop', None)
-        self.distance = kwargs.pop('distance', None)
-        self.format = kwargs.pop('format', None)
-        self.formatter = kwargs.pop('formatter', None)
-        self.include_in_data_export = kwargs.pop('include_in_data_export', None)
-        self.overflow = kwargs.pop('overflow', None)
-        self.padding = kwargs.pop('padding', None)
-        self.shadow = kwargs.pop('shadow', None)
-        self.shape = kwargs.pop('shape', None)
-        self.style = kwargs.pop('style', None)
-        self.text = kwargs.pop('text', None)
-        self.use_html = kwargs.pop('use_html', None)
-        self.vertical_align = kwargs.pop('vertical_align', None)
-        self.x = kwargs.pop('x', None)
-        self.y = kwargs.pop('y', None)
+        self.accessibility = kwargs.get('accessibility', None)
+        self.align = kwargs.get('align', None)
+        self.allow_overlap = kwargs.get('allow_overlap', None)
+        self.background_color = kwargs.get('background_color', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_radius = kwargs.get('border_radius', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.crop = kwargs.get('crop', None)
+        self.distance = kwargs.get('distance', None)
+        self.format = kwargs.get('format', None)
+        self.formatter = kwargs.get('formatter', None)
+        self.include_in_data_export = kwargs.get('include_in_data_export', None)
+        self.overflow = kwargs.get('overflow', None)
+        self.padding = kwargs.get('padding', None)
+        self.shadow = kwargs.get('shadow', None)
+        self.shape = kwargs.get('shape', None)
+        self.style = kwargs.get('style', None)
+        self.text = kwargs.get('text', None)
+        self.use_html = kwargs.get('use_html', None)
+        self.vertical_align = kwargs.get('vertical_align', None)
+        self.x = kwargs.get('x', None)
+        self.y = kwargs.get('y', None)
 
     @property
     def accessibility(self) -> Optional[AnnotationLabelOptionAccessibility]:
@@ -548,29 +547,29 @@ class LabelOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'align': as_dict.pop('align', None),
-            'allow_overlap': as_dict.pop('allowOverlap', None),
-            'background_color': as_dict.pop('backgroundColor', None),
-            'border_color': as_dict.pop('borderColor', None),
-            'border_radius': as_dict.pop('borderRadius', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'class_name': as_dict.pop('className', None),
-            'crop': as_dict.pop('crop', None),
-            'distance': as_dict.pop('distance', None),
-            'format': as_dict.pop('format', None),
-            'formatter': as_dict.pop('formatter', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'overflow': as_dict.pop('overflow', None),
-            'padding': as_dict.pop('padding', None),
-            'shadow': as_dict.pop('shadow', None),
-            'shape': as_dict.pop('shape', None),
-            'style': as_dict.pop('style', None),
-            'text': as_dict.pop('text', None),
-            'use_html': as_dict.pop('useHTML', None),
-            'vertical_align': as_dict.pop('verticalAlign', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'align': as_dict.get('align', None),
+            'allow_overlap': as_dict.get('allowOverlap', None),
+            'background_color': as_dict.get('backgroundColor', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'class_name': as_dict.get('className', None),
+            'crop': as_dict.get('crop', None),
+            'distance': as_dict.get('distance', None),
+            'format': as_dict.get('format', None),
+            'formatter': as_dict.get('formatter', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'overflow': as_dict.get('overflow', None),
+            'padding': as_dict.get('padding', None),
+            'shadow': as_dict.get('shadow', None),
+            'shape': as_dict.get('shape', None),
+            'style': as_dict.get('style', None),
+            'text': as_dict.get('text', None),
+            'use_html': as_dict.get('useHTML', None),
+            'vertical_align': as_dict.get('verticalAlign', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
         }
 
         return cls(**kwargs)
@@ -616,7 +615,7 @@ class AnnotationLabel(LabelOptions):
     def __init__(self, **kwargs):
         self._point = None
 
-        self.point = kwargs.pop('point', None)
+        self.point = kwargs.get('point', None)
 
         super().__init__(**kwargs)
 
@@ -655,32 +654,32 @@ class AnnotationLabel(LabelOptions):
     def from_dict(cls, as_dict):
         kwargs = {
             # from LabelOptions
-            'accessibility': as_dict.pop('accessibility', None),
-            'align': as_dict.pop('align', None),
-            'allow_overlap': as_dict.pop('allowOverlap', None),
-            'background_color': as_dict.pop('backgroundColor', None),
-            'border_color': as_dict.pop('borderColor', None),
-            'border_radius': as_dict.pop('borderRadius', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'class_name': as_dict.pop('className', None),
-            'crop': as_dict.pop('crop', None),
-            'distance': as_dict.pop('distance', None),
-            'format': as_dict.pop('format', None),
-            'formatter': as_dict.pop('formatter', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'overflow': as_dict.pop('overflow', None),
-            'padding': as_dict.pop('padding', None),
-            'shadow': as_dict.pop('shadow', None),
-            'shape': as_dict.pop('shape', None),
-            'style': as_dict.pop('style', None),
-            'text': as_dict.pop('text', None),
-            'use_html': as_dict.pop('useHTML', None),
-            'vertical_align': as_dict.pop('verticalAlign', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'align': as_dict.get('align', None),
+            'allow_overlap': as_dict.get('allowOverlap', None),
+            'background_color': as_dict.get('backgroundColor', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'class_name': as_dict.get('className', None),
+            'crop': as_dict.get('crop', None),
+            'distance': as_dict.get('distance', None),
+            'format': as_dict.get('format', None),
+            'formatter': as_dict.get('formatter', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'overflow': as_dict.get('overflow', None),
+            'padding': as_dict.get('padding', None),
+            'shadow': as_dict.get('shadow', None),
+            'shape': as_dict.get('shape', None),
+            'style': as_dict.get('style', None),
+            'text': as_dict.get('text', None),
+            'use_html': as_dict.get('useHTML', None),
+            'vertical_align': as_dict.get('verticalAlign', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
 
             # from AnnotationLabel
-            'point': as_dict.pop('point', None),
+            'point': as_dict.get('point', None),
         }
 
         return cls(**kwargs)

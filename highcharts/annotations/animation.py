@@ -12,7 +12,7 @@ class AnnotationAnimation(HighchartsMeta):
     def __init__(self, **kwargs):
         self._defer = None
 
-        self.defer = kwargs.pop('defer', None)
+        self.defer = kwargs.get('defer', None)
 
     @property
     def defer(self) -> Optional[int | float | Decimal]:
@@ -40,7 +40,7 @@ class AnnotationAnimation(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'defer': as_dict.pop('defer', None)
+            'defer': as_dict.get('defer', None)
         }
 
         return cls(**kwargs)

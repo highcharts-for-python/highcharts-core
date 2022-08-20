@@ -8,6 +8,8 @@ from highcharts.decorators import validate_types
 from highcharts.utility_classes import Gradient, Pattern
 from highcharts.annotations.points import AnnotationPoint
 from highcharts.metaclasses import HighchartsMeta
+from highcharts.utility_classes.javascript_functions import CallbackFunction
+from highcharts.utility_functions import validate_color
 
 
 class ShapeOptions(HighchartsMeta):
@@ -28,19 +30,19 @@ class ShapeOptions(HighchartsMeta):
         self._x_axis = None
         self._y_axis = None
 
-        self.dash_style = kwargs.pop('dash_style', None)
-        self.fill = kwargs.pop('fill', None)
-        self.height = kwargs.pop('height', None)
-        self.r = kwargs.pop('r', None)
-        self.ry = kwargs.pop('ry', None)
-        self.snap = kwargs.pop('snap', None)
-        self.src = kwargs.pop('src', None)
-        self.stroke = kwargs.pop('stroke', None)
-        self.stroke_width = kwargs.pop('stroke_width', None)
-        self.type = kwargs.pop('type', None)
-        self.width = kwargs.pop('width', None)
-        self.x_axis = kwargs.pop('x_axis', None)
-        self.y_axis = kwargs.pop('y_axis', None)
+        self.dash_style = kwargs.get('dash_style', None)
+        self.fill = kwargs.get('fill', None)
+        self.height = kwargs.get('height', None)
+        self.r = kwargs.get('r', None)
+        self.ry = kwargs.get('ry', None)
+        self.snap = kwargs.get('snap', None)
+        self.src = kwargs.get('src', None)
+        self.stroke = kwargs.get('stroke', None)
+        self.stroke_width = kwargs.get('stroke_width', None)
+        self.type = kwargs.get('type', None)
+        self.width = kwargs.get('width', None)
+        self.x_axis = kwargs.get('x_axis', None)
+        self.y_axis = kwargs.get('y_axis', None)
 
     @property
     def dash_style(self) -> Optional[str]:
@@ -87,34 +89,7 @@ class ShapeOptions(HighchartsMeta):
 
     @fill.setter
     def fill(self, value):
-        if not value:
-            self._fill = None
-        elif isinstance(value, (Gradient, Pattern)):
-            self._fill = value
-        elif isinstance(value, (dict, str)) and 'linearGradient' in value:
-            try:
-                self._fill = Gradient.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._fill = Gradient.from_dict(value)
-                else:
-                    self._fill = validators.string(value)
-        elif isinstance(value, dict) and 'linear_gradient' in value:
-            self._fill = Gradient(**value)
-        elif isinstance(value, (dict, str)) and 'patternOptions' in value:
-            try:
-                self._fill = Pattern.from_json(value)
-            except ValueError:
-                if isinstance(value, dict):
-                    self._fill = Pattern.from_dict(value)
-                else:
-                    self._fill = validators.string(value)
-        elif isinstance(value, dict) and 'pattern_options' in value:
-            self._fill = Pattern(**value)
-        else:
-            raise errors.HighchartsValueError(f'Unable to resolve value to a string, '
-                                              f'Gradient, or Pattern. Value received '
-                                              f'was: {value}')
+        self._fill = validate_color(value)
 
     @property
     def height(self) -> Optional[int | float | Decimal]:
@@ -311,19 +286,19 @@ class ShapeOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'dash_style': as_dict.pop('dashStyle', None),
-            'fill': as_dict.pop('fill', None),
-            'height': as_dict.pop('height', None),
-            'r': as_dict.pop('r', None),
-            'ry': as_dict.pop('ry', None),
-            'snap': as_dict.pop('snap', None),
-            'src': as_dict.pop('src', None),
-            'stroke': as_dict.pop('stroke', None),
-            'stroke_width': as_dict.pop('strokeWidth', None),
-            'type': as_dict.pop('type', None),
-            'width': as_dict.pop('width', None),
-            'x_axis': as_dict.pop('xAxis', None),
-            'y_axis': as_dict.pop('yAxis', None)
+            'dash_style': as_dict.get('dashStyle', None),
+            'fill': as_dict.get('fill', None),
+            'height': as_dict.get('height', None),
+            'r': as_dict.get('r', None),
+            'ry': as_dict.get('ry', None),
+            'snap': as_dict.get('snap', None),
+            'src': as_dict.get('src', None),
+            'stroke': as_dict.get('stroke', None),
+            'stroke_width': as_dict.get('strokeWidth', None),
+            'type': as_dict.get('type', None),
+            'width': as_dict.get('width', None),
+            'x_axis': as_dict.get('xAxis', None),
+            'y_axis': as_dict.get('yAxis', None)
         }
         return cls(**kwargs)
 
@@ -360,10 +335,12 @@ class AnnotationShape(ShapeOptions):
         self._point = None
         self._points = None
 
-        self.marker_end = kwargs.pop('marker_end', None)
-        self.marker_start = kwargs.pop('marker_start', None)
-        self.point = kwargs.pop('point', None)
-        self.points = kwargs.pop('points', None)
+        self.marker_end = kwargs.get('marker_end', None)
+        self.marker_start = kwargs.get('marker_start', None)
+        self.point = kwargs.get('point', None)
+        self.points = kwargs.get('points', None)
+
+        super().__init__(**kwargs)
 
     @property
     def marker_end(self) -> Optional[str]:
@@ -429,7 +406,7 @@ class AnnotationShape(ShapeOptions):
                                               'supported type.')
 
     @property
-    def points(self) -> Optional[List[str | AnnotationPoint]]:
+    def points(self) -> Optional[List[CallbackFunction | AnnotationPoint | str]]:
         """An array of points for the shape or a JavaScript callback function that returns
         that shape point.
 
@@ -438,8 +415,9 @@ class AnnotationShape(ShapeOptions):
           This option is available for shapes which can use multiple points such as path.
           A point can be either a :class:`AnnotationPoint` object or a point's id.
 
-        :rtype: :class:`list <python:list>` of :class:`str <python:str>` or
-          :class:`AnnotationPoint`, OR :obj:`None <python:None>`
+        :rtype: :class:`list <python:list>` of :class:`CallbackFunction` or
+          :class:`str <python:str>` or :class:`AnnotationPoint` or
+          :class:`str <python:str>`, OR :obj:`None <python:None>`
         """
         return self._points
 
@@ -448,13 +426,27 @@ class AnnotationShape(ShapeOptions):
         if not value:
             self._points = None
         elif checkers.is_iterable(value):
-            try:
-                value = [validate_types(x, types = AnnotationPoint)
-                         for x in value]
-            except ValueError:
-                value = validators.string(value)
+            processed_value = []
+            for item in value:
+                try:
+                    item = validate_types(item, types = AnnotationPoint)
+                except ValueError:
+                    try:
+                        item = validate_types(item, types = CallbackFunction)
+                    except (ValueError, TypeError):
+                        try:
+                            item = validators.string(item, allow_empty = False)
+                        except ValueError:
+                            raise errors.HighchartsValueError(
+                                f'points expects '
+                                f'AnnotationPoint, '
+                                f'CallbackFunction, or str'
+                                f'instances. Received: '
+                                f'{item.__class__.__name__}'
+                            )
+                processed_value.append(item)
 
-            self._points = value
+            self._points = [x for x in processed_value]
         else:
             raise errors.HighchartsValueError('Unable to resolve the value to a '
                                               'supported type.')
@@ -463,25 +455,25 @@ class AnnotationShape(ShapeOptions):
     def from_dict(cls, as_dict):
         kwargs = {
             # from ShapeOptions
-            'dash_style': as_dict.pop('dashStyle', None),
-            'fill': as_dict.pop('fill', None),
-            'height': as_dict.pop('height', None),
-            'r': as_dict.pop('r', None),
-            'ry': as_dict.pop('ry', None),
-            'snap': as_dict.pop('snap', None),
-            'src': as_dict.pop('src', None),
-            'stroke': as_dict.pop('stroke', None),
-            'stroke_width': as_dict.pop('strokeWidth', None),
-            'type': as_dict.pop('type', None),
-            'width': as_dict.pop('width', None),
-            'x_axis': as_dict.pop('xAxis', None),
-            'y_axis': as_dict.pop('yAxis', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'fill': as_dict.get('fill', None),
+            'height': as_dict.get('height', None),
+            'r': as_dict.get('r', None),
+            'ry': as_dict.get('ry', None),
+            'snap': as_dict.get('snap', None),
+            'src': as_dict.get('src', None),
+            'stroke': as_dict.get('stroke', None),
+            'stroke_width': as_dict.get('strokeWidth', None),
+            'type': as_dict.get('type', None),
+            'width': as_dict.get('width', None),
+            'x_axis': as_dict.get('xAxis', None),
+            'y_axis': as_dict.get('yAxis', None),
 
             # from AnnotationShape
-            'marker_end': as_dict.pop('markerEnd', None),
-            'marker_start': as_dict.pop('markerStart', None),
-            'point': as_dict.pop('point', None),
-            'points': as_dict.pop('points', None),
+            'marker_end': as_dict.get('markerEnd', None),
+            'marker_start': as_dict.get('markerStart', None),
+            'point': as_dict.get('point', None),
+            'points': as_dict.get('points', None),
         }
         return cls(**kwargs)
 
