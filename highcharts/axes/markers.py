@@ -20,9 +20,9 @@ class AxisMarker(HighchartsMeta):
         self._color = None
         self._width = None
 
-        self.animation = kwargs.pop('animation', None)
-        self.color = kwargs.pop('color', None)
-        self.width = kwargs.pop('width', None)
+        self.animation = kwargs.get('animation', None)
+        self.color = kwargs.get('color', None)
+        self.width = kwargs.get('width', None)
 
     @property
     def animation(self) -> Optional[bool | AnimationOptions]:
@@ -76,9 +76,9 @@ class AxisMarker(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'animation': as_dict.pop('animation', None),
-            'color': as_dict.pop('color', None),
-            'width': as_dict.pop('width', None),
+            'animation': as_dict.get('animation', None),
+            'color': as_dict.get('color', None),
+            'width': as_dict.get('width', None),
         }
 
         return cls(**kwargs)

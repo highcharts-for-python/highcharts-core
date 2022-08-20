@@ -4,7 +4,7 @@ import pytest
 
 from json.decoder import JSONDecodeError
 
-from highcharts.axes.numeric import NumericAxis as cls
+from highcharts.axes.color_axis import ColorAxis as cls
 from highcharts import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
@@ -12,108 +12,52 @@ from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_di
 
 STANDARD_PARAMS = [
     ({}, None),
-    # Numeric Specific
+    # ColorAxis properties only
     ({
-      'align_ticks': False,
-      'allow_decimals': True,
-      'alternate_grid_color': '#ccc',
-      'breaks': [
+      'data_class_color': 'tween',
+      'data_classes': [
           {
-           'breakSize': 20,
+           'color': '#ccc',
            'from': 0,
-           'repeat': 1,
+           'name': 'My Data Class',
            'to': 100
           },
           {
-           'breakSize': 50,
+           'color': '#fff',
            'from': 100,
-           'repeat': 1,
-           'to': 1000
+           'name': 'My Second Data Class',
+           'to': 200
           }
       ],
-      'categories': [
-          'Category 1',
-          'Category 2',
-          'Category 3',
-          'Category 4'
-      ],
-      'date_time_label_formats': {
-        'day': 'test',
-        'hour': 'test',
-        'millisecond': 'test',
-        'minute': 'test',
-        'month': 'test',
-        'second': 'test',
-        'week': 'test',
-        'year': 'test'
+      'layout': 'horizontal',
+      'line_color': '#fff',
+      'marker': {
+          'animation': {
+              'defer': 5
+          },
+          'color': '#ff0000',
+          'width': 10
       },
-      'linked_to': 3,
-      'min_range': 5,
-      'min_tick_interval': 1,
-      'offset': 0,
-      'opposite': False,
-      'pane': 1,
-      'reversed_stacks': False,
-      'title': {
-          'align': 'low',
-          'margin': 20,
-          'offset': 0,
-          'position3d': 'offset',
-          'reserveSpace': True,
-          'rotation': 0,
-          'skew3d': False,
-          'style': 'some-style-string',
-          'text': 'The Axis Title',
-          'textAlign': 'center',
-          'useHTML': False,
-          'x': 5,
-          'y': 10
-      },
-      'zoom_enabled': True
+      'max_color': '#999',
+      'min_color': '#ccc',
+      'show_in_legend': True,
+      'stops': [
+          [0, '#ccc'],
+          [0.1, '#fff'],
+          [0.25, '#999'],
+          [1, '#ff0000']
+      ]
     }, None),
-    # Including Generic Attributes
+    # with GenericAxis properties
     ({
       'accessibility': {
           'description': 'Description goes here',
           'enabled': True,
           'rangeDescription': 'Range description goes here'
       },
-      'align_ticks': False,
-      'allow_decimals': True,
-      'alternate_grid_color': '#ccc',
       'angle': 15,
-      'breaks': [
-          {
-           'breakSize': 20,
-           'from': 0,
-           'repeat': 1,
-           'to': 100
-          },
-          {
-           'breakSize': 50,
-           'from': 100,
-           'repeat': 1,
-           'to': 1000
-          }
-      ],
-      'categories': [
-          'Category 1',
-          'Category 2',
-          'Category 3',
-          'Category 4'
-      ],
       'ceiling': 120,
       'class_name': 'some-class-name',
-      'date_time_label_formats': {
-        'day': 'test',
-        'hour': 'test',
-        'millisecond': 'test',
-        'minute': 'test',
-        'month': 'test',
-        'second': 'test',
-        'week': 'test',
-        'year': 'test'
-      },
       'end_on_tick': False,
       'events': {
         'afterBreaks': """function(event) { return true; }""",
@@ -151,13 +95,10 @@ STANDARD_PARAMS = [
           'y': -10,
           'zIndex': 6
       },
-      'linked_to': 3,
       'margin': 12,
       'max': 1000,
       'max_padding': 12,
       'min': 0,
-      'min_range': 5,
-      'min_tick_interval': 1,
       'minor_grid_line_color': '#999',
       'minor_grid_line_dash_style': 'Dash',
       'minor_grid_line_width': 1,
@@ -167,12 +108,8 @@ STANDARD_PARAMS = [
       'minor_ticks': True,
       'minor_tick_width': 1,
       'min_padding': 8,
-      'offset': 0,
-      'opposite': False,
-      'pane': 1,
       'panning_enabled': True,
       'reversed': False,
-      'reversed_stacks': False,
       'show_first_label': True,
       'show_last_label': True,
       'soft_max': 10,
@@ -188,21 +125,7 @@ STANDARD_PARAMS = [
       'tick_position': 'outside',
       'tick_positioner': """function() { return true; }""",
       'tick_width': 1,
-      'title': {
-          'align': 'low',
-          'margin': 20,
-          'offset': 0,
-          'position3d': 'offset',
-          'reserveSpace': True,
-          'rotation': 0,
-          'skew3d': False,
-          'style': 'some-style-string',
-          'text': 'The Axis Title',
-          'textAlign': 'center',
-          'useHTML': False,
-          'x': 5,
-          'y': 10
-      },
+      'type': 'linear',
       'type': 'linear',
       'unique_names': True,
       'units': [
@@ -241,8 +164,42 @@ STANDARD_PARAMS = [
       ],
       'visible': True,
       'z_index': 3,
-      'zoom_enabled': True
+
+      'data_class_color': 'tween',
+      'data_classes': [
+          {
+           'color': '#ccc',
+           'from': 0,
+           'name': 'My Data Class',
+           'to': 100
+          },
+          {
+           'color': '#fff',
+           'from': 100,
+           'name': 'My Second Data Class',
+           'to': 200
+          }
+      ],
+      'layout': 'horizontal',
+      'line_color': '#fff',
+      'marker': {
+          'animation': {
+              'defer': 5
+          },
+          'color': '#ff0000',
+          'width': 10
+      },
+      'max_color': '#999',
+      'min_color': '#ccc',
+      'show_in_legend': True,
+      'stops': [
+          [0, '#ccc'],
+          [0.1, '#fff'],
+          [0.25, '#999'],
+          [1, '#ff0000']
+      ]
     }, None),
+
 ]
 
 
@@ -267,17 +224,17 @@ def test_to_dict(kwargs, error):
 
 
 @pytest.mark.parametrize('filename, as_file, error', [
-    ('axes/numeric/01.js', False, None),
-    ('axes/numeric/02.js', False, None),
+    ('axes/color_axis/01.js', False, None),
+    ('axes/color_axis/02.js', False, None),
 
-    ('axes/numeric/error-01.js',
+    ('axes/color_axis/error-01.js',
      False,
      (errors.HighchartsValueError,
       errors.HighchartsParseError,
       JSONDecodeError,
       TypeError,
       ValueError)),
-    ('axes/numeric/error-02.js',
+    ('axes/color_axis/error-02.js',
      False,
      (errors.HighchartsValueError,
       errors.HighchartsParseError,
@@ -285,17 +242,17 @@ def test_to_dict(kwargs, error):
       TypeError,
       ValueError)),
 
-    ('axes/numeric/01.js', True, None),
-    ('axes/numeric/02.js', True, None),
+    ('axes/color_axis/01.js', True, None),
+    ('axes/color_axis/02.js', True, None),
 
-    ('axes/numeric/error-01.js',
+    ('axes/color_axis/error-01.js',
      True,
      (errors.HighchartsValueError,
       errors.HighchartsParseError,
       JSONDecodeError,
       TypeError,
       ValueError)),
-    ('axes/numeric/error-02.js',
+    ('axes/color_axis/error-02.js',
      True,
      (errors.HighchartsValueError,
       errors.HighchartsParseError,

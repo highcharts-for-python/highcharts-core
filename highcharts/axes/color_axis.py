@@ -63,15 +63,15 @@ class ColorAxis(GenericAxis):
         self._show_in_legend = None
         self._stops = None
 
-        self.data_class_color = kwargs.pop('data_class_color', None)
-        self.data_classes = kwargs.pop('data_classes', None)
-        self.layout = kwargs.pop('layout', None)
-        self.line_color = kwargs.pop('line_color', None)
-        self.marker = kwargs.pop('marker', None)
-        self.max_color = kwargs.pop('max_color', None)
-        self.min_color = kwargs.pop('min_color', None)
-        self.show_in_legend = kwargs.pop('show_in_legend', None)
-        self.stops = kwargs.pop('stops', None)
+        self.data_class_color = kwargs.get('data_class_color', None)
+        self.data_classes = kwargs.get('data_classes', None)
+        self.layout = kwargs.get('layout', None)
+        self.line_color = kwargs.get('line_color', None)
+        self.marker = kwargs.get('marker', None)
+        self.max_color = kwargs.get('max_color', None)
+        self.min_color = kwargs.get('min_color', None)
+        self.show_in_legend = kwargs.get('show_in_legend', None)
+        self.stops = kwargs.get('stops', None)
 
         super().__init__(**kwargs)
 
@@ -276,67 +276,67 @@ class ColorAxis(GenericAxis):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'angle': as_dict.pop('angle', None),
-            'ceiling': as_dict.pop('ceiling', None),
-            'class_name': as_dict.pop('className', None),
-            'end_on_tick': as_dict.pop('endOnTick', None),
-            'events': as_dict.pop('events', None),
-            'floor': as_dict.pop('floor', None),
-            'grid_line_color': as_dict.pop('gridLineColor', None),
-            'grid_line_dash_style': as_dict.pop('gridLineDashStyle', None),
-            'grid_line_interpolation': as_dict.pop('gridLineInterpolation', None),
-            'grid_line_width': as_dict.pop('gridLineWidth', None),
-            'grid_z_index': as_dict.pop('gridZIndex', None),
-            'id': as_dict.pop('id', None),
-            'labels': as_dict.pop('labels', None),
-            'margin': as_dict.pop('margin', None),
-            'max': as_dict.pop('max', None),
-            'max_padding': as_dict.pop('maxPadding', None),
-            'min': as_dict.pop('min', None),
-            'minor_grid_line_color': as_dict.pop('minorGridLineColor', None),
-            'minor_grid_line_dash_style': as_dict.pop('minorGridLineDashStyle', None),
-            'minor_grid_line_width': as_dict.pop('minorGridLineWidth', None),
-            'minor_tick_color': as_dict.pop('minorTickColor', None),
-            'minor_tick_interval': as_dict.pop('minorTickInterval', None),
-            'minor_tick_length': as_dict.pop('minorTickLength', None),
-            'minor_tick_position': as_dict.pop('minorTickPosition', None),
-            'minor_ticks': as_dict.pop('minorTicks', None),
-            'minor_tick_width': as_dict.pop('minorTickWidth', None),
-            'min_padding': as_dict.pop('minPadding', None),
-            'panning_enabled': as_dict.pop('panningEnabled', None),
-            'reversed': as_dict.pop('reversed', None),
-            'show_first_label': as_dict.pop('showFirstLabel', None),
-            'show_last_label': as_dict.pop('showLastLabel', None),
-            'soft_max': as_dict.pop('softMax', None),
-            'soft_min': as_dict.pop('softMin', None),
-            'start_of_week': as_dict.pop('startOfWeek', None),
-            'start_on_tick': as_dict.pop('startOnTick', None),
-            'tick_amount': as_dict.pop('tickAmount', None),
-            'tick_color': as_dict.pop('tickColor', None),
-            'tick_interval': as_dict.pop('tickInterval', None),
-            'tick_length': as_dict.pop('tickLength', None),
-            'tickmark_placement': as_dict.pop('tickmarkPlacement', None),
-            'tick_pixel_interval': as_dict.pop('tickPixelInterval', None),
-            'tick_position': as_dict.pop('tickPosition', None),
-            'tick_positioner': as_dict.pop('tickPositioner', None),
-            'tick_positions': as_dict.pop('tickPositions', None),
-            'tick_width': as_dict.pop('tickWidth', None),
-            'type': as_dict.pop('type', None),
-            'unique_names': as_dict.pop('uniqueNames', None),
-            'units': as_dict.pop('units', None),
-            'visible': as_dict.pop('visible', None),
-            'z_index': as_dict.pop('zIndex', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'angle': as_dict.get('angle', None),
+            'ceiling': as_dict.get('ceiling', None),
+            'class_name': as_dict.get('className', None),
+            'end_on_tick': as_dict.get('endOnTick', None),
+            'events': as_dict.get('events', None),
+            'floor': as_dict.get('floor', None),
+            'grid_line_color': as_dict.get('gridLineColor', None),
+            'grid_line_dash_style': as_dict.get('gridLineDashStyle', None),
+            'grid_line_interpolation': as_dict.get('gridLineInterpolation', None),
+            'grid_line_width': as_dict.get('gridLineWidth', None),
+            'grid_z_index': as_dict.get('gridZIndex', None),
+            'id': as_dict.get('id', None),
+            'labels': as_dict.get('labels', None),
+            'margin': as_dict.get('margin', None),
+            'max': as_dict.get('max', None),
+            'max_padding': as_dict.get('maxPadding', None),
+            'min': as_dict.get('min', None),
+            'minor_grid_line_color': as_dict.get('minorGridLineColor', None),
+            'minor_grid_line_dash_style': as_dict.get('minorGridLineDashStyle', None),
+            'minor_grid_line_width': as_dict.get('minorGridLineWidth', None),
+            'minor_tick_color': as_dict.get('minorTickColor', None),
+            'minor_tick_interval': as_dict.get('minorTickInterval', None),
+            'minor_tick_length': as_dict.get('minorTickLength', None),
+            'minor_tick_position': as_dict.get('minorTickPosition', None),
+            'minor_ticks': as_dict.get('minorTicks', None),
+            'minor_tick_width': as_dict.get('minorTickWidth', None),
+            'min_padding': as_dict.get('minPadding', None),
+            'panning_enabled': as_dict.get('panningEnabled', None),
+            'reversed': as_dict.get('reversed', None),
+            'show_first_label': as_dict.get('showFirstLabel', None),
+            'show_last_label': as_dict.get('showLastLabel', None),
+            'soft_max': as_dict.get('softMax', None),
+            'soft_min': as_dict.get('softMin', None),
+            'start_of_week': as_dict.get('startOfWeek', None),
+            'start_on_tick': as_dict.get('startOnTick', None),
+            'tick_amount': as_dict.get('tickAmount', None),
+            'tick_color': as_dict.get('tickColor', None),
+            'tick_interval': as_dict.get('tickInterval', None),
+            'tick_length': as_dict.get('tickLength', None),
+            'tickmark_placement': as_dict.get('tickmarkPlacement', None),
+            'tick_pixel_interval': as_dict.get('tickPixelInterval', None),
+            'tick_position': as_dict.get('tickPosition', None),
+            'tick_positioner': as_dict.get('tickPositioner', None),
+            'tick_positions': as_dict.get('tickPositions', None),
+            'tick_width': as_dict.get('tickWidth', None),
+            'type': as_dict.get('type', None),
+            'unique_names': as_dict.get('uniqueNames', None),
+            'units': as_dict.get('units', None),
+            'visible': as_dict.get('visible', None),
+            'z_index': as_dict.get('zIndex', None),
 
-            'data_class_color': as_dict.pop('dataClassColor', None),
-            'data_classes': as_dict.pop('dataClasses', None),
-            'layout': as_dict.pop('layout', None),
-            'line_color': as_dict.pop('lineColor', None),
-            'marker': as_dict.pop('marker', None),
-            'max_color': as_dict.pop('maxColor', None),
-            'min_color': as_dict.pop('minColor', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'stops': as_dict.pop('stops', None)
+            'data_class_color': as_dict.get('dataClassColor', None),
+            'data_classes': as_dict.get('dataClasses', None),
+            'layout': as_dict.get('layout', None),
+            'line_color': as_dict.get('lineColor', None),
+            'marker': as_dict.get('marker', None),
+            'max_color': as_dict.get('maxColor', None),
+            'min_color': as_dict.get('minColor', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'stops': as_dict.get('stops', None)
         }
 
         return cls(**kwargs)
@@ -346,7 +346,7 @@ class ColorAxis(GenericAxis):
             'accessibility': self.accessibility,
             'angle': self.angle,
             'ceiling': self.ceiling,
-            'class_name': self.class_name,
+            'className': self.class_name,
             'endOnTick': self.end_on_tick,
             'events': self.events,
             'floor': self.floor,
@@ -395,14 +395,14 @@ class ColorAxis(GenericAxis):
             'visible': self.visible,
             'zIndex': self.z_index,
 
-            'data_class_color': self.data_class_color,
-            'data_classes': self.data_classes,
+            'dataClassColor': self.data_class_color,
+            'dataClasses': self.data_classes,
             'layout': self.layout,
-            'line_color': self.line_color,
+            'lineColor': self.line_color,
             'marker': self.marker,
-            'max_color': self.max_color,
-            'min_color': self.min_color,
-            'show_in_legend': self.show_in_legend,
+            'maxColor': self.max_color,
+            'minColor': self.min_color,
+            'showInLegend': self.show_in_legend,
             'stops': self.stops
         }
 

@@ -18,10 +18,10 @@ class DataClass(HighchartsMeta):
         self._name = None
         self._to = None
 
-        self.color = kwargs.pop('color', None)
-        self.from_ = kwargs.pop('from_', None)
-        self.name = kwargs.pop('name', None)
-        self.to = kwargs.pop('to', None)
+        self.color = kwargs.get('color', None)
+        self.from_ = kwargs.get('from_', None)
+        self.name = kwargs.get('name', None)
+        self.to = kwargs.get('to', None)
 
     @property
     def color(self) -> Optional[str | Gradient | Pattern]:
@@ -103,10 +103,10 @@ class DataClass(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'color': as_dict.pop('color', None),
-            'from_': as_dict.pop('from', None),
-            'name': as_dict.pop('name', None),
-            'to': as_dict.pop('to', None)
+            'color': as_dict.get('color', None),
+            'from_': as_dict.get('from', None),
+            'name': as_dict.get('name', None),
+            'to': as_dict.get('to', None)
         }
 
         return cls(**kwargs)
