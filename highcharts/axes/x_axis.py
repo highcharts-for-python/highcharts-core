@@ -28,14 +28,14 @@ class XAxis(NumericAxis):
         self._top = None
         self._width = None
 
-        self.crosshair = kwargs.pop('crosshair', None)
-        self.height = kwargs.pop('height', None)
-        self.left = kwargs.pop('left', None)
-        self.line_color = kwargs.pop('line_color', None)
-        self.line_width = kwargs.pop('line_width', None)
-        self.show_empty = kwargs.pop('show_empty', None)
-        self.top = kwargs.pop('top', None)
-        self.width = kwargs.pop('width', None)
+        self.crosshair = kwargs.get('crosshair', None)
+        self.height = kwargs.get('height', None)
+        self.left = kwargs.get('left', None)
+        self.line_color = kwargs.get('line_color', None)
+        self.line_width = kwargs.get('line_width', None)
+        self.show_empty = kwargs.get('show_empty', None)
+        self.top = kwargs.get('top', None)
+        self.width = kwargs.get('width', None)
 
         super().__init__(**kwargs)
 
@@ -72,7 +72,7 @@ class XAxis(NumericAxis):
                 value = validators.string(value)
                 if '%' not in value:
                     raise ValueError
-            except ValueError:
+            except (TypeError, ValueError):
                 value = validators.numeric(value, minimum = 0)
 
             self._height = value
@@ -97,7 +97,7 @@ class XAxis(NumericAxis):
                 value = validators.string(value)
                 if '%' not in value:
                     raise ValueError
-            except ValueError:
+            except (TypeError, ValueError):
                 value = validators.numeric(value, minimum = 0)
 
             self._left = value
@@ -167,7 +167,7 @@ class XAxis(NumericAxis):
                 value = validators.string(value)
                 if '%' not in value:
                     raise ValueError
-            except ValueError:
+            except (TypeError, ValueError):
                 value = validators.numeric(value, minimum = 0)
 
             self._top = value
@@ -191,7 +191,7 @@ class XAxis(NumericAxis):
                 value = validators.string(value)
                 if '%' not in value:
                     raise ValueError
-            except ValueError:
+            except (TypeError, ValueError):
                 value = validators.numeric(value, minimum = 0)
 
             self._width = value
@@ -199,83 +199,83 @@ class XAxis(NumericAxis):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'align_ticks': as_dict.pop('alignTicks', None),
-            'allow_decimals': as_dict.pop('allowDecimals', None),
-            'alternate_grid_color': as_dict.pop('alternateGridColor', None),
-            'angle': as_dict.pop('angle', None),
-            'breaks': as_dict.pop('breaks', None),
-            'categories': as_dict.pop('categories', None),
-            'ceiling': as_dict.pop('ceiling', None),
-            'class_name': as_dict.pop('className', None),
-            'date_time_label_formats': as_dict.pop('dateTimeLabelFormats', None),
-            'end_on_tick': as_dict.pop('endOnTick', None),
-            'events': as_dict.pop('events', None),
-            'floor': as_dict.pop('floor', None),
-            'grid_line_color': as_dict.pop('gridLineColor', None),
-            'grid_line_dash_style': as_dict.pop('gridLineDashStyle', None),
-            'grid_line_interpolation': as_dict.pop('gridLineInterpolation', None),
-            'grid_line_width': as_dict.pop('gridLineWidth', None),
-            'grid_z_index': as_dict.pop('gridZIndex', None),
-            'id': as_dict.pop('id', None),
-            'labels': as_dict.pop('labels', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'margin': as_dict.pop('margin', None),
-            'max': as_dict.pop('max', None),
-            'max_padding': as_dict.pop('maxPadding', None),
-            'min': as_dict.pop('min', None),
-            'minor_grid_line_color': as_dict.pop('minorGridLineColor', None),
-            'minor_grid_line_dash_style': as_dict.pop('minorGridLineDashStyle', None),
-            'minor_grid_line_width': as_dict.pop('minorGridLineWidth', None),
-            'minor_tick_color': as_dict.pop('minorTickColor', None),
-            'minor_tick_interval': as_dict.pop('minorTickInterval', None),
-            'minor_tick_length': as_dict.pop('minorTickLength', None),
-            'minor_tick_position': as_dict.pop('minorTickPosition', None),
-            'minor_ticks': as_dict.pop('minorTicks', None),
-            'minor_tick_width': as_dict.pop('minorTickWidth', None),
-            'min_padding': as_dict.pop('minPadding', None),
-            'min_range': as_dict.pop('minRange', None),
-            'min_tick_interval': as_dict.pop('minTickInterval', None),
-            'offset': as_dict.pop('offset', None),
-            'opposite': as_dict.pop('opposite', None),
-            'pane': as_dict.pop('pane', None),
-            'panning_enabled': as_dict.pop('panningEnabled', None),
-            'plot_bands': as_dict.pop('plotBands', None),
-            'plot_lines': as_dict.pop('plotLines', None),
-            'reversed': as_dict.pop('reversed', None),
-            'reversed_stacks': as_dict.pop('reversedStacks', None),
-            'show_first_label': as_dict.pop('showFirstLabel', None),
-            'show_last_label': as_dict.pop('showLastLabel', None),
-            'soft_max': as_dict.pop('softMax', None),
-            'soft_min': as_dict.pop('softMin', None),
-            'start_of_week': as_dict.pop('startOfWeek', None),
-            'start_on_tick': as_dict.pop('startOnTick', None),
-            'tick_amount': as_dict.pop('tickAmount', None),
-            'tick_color': as_dict.pop('tickColor', None),
-            'tick_interval': as_dict.pop('tickInterval', None),
-            'tick_length': as_dict.pop('tickLength', None),
-            'tickmark_placement': as_dict.pop('tickmarkPlacement', None),
-            'tick_pixel_interval': as_dict.pop('tickPixelInterval', None),
-            'tick_position': as_dict.pop('tickPosition', None),
-            'tick_positioner': as_dict.pop('tickPositioner', None),
-            'tick_positions': as_dict.pop('tickPositions', None),
-            'tick_width': as_dict.pop('tickWidth', None),
-            'title': as_dict.pop('title', None),
-            'type': as_dict.pop('type', None),
-            'unique_names': as_dict.pop('uniqueNames', None),
-            'units': as_dict.pop('units', None),
-            'visible': as_dict.pop('visible', None),
-            'z_index': as_dict.pop('zIndex', None),
-            'zoom_enabled': as_dict.pop('zoomEnabled', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'align_ticks': as_dict.get('alignTicks', None),
+            'allow_decimals': as_dict.get('allowDecimals', None),
+            'alternate_grid_color': as_dict.get('alternateGridColor', None),
+            'angle': as_dict.get('angle', None),
+            'breaks': as_dict.get('breaks', None),
+            'categories': as_dict.get('categories', None),
+            'ceiling': as_dict.get('ceiling', None),
+            'class_name': as_dict.get('className', None),
+            'date_time_label_formats': as_dict.get('dateTimeLabelFormats', None),
+            'end_on_tick': as_dict.get('endOnTick', None),
+            'events': as_dict.get('events', None),
+            'floor': as_dict.get('floor', None),
+            'grid_line_color': as_dict.get('gridLineColor', None),
+            'grid_line_dash_style': as_dict.get('gridLineDashStyle', None),
+            'grid_line_interpolation': as_dict.get('gridLineInterpolation', None),
+            'grid_line_width': as_dict.get('gridLineWidth', None),
+            'grid_z_index': as_dict.get('gridZIndex', None),
+            'id': as_dict.get('id', None),
+            'labels': as_dict.get('labels', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'margin': as_dict.get('margin', None),
+            'max': as_dict.get('max', None),
+            'max_padding': as_dict.get('maxPadding', None),
+            'min': as_dict.get('min', None),
+            'minor_grid_line_color': as_dict.get('minorGridLineColor', None),
+            'minor_grid_line_dash_style': as_dict.get('minorGridLineDashStyle', None),
+            'minor_grid_line_width': as_dict.get('minorGridLineWidth', None),
+            'minor_tick_color': as_dict.get('minorTickColor', None),
+            'minor_tick_interval': as_dict.get('minorTickInterval', None),
+            'minor_tick_length': as_dict.get('minorTickLength', None),
+            'minor_tick_position': as_dict.get('minorTickPosition', None),
+            'minor_ticks': as_dict.get('minorTicks', None),
+            'minor_tick_width': as_dict.get('minorTickWidth', None),
+            'min_padding': as_dict.get('minPadding', None),
+            'min_range': as_dict.get('minRange', None),
+            'min_tick_interval': as_dict.get('minTickInterval', None),
+            'offset': as_dict.get('offset', None),
+            'opposite': as_dict.get('opposite', None),
+            'pane': as_dict.get('pane', None),
+            'panning_enabled': as_dict.get('panningEnabled', None),
+            'plot_bands': as_dict.get('plotBands', None),
+            'plot_lines': as_dict.get('plotLines', None),
+            'reversed': as_dict.get('reversed', None),
+            'reversed_stacks': as_dict.get('reversedStacks', None),
+            'show_first_label': as_dict.get('showFirstLabel', None),
+            'show_last_label': as_dict.get('showLastLabel', None),
+            'soft_max': as_dict.get('softMax', None),
+            'soft_min': as_dict.get('softMin', None),
+            'start_of_week': as_dict.get('startOfWeek', None),
+            'start_on_tick': as_dict.get('startOnTick', None),
+            'tick_amount': as_dict.get('tickAmount', None),
+            'tick_color': as_dict.get('tickColor', None),
+            'tick_interval': as_dict.get('tickInterval', None),
+            'tick_length': as_dict.get('tickLength', None),
+            'tickmark_placement': as_dict.get('tickmarkPlacement', None),
+            'tick_pixel_interval': as_dict.get('tickPixelInterval', None),
+            'tick_position': as_dict.get('tickPosition', None),
+            'tick_positioner': as_dict.get('tickPositioner', None),
+            'tick_positions': as_dict.get('tickPositions', None),
+            'tick_width': as_dict.get('tickWidth', None),
+            'title': as_dict.get('title', None),
+            'type': as_dict.get('type', None),
+            'unique_names': as_dict.get('uniqueNames', None),
+            'units': as_dict.get('units', None),
+            'visible': as_dict.get('visible', None),
+            'z_index': as_dict.get('zIndex', None),
+            'zoom_enabled': as_dict.get('zoomEnabled', None),
 
-            'crosshair': as_dict.pop('crosshair', None),
-            'height': as_dict.pop('height', None),
-            'left': as_dict.pop('left', None),
-            'line_color': as_dict.pop('lineColor', None),
-            'line_width': as_dict.pop('lineWidth', None),
-            'show_empty': as_dict.pop('showEmpty', None),
-            'top': as_dict.pop('top', None),
-            'width': as_dict.pop('width', None)
+            'crosshair': as_dict.get('crosshair', None),
+            'height': as_dict.get('height', None),
+            'left': as_dict.get('left', None),
+            'line_color': as_dict.get('lineColor', None),
+            'line_width': as_dict.get('lineWidth', None),
+            'show_empty': as_dict.get('showEmpty', None),
+            'top': as_dict.get('top', None),
+            'width': as_dict.get('width', None)
         }
 
         return cls(**kwargs)
@@ -285,9 +285,9 @@ class XAxis(NumericAxis):
             'crosshair': self.crosshair,
             'height': self.height,
             'left': self.left,
-            'line_color': self.line_color,
-            'line_width': self.line_width,
-            'show_empty': self.show_empty,
+            'lineColor': self.line_color,
+            'lineWidth': self.line_width,
+            'showEmpty': self.show_empty,
             'top': self.top,
             'width': self.width
         }

@@ -21,12 +21,12 @@ class CrosshairOptions(HighchartsMeta):
         self._width = None
         self._z_index = None
 
-        self.class_name = kwargs.pop('class_name', None)
-        self.color = kwargs.pop('color', None)
-        self.dash_style = kwargs.pop('dash_style', None)
-        self.snap = kwargs.pop('snap', None)
-        self.width = kwargs.pop('width', None)
-        self.z_index = kwargs.pop('z_index', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.color = kwargs.get('color', None)
+        self.dash_style = kwargs.get('dash_style', None)
+        self.snap = kwargs.get('snap', None)
+        self.width = kwargs.get('width', None)
+        self.z_index = kwargs.get('z_index', None)
 
     @property
     def class_name(self) -> Optional[str]:
@@ -143,12 +143,12 @@ class CrosshairOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'snap': as_dict.pop('snap', None),
-            'width': as_dict.pop('width', None),
-            'z_index': as_dict.pop('zIndex', None)
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'snap': as_dict.get('snap', None),
+            'width': as_dict.get('width', None),
+            'z_index': as_dict.get('zIndex', None)
         }
 
         return cls(**kwargs)
