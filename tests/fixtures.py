@@ -553,7 +553,9 @@ def Class_to_dict(cls, kwargs, error):
         result = instance.to_dict()
         assert result is not None
         assert isinstance(result, dict) is True
+        print('EXPECTED:')
         print(expected)
+        print('RESULT:')
         print(result)
         if checkers.is_type(instance, ('MarkerAttributeObject')):
             check_dicts = False

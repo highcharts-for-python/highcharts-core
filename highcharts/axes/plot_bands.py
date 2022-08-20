@@ -169,11 +169,11 @@ class PlotBand(HighchartsMeta):
 
         :rtype: numeric or :obj:`None <python:None>`
         """
-        return self._from
+        return self._to
 
     @to.setter
     def to(self, value):
-        self._from = validators.numeric(value, allow_empty = True)
+        self._to = validators.numeric(value, allow_empty = True)
 
     @property
     def z_index(self) -> Optional[int | float | Decimal]:
