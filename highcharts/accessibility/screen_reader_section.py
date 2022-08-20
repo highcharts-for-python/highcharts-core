@@ -21,13 +21,13 @@ class ScreenReaderSection(HighchartsMeta):
         self._on_play_as_sound_click = None
         self._on_view_data_table_click = None
 
-        self.after_chart_format = kwargs.pop('after_chart_format', None)
-        self.after_chart_formatter = kwargs.pop('after_chart_formatter', None)
-        self.axis_range_date_format = kwargs.pop('axis_range_date_format', None)
-        self.before_chart_format = kwargs.pop('before_chart_format', None)
-        self.before_chart_formatter = kwargs.pop('before_chart_formatter', None)
-        self.on_play_as_sound_click = kwargs.pop('on_play_as_sound_click', None)
-        self.on_view_data_table_click = kwargs.pop('on_view_data_table_click', None)
+        self.after_chart_format = kwargs.get('after_chart_format', None)
+        self.after_chart_formatter = kwargs.get('after_chart_formatter', None)
+        self.axis_range_date_format = kwargs.get('axis_range_date_format', None)
+        self.before_chart_format = kwargs.get('before_chart_format', None)
+        self.before_chart_formatter = kwargs.get('before_chart_formatter', None)
+        self.on_play_as_sound_click = kwargs.get('on_play_as_sound_click', None)
+        self.on_view_data_table_click = kwargs.get('on_view_data_table_click', None)
 
     @property
     def after_chart_format(self) -> Optional[str]:
@@ -220,13 +220,13 @@ class ScreenReaderSection(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'after_chart_format': as_dict.pop('afterChartFormat', None),
-            'after_chart_formatter': as_dict.pop('afterChartFormatter', None),
-            'axis_range_date_format': as_dict.pop('axisRangeDateFormat', None),
-            'before_chart_format': as_dict.pop('beforeChartFormat', None),
-            'before_chart_formatter': as_dict.pop('beforeChartFormatter', None),
-            'on_play_as_sound_click': as_dict.pop('onPlayAsSoundClick', None),
-            'on_view_data_table_click': as_dict.pop('onViewDataTableClick', None)
+            'after_chart_format': as_dict.get('afterChartFormat', None),
+            'after_chart_formatter': as_dict.get('afterChartFormatter', None),
+            'axis_range_date_format': as_dict.get('axisRangeDateFormat', None),
+            'before_chart_format': as_dict.get('beforeChartFormat', None),
+            'before_chart_formatter': as_dict.get('beforeChartFormatter', None),
+            'on_play_as_sound_click': as_dict.get('onPlayAsSoundClick', None),
+            'on_view_data_table_click': as_dict.get('onViewDataTableClick', None)
         }
 
         return cls(**kwargs)

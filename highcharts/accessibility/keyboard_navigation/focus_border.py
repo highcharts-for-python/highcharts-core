@@ -24,9 +24,9 @@ class FocusBorderStyle(HighchartsMeta):
         self._color = None
         self._line_width = None
 
-        self.border_radius = kwargs.pop('border_radius', None)
-        self.color = kwargs.pop('color', None)
-        self.line_width = kwargs.pop('line_width', None)
+        self.border_radius = kwargs.get('border_radius', None)
+        self.color = kwargs.get('color', None)
+        self.line_width = kwargs.get('line_width', None)
 
     @property
     def border_radius(self) -> Optional[int | float | Decimal]:
@@ -67,9 +67,9 @@ class FocusBorderStyle(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'border_radius': as_dict.pop('borderRadius', None),
-            'color': as_dict.pop('color', None),
-            'line_width': as_dict.pop('lineWidth', None)
+            'border_radius': as_dict.get('borderRadius', None),
+            'color': as_dict.get('color', None),
+            'line_width': as_dict.get('lineWidth', None)
         }
         return cls(**kwargs)
 
@@ -92,10 +92,10 @@ class FocusBorder(HighchartsMeta):
         self._margin = None
         self._style = None
 
-        self.enabled = kwargs.pop('enabled', None)
-        self.hide_browser_focus_outline = kwargs.pop('hide_browser_focus_outline', None)
-        self.margin = kwargs.pop('margin', None)
-        self.style = kwargs.pop('style', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.hide_browser_focus_outline = kwargs.get('hide_browser_focus_outline', None)
+        self.margin = kwargs.get('margin', None)
+        self.style = kwargs.get('style', None)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -169,10 +169,10 @@ class FocusBorder(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'enabled': as_dict.pop('enabled', None),
-            'hide_browser_focus_outline': as_dict.pop('hideBrowserFocusOutline', None),
-            'margin': as_dict.pop('margin', None),
-            'style': as_dict.pop('style', None)
+            'enabled': as_dict.get('enabled', None),
+            'hide_browser_focus_outline': as_dict.get('hideBrowserFocusOutline', None),
+            'margin': as_dict.get('margin', None),
+            'style': as_dict.get('style', None)
         }
         return cls(**kwargs)
 

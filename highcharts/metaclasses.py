@@ -410,9 +410,18 @@ class JavaScriptDict(UserDict):
                     raise error
 
         if self._valid_value_types:
-            item = validate_types(item,
-                                  types = self._valid_value_types,
-                                  allow_none = self._allow_empty_value)
+            try:
+                item = validate_types(item,
+                                      types = self._valid_value_types,
+                                      allow_none = self._allow_empty_value)
+            except errors.HighchartsValueError as error:
+                if self._allow_empty_value and not item:
+                    item = None
+                else:
+                    try:
+                        item = self._valid_value_types(item)
+                    except (TypeError, ValueError, AttributeError):
+                        raise error
 
         super().__setitem__(key, item)
 

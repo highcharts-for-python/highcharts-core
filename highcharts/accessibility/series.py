@@ -23,10 +23,10 @@ class AccessibilitySeries(HighchartsMeta):
         self._description_formatter = None
         self._point_description_enabled_threshold = None
 
-        self.describe_single_series = kwargs.pop('describe_single_series', None)
-        self.description_format = kwargs.pop('description_format', None)
-        self.description_formatter = kwargs.pop('description_formatter', None)
-        self.point_description_enabled_threshold = kwargs.pop(
+        self.describe_single_series = kwargs.get('describe_single_series', None)
+        self.description_format = kwargs.get('description_format', None)
+        self.description_formatter = kwargs.get('description_formatter', None)
+        self.point_description_enabled_threshold = kwargs.get(
             'point_description_enabled_threshold',
             None
         )
@@ -142,10 +142,10 @@ class AccessibilitySeries(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'describe_single_series': as_dict.pop('describeSingleSeries', None),
-            'description_format': as_dict.pop('descriptionFormat', None),
-            'description_formatter': as_dict.pop('descriptionFormatter', None),
-            'point_description_enabled_threshold': as_dict.pop(
+            'describe_single_series': as_dict.get('describeSingleSeries', None),
+            'description_format': as_dict.get('descriptionFormat', None),
+            'description_formatter': as_dict.get('descriptionFormatter', None),
+            'point_description_enabled_threshold': as_dict.get(
                 'pointDescriptionEnabledThreshold',
                 None
             ),
@@ -156,8 +156,8 @@ class AccessibilitySeries(HighchartsMeta):
     def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
             'describeSingleSeries': self.describe_single_series,
-            'descriptionFormat': self.descriptionFormat,
-            'descriptionFormatter': self.descriptionFormatter,
+            'descriptionFormat': self.description_format,
+            'descriptionFormatter': self.description_formatter,
             'pointDescriptionEnabledThreshold': self.point_description_enabled_threshold
         }
 

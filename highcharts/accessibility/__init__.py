@@ -3,7 +3,7 @@ from typing import Optional, Any
 
 from validator_collection import validators
 
-from highcharts.metaclasses import HighchartsMeta
+from highcharts.metaclasses import HighchartsMeta, JavaScriptDict
 from highcharts.decorators import class_sensitive
 from highcharts import constants, errors
 
@@ -13,6 +13,23 @@ from highcharts.accessibility.keyboard_navigation import KeyboardNavigation
 from highcharts.accessibility.point import AccessibilityPoint
 from highcharts.accessibility.screen_reader_section import ScreenReaderSection
 from highcharts.accessibility.series import AccessibilitySeries
+
+
+class CustomAccessibilityComponents(JavaScriptDict):
+    """JavaScript object which contains a map of component names to instances of classes
+    inheriting from the (JavaScript)
+    `Highcharts.AccessibilityComponent <https://api.highcharts.com/class-reference/Highcharts.AccessibilityComponent>`_
+    base class.
+
+    .. tip::
+
+      Remember to add the component to the :meth:`keyboard_navigation.order`
+      for the keyboard navigation to be usable.
+
+    """
+    _valid_value_types = str
+    _allow_empty_value = True
+
 
 
 class Accessibility(HighchartsMeta):
@@ -32,18 +49,18 @@ class Accessibility(HighchartsMeta):
         self._series = None
         self._type_description = None
 
-        self.announce_new_data = kwargs.pop('announce_new_data', None)
-        self.custom_components = kwargs.pop('custom_components', None)
-        self.description = kwargs.pop('description', None)
-        self.enabled = kwargs.pop('enabled', True)
-        self.high_contrast_theme = kwargs.pop('high_contrast_theme', None)
-        self.keyboard_navigation = kwargs.pop('keyboard_navigation', None)
-        self.landmark_verbosity = kwargs.pop('landmark_verbosity', None)
-        self.linked_description = kwargs.pop('linked_description', None)
-        self.point = kwargs.pop('point', None)
-        self.screen_reader_section = kwargs.pop('screen_reader_section', None)
-        self.series = kwargs.pop('series', None)
-        self.type_description = kwargs.pop('type_description', None)
+        self.announce_new_data = kwargs.get('announce_new_data', None)
+        self.custom_components = kwargs.get('custom_components', None)
+        self.description = kwargs.get('description', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.high_contrast_theme = kwargs.get('high_contrast_theme', None)
+        self.keyboard_navigation = kwargs.get('keyboard_navigation', None)
+        self.landmark_verbosity = kwargs.get('landmark_verbosity', None)
+        self.linked_description = kwargs.get('linked_description', None)
+        self.point = kwargs.get('point', None)
+        self.screen_reader_section = kwargs.get('screen_reader_section', None)
+        self.series = kwargs.get('series', None)
+        self.type_description = kwargs.get('type_description', None)
 
     @property
     def announce_new_data(self) -> Optional[AnnounceNewData]:
@@ -68,13 +85,9 @@ class Accessibility(HighchartsMeta):
         self._announce_new_data = value
 
     @property
-    def custom_components(self) -> Optional[str]:
-        """A hook for adding custom components to the accessibility module.
-
-        Should be a string containing JavaScript code which contains an object mapping
-        component names to instances of classes inheriting from the
-        `Highcharts.AccessibilityComponent <https://api.highcharts.com/class-reference/Highcharts.AccessibilityComponent>`_
-        base class.
+    def custom_components(self) -> Optional[CustomAccessibilityComponents]:
+        """Property which supports the definition of custom components added to the
+        accessibility module. Defaults to :obj:`None <python:None>`.
 
         .. tip::
 
@@ -82,14 +95,15 @@ class Accessibility(HighchartsMeta):
           for the keyboard navigation to be usable.
 
         :returns: Custom components that have been added to the accessibility module.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`CustomAccessibilityComponents` or :obj:`None <python:None>`
 
         """
         return self._custom_components
 
     @custom_components.setter
+    @class_sensitive(CustomAccessibilityComponents)
     def custom_components(self, value):
-        self._custom_components = validators.string(value, allow_empty = True)
+        self._custom_components = value
 
     @property
     def description(self) -> Optional[str]:
@@ -204,11 +218,15 @@ class Accessibility(HighchartsMeta):
 
     @landmark_verbosity.setter
     def landmark_verbosity(self, value):
-        value = validators.string(value, allow_empty = False).lower()
-        if value not in constants.LANDMARK_VERBOSITY_VALUES:
-            raise errors.HighchartsValueError(f'landmark_verbosity must be all, one, or '
-                                              f'disabled. Was: {value}')
-        self._landmark_verbosity = value
+        if not value:
+            self._landmark_verbosity = None
+        else:
+            value = validators.string(value)
+            value = value.lower()
+            if value not in constants.LANDMARK_VERBOSITY_VALUES:
+                raise errors.HighchartsValueError(f'landmark_verbosity must be "all", '
+                                                  f'"one", or "disabled". Was: {value}')
+            self._landmark_verbosity = value
 
     @property
     def linked_description(self) -> Optional[str]:
@@ -326,20 +344,18 @@ class Accessibility(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'announce_new_data': as_dict.pop('announceNewData', None),
-            'custom_components': as_dict.pop('customComponents', None),
-            'description': as_dict.pop('description', None),
-            'enabled': as_dict.pop('enabled', True),
-            'high_contrast_theme': as_dict.pop('highContrastTheme', None),
-            'keyboard_navigation': as_dict.pop('keyboardNavigation', None),
-            'landmark_verbosity': as_dict.pop('landmark_verbosity',
-                                              constants.DEFAULT_LANDMARK_VERBOSITY),
-            'linked_description': as_dict.pop('linkedDescription',
-                                              constants.DEFAULT_LINKED_DESCRIPTION),
-            'point': as_dict.pop('point', None),
-            'screen_reader_section': as_dict.pop('screenReaderSection', None),
-            'series': as_dict.pop('series', None),
-            'type_description': as_dict.pop('typeDescription', None)
+            'announce_new_data': as_dict.get('announceNewData', None),
+            'custom_components': as_dict.get('customComponents', None),
+            'description': as_dict.get('description', None),
+            'enabled': as_dict.get('enabled', None),
+            'high_contrast_theme': as_dict.get('highContrastTheme', None),
+            'keyboard_navigation': as_dict.get('keyboardNavigation', None),
+            'landmark_verbosity': as_dict.get('landmarkVerbosity', None),
+            'linked_description': as_dict.get('linkedDescription', None),
+            'point': as_dict.get('point', None),
+            'screen_reader_section': as_dict.get('screenReaderSection', None),
+            'series': as_dict.get('series', None),
+            'type_description': as_dict.get('typeDescription', None)
         }
 
         return cls(**kwargs)

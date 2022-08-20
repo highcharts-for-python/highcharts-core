@@ -15,11 +15,11 @@ class SeriesNavigation(HighchartsMeta):
         self._remember_point_focus = None
         self._skip_null_points = None
 
-        self.mode = kwargs.pop('mode', None)
-        self.point_navigation_enabled_threshold = kwargs.pop('point_navigation_enabled_threshold',
+        self.mode = kwargs.get('mode', None)
+        self.point_navigation_enabled_threshold = kwargs.get('point_navigation_enabled_threshold',
                                                              None)
-        self.remember_point_focus = kwargs.pop('remember_point_focus', None)
-        self.skip_null_points = kwargs.pop('skip_null_points', None)
+        self.remember_point_focus = kwargs.get('remember_point_focus', None)
+        self.skip_null_points = kwargs.get('skip_null_points', None)
 
     @property
     def mode(self) -> Optional[str]:
@@ -89,7 +89,7 @@ class SeriesNavigation(HighchartsMeta):
         :returns: Flag indicating whether to remember point focus.
         :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
-        return self.point_focus
+        return self._remember_point_focus
 
     @remember_point_focus.setter
     def remember_point_focus(self, value):
@@ -118,11 +118,11 @@ class SeriesNavigation(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'mode': as_dict.pop('mode', None),
-            'point_navigation_enabled_threshold': as_dict.pop('pointNavigationEnabledThreshold',
+            'mode': as_dict.get('mode', None),
+            'point_navigation_enabled_threshold': as_dict.get('pointNavigationEnabledThreshold',
                                                               None),
-            'remember_point_focus': as_dict.pop('rememberPointFocus', None),
-            'skip_null_points': as_dict.pop('skipNullPoints', None),
+            'remember_point_focus': as_dict.get('rememberPointFocus', None),
+            'skip_null_points': as_dict.get('skipNullPoints', None),
         }
         return cls(**kwargs)
 
@@ -130,7 +130,7 @@ class SeriesNavigation(HighchartsMeta):
         untrimmed = {
             'mode': self.mode,
             'pointNavigationEnabledThreshold': self.point_navigation_enabled_threshold,
-            'rememberPointFocus': self.remmeber_point_focus,
+            'rememberPointFocus': self.remember_point_focus,
             'skipNullPoints': self.skip_null_points
         }
         return untrimmed

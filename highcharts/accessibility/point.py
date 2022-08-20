@@ -21,14 +21,14 @@ class AccessibilityPoint(HighchartsMeta):
         self._value_prefix = None
         self._value_suffix = None
 
-        self.date_format = kwargs.pop('date_format', None)
-        self.date_formatter = kwargs.pop('date_formatter', None)
-        self.describe_null = kwargs.pop('describe_null', None)
-        self.description_formatter = kwargs.pop('description_formatter', None)
-        self.value_decimals = kwargs.pop('value_decimals', None)
-        self.value_description_format = kwargs.pop('value_description_format', None)
-        self.value_prefix = kwargs.pop('value_prefix', None)
-        self.value_suffix = kwargs.pop('value_suffix', None)
+        self.date_format = kwargs.get('date_format', None)
+        self.date_formatter = kwargs.get('date_formatter', None)
+        self.describe_null = kwargs.get('describe_null', None)
+        self.description_formatter = kwargs.get('description_formatter', None)
+        self.value_decimals = kwargs.get('value_decimals', None)
+        self.value_description_format = kwargs.get('value_description_format', None)
+        self.value_prefix = kwargs.get('value_prefix', None)
+        self.value_suffix = kwargs.get('value_suffix', None)
 
     @property
     def date_format(self) -> Optional[str]:
@@ -115,7 +115,7 @@ class AccessibilityPoint(HighchartsMeta):
     @description_formatter.setter
     @class_sensitive(CallbackFunction)
     def description_formatter(self, value):
-        self._value = value
+        self._description_formatter = value
 
     @property
     def value_decimals(self) -> Optional[int]:
@@ -200,14 +200,14 @@ class AccessibilityPoint(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'date_format': as_dict.pop('dateFormat', None),
-            'date_formatter': as_dict.pop('dateFormatter', None),
-            'describe_null': as_dict.pop('describeNull', None),
-            'description_formatter': as_dict.pop('descriptionFormatter', None),
-            'value_decimals': as_dict.pop('valueDecimals', None),
-            'value_description_format': as_dict.pop('valueDescriptionFormat', None),
-            'value_prefix': as_dict.pop('valuePrefix', None),
-            'value_suffix': as_dict.pop('valueSuffix', None)
+            'date_format': as_dict.get('dateFormat', None),
+            'date_formatter': as_dict.get('dateFormatter', None),
+            'describe_null': as_dict.get('describeNull', None),
+            'description_formatter': as_dict.get('descriptionFormatter', None),
+            'value_decimals': as_dict.get('valueDecimals', None),
+            'value_description_format': as_dict.get('valueDescriptionFormat', None),
+            'value_prefix': as_dict.get('valuePrefix', None),
+            'value_suffix': as_dict.get('valueSuffix', None)
         }
         return cls(**kwargs)
 
@@ -217,7 +217,7 @@ class AccessibilityPoint(HighchartsMeta):
             'dateFormatter': self.date_formatter,
             'describeNull': self.describe_null,
             'descriptionFormatter': self.description_formatter,
-            'valueDecimals': self.valueDecimals,
+            'valueDecimals': self.value_decimals,
             'valueDescriptionFormat': self.value_description_format,
             'valuePrefix': self.value_prefix,
             'valueSuffix': self.value_suffix

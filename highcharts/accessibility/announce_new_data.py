@@ -29,10 +29,10 @@ class AnnounceNewData(HighchartsMeta):
         self._interrupt_user = None
         self._minimum_announcement_interval = None
 
-        self.announcement_formatter = kwargs.pop('announcement_formatter', None)
-        self.enabled = kwargs.pop('enabled', None)
-        self.interrupt_user = kwargs.pop('interrupt_user', None)
-        self.minimum_announcement_interval = kwargs.pop('minimum_announcement_interval',
+        self.announcement_formatter = kwargs.get('announcement_formatter', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.interrupt_user = kwargs.get('interrupt_user', None)
+        self.minimum_announcement_interval = kwargs.get('minimum_announcement_interval',
                                                         None)
 
     @property
@@ -136,18 +136,18 @@ class AnnounceNewData(HighchartsMeta):
 
     @minimum_announcement_interval.setter
     def minimum_announcement_interval(self, value: int | float | Decimal):
-        value = validators.integer(value,
-                                   allow_empty = True,
-                                   coerce_value = True,
-                                   minimum = 0)
+        self._minimum_announcement_interval = validators.integer(value,
+                                                                 allow_empty = True,
+                                                                 coerce_value = True,
+                                                                 minimum = 0)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'announcement_formatter': as_dict.pop('announcementFormatter', None),
-            'enabled': as_dict.pop('enabled', None),
-            'interrupt_user': as_dict.pop('interruptUser', None),
-            'minimum_announcement_interval': as_dict.pop('minimumAnnouncementInterval',
+            'announcement_formatter': as_dict.get('announcementFormatter', None),
+            'enabled': as_dict.get('enabled', None),
+            'interrupt_user': as_dict.get('interruptUser', None),
+            'minimum_announcement_interval': as_dict.get('minimumAnnouncementInterval',
                                                             None),
         }
 

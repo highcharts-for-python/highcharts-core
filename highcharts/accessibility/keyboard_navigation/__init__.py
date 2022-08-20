@@ -18,11 +18,11 @@ class KeyboardNavigation(HighchartsMeta):
         self._series_navigation = None
         self._wrap_around = None
 
-        self.enabled = kwargs.pop('enabled', None)
-        self.focus_border = kwargs.pop('focus_border', None)
-        self.order = kwargs.pop('order', None)
-        self.series_navigation = kwargs.pop('series_navigation', None)
-        self.wrap_around = kwargs.pop('wrap_around', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.focus_border = kwargs.get('focus_border', None)
+        self.order = kwargs.get('order', None)
+        self.series_navigation = kwargs.get('series_navigation', None)
+        self.wrap_around = kwargs.get('wrap_around', None)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -126,11 +126,11 @@ class KeyboardNavigation(HighchartsMeta):
     def from_dict(cls, as_dict):
         as_dict = validators.dict(as_dict, allow_empty = True) or {}
         kwargs = {
-            'enabled': as_dict.pop('enabled', None),
-            'focus_border': as_dict.pop('focusBorder', None),
-            'order': as_dict.pop('order', None),
-            'series_navigation': as_dict.pop('seriesNavigation', None),
-            'wrap_around': as_dict.pop('wrapAround', None)
+            'enabled': as_dict.get('enabled', None),
+            'focus_border': as_dict.get('focusBorder', None),
+            'order': as_dict.get('order', None),
+            'series_navigation': as_dict.get('seriesNavigation', None),
+            'wrap_around': as_dict.get('wrapAround', None)
         }
 
         return cls(**kwargs)
