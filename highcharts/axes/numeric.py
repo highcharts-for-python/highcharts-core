@@ -37,23 +37,23 @@ class NumericAxis(GenericAxis):
         self._title = None
         self._zoom_enabled = None
 
-        self.align_ticks = kwargs.pop('align_ticks', None)
-        self.allow_decimals = kwargs.pop('allow_decimals', None)
-        self.alternate_grid_color = kwargs.pop('alternate_grid_color', None)
-        self.breaks = kwargs.pop('breaks', None)
-        self.categories = kwargs.pop('categories', None)
-        self.date_time_label_formats = kwargs.pop('date_time_label_formats', None)
-        self.linked_to = kwargs.pop('linked_to', None)
-        self.min_range = kwargs.pop('min_range', None)
-        self.min_tick_interval = kwargs.pop('min_tick_interval', None)
-        self.offset = kwargs.pop('offset', None)
-        self.opposite = kwargs.pop('opposite', None)
-        self.pane = kwargs.pop('pane', None)
-        self.plot_bands = kwargs.pop('plot_bands', None)
-        self.plot_lines = kwargs.pop('plot_lines', None)
-        self.reversed_stacks = kwargs.pop('reversed_stacks', None)
-        self.title = kwargs.pop('title', None)
-        self.zoom_enabled = kwargs.pop('zoom_enabled', None)
+        self.align_ticks = kwargs.get('align_ticks', None)
+        self.allow_decimals = kwargs.get('allow_decimals', None)
+        self.alternate_grid_color = kwargs.get('alternate_grid_color', None)
+        self.breaks = kwargs.get('breaks', None)
+        self.categories = kwargs.get('categories', None)
+        self.date_time_label_formats = kwargs.get('date_time_label_formats', None)
+        self.linked_to = kwargs.get('linked_to', None)
+        self.min_range = kwargs.get('min_range', None)
+        self.min_tick_interval = kwargs.get('min_tick_interval', None)
+        self.offset = kwargs.get('offset', None)
+        self.opposite = kwargs.get('opposite', None)
+        self.pane = kwargs.get('pane', None)
+        self.plot_bands = kwargs.get('plot_bands', None)
+        self.plot_lines = kwargs.get('plot_lines', None)
+        self.reversed_stacks = kwargs.get('reversed_stacks', None)
+        self.title = kwargs.get('title', None)
+        self.zoom_enabled = kwargs.get('zoom_enabled', None)
 
         super().__init__(**kwargs)
 
@@ -426,74 +426,74 @@ class NumericAxis(GenericAxis):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'align_ticks': as_dict.pop('alignTicks', None),
-            'allow_decimals': as_dict.pop('allowDecimals', None),
-            'alternate_grid_color': as_dict.pop('alternateGridColor', None),
-            'angle': as_dict.pop('angle', None),
-            'breaks': as_dict.pop('breaks', None),
-            'categories': as_dict.pop('categories', None),
-            'ceiling': as_dict.pop('ceiling', None),
-            'class_name': as_dict.pop('className', None),
-            'date_time_label_formats': as_dict.pop('dateTimeLabelFormats', None),
-            'end_on_tick': as_dict.pop('endOnTick', None),
-            'events': as_dict.pop('events', None),
-            'floor': as_dict.pop('floor', None),
-            'grid_line_color': as_dict.pop('gridLineColor', None),
-            'grid_line_dash_style': as_dict.pop('gridLineDashStyle', None),
-            'grid_line_interpolation': as_dict.pop('gridLineInterpolation', None),
-            'grid_line_width': as_dict.pop('gridLineWidth', None),
-            'grid_z_index': as_dict.pop('gridZIndex', None),
-            'id': as_dict.pop('id', None),
-            'labels': as_dict.pop('labels', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'margin': as_dict.pop('margin', None),
-            'max': as_dict.pop('max', None),
-            'max_padding': as_dict.pop('maxPadding', None),
-            'min': as_dict.pop('min', None),
-            'minor_grid_line_color': as_dict.pop('minorGridLineColor', None),
-            'minor_grid_line_dash_style': as_dict.pop('minorGridLineDashStyle', None),
-            'minor_grid_line_width': as_dict.pop('minorGridLineWidth', None),
-            'minor_tick_color': as_dict.pop('minorTickColor', None),
-            'minor_tick_interval': as_dict.pop('minorTickInterval', None),
-            'minor_tick_length': as_dict.pop('minorTickLength', None),
-            'minor_tick_position': as_dict.pop('minorTickPosition', None),
-            'minor_ticks': as_dict.pop('minorTicks', None),
-            'minor_tick_width': as_dict.pop('minorTickWidth', None),
-            'min_padding': as_dict.pop('minPadding', None),
-            'min_range': as_dict.pop('minRange', None),
-            'min_tick_interval': as_dict.pop('minTickInterval', None),
-            'offset': as_dict.pop('offset', None),
-            'opposite': as_dict.pop('opposite', None),
-            'pane': as_dict.pop('pane', None),
-            'panning_enabled': as_dict.pop('panningEnabled', None),
-            'plot_bands': as_dict.pop('plotBands', None),
-            'plot_lines': as_dict.pop('plotLines', None),
-            'reversed': as_dict.pop('reversed', None),
-            'reversed_stacks': as_dict.pop('reversedStacks', None),
-            'show_first_label': as_dict.pop('showFirstLabel', None),
-            'show_last_label': as_dict.pop('showLastLabel', None),
-            'soft_max': as_dict.pop('softMax', None),
-            'soft_min': as_dict.pop('softMin', None),
-            'start_of_week': as_dict.pop('startOfWeek', None),
-            'start_on_tick': as_dict.pop('startOnTick', None),
-            'tick_amount': as_dict.pop('tickAmount', None),
-            'tick_color': as_dict.pop('tickColor', None),
-            'tick_interval': as_dict.pop('tickInterval', None),
-            'tick_length': as_dict.pop('tickLength', None),
-            'tickmark_placement': as_dict.pop('tickmarkPlacement', None),
-            'tick_pixel_interval': as_dict.pop('tickPixelInterval', None),
-            'tick_position': as_dict.pop('tickPosition', None),
-            'tick_positioner': as_dict.pop('tickPositioner', None),
-            'tick_positions': as_dict.pop('tickPositions', None),
-            'tick_width': as_dict.pop('tickWidth', None),
-            'title': as_dict.pop('title', None),
-            'type': as_dict.pop('type', None),
-            'unique_names': as_dict.pop('uniqueNames', None),
-            'units': as_dict.pop('units', None),
-            'visible': as_dict.pop('visible', None),
-            'z_index': as_dict.pop('zIndex', None),
-            'zoom_enabled': as_dict.pop('zoomEnabled', None)
+            'accessibility': as_dict.get('accessibility', None),
+            'align_ticks': as_dict.get('alignTicks', None),
+            'allow_decimals': as_dict.get('allowDecimals', None),
+            'alternate_grid_color': as_dict.get('alternateGridColor', None),
+            'angle': as_dict.get('angle', None),
+            'breaks': as_dict.get('breaks', None),
+            'categories': as_dict.get('categories', None),
+            'ceiling': as_dict.get('ceiling', None),
+            'class_name': as_dict.get('className', None),
+            'date_time_label_formats': as_dict.get('dateTimeLabelFormats', None),
+            'end_on_tick': as_dict.get('endOnTick', None),
+            'events': as_dict.get('events', None),
+            'floor': as_dict.get('floor', None),
+            'grid_line_color': as_dict.get('gridLineColor', None),
+            'grid_line_dash_style': as_dict.get('gridLineDashStyle', None),
+            'grid_line_interpolation': as_dict.get('gridLineInterpolation', None),
+            'grid_line_width': as_dict.get('gridLineWidth', None),
+            'grid_z_index': as_dict.get('gridZIndex', None),
+            'id': as_dict.get('id', None),
+            'labels': as_dict.get('labels', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'margin': as_dict.get('margin', None),
+            'max': as_dict.get('max', None),
+            'max_padding': as_dict.get('maxPadding', None),
+            'min': as_dict.get('min', None),
+            'minor_grid_line_color': as_dict.get('minorGridLineColor', None),
+            'minor_grid_line_dash_style': as_dict.get('minorGridLineDashStyle', None),
+            'minor_grid_line_width': as_dict.get('minorGridLineWidth', None),
+            'minor_tick_color': as_dict.get('minorTickColor', None),
+            'minor_tick_interval': as_dict.get('minorTickInterval', None),
+            'minor_tick_length': as_dict.get('minorTickLength', None),
+            'minor_tick_position': as_dict.get('minorTickPosition', None),
+            'minor_ticks': as_dict.get('minorTicks', None),
+            'minor_tick_width': as_dict.get('minorTickWidth', None),
+            'min_padding': as_dict.get('minPadding', None),
+            'min_range': as_dict.get('minRange', None),
+            'min_tick_interval': as_dict.get('minTickInterval', None),
+            'offset': as_dict.get('offset', None),
+            'opposite': as_dict.get('opposite', None),
+            'pane': as_dict.get('pane', None),
+            'panning_enabled': as_dict.get('panningEnabled', None),
+            'plot_bands': as_dict.get('plotBands', None),
+            'plot_lines': as_dict.get('plotLines', None),
+            'reversed': as_dict.get('reversed', None),
+            'reversed_stacks': as_dict.get('reversedStacks', None),
+            'show_first_label': as_dict.get('showFirstLabel', None),
+            'show_last_label': as_dict.get('showLastLabel', None),
+            'soft_max': as_dict.get('softMax', None),
+            'soft_min': as_dict.get('softMin', None),
+            'start_of_week': as_dict.get('startOfWeek', None),
+            'start_on_tick': as_dict.get('startOnTick', None),
+            'tick_amount': as_dict.get('tickAmount', None),
+            'tick_color': as_dict.get('tickColor', None),
+            'tick_interval': as_dict.get('tickInterval', None),
+            'tick_length': as_dict.get('tickLength', None),
+            'tickmark_placement': as_dict.get('tickmarkPlacement', None),
+            'tick_pixel_interval': as_dict.get('tickPixelInterval', None),
+            'tick_position': as_dict.get('tickPosition', None),
+            'tick_positioner': as_dict.get('tickPositioner', None),
+            'tick_positions': as_dict.get('tickPositions', None),
+            'tick_width': as_dict.get('tickWidth', None),
+            'title': as_dict.get('title', None),
+            'type': as_dict.get('type', None),
+            'unique_names': as_dict.get('uniqueNames', None),
+            'units': as_dict.get('units', None),
+            'visible': as_dict.get('visible', None),
+            'z_index': as_dict.get('zIndex', None),
+            'zoom_enabled': as_dict.get('zoomEnabled', None)
         }
 
         return cls(**kwargs)
@@ -508,7 +508,7 @@ class NumericAxis(GenericAxis):
             'breaks': self.breaks,
             'categories': self.categories,
             'ceiling': self.ceiling,
-            'class_name': self.class_name,
+            'className': self.class_name,
             'dateTimeLabelFormats': self.date_time_label_formats,
             'endOnTick': self.end_on_tick,
             'events': self.events,

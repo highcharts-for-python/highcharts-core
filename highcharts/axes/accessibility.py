@@ -13,9 +13,9 @@ class AxisAccessibility(HighchartsMeta):
         self._enabled = None
         self._range_description = None
 
-        self.description = kwargs.pop('description', None)
-        self.enabled = kwargs.pop('enabled', None)
-        self.range_description = kwargs.pop('range_description', None)
+        self.description = kwargs.get('description', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.range_description = kwargs.get('range_description', None)
 
     @property
     def description(self) -> Optional[str]:
@@ -75,9 +75,9 @@ class AxisAccessibility(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'description': as_dict.pop('description', None),
-            'enabled': as_dict.pop('enabled', None),
-            'range_description': as_dict.pop('rangeDescription', None)
+            'description': as_dict.get('description', None),
+            'enabled': as_dict.get('enabled', None),
+            'range_description': as_dict.get('rangeDescription', None)
         }
 
         return cls(**kwargs)
@@ -86,7 +86,7 @@ class AxisAccessibility(HighchartsMeta):
         untrimmed = {
             'description': self.description,
             'enabled': self.enabled,
-            'range_description': self.range_description
+            'rangeDescription': self.range_description
         }
 
         return untrimmed

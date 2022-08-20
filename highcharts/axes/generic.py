@@ -16,6 +16,7 @@ from highcharts.axes.labels import AxisLabelOptions
 
 NoneType = type(None)
 
+
 class GenericAxis(HighchartsMeta):
     """Base class that is used for defining axis classes."""
 
@@ -72,57 +73,57 @@ class GenericAxis(HighchartsMeta):
         self._visible = None
         self._z_index = None
 
-        self.accessibility = kwargs.pop('accessibility', None)
-        self.angle = kwargs.pop('angle', None)
-        self.ceiling = kwargs.pop('ceiling', None)
-        self.class_name = kwargs.pop('class_name', None)
-        self.end_on_tick = kwargs.pop('end_on_tick', None)
-        self.events = kwargs.pop('events', None)
-        self.floor = kwargs.pop('floor', None)
-        self.grid_line_color = kwargs.pop('grid_line_color', None)
-        self.grid_line_dash_style = kwargs.pop('grid_line_dash_style', None)
-        self.grid_line_interpolation = kwargs.pop('grid_line_interpolation', None)
-        self.grid_line_width = kwargs.pop('grid_line_width', None)
-        self.grid_z_index = kwargs.pop('grid_z_index', None)
-        self.id = kwargs.pop('id', None)
-        self.labels = kwargs.pop('labels', None)
-        self.margin = kwargs.pop('margin', None)
-        self.max = kwargs.pop('max', None)
-        self.max_padding = kwargs.pop('max_padding', None)
-        self.min = kwargs.pop('min', None)
-        self.minor_grid_line_color = kwargs.pop('minor_grid_line_color', None)
-        self.minor_grid_line_dash_style = kwargs.pop('minor_grid_line_dash_style', None)
-        self.minor_grid_line_width = kwargs.pop('minor_grid_line_width', None)
-        self.minor_tick_color = kwargs.pop('minor_tick_color', None)
-        self.minor_tick_interval = kwargs.pop('minor_tick_interval', None)
-        self.minor_tick_length = kwargs.pop('minor_tick_length', None)
-        self.minor_tick_position = kwargs.pop('minor_tick_position', None)
-        self.minor_ticks = kwargs.pop('minor_ticks', None)
-        self.minor_tick_width = kwargs.pop('minor_tick_width', None)
-        self.min_padding = kwargs.pop('min_padding', None)
-        self.panning_enabled = kwargs.pop('panning_enabled', None)
-        self.reversed = kwargs.pop('reversed', None)
-        self.show_first_label = kwargs.pop('show_first_label', None)
-        self.show_last_label = kwargs.pop('show_last_label', None)
-        self.soft_max = kwargs.pop('soft_max', None)
-        self.soft_min = kwargs.pop('soft_min', None)
-        self.start_of_week = kwargs.pop('start_of_week', None)
-        self.start_on_tick = kwargs.pop('start_on_tick', None)
-        self.tick_amount = kwargs.pop('tick_amount', None)
-        self.tick_color = kwargs.pop('tick_color', None)
-        self.tick_interval = kwargs.pop('tick_interval', None)
-        self.tick_length = kwargs.pop('tick_length', None)
-        self.tickmark_placement = kwargs.pop('tickmark_placement', None)
-        self.tick_pixel_interval = kwargs.pop('tick_pixel_interval', None)
-        self.tick_position = kwargs.pop('tick_position', None)
-        self.tick_positioner = kwargs.pop('tick_positioner', None)
-        self.tick_positions = kwargs.pop('tick_positions', None)
-        self.tick_width = kwargs.pop('tick_width', None)
-        self.type = kwargs.pop('type', None)
-        self.unique_names = kwargs.pop('unique_names', None)
-        self.units = kwargs.pop('units', None)
-        self.visible = kwargs.pop('visible', None)
-        self.z_index = kwargs.pop('z_index', None)
+        self.accessibility = kwargs.get('accessibility', None)
+        self.angle = kwargs.get('angle', None)
+        self.ceiling = kwargs.get('ceiling', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.end_on_tick = kwargs.get('end_on_tick', None)
+        self.events = kwargs.get('events', None)
+        self.floor = kwargs.get('floor', None)
+        self.grid_line_color = kwargs.get('grid_line_color', None)
+        self.grid_line_dash_style = kwargs.get('grid_line_dash_style', None)
+        self.grid_line_interpolation = kwargs.get('grid_line_interpolation', None)
+        self.grid_line_width = kwargs.get('grid_line_width', None)
+        self.grid_z_index = kwargs.get('grid_z_index', None)
+        self.id = kwargs.get('id', None)
+        self.labels = kwargs.get('labels', None)
+        self.margin = kwargs.get('margin', None)
+        self.max = kwargs.get('max', None)
+        self.max_padding = kwargs.get('max_padding', None)
+        self.min = kwargs.get('min', None)
+        self.minor_grid_line_color = kwargs.get('minor_grid_line_color', None)
+        self.minor_grid_line_dash_style = kwargs.get('minor_grid_line_dash_style', None)
+        self.minor_grid_line_width = kwargs.get('minor_grid_line_width', None)
+        self.minor_tick_color = kwargs.get('minor_tick_color', None)
+        self.minor_tick_interval = kwargs.get('minor_tick_interval', None)
+        self.minor_tick_length = kwargs.get('minor_tick_length', None)
+        self.minor_tick_position = kwargs.get('minor_tick_position', None)
+        self.minor_ticks = kwargs.get('minor_ticks', None)
+        self.minor_tick_width = kwargs.get('minor_tick_width', None)
+        self.min_padding = kwargs.get('min_padding', None)
+        self.panning_enabled = kwargs.get('panning_enabled', None)
+        self.reversed = kwargs.get('reversed', None)
+        self.show_first_label = kwargs.get('show_first_label', None)
+        self.show_last_label = kwargs.get('show_last_label', None)
+        self.soft_max = kwargs.get('soft_max', None)
+        self.soft_min = kwargs.get('soft_min', None)
+        self.start_of_week = kwargs.get('start_of_week', None)
+        self.start_on_tick = kwargs.get('start_on_tick', None)
+        self.tick_amount = kwargs.get('tick_amount', None)
+        self.tick_color = kwargs.get('tick_color', None)
+        self.tick_interval = kwargs.get('tick_interval', None)
+        self.tick_length = kwargs.get('tick_length', None)
+        self.tickmark_placement = kwargs.get('tickmark_placement', None)
+        self.tick_pixel_interval = kwargs.get('tick_pixel_interval', None)
+        self.tick_position = kwargs.get('tick_position', None)
+        self.tick_positioner = kwargs.get('tick_positioner', None)
+        self.tick_positions = kwargs.get('tick_positions', None)
+        self.tick_width = kwargs.get('tick_width', None)
+        self.type = kwargs.get('type', None)
+        self.unique_names = kwargs.get('unique_names', None)
+        self.units = kwargs.get('units', None)
+        self.visible = kwargs.get('visible', None)
+        self.z_index = kwargs.get('z_index', None)
 
     @property
     def accessibility(self) -> Optional[AxisAccessibility]:
@@ -570,7 +571,7 @@ class GenericAxis(HighchartsMeta):
 
         :rtype: numeric or :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return self.minor_tick_interval
+        return self._minor_tick_interval
 
     @minor_tick_interval.setter
     def minor_tick_interval(self, value):
@@ -943,7 +944,7 @@ class GenericAxis(HighchartsMeta):
 
         :rtype: numeric or :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return self.tick_interval
+        return self._tick_interval
 
     @tick_interval.setter
     def tick_interval(self, value):

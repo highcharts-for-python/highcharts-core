@@ -25,19 +25,19 @@ class AxisTitle(HighchartsMeta):
         self._x = None
         self._y = None
 
-        self.align = kwargs.pop('align', None)
-        self.margin = kwargs.pop('margin', None)
-        self.offset = kwargs.pop('offset', None)
-        self.position_3d = kwargs.pop('position_3d', None)
-        self.reserve_space = kwargs.pop('reserve_space', None)
-        self.rotation = kwargs.pop('rotation', None)
-        self.skew_3d = kwargs.pop('skew_3d', None)
-        self.style = kwargs.pop('style', None)
-        self.text = kwargs.pop('text', None)
-        self.text_align = kwargs.pop('text_align', None)
-        self.use_html = kwargs.pop('use_html', None)
-        self.x = kwargs.pop('x', None)
-        self.y = kwargs.pop('y', None)
+        self.align = kwargs.get('align', None)
+        self.margin = kwargs.get('margin', None)
+        self.offset = kwargs.get('offset', None)
+        self.position_3d = kwargs.get('position_3d', None)
+        self.reserve_space = kwargs.get('reserve_space', None)
+        self.rotation = kwargs.get('rotation', None)
+        self.skew_3d = kwargs.get('skew_3d', None)
+        self.style = kwargs.get('style', None)
+        self.text = kwargs.get('text', None)
+        self.text_align = kwargs.get('text_align', None)
+        self.use_html = kwargs.get('use_html', None)
+        self.x = kwargs.get('x', None)
+        self.y = kwargs.get('y', None)
 
     @property
     def align(self) -> Optional[str]:
@@ -303,7 +303,7 @@ class AxisTitle(HighchartsMeta):
 
     @x.setter
     def x(self, value):
-        value = validators.numeric(value, allow_empty = True)
+        self._x = validators.numeric(value, allow_empty = True)
 
     @property
     def y(self) -> Optional[int | float | Decimal]:
@@ -315,24 +315,24 @@ class AxisTitle(HighchartsMeta):
 
     @y.setter
     def y(self, value):
-        value = validators.numeric(value, allow_empty = True)
+        self._y = validators.numeric(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.pop('align', None),
-            'margin': as_dict.pop('margin', None),
-            'offset': as_dict.pop('offset', None),
-            'position_3d': as_dict.pop('position3d', None),
-            'reserve_space': as_dict.pop('reserveSpace', None),
-            'rotation': as_dict.pop('rotation', None),
-            'skew_3d': as_dict.pop('skew3d', None),
-            'style': as_dict.pop('style', None),
-            'text': as_dict.pop('text', None),
-            'text_align': as_dict.pop('textAlign', None),
-            'use_html': as_dict.pop('useHTML', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None)
+            'align': as_dict.get('align', None),
+            'margin': as_dict.get('margin', None),
+            'offset': as_dict.get('offset', None),
+            'position_3d': as_dict.get('position3d', None),
+            'reserve_space': as_dict.get('reserveSpace', None),
+            'rotation': as_dict.get('rotation', None),
+            'skew_3d': as_dict.get('skew3d', None),
+            'style': as_dict.get('style', None),
+            'text': as_dict.get('text', None),
+            'text_align': as_dict.get('textAlign', None),
+            'use_html': as_dict.get('useHTML', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None)
         }
 
         return cls(**kwargs)

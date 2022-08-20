@@ -35,27 +35,27 @@ class AxisLabelOptions(HighchartsMeta):
         self._y = None
         self._z_index = None
 
-        self.align = kwargs.pop('align', None)
-        self.allow_overlap = kwargs.pop('allow_overlap', None)
-        self.auto_rotation = kwargs.pop('auto_rotation', None)
-        self.auto_rotation_limit = kwargs.pop('auto_rotation_limit', None)
-        self.distance = kwargs.pop('distance', None)
-        self.enabled = kwargs.pop('enabled', None)
-        self.format = kwargs.pop('format', None)
-        self.formatter = kwargs.pop('formatter', None)
-        self.overflow = kwargs.pop('overflow', None)
-        self.padding = kwargs.pop('padding', None)
-        self.position_3d = kwargs.pop('position_3d', None)
-        self.reserve_space = kwargs.pop('reserve_space', None)
-        self.rotation = kwargs.pop('rotation', None)
-        self.skew_3d = kwargs.pop('skew_3d', None)
-        self.stagger_lines = kwargs.pop('stagger_lines', None)
-        self.step = kwargs.pop('step', None)
-        self.style = kwargs.pop('style', None)
-        self.use_html = kwargs.pop('use_html', None)
-        self.x = kwargs.pop('x', None)
-        self.y = kwargs.pop('y', None)
-        self.z_index = kwargs.pop('z_index', None)
+        self.align = kwargs.get('align', None)
+        self.allow_overlap = kwargs.get('allow_overlap', None)
+        self.auto_rotation = kwargs.get('auto_rotation', None)
+        self.auto_rotation_limit = kwargs.get('auto_rotation_limit', None)
+        self.distance = kwargs.get('distance', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.format = kwargs.get('format', None)
+        self.formatter = kwargs.get('formatter', None)
+        self.overflow = kwargs.get('overflow', None)
+        self.padding = kwargs.get('padding', None)
+        self.position_3d = kwargs.get('position_3d', None)
+        self.reserve_space = kwargs.get('reserve_space', None)
+        self.rotation = kwargs.get('rotation', None)
+        self.skew_3d = kwargs.get('skew_3d', None)
+        self.stagger_lines = kwargs.get('stagger_lines', None)
+        self.step = kwargs.get('step', None)
+        self.style = kwargs.get('style', None)
+        self.use_html = kwargs.get('use_html', None)
+        self.x = kwargs.get('x', None)
+        self.y = kwargs.get('y', None)
+        self.z_index = kwargs.get('z_index', None)
 
     @property
     def align(self) -> Optional[str]:
@@ -236,8 +236,9 @@ class AxisLabelOptions(HighchartsMeta):
         return self._formatter
 
     @formatter.setter
+    @class_sensitive(CallbackFunction)
     def formatter(self, value):
-        self._formatter = validators.string(value, allow_empty = True)
+        self._formatter = value
 
     @property
     def overflow(self) -> Optional[str]:
@@ -262,9 +263,9 @@ class AxisLabelOptions(HighchartsMeta):
             self._overflow = None
         else:
             value = value.lower()
-            if value not in ['justify', 'none']:
-                raise errors.HighchartsValueError(f'overflow accepts "justify" or "none".'
-                                                  f' Was: {value}')
+            if value not in ['justify', 'allow']:
+                raise errors.HighchartsValueError(f'overflow accepts "justify" or "allow"'
+                                                  f'. Was: {value}')
             self._overflow = value
 
     @property
@@ -472,7 +473,7 @@ class AxisLabelOptions(HighchartsMeta):
 
     @x.setter
     def x(self, value):
-        value = validators.numeric(value, allow_empty = True)
+        self._x = validators.numeric(value, allow_empty = True)
 
     @property
     def y(self) -> Optional[int | float | Decimal]:
@@ -486,7 +487,7 @@ class AxisLabelOptions(HighchartsMeta):
 
     @y.setter
     def y(self, value):
-        value = validators.numeric(value, allow_empty = True)
+        self._y = validators.numeric(value, allow_empty = True)
 
     @property
     def z_index(self) -> Optional[int | float | Decimal]:
@@ -503,27 +504,27 @@ class AxisLabelOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.pop('align', None),
-            'allow_overlap': as_dict.pop('allowOverlap', None),
-            'auto_rotation': as_dict.pop('autoRotation', None),
-            'auto_rotation_limit': as_dict.pop('autoRotationLimit', None),
-            'distance': as_dict.pop('distance', None),
-            'enabled': as_dict.pop('enabled', None),
-            'format': as_dict.pop('format', None),
-            'formatter': as_dict.pop('formatter', None),
-            'overflow': as_dict.pop('overflow', None),
-            'padding': as_dict.pop('padding', None),
-            'position_3d': as_dict.pop('position3d', None),
-            'reserve_space': as_dict.pop('reserveSpace', None),
-            'rotation': as_dict.pop('rotation', None),
-            'skew_3d': as_dict.pop('skew3d', None),
-            'stagger_lines': as_dict.pop('staggerLines', None),
-            'step': as_dict.pop('step', None),
-            'style': as_dict.pop('style', None),
-            'use_html': as_dict.pop('useHTML', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
-            'z_index': as_dict.pop('zIndex', None)
+            'align': as_dict.get('align', None),
+            'allow_overlap': as_dict.get('allowOverlap', None),
+            'auto_rotation': as_dict.get('autoRotation', None),
+            'auto_rotation_limit': as_dict.get('autoRotationLimit', None),
+            'distance': as_dict.get('distance', None),
+            'enabled': as_dict.get('enabled', None),
+            'format': as_dict.get('format', None),
+            'formatter': as_dict.get('formatter', None),
+            'overflow': as_dict.get('overflow', None),
+            'padding': as_dict.get('padding', None),
+            'position_3d': as_dict.get('position3d', None),
+            'reserve_space': as_dict.get('reserveSpace', None),
+            'rotation': as_dict.get('rotation', None),
+            'skew_3d': as_dict.get('skew3d', None),
+            'stagger_lines': as_dict.get('staggerLines', None),
+            'step': as_dict.get('step', None),
+            'style': as_dict.get('style', None),
+            'use_html': as_dict.get('useHTML', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
+            'z_index': as_dict.get('zIndex', None)
         }
 
         return cls(**kwargs)
@@ -552,9 +553,8 @@ class AxisLabelOptions(HighchartsMeta):
             'y': self.y,
             'zIndex': self.z_index
         }
-        as_dict = self.trim_dict(untrimmed)
 
-        return as_dict
+        return untrimmed
 
 
 class PlotBandLabel(HighchartsMeta):
@@ -571,15 +571,15 @@ class PlotBandLabel(HighchartsMeta):
         self._x = None
         self._y = None
 
-        self.align = kwargs.pop('align', None)
-        self.rotation = kwargs.pop('rotation', None)
-        self.style = kwargs.pop('style', None)
-        self.text = kwargs.pop('text', None)
-        self.text_align = kwargs.pop('text_align', None)
-        self.use_html = kwargs.pop('use_html', None)
-        self.vertical_align = kwargs.pop('vertical_align', None)
-        self.x = kwargs.pop('x', None)
-        self.y = kwargs.pop('y', None)
+        self.align = kwargs.get('align', None)
+        self.rotation = kwargs.get('rotation', None)
+        self.style = kwargs.get('style', None)
+        self.text = kwargs.get('text', None)
+        self.text_align = kwargs.get('text_align', None)
+        self.use_html = kwargs.get('use_html', None)
+        self.vertical_align = kwargs.get('vertical_align', None)
+        self.x = kwargs.get('x', None)
+        self.y = kwargs.get('y', None)
 
     @property
     def align(self) -> Optional[str]:
@@ -743,7 +743,7 @@ class PlotBandLabel(HighchartsMeta):
 
     @x.setter
     def x(self, value):
-        value = validators.numeric(value, allow_empty = True)
+        self._x = validators.numeric(value, allow_empty = True)
 
     @property
     def y(self) -> Optional[int | float | Decimal]:
@@ -757,20 +757,20 @@ class PlotBandLabel(HighchartsMeta):
 
     @y.setter
     def y(self, value):
-        value = validators.numeric(value, allow_empty = True)
+        self._y = validators.numeric(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.pop('align', None),
-            'rotation': as_dict.pop('rotation', None),
-            'style': as_dict.pop('style', None),
-            'text': as_dict.pop('text', None),
-            'text_align': as_dict.pop('textAlign', None),
-            'use_html': as_dict.pop('useHTML', None),
-            'vertical_align': as_dict.pop('verticalAlign', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None)
+            'align': as_dict.get('align', None),
+            'rotation': as_dict.get('rotation', None),
+            'style': as_dict.get('style', None),
+            'text': as_dict.get('text', None),
+            'text_align': as_dict.get('textAlign', None),
+            'use_html': as_dict.get('useHTML', None),
+            'vertical_align': as_dict.get('verticalAlign', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None)
         }
 
         return cls(**kwargs)
@@ -797,7 +797,7 @@ class PlotLineLabel(PlotBandLabel):
     def __init__(self, **kwargs):
         self._formatter = None
 
-        self.formatter = kwargs.pop('formatter', None)
+        self.formatter = kwargs.get('formatter', None)
 
         super().__init__(**kwargs)
 
@@ -824,16 +824,16 @@ class PlotLineLabel(PlotBandLabel):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.pop('align', None),
-            'formatter': as_dict.pop('formatter', None),
-            'rotation': as_dict.pop('rotation', None),
-            'style': as_dict.pop('style', None),
-            'text': as_dict.pop('text', None),
-            'text_align': as_dict.pop('textAlign', None),
-            'use_html': as_dict.pop('useHTML', None),
-            'vertical_align': as_dict.pop('verticalAlign', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None)
+            'align': as_dict.get('align', None),
+            'formatter': as_dict.get('formatter', None),
+            'rotation': as_dict.get('rotation', None),
+            'style': as_dict.get('style', None),
+            'text': as_dict.get('text', None),
+            'text_align': as_dict.get('textAlign', None),
+            'use_html': as_dict.get('useHTML', None),
+            'vertical_align': as_dict.get('verticalAlign', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None)
         }
 
         return cls(**kwargs)

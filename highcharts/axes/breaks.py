@@ -19,14 +19,14 @@ class AxisBreak(HighchartsMeta):
 
     def __init__(self, **kwargs):
         self._break_size = None
-        self._from = None
+        self._from_ = None
         self._repeat = None
         self._to = None
 
-        self.break_size = kwargs.pop('break_size', None)
-        self.from_ = kwargs.pop('from', None)
-        self.repeat = kwargs.pop('repeat', None)
-        self.to = kwargs.pop('to', None)
+        self.break_size = kwargs.get('break_size', None)
+        self.from_ = kwargs.get('from_', None)
+        self.repeat = kwargs.get('repeat', None)
+        self.to = kwargs.get('to', None)
 
     @property
     def break_size(self) -> Optional[int | float | Decimal]:
@@ -52,11 +52,11 @@ class AxisBreak(HighchartsMeta):
 
         :rtype: numeric or :obj:`None <python:None>`
         """
-        return self._from
+        return self._from_
 
     @from_.setter
     def from_(self, value):
-        self._from = validators.numeric(value, allow_empty = True)
+        self._from_ = validators.numeric(value, allow_empty = True)
 
     @property
     def repeat(self) -> Optional[int | float | Decimal]:
@@ -82,19 +82,19 @@ class AxisBreak(HighchartsMeta):
 
         :rtype: numeric or :obj:`None <python:None>`
         """
-        return self._from
+        return self._to
 
     @to.setter
     def to(self, value):
-        self._from = validators.numeric(value, allow_empty = True)
+        self._to = validators.numeric(value, allow_empty = True)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'break_size': as_dict.pop('breakSize', None),
-            'from_': as_dict.pop('from', None),
-            'repeat': as_dict.pop('repeat', None),
-            'to': as_dict.pop('to', None)
+            'break_size': as_dict.get('breakSize', None),
+            'from_': as_dict.get('from', None),
+            'repeat': as_dict.get('repeat', None),
+            'to': as_dict.get('to', None)
         }
 
         return cls(**kwargs)

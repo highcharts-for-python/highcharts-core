@@ -23,6 +23,13 @@ while indent_count < int(JAVASCRIPT_INDENT_SPACES):
 DEFAULT_COLORS = ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80",
                   "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"]
 
+AXIS_TYPES = [
+    'linear',
+    'logarithmic',
+    'datetime',
+    'category'
+]
+
 SUPPORTED_CURSOR_VALUES = [
     'alias',
     'all-scroll',

@@ -36,16 +36,16 @@ class PlotBand(HighchartsMeta):
         self._to = None
         self._z_index = None
 
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.class_name = kwargs.pop('class_name', None)
-        self.color = kwargs.pop('color', None)
-        self.events = kwargs.pop('events', None)
-        self.from_ = kwargs.pop('from_', None)
-        self.id = kwargs.pop('id', None)
-        self.label = kwargs.pop('label', None)
-        self.to = kwargs.pop('to', None)
-        self.z_index = kwargs.pop('z_index', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.color = kwargs.get('color', None)
+        self.events = kwargs.get('events', None)
+        self.from_ = kwargs.get('from_', None)
+        self.id = kwargs.get('id', None)
+        self.label = kwargs.get('label', None)
+        self.to = kwargs.get('to', None)
+        self.z_index = kwargs.get('z_index', None)
 
     @property
     def border_color(self) -> Optional[str | Gradient | Pattern]:
@@ -195,16 +195,16 @@ class PlotBand(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'border_color': as_dict.pop('borderColor', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'events': as_dict.pop('events', None),
-            'from_': as_dict.pop('from', None),
-            'id': as_dict.pop('id', None),
-            'label': as_dict.pop('label', None),
-            'to': as_dict.pop('to', None),
-            'z_index': as_dict.pop('zIndex', None)
+            'border_color': as_dict.get('borderColor', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'events': as_dict.get('events', None),
+            'from_': as_dict.get('from', None),
+            'id': as_dict.get('id', None),
+            'label': as_dict.get('label', None),
+            'to': as_dict.get('to', None),
+            'z_index': as_dict.get('zIndex', None)
         }
 
         return cls(**kwargs)
@@ -240,15 +240,15 @@ class PlotLine(HighchartsMeta):
         self._width = None
         self._z_index = None
 
-        self.class_name = kwargs.pop('class_name', None)
-        self.color = kwargs.pop('color', None)
-        self.dash_style = kwargs.pop('dash_style', None)
-        self.events = kwargs.pop('events', None)
-        self.id = kwargs.pop('id', None)
-        self.label = kwargs.pop('label', None)
-        self.value = kwargs.pop('value', None)
-        self.width = kwargs.pop('width', None)
-        self.z_index = kwargs.pop('z_index', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.color = kwargs.get('color', None)
+        self.dash_style = kwargs.get('dash_style', None)
+        self.events = kwargs.get('events', None)
+        self.id = kwargs.get('id', None)
+        self.label = kwargs.get('label', None)
+        self.value = kwargs.get('value', None)
+        self.width = kwargs.get('width', None)
+        self.z_index = kwargs.get('z_index', None)
 
     @property
     def class_name(self) -> Optional[str]:
@@ -380,15 +380,15 @@ class PlotLine(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label': as_dict.pop('label', None),
-            'value': as_dict.pop('value', None),
-            'width': as_dict.pop('width', None),
-            'z_index': as_dict.pop('zIndex', None)
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label': as_dict.get('label', None),
+            'value': as_dict.get('value', None),
+            'width': as_dict.get('width', None),
+            'z_index': as_dict.get('zIndex', None)
         }
 
         return cls(**kwargs)

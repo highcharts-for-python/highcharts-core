@@ -351,11 +351,12 @@ def convert_js_to_python(javascript, original_str = None):
     if javascript.type not in ('Property',
                                'Literal',
                                'ObjectExpression',
-                               'ArrayExpression'):
+                               'ArrayExpression',
+                               'UnaryExpression'):
         raise errors.HighchartsParseError(f'javascript should contain a '
                                           f'Property, Literal, ObjectExpression, '
-                                          f'ArrayExpression instance. Received: '
-                                          f'{javascript.type}')
+                                          f'ArrayExpression, or UnaryExpression instance. '
+                                          f'Received: {javascript.type}')
 
     if checkers.is_type(javascript, 'Property'):
         return convert_js_property_to_python(javascript, original_str)
@@ -369,6 +370,12 @@ def convert_js_to_python(javascript, original_str = None):
     elif checkers.is_type(javascript, 'ArrayExpression'):
         return [convert_js_to_python(x, original_str)
                 for x in javascript.elements]
+    elif checkers.is_type(javascript, 'UnaryExpression'):
+        is_negative = javascript.operator == '-'
+        if is_negative:
+            multiple = -1
+        converted_value = convert_js_literal_to_python(javascript.argument, original_str)
+        return converted_value * multiple
     else:
         return convert_js_literal_to_python(javascript, original_str)
 
