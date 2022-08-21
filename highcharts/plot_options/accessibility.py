@@ -13,7 +13,7 @@ class SeriesKeyboardNavigation(HighchartsMeta):
     def __init__(self, **kwargs):
         self._enabled = None
 
-        self.enabled = kwargs.pop('enabled', None)
+        self.enabled = kwargs.get('enabled', None)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -33,7 +33,7 @@ class SeriesKeyboardNavigation(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'enabled': as_dict.pop('enabled', None)
+            'enabled': as_dict.get('enabled', None)
         }
 
         return cls(**kwargs)
@@ -56,11 +56,11 @@ class TypeOptionsAccessibility(HighchartsMeta):
         self._keyboard_navigation = None
         self._point = None
 
-        self.description = kwargs.pop('description', None)
-        self.enabled = kwargs.pop('enabled', None)
-        self.expose_as_group_only = kwargs.pop('expose_as_group_only', None)
-        self.keyboard_navigation = kwargs.pop('keyboard_navigation', None)
-        self.point = kwargs.pop('point', None)
+        self.description = kwargs.get('description', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.expose_as_group_only = kwargs.get('expose_as_group_only', None)
+        self.keyboard_navigation = kwargs.get('keyboard_navigation', None)
+        self.point = kwargs.get('point', None)
 
     @property
     def description(self) -> Optional[str]:
@@ -133,11 +133,11 @@ class TypeOptionsAccessibility(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'description': as_dict.pop('description', None),
-            'enabled': as_dict.pop('enabled', None),
-            'expose_as_group_only': as_dict.pop('exposeAsGroupOnly', None),
-            'keyboard_navigation': as_dict.pop('keyboardNavigation', None),
-            'point': as_dict.pop('point', None)
+            'description': as_dict.get('description', None),
+            'enabled': as_dict.get('enabled', None),
+            'expose_as_group_only': as_dict.get('exposeAsGroupOnly', None),
+            'keyboard_navigation': as_dict.get('keyboardNavigation', None),
+            'point': as_dict.get('point', None)
         }
 
         return cls(**kwargs)

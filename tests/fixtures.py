@@ -254,12 +254,18 @@ def Class__init__(cls, kwargs, error):
         print(kwargs_copy)
         assert result is not None
         assert isinstance(result, cls) is True
+        if checkers.is_type(result, 'GenericTypeOptions'):
+            kwargs_copy['type'] = result.type
+            kwargs['type'] = result.type
         for key in kwargs_copy:
             print(f'CHECKING: {key}')
             if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('function'):
                 continue
             if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('class'):
                 continue
+            if key == 'type' and checkers.is_type(result, 'GenericTypeOptions'):
+                assert does_kwarg_value_match_result(kwargs_copy[key],
+                                                     getattr(result, 'type'))
             elif key == 'margin' and checkers.is_type(result, 'ChartOptions'):
                 print(f'CHECKING: {key}, which gets split over other values')
                 if checkers.is_iterable(kwargs_copy[key]):
@@ -307,6 +313,9 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
         result = instance._to_untrimmed_dict()
         assert result is not None
         assert isinstance(result, dict) is True
+        if checkers.is_type(result, 'GenericTypeOptions'):
+            kwargs_copy['type'] = result.type
+
         for key in kwargs_copy:
             kwarg_value = kwargs_copy[key]
             result_value = result.get(key)
@@ -526,6 +535,8 @@ def Class_from_dict(cls, kwargs, error):
                 kwarg_value = kwargs[key]
                 if key in ['pattern_options', 'patternOptions']:
                     result_value = getattr(instance, 'pattern_options')
+                elif key == 'type':
+                    result_value = getattr(instance, 'type')
                 else:
                     result_value = getattr(instance, key)
                 print(kwarg_value)
@@ -550,6 +561,9 @@ def Class_to_dict(cls, kwargs, error):
 
     if not error:
         instance = cls(**kwargs)
+        if checkers.is_type(instance, 'GenericTypeOptions'):
+            expected['type'] = instance.type
+
         result = instance.to_dict()
         assert result is not None
         assert isinstance(result, dict) is True
@@ -585,6 +599,9 @@ def Class_from_js_literal(cls, input_files, filename, as_file, error):
         input_string = input_file
     else:
         input_string = as_str
+
+    if checkers.is_type(cls, 'GenericTypeOptions') or cls.__name__ == 'GenericTypeOptions':
+        as_str = """{\n  type: 'generic',""" + as_str[1:]
 
     if not error:
         print('-------------------')

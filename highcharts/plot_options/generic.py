@@ -5,7 +5,7 @@ from validator_collection import validators, checkers
 
 from highcharts import constants, errors
 from highcharts.decorators import class_sensitive, validate_types
-from highcharts.metaclasses import HighchartsMeta
+from highcharts.metaclasses import HighchartsMeta, JavaScriptDict
 from highcharts.plot_options.accessibility import TypeOptionsAccessibility
 from highcharts.series.labels import SeriesLabel
 from highcharts.plot_options.points import OnPointOptions
@@ -59,41 +59,41 @@ class GenericTypeOptions(HighchartsMeta):
         self._turbo_threshold = None
         self._visible = None
 
-        self.accessibility = kwargs.pop('accessibility', None)
-        self.allow_point_select = kwargs.pop('allow_point_select', None)
-        self.animation = kwargs.pop('animation', None)
-        self.class_name = kwargs.pop('class_name', None)
-        self.clip = kwargs.pop('clip', True)
-        self.color = kwargs.pop('color', None)
-        self.cursor = kwargs.pop('cursor', None)
-        self.custom = kwargs.pop('custom', None)
-        self.dash_style = kwargs.pop('dash_style', None)
-        self.data_labels = kwargs.pop('data_labels', None)
-        self.description = kwargs.pop('description', None)
-        self.enable_mouse_tracking = kwargs.pop('enable_mouse_tracking', None)
-        self.events = kwargs.pop('events', None)
-        self.include_in_data_export = kwargs.pop('include_in_data_export', None)
-        self.keys = kwargs.pop('keys', None)
-        self.label = kwargs.pop('label', None)
-        self.linked_to = kwargs.pop('linked_to', None)
-        self.marker = kwargs.pop('marker', None)
-        self.on_point = kwargs.pop('on_point', None)
-        self.opacity = kwargs.pop('opacity', None)
-        self.point = kwargs.pop('point', None)
-        self.point_description_formatter = kwargs.pop('point_description_formatter', None)
-        self.selected = kwargs.pop('selected', None)
-        self.show_checkbox = kwargs.pop('show_checkbox', None)
-        self.show_in_legend = kwargs.pop('show_in_legend', None)
-        self.skip_keyboard_navigation = kwargs.pop('skip_keyboard_navigation', None)
-        self.states = kwargs.pop('states', None)
-        self.sticky_tracking = kwargs.pop('sticky_tracking', None)
-        self.threshold = kwargs.pop('threshold', None)
-        self.tooltip = kwargs.pop('tooltip', None)
-        self.turbo_threshold = kwargs.pop('turbo_threshold', None)
-        self.visible = kwargs.pop('visible', None)
+        self.accessibility = kwargs.get('accessibility', None)
+        self.allow_point_select = kwargs.get('allow_point_select', None)
+        self.animation = kwargs.get('animation', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.clip = kwargs.get('clip', None)
+        self.color = kwargs.get('color', None)
+        self.cursor = kwargs.get('cursor', None)
+        self.custom = kwargs.get('custom', None)
+        self.dash_style = kwargs.get('dash_style', None)
+        self.data_labels = kwargs.get('data_labels', None)
+        self.description = kwargs.get('description', None)
+        self.enable_mouse_tracking = kwargs.get('enable_mouse_tracking', None)
+        self.events = kwargs.get('events', None)
+        self.include_in_data_export = kwargs.get('include_in_data_export', None)
+        self.keys = kwargs.get('keys', None)
+        self.label = kwargs.get('label', None)
+        self.linked_to = kwargs.get('linked_to', None)
+        self.marker = kwargs.get('marker', None)
+        self.on_point = kwargs.get('on_point', None)
+        self.opacity = kwargs.get('opacity', None)
+        self.point = kwargs.get('point', None)
+        self.point_description_formatter = kwargs.get('point_description_formatter', None)
+        self.selected = kwargs.get('selected', None)
+        self.show_checkbox = kwargs.get('show_checkbox', None)
+        self.show_in_legend = kwargs.get('show_in_legend', None)
+        self.skip_keyboard_navigation = kwargs.get('skip_keyboard_navigation', None)
+        self.states = kwargs.get('states', None)
+        self.sticky_tracking = kwargs.get('sticky_tracking', None)
+        self.threshold = kwargs.get('threshold', None)
+        self.tooltip = kwargs.get('tooltip', None)
+        self.turbo_threshold = kwargs.get('turbo_threshold', None)
+        self.visible = kwargs.get('visible', None)
 
     @property
-    def type_(self) -> str:
+    def type(self) -> str:
         """Indicates the type of series that is represented by this instance.
 
         .. warning::
@@ -103,6 +103,7 @@ class GenericTypeOptions(HighchartsMeta):
         :rtype: :class:`str <python:str>`
         """
         class_name = self.__class__.__name__
+        class_name = class_name.replace('TypeOptions', '')
         class_name = class_name.replace('Options', '')
 
         return class_name.lower()
@@ -138,7 +139,10 @@ class GenericTypeOptions(HighchartsMeta):
 
     @allow_point_select.setter
     def allow_point_select(self, value):
-        self._allow_point_select = bool(value)
+        if value is None:
+            self._allow_point_select = None
+        else:
+            self._allow_point_select = bool(value)
 
     @property
     def animation(self) -> Optional[AnimationOptions]:
@@ -280,7 +284,7 @@ class GenericTypeOptions(HighchartsMeta):
             self._cursor = value
 
     @property
-    def custom(self) -> Optional[dict]:
+    def custom(self) -> Optional[JavaScriptDict]:
         """A reserved subspace to store options and values for customized functionality.
 
         Here you can add additional data for your own event callbacks and formatter
@@ -291,8 +295,9 @@ class GenericTypeOptions(HighchartsMeta):
         return self._custom
 
     @custom.setter
+    @class_sensitive(JavaScriptDict)
     def custom(self, value):
-        self._custom = validators.dict(value, allow_empty = True) or {}
+        self._custom = value
 
     @property
     def dash_style(self) -> Optional[str]:
@@ -765,38 +770,38 @@ class GenericTypeOptions(HighchartsMeta):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'sticky_tracking': as_dict.pop('stickyTracking', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', True)
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', True)
         }
 
         return kwargs
@@ -809,7 +814,7 @@ class GenericTypeOptions(HighchartsMeta):
 
     def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
-            'type': self.type_,
+            'type': self.type,
             'accessibility': self.accessibility,
             'allowPointSelect': self.allow_point_select,
             'animation': self.animation,

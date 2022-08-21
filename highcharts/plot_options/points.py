@@ -18,9 +18,9 @@ class ConnectorOptions(HighchartsMeta):
         self._stroke = None
         self._width = None
 
-        self.dashstyle = kwargs.pop('dashstyle', None)
-        self.stroke = kwargs.pop('stroke', None)
-        self.width = kwargs.pop('width', None)
+        self.dashstyle = kwargs.get('dashstyle', None)
+        self.stroke = kwargs.get('stroke', None)
+        self.width = kwargs.get('width', None)
 
     @property
     def dashstyle(self) -> Optional[str]:
@@ -82,9 +82,9 @@ class ConnectorOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'dashstyle': as_dict.pop('dashstyle', None) or as_dict.pop('dashStyle', None),
-            'stroke': as_dict.pop('stroke', None),
-            'width': as_dict.pop('width', None)
+            'dashstyle': as_dict.get('dashstyle', None) or as_dict.get('dashStyle', None),
+            'stroke': as_dict.get('stroke', None),
+            'width': as_dict.get('width', None)
         }
 
         return cls(**kwargs)
@@ -108,9 +108,9 @@ class OnPointOptions(HighchartsMeta):
         self._id = None
         self._position = None
 
-        self.connector_options = kwargs.pop('connector_options', None)
-        self.id = kwargs.pop('id', None)
-        self.position = kwargs.pop('position', None)
+        self.connector_options = kwargs.get('connector_options', None)
+        self.id = kwargs.get('id', None)
+        self.position = kwargs.get('position', None)
 
     @property
     def connector_options(self) -> Optional[ConnectorOptions]:
@@ -159,9 +159,9 @@ class OnPointOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'connector_options': as_dict.pop('connector_options', None),
-            'id': as_dict.pop('id', None),
-            'position': as_dict.pop('position', None)
+            'connector_options': as_dict.get('connectorOptions', None),
+            'id': as_dict.get('id', None),
+            'position': as_dict.get('position', None)
         }
 
         return cls(**kwargs)
@@ -182,7 +182,7 @@ class Point(HighchartsMeta):
     def __init__(self, **kwargs):
         self._events = None
 
-        self.events = kwargs.pop('events', None)
+        self.events = kwargs.get('events', None)
 
     @property
     def events(self) -> Optional[PointEvents]:
@@ -200,7 +200,7 @@ class Point(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'events': as_dict.pop('events', None)
+            'events': as_dict.get('events', None)
         }
 
         return cls(**kwargs)

@@ -16,10 +16,10 @@ class Position(HighchartsMeta):
         self._x = None
         self._y = None
 
-        self.align = kwargs.pop('align', None)
-        self.vertical_align = kwargs.pop('vertical_align', None)
-        self.x = kwargs.pop('x', None)
-        self.y = kwargs.pop('y', None)
+        self.align = kwargs.get('align', None)
+        self.vertical_align = kwargs.get('vertical_align', None)
+        self.x = kwargs.get('x', None)
+        self.y = kwargs.get('y', None)
 
     @property
     def align(self) -> Optional[str]:
@@ -102,10 +102,10 @@ class Position(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.pop('align', None),
-            'vertical_align': as_dict.pop('verticalAlign', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
+            'align': as_dict.get('align', None),
+            'vertical_align': as_dict.get('verticalAlign', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
         }
 
         return cls(**kwargs)

@@ -18,10 +18,10 @@ class Box(HighchartsMeta):
         self._right = None
         self._top = None
 
-        self.bottom = kwargs.pop('bottom', None)
-        self.left = kwargs.pop('left', None)
-        self.right = kwargs.pop('right', None)
-        self.top = kwargs.pop('top', None)
+        self.bottom = kwargs.get('bottom', None)
+        self.left = kwargs.get('left', None)
+        self.right = kwargs.get('right', None)
+        self.top = kwargs.get('top', None)
 
     @property
     def bottom(self) -> Optional[int | float | Decimal]:
@@ -74,10 +74,10 @@ class Box(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'bottom': as_dict.pop('bottom', None),
-            'left': as_dict.pop('left', None),
-            'right': as_dict.pop('right', None),
-            'top': as_dict.pop('top', None)
+            'bottom': as_dict.get('bottom', None),
+            'left': as_dict.get('left', None),
+            'right': as_dict.get('right', None),
+            'top': as_dict.get('top', None)
         }
 
         return cls(**kwargs)
@@ -113,16 +113,17 @@ class SeriesLabel(HighchartsMeta):
         self._on_area = None
         self._style = None
 
-        self.boxes_to_avoid = kwargs.pop('boxes_to_avoid', None)
-        self.connector_allowed = kwargs.pop('connector_allowed', False)
-        self.connector_neighbour_distance = kwargs.pop('connector_neighbour_distance', 24)
-        self.enabled = kwargs.pop('enabled', True)
-        self.format = kwargs.pop('format', None)
-        self.formatter = kwargs.pop('formatter', None)
-        self.max_font_size = kwargs.pop('max_font_size', constants.EnforcedNull)
-        self.min_font_size = kwargs.pop('min_font_size', constants.EnforcedNull)
-        self.on_area = kwargs.pop('on_area', constants.EnforcedNull)
-        self.style = kwargs.pop('style', None)
+        self.boxes_to_avoid = kwargs.get('boxes_to_avoid', None)
+        self.connector_allowed = kwargs.get('connector_allowed', None)
+        self.connector_neighbour_distance = kwargs.get('connector_neighbour_distance',
+                                                       None)
+        self.enabled = kwargs.get('enabled', None)
+        self.format = kwargs.get('format', None)
+        self.formatter = kwargs.get('formatter', None)
+        self.max_font_size = kwargs.get('max_font_size', None)
+        self.min_font_size = kwargs.get('min_font_size', None)
+        self.on_area = kwargs.get('on_area', None)
+        self.style = kwargs.get('style', None)
 
     @property
     def boxes_to_avoid(self) -> Optional[List[Box]]:
@@ -276,6 +277,8 @@ class SeriesLabel(HighchartsMeta):
     def on_area(self, value):
         if value is None:
             self._on_area = None
+        elif value is False:
+            self._on_area = False
         elif isinstance(value, constants.EnforcedNullType):
             self._on_area = constants.EnforcedNull
         else:
@@ -297,17 +300,17 @@ class SeriesLabel(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'boxes_to_avoid': as_dict.pop('boxesToAvoid', None),
-            'connector_allowed': as_dict.pop('connectorAllowed', None),
-            'connector_neighbour_distance': as_dict.pop('connectorNeighbourDistance',
+            'boxes_to_avoid': as_dict.get('boxesToAvoid', None),
+            'connector_allowed': as_dict.get('connectorAllowed', None),
+            'connector_neighbour_distance': as_dict.get('connectorNeighbourDistance',
                                                         None),
-            'enabled': as_dict.pop('enabled', None),
-            'format': as_dict.pop('format', None),
-            'formatter': as_dict.pop('formatter', None),
-            'max_font_size': as_dict.pop('maxFontSize', None),
-            'min_font_size': as_dict.pop('minFontSize', None),
-            'on_area': as_dict.pop('on_area', None),
-            'style': as_dict.pop('style', None)
+            'enabled': as_dict.get('enabled', None),
+            'format': as_dict.get('format', None),
+            'formatter': as_dict.get('formatter', None),
+            'max_font_size': as_dict.get('maxFontSize', None),
+            'min_font_size': as_dict.get('minFontSize', None),
+            'on_area': as_dict.get('onArea', None),
+            'style': as_dict.get('style', None)
         }
 
         return cls(**kwargs)
