@@ -55,42 +55,42 @@ class Tooltip(HighchartsMeta):
         self._value_suffix = None
         self._x_date_format = None
 
-        self.animation = kwargs.pop('animation', None)
-        self.background_color = kwargs.pop('background_color', None)
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_radius = kwargs.pop('border_radius', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.class_name = kwargs.pop('class_name', None)
-        self.cluster_format = kwargs.pop('cluster_format', None)
-        self.date_time_label_formats = kwargs.pop('date_time_label_formats', None)
-        self.distance = kwargs.pop('distance', None)
-        self.enabled = kwargs.pop('enabled', None)
-        self.follow_pointer = kwargs.pop('follow_pointer', None)
-        self.follow_touch_move = kwargs.pop('follow_touch_move', None)
-        self.footer_format = kwargs.pop('footer_format', None)
-        self.formatter = kwargs.pop('formatter', None)
-        self.header_format = kwargs.pop('header_format', None)
-        self.header_shape = kwargs.pop('header_shape', None)
-        self.hide_delay = kwargs.pop('hide_delay', None)
-        self.null_format = kwargs.pop('null_format', None)
-        self.null_formatter = kwargs.pop('null_formatter', None)
-        self.outside = kwargs.pop('outside', None)
-        self.padding = kwargs.pop('padding', None)
-        self.point_format = kwargs.pop('point_format', None)
-        self.point_formatter = kwargs.pop('point_formatter', None)
-        self.positioner = kwargs.pop('positioner', None)
-        self.shadow = kwargs.pop('shadow', None)
-        self.shape = kwargs.pop('shape', None)
-        self.shared = kwargs.pop('shared', None)
-        self.snap = kwargs.pop('snap', None)
-        self.split = kwargs.pop('split', None)
-        self.stick_on_contact = kwargs.pop('stick_on_contact', None)
-        self.style = kwargs.pop('style', None)
-        self.use_html = kwargs.pop('use_html', None)
-        self.value_decimals = kwargs.pop('value_decimals', None)
-        self.value_prefix = kwargs.pop('value_prefix', None)
-        self.value_suffix = kwargs.pop('value_suffix', None)
-        self.x_date_format = kwargs.pop('x_date_format', None)
+        self.animation = kwargs.get('animation', None)
+        self.background_color = kwargs.get('background_color', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_radius = kwargs.get('border_radius', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.cluster_format = kwargs.get('cluster_format', None)
+        self.date_time_label_formats = kwargs.get('date_time_label_formats', None)
+        self.distance = kwargs.get('distance', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.follow_pointer = kwargs.get('follow_pointer', None)
+        self.follow_touch_move = kwargs.get('follow_touch_move', None)
+        self.footer_format = kwargs.get('footer_format', None)
+        self.formatter = kwargs.get('formatter', None)
+        self.header_format = kwargs.get('header_format', None)
+        self.header_shape = kwargs.get('header_shape', None)
+        self.hide_delay = kwargs.get('hide_delay', None)
+        self.null_format = kwargs.get('null_format', None)
+        self.null_formatter = kwargs.get('null_formatter', None)
+        self.outside = kwargs.get('outside', None)
+        self.padding = kwargs.get('padding', None)
+        self.point_format = kwargs.get('point_format', None)
+        self.point_formatter = kwargs.get('point_formatter', None)
+        self.positioner = kwargs.get('positioner', None)
+        self.shadow = kwargs.get('shadow', None)
+        self.shape = kwargs.get('shape', None)
+        self.shared = kwargs.get('shared', None)
+        self.snap = kwargs.get('snap', None)
+        self.split = kwargs.get('split', None)
+        self.stick_on_contact = kwargs.get('stick_on_contact', None)
+        self.style = kwargs.get('style', None)
+        self.use_html = kwargs.get('use_html', None)
+        self.value_decimals = kwargs.get('value_decimals', None)
+        self.value_prefix = kwargs.get('value_prefix', None)
+        self.value_suffix = kwargs.get('value_suffix', None)
+        self.x_date_format = kwargs.get('x_date_format', None)
 
     @property
     def animation(self) -> Optional[bool]:
@@ -846,42 +846,42 @@ class Tooltip(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'animation': as_dict.pop('animation', None),
-            'background_color': as_dict.pop('backgroundColor', None),
-            'border_color': as_dict.pop('borderColor', None),
-            'border_radius': as_dict.pop('borderRadius', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'class_name': as_dict.pop('className', None),
-            'cluster_format': as_dict.pop('clusterFormat', None),
-            'date_time_label_formats': as_dict.pop('dateTimeLabelFormats', None),
-            'distance': as_dict.pop('distance', None),
-            'enabled': as_dict.pop('enabled', None),
-            'follow_pointer': as_dict.pop('followPointer', None),
-            'follow_touch_move': as_dict.pop('followTouchMove', None),
-            'footer_format': as_dict.pop('footerFormat', None),
-            'formatter': as_dict.pop('formatter', None),
-            'header_format': as_dict.pop('headerFormat', None),
-            'header_shape': as_dict.pop('headerShape', None),
-            'hide_delay': as_dict.pop('hideDelay', None),
-            'null_format': as_dict.pop('nullFormat', None),
-            'null_formatter': as_dict.pop('nullFormatter', None),
-            'outside': as_dict.pop('outside', None),
-            'padding': as_dict.pop('padding', None),
-            'point_format': as_dict.pop('pointFormat', None),
-            'point_formatter': as_dict.pop('pointFormatter', None),
-            'positioner': as_dict.pop('positioner', None),
-            'shadow': as_dict.pop('shadow', None),
-            'shape': as_dict.pop('shape', None),
-            'shared': as_dict.pop('shared', None),
-            'snap': as_dict.pop('snap', None),
-            'split': as_dict.pop('split', None),
-            'stick_on_contact': as_dict.pop('stickOnContact', None),
-            'style': as_dict.pop('style', None),
-            'use_html': as_dict.pop('useHTML', None),
-            'value_decimals': as_dict.pop('valueDecimals', None),
-            'value_prefix': as_dict.pop('valuePrefix', None),
-            'value_suffix': as_dict.pop('valueSuffix', None),
-            'x_date_format': as_dict.pop('xDateFormat', None)
+            'animation': as_dict.get('animation', None),
+            'background_color': as_dict.get('backgroundColor', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'class_name': as_dict.get('className', None),
+            'cluster_format': as_dict.get('clusterFormat', None),
+            'date_time_label_formats': as_dict.get('dateTimeLabelFormats', None),
+            'distance': as_dict.get('distance', None),
+            'enabled': as_dict.get('enabled', None),
+            'follow_pointer': as_dict.get('followPointer', None),
+            'follow_touch_move': as_dict.get('followTouchMove', None),
+            'footer_format': as_dict.get('footerFormat', None),
+            'formatter': as_dict.get('formatter', None),
+            'header_format': as_dict.get('headerFormat', None),
+            'header_shape': as_dict.get('headerShape', None),
+            'hide_delay': as_dict.get('hideDelay', None),
+            'null_format': as_dict.get('nullFormat', None),
+            'null_formatter': as_dict.get('nullFormatter', None),
+            'outside': as_dict.get('outside', None),
+            'padding': as_dict.get('padding', None),
+            'point_format': as_dict.get('pointFormat', None),
+            'point_formatter': as_dict.get('pointFormatter', None),
+            'positioner': as_dict.get('positioner', None),
+            'shadow': as_dict.get('shadow', None),
+            'shape': as_dict.get('shape', None),
+            'shared': as_dict.get('shared', None),
+            'snap': as_dict.get('snap', None),
+            'split': as_dict.get('split', None),
+            'stick_on_contact': as_dict.get('stickOnContact', None),
+            'style': as_dict.get('style', None),
+            'use_html': as_dict.get('useHTML', None),
+            'value_decimals': as_dict.get('valueDecimals', None),
+            'value_prefix': as_dict.get('valuePrefix', None),
+            'value_suffix': as_dict.get('valueSuffix', None),
+            'x_date_format': as_dict.get('xDateFormat', None)
         }
 
         return cls(**kwargs)
