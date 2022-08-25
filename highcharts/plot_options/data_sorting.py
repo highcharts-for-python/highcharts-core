@@ -13,9 +13,9 @@ class DataSorting(HighchartsMeta):
         self._match_by_name = None
         self._sort_key = None
 
-        self.enabled = kwargs.pop('enabled', None)
-        self.match_by_name = kwargs.pop('match_by_name', None)
-        self.sort_key = kwargs.pop('sort_key', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.match_by_name = kwargs.get('match_by_name', None)
+        self.sort_key = kwargs.get('sort_key', None)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -70,9 +70,9 @@ class DataSorting(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'enabled': as_dict.pop('enabled', None),
-            'match_by_name': as_dict.pop('matchByName', None),
-            'sort_key': as_dict.pop('sortKey', None)
+            'enabled': as_dict.get('enabled', None),
+            'match_by_name': as_dict.get('matchByName', None),
+            'sort_key': as_dict.get('sortKey', None)
         }
 
         return cls(**kwargs)

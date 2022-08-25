@@ -23,13 +23,13 @@ class DragHandle(HighchartsMeta):
         self._path_formatter = None
         self._z_index = None
 
-        self.class_name = kwargs.pop('class_name', None)
-        self.color = kwargs.pop('color', None)
-        self.cursor = kwargs.pop('cursor', None)
-        self.line_color = kwargs.pop('line_color', None)
-        self.line_width = kwargs.pop('line_width', None)
-        self.path_formatter = kwargs.pop('path_formatter', None)
-        self.z_index = kwargs.pop('z_index', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.color = kwargs.get('color', None)
+        self.cursor = kwargs.get('cursor', None)
+        self.line_color = kwargs.get('line_color', None)
+        self.line_width = kwargs.get('line_width', None)
+        self.path_formatter = kwargs.get('path_formatter', None)
+        self.z_index = kwargs.get('z_index', None)
 
     @property
     def class_name(self) -> Optional[str]:
@@ -177,13 +177,13 @@ class DragHandle(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'line_color': as_dict.pop('lineColor', None),
-            'line_width': as_dict.pop('lineWidth', None),
-            'path_formatter': as_dict.pop('pathFormatter', None),
-            'z_index': as_dict.pop('zIndex', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'line_color': as_dict.get('lineColor', None),
+            'line_width': as_dict.get('lineWidth', None),
+            'path_formatter': as_dict.get('pathFormatter', None),
+            'z_index': as_dict.get('zIndex', None),
         }
 
         return cls(**kwargs)
@@ -213,12 +213,12 @@ class GuideBoxOptions(HighchartsMeta):
         self._line_width = None
         self._z_index = None
 
-        self.class_name = kwargs.pop('class_name', None)
-        self.color = kwargs.pop('color', None)
-        self.cursor = kwargs.pop('cursor', None)
-        self.line_color = kwargs.pop('line_color', None)
-        self.line_width = kwargs.pop('line_width', None)
-        self.z_index = kwargs.pop('z_index', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.color = kwargs.get('color', None)
+        self.cursor = kwargs.get('cursor', None)
+        self.line_color = kwargs.get('line_color', None)
+        self.line_width = kwargs.get('line_width', None)
+        self.z_index = kwargs.get('z_index', None)
 
     @property
     def class_name(self) -> Optional[str]:
@@ -350,12 +350,12 @@ class GuideBoxOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'line_color': as_dict.pop('lineColor', None),
-            'line_width': as_dict.pop('lineWidth', None),
-            'z_index': as_dict.pop('zIndex', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'line_color': as_dict.get('lineColor', None),
+            'line_width': as_dict.get('lineWidth', None),
+            'z_index': as_dict.get('zIndex', None),
         }
 
         return cls(**kwargs)
@@ -379,7 +379,7 @@ class GuideBox(HighchartsMeta):
 
     def __init__(self, **kwargs):
         self._default = None
-        self.default = kwargs.pop('default', None)
+        self.default = kwargs.get('default', None)
 
     @property
     def default(self) -> Optional[GuideBoxOptions]:
@@ -396,8 +396,8 @@ class GuideBox(HighchartsMeta):
 
     @classmethod
     def from_dict(cls, as_dict):
-        return cls({
-            'default': as_dict.pop('default', None)
+        return cls(**{
+            'default': as_dict.get('default', None)
         })
 
     def _to_untrimmed_dict(self) -> dict:
@@ -436,19 +436,19 @@ class DragDropOptions(HighchartsMeta):
         self._guide_box = None
         self._live_redraw = True
 
-        self.draggable_x = kwargs.pop('draggable_x', None)
-        self.draggable_y = kwargs.pop('draggable_y', None)
-        self.drag_handle = kwargs.pop('drag_handle', None)
-        self.drag_max_x = kwargs.pop('drag_max_x', None)
-        self.drag_max_y = kwargs.pop('drag_max_y', None)
-        self.drag_min_x = kwargs.pop('drag_min_x', None)
-        self.drag_min_y = kwargs.pop('drag_min_y', None)
-        self.drag_precision_x = kwargs.pop('drag_precision_x', None)
-        self.drag_precision_y = kwargs.pop('drag_precision_y', None)
-        self.drag_sensitivity = kwargs.pop('drag_sensitivity', None)
-        self.group_by = kwargs.pop('group_by', None)
-        self.guide_box = kwargs.pop('guide_box', None)
-        self.live_redraw = kwargs.pop('live_redraw', None)
+        self.draggable_x = kwargs.get('draggable_x', None)
+        self.draggable_y = kwargs.get('draggable_y', None)
+        self.drag_handle = kwargs.get('drag_handle', None)
+        self.drag_max_x = kwargs.get('drag_max_x', None)
+        self.drag_max_y = kwargs.get('drag_max_y', None)
+        self.drag_min_x = kwargs.get('drag_min_x', None)
+        self.drag_min_y = kwargs.get('drag_min_y', None)
+        self.drag_precision_x = kwargs.get('drag_precision_x', None)
+        self.drag_precision_y = kwargs.get('drag_precision_y', None)
+        self.drag_sensitivity = kwargs.get('drag_sensitivity', None)
+        self.group_by = kwargs.get('group_by', None)
+        self.guide_box = kwargs.get('guide_box', None)
+        self.live_redraw = kwargs.get('live_redraw', None)
 
     @property
     def draggable_x(self) -> Optional[bool]:
@@ -653,19 +653,19 @@ class DragDropOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'draggable_x': as_dict.pop('draggableX', None),
-            'draggable_y': as_dict.pop('draggableY', None),
-            'drag_handle': as_dict.pop('dragHandle', None),
-            'drag_max_x': as_dict.pop('dragMaxX', None),
-            'drag_max_y': as_dict.pop('dragMaxY', None),
-            'drag_min_x': as_dict.pop('dragMinX', None),
-            'drag_min_y': as_dict.pop('dragMinY', None),
-            'drag_precision_x': as_dict.pop('dragPrecisionX', None),
-            'drag_precision_y': as_dict.pop('dragPrecisionY', None),
-            'drag_sensitivity': as_dict.pop('dragSensitivity', None),
-            'group_by': as_dict.pop('groupBy', None),
-            'guide_box': as_dict.pop('guideBox', None),
-            'live_redraw': as_dict.pop('liveRedraw', None)
+            'draggable_x': as_dict.get('draggableX', None),
+            'draggable_y': as_dict.get('draggableY', None),
+            'drag_handle': as_dict.get('dragHandle', None),
+            'drag_max_x': as_dict.get('dragMaxX', None),
+            'drag_max_y': as_dict.get('dragMaxY', None),
+            'drag_min_x': as_dict.get('dragMinX', None),
+            'drag_min_y': as_dict.get('dragMinY', None),
+            'drag_precision_x': as_dict.get('dragPrecisionX', None),
+            'drag_precision_y': as_dict.get('dragPrecisionY', None),
+            'drag_sensitivity': as_dict.get('dragSensitivity', None),
+            'group_by': as_dict.get('groupBy', None),
+            'guide_box': as_dict.get('guideBox', None),
+            'live_redraw': as_dict.get('liveRedraw', None)
         }
 
         return cls(**kwargs)
@@ -698,8 +698,8 @@ class HighLowDragDropOptions(DragDropOptions):
         self._draggable_high = None
         self._draggable_low = None
 
-        self.draggable_high = kwargs.pop('draggable_high', None)
-        self.draggable_low = kwargs.pop('draggable_low', None)
+        self.draggable_high = kwargs.get('draggable_high', None)
+        self.draggable_low = kwargs.get('draggable_low', None)
 
         super(self).__init__(**kwargs)
 
@@ -738,22 +738,22 @@ class HighLowDragDropOptions(DragDropOptions):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'draggable_x': as_dict.pop('draggableX', None),
-            'draggable_y': as_dict.pop('draggableY', None),
-            'drag_handle': as_dict.pop('dragHandle', None),
-            'drag_max_x': as_dict.pop('dragMaxX', None),
-            'drag_max_y': as_dict.pop('dragMaxY', None),
-            'drag_min_x': as_dict.pop('dragMinX', None),
-            'drag_min_y': as_dict.pop('dragMinY', None),
-            'drag_precision_x': as_dict.pop('dragPrecisionX', None),
-            'drag_precision_y': as_dict.pop('dragPrecisionY', None),
-            'drag_sensitivity': as_dict.pop('dragSensitivity', None),
-            'group_by': as_dict.pop('groupBy', None),
-            'guide_box': as_dict.pop('guideBox', None),
-            'live_redraw': as_dict.pop('liveRedraw', None),
+            'draggable_x': as_dict.get('draggableX', None),
+            'draggable_y': as_dict.get('draggableY', None),
+            'drag_handle': as_dict.get('dragHandle', None),
+            'drag_max_x': as_dict.get('dragMaxX', None),
+            'drag_max_y': as_dict.get('dragMaxY', None),
+            'drag_min_x': as_dict.get('dragMinX', None),
+            'drag_min_y': as_dict.get('dragMinY', None),
+            'drag_precision_x': as_dict.get('dragPrecisionX', None),
+            'drag_precision_y': as_dict.get('dragPrecisionY', None),
+            'drag_sensitivity': as_dict.get('dragSensitivity', None),
+            'group_by': as_dict.get('groupBy', None),
+            'guide_box': as_dict.get('guideBox', None),
+            'live_redraw': as_dict.get('liveRedraw', None),
 
-            'draggable_high': as_dict.pop('draggableHigh', None),
-            'draggable_low': as_dict.pop('draggableLow', None),
+            'draggable_high': as_dict.get('draggableHigh', None),
+            'draggable_low': as_dict.get('draggableLow', None),
         }
 
         return cls(**kwargs)
@@ -791,10 +791,10 @@ class BoxPlotDragDropOptions(HighLowDragDropOptions):
         self._draggable_q1 = None
         self._draggable_q3 = None
 
-        self.draggable_high = kwargs.pop('draggable_high', None)
-        self.draggable_low = kwargs.pop('draggable_low', None)
-        self.draggable_q1 = kwargs.pop('draggable_q1', None)
-        self.draggable_q3 = kwargs.pop('draggable_q3', None)
+        self.draggable_high = kwargs.get('draggable_high', None)
+        self.draggable_low = kwargs.get('draggable_low', None)
+        self.draggable_q1 = kwargs.get('draggable_q1', None)
+        self.draggable_q3 = kwargs.get('draggable_q3', None)
 
         super(self).__init__(**kwargs)
 
@@ -833,24 +833,24 @@ class BoxPlotDragDropOptions(HighLowDragDropOptions):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'draggable_x': as_dict.pop('draggableX', None),
-            'draggable_y': as_dict.pop('draggableY', None),
-            'drag_handle': as_dict.pop('dragHandle', None),
-            'drag_max_x': as_dict.pop('dragMaxX', None),
-            'drag_max_y': as_dict.pop('dragMaxY', None),
-            'drag_min_x': as_dict.pop('dragMinX', None),
-            'drag_min_y': as_dict.pop('dragMinY', None),
-            'drag_precision_x': as_dict.pop('dragPrecisionX', None),
-            'drag_precision_y': as_dict.pop('dragPrecisionY', None),
-            'drag_sensitivity': as_dict.pop('dragSensitivity', None),
-            'group_by': as_dict.pop('groupBy', None),
-            'guide_box': as_dict.pop('guideBox', None),
-            'live_redraw': as_dict.pop('liveRedraw', None),
+            'draggable_x': as_dict.get('draggableX', None),
+            'draggable_y': as_dict.get('draggableY', None),
+            'drag_handle': as_dict.get('dragHandle', None),
+            'drag_max_x': as_dict.get('dragMaxX', None),
+            'drag_max_y': as_dict.get('dragMaxY', None),
+            'drag_min_x': as_dict.get('dragMinX', None),
+            'drag_min_y': as_dict.get('dragMinY', None),
+            'drag_precision_x': as_dict.get('dragPrecisionX', None),
+            'drag_precision_y': as_dict.get('dragPrecisionY', None),
+            'drag_sensitivity': as_dict.get('dragSensitivity', None),
+            'group_by': as_dict.get('groupBy', None),
+            'guide_box': as_dict.get('guideBox', None),
+            'live_redraw': as_dict.get('liveRedraw', None),
 
-            'draggable_high': as_dict.pop('draggableHigh', None),
-            'draggable_low': as_dict.pop('draggableLow', None),
-            'draggable_q1': as_dict.pop('draggableQ1', None),
-            'draggable_q3': as_dict.pop('draggableQ3', None)
+            'draggable_high': as_dict.get('draggableHigh', None),
+            'draggable_low': as_dict.get('draggableLow', None),
+            'draggable_q1': as_dict.get('draggableQ1', None),
+            'draggable_q3': as_dict.get('draggableQ3', None)
         }
 
         return cls(**kwargs)
@@ -887,7 +887,7 @@ class BulletDragDropOptions(DragDropOptions):
     def __init__(self, **kwargs):
         self._draggable_target = None
 
-        self.draggable_target = kwargs.pop('draggable_target', None)
+        self.draggable_target = kwargs.get('draggable_target', None)
 
         super(self).__init__(**kwargs)
 
@@ -910,21 +910,21 @@ class BulletDragDropOptions(DragDropOptions):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'draggable_x': as_dict.pop('draggableX', None),
-            'draggable_y': as_dict.pop('draggableY', None),
-            'drag_handle': as_dict.pop('dragHandle', None),
-            'drag_max_x': as_dict.pop('dragMaxX', None),
-            'drag_max_y': as_dict.pop('dragMaxY', None),
-            'drag_min_x': as_dict.pop('dragMinX', None),
-            'drag_min_y': as_dict.pop('dragMinY', None),
-            'drag_precision_x': as_dict.pop('dragPrecisionX', None),
-            'drag_precision_y': as_dict.pop('dragPrecisionY', None),
-            'drag_sensitivity': as_dict.pop('dragSensitivity', None),
-            'group_by': as_dict.pop('groupBy', None),
-            'guide_box': as_dict.pop('guideBox', None),
-            'live_redraw': as_dict.pop('liveRedraw', None),
+            'draggable_x': as_dict.get('draggableX', None),
+            'draggable_y': as_dict.get('draggableY', None),
+            'drag_handle': as_dict.get('dragHandle', None),
+            'drag_max_x': as_dict.get('dragMaxX', None),
+            'drag_max_y': as_dict.get('dragMaxY', None),
+            'drag_min_x': as_dict.get('dragMinX', None),
+            'drag_min_y': as_dict.get('dragMinY', None),
+            'drag_precision_x': as_dict.get('dragPrecisionX', None),
+            'drag_precision_y': as_dict.get('dragPrecisionY', None),
+            'drag_sensitivity': as_dict.get('dragSensitivity', None),
+            'group_by': as_dict.get('groupBy', None),
+            'guide_box': as_dict.get('guideBox', None),
+            'live_redraw': as_dict.get('liveRedraw', None),
 
-            'draggable_target': as_dict.pop('draggableTarget', None)
+            'draggable_target': as_dict.get('draggableTarget', None)
         }
 
         return cls(**kwargs)

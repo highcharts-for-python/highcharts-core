@@ -601,7 +601,9 @@ def Class_from_js_literal(cls, input_files, filename, as_file, error):
         input_string = as_str
 
     if checkers.is_type(cls, 'GenericTypeOptions') or cls.__name__ == 'GenericTypeOptions':
-        as_str = """{\n  type: 'generic',""" + as_str[1:]
+        as_str = as_str[:-2] + """,\n  type: 'generic'}"""
+    elif checkers.is_type(cls, 'SeriesOptions') or cls.__name__ == 'SeriesOptions':
+        as_str = as_str[:-2] + """,\n type: 'series'}"""
 
     if not error:
         print('-------------------')

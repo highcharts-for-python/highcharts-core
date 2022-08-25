@@ -814,7 +814,6 @@ class GenericTypeOptions(HighchartsMeta):
 
     def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
-            'type': self.type,
             'accessibility': self.accessibility,
             'allowPointSelect': self.allow_point_select,
             'animation': self.animation,
@@ -846,7 +845,8 @@ class GenericTypeOptions(HighchartsMeta):
             'threshold': self.threshold,
             'tooltip': self.tooltip,
             'turboThreshold': self.turbo_threshold,
-            'visible': self.visible
+            'visible': self.visible,
+            'type': self.type
         }
 
         return untrimmed
