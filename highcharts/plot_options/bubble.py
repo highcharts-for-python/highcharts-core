@@ -34,15 +34,15 @@ class BubbleOptions(SeriesOptions):
         self._z_min = None
         self._z_threshold = None
 
-        self.display_negative = kwargs.pop('display_negative', None)
-        self.jitter = kwargs.pop('jitter', None)
-        self.max_size = kwargs.pop('max_size', None)
-        self.min_size = kwargs.pop('min_size', None)
-        self.size_by = kwargs.pop('size_by', None)
-        self.size_by_absolute_value = kwargs.pop('size_by_absolute_value', None)
-        self.z_max = kwargs.pop('z_max', None)
-        self.z_min = kwargs.pop('z_min', None)
-        self.z_threshold = kwargs.pop('z_threshold', None)
+        self.display_negative = kwargs.get('display_negative', None)
+        self.jitter = kwargs.get('jitter', None)
+        self.max_size = kwargs.get('max_size', None)
+        self.min_size = kwargs.get('min_size', None)
+        self.size_by = kwargs.get('size_by', None)
+        self.size_by_absolute_value = kwargs.get('size_by_absolute_value', None)
+        self.z_max = kwargs.get('z_max', None)
+        self.z_min = kwargs.get('z_min', None)
+        self.z_threshold = kwargs.get('z_threshold', None)
 
         super().__init__(**kwargs)
 
@@ -112,8 +112,9 @@ class BubbleOptions(SeriesOptions):
             try:
                 value = validators.string(value)
                 if '%' not in value:
-                    raise ValueError
-            except ValueError:
+                    raise errors.HighchartsValueError('max_size expects either a number '
+                                                      'or a % string. No "%" found.')
+            except TypeError:
                 self._max_size = validators.numeric(value,
                                                     allow_empty = True,
                                                     minimum = 0)
@@ -139,8 +140,9 @@ class BubbleOptions(SeriesOptions):
             try:
                 value = validators.string(value)
                 if '%' not in value:
-                    raise ValueError
-            except ValueError:
+                    raise errors.HighchartsValueError('min_size expects either a number '
+                                                      'or a % string. No "%" found.')
+            except TypeError:
                 self._min_size = validators.numeric(value,
                                                     allow_empty = True,
                                                     minimum = 0)
@@ -235,91 +237,92 @@ class BubbleOptions(SeriesOptions):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
-            'animation_limit': as_dict.pop('animationLimit', None),
-            'boost_blending': as_dict.pop('boostBlending', None),
-            'boost_threshold': as_dict.pop('boostThreshold', None),
-            'color_axis': as_dict.pop('colorAxis', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'color_key': as_dict.pop('colorKey', None),
-            'connect_ends': as_dict.pop('connectEnds', None),
-            'connect_nulls': as_dict.pop('connectNulls', None),
-            'crisp': as_dict.pop('crisp', None),
-            'crop_threshold': as_dict.pop('cropThreshold', None),
-            'data_sorting': as_dict.pop('dataSorting', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'find_nearest_point_by': as_dict.pop('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.pop('getExtremesForAll', None),
-            'linecap': as_dict.pop('linecap', None),
-            'line_width': as_dict.pop('lineWidth', None),
-            'negative_color': as_dict.pop('negativeColor', None),
-            'point_interval': as_dict.pop('pointInterval', None),
-            'point_interval_unit': as_dict.pop('pointIntervalUnit', None),
-            'point_placement': as_dict.pop('pointPlacement', None),
-            'point_start': as_dict.pop('pointStart', None),
-            'relative_x_value': as_dict.pop('relativeXValue', None),
-            'shadow': as_dict.pop('shadow', None),
-            'soft_threshold': as_dict.pop('softThreshold', None),
-            'stacking': as_dict.pop('stacking', None),
-            'step': as_dict.pop('step', None),
-            'zone_axis': as_dict.pop('zoneAxis', None),
-            'zones': as_dict.pop('zones', None),
+            'animation_limit': as_dict.get('animationLimit', None),
+            'boost_blending': as_dict.get('boostBlending', None),
+            'boost_threshold': as_dict.get('boostThreshold', None),
+            'color_axis': as_dict.get('colorAxis', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'color_key': as_dict.get('colorKey', None),
+            'connect_ends': as_dict.get('connectEnds', None),
+            'connect_nulls': as_dict.get('connectNulls', None),
+            'crisp': as_dict.get('crisp', None),
+            'crop_threshold': as_dict.get('cropThreshold', None),
+            'data_sorting': as_dict.get('dataSorting', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
+            'get_extremes_for_all': as_dict.get('getExtremesForAll', None),
+            'linecap': as_dict.get('linecap', None),
+            'line_width': as_dict.get('lineWidth', None),
+            'negative_color': as_dict.get('negativeColor', None),
+            'point_interval': as_dict.get('pointInterval', None),
+            'point_interval_unit': as_dict.get('pointIntervalUnit', None),
+            'point_placement': as_dict.get('pointPlacement', None),
+            'point_start': as_dict.get('pointStart', None),
+            'relative_x_value': as_dict.get('relativeXValue', None),
+            'shadow': as_dict.get('shadow', None),
+            'soft_threshold': as_dict.get('softThreshold', None),
+            'stacking': as_dict.get('stacking', None),
+            'step': as_dict.get('step', None),
+            'zone_axis': as_dict.get('zoneAxis', None),
+            'zones': as_dict.get('zones', None),
 
-            'display_negative': as_dict.pop('displayNegative', None),
-            'jitter': as_dict.pop('jitter', None),
-            'max_size': as_dict.pop('maxSize', None),
-            'min_size': as_dict.pop('minSize', None),
-            'size_by': as_dict.pop('sizeBy', None),
-            'size_by_absolute_value': as_dict.pop('sizeByAbsoluteValue', None),
-            'z_max': as_dict.pop('zMax', None),
-            'z_min': as_dict.pop('zMin', None),
-            'z_threshold': as_dict.pop('zThreshold', None),
+            'display_negative': as_dict.get('displayNegative', None),
+            'jitter': as_dict.get('jitter', None),
+            'max_size': as_dict.get('maxSize', None),
+            'min_size': as_dict.get('minSize', None),
+            'size_by': as_dict.get('sizeBy', None),
+            'size_by_absolute_value': as_dict.get('sizeByAbsoluteValue', None),
+            'z_max': as_dict.get('zMax', None),
+            'z_min': as_dict.get('zMin', None),
+            'z_threshold': as_dict.get('zThreshold', None),
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
-            'display_negative': self.display_negative,
+            'displayNegative': self.display_negative,
             'jitter': self.jitter,
-            'max_size': self.max_size,
-            'min_size': self.min_size,
-            'size_by': self.size_by,
-            'size_by_absolute_value': self.size_by_absolute_value,
-            'z_max': self.z_max,
-            'z_min': self.z_min,
-            'z_threshold': self.z_threshold
+            'maxSize': self.max_size,
+            'minSize': self.min_size,
+            'sizeBy': self.size_by,
+            'sizeByAbsoluteValue': self.size_by_absolute_value,
+            'zMax': self.z_max,
+            'zMin': self.z_min,
+            'zThreshold': self.z_threshold
         }
         parent_as_dict = super()._to_untrimmed_dict()
 
