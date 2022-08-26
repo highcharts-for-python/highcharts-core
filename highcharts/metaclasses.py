@@ -42,7 +42,7 @@ class HighchartsMeta(ABC):
 
         """
         classes = [x for x in self.__class__.mro()
-                   if x.__name__ != 'object']
+                   if x.__name__ not in ['ABC', 'object', 'HighchartsMeta']]
 
         for item in classes:
             try:
@@ -58,6 +58,28 @@ class HighchartsMeta(ABC):
         other_js_literal = other.to_js_literal()
 
         return self_js_literal == other_js_literal
+
+    def __mro_to_untrimmed_dict__(self) -> dict:
+        """Walk through the parent classes and consolidate the results of their
+        :meth:`_to_untrimmed_dict() <HighchartsMeta._to_untrimmed_dict__>` methods into
+        a single :class:`dict <python:dict>`.
+
+        :rtype: :class:`dict <python:dict>`
+        """
+        classes = [x for x in self.__class__.mro()
+                   if x.__name__ not in ['ABC', 'object', 'HighchartsMeta']]
+
+        consolidated = {}
+
+        for item in classes:
+            try:
+                parent_dict = super(item, self)._to_untrimmed_dict()
+            except NotImplementedError:
+                continue
+            for key in parent_dict:
+                consolidated[key] = parent_dict[key]
+
+        return consolidated
 
     @abstractmethod
     def _to_untrimmed_dict(self) -> dict:

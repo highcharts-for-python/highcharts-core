@@ -21,11 +21,11 @@ class HoverState(HighchartsMeta):
         self._color = None
         self._enabled = None
 
-        self.animation = kwargs.pop('animation', None)
-        self.border_color = kwargs.pop('border_color', None)
-        self.brightness = kwargs.pop('brightness', None)
-        self.color = kwargs.pop('color', None)
-        self.enabled = kwargs.pop('enabled', None)
+        self.animation = kwargs.get('animation', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.brightness = kwargs.get('brightness', None)
+        self.color = kwargs.get('color', None)
+        self.enabled = kwargs.get('enabled', None)
 
     @property
     def animation(self) -> Optional[AnimationOptions]:
@@ -114,11 +114,11 @@ class HoverState(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'animation': as_dict.pop('animation', None),
-            'border_color': as_dict.pop('borderColor', None),
-            'brightness': as_dict.pop('brightness', None),
-            'color': as_dict.pop('color', None),
-            'enabled': as_dict.pop('enabled', None)
+            'animation': as_dict.get('animation', None),
+            'border_color': as_dict.get('borderColor', None),
+            'brightness': as_dict.get('brightness', None),
+            'color': as_dict.get('color', None),
+            'enabled': as_dict.get('enabled', None)
         }
 
         return cls(**kwargs)
@@ -143,9 +143,9 @@ class InactiveState(HighchartsMeta):
         self._enabled = None
         self._opacity = None
 
-        self.animation = kwargs.pop('animation', None)
-        self.enabled = kwargs.pop('enabled', None)
-        self.opacity = kwargs.pop('opacity', None)
+        self.animation = kwargs.get('animation', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.opacity = kwargs.get('opacity', None)
 
     @property
     def animation(self) -> Optional[AnimationOptions]:
@@ -190,9 +190,9 @@ class InactiveState(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'animation': as_dict.pop('animation', None),
-            'enabled': as_dict.pop('enabled', None),
-            'opacity': as_dict.pop('opacity', None)
+            'animation': as_dict.get('animation', None),
+            'enabled': as_dict.get('enabled', None),
+            'opacity': as_dict.get('opacity', None)
         }
 
         return cls(**kwargs)
@@ -213,7 +213,7 @@ class NormalState(HighchartsMeta):
     def __init__(self, **kwargs):
         self._animation = None
 
-        self.animation = kwargs.pop('animation', None)
+        self.animation = kwargs.get('animation', None)
 
     @property
     def animation(self) -> Optional[bool | AnimationOptions]:
@@ -236,7 +236,7 @@ class NormalState(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'animation': as_dict.pop('animation', None)
+            'animation': as_dict.get('animation', None)
         }
 
         return cls(**kwargs)
@@ -259,10 +259,10 @@ class SelectState(HighchartsMeta):
         self._color = None
         self._enabled = None
 
-        self.animation = kwargs.pop('animation', None)
-        self.border_color = kwargs.pop('border_color', None)
-        self.color = kwargs.pop('color', None)
-        self.enabled = kwargs.pop('enabled', None)
+        self.animation = kwargs.get('animation', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.color = kwargs.get('color', None)
+        self.enabled = kwargs.get('enabled', None)
 
     @property
     def animation(self) -> Optional[AnimationOptions]:
@@ -324,10 +324,10 @@ class SelectState(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'animation': as_dict.pop('animation', None),
-            'border_color': as_dict.pop('borderColor', None),
-            'color': as_dict.pop('color', None),
-            'enabled': as_dict.pop('enabled', None),
+            'animation': as_dict.get('animation', None),
+            'border_color': as_dict.get('borderColor', None),
+            'color': as_dict.get('color', None),
+            'enabled': as_dict.get('enabled', None),
         }
 
         return cls(**kwargs)
@@ -353,10 +353,10 @@ class States(HighchartsMeta):
         self._normal = None
         self._select = None
 
-        self.hover = kwargs.pop('hover', None)
-        self.inactive = kwargs.pop('inactive', None)
-        self.normal = kwargs.pop('normal', None)
-        self.select = kwargs.pop('select', None)
+        self.hover = kwargs.get('hover', None)
+        self.inactive = kwargs.get('inactive', None)
+        self.normal = kwargs.get('normal', None)
+        self.select = kwargs.get('select', None)
 
     @property
     def hover(self) -> Optional[HoverState]:
@@ -424,10 +424,10 @@ class States(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'hover': as_dict.pop('hover', None),
-            'inactive': as_dict.pop('inactive', None),
-            'normal': as_dict.pop('normal', None),
-            'select': as_dict.pop('select', None)
+            'hover': as_dict.get('hover', None),
+            'inactive': as_dict.get('inactive', None),
+            'normal': as_dict.get('normal', None),
+            'select': as_dict.get('select', None)
         }
 
         return cls(**kwargs)

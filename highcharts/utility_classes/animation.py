@@ -25,11 +25,11 @@ class AnimationOptions(HighchartsMeta):
         self._easing = None
         self._step = None
 
-        self.complete = kwargs.pop('complete', None)
-        self.defer = kwargs.pop('defer', None)
-        self.duration = kwargs.pop('duration', None)
-        self.easing = kwargs.pop('easing', None)
-        self.step = kwargs.pop('step', None)
+        self.complete = kwargs.get('complete', None)
+        self.defer = kwargs.get('defer', None)
+        self.duration = kwargs.get('duration', None)
+        self.easing = kwargs.get('easing', None)
+        self.step = kwargs.get('step', None)
 
     @property
     def complete(self) -> Optional[CallbackFunction]:
@@ -109,11 +109,11 @@ class AnimationOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'complete': as_dict.pop('complete', None),
-            'defer': as_dict.pop('defer', None),
-            'duration': as_dict.pop('duration', None),
-            'easing': as_dict.pop('easing', None),
-            'step': as_dict.pop('step', None)
+            'complete': as_dict.get('complete', None),
+            'defer': as_dict.get('defer', None),
+            'duration': as_dict.get('duration', None),
+            'easing': as_dict.get('easing', None),
+            'step': as_dict.get('step', None)
         }
         return cls(**kwargs)
 
