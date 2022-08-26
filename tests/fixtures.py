@@ -260,12 +260,14 @@ def Class__init__(cls, kwargs, error):
         assert isinstance(result, cls) is True
         if checkers.is_type(result, 'GenericTypeOptions'):
             kwargs_copy['type'] = result.type
-            kwargs['type'] = result.type
+            #kwargs['type'] = result.type
         for key in kwargs_copy:
             print(f'CHECKING: {key}')
-            if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('function'):
+            if kwargs.get(key) and isinstance(kwargs_copy[key],
+                                              str) and kwargs[key].startswith('function'):
                 continue
-            if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('class'):
+            if kwargs.get(key) and isinstance(kwargs_copy[key],
+                                              str) and kwargs[key].startswith('class'):
                 continue
             if key == 'type' and checkers.is_type(result, 'GenericTypeOptions'):
                 assert does_kwarg_value_match_result(kwargs_copy[key],
@@ -317,16 +319,19 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
         result = instance._to_untrimmed_dict()
         assert result is not None
         assert isinstance(result, dict) is True
-        if checkers.is_type(result, 'GenericTypeOptions'):
-            kwargs_copy['type'] = result.type
+        if checkers.is_type(instance, 'GenericTypeOptions'):
+            print('updating the type!')
+            kwargs_copy['type'] = instance.type
 
         for key in kwargs_copy:
             kwarg_value = kwargs_copy[key]
             result_value = result.get(key)
 
-            if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('function'):
+            if kwargs.get(key) and isinstance(kwargs_copy[key],
+                                              str) and kwargs[key].startswith('function'):
                 continue
-            if isinstance(kwargs_copy[key], str) and kwargs[key].startswith('class'):
+            if kwargs.get(key) and isinstance(kwargs_copy[key],
+                                              str) and kwargs[key].startswith('class'):
                 continue
             if '_' not in key and (key != 'margin' and not checkers.is_type(instance,
                                                                             'ChartOptions')):
@@ -594,6 +599,31 @@ def Class_to_dict(cls, kwargs, error):
             result = instance.to_dict()
 
 
+def append_plot_options_type(cls, as_str):
+    """Append a JavaScript Literal ``type`` value to ``as_str`` based on ``cls``.
+
+    :returns: An updated ``as_str``.
+    :rtype: :class:`str <python:str>`
+    """
+    class_name = cls.__name__
+    class_parents = cls.mro()
+    is_generic_type_options = False
+    for parent in class_parents:
+        if 'GenericTypeOptions' in parent.__name__:
+            is_generic_type_options = True
+            break
+    if not is_generic_type_options:
+        return as_str
+    class_name = class_name.replace('TypeOptions', '')
+    class_name = class_name.replace('Options', '')
+
+    class_name = class_name.lower()
+
+    as_str = as_str[:-2] + f""",\n  type: '{class_name}'}}"""
+
+    return as_str
+
+
 def Class_from_js_literal(cls, input_files, filename, as_file, error):
     input_file = check_input_file(input_files, filename)
 
@@ -605,12 +635,7 @@ def Class_from_js_literal(cls, input_files, filename, as_file, error):
     else:
         input_string = as_str
 
-    if checkers.is_type(cls, 'GenericTypeOptions') or cls.__name__ == 'GenericTypeOptions':
-        as_str = as_str[:-2] + """,\n  type: 'generic'}"""
-    elif checkers.is_type(cls, 'SeriesOptions') or cls.__name__ == 'SeriesOptions':
-        as_str = as_str[:-2] + """,\n type: 'series'}"""
-    elif checkers.is_type(cls, 'ArcDiagramOptions') or cls.__name__ == 'ArcDiagramOptions':
-        as_str = as_str[:-2] + """,\n type: 'arcdiagram'}"""
+    as_str = append_plot_options_type(cls, as_str)
 
     if not error:
         print('-------------------')

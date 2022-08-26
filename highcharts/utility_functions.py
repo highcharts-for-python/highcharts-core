@@ -53,7 +53,8 @@ def validate_color(value):
         return None
     elif isinstance(value, (Gradient, Pattern)):
         return value
-    elif isinstance(value, (dict, str)) and 'linearGradient' in value:
+    elif isinstance(value, (dict, str)) and ('linearGradient' in value or
+                                             'radialGradient' in value):
         try:
             value = Gradient.from_json(value)
         except (TypeError, ValueError):
@@ -61,7 +62,8 @@ def validate_color(value):
                 value = Gradient.from_dict(value)
             else:
                 value = validators.string(value)
-    elif isinstance(value, dict) and 'linear_gradient' in value:
+    elif isinstance(value, dict) and ('linear_gradient' in value or
+                                      'radial_gradient' in value):
         value = Gradient(**value)
     elif isinstance(value, (dict, str)) and ('patternOptions' in value or
                                              'pattern' in value):
