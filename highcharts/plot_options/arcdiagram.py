@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from validator_collection import validators
 
-from highcharts import errors
+from highcharts import errors, utility_functions
 from highcharts.decorators import class_sensitive, validate_types
 from highcharts.plot_options.generic import GenericTypeOptions
 from highcharts.utility_classes.gradients import Gradient
@@ -38,21 +38,21 @@ class ArcDiagramOptions(GenericTypeOptions):
         self._reversed = None
         self._sticky_tracking = None
 
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.centered_links = kwargs.pop('centered_links', None)
-        self.color_by_point = kwargs.pop('color_by_point', None)
-        self.color_index = kwargs.pop('color_index', None)
-        self.colors = kwargs.pop('colors', None)
-        self.equal_nodes = kwargs.pop('equal_nodes', None)
-        self.levels = kwargs.pop('levels', None)
-        self.link_opacity = kwargs.pop('link_opacity', None)
-        self.min_link_width = kwargs.pop('min_link_width', None)
-        self.node_width = kwargs.pop('node_width', None)
-        self.reversed = kwargs.pop('reversed', None)
-        self.sticky_tracking = kwargs.pop('sticky_tracking', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.centered_links = kwargs.get('centered_links', None)
+        self.color_by_point = kwargs.get('color_by_point', None)
+        self.color_index = kwargs.get('color_index', None)
+        self.colors = kwargs.get('colors', None)
+        self.equal_nodes = kwargs.get('equal_nodes', None)
+        self.levels = kwargs.get('levels', None)
+        self.link_opacity = kwargs.get('link_opacity', None)
+        self.min_link_width = kwargs.get('min_link_width', None)
+        self.node_width = kwargs.get('node_width', None)
+        self.reversed = kwargs.get('reversed', None)
+        self.sticky_tracking = kwargs.get('sticky_tracking', None)
 
-        super(self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     @property
     def border_color(self) -> Optional[str | Gradient | Pattern]:
@@ -66,7 +66,7 @@ class ArcDiagramOptions(GenericTypeOptions):
     @border_color.setter
     def border_color(self, value):
         from highcharts import utility_functions
-        self._background_color = utility_functions.validate_color(value)
+        self._border_color = utility_functions.validate_color(value)
 
     @property
     def border_width(self) -> Optional[int | float | Decimal]:
@@ -153,16 +153,7 @@ class ArcDiagramOptions(GenericTypeOptions):
             self._colors = None
         else:
             value = validators.iterable(value)
-            checked_values = []
-            for item in value:
-                if isinstance(value, str):
-                    checked_values.append(item)
-                else:
-                    processed_item = validate_types(item,
-                                                    types = (Gradient, Pattern))
-                    checked_values.append(processed_item)
-
-            self._colors = checked_values
+            self._colors = [utility_functions.validate_color(x) for x in value]
 
     @property
     def equal_nodes(self) -> Optional[bool]:
@@ -259,87 +250,54 @@ class ArcDiagramOptions(GenericTypeOptions):
         else:
             self._reversed = bool(value)
 
-    @property
-    def sticky_tracking(self) -> Optional[bool]:
-        """Enable (``True``) or disable (``False``) :term:`sticky tracking` of mouse
-        events. Defaults to :obj:`None <python:None>`.
-
-        When ``True``, the mouse out event on a series isn't triggered until the mouse
-        moves over another series, or out of the plot area.
-
-        When ``False``, the mouse out event on a series is triggered when the mouse leaves
-        the area around the series' graph or markers. This also implies the tooltip when
-        not shared.
-
-        When ``sticky_tracking`` is ``False`` and `:meth:Tooltip.shared` is ``False``, the
-        tooltip will be hidden when moving the mouse between series.
-
-        If :obj:`None <python:None>`, will defaults to ``True`` for line and area type
-        series, but ``False`` for columns, pies, etc.
-
-        .. note::
-
-          The boost module will force this option because of technical limitations.
-
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
-        """
-        return self._sticky_tracking
-
-    @sticky_tracking.setter
-    def sticky_tracking(self, value):
-        if value is None:
-            self._sticky_tracking = None
-        else:
-            self._sticky_tracking = bool(value)
-
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
-            'border_color': as_dict.pop('borderColor', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'centered_links': as_dict.pop('centeredLinks', None),
-            'color_by_point': as_dict.pop('colorByPoint', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'colors': as_dict.pop('colors', None),
-            'equal_nodes': as_dict.pop('equalNodes', None),
-            'levels': as_dict.pop('levels', None),
-            'link_opacity': as_dict.pop('linkOpacity', None),
-            'min_link_width': as_dict.pop('minLinkWidth', None),
-            'node_width': as_dict.pop('nodeWidth', None),
-            'reversed': as_dict.pop('reversed', None),
-            'sticky_tracking': as_dict.pop('stickyTracking', None)
+            'border_color': as_dict.get('borderColor', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'centered_links': as_dict.get('centeredLinks', None),
+            'color_by_point': as_dict.get('colorByPoint', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'colors': as_dict.get('colors', None),
+            'equal_nodes': as_dict.get('equalNodes', None),
+            'levels': as_dict.get('levels', None),
+            'link_opacity': as_dict.get('linkOpacity', None),
+            'min_link_width': as_dict.get('minLinkWidth', None),
+            'node_width': as_dict.get('nodeWidth', None),
+            'reversed': as_dict.get('reversed', None)
         }
 
         return kwargs
@@ -358,9 +316,8 @@ class ArcDiagramOptions(GenericTypeOptions):
             'minLinkWidth': self.min_link_width,
             'nodeWidth': self.node_width,
             'reversed': self.reversed,
-            'stickyTracking': self.sticky_tracking
         }
-        parent_as_dict = super(self)._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]

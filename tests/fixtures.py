@@ -178,8 +178,12 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
             return False
         for key in kwarg_value:
             print(f'CHECKING: {key}')
-            matches = does_kwarg_value_match_result(kwarg_value.get(key),
-                                                    result_value.get(key))
+            if key == 'patternOptions':
+                matches = does_kwarg_value_match_result(kwarg_value.get(key),
+                                                        result_value.get('pattern'))
+            else:
+                matches = does_kwarg_value_match_result(kwarg_value.get(key),
+                                                        result_value.get(key))
             if not matches:
                 print(f'-- dict key ({key}) does not match')
                 return False
@@ -578,6 +582,7 @@ def Class_to_dict(cls, kwargs, error):
             for key in expected:
                 print(f'CHECKING: {key}')
                 if key == 'patternOptions':
+                    print('running special check for patternOptions')
                     assert does_kwarg_value_match_result(expected[key],
                                                          result.get('pattern')) is True
                 else:
@@ -604,6 +609,8 @@ def Class_from_js_literal(cls, input_files, filename, as_file, error):
         as_str = as_str[:-2] + """,\n  type: 'generic'}"""
     elif checkers.is_type(cls, 'SeriesOptions') or cls.__name__ == 'SeriesOptions':
         as_str = as_str[:-2] + """,\n type: 'series'}"""
+    elif checkers.is_type(cls, 'ArcDiagramOptions') or cls.__name__ == 'ArcDiagramOptions':
+        as_str = as_str[:-2] + """,\n type: 'arcdiagram'}"""
 
     if not error:
         print('-------------------')

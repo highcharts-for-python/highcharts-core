@@ -26,18 +26,18 @@ class PatternOptions(HighchartsMeta):
         self._x = None
         self._y = None
 
-        self.aspect_ratio = kwargs.pop('aspect_ratio', None)
-        self.background_color = kwargs.pop('background_color', None)
-        self.color = kwargs.pop('color', None)
-        self.height = kwargs.pop('height', None)
-        self.id = kwargs.pop('id', None)
-        self.image = kwargs.pop('image', None)
-        self.opacity = kwargs.pop('opacity', None)
-        self.path = kwargs.pop('path', None)
-        self.pattern_transform = kwargs.pop('pattern_transform', None)
-        self.width = kwargs.pop('width', None)
-        self.x = kwargs.pop('x', None)
-        self.y = kwargs.pop('y', None)
+        self.aspect_ratio = kwargs.get('aspect_ratio', None)
+        self.background_color = kwargs.get('background_color', None)
+        self.color = kwargs.get('color', None)
+        self.height = kwargs.get('height', None)
+        self.id = kwargs.get('id', None)
+        self.image = kwargs.get('image', None)
+        self.opacity = kwargs.get('opacity', None)
+        self.path = kwargs.get('path', None)
+        self.pattern_transform = kwargs.get('pattern_transform', None)
+        self.width = kwargs.get('width', None)
+        self.x = kwargs.get('x', None)
+        self.y = kwargs.get('y', None)
 
     @property
     def aspect_ratio(self) -> Optional[int | float | Decimal | Fraction]:
@@ -242,18 +242,18 @@ class PatternOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'aspect_ratio': as_dict.pop('aspectRatio', None),
-            'background_color': as_dict.pop('backgroundColor', None),
-            'color': as_dict.pop('color', None),
-            'height': as_dict.pop('height', None),
-            'id': as_dict.pop('id', None),
-            'image': as_dict.pop('image', None),
-            'opacity': as_dict.pop('opacity', None),
-            'path': as_dict.pop('path', None),
-            'pattern_transform': as_dict.pop('patternTransform', None),
-            'width': as_dict.pop('width', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None)
+            'aspect_ratio': as_dict.get('aspectRatio', None),
+            'background_color': as_dict.get('backgroundColor', None),
+            'color': as_dict.get('color', None),
+            'height': as_dict.get('height', None),
+            'id': as_dict.get('id', None),
+            'image': as_dict.get('image', None),
+            'opacity': as_dict.get('opacity', None),
+            'path': as_dict.get('path', None),
+            'pattern_transform': as_dict.get('patternTransform', None),
+            'width': as_dict.get('width', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None)
         }
         return cls(**kwargs)
 
@@ -284,9 +284,9 @@ class Pattern(HighchartsMeta):
         self._pattern_options = None
         self._pattern_index = None
 
-        self.animation = kwargs.pop('animation', None)
-        self.pattern_options = kwargs.pop('pattern_options', None)
-        self.pattern_index = kwargs.pop('pattern_index', None)
+        self.animation = kwargs.get('animation', None)
+        self.pattern_options = kwargs.get('pattern_options', None)
+        self.pattern_index = kwargs.get('pattern_index', None)
 
     @property
     def animation(self) -> Optional[AnimationOptions]:
@@ -335,13 +335,13 @@ class Pattern(HighchartsMeta):
 
     @classmethod
     def from_dict(cls, as_dict):
-        pattern_options = as_dict.pop('pattern', None) or \
-                          as_dict.pop('pattern_options', None) or \
-                          as_dict.pop('patternOptions', None)
+        pattern_options = as_dict.get('pattern', None) or \
+                          as_dict.get('pattern_options', None) or \
+                          as_dict.get('patternOptions', None)
         kwargs = {
-            'animation': as_dict.pop('animation', None),
+            'animation': as_dict.get('animation', None),
             'pattern_options': pattern_options,
-            'pattern_index': as_dict.pop('patternIndex', None)
+            'pattern_index': as_dict.get('patternIndex', None)
         }
         return cls(**kwargs)
 

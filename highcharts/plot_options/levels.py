@@ -21,10 +21,10 @@ class BaseLevelOptions(HighchartsMeta):
         self._data_labels = None
         self._level = None
 
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.data_labels = kwargs.pop('data_labels', None)
-        self.level = kwargs.pop('level', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.data_labels = kwargs.get('data_labels', None)
+        self.level = kwargs.get('level', None)
 
     @property
     def border_color(self) -> Optional[str | Gradient | Pattern]:
@@ -84,10 +84,10 @@ class BaseLevelOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'border_color': as_dict.pop('borderColor', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'level': as_dict.pop('level', None)
+            'border_color': as_dict.get('borderColor', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'level': as_dict.get('level', None)
         }
 
         return cls(**kwargs)
@@ -99,9 +99,6 @@ class BaseLevelOptions(HighchartsMeta):
             'dataLabels': self.data_labels,
             'level': self.level
         }
-        parent_as_dict = super()._to_untrimmed_dict()
-        for key in parent_as_dict:
-            untrimmed[key] = parent_as_dict[key]
 
         return untrimmed
 
@@ -115,9 +112,9 @@ class LevelOptions(BaseLevelOptions):
         self._link_opacity = None
         self._states = None
 
-        self.color_by_point = kwargs.pop('color_by_point', None)
-        self.link_opacity = kwargs.pop('link_opacity', None)
-        self.states = kwargs.pop('states', None)
+        self.color_by_point = kwargs.get('color_by_point', None)
+        self.link_opacity = kwargs.get('link_opacity', None)
+        self.states = kwargs.get('states', None)
 
         super().__init__(**kwargs)
 
@@ -171,14 +168,14 @@ class LevelOptions(BaseLevelOptions):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'border_color': as_dict.pop('borderColor', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'level': as_dict.pop('level', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'level': as_dict.get('level', None),
 
-            'color_by_point': as_dict.pop('colorByPoint', None),
-            'link_opacity': as_dict.pop('linkOpacity', None),
-            'states': as_dict.pop('states', None)
+            'color_by_point': as_dict.get('colorByPoint', None),
+            'link_opacity': as_dict.get('linkOpacity', None),
+            'states': as_dict.get('states', None)
         }
 
         return cls(**kwargs)
@@ -204,8 +201,8 @@ class ColorVariation(HighchartsMeta):
         self._key = None
         self._to = None
 
-        self.key = kwargs.pop('key', None)
-        self.to = kwargs.pop('to', None)
+        self.key = kwargs.get('key', None)
+        self.to = kwargs.get('to', None)
 
     @property
     def key(self) -> Optional[str]:
@@ -236,8 +233,8 @@ class ColorVariation(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'key': as_dict.pop('key', None),
-            'to': as_dict.pop('to', None)
+            'key': as_dict.get('key', None),
+            'to': as_dict.get('to', None)
         }
 
         return cls(**kwargs)
@@ -258,8 +255,8 @@ class LevelSize(HighchartsMeta):
         self._unit = None
         self._value = None
 
-        self.unit = kwargs.pop('unit', None)
-        self.value = kwargs.pop('value', None)
+        self.unit = kwargs.get('unit', None)
+        self.value = kwargs.get('value', None)
 
     @property
     def unit(self) -> Optional[str]:
@@ -310,8 +307,8 @@ class LevelSize(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'unit': as_dict.pop('unit', None),
-            'value': as_dict.pop('value', None)
+            'unit': as_dict.get('unit', None),
+            'value': as_dict.get('value', None)
         }
 
         return cls(**kwargs)
@@ -335,10 +332,10 @@ class SunburstLevelOptions(BaseLevelOptions):
         self._color_variation = None
         self._level_size = None
 
-        self.border_dash_style = kwargs.pop('border_dash_style', None)
-        self.color = kwargs.pop('color', None)
-        self.color_variation = kwargs.pop('color_variation', None)
-        self.level_size = kwargs.pop('level_size', None)
+        self.border_dash_style = kwargs.get('border_dash_style', None)
+        self.color = kwargs.get('color', None)
+        self.color_variation = kwargs.get('color_variation', None)
+        self.level_size = kwargs.get('level_size', None)
 
         super().__init__(**kwargs)
 
@@ -423,15 +420,15 @@ class SunburstLevelOptions(BaseLevelOptions):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'border_color': as_dict.pop('borderColor', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'level': as_dict.pop('level', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'level': as_dict.get('level', None),
 
-            'border_dash_style': as_dict.pop('borderDashStyle', None),
-            'color': as_dict.pop('color', None),
-            'color_variation': as_dict.pop('colorVariation', None),
-            'level_size': as_dict.pop('levelSize', None)
+            'border_dash_style': as_dict.get('borderDashStyle', None),
+            'color': as_dict.get('color', None),
+            'color_variation': as_dict.get('colorVariation', None),
+            'level_size': as_dict.get('levelSize', None)
          }
 
         return cls(**kwargs)
@@ -462,11 +459,11 @@ class TreemapLevelOptions(BaseLevelOptions):
         self._layout_algoritm = None
         self._layout_starting_direction = None
 
-        self.border_dash_style = kwargs.pop('border_dash_style', None)
-        self.color = kwargs.pop('color', None)
-        self.color_variation = kwargs.pop('color_variation', None)
-        self.layout_algorithm = kwargs.pop('layout_algorithm', None)
-        self.layout_starting_direction = kwargs.pop('layout_starting_direction', None)
+        self.border_dash_style = kwargs.get('border_dash_style', None)
+        self.color = kwargs.get('color', None)
+        self.color_variation = kwargs.get('color_variation', None)
+        self.layout_algorithm = kwargs.get('layout_algorithm', None)
+        self.layout_starting_direction = kwargs.get('layout_starting_direction', None)
 
         super().__init__(**kwargs)
 
@@ -591,17 +588,17 @@ class TreemapLevelOptions(BaseLevelOptions):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'border_color': as_dict.pop('borderColor', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'level': as_dict.pop('level', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'level': as_dict.get('level', None),
 
-            'border_dash_style': as_dict.pop('borderDashStyle', None),
-            'color': as_dict.pop('color', None),
-            'color_variation': as_dict.pop('colorVariation', None),
+            'border_dash_style': as_dict.get('borderDashStyle', None),
+            'color': as_dict.get('color', None),
+            'color_variation': as_dict.get('colorVariation', None),
 
-            'layout_algorithm': as_dict.pop('layoutAlgorithm', None),
-            'layout_starting_direction': as_dict.pop('layoutStartingDirection', None)
+            'layout_algorithm': as_dict.get('layoutAlgorithm', None),
+            'layout_starting_direction': as_dict.get('layoutStartingDirection', None)
          }
 
         return cls(**kwargs)
