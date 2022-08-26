@@ -142,7 +142,7 @@ class DumbbellOptions(GenericTypeOptions):
         else:
             try:
                 self._color_axis = validators.string(value)
-            except ValueError:
+            except TypeError:
                 self._color_axis = validators.integer(value,
                                                       minimum = 0)
 

@@ -167,7 +167,7 @@ class SeriesOptions(GenericTypeOptions):
         else:
             try:
                 self._color_axis = validators.string(value)
-            except (TypeError, ValueError):
+            except TypeError:
                 self._color_axis = validators.integer(value,
                                                       minimum = 0)
 

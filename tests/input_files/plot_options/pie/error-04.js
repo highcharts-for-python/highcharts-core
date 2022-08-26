@@ -1,12 +1,19 @@
 {
+  maxPointSize: '15%',
+  minPointSize: '5%',
+  sizeBy: 'invalid value',
+  zMax: 30,
+  zMin': 2,
+
   borderColor: '#ccc',
-  borderRadius: 4,
-  borderWidth: 'invalid value',
-  centerInCategory: true,
-  colorByPoint: true,
+  borderWidth: 1,
+  center: ['50%', '50%'],
+  colorAxis: 1,
+  colorIndex: 3,
+  colorKey: 'some-key-goes-here',
   colors: [
       '#fff',
-      '#ccc',
+      'ccc',
       {
         linearGradient: {
             x1: 0.123,
@@ -36,13 +43,17 @@
         patternIndex: 2
       }
   ],
-  grouping: false,
-  groupPadding: 6,
-  maxPointWidth: 12,
-  minPointLength: 12,
-  pointPadding: 6,
-  pointRange: 24,
-  pointWidth: 12,
+  depth: 10,
+  endAngle: 90,
+  fillColor: '#fff',
+  ignoreHiddenPoint: true,
+  innerSize: '30%',
+  linecap: 'round',
+  minSize: '20%',
+  size: 80,
+  slicedOffset: 24,
+  startAngle: 45,
+  thickness: 2,
 
   accessibility: {
       description: 'Description goes here',

@@ -16,7 +16,7 @@ STANDARD_PARAMS = [
       'linear_gradient': {
           'x1': 0.123,
           'x2': 0.567,
-          'y1': 0.890,
+          'y1': 0.891,
           'y2': 0.987
       },
       'stops': [

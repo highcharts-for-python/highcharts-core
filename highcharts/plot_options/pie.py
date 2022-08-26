@@ -3,8 +3,7 @@ from decimal import Decimal
 
 from validator_collection import validators
 
-from highcharts import constants, errors
-from highcharts.decorators import validate_types
+from highcharts import constants, errors, utility_functions
 from highcharts.plot_options.generic import GenericTypeOptions
 from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
@@ -52,24 +51,24 @@ class PieOptions(GenericTypeOptions):
         self._start_angle = 0
         self._thickness = None
 
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.center = kwargs.pop('center', None)
-        self.color_axis = kwargs.pop('color_axis', None)
-        self.color_index = kwargs.pop('color_index', None)
-        self.color_key = kwargs.pop('color_key', None)
-        self.colors = kwargs.pop('colors', None)
-        self.depth = kwargs.pop('depth', None)
-        self.end_angle = kwargs.pop('end_angle', None)
-        self.fill_color = kwargs.pop('fill_color', None)
-        self.ignore_hidden_point = kwargs.pop('ignore_hidden_point', None)
-        self.inner_size = kwargs.pop('inner_size', None)
-        self.linecap = kwargs.pop('linecap', None)
-        self.min_size = kwargs.pop('min_size', None)
-        self.size = kwargs.pop('size', None)
-        self.sliced_offset = kwargs.pop('sliced_offset', None)
-        self.start_angle = kwargs.pop('start_angle', None)
-        self.thickness = kwargs.pop('thickness', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.center = kwargs.get('center', None)
+        self.color_axis = kwargs.get('color_axis', None)
+        self.color_index = kwargs.get('color_index', None)
+        self.color_key = kwargs.get('color_key', None)
+        self.colors = kwargs.get('colors', None)
+        self.depth = kwargs.get('depth', None)
+        self.end_angle = kwargs.get('end_angle', None)
+        self.fill_color = kwargs.get('fill_color', None)
+        self.ignore_hidden_point = kwargs.get('ignore_hidden_point', None)
+        self.inner_size = kwargs.get('inner_size', None)
+        self.linecap = kwargs.get('linecap', None)
+        self.min_size = kwargs.get('min_size', None)
+        self.size = kwargs.get('size', None)
+        self.sliced_offset = kwargs.get('sliced_offset', None)
+        self.start_angle = kwargs.get('start_angle', None)
+        self.thickness = kwargs.get('thickness', None)
 
         super().__init__(**kwargs)
 
@@ -138,11 +137,13 @@ class PieOptions(GenericTypeOptions):
             processed_values = []
             for item in value:
                 try:
-                    item = validators.string(value)
+                    item = validators.string(item)
                     if '%' not in item:
-                        raise ValueError
-                except ValueError:
-                    item = validators.numeric(value)
+                        raise errors.HighchartsValueError('center expects an array of '
+                                                          'numbers or percentage strings.'
+                                                          ' No "%" character found.')
+                except TypeError:
+                    item = validators.numeric(item)
 
                 processed_values.append(item)
 
@@ -172,7 +173,7 @@ class PieOptions(GenericTypeOptions):
         else:
             try:
                 self._color_axis = validators.string(value)
-            except ValueError:
+            except TypeError:
                 self._color_axis = validators.integer(value,
                                                       minimum = 0)
 
@@ -228,16 +229,7 @@ class PieOptions(GenericTypeOptions):
             self._colors = None
         else:
             value = validators.iterable(value)
-            checked_values = []
-            for item in value:
-                if isinstance(value, str):
-                    checked_values.append(item)
-                else:
-                    processed_item = validate_types(item,
-                                                    types = (Gradient, Pattern))
-                    checked_values.append(processed_item)
-
-            self._colors = checked_values
+            self._colors = [utility_functions.validate_color(x) for x in value]
 
     @property
     def depth(self) -> Optional[int | float | Decimal]:
@@ -334,8 +326,10 @@ class PieOptions(GenericTypeOptions):
             try:
                 value = validators.string(value)
                 if '%' not in value:
-                    raise ValueError
-            except ValueError:
+                    raise errors.HighchartsValueError('inner_size expects a number or '
+                                                      'percentage ("%") string. No "%" '
+                                                      'character found.')
+            except TypeError:
                 value = validators.integer(value, minimum = 0)
 
             self._inner_size = value
@@ -377,8 +371,10 @@ class PieOptions(GenericTypeOptions):
             try:
                 value = validators.string(value)
                 if '%' not in value:
-                    raise ValueError
-            except ValueError:
+                    raise errors.HighchartsValueError('min_size expects a number or a '
+                                                      'percentage string. No "%" '
+                                                      'character found.')
+            except TypeError:
                 value = validators.numeric(value, minimum = 0)
 
             self._min_size = value
@@ -411,8 +407,10 @@ class PieOptions(GenericTypeOptions):
             try:
                 value = validators.string(value)
                 if '%' not in value:
-                    raise ValueError
-            except ValueError:
+                    raise errors.HighchartsValueError('size expects a number or a '
+                                                      'percentage string. No "%" '
+                                                      'character found.')
+            except TypeError:
                 value = validators.integer(value, minimum = 0)
 
             self._size = value
@@ -464,55 +462,57 @@ class PieOptions(GenericTypeOptions):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
-            'border_color': as_dict.pop('borderColor', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'center': as_dict.pop('center', None),
-            'color_axis': as_dict.pop('colorAxis', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'color_key': as_dict.pop('colorKey', None),
-            'colors': as_dict.pop('colors', None),
-            'depth': as_dict.pop('depth', None),
-            'end_angle': as_dict.pop('endAngle', None),
-            'fill_color': as_dict.pop('fillColor', None),
-            'ignore_hidden_point': as_dict.pop('ignoreHiddenPoint', None),
-            'inner_size': as_dict.pop('innerSize', None),
-            'linecap': as_dict.pop('linecap', None),
-            'min_size': as_dict.pop('minSize', None),
-            'size': as_dict.pop('size', None),
-            'sliced_offset': as_dict.pop('slicedOffset', None),
-            'start_angle': as_dict.pop('startAngle', None)
+            'border_color': as_dict.get('borderColor', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'center': as_dict.get('center', None),
+            'color_axis': as_dict.get('colorAxis', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'color_key': as_dict.get('colorKey', None),
+            'colors': as_dict.get('colors', None),
+            'depth': as_dict.get('depth', None),
+            'end_angle': as_dict.get('endAngle', None),
+            'fill_color': as_dict.get('fillColor', None),
+            'ignore_hidden_point': as_dict.get('ignoreHiddenPoint', None),
+            'inner_size': as_dict.get('innerSize', None),
+            'linecap': as_dict.get('linecap', None),
+            'min_size': as_dict.get('minSize', None),
+            'size': as_dict.get('size', None),
+            'sliced_offset': as_dict.get('slicedOffset', None),
+            'start_angle': as_dict.get('startAngle', None),
+            'thickness': as_dict.get('thickness', None),
         }
 
         return kwargs
@@ -535,7 +535,8 @@ class PieOptions(GenericTypeOptions):
             'minSize': self.min_size,
             'size': self.size,
             'slicedOffset': self.sliced_offset,
-            'startAngle': self.start_angle
+            'startAngle': self.start_angle,
+            'thickness': self.thickness
         }
         parent_as_dict = super()._to_untrimmed_dict()
 
@@ -565,11 +566,11 @@ class VariablePieOptions(PieOptions):
         self._z_max = None
         self._z_min = None
 
-        self.max_point_size = kwargs.pop('max_point_size', None)
-        self.min_point_size = kwargs.pop('min_point_size', None)
-        self.size_by = kwargs.pop('size_by', None)
-        self.z_max = kwargs.pop('z_max', None)
-        self.z_min = kwargs.pop('z_min', None)
+        self.max_point_size = kwargs.get('max_point_size', None)
+        self.min_point_size = kwargs.get('min_point_size', None)
+        self.size_by = kwargs.get('size_by', None)
+        self.z_max = kwargs.get('z_max', None)
+        self.z_min = kwargs.get('z_min', None)
 
         super().__init__(**kwargs)
 
@@ -590,8 +591,9 @@ class VariablePieOptions(PieOptions):
             try:
                 value = validators.string(value)
                 if '%' not in value:
-                    raise ValueError
-            except ValueError:
+                    raise errors.HighchartsValueError('max_point_size expects a number '
+                                                      'or a % string. No "%" character.')
+            except TypeError:
                 value = validators.numeric(value, allow_empty = True)
 
             self._max_point_size = value
@@ -613,8 +615,9 @@ class VariablePieOptions(PieOptions):
             try:
                 value = validators.string(value)
                 if '%' not in value:
-                    raise ValueError
-            except ValueError:
+                    raise errors.HighchartsValueError('min_point_size expects a number '
+                                                      'or a % string. No "%" character.')
+            except TypeError:
                 value = validators.numeric(value, allow_empty = True)
 
             self._min_point_size = value
@@ -685,72 +688,74 @@ class VariablePieOptions(PieOptions):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
-            'border_color': as_dict.pop('borderColor', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'center': as_dict.pop('center', None),
-            'color_axis': as_dict.pop('colorAxis', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'color_key': as_dict.pop('colorKey', None),
-            'colors': as_dict.pop('colors', None),
-            'depth': as_dict.pop('depth', None),
-            'end_angle': as_dict.pop('endAngle', None),
-            'fill_color': as_dict.pop('fillColor', None),
-            'ignore_hidden_point': as_dict.pop('ignoreHiddenPoint', None),
-            'inner_size': as_dict.pop('innerSize', None),
-            'linecap': as_dict.pop('linecap', None),
-            'min_size': as_dict.pop('minSize', None),
-            'size': as_dict.pop('size', None),
-            'sliced_offset': as_dict.pop('slicedOffset', None),
-            'start_angle': as_dict.pop('startAngle', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'center': as_dict.get('center', None),
+            'color_axis': as_dict.get('colorAxis', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'color_key': as_dict.get('colorKey', None),
+            'colors': as_dict.get('colors', None),
+            'depth': as_dict.get('depth', None),
+            'end_angle': as_dict.get('endAngle', None),
+            'fill_color': as_dict.get('fillColor', None),
+            'ignore_hidden_point': as_dict.get('ignoreHiddenPoint', None),
+            'inner_size': as_dict.get('innerSize', None),
+            'linecap': as_dict.get('linecap', None),
+            'min_size': as_dict.get('minSize', None),
+            'size': as_dict.get('size', None),
+            'sliced_offset': as_dict.get('slicedOffset', None),
+            'start_angle': as_dict.get('startAngle', None),
+            'thickness': as_dict.get('thickness', None),
 
-            'max_point_size': as_dict.pop('maxPointSize', None),
-            'min_point_size': as_dict.pop('minPointSize', None),
-            'size_by': as_dict.pop('sizeBy', None),
-            'z_max': as_dict.pop('zMax', None),
-            'z_min': as_dict.pop('zMin', None)
+            'max_point_size': as_dict.get('maxPointSize', None),
+            'min_point_size': as_dict.get('minPointSize', None),
+            'size_by': as_dict.get('sizeBy', None),
+            'z_max': as_dict.get('zMax', None),
+            'z_min': as_dict.get('zMin', None)
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
-            'max_point_size': self.max_point_size,
-            'min_point_size': self.min_point_size,
-            'size_by': self.size_by,
-            'z_max': self.z_max,
-            'z_min': self.z_min
+            'maxPointSize': self.max_point_size,
+            'minPointSize': self.min_point_size,
+            'sizeBy': self.size_by,
+            'zMax': self.z_max,
+            'zMin': self.z_min
         }
         parent_as_dict = super()._to_untrimmed_dict()
 

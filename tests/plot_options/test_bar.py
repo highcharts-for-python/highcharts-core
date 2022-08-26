@@ -34,7 +34,7 @@ STANDARD_PARAMS = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -81,7 +81,7 @@ STANDARD_PARAMS = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -532,7 +532,7 @@ STANDARD_PARAMS_2 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -584,7 +584,7 @@ STANDARD_PARAMS_2 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -1035,7 +1035,7 @@ STANDARD_PARAMS_3 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -1087,7 +1087,7 @@ STANDARD_PARAMS_3 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -1538,7 +1538,7 @@ STANDARD_PARAMS_4 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -1590,7 +1590,7 @@ STANDARD_PARAMS_4 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -2041,7 +2041,7 @@ STANDARD_PARAMS_5 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -2093,7 +2093,7 @@ STANDARD_PARAMS_5 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -2544,7 +2544,7 @@ STANDARD_PARAMS_6 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -2596,7 +2596,7 @@ STANDARD_PARAMS_6 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -3036,7 +3036,7 @@ STANDARD_PARAMS_7 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -3083,7 +3083,7 @@ STANDARD_PARAMS_7 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -3530,7 +3530,7 @@ STANDARD_PARAMS_8 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -3577,7 +3577,7 @@ STANDARD_PARAMS_8 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -4148,7 +4148,7 @@ STANDARD_PARAMS_9 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -4259,7 +4259,7 @@ STANDARD_PARAMS_9 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -4710,7 +4710,7 @@ STANDARD_PARAMS_10 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [
@@ -4762,7 +4762,7 @@ STANDARD_PARAMS_10 = [
             'linearGradient': {
                 'x1': 0.123,
                 'x2': 0.567,
-                'y1': 0.890,
+                'y1': 0.891,
                 'y2': 0.987
             },
             'stops': [

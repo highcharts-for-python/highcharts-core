@@ -4,8 +4,8 @@ import pytest
 
 from json.decoder import JSONDecodeError
 
-from highcharts.plot_options.boxplot import BoxPlotOptions as cls
-from highcharts.plot_options.boxplot import ErrorBarOptions as cls2
+from highcharts.plot_options.pie import PieOptions as cls
+from highcharts.plot_options.pie import VariablePieOptions as cls2
 from highcharts import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
@@ -13,359 +13,109 @@ from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_di
 
 STANDARD_PARAMS = [
     ({}, None),
+    # Pie Options only
     ({
-      'box_dash_style': 'Solid',
-      'drag_drop': {
-          'draggableHigh': True,
-          'draggableLow': True,
-          'draggableQ1': True,
-          'draggableQ3': True,
-          'draggableX': True,
-          'draggableY': True,
-          'dragHandle': {
-              'className': 'draghandle-classname-goes-here',
-              'color': '#ccc',
-              'cursor': 'alias',
-              'lineColor': '#ddd',
-              'lineWidth': 2,
-              'pathFormatter': """function() { return true; }""",
-              'zIndex': 10
-          },
-          'dragMaxX': 3456,
-          'dragMaxY': 6532,
-          'dragMinX': 123,
-          'dragMinY': 321,
-          'dragPrecisionX': 5,
-          'dragPrecisionY': 5,
-          'dragSensitivity': 2,
-          'groupBy': 'some-property-name',
-          'guideBox': {
-              'default': {
-                  'className': 'some-classname-goes-here',
-                  'color': '#999',
-                  'cursor': 'pointer',
-                  'lineColor': '#ccc',
-                  'lineWidth': 2,
-                  'zIndex': 100
-              }
-          },
-          'liveRedraw': True
-      },
-      'median_color': '#ccc',
-      'median_dash_style': 'Dash',
-      'median_width': 2,
-      'stem_dash_style': 'Solid',
-      'stem_width': 1,
-      'whisker_color': '#999',
-      'whisker_dash_style': 'Solid',
-      'whisker_length': 12,
-      'whisker_width': 2
-    }, None),
-    # + Bar Options
-    ({
-      'box_dash_style': 'Solid',
-      'drag_drop': {
-          'draggableHigh': True,
-          'draggableLow': True,
-          'draggableQ1': True,
-          'draggableQ3': True,
-          'draggableX': True,
-          'draggableY': True,
-          'dragHandle': {
-              'className': 'draghandle-classname-goes-here',
-              'color': '#ccc',
-              'cursor': 'alias',
-              'lineColor': '#ddd',
-              'lineWidth': 2,
-              'pathFormatter': """function() { return true; }""",
-              'zIndex': 10
-          },
-          'dragMaxX': 3456,
-          'dragMaxY': 6532,
-          'dragMinX': 123,
-          'dragMinY': 321,
-          'dragPrecisionX': 5,
-          'dragPrecisionY': 5,
-          'dragSensitivity': 2,
-          'groupBy': 'some-property-name',
-          'guideBox': {
-              'default': {
-                  'className': 'some-classname-goes-here',
-                  'color': '#999',
-                  'cursor': 'pointer',
-                  'lineColor': '#ccc',
-                  'lineWidth': 2,
-                  'zIndex': 100
-              }
-          },
-          'liveRedraw': True
-      },
-      'median_color': '#ccc',
-      'median_dash_style': 'Dash',
-      'median_width': 2,
-      'stem_dash_style': 'Solid',
-      'stem_width': 1,
-      'whisker_color': '#999',
-      'whisker_dash_style': 'Solid',
-      'whisker_length': 12,
-      'whisker_width': 2,
-
-      'depth': 10,
-      'edge_color': '#999',
-      'edge_width': 1,
-      'group_z_padding': 4
-    }, None),
-    # + Base Bar Options
-    ({
-      'box_dash_style': 'Solid',
-      'drag_drop': {
-          'draggableHigh': True,
-          'draggableLow': True,
-          'draggableQ1': True,
-          'draggableQ3': True,
-          'draggableX': True,
-          'draggableY': True,
-          'dragHandle': {
-              'className': 'draghandle-classname-goes-here',
-              'color': '#ccc',
-              'cursor': 'alias',
-              'lineColor': '#ddd',
-              'lineWidth': 2,
-              'pathFormatter': """function() { return true; }""",
-              'zIndex': 10
-          },
-          'dragMaxX': 3456,
-          'dragMaxY': 6532,
-          'dragMinX': 123,
-          'dragMinY': 321,
-          'dragPrecisionX': 5,
-          'dragPrecisionY': 5,
-          'dragSensitivity': 2,
-          'groupBy': 'some-property-name',
-          'guideBox': {
-              'default': {
-                  'className': 'some-classname-goes-here',
-                  'color': '#999',
-                  'cursor': 'pointer',
-                  'lineColor': '#ccc',
-                  'lineWidth': 2,
-                  'zIndex': 100
-              }
-          },
-          'liveRedraw': True
-      },
-      'median_color': '#ccc',
-      'median_dash_style': 'Dash',
-      'median_width': 2,
-      'stem_dash_style': 'Solid',
-      'stem_width': 1,
-      'whisker_color': '#999',
-      'whisker_dash_style': 'Solid',
-      'whisker_length': 12,
-      'whisker_width': 2,
-
-      'depth': 10,
-      'edge_color': '#999',
-      'edge_width': 1,
-      'group_z_padding': 4,
-
       'border_color': '#ccc',
-      'border_radius': 4,
-      'border_width': 2,
-      'center_in_category': True,
-      'color_by_point': True,
-      'colors': [
-          '#fff',
-          'ccc',
-          {
-            'linearGradient': {
-                'x1': 0.123,
-                'x2': 0.567,
-                'y1': 0.891,
-                'y2': 0.987
-            },
-            'stops': [
-                [0.123, '#cccccc'],
-                [0.456, '#ff0000'],
-                [1, '#00ff00']
-            ]
-          },
-          {
-            'animation': {
-                'defer': 5
-            },
-            'patternOptions': {
-                'aspectRatio': 0.5,
-                'backgroundColor': '#999999',
-                'id': 'some_id_goes_here',
-                'opacity': 0.5,
-                'width': 120,
-                'x': 5,
-                'y': 10
-            },
-            'patternIndex': 2
-          }
-      ],
-      'grouping': False,
-      'group_padding': 6,
-      'max_point_width': 12,
-      'min_point_length': 12,
-      'point_padding': 6,
-      'point_range': 24,
-      'point_width': 12
-    }, None),
-    # + Base Bar + Series + Generic
-    ({
-      'box_dash_style': 'Solid',
-      'drag_drop': {
-          'draggableHigh': True,
-          'draggableLow': True,
-          'draggableQ1': True,
-          'draggableQ3': True,
-          'draggableX': True,
-          'draggableY': True,
-          'dragHandle': {
-              'className': 'draghandle-classname-goes-here',
-              'color': '#ccc',
-              'cursor': 'alias',
-              'lineColor': '#ddd',
-              'lineWidth': 2,
-              'pathFormatter': """function() { return true; }""",
-              'zIndex': 10
-          },
-          'dragMaxX': 3456,
-          'dragMaxY': 6532,
-          'dragMinX': 123,
-          'dragMinY': 321,
-          'dragPrecisionX': 5,
-          'dragPrecisionY': 5,
-          'dragSensitivity': 2,
-          'groupBy': 'some-property-name',
-          'guideBox': {
-              'default': {
-                  'className': 'some-classname-goes-here',
-                  'color': '#999',
-                  'cursor': 'pointer',
-                  'lineColor': '#ccc',
-                  'lineWidth': 2,
-                  'zIndex': 100
-              }
-          },
-          'liveRedraw': True
-      },
-      'median_color': '#ccc',
-      'median_dash_style': 'Dash',
-      'median_width': 2,
-      'stem_dash_style': 'Solid',
-      'stem_width': 1,
-      'whisker_color': '#999',
-      'whisker_dash_style': 'Solid',
-      'whisker_length': 12,
-      'whisker_width': 2,
-
-      'depth': 10,
-      'edge_color': '#999',
-      'edge_width': 1,
-      'group_z_padding': 4,
-
-      'border_color': '#ccc',
-      'border_radius': 4,
-      'border_width': 2,
-      'center_in_category': True,
-      'color_by_point': True,
-      'colors': [
-          '#fff',
-          'ccc',
-          {
-            'linearGradient': {
-                'x1': 0.123,
-                'x2': 0.567,
-                'y1': 0.891,
-                'y2': 0.987
-            },
-            'stops': [
-                [0.123, '#cccccc'],
-                [0.456, '#ff0000'],
-                [1, '#00ff00']
-            ]
-          },
-          {
-            'animation': {
-                'defer': 5
-            },
-            'patternOptions': {
-                'aspectRatio': 0.5,
-                'backgroundColor': '#999999',
-                'id': 'some_id_goes_here',
-                'opacity': 0.5,
-                'width': 120,
-                'x': 5,
-                'y': 10
-            },
-            'patternIndex': 2
-          }
-      ],
-      'grouping': False,
-      'group_padding': 6,
-      'max_point_width': 12,
-      'min_point_length': 12,
-      'point_padding': 6,
-      'point_range': 24,
-      'point_width': 12,
-
-      'animation_limit': 10,
-      'boost_blending': '#ccc',
-      'boost_threshold': 1234,
+      'border_width': 1,
+      'center': ['50%', '50%'],
       'color_axis': 1,
-      'color_index': 5,
-      'color_key': 'some-key-value',
-      'connect_ends': True,
-      'connect_nulls': True,
-      'crisp': True,
-      'crop_threshold': 123,
-      'data_sorting': {
-          'enabled': True,
-          'matchByName': True,
-          'sortKey': 'some-key-value'
-      },
-      'find_nearest_point_by': 'x',
-      'get_extremes_for_all': True,
-      'linecap': 'round',
-      'line_width': 2,
-      'negative_color': '#fff',
-      'point_interval': 5,
-      'point_interval_unit': 'weeks',
-      'point_placement': 'on',
-      'point_start': 12,
-      'relative_x_value': True,
-      'shadow': False,
-      'soft_threshold': True,
-      'stacking': 'normal',
-      'step': 'left',
-      'zone_axis': 'y',
-      'zones': [
+      'color_index': 3,
+      'color_key': 'some-key-goes-here',
+      'colors': [
+          '#fff',
+          'ccc',
           {
-            'className': 'some-class-name1',
-            'color': '#999999',
-            'dashStyle': 'Solid',
-            'fillColor': '#cccccc',
-            'value': 123
+            'linearGradient': {
+                'x1': 0.123,
+                'x2': 0.567,
+                'y1': 0.891,
+                'y2': 0.987
+            },
+            'stops': [
+                [0.123, '#cccccc'],
+                [0.456, '#ff0000'],
+                [1, '#00ff00']
+            ]
           },
           {
-            'className': 'some-class-name1',
-            'color': '#999999',
-            'dashStyle': 'Solid',
-            'fillColor': '#cccccc',
-            'value': 123
-          },
-          {
-            'className': 'some-class-name1',
-            'color': '#999999',
-            'dashStyle': 'Solid',
-            'fillColor': '#cccccc',
-            'value': 123
+            'animation': {
+                'defer': 5
+            },
+            'patternOptions': {
+                'aspectRatio': 0.5,
+                'backgroundColor': '#999999',
+                'id': 'some_id_goes_here',
+                'opacity': 0.5,
+                'width': 120,
+                'x': 5,
+                'y': 10
+            },
+            'patternIndex': 2
           }
       ],
+      'depth': 10,
+      'end_angle': 90,
+      'fill_color': '#fff',
+      'ignore_hidden_point': True,
+      'inner_size': '30%',
+      'linecap': 'round',
+      'min_size': '20%',
+      'size': 80,
+      'sliced_offset': 24,
+      'start_angle': 45,
+      'thickness': 2
+    }, None),
+    # + Generic Options
+    ({
+      'border_color': '#ccc',
+      'border_width': 1,
+      'center': ['50%', '50%'],
+      'color_axis': 1,
+      'color_index': 3,
+      'color_key': 'some-key-goes-here',
+      'colors': [
+          '#fff',
+          'ccc',
+          {
+            'linearGradient': {
+                'x1': 0.123,
+                'x2': 0.567,
+                'y1': 0.891,
+                'y2': 0.987
+            },
+            'stops': [
+                [0.123, '#cccccc'],
+                [0.456, '#ff0000'],
+                [1, '#00ff00']
+            ]
+          },
+          {
+            'animation': {
+                'defer': 5
+            },
+            'patternOptions': {
+                'aspectRatio': 0.5,
+                'backgroundColor': '#999999',
+                'id': 'some_id_goes_here',
+                'opacity': 0.5,
+                'width': 120,
+                'x': 5,
+                'y': 10
+            },
+            'patternIndex': 2
+          }
+      ],
+      'depth': 10,
+      'end_angle': 90,
+      'fill_color': '#fff',
+      'ignore_hidden_point': True,
+      'inner_size': '30%',
+      'linecap': 'round',
+      'min_size': '20%',
+      'size': 80,
+      'sliced_offset': 24,
+      'start_angle': 45,
+      'thickness': 2,
 
       'accessibility': {
           'description': 'Description goes here',
@@ -609,37 +359,37 @@ STANDARD_PARAMS = [
 
 
 @pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
-def test_BoxPlotOptions__init__(kwargs, error):
+def test_PieOptions__init__(kwargs, error):
     Class__init__(cls, kwargs, error)
 
 
 @pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
-def test_BoxPlotOptions__to_untrimmed_dict(kwargs, error):
+def test_PieOptions__to_untrimmed_dict(kwargs, error):
     Class__to_untrimmed_dict(cls, kwargs, error)
 
 
 @pytest.mark.parametrize('kwargs, error',  STANDARD_PARAMS)
-def test_BoxPlotOptions_from_dict(kwargs, error):
+def test_PieOptions_from_dict(kwargs, error):
     Class_from_dict(cls, kwargs, error)
 
 
 @pytest.mark.parametrize('kwargs, error',  STANDARD_PARAMS)
-def test_BoxPlotOptions_to_dict(kwargs, error):
+def test_PieOptions_to_dict(kwargs, error):
     Class_to_dict(cls, kwargs, error)
 
 
 @pytest.mark.parametrize('filename, as_file, error', [
-    ('plot_options/bar/01.js', False, None),
-    ('plot_options/bar/02.js', False, None),
+    ('plot_options/pie/01.js', False, None),
+    ('plot_options/pie/02.js', False, None),
 
-    ('plot_options/bar/error-01.js',
+    ('plot_options/pie/error-01.js',
      False,
      (errors.HighchartsValueError,
       errors.HighchartsParseError,
       JSONDecodeError,
       TypeError,
       ValueError)),
-    ('plot_options/bar/error-02.js',
+    ('plot_options/pie/error-02.js',
      False,
      (errors.HighchartsValueError,
       errors.HighchartsParseError,
@@ -647,17 +397,17 @@ def test_BoxPlotOptions_to_dict(kwargs, error):
       TypeError,
       ValueError)),
 
-    ('plot_options/bar/01.js', True, None),
-    ('plot_options/bar/02.js', True, None),
+    ('plot_options/pie/01.js', True, None),
+    ('plot_options/pie/02.js', True, None),
 
-    ('plot_options/bar/error-01.js',
+    ('plot_options/pie/error-01.js',
      True,
      (errors.HighchartsValueError,
       errors.HighchartsParseError,
       JSONDecodeError,
       TypeError,
       ValueError)),
-    ('plot_options/bar/error-02.js',
+    ('plot_options/pie/error-02.js',
      True,
      (errors.HighchartsValueError,
       errors.HighchartsParseError,
@@ -666,367 +416,136 @@ def test_BoxPlotOptions_to_dict(kwargs, error):
       ValueError)),
 
 ])
-def test_BoxPlotOptions_from_js_literal(input_files, filename, as_file, error):
+def test_PieOptions_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
 
 
-# NEXT CLASS!
+## NEXT CLASS
 
 STANDARD_PARAMS_2 = [
     ({}, None),
     ({
-      'box_dash_style': 'Solid',
-      'drag_drop': {
-          'draggableHigh': True,
-          'draggableLow': True,
-          'draggableQ1': True,
-          'draggableQ3': True,
-          'draggableX': True,
-          'draggableY': True,
-          'dragHandle': {
-              'className': 'draghandle-classname-goes-here',
-              'color': '#ccc',
-              'cursor': 'alias',
-              'lineColor': '#ddd',
-              'lineWidth': 2,
-              'pathFormatter': """function() { return true; }""",
-              'zIndex': 10
-          },
-          'dragMaxX': 3456,
-          'dragMaxY': 6532,
-          'dragMinX': 123,
-          'dragMinY': 321,
-          'dragPrecisionX': 5,
-          'dragPrecisionY': 5,
-          'dragSensitivity': 2,
-          'groupBy': 'some-property-name',
-          'guideBox': {
-              'default': {
-                  'className': 'some-classname-goes-here',
-                  'color': '#999',
-                  'cursor': 'pointer',
-                  'lineColor': '#ccc',
-                  'lineWidth': 2,
-                  'zIndex': 100
-              }
-          },
-          'liveRedraw': True
-      },
-      'median_color': '#ccc',
-      'median_dash_style': 'Dash',
-      'median_width': 2,
-      'stem_dash_style': 'Solid',
-      'stem_width': 1,
-      'whisker_color': '#999',
-      'whisker_dash_style': 'Solid',
-      'whisker_length': 12,
-      'whisker_width': 2
+      'max_point_size': '15%',
+      'min_point_size': '5%',
+      'size_by': 'area',
+      'z_max': 30,
+      'z_min': 2
     }, None),
-    # + Bar Options
+    # + Pie Options
     ({
-      'box_dash_style': 'Solid',
-      'drag_drop': {
-          'draggableHigh': True,
-          'draggableLow': True,
-          'draggableQ1': True,
-          'draggableQ3': True,
-          'draggableX': True,
-          'draggableY': True,
-          'dragHandle': {
-              'className': 'draghandle-classname-goes-here',
-              'color': '#ccc',
-              'cursor': 'alias',
-              'lineColor': '#ddd',
-              'lineWidth': 2,
-              'pathFormatter': """function() { return true; }""",
-              'zIndex': 10
-          },
-          'dragMaxX': 3456,
-          'dragMaxY': 6532,
-          'dragMinX': 123,
-          'dragMinY': 321,
-          'dragPrecisionX': 5,
-          'dragPrecisionY': 5,
-          'dragSensitivity': 2,
-          'groupBy': 'some-property-name',
-          'guideBox': {
-              'default': {
-                  'className': 'some-classname-goes-here',
-                  'color': '#999',
-                  'cursor': 'pointer',
-                  'lineColor': '#ccc',
-                  'lineWidth': 2,
-                  'zIndex': 100
-              }
-          },
-          'liveRedraw': True
-      },
-      'median_color': '#ccc',
-      'median_dash_style': 'Dash',
-      'median_width': 2,
-      'stem_dash_style': 'Solid',
-      'stem_width': 1,
-      'whisker_color': '#999',
-      'whisker_dash_style': 'Solid',
-      'whisker_length': 12,
-      'whisker_width': 2,
-
-      'depth': 10,
-      'edge_color': '#999',
-      'edge_width': 1,
-      'group_z_padding': 4
-    }, None),
-    # + Base Bar Options
-    ({
-      'box_dash_style': 'Solid',
-      'drag_drop': {
-          'draggableHigh': True,
-          'draggableLow': True,
-          'draggableQ1': True,
-          'draggableQ3': True,
-          'draggableX': True,
-          'draggableY': True,
-          'dragHandle': {
-              'className': 'draghandle-classname-goes-here',
-              'color': '#ccc',
-              'cursor': 'alias',
-              'lineColor': '#ddd',
-              'lineWidth': 2,
-              'pathFormatter': """function() { return true; }""",
-              'zIndex': 10
-          },
-          'dragMaxX': 3456,
-          'dragMaxY': 6532,
-          'dragMinX': 123,
-          'dragMinY': 321,
-          'dragPrecisionX': 5,
-          'dragPrecisionY': 5,
-          'dragSensitivity': 2,
-          'groupBy': 'some-property-name',
-          'guideBox': {
-              'default': {
-                  'className': 'some-classname-goes-here',
-                  'color': '#999',
-                  'cursor': 'pointer',
-                  'lineColor': '#ccc',
-                  'lineWidth': 2,
-                  'zIndex': 100
-              }
-          },
-          'liveRedraw': True
-      },
-      'median_color': '#ccc',
-      'median_dash_style': 'Dash',
-      'median_width': 2,
-      'stem_dash_style': 'Solid',
-      'stem_width': 1,
-      'whisker_color': '#999',
-      'whisker_dash_style': 'Solid',
-      'whisker_length': 12,
-      'whisker_width': 2,
-
-      'depth': 10,
-      'edge_color': '#999',
-      'edge_width': 1,
-      'group_z_padding': 4,
+      'max_point_size': '15%',
+      'min_point_size': '5%',
+      'size_by': 'area',
+      'z_max': 30,
+      'z_min': 2,
 
       'border_color': '#ccc',
-      'border_radius': 4,
-      'border_width': 2,
-      'center_in_category': True,
-      'color_by_point': True,
-      'colors': [
-          '#fff',
-          'ccc',
-          {
-            'linearGradient': {
-                'x1': 0.123,
-                'x2': 0.567,
-                'y1': 0.891,
-                'y2': 0.987
-            },
-            'stops': [
-                [0.123, '#cccccc'],
-                [0.456, '#ff0000'],
-                [1, '#00ff00']
-            ]
-          },
-          {
-            'animation': {
-                'defer': 5
-            },
-            'patternOptions': {
-                'aspectRatio': 0.5,
-                'backgroundColor': '#999999',
-                'id': 'some_id_goes_here',
-                'opacity': 0.5,
-                'width': 120,
-                'x': 5,
-                'y': 10
-            },
-            'patternIndex': 2
-          }
-      ],
-      'grouping': False,
-      'group_padding': 6,
-      'max_point_width': 12,
-      'min_point_length': 12,
-      'point_padding': 6,
-      'point_range': 24,
-      'point_width': 12
-    }, None),
-    # + Base Bar + Series + Generic
-    ({
-      'box_dash_style': 'Solid',
-      'drag_drop': {
-          'draggableHigh': True,
-          'draggableLow': True,
-          'draggableQ1': True,
-          'draggableQ3': True,
-          'draggableX': True,
-          'draggableY': True,
-          'dragHandle': {
-              'className': 'draghandle-classname-goes-here',
-              'color': '#ccc',
-              'cursor': 'alias',
-              'lineColor': '#ddd',
-              'lineWidth': 2,
-              'pathFormatter': """function() { return true; }""",
-              'zIndex': 10
-          },
-          'dragMaxX': 3456,
-          'dragMaxY': 6532,
-          'dragMinX': 123,
-          'dragMinY': 321,
-          'dragPrecisionX': 5,
-          'dragPrecisionY': 5,
-          'dragSensitivity': 2,
-          'groupBy': 'some-property-name',
-          'guideBox': {
-              'default': {
-                  'className': 'some-classname-goes-here',
-                  'color': '#999',
-                  'cursor': 'pointer',
-                  'lineColor': '#ccc',
-                  'lineWidth': 2,
-                  'zIndex': 100
-              }
-          },
-          'liveRedraw': True
-      },
-      'median_color': '#ccc',
-      'median_dash_style': 'Dash',
-      'median_width': 2,
-      'stem_dash_style': 'Solid',
-      'stem_width': 1,
-      'whisker_color': '#999',
-      'whisker_dash_style': 'Solid',
-      'whisker_length': 12,
-      'whisker_width': 2,
-
-      'depth': 10,
-      'edge_color': '#999',
-      'edge_width': 1,
-      'group_z_padding': 4,
-
-      'border_color': '#ccc',
-      'border_radius': 4,
-      'border_width': 2,
-      'center_in_category': True,
-      'color_by_point': True,
-      'colors': [
-          '#fff',
-          'ccc',
-          {
-            'linearGradient': {
-                'x1': 0.123,
-                'x2': 0.567,
-                'y1': 0.891,
-                'y2': 0.987
-            },
-            'stops': [
-                [0.123, '#cccccc'],
-                [0.456, '#ff0000'],
-                [1, '#00ff00']
-            ]
-          },
-          {
-            'animation': {
-                'defer': 5
-            },
-            'patternOptions': {
-                'aspectRatio': 0.5,
-                'backgroundColor': '#999999',
-                'id': 'some_id_goes_here',
-                'opacity': 0.5,
-                'width': 120,
-                'x': 5,
-                'y': 10
-            },
-            'patternIndex': 2
-          }
-      ],
-      'grouping': False,
-      'group_padding': 6,
-      'max_point_width': 12,
-      'min_point_length': 12,
-      'point_padding': 6,
-      'point_range': 24,
-      'point_width': 12,
-
-      'animation_limit': 10,
-      'boost_blending': '#ccc',
-      'boost_threshold': 1234,
+      'border_width': 1,
+      'center': ['50%', '50%'],
       'color_axis': 1,
-      'color_index': 5,
-      'color_key': 'some-key-value',
-      'connect_ends': True,
-      'connect_nulls': True,
-      'crisp': True,
-      'crop_threshold': 123,
-      'data_sorting': {
-          'enabled': True,
-          'matchByName': True,
-          'sortKey': 'some-key-value'
-      },
-      'find_nearest_point_by': 'x',
-      'get_extremes_for_all': True,
-      'linecap': 'round',
-      'line_width': 2,
-      'negative_color': '#fff',
-      'point_interval': 5,
-      'point_interval_unit': 'weeks',
-      'point_placement': 'on',
-      'point_start': 12,
-      'relative_x_value': True,
-      'shadow': False,
-      'soft_threshold': True,
-      'stacking': 'normal',
-      'step': 'left',
-      'zone_axis': 'y',
-      'zones': [
+      'color_index': 3,
+      'color_key': 'some-key-goes-here',
+      'colors': [
+          '#fff',
+          'ccc',
           {
-            'className': 'some-class-name1',
-            'color': '#999999',
-            'dashStyle': 'Solid',
-            'fillColor': '#cccccc',
-            'value': 123
+            'linearGradient': {
+                'x1': 0.123,
+                'x2': 0.567,
+                'y1': 0.891,
+                'y2': 0.987
+            },
+            'stops': [
+                [0.123, '#cccccc'],
+                [0.456, '#ff0000'],
+                [1, '#00ff00']
+            ]
           },
           {
-            'className': 'some-class-name1',
-            'color': '#999999',
-            'dashStyle': 'Solid',
-            'fillColor': '#cccccc',
-            'value': 123
-          },
-          {
-            'className': 'some-class-name1',
-            'color': '#999999',
-            'dashStyle': 'Solid',
-            'fillColor': '#cccccc',
-            'value': 123
+            'animation': {
+                'defer': 5
+            },
+            'patternOptions': {
+                'aspectRatio': 0.5,
+                'backgroundColor': '#999999',
+                'id': 'some_id_goes_here',
+                'opacity': 0.5,
+                'width': 120,
+                'x': 5,
+                'y': 10
+            },
+            'patternIndex': 2
           }
       ],
+      'depth': 10,
+      'end_angle': 90,
+      'fill_color': '#fff',
+      'ignore_hidden_point': True,
+      'inner_size': '30%',
+      'linecap': 'round',
+      'min_size': '20%',
+      'size': 80,
+      'sliced_offset': 24,
+      'start_angle': 45,
+      'thickness': 2
+    }, None),
+    # + Generic Options
+    ({
+      'max_point_size': '15%',
+      'min_point_size': '5%',
+      'size_by': 'area',
+      'z_max': 30,
+      'z_min': 2,
+
+      'border_color': '#ccc',
+      'border_width': 1,
+      'center': ['50%', '50%'],
+      'color_axis': 1,
+      'color_index': 3,
+      'color_key': 'some-key-goes-here',
+      'colors': [
+          '#fff',
+          'ccc',
+          {
+            'linearGradient': {
+                'x1': 0.123,
+                'x2': 0.567,
+                'y1': 0.891,
+                'y2': 0.987
+            },
+            'stops': [
+                [0.123, '#cccccc'],
+                [0.456, '#ff0000'],
+                [1, '#00ff00']
+            ]
+          },
+          {
+            'animation': {
+                'defer': 5
+            },
+            'patternOptions': {
+                'aspectRatio': 0.5,
+                'backgroundColor': '#999999',
+                'id': 'some_id_goes_here',
+                'opacity': 0.5,
+                'width': 120,
+                'x': 5,
+                'y': 10
+            },
+            'patternIndex': 2
+          }
+      ],
+      'depth': 10,
+      'end_angle': 90,
+      'fill_color': '#fff',
+      'ignore_hidden_point': True,
+      'inner_size': '30%',
+      'linecap': 'round',
+      'min_size': '20%',
+      'size': 80,
+      'sliced_offset': 24,
+      'start_angle': 45,
+      'thickness': 2,
 
       'accessibility': {
           'description': 'Description goes here',
@@ -1269,39 +788,38 @@ STANDARD_PARAMS_2 = [
 ]
 
 
-
 @pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS_2)
-def test_ErrorBarOptions__init__(kwargs, error):
+def test_VariablePieOptions__init__(kwargs, error):
     Class__init__(cls2, kwargs, error)
 
 
 @pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS_2)
-def test_ErrorBarOptions__to_untrimmed_dict(kwargs, error):
+def test_VariablePieOptions__to_untrimmed_dict(kwargs, error):
     Class__to_untrimmed_dict(cls2, kwargs, error)
 
 
 @pytest.mark.parametrize('kwargs, error',  STANDARD_PARAMS_2)
-def test_ErrorBarOptions_from_dict(kwargs, error):
+def test_VariablePieOptions_from_dict(kwargs, error):
     Class_from_dict(cls2, kwargs, error)
 
 
 @pytest.mark.parametrize('kwargs, error',  STANDARD_PARAMS_2)
-def test_ErrorBarOptions_to_dict(kwargs, error):
+def test_VariablePieOptions_to_dict(kwargs, error):
     Class_to_dict(cls2, kwargs, error)
 
 
 @pytest.mark.parametrize('filename, as_file, error', [
-    ('plot_options/bar/03.js', False, None),
-    ('plot_options/bar/04.js', False, None),
+    ('plot_options/pie/03.js', False, None),
+    ('plot_options/pie/04.js', False, None),
 
-    ('plot_options/bar/error-01.js',
+    ('plot_options/pie/error-03.js',
      False,
      (errors.HighchartsValueError,
       errors.HighchartsParseError,
       JSONDecodeError,
       TypeError,
       ValueError)),
-    ('plot_options/bar/error-02.js',
+    ('plot_options/pie/error-04.js',
      False,
      (errors.HighchartsValueError,
       errors.HighchartsParseError,
@@ -1309,17 +827,17 @@ def test_ErrorBarOptions_to_dict(kwargs, error):
       TypeError,
       ValueError)),
 
-    ('plot_options/bar/03.js', True, None),
-    ('plot_options/bar/04.js', True, None),
+    ('plot_options/pie/03.js', True, None),
+    ('plot_options/pie/04.js', True, None),
 
-    ('plot_options/bar/error-01.js',
+    ('plot_options/pie/error-03.js',
      True,
      (errors.HighchartsValueError,
       errors.HighchartsParseError,
       JSONDecodeError,
       TypeError,
       ValueError)),
-    ('plot_options/bar/error-02.js',
+    ('plot_options/pie/error-04.js',
      True,
      (errors.HighchartsValueError,
       errors.HighchartsParseError,
@@ -1328,5 +846,5 @@ def test_ErrorBarOptions_to_dict(kwargs, error):
       ValueError)),
 
 ])
-def test_ErrorBarOptions_from_js_literal(input_files, filename, as_file, error):
+def test_VariablePieOptions_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls2, input_files, filename, as_file, error)
