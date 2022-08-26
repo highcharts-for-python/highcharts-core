@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from validator_collection import validators
 
-from highcharts import constants, errors
+from highcharts import constants, errors, utility_functions
 from highcharts.decorators import class_sensitive, validate_types
 from highcharts.plot_options.series import SeriesOptions
 from highcharts.utility_classes.gradients import Gradient
@@ -30,21 +30,21 @@ class BaseBarOptions(SeriesOptions):
         self._point_range = None
         self._point_width = None
 
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_radius = kwargs.pop('border_radius', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.center_in_category = kwargs.pop('center_in_category', None)
-        self.color_by_point = kwargs.pop('color_by_point', None)
-        self.colors = kwargs.pop('colors', None)
-        self.grouping = kwargs.pop('grouping', None)
-        self.group_padding = kwargs.pop('group_padding', None)
-        self.max_point_width = kwargs.pop('max_point_width', None)
-        self.min_point_length = kwargs.pop('min_point_length', None)
-        self.point_padding = kwargs.pop('point_padding', None)
-        self.point_range = kwargs.pop('point_range', None)
-        self.point_width = kwargs.pop('point_width', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_radius = kwargs.get('border_radius', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.center_in_category = kwargs.get('center_in_category', None)
+        self.color_by_point = kwargs.get('color_by_point', None)
+        self.colors = kwargs.get('colors', None)
+        self.grouping = kwargs.get('grouping', None)
+        self.group_padding = kwargs.get('group_padding', None)
+        self.max_point_width = kwargs.get('max_point_width', None)
+        self.min_point_length = kwargs.get('min_point_length', None)
+        self.point_padding = kwargs.get('point_padding', None)
+        self.point_range = kwargs.get('point_range', None)
+        self.point_width = kwargs.get('point_width', None)
 
-        super(self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     @property
     def border_color(self) -> Optional[str | Gradient | Pattern]:
@@ -143,16 +143,7 @@ class BaseBarOptions(SeriesOptions):
             self._colors = None
         else:
             value = validators.iterable(value)
-            checked_values = []
-            for item in value:
-                if isinstance(value, str):
-                    checked_values.append(item)
-                else:
-                    processed_item = validate_types(item,
-                                                    types = (Gradient, Pattern))
-                    checked_values.append(processed_item)
-
-            self._colors = checked_values
+            self._colors = [utility_functions.validate_color(x) for x in value]
 
     @property
     def grouping(self) -> Optional[bool]:
@@ -292,80 +283,81 @@ class BaseBarOptions(SeriesOptions):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
-            'animation_limit': as_dict.pop('animationLimit', None),
-            'boost_blending': as_dict.pop('boostBlending', None),
-            'boost_threshold': as_dict.pop('boostThreshold', None),
-            'color_axis': as_dict.pop('colorAxis', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'color_key': as_dict.pop('colorKey', None),
-            'connect_ends': as_dict.pop('connectEnds', None),
-            'connect_nulls': as_dict.pop('connectNulls', None),
-            'crisp': as_dict.pop('crisp', None),
-            'crop_threshold': as_dict.pop('cropThreshold', None),
-            'data_sorting': as_dict.pop('dataSorting', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'find_nearest_point_by': as_dict.pop('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.pop('getExtremesForAll', None),
-            'linecap': as_dict.pop('linecap', None),
-            'line_width': as_dict.pop('lineWidth', None),
-            'negative_color': as_dict.pop('negativeColor', None),
-            'point_interval': as_dict.pop('pointInterval', None),
-            'point_interval_unit': as_dict.pop('pointIntervalUnit', None),
-            'point_placement': as_dict.pop('pointPlacement', None),
-            'point_start': as_dict.pop('pointStart', None),
-            'relative_x_value': as_dict.pop('relativeXValue', None),
-            'shadow': as_dict.pop('shadow', None),
-            'soft_threshold': as_dict.pop('softThreshold', None),
-            'stacking': as_dict.pop('stacking', None),
-            'step': as_dict.pop('step', None),
-            'zone_axis': as_dict.pop('zoneAxis', None),
-            'zones': as_dict.pop('zones', None),
+            'animation_limit': as_dict.get('animationLimit', None),
+            'boost_blending': as_dict.get('boostBlending', None),
+            'boost_threshold': as_dict.get('boostThreshold', None),
+            'color_axis': as_dict.get('colorAxis', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'color_key': as_dict.get('colorKey', None),
+            'connect_ends': as_dict.get('connectEnds', None),
+            'connect_nulls': as_dict.get('connectNulls', None),
+            'crisp': as_dict.get('crisp', None),
+            'crop_threshold': as_dict.get('cropThreshold', None),
+            'data_sorting': as_dict.get('dataSorting', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
+            'get_extremes_for_all': as_dict.get('getExtremesForAll', None),
+            'linecap': as_dict.get('linecap', None),
+            'line_width': as_dict.get('lineWidth', None),
+            'negative_color': as_dict.get('negativeColor', None),
+            'point_interval': as_dict.get('pointInterval', None),
+            'point_interval_unit': as_dict.get('pointIntervalUnit', None),
+            'point_placement': as_dict.get('pointPlacement', None),
+            'point_start': as_dict.get('pointStart', None),
+            'relative_x_value': as_dict.get('relativeXValue', None),
+            'shadow': as_dict.get('shadow', None),
+            'soft_threshold': as_dict.get('softThreshold', None),
+            'stacking': as_dict.get('stacking', None),
+            'step': as_dict.get('step', None),
+            'zone_axis': as_dict.get('zoneAxis', None),
+            'zones': as_dict.get('zones', None),
 
-            'border_color': as_dict.pop('borderColor', None),
-            'border_radius': as_dict.pop('borderRadius', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'center_in_category': as_dict.pop('centerInCategory', None),
-            'color_by_point': as_dict.pop('colorByPoint', None),
-            'colors': as_dict.pop('colors', None),
-            'grouping': as_dict.pop('grouping', None),
-            'group_padding': as_dict.pop('groupPadding', None),
-            'max_point_width': as_dict.pop('maxPointWidth', None),
-            'min_point_length': as_dict.pop('minPointLength', None),
-            'point_padding': as_dict.pop('pointPadding', None),
-            'point_range': as_dict.pop('pointRange', None),
-            'point_width': as_dict.pop('pointWidth', None)
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'center_in_category': as_dict.get('centerInCategory', None),
+            'color_by_point': as_dict.get('colorByPoint', None),
+            'colors': as_dict.get('colors', None),
+            'grouping': as_dict.get('grouping', None),
+            'group_padding': as_dict.get('groupPadding', None),
+            'max_point_width': as_dict.get('maxPointWidth', None),
+            'min_point_length': as_dict.get('minPointLength', None),
+            'point_padding': as_dict.get('pointPadding', None),
+            'point_range': as_dict.get('pointRange', None),
+            'point_width': as_dict.get('pointWidth', None)
         }
 
         return kwargs
@@ -386,7 +378,7 @@ class BaseBarOptions(SeriesOptions):
             'pointRange': self.point_range,
             'pointWidth': self.point_width
         }
-        parent_as_dict = super(self)._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
@@ -410,12 +402,12 @@ class BarOptions(BaseBarOptions):
         self._edge_width = None
         self._group_z_padding = None
 
-        self.depth = kwargs.pop('depth', None)
-        self.edge_color = kwargs.pop('edge_color', None)
-        self.edge_width = kwargs.pop('edge_width', None)
-        self.group_z_padding = kwargs.pop('group_z_padding', None)
+        self.depth = kwargs.get('depth', None)
+        self.edge_color = kwargs.get('edge_color', None)
+        self.edge_width = kwargs.get('edge_width', None)
+        self.group_z_padding = kwargs.get('group_z_padding', None)
 
-        super(self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     @property
     def depth(self) -> Optional[int | float | Decimal]:
@@ -478,85 +470,86 @@ class BarOptions(BaseBarOptions):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
-            'animation_limit': as_dict.pop('animationLimit', None),
-            'boost_blending': as_dict.pop('boostBlending', None),
-            'boost_threshold': as_dict.pop('boostThreshold', None),
-            'color_axis': as_dict.pop('colorAxis', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'color_key': as_dict.pop('colorKey', None),
-            'connect_ends': as_dict.pop('connectEnds', None),
-            'connect_nulls': as_dict.pop('connectNulls', None),
-            'crisp': as_dict.pop('crisp', None),
-            'crop_threshold': as_dict.pop('cropThreshold', None),
-            'data_sorting': as_dict.pop('dataSorting', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'find_nearest_point_by': as_dict.pop('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.pop('getExtremesForAll', None),
-            'linecap': as_dict.pop('linecap', None),
-            'line_width': as_dict.pop('lineWidth', None),
-            'negative_color': as_dict.pop('negativeColor', None),
-            'point_interval': as_dict.pop('pointInterval', None),
-            'point_interval_unit': as_dict.pop('pointIntervalUnit', None),
-            'point_placement': as_dict.pop('pointPlacement', None),
-            'point_start': as_dict.pop('pointStart', None),
-            'relative_x_value': as_dict.pop('relativeXValue', None),
-            'shadow': as_dict.pop('shadow', None),
-            'soft_threshold': as_dict.pop('softThreshold', None),
-            'stacking': as_dict.pop('stacking', None),
-            'step': as_dict.pop('step', None),
-            'zone_axis': as_dict.pop('zoneAxis', None),
-            'zones': as_dict.pop('zones', None),
+            'animation_limit': as_dict.get('animationLimit', None),
+            'boost_blending': as_dict.get('boostBlending', None),
+            'boost_threshold': as_dict.get('boostThreshold', None),
+            'color_axis': as_dict.get('colorAxis', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'color_key': as_dict.get('colorKey', None),
+            'connect_ends': as_dict.get('connectEnds', None),
+            'connect_nulls': as_dict.get('connectNulls', None),
+            'crisp': as_dict.get('crisp', None),
+            'crop_threshold': as_dict.get('cropThreshold', None),
+            'data_sorting': as_dict.get('dataSorting', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
+            'get_extremes_for_all': as_dict.get('getExtremesForAll', None),
+            'linecap': as_dict.get('linecap', None),
+            'line_width': as_dict.get('lineWidth', None),
+            'negative_color': as_dict.get('negativeColor', None),
+            'point_interval': as_dict.get('pointInterval', None),
+            'point_interval_unit': as_dict.get('pointIntervalUnit', None),
+            'point_placement': as_dict.get('pointPlacement', None),
+            'point_start': as_dict.get('pointStart', None),
+            'relative_x_value': as_dict.get('relativeXValue', None),
+            'shadow': as_dict.get('shadow', None),
+            'soft_threshold': as_dict.get('softThreshold', None),
+            'stacking': as_dict.get('stacking', None),
+            'step': as_dict.get('step', None),
+            'zone_axis': as_dict.get('zoneAxis', None),
+            'zones': as_dict.get('zones', None),
 
-            'border_color': as_dict.pop('borderColor', None),
-            'border_radius': as_dict.pop('borderRadius', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'center_in_category': as_dict.pop('centerInCategory', None),
-            'color_by_point': as_dict.pop('colorByPoint', None),
-            'colors': as_dict.pop('colors', None),
-            'grouping': as_dict.pop('grouping', None),
-            'group_padding': as_dict.pop('groupPadding', None),
-            'max_point_width': as_dict.pop('maxPointWidth', None),
-            'min_point_length': as_dict.pop('minPointLength', None),
-            'point_padding': as_dict.pop('pointPadding', None),
-            'point_range': as_dict.pop('pointRange', None),
-            'point_width': as_dict.pop('pointWidth', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'center_in_category': as_dict.get('centerInCategory', None),
+            'color_by_point': as_dict.get('colorByPoint', None),
+            'colors': as_dict.get('colors', None),
+            'grouping': as_dict.get('grouping', None),
+            'group_padding': as_dict.get('groupPadding', None),
+            'max_point_width': as_dict.get('maxPointWidth', None),
+            'min_point_length': as_dict.get('minPointLength', None),
+            'point_padding': as_dict.get('pointPadding', None),
+            'point_range': as_dict.get('pointRange', None),
+            'point_width': as_dict.get('pointWidth', None),
 
-            'depth': as_dict.pop('depth', None),
-            'edge_color': as_dict.pop('edgeColor', None),
-            'edge_width': as_dict.pop('edgeWidth', None),
-            'group_z_padding': as_dict.pop('groupZPadding', None)
+            'depth': as_dict.get('depth', None),
+            'edge_color': as_dict.get('edgeColor', None),
+            'edge_width': as_dict.get('edgeWidth', None),
+            'group_z_padding': as_dict.get('groupZPadding', None)
          }
 
         return kwargs
@@ -568,7 +561,7 @@ class BarOptions(BaseBarOptions):
             'edgeWidth': self.edge_width,
             'groupZPadding': self.group_z_padding
         }
-        parent_as_dict = super(self)._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
@@ -726,8 +719,8 @@ class WaterfallOptions(ColumnOptions):
         self._line_color = None
         self._up_color = None
 
-        self.line_color = kwargs.pop('line_color', None)
-        self.up_color = kwargs.pop('up_color', None)
+        self.line_color = kwargs.get('line_color', None)
+        self.up_color = kwargs.get('up_color', None)
 
         super().__init__(**kwargs)
 
@@ -765,88 +758,89 @@ class WaterfallOptions(ColumnOptions):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
-            'animation_limit': as_dict.pop('animationLimit', None),
-            'boost_blending': as_dict.pop('boostBlending', None),
-            'boost_threshold': as_dict.pop('boostThreshold', None),
-            'color_axis': as_dict.pop('colorAxis', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'color_key': as_dict.pop('colorKey', None),
-            'connect_ends': as_dict.pop('connectEnds', None),
-            'connect_nulls': as_dict.pop('connectNulls', None),
-            'crisp': as_dict.pop('crisp', None),
-            'crop_threshold': as_dict.pop('cropThreshold', None),
-            'data_sorting': as_dict.pop('dataSorting', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'find_nearest_point_by': as_dict.pop('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.pop('getExtremesForAll', None),
-            'linecap': as_dict.pop('linecap', None),
-            'line_width': as_dict.pop('lineWidth', None),
-            'negative_color': as_dict.pop('negativeColor', None),
-            'point_interval': as_dict.pop('pointInterval', None),
-            'point_interval_unit': as_dict.pop('pointIntervalUnit', None),
-            'point_placement': as_dict.pop('pointPlacement', None),
-            'point_start': as_dict.pop('pointStart', None),
-            'relative_x_value': as_dict.pop('relativeXValue', None),
-            'shadow': as_dict.pop('shadow', None),
-            'soft_threshold': as_dict.pop('softThreshold', None),
-            'stacking': as_dict.pop('stacking', None),
-            'step': as_dict.pop('step', None),
-            'zone_axis': as_dict.pop('zoneAxis', None),
-            'zones': as_dict.pop('zones', None),
+            'animation_limit': as_dict.get('animationLimit', None),
+            'boost_blending': as_dict.get('boostBlending', None),
+            'boost_threshold': as_dict.get('boostThreshold', None),
+            'color_axis': as_dict.get('colorAxis', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'color_key': as_dict.get('colorKey', None),
+            'connect_ends': as_dict.get('connectEnds', None),
+            'connect_nulls': as_dict.get('connectNulls', None),
+            'crisp': as_dict.get('crisp', None),
+            'crop_threshold': as_dict.get('cropThreshold', None),
+            'data_sorting': as_dict.get('dataSorting', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
+            'get_extremes_for_all': as_dict.get('getExtremesForAll', None),
+            'linecap': as_dict.get('linecap', None),
+            'line_width': as_dict.get('lineWidth', None),
+            'negative_color': as_dict.get('negativeColor', None),
+            'point_interval': as_dict.get('pointInterval', None),
+            'point_interval_unit': as_dict.get('pointIntervalUnit', None),
+            'point_placement': as_dict.get('pointPlacement', None),
+            'point_start': as_dict.get('pointStart', None),
+            'relative_x_value': as_dict.get('relativeXValue', None),
+            'shadow': as_dict.get('shadow', None),
+            'soft_threshold': as_dict.get('softThreshold', None),
+            'stacking': as_dict.get('stacking', None),
+            'step': as_dict.get('step', None),
+            'zone_axis': as_dict.get('zoneAxis', None),
+            'zones': as_dict.get('zones', None),
 
-            'border_color': as_dict.pop('borderColor', None),
-            'border_radius': as_dict.pop('borderRadius', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'center_in_category': as_dict.pop('centerInCategory', None),
-            'color_by_point': as_dict.pop('colorByPoint', None),
-            'colors': as_dict.pop('colors', None),
-            'grouping': as_dict.pop('grouping', None),
-            'group_padding': as_dict.pop('groupPadding', None),
-            'max_point_width': as_dict.pop('maxPointWidth', None),
-            'min_point_length': as_dict.pop('minPointLength', None),
-            'point_padding': as_dict.pop('pointPadding', None),
-            'point_range': as_dict.pop('pointRange', None),
-            'point_width': as_dict.pop('pointWidth', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'center_in_category': as_dict.get('centerInCategory', None),
+            'color_by_point': as_dict.get('colorByPoint', None),
+            'colors': as_dict.get('colors', None),
+            'grouping': as_dict.get('grouping', None),
+            'group_padding': as_dict.get('groupPadding', None),
+            'max_point_width': as_dict.get('maxPointWidth', None),
+            'min_point_length': as_dict.get('minPointLength', None),
+            'point_padding': as_dict.get('pointPadding', None),
+            'point_range': as_dict.get('pointRange', None),
+            'point_width': as_dict.get('pointWidth', None),
 
-            'depth': as_dict.pop('depth', None),
-            'edge_color': as_dict.pop('edgeColor', None),
-            'edge_width': as_dict.pop('edgeWidth', None),
-            'group_z_padding': as_dict.pop('groupZPadding', None),
+            'depth': as_dict.get('depth', None),
+            'edge_color': as_dict.get('edgeColor', None),
+            'edge_width': as_dict.get('edgeWidth', None),
+            'group_z_padding': as_dict.get('groupZPadding', None),
 
-            'line_color': as_dict.pop('lineColor', None),
-            'up_color': as_dict.pop('upColor', None)
+            'line_color': as_dict.get('lineColor', None),
+            'up_color': as_dict.get('upColor', None)
          }
 
         return kwargs
@@ -856,7 +850,7 @@ class WaterfallOptions(ColumnOptions):
             'lineColor': self.line_color,
             'upColor': self.up_color
         }
-        parent_as_dict = super(self)._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
@@ -884,11 +878,11 @@ class WindBarbOptions(BarOptions):
         self._x_offset = None
         self._y_offset = None
 
-        self.data_grouping = kwargs.pop('data_grouping', None)
-        self.on_series = kwargs.pop('on_series', None)
-        self.vector_length = kwargs.pop('vector_length', None)
-        self.x_offset = kwargs.pop('x_offset', None)
-        self.y_offset = kwargs.pop('y_offset', None)
+        self.data_grouping = kwargs.get('data_grouping', None)
+        self.on_series = kwargs.get('on_series', None)
+        self.vector_length = kwargs.get('vector_length', None)
+        self.x_offset = kwargs.get('x_offset', None)
+        self.y_offset = kwargs.get('y_offset', None)
 
         super().__init__(**kwargs)
 
@@ -979,91 +973,92 @@ class WindBarbOptions(BarOptions):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
-            'animation_limit': as_dict.pop('animationLimit', None),
-            'boost_blending': as_dict.pop('boostBlending', None),
-            'boost_threshold': as_dict.pop('boostThreshold', None),
-            'color_axis': as_dict.pop('colorAxis', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'color_key': as_dict.pop('colorKey', None),
-            'connect_ends': as_dict.pop('connectEnds', None),
-            'connect_nulls': as_dict.pop('connectNulls', None),
-            'crisp': as_dict.pop('crisp', None),
-            'crop_threshold': as_dict.pop('cropThreshold', None),
-            'data_sorting': as_dict.pop('dataSorting', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'find_nearest_point_by': as_dict.pop('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.pop('getExtremesForAll', None),
-            'linecap': as_dict.pop('linecap', None),
-            'line_width': as_dict.pop('lineWidth', None),
-            'negative_color': as_dict.pop('negativeColor', None),
-            'point_interval': as_dict.pop('pointInterval', None),
-            'point_interval_unit': as_dict.pop('pointIntervalUnit', None),
-            'point_placement': as_dict.pop('pointPlacement', None),
-            'point_start': as_dict.pop('pointStart', None),
-            'relative_x_value': as_dict.pop('relativeXValue', None),
-            'shadow': as_dict.pop('shadow', None),
-            'soft_threshold': as_dict.pop('softThreshold', None),
-            'stacking': as_dict.pop('stacking', None),
-            'step': as_dict.pop('step', None),
-            'zone_axis': as_dict.pop('zoneAxis', None),
-            'zones': as_dict.pop('zones', None),
+            'animation_limit': as_dict.get('animationLimit', None),
+            'boost_blending': as_dict.get('boostBlending', None),
+            'boost_threshold': as_dict.get('boostThreshold', None),
+            'color_axis': as_dict.get('colorAxis', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'color_key': as_dict.get('colorKey', None),
+            'connect_ends': as_dict.get('connectEnds', None),
+            'connect_nulls': as_dict.get('connectNulls', None),
+            'crisp': as_dict.get('crisp', None),
+            'crop_threshold': as_dict.get('cropThreshold', None),
+            'data_sorting': as_dict.get('dataSorting', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
+            'get_extremes_for_all': as_dict.get('getExtremesForAll', None),
+            'linecap': as_dict.get('linecap', None),
+            'line_width': as_dict.get('lineWidth', None),
+            'negative_color': as_dict.get('negativeColor', None),
+            'point_interval': as_dict.get('pointInterval', None),
+            'point_interval_unit': as_dict.get('pointIntervalUnit', None),
+            'point_placement': as_dict.get('pointPlacement', None),
+            'point_start': as_dict.get('pointStart', None),
+            'relative_x_value': as_dict.get('relativeXValue', None),
+            'shadow': as_dict.get('shadow', None),
+            'soft_threshold': as_dict.get('softThreshold', None),
+            'stacking': as_dict.get('stacking', None),
+            'step': as_dict.get('step', None),
+            'zone_axis': as_dict.get('zoneAxis', None),
+            'zones': as_dict.get('zones', None),
 
-            'border_color': as_dict.pop('borderColor', None),
-            'border_radius': as_dict.pop('borderRadius', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'center_in_category': as_dict.pop('centerInCategory', None),
-            'color_by_point': as_dict.pop('colorByPoint', None),
-            'colors': as_dict.pop('colors', None),
-            'grouping': as_dict.pop('grouping', None),
-            'group_padding': as_dict.pop('groupPadding', None),
-            'max_point_width': as_dict.pop('maxPointWidth', None),
-            'min_point_length': as_dict.pop('minPointLength', None),
-            'point_padding': as_dict.pop('pointPadding', None),
-            'point_range': as_dict.pop('pointRange', None),
-            'point_width': as_dict.pop('pointWidth', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'center_in_category': as_dict.get('centerInCategory', None),
+            'color_by_point': as_dict.get('colorByPoint', None),
+            'colors': as_dict.get('colors', None),
+            'grouping': as_dict.get('grouping', None),
+            'group_padding': as_dict.get('groupPadding', None),
+            'max_point_width': as_dict.get('maxPointWidth', None),
+            'min_point_length': as_dict.get('minPointLength', None),
+            'point_padding': as_dict.get('pointPadding', None),
+            'point_range': as_dict.get('pointRange', None),
+            'point_width': as_dict.get('pointWidth', None),
 
-            'depth': as_dict.pop('depth', None),
-            'edge_color': as_dict.pop('edgeColor', None),
-            'edge_width': as_dict.pop('edgeWidth', None),
-            'group_z_padding': as_dict.pop('groupZPadding', None),
+            'depth': as_dict.get('depth', None),
+            'edge_color': as_dict.get('edgeColor', None),
+            'edge_width': as_dict.get('edgeWidth', None),
+            'group_z_padding': as_dict.get('groupZPadding', None),
 
-            'data_grouping': as_dict.pop('dataGrouping', None),
-            'on_series': as_dict.pop('onSeries', None),
-            'vector_length': as_dict.pop('vectorLength', None),
-            'x_offset': as_dict.pop('xOffset', None),
-            'y_offset': as_dict.pop('yOffset', None)
+            'data_grouping': as_dict.get('dataGrouping', None),
+            'on_series': as_dict.get('onSeries', None),
+            'vector_length': as_dict.get('vectorLength', None),
+            'x_offset': as_dict.get('xOffset', None),
+            'y_offset': as_dict.get('yOffset', None)
          }
 
         return kwargs
@@ -1076,7 +1071,7 @@ class WindBarbOptions(BarOptions):
             'xOffset': self.x_offset,
             'yOffset': self.y_offset,
         }
-        parent_as_dict = super(self)._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
@@ -1110,8 +1105,8 @@ class XRangeOptions(BaseBarOptions):
         self._group_z_padding = None
         self._partial_fill = None
 
-        self.group_z_padding = kwargs.pop('group_z_padding', None)
-        self.partial_fill = kwargs.pop('partial_fill', None)
+        self.group_z_padding = kwargs.get('group_z_padding', None)
+        self.partial_fill = kwargs.get('partial_fill', None)
 
         super().__init__(**kwargs)
 
@@ -1150,83 +1145,84 @@ class XRangeOptions(BaseBarOptions):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
-            'animation_limit': as_dict.pop('animationLimit', None),
-            'boost_blending': as_dict.pop('boostBlending', None),
-            'boost_threshold': as_dict.pop('boostThreshold', None),
-            'color_axis': as_dict.pop('colorAxis', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'color_key': as_dict.pop('colorKey', None),
-            'connect_ends': as_dict.pop('connectEnds', None),
-            'connect_nulls': as_dict.pop('connectNulls', None),
-            'crisp': as_dict.pop('crisp', None),
-            'crop_threshold': as_dict.pop('cropThreshold', None),
-            'data_sorting': as_dict.pop('dataSorting', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'find_nearest_point_by': as_dict.pop('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.pop('getExtremesForAll', None),
-            'linecap': as_dict.pop('linecap', None),
-            'line_width': as_dict.pop('lineWidth', None),
-            'negative_color': as_dict.pop('negativeColor', None),
-            'point_interval': as_dict.pop('pointInterval', None),
-            'point_interval_unit': as_dict.pop('pointIntervalUnit', None),
-            'point_placement': as_dict.pop('pointPlacement', None),
-            'point_start': as_dict.pop('pointStart', None),
-            'relative_x_value': as_dict.pop('relativeXValue', None),
-            'shadow': as_dict.pop('shadow', None),
-            'soft_threshold': as_dict.pop('softThreshold', None),
-            'stacking': as_dict.pop('stacking', None),
-            'step': as_dict.pop('step', None),
-            'zone_axis': as_dict.pop('zoneAxis', None),
-            'zones': as_dict.pop('zones', None),
+            'animation_limit': as_dict.get('animationLimit', None),
+            'boost_blending': as_dict.get('boostBlending', None),
+            'boost_threshold': as_dict.get('boostThreshold', None),
+            'color_axis': as_dict.get('colorAxis', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'color_key': as_dict.get('colorKey', None),
+            'connect_ends': as_dict.get('connectEnds', None),
+            'connect_nulls': as_dict.get('connectNulls', None),
+            'crisp': as_dict.get('crisp', None),
+            'crop_threshold': as_dict.get('cropThreshold', None),
+            'data_sorting': as_dict.get('dataSorting', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
+            'get_extremes_for_all': as_dict.get('getExtremesForAll', None),
+            'linecap': as_dict.get('linecap', None),
+            'line_width': as_dict.get('lineWidth', None),
+            'negative_color': as_dict.get('negativeColor', None),
+            'point_interval': as_dict.get('pointInterval', None),
+            'point_interval_unit': as_dict.get('pointIntervalUnit', None),
+            'point_placement': as_dict.get('pointPlacement', None),
+            'point_start': as_dict.get('pointStart', None),
+            'relative_x_value': as_dict.get('relativeXValue', None),
+            'shadow': as_dict.get('shadow', None),
+            'soft_threshold': as_dict.get('softThreshold', None),
+            'stacking': as_dict.get('stacking', None),
+            'step': as_dict.get('step', None),
+            'zone_axis': as_dict.get('zoneAxis', None),
+            'zones': as_dict.get('zones', None),
 
-            'border_color': as_dict.pop('borderColor', None),
-            'border_radius': as_dict.pop('borderRadius', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'center_in_category': as_dict.pop('centerInCategory', None),
-            'color_by_point': as_dict.pop('colorByPoint', None),
-            'colors': as_dict.pop('colors', None),
-            'grouping': as_dict.pop('grouping', None),
-            'group_padding': as_dict.pop('groupPadding', None),
-            'max_point_width': as_dict.pop('maxPointWidth', None),
-            'min_point_length': as_dict.pop('minPointLength', None),
-            'point_padding': as_dict.pop('pointPadding', None),
-            'point_range': as_dict.pop('pointRange', None),
-            'point_width': as_dict.pop('pointWidth', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'center_in_category': as_dict.get('centerInCategory', None),
+            'color_by_point': as_dict.get('colorByPoint', None),
+            'colors': as_dict.get('colors', None),
+            'grouping': as_dict.get('grouping', None),
+            'group_padding': as_dict.get('groupPadding', None),
+            'max_point_width': as_dict.get('maxPointWidth', None),
+            'min_point_length': as_dict.get('minPointLength', None),
+            'point_padding': as_dict.get('pointPadding', None),
+            'point_range': as_dict.get('pointRange', None),
+            'point_width': as_dict.get('pointWidth', None),
 
-            'group_z_padding': as_dict.pop('groupZPadding', None),
-            'partial_fill': as_dict.pop('partialFill', None)
+            'group_z_padding': as_dict.get('groupZPadding', None),
+            'partial_fill': as_dict.get('partialFill', None)
          }
 
         return kwargs
@@ -1236,7 +1232,7 @@ class XRangeOptions(BaseBarOptions):
             'groupZPadding': self.group_z_padding,
             'partialFill': self.partial_fill
         }
-        parent_as_dict = super(self)._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
