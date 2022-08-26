@@ -760,6 +760,8 @@ class HighLowDragDropOptions(DragDropOptions):
 
     def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
+            'draggableHigh': self.draggable_high,
+            'draggableLow': self.draggable_low,
             'draggableX': self.draggable_x,
             'draggableY': self.draggable_y,
             'dragHandle': self.drag_handle,
@@ -772,10 +774,7 @@ class HighLowDragDropOptions(DragDropOptions):
             'dragSensitivity': self.drag_sensitivity,
             'groupBy': self.group_by,
             'guideBox': self.guide_box,
-            'liveRedraw': self.live_redraw,
-
-            'draggableHigh': self.draggable_high,
-            'draggableLow': self.draggable_low,
+            'liveRedraw': self.live_redraw
         }
 
         return untrimmed
