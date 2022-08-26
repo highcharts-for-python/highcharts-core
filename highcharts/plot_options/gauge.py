@@ -27,15 +27,15 @@ class DialOptions(HighchartsMeta):
         self._rear_length = None
         self._top_width = None
 
-        self.background_color = kwargs.pop('background_color', None)
-        self.base_length = kwargs.pop('base_length', None)
-        self.base_width = kwargs.pop('base_width', None)
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.path = kwargs.pop('path', None)
-        self.radius = kwargs.pop('radius', None)
-        self.rear_length = kwargs.pop('rear_length', None)
-        self.top_width = kwargs.pop('top_width', None)
+        self.background_color = kwargs.get('background_color', None)
+        self.base_length = kwargs.get('base_length', None)
+        self.base_width = kwargs.get('base_width', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.path = kwargs.get('path', None)
+        self.radius = kwargs.get('radius', None)
+        self.rear_length = kwargs.get('rear_length', None)
+        self.top_width = kwargs.get('top_width', None)
 
     @property
     def background_color(self) -> Optional[str | Gradient | Pattern]:
@@ -198,15 +198,15 @@ class DialOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'background_color': as_dict.pop('backgroundColor', None),
-            'base_length': as_dict.pop('baseLength', None),
-            'base_width': as_dict.pop('baseWidth', None),
-            'border_color': as_dict.pop('borderColor', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'path': as_dict.pop('path', None),
-            'radius': as_dict.pop('radius', None),
-            'rear_length': as_dict.pop('rearLength', None),
-            'top_width': as_dict.pop('topWidth', None)
+            'background_color': as_dict.get('backgroundColor', None),
+            'base_length': as_dict.get('baseLength', None),
+            'base_width': as_dict.get('baseWidth', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'path': as_dict.get('path', None),
+            'radius': as_dict.get('radius', None),
+            'rear_length': as_dict.get('rearLength', None),
+            'top_width': as_dict.get('topWidth', None)
         }
 
         return cls(**kwargs)
@@ -236,10 +236,10 @@ class PivotOptions(HighchartsMeta):
         self._border_width = None
         self._radius = None
 
-        self.background_color = kwargs.pop('background_color', None)
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.radius = kwargs.pop('radius', None)
+        self.background_color = kwargs.get('background_color', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.radius = kwargs.get('radius', None)
 
     @property
     def background_color(self) -> Optional[str | Gradient | Pattern]:
@@ -302,10 +302,10 @@ class PivotOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'background_color': as_dict.pop('backgroundColor', None),
-            'border_color': as_dict.pop('borderColor', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'radius': as_dict.pop('radius', None)
+            'background_color': as_dict.get('backgroundColor', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'radius': as_dict.get('radius', None)
         }
 
         return cls(**kwargs)
@@ -348,19 +348,19 @@ class GaugeOptions(GenericTypeOptions):
         self._shadow = None
         self._wrap = None
 
-        self.color_index = kwargs.pop('color_index', None)
-        self.crisp = kwargs.pop('crisp', None)
-        self.dial = kwargs.pop('dial', None)
-        self.linecap = kwargs.pop('linecap', None)
-        self.line_width = kwargs.pop('line_width', None)
-        self.overshoot = kwargs.pop('overshoot', None)
-        self.pivot = kwargs.pop('pivot', None)
-        self.point_interval = kwargs.pop('point_interval', None)
-        self.point_interval_unit = kwargs.pop('point_interval_unit', None)
-        self.point_start = kwargs.pop('point_start', None)
-        self.relative_x_value = kwargs.pop('relative_x_value', None)
-        self.shadow = kwargs.pop('shadow', None)
-        self.wrap = kwargs.pop('wrap', None)
+        self.color_index = kwargs.get('color_index', None)
+        self.crisp = kwargs.get('crisp', None)
+        self.dial = kwargs.get('dial', None)
+        self.linecap = kwargs.get('linecap', None)
+        self.line_width = kwargs.get('line_width', None)
+        self.overshoot = kwargs.get('overshoot', None)
+        self.pivot = kwargs.get('pivot', None)
+        self.point_interval = kwargs.get('point_interval', None)
+        self.point_interval_unit = kwargs.get('point_interval_unit', None)
+        self.point_start = kwargs.get('point_start', None)
+        self.relative_x_value = kwargs.get('relative_x_value', None)
+        self.shadow = kwargs.get('shadow', None)
+        self.wrap = kwargs.get('wrap', None)
 
         super().__init__(**kwargs)
 
@@ -643,53 +643,54 @@ class GaugeOptions(GenericTypeOptions):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'sticky_tracking': as_dict.pop('stickyTracking', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
-            'color_index': as_dict.pop('colorIndex', None),
-            'crisp': as_dict.pop('crisp', None),
-            'linecap': as_dict.pop('linecap', None),
-            'line_width': as_dict.pop('lineWidth', None),
-            'point_interval': as_dict.pop('pointInterval', None),
-            'point_interval_unit': as_dict.pop('pointIntervalUnit', None),
-            'point_placement': as_dict.pop('pointPlacement', None),
-            'relative_x_value': as_dict.pop('relativeXValue', None),
-            'shadow': as_dict.pop('shadow', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'crisp': as_dict.get('crisp', None),
+            'linecap': as_dict.get('linecap', None),
+            'line_width': as_dict.get('lineWidth', None),
+            'point_interval': as_dict.get('pointInterval', None),
+            'point_interval_unit': as_dict.get('pointIntervalUnit', None),
+            'point_placement': as_dict.get('pointPlacement', None),
+            'point_start': as_dict.get('pointStart', None),
+            'relative_x_value': as_dict.get('relativeXValue', None),
+            'shadow': as_dict.get('shadow', None),
 
-            'dial': as_dict.pop('dial', None),
-            'overshoot': as_dict.pop('overshoot', None),
-            'pivot': as_dict.pop('pivot', None),
-            'wrap': as_dict.pop('wrap', None)
+            'dial': as_dict.get('dial', None),
+            'overshoot': as_dict.get('overshoot', None),
+            'pivot': as_dict.get('pivot', None),
+            'wrap': as_dict.get('wrap', None)
         }
 
         return kwargs
@@ -736,10 +737,10 @@ class SolidGaugeOptions(SeriesOptions):
         self._radius = None
         self._rounded = None
 
-        self.inner_radius = kwargs.pop('inner_radius', None)
-        self.overshoot = kwargs.pop('overshoot', None)
-        self.radius = kwargs.pop('radius', None)
-        self.rounded = kwargs.pop('rounded', None)
+        self.inner_radius = kwargs.get('inner_radius', None)
+        self.overshoot = kwargs.get('overshoot', None)
+        self.radius = kwargs.get('radius', None)
+        self.rounded = kwargs.get('rounded', None)
 
         super().__init__(**kwargs)
 
@@ -760,8 +761,10 @@ class SolidGaugeOptions(SeriesOptions):
             try:
                 value = validators.string(value)
                 if '%' not in value:
-                    raise ValueError
-            except ValueError:
+                    raise errors.HighchartsValueError('inner_radius expects either a '
+                                                      'number or a percentage % string. '
+                                                      'No "%" character found.')
+            except TypeError:
                 value = validators.numeric(value, minimum = 0)
 
             self._inner_radius = value
@@ -803,8 +806,10 @@ class SolidGaugeOptions(SeriesOptions):
             try:
                 value = validators.string(value)
                 if '%' not in value:
-                    raise ValueError
-            except ValueError:
+                    raise errors.HighchartsValueError('radius expects either a number or '
+                                                      'a percentage string. No "%" '
+                                                      'character found.')
+            except TypeError:
                 value = validators.numeric(value, minimum = 0)
 
             self._radius = value
@@ -827,78 +832,79 @@ class SolidGaugeOptions(SeriesOptions):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
-            'animation_limit': as_dict.pop('animationLimit', None),
-            'boost_blending': as_dict.pop('boostBlending', None),
-            'boost_threshold': as_dict.pop('boostThreshold', None),
-            'color_axis': as_dict.pop('colorAxis', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'color_key': as_dict.pop('colorKey', None),
-            'connect_ends': as_dict.pop('connectEnds', None),
-            'connect_nulls': as_dict.pop('connectNulls', None),
-            'crisp': as_dict.pop('crisp', None),
-            'crop_threshold': as_dict.pop('cropThreshold', None),
-            'data_sorting': as_dict.pop('dataSorting', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'find_nearest_point_by': as_dict.pop('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.pop('getExtremesForAll', None),
-            'linecap': as_dict.pop('linecap', None),
-            'line_width': as_dict.pop('lineWidth', None),
-            'negative_color': as_dict.pop('negativeColor', None),
-            'point_interval': as_dict.pop('pointInterval', None),
-            'point_interval_unit': as_dict.pop('pointIntervalUnit', None),
-            'point_placement': as_dict.pop('pointPlacement', None),
-            'point_start': as_dict.pop('pointStart', None),
-            'relative_x_value': as_dict.pop('relativeXValue', None),
-            'shadow': as_dict.pop('shadow', None),
-            'soft_threshold': as_dict.pop('softThreshold', None),
-            'stacking': as_dict.pop('stacking', None),
-            'step': as_dict.pop('step', None),
-            'zone_axis': as_dict.pop('zoneAxis', None),
-            'zones': as_dict.pop('zones', None),
+            'animation_limit': as_dict.get('animationLimit', None),
+            'boost_blending': as_dict.get('boostBlending', None),
+            'boost_threshold': as_dict.get('boostThreshold', None),
+            'color_axis': as_dict.get('colorAxis', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'color_key': as_dict.get('colorKey', None),
+            'connect_ends': as_dict.get('connectEnds', None),
+            'connect_nulls': as_dict.get('connectNulls', None),
+            'crisp': as_dict.get('crisp', None),
+            'crop_threshold': as_dict.get('cropThreshold', None),
+            'data_sorting': as_dict.get('dataSorting', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
+            'get_extremes_for_all': as_dict.get('getExtremesForAll', None),
+            'linecap': as_dict.get('linecap', None),
+            'line_width': as_dict.get('lineWidth', None),
+            'negative_color': as_dict.get('negativeColor', None),
+            'point_interval': as_dict.get('pointInterval', None),
+            'point_interval_unit': as_dict.get('pointIntervalUnit', None),
+            'point_placement': as_dict.get('pointPlacement', None),
+            'point_start': as_dict.get('pointStart', None),
+            'relative_x_value': as_dict.get('relativeXValue', None),
+            'shadow': as_dict.get('shadow', None),
+            'soft_threshold': as_dict.get('softThreshold', None),
+            'stacking': as_dict.get('stacking', None),
+            'step': as_dict.get('step', None),
+            'zone_axis': as_dict.get('zoneAxis', None),
+            'zones': as_dict.get('zones', None),
 
-            'inner_radius': as_dict.pop('innerRadius', None),
-            'overshoot': as_dict.pop('overshoot', None),
-            'radius': as_dict.pop('radius', None),
-            'rounded': as_dict.pop('rounded', None)
+            'inner_radius': as_dict.get('innerRadius', None),
+            'overshoot': as_dict.get('overshoot', None),
+            'radius': as_dict.get('radius', None),
+            'rounded': as_dict.get('rounded', None)
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self) -> dict:
         untrimmed = {
-            'inner_radius': self.inner_radius,
+            'innerRadius': self.inner_radius,
             'overshoot': self.overshoot,
             'radius': self.radius,
             'rounded': self.rounded
