@@ -173,7 +173,7 @@ class BulletOptions(BarOptions):
 
         self.target_options = kwargs.pop('target_options', None)
 
-        super(self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     @property
     def drag_drop(self) -> Optional[BulletDragDropOptions]:
@@ -305,7 +305,7 @@ class BulletOptions(BarOptions):
         untrimmed = {
             'targetOptions': self.target_options
         }
-        parent_as_dict = super(self)._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]

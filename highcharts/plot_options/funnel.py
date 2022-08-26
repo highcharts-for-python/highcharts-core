@@ -36,7 +36,7 @@ class FunnelOptions(PieOptions):
         self.reversed = kwargs.pop('reversed', None)
         self.width = kwargs.pop('width', None)
 
-        super(self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     @property
     def height(self) -> Optional[str | int | float | Decimal]:

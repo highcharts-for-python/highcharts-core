@@ -44,7 +44,7 @@ class BubbleOptions(SeriesOptions):
         self.z_min = kwargs.pop('z_min', None)
         self.z_threshold = kwargs.pop('z_threshold', None)
 
-        super(self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     @property
     def display_negative(self) -> Optional[bool]:
@@ -321,7 +321,7 @@ class BubbleOptions(SeriesOptions):
             'z_min': self.z_min,
             'z_threshold': self.z_threshold
         }
-        parent_as_dict = super(self)._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]

@@ -701,7 +701,7 @@ class HighLowDragDropOptions(DragDropOptions):
         self.draggable_high = kwargs.get('draggable_high', None)
         self.draggable_low = kwargs.get('draggable_low', None)
 
-        super(self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     @property
     def draggable_high(self) -> Optional[bool]:
@@ -796,7 +796,7 @@ class BoxPlotDragDropOptions(HighLowDragDropOptions):
         self.draggable_q1 = kwargs.get('draggable_q1', None)
         self.draggable_q3 = kwargs.get('draggable_q3', None)
 
-        super(self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     @property
     def draggable_q1(self) -> Optional[bool]:
@@ -889,7 +889,7 @@ class BulletDragDropOptions(DragDropOptions):
 
         self.draggable_target = kwargs.get('draggable_target', None)
 
-        super(self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     @property
     def draggable_target(self) -> Optional[bool]:

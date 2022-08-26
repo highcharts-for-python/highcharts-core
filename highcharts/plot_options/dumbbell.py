@@ -93,7 +93,7 @@ class DumbbellOptions(GenericTypeOptions):
         self.zone_axis = kwargs.pop('zone_axis', None)
         self.zones = kwargs.pop('zones', None)
 
-        super(self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     @property
     def animation_limit(self) -> Optional[int | float | Decimal]:
@@ -864,7 +864,7 @@ class DumbbellOptions(GenericTypeOptions):
             'zoneAxis': self.zone_axis,
             'zones': self.zones
         }
-        parent_as_dict = super(self)._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]

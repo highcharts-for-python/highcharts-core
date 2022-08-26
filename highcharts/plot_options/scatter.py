@@ -122,7 +122,7 @@ class ScatterOptions(SeriesOptions):
         untrimmed = {
             'jitter': self.jitter
         }
-        parent_as_dict = super(self)._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]

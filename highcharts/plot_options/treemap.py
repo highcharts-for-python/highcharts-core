@@ -927,7 +927,7 @@ class TreemapOptions(GenericTypeOptions):
             'layoutStartingDirection': self.layout_starting_direction,
             'sortIndex': self.sort_index
         }
-        parent_as_dict = super(self)._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]

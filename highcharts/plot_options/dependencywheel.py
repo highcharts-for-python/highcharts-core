@@ -54,7 +54,7 @@ class DependencyWheelOptions(GenericTypeOptions):
         self.node_width = kwargs.pop('node_width', None)
         self.start_angle = kwargs.pop('start_angle', None)
 
-        super(self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     @property
     def border_color(self) -> Optional[str | Gradient | Pattern]:
@@ -381,7 +381,7 @@ class DependencyWheelOptions(GenericTypeOptions):
             'nodeWidth': self.node_width,
             'startAngle': self.start_angle
         }
-        parent_as_dict = super(self)._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]

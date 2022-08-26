@@ -52,7 +52,7 @@ class BoxPlotOptions(BarOptions):
         self.whisker_length = kwargs.pop('whisker_length', None)
         self.whisker_width = kwargs.pop('whisker_width', None)
 
-        super(self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     @property
     def box_dash_style(self) -> Optional[str]:
@@ -426,7 +426,7 @@ class BoxPlotOptions(BarOptions):
             'whiskerLength': self.whisker_length,
             'whiskerWidth': self.whisker_width
         }
-        parent_as_dict = super(self)._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]

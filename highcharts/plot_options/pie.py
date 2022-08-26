@@ -71,7 +71,7 @@ class PieOptions(GenericTypeOptions):
         self.start_angle = kwargs.pop('start_angle', None)
         self.thickness = kwargs.pop('thickness', None)
 
-        super(self).__init__(**kwargs)
+        super().__init__(**kwargs)
 
     @property
     def border_color(self) -> Optional[str | Gradient | Pattern]:
@@ -537,7 +537,7 @@ class PieOptions(GenericTypeOptions):
             'slicedOffset': self.sliced_offset,
             'startAngle': self.start_angle
         }
-        parent_as_dict = super(self)._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
@@ -752,7 +752,7 @@ class VariablePieOptions(PieOptions):
             'z_max': self.z_max,
             'z_min': self.z_min
         }
-        parent_as_dict = super(self)._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict()
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
