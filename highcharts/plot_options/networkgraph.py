@@ -32,20 +32,20 @@ class LayoutAlgorithm(HighchartsMeta):
         self._theta = None
         self._type = None
 
-        self.approximation = kwargs.pop('approximation', None)
-        self.attractive_force = kwargs.pop('attractive_force', None)
-        self.enable_simulation = kwargs.pop('enable_simulation', None)
-        self.friction = kwargs.pop('friction', None)
-        self.gravitational_constant = kwargs.pop('gravitational_constant', None)
-        self.initial_position_radius = kwargs.pop('initial_position_radius', None)
-        self.initial_positions = kwargs.pop('initial_positions', None)
-        self.integration = kwargs.pop('integration', None)
-        self.link_length = kwargs.pop('link_length', None)
-        self.max_iterations = kwargs.pop('max_iterations', None)
-        self.max_speed = kwargs.pop('max_speed', None)
-        self.repulsive_force = kwargs.pop('repulsive_force', None)
-        self.theta = kwargs.pop('theta', None)
-        self.type = kwargs.pop('type', None)
+        self.approximation = kwargs.get('approximation', None)
+        self.attractive_force = kwargs.get('attractive_force', None)
+        self.enable_simulation = kwargs.get('enable_simulation', None)
+        self.friction = kwargs.get('friction', None)
+        self.gravitational_constant = kwargs.get('gravitational_constant', None)
+        self.initial_position_radius = kwargs.get('initial_position_radius', None)
+        self.initial_positions = kwargs.get('initial_positions', None)
+        self.integration = kwargs.get('integration', None)
+        self.link_length = kwargs.get('link_length', None)
+        self.max_iterations = kwargs.get('max_iterations', None)
+        self.max_speed = kwargs.get('max_speed', None)
+        self.repulsive_force = kwargs.get('repulsive_force', None)
+        self.theta = kwargs.get('theta', None)
+        self.type = kwargs.get('type', None)
 
     @property
     def approximation(self) -> Optional[str]:
@@ -349,20 +349,20 @@ class LayoutAlgorithm(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'approximation': as_dict.pop('approximation', None),
-            'attractive_force': as_dict.pop('attractiveForce', None),
-            'enable_simulation': as_dict.pop('enableSimulation', None),
-            'friction': as_dict.pop('friction', None),
-            'gravitational_constant': as_dict.pop('gravitationalConstant', None),
-            'initial_position_radius': as_dict.pop('initialPositionRadius', None),
-            'initial_positions': as_dict.pop('initialPositions', None),
-            'integration': as_dict.pop('integration', None),
-            'link_length': as_dict.pop('linkLength', None),
-            'max_iterations': as_dict.pop('maxIterations', None),
-            'max_speed': as_dict.pop('maxSpeed', None),
-            'repulsive_force': as_dict.pop('repulsiveForce', None),
-            'theta': as_dict.pop('theta', None),
-            'type': as_dict.pop('type', None)
+            'approximation': as_dict.get('approximation', None),
+            'attractive_force': as_dict.get('attractiveForce', None),
+            'enable_simulation': as_dict.get('enableSimulation', None),
+            'friction': as_dict.get('friction', None),
+            'gravitational_constant': as_dict.get('gravitationalConstant', None),
+            'initial_position_radius': as_dict.get('initialPositionRadius', None),
+            'initial_positions': as_dict.get('initialPositions', None),
+            'integration': as_dict.get('integration', None),
+            'link_length': as_dict.get('linkLength', None),
+            'max_iterations': as_dict.get('maxIterations', None),
+            'max_speed': as_dict.get('maxSpeed', None),
+            'repulsive_force': as_dict.get('repulsiveForce', None),
+            'theta': as_dict.get('theta', None),
+            'type': as_dict.get('type', None)
         }
 
         return cls(**kwargs)
@@ -412,16 +412,18 @@ class NetworkGraphOptions(GenericTypeOptions):
         self._shadow = None
         self._zones = None
 
-        self.color_index = kwargs.pop('color_index', None)
-        self.crisp = kwargs.pop('crisp', None)
-        self.draggable = kwargs.pop('draggable', None)
-        self.find_nearest_point_by = kwargs.pop('find_nearest_point_by', None)
-        self.layout_algorithm = kwargs.pop('layout_algorithm', None)
-        self.line_width = kwargs.pop('line_width', None)
-        self.link = kwargs.pop('link', None)
-        self.relative_x_value = kwargs.pop('relative_x_value', None)
-        self.shadow = kwargs.pop('shadow', None)
-        self.zones = kwargs.pop('zones', None)
+        self.color_index = kwargs.get('color_index', None)
+        self.crisp = kwargs.get('crisp', None)
+        self.draggable = kwargs.get('draggable', None)
+        self.find_nearest_point_by = kwargs.get('find_nearest_point_by', None)
+        self.layout_algorithm = kwargs.get('layout_algorithm', None)
+        self.line_width = kwargs.get('line_width', None)
+        self.link = kwargs.get('link', None)
+        self.relative_x_value = kwargs.get('relative_x_value', None)
+        self.shadow = kwargs.get('shadow', None)
+        self.zones = kwargs.get('zones', None)
+
+        super().__init__(**kwargs)
 
     @property
     def color_index(self) -> Optional[int]:
@@ -613,49 +615,49 @@ class NetworkGraphOptions(GenericTypeOptions):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'sticky_tracking': as_dict.pop('sticky_tracking', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
-            'color_index': as_dict.pop('colorIndex', None),
-            'crisp': as_dict.pop('crisp', None),
-            'draggable': as_dict.pop('draggable', None),
-            'find_nearest_point_by': as_dict.pop('findNearestPointBy', None),
-            'layout_algorithm': as_dict.pop('layoutAlgorithm', None),
-            'line_width': as_dict.pop('lineWidth', None),
-            'link': as_dict.pop('link', None),
-            'relative_x_value': as_dict.pop('relativeXValue', None),
-            'shadow': as_dict.pop('shadow', None),
-            'zones': as_dict.pop('zones', None)
+            'color_index': as_dict.get('colorIndex', None),
+            'crisp': as_dict.get('crisp', None),
+            'draggable': as_dict.get('draggable', None),
+            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
+            'layout_algorithm': as_dict.get('layoutAlgorithm', None),
+            'line_width': as_dict.get('lineWidth', None),
+            'link': as_dict.get('link', None),
+            'relative_x_value': as_dict.get('relativeXValue', None),
+            'shadow': as_dict.get('shadow', None),
+            'zones': as_dict.get('zones', None)
         }
 
         return kwargs

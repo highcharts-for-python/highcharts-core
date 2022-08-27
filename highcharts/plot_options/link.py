@@ -14,9 +14,9 @@ class LinkOptions(HighchartsMeta):
         self._dash_style = None
         self._width = None
 
-        self.color = kwargs.pop('color', None)
-        self.dash_style = kwargs.pop('dash_style', None)
-        self.width = kwargs.pop('width', None)
+        self.color = kwargs.get('color', None)
+        self.dash_style = kwargs.get('dash_style', None)
+        self.width = kwargs.get('width', None)
 
     @property
     def color(self) -> Optional[str]:
@@ -58,9 +58,9 @@ class LinkOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'color': as_dict.pop('color', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'width': as_dict.pop('width', None)
+            'color': as_dict.get('color', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'width': as_dict.get('width', None)
         }
 
         return cls(**kwargs)
