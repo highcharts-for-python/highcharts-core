@@ -517,7 +517,7 @@ class PieOptions(GenericTypeOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'borderColor': self.border_color,
             'borderWidth': self.border_width,
@@ -538,7 +538,7 @@ class PieOptions(GenericTypeOptions):
             'startAngle': self.start_angle,
             'thickness': self.thickness
         }
-        parent_as_dict = super()._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
@@ -749,7 +749,7 @@ class VariablePieOptions(PieOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'maxPointSize': self.max_point_size,
             'minPointSize': self.min_point_size,
@@ -757,7 +757,7 @@ class VariablePieOptions(PieOptions):
             'zMax': self.z_max,
             'zMin': self.z_min
         }
-        parent_as_dict = super()._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]

@@ -362,7 +362,7 @@ class BaseBarOptions(SeriesOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'borderColor': self.border_color,
             'borderRadius': self.border_radius,
@@ -378,7 +378,7 @@ class BaseBarOptions(SeriesOptions):
             'pointRange': self.point_range,
             'pointWidth': self.point_width
         }
-        parent_as_dict = super()._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
@@ -554,14 +554,14 @@ class BarOptions(BaseBarOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'depth': self.depth,
             'edgeColor': self.edge_color,
             'edgeWidth': self.edge_width,
             'groupZPadding': self.group_z_padding
         }
-        parent_as_dict = super()._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
@@ -845,12 +845,12 @@ class WaterfallOptions(ColumnOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'lineColor': self.line_color,
             'upColor': self.up_color
         }
-        parent_as_dict = super()._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
@@ -1063,7 +1063,7 @@ class WindBarbOptions(BarOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'dataGrouping': self.data_grouping,
             'onSeries': self.on_series,
@@ -1071,7 +1071,7 @@ class WindBarbOptions(BarOptions):
             'xOffset': self.x_offset,
             'yOffset': self.y_offset,
         }
-        parent_as_dict = super()._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
@@ -1227,12 +1227,12 @@ class XRangeOptions(BaseBarOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'groupZPadding': self.group_z_padding,
             'partialFill': self.partial_fill
         }
-        parent_as_dict = super()._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]

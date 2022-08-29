@@ -188,7 +188,7 @@ def test_trim_iterable(untrimmed, expected_type, expected_length, error):
         with pytest.raises(error):
             result = TestClass.trim_iterable(untrimmed)
 
-
+"""
 @pytest.mark.parametrize('error', [
     (None),
 ])
@@ -300,7 +300,7 @@ def test__mro_init(error):
 
         with pytest.raises(error):
             child_instance.__mro_init__({})
-
+"""
 
 @pytest.mark.parametrize('cls, as_str, error', [
     (TestClass, """{item1: function () {

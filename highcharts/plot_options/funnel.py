@@ -229,7 +229,7 @@ class FunnelOptions(PieOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'height': self.height,
             'neckHeight': self.neck_height,
@@ -237,7 +237,7 @@ class FunnelOptions(PieOptions):
             'reversed': self.reversed,
             'width': self.width
         }
-        parent_as_dict = super()._to_untrimmed_dict()
+        parent_as_dict = self._untrimmed_ancestors(in_cls = in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
@@ -271,7 +271,7 @@ class Funnel3DOptions(FunnelOptions, ColumnOptions):
 
         self.gradient_for_sides = kwargs.get('gradient_for_sides', None)
 
-        self.__mro_init__(kwargs)
+        super().__init__(**kwargs)
 
     @property
     def gradient_for_sides(self) -> Optional[bool]:
@@ -303,11 +303,11 @@ class Funnel3DOptions(FunnelOptions, ColumnOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'gradientForSides': self.gradient_for_sides,
         }
-        parent_as_dict = self.__mro_to_untrimmed_dict__()
+        parent_as_dict = self._untrimmed_ancestors(in_cls = in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]

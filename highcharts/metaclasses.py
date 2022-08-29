@@ -17,7 +17,7 @@ import esprima
 from esprima.error_handler import Error as ParseError
 from validator_collection import validators, checkers, errors as validator_errors
 
-from highcharts import constants, errors
+from highcharts import constants, errors, utility_functions
 from highcharts.decorators import validate_types
 from highcharts.js_literal_functions import serialize_to_js_literal, assemble_js_literal,\
     get_key_value_pairs
@@ -42,7 +42,10 @@ class HighchartsMeta(ABC):
 
         """
         classes = [x for x in self.__class__.mro()
-                   if x.__name__ not in ['ABC', 'object', 'HighchartsMeta']]
+                   if x.__name__ not in [self.__class__.__name__,
+                                         'ABC',
+                                         'object',
+                                         'HighchartsMeta']]
 
         for item in classes:
             try:
@@ -59,30 +62,17 @@ class HighchartsMeta(ABC):
 
         return self_js_literal == other_js_literal
 
-    def __mro_to_untrimmed_dict__(self) -> dict:
+    def _untrimmed_ancestors(self, in_cls = None) -> dict:
         """Walk through the parent classes and consolidate the results of their
         :meth:`_to_untrimmed_dict() <HighchartsMeta._to_untrimmed_dict__>` methods into
         a single :class:`dict <python:dict>`.
 
         :rtype: :class:`dict <python:dict>`
         """
-        classes = [x for x in self.__class__.mro()
-                   if x.__name__ not in ['ABC', 'object', 'HighchartsMeta']]
-
-        consolidated = {}
-
-        for item in classes:
-            try:
-                parent_dict = super(item, self)._to_untrimmed_dict()
-            except NotImplementedError:
-                continue
-            for key in parent_dict:
-                consolidated[key] = parent_dict[key]
-
-        return consolidated
+        return utility_functions.mro__to_untrimmed_dict(self, in_cls = in_cls)
 
     @abstractmethod
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         """Generate the first-level of the :class:`dict <python:dict>` representation of
         the object.
 

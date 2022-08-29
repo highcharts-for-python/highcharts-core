@@ -14,7 +14,6 @@ class PyramidOptions(FunnelOptions):
     """
     pass
 
-
 class Pyramid3DOptions(Funnel3DOptions):
     """General options to apply to all Pyramid 3D series types.
 
@@ -26,4 +25,5 @@ class Pyramid3DOptions(Funnel3DOptions):
       :align: center
 
     """
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
