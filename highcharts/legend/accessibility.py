@@ -31,7 +31,7 @@ class LegendKeyboardNavigation(HighchartsMeta):
     def from_dict(cls, as_dict):
         return cls(enabled = as_dict.get('enabled', None))
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
             'enabled': self.enabled
         }
@@ -91,7 +91,7 @@ class LegendAccessibilityOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'enabled': self.enabled,
             'keyboardNavigation': self.keyboard_navigation

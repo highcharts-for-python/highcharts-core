@@ -158,7 +158,7 @@ class PieSeries(SeriesBase, PieOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = mro_to_dict(self)
 
         return untrimmed
@@ -295,7 +295,7 @@ class VariablePieSeries(PieSeries):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'max_point_size': self.max_point_size,
             'min_point_size': self.min_point_size,

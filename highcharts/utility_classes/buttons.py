@@ -67,7 +67,7 @@ class ButtonTheme(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'fill': self.fill,
             'stroke': self.stroke
@@ -158,7 +158,7 @@ class ButtonConfiguration(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'enabled': self.enabled,
             'text': self.text,
@@ -357,7 +357,7 @@ class ContextButtonConfiguration(ButtonConfiguration):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'className': self.class_name,
             'enabled': self.enabled,

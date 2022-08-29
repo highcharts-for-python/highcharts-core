@@ -67,7 +67,7 @@ class ExportDataLanguageOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'annotationHeader': self.annotation_header,
             'categoryDatetimeHeader': self.category_datetime_header,

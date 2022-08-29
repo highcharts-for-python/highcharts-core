@@ -185,7 +185,7 @@ class NodeOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'color': self.color,
             'colorIndex': self.color_index,
@@ -300,7 +300,7 @@ class ArcDiagramData(DataBase):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -488,7 +488,7 @@ class ArcDiagramSeries(SeriesBase, ArcDiagramOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'linkWeight': self.link_weight,
             'nodes': self.nodes,

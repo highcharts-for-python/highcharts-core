@@ -1649,7 +1649,7 @@ class PlotOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'arcdiagram': self.arcdiagram,
             'area': self.area,

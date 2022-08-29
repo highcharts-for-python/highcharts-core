@@ -237,7 +237,7 @@ class FunnelOptions(PieOptions):
             'reversed': self.reversed,
             'width': self.width
         }
-        parent_as_dict = self._untrimmed_ancestors(in_cls = in_cls)
+        parent_as_dict = self._untrimmed_mro_ancestors(in_cls = in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
@@ -307,7 +307,7 @@ class Funnel3DOptions(FunnelOptions, ColumnOptions):
         untrimmed = {
             'gradientForSides': self.gradient_for_sides,
         }
-        parent_as_dict = self._untrimmed_ancestors(in_cls = in_cls)
+        parent_as_dict = self._untrimmed_mro_ancestors(in_cls = in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]

@@ -153,7 +153,7 @@ class CrosshairOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'className': self.class_name,
             'color': self.color,

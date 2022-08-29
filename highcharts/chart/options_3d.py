@@ -94,7 +94,7 @@ class PanelOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
             'color': self.color,
             'size': self.size,
@@ -266,7 +266,7 @@ class Frame(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
             'back': self.back,
             'bottom': self.bottom,
@@ -453,7 +453,7 @@ class Options3D(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'alpha': self.alpha,
             'axisLabelPosition': self.axis_label_position,

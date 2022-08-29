@@ -118,7 +118,7 @@ class Binding(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'className': self.class_name,
             'init': self.init,
@@ -282,7 +282,7 @@ class Bindings(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'circleAnnotation': self.circle_annotation,
             'ellipseAnnotation': self.ellipse_annotation,

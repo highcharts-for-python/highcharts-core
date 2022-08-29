@@ -182,7 +182,7 @@ class BubbleLegendLabelOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'align': self.align,
             'allowOverlap': self.allow_overlap,
@@ -285,7 +285,7 @@ class BubbleLegendRange(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'borderColor': self.border_color,
             'color': self.color,
@@ -667,7 +667,7 @@ class BubbleLegend(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'borderColor': self.border_color,
             'borderWidth': self.border_width,

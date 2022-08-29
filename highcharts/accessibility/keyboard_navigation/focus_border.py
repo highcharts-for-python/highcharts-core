@@ -73,7 +73,7 @@ class FocusBorderStyle(HighchartsMeta):
         }
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'borderRadius': self.border_radius,
             'color': self.color,
@@ -176,7 +176,7 @@ class FocusBorder(HighchartsMeta):
         }
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'enabled': self.enabled,
             'hideBrowserFocusOutline': self.hide_browser_focus_outline,

@@ -211,7 +211,7 @@ class AccessibilityPoint(HighchartsMeta):
         }
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'dateFormat': self.date_format,
             'dateFormatter': self.date_formatter,

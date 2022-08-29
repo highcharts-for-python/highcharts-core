@@ -147,7 +147,7 @@ class BoostDebug(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
             'showSkipSummary': self.show_skip_summary,
             'timeBufferCopy': self.time_buffer_copy,
@@ -361,7 +361,7 @@ class Boost(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'allowForce': self.allow_force,
             'debug': self.debug,

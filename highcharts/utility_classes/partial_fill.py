@@ -42,7 +42,7 @@ class PartialFillOptions(HighchartsMeta):
             'fill': as_dict.pop('fill', None)
         })
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
             'fill': self.fill
         }

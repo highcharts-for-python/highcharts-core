@@ -159,7 +159,7 @@ class HandleOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'backgroundColor': self.background_color,
             'borderColor': self.border_color,
@@ -489,7 +489,7 @@ class Navigator(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'adaptToUpdatedData': self.adapt_to_updated_data,
             'enabled': self.enabled,

@@ -235,7 +235,7 @@ class DataBase(HighchartsMeta):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,

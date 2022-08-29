@@ -55,7 +55,7 @@ class Separator(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'style': self.style,
             'text': self.text
@@ -344,7 +344,7 @@ class BreadcrumbOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'buttonSpacing': self.button_spacing,
             'buttonTheme': self.button_theme,

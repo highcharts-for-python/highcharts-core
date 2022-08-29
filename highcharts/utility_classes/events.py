@@ -297,7 +297,7 @@ class ChartEvents(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'addSeries': self.add_series,
             'afterPrint': self.after_print,
@@ -361,7 +361,7 @@ class BreadcrumbEvents(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'click': self.click
         }
@@ -448,7 +448,7 @@ class NavigationEvents(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'closePopup': self.close_popup,
             'deselectButton': self.deselect_button,
@@ -676,7 +676,7 @@ class PointEvents(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'click': self.click,
             'drag': self.drag,
@@ -862,7 +862,7 @@ class SeriesEvents(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'afterAnimate': self.after_animate,
             'checkboxClick': self.checkbox_click,
@@ -907,7 +907,7 @@ class ClusterEvents(HighchartsMeta):
     def from_dict(cls, as_dict):
         return cls(drill_to_cluster = as_dict.get('drillToCluster', None))
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'drillToCluster': self.drill_to_cluster
         }
@@ -1034,7 +1034,7 @@ class AxisEvents(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'afterBreaks': self.after_breaks,
             'afterSetExtremes': self.after_set_extremes,
@@ -1129,7 +1129,7 @@ class MouseEvents(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'click': self.click,
             'mousemove': self.mousemove,

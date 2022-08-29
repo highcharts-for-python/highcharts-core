@@ -91,7 +91,7 @@ class LinearGradient(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'x1': self.x1,
             'x2': self.x2,
@@ -171,7 +171,7 @@ class RadialGradient(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'cx': self.cx,
             'cy': self.cy,
@@ -265,7 +265,7 @@ class Gradient(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'linearGradient': self.linear_gradient,
             'radialGradient': self.radial_gradient,

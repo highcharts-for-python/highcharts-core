@@ -419,7 +419,7 @@ class BoxPlotOptions(BarOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'boxDashStyle': self.box_dash_style,
             'medianColor': self.median_color,

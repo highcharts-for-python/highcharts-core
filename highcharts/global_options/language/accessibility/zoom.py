@@ -67,7 +67,7 @@ class ZoomLanguageOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'mapZoomIn': self.map_zoom_in,
             'mapZoomOut': self.map_zoom_out,

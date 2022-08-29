@@ -188,7 +188,7 @@ class DragHandle(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'className': self.class_name,
             'color': self.color,
@@ -360,7 +360,7 @@ class GuideBoxOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'className': self.class_name,
             'color': self.color,
@@ -400,7 +400,7 @@ class GuideBox(HighchartsMeta):
             'default': as_dict.get('default', None)
         })
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'default': self.default
         }
@@ -670,7 +670,7 @@ class DragDropOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'draggableX': self.draggable_x,
             'draggableY': self.draggable_y,
@@ -758,7 +758,7 @@ class HighLowDragDropOptions(DragDropOptions):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'draggableHigh': self.draggable_high,
             'draggableLow': self.draggable_low,
@@ -854,7 +854,7 @@ class BoxPlotDragDropOptions(HighLowDragDropOptions):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'draggableX': self.draggable_x,
             'draggableY': self.draggable_y,
@@ -928,7 +928,7 @@ class BulletDragDropOptions(DragDropOptions):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'draggableX': self.draggable_x,
             'draggableY': self.draggable_y,

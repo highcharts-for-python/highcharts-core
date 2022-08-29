@@ -135,7 +135,7 @@ class ASTNode(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'attributes': self.attributes,
             'children': self.children,
@@ -218,7 +218,7 @@ class TextPath(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'attributes': self.attributes,
             'enabled': self.enabled

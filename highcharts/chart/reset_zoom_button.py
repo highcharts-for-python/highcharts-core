@@ -91,7 +91,7 @@ class ResetZoomButtonOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'position': self.position,
             'relativeTo': self.relative_to,

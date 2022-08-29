@@ -178,7 +178,7 @@ class VectorOptions(SeriesOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'cluster': self.cluster,
             'rotationOrigin': self.rotation_origin,

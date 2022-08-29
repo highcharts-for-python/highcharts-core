@@ -62,7 +62,7 @@ class Jitter(HighchartsMeta):
             'y': as_dict.pop('y', None)
         })
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
             'x': self.x,
             'y': self.y

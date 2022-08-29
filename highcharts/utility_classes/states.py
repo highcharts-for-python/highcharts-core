@@ -123,7 +123,7 @@ class HoverState(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'animation': self.animation,
             'borderColor': self.border_color,
@@ -197,7 +197,7 @@ class InactiveState(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'animation': self.animation,
             'enabled': self.enabled,
@@ -241,7 +241,7 @@ class NormalState(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'animation': self.animation
         }
@@ -332,7 +332,7 @@ class SelectState(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'animation': self.animation,
             'borderColor': self.border_color,
@@ -432,7 +432,7 @@ class States(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'hover': self.hover,
             'inactive': self.inactive,

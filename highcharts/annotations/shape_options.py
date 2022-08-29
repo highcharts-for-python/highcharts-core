@@ -302,7 +302,7 @@ class ShapeOptions(HighchartsMeta):
         }
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'dashStyle': self.dash_style,
             'fill': self.fill,
@@ -477,7 +477,7 @@ class AnnotationShape(ShapeOptions):
         }
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'markerEnd': self.marker_end,
             'markerStart': self.marker_start,

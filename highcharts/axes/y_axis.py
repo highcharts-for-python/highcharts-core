@@ -257,7 +257,7 @@ class YAxis(XAxis):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'maxColor': self.max_color,
             'minColor': self.min_color,

@@ -302,7 +302,7 @@ class ArcDiagramOptions(GenericTypeOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'borderColor': self.border_color,
             'borderWidth': self.border_width,

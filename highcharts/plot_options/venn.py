@@ -331,7 +331,7 @@ class VennOptions(GenericTypeOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'animation_limit': self.animation_limit,
             'color_axis': self.color_axis,

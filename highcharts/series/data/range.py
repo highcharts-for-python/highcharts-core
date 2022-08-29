@@ -244,7 +244,7 @@ class RangeData(DataBase):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -366,7 +366,7 @@ class ConnectedRangeData(RangeData):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'connectorColor': self.connector_color,
             'connectorWidth': self.connector_width,

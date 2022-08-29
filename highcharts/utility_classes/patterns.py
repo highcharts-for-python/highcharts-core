@@ -257,7 +257,7 @@ class PatternOptions(HighchartsMeta):
         }
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'aspectRatio': self.aspect_ratio,
             'backgroundColor': self.background_color,
@@ -345,7 +345,7 @@ class Pattern(HighchartsMeta):
         }
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'animation': self.animation,
             'pattern': self.pattern_options,

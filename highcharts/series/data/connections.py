@@ -108,7 +108,7 @@ class ConnectionBase(DataBase):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -239,7 +239,7 @@ class ConnectionData(ConnectionBase):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'dataLabels': self.data_labels,
             'dragDrop': self.drag_drop,
@@ -339,7 +339,7 @@ class WeightedConnectionData(ConnectionBase):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -455,7 +455,7 @@ class OutgoingWeightedConnectionData(ConnectionBase):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'outgoing': self.outgoing
         }

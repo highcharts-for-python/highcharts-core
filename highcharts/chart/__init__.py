@@ -92,7 +92,7 @@ class PanningOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
             'enabled': self.enabled,
             'type': self.type
@@ -1482,7 +1482,7 @@ class ChartOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'alignThresholds': self.align_thresholds,
             'alignTicks': self.align_ticks,

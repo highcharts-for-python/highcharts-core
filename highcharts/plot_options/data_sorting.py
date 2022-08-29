@@ -77,7 +77,7 @@ class DataSorting(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'enabled': self.enabled,
             'matchByName': self.match_by_name,

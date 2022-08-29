@@ -66,7 +66,7 @@ class CreditStyleOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'color': self.color,
             'cursor': self.cursor,
@@ -181,7 +181,7 @@ class Credits(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'enabled': self.enabled,
             'href': self.href,

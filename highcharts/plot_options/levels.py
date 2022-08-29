@@ -92,7 +92,7 @@ class BaseLevelOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'borderColor': self.border_color,
             'borderWidth': self.border_width,
@@ -180,7 +180,7 @@ class LevelOptions(BaseLevelOptions):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'colorByPoint': self.color_by_point,
             'dataLabels': self.data_labels,
@@ -239,7 +239,7 @@ class ColorVariation(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'key': self.key,
             'to': self.to
@@ -313,7 +313,7 @@ class LevelSize(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'unit': self.unit,
             'value': self.value
@@ -433,7 +433,7 @@ class SunburstLevelOptions(BaseLevelOptions):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'borderDashStyle': self.border_dash_style,
             'color': self.color,
@@ -603,7 +603,7 @@ class TreemapLevelOptions(BaseLevelOptions):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'borderDashStyle': self.border_dash_style,
             'color': self.color,

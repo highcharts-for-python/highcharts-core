@@ -168,7 +168,7 @@ class AxisLanguageOptions(HighchartsMeta):
         }
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'rangeCategories': self.range_categories,
             'rangeFromTo': self.range_from_to,

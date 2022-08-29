@@ -211,7 +211,7 @@ class DialOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'backgroundColor': self.background_color,
             'baseLength': self.base_length,
@@ -310,7 +310,7 @@ class PivotOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'backgroundColor': self.background_color,
             'borderColor': self.border_color,
@@ -695,7 +695,7 @@ class GaugeOptions(GenericTypeOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'colorIndex': self.color_index,
             'crisp': self.crisp,
@@ -902,7 +902,7 @@ class SolidGaugeOptions(SeriesOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'innerRadius': self.inner_radius,
             'overshoot': self.overshoot,

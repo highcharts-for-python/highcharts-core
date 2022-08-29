@@ -231,7 +231,7 @@ class ScreenReaderSection(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'afterChartFormat': self.after_chart_format,
             'afterChartFormatter': self.after_chart_formatter,

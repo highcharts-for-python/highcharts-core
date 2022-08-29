@@ -130,7 +130,7 @@ class Condition(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'callback': self.callback,
             'maxHeight': self.max_height,
@@ -201,7 +201,7 @@ class ResponsiveRules(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'chartOptions': self.chart_options,
             'condition': self.condition
@@ -248,7 +248,7 @@ class Responsive(HighchartsMeta):
             'rules': as_dict.pop('rules', None)
         })
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'rules': self.rules
         }

@@ -158,7 +158,7 @@ class SeriesTypeDescriptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'arearange': self.arearange,
             'areasplinerange': self.areasplinerange,
@@ -601,7 +601,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'bar': self.bar,
             'barCombination': self.bar_combination,
@@ -771,7 +771,7 @@ class SeriesLanguageOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'description': self.description,
             'nullPointValue': self.null_point_value,

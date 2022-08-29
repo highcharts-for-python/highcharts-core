@@ -529,7 +529,7 @@ class AxisLabelOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'align': self.align,
             'allowOverlap': self.allow_overlap,
@@ -775,7 +775,7 @@ class PlotBandLabel(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'align': self.align,
             'rotation': self.rotation,
@@ -838,7 +838,7 @@ class PlotLineLabel(PlotBandLabel):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'align': self.align,
             'formatter': self.formatter,

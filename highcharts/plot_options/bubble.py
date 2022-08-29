@@ -312,7 +312,7 @@ class BubbleOptions(SeriesOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'displayNegative': self.display_negative,
             'jitter': self.jitter,

@@ -62,7 +62,7 @@ class HighchartsMeta(ABC):
 
         return self_js_literal == other_js_literal
 
-    def _untrimmed_ancestors(self, in_cls = None) -> dict:
+    def _untrimmed_mro_ancestors(self, in_cls = None) -> dict:
         """Walk through the parent classes and consolidate the results of their
         :meth:`_to_untrimmed_dict() <HighchartsMeta._to_untrimmed_dict__>` methods into
         a single :class:`dict <python:dict>`.
@@ -471,7 +471,7 @@ class JavaScriptDict(UserDict):
 
         return cls.from_dict(as_dict)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return self.data
 
     def to_dict(self):

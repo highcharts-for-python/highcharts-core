@@ -187,7 +187,7 @@ class BaseBarSeries(SeriesBase, BaseBarOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = mro_to_dict(self)
 
         return untrimmed
@@ -310,7 +310,7 @@ class BarSeries(BaseBarSeries, BarOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = mro_to_dict(self)
 
         return untrimmed
@@ -867,7 +867,7 @@ class WaterfallSeries(ColumnSeries, WaterfallOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = mro_to_dict(self)
 
         return untrimmed
@@ -1068,7 +1068,7 @@ class WindBarbSeries(BarSeries, WindBarbOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = mro_to_dict(self)
 
         return untrimmed
@@ -1219,7 +1219,7 @@ class XRangeSeries(BaseBarSeries, XRangeOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = mro_to_dict(self)
 
         return untrimmed

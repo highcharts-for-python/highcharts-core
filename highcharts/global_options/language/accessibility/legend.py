@@ -63,7 +63,7 @@ class LegendLanguageOptions(HighchartsMeta):
         }
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'legendItem': self.legend_item,
             'legendLabel': self.legend_label,

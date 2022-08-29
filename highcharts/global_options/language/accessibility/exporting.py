@@ -49,7 +49,7 @@ class ExportingLanguageOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'chartMenuLabel': self.chart_menu_label,
             'menuButtonLabel': self.menu_button_label

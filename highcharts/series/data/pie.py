@@ -72,7 +72,7 @@ class PieData(SinglePointData):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'sliced': self.sliced,
         }
@@ -183,7 +183,7 @@ class VariablePieData(PieData):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'z': self.z,
         }

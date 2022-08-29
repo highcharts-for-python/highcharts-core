@@ -56,7 +56,7 @@ class CSVAnnotationOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'itemDelimiter': self.item_delimiter,
             'join': self.join
@@ -228,7 +228,7 @@ class ExportingCSV(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'annotations': self.annotations,
             'columnHeaderFormatter': self.column_header_formatter,

@@ -360,7 +360,7 @@ class Accessibility(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'announceNewData': self.announce_new_data,
             'customComponents': self.custom_components,

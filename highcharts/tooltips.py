@@ -886,7 +886,7 @@ class Tooltip(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'animation': self.animation,
             'backgroundColor': self.background_color,

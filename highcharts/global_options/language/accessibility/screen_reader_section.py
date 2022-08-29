@@ -85,7 +85,7 @@ class ScreenReaderSectionAnnotationLanguage(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'descriptionMultiplePoints': self.description_multiple_points,
             'descriptionNoPoints': self.description_no_points,
@@ -174,7 +174,7 @@ class ScreenReaderSectionLanguageOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'afterRegionLabel': self.after_region_label,
             'annotations': self.annotations,

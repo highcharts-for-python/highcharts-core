@@ -209,7 +209,7 @@ class PlotBand(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'borderColor': self.border_color,
             'borderWidth': self.border_width,
@@ -393,7 +393,7 @@ class PlotLine(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'className': self.class_name,
             'color': self.color,

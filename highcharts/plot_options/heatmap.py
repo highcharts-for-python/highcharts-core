@@ -184,7 +184,7 @@ class HeatmapOptions(SeriesOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'borderRadius': self.border_radius,
             'colsize': self.colsize,
@@ -338,7 +338,7 @@ class TilemapOptions(HeatmapOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'tileShape': self.tile_shape
         }

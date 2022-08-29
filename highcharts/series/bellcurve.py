@@ -156,7 +156,7 @@ class BellCurveSeries(AreaSeries, BellCurveOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'baseSeries': self.base_series
         }

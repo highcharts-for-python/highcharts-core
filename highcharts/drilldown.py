@@ -176,7 +176,7 @@ class Drilldown(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'activeAxisLabelStyle': self.active_axis_label_style,
             'activeDataLabelStyle': self.active_data_label_style,

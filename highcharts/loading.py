@@ -100,7 +100,7 @@ class Loading(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'hideDuration': self.hide_duration,
             'labelStyle': self.label_style,

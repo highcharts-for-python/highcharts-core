@@ -180,7 +180,7 @@ class NodeOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'color': self.color,
             'colorIndex': self.color_index,
@@ -273,7 +273,7 @@ class DependencyWheelNodeOptions(NodeOptions):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'column': self.column,
             'level': self.level,
@@ -391,7 +391,7 @@ class OrganizationNodeOptions(DependencyWheelNodeOptions):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'image': self.image,
             'layout': self.layout,

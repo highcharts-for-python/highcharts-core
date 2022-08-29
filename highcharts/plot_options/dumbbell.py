@@ -830,7 +830,7 @@ class DumbbellOptions(GenericTypeOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'animationLimit': self.animation_limit,
             'colorAxis': self.color_axis,

@@ -177,7 +177,7 @@ class PaneBackground(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'backgroundColor': self.background_color,
             'borderColor': self.border_color,
@@ -345,7 +345,7 @@ class Pane(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'background': self.background,
             'center': self.center,

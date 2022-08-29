@@ -89,7 +89,7 @@ class ConnectorOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'dashstyle': self.dashstyle,
             'stroke': self.stroke,
@@ -166,7 +166,7 @@ class OnPointOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'connectorOptions': self.connector_options,
             'id': self.id,
@@ -205,7 +205,7 @@ class Point(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'events': self.events
         }

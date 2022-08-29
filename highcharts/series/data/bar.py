@@ -157,7 +157,7 @@ class BarData(CartesianData):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'borderColor': self.border_color,
             'borderWidth': self.border_width,
@@ -265,7 +265,7 @@ class WaterfallData(CartesianData):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'isIntermediateSum': self.is_intermediate_sum,
             'isSum': self.is_sum,
@@ -408,7 +408,7 @@ class WindBarbData(CartesianData):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'direction': self.direction,
             'value': self.value,
@@ -584,7 +584,7 @@ class XRangeData(CartesianData):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'partialFill': self.partial_fill,
             'x2': self.x2,

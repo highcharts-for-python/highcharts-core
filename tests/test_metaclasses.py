@@ -27,7 +27,7 @@ class TestClass(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
             'item1': self.item1,
             'item2': self.item2
@@ -218,7 +218,7 @@ def test__mro_init(error):
         def item2(self, value):
             self._item2 = value
 
-        def _to_untrimmed_dict(self) -> dict:
+        def _to_untrimmed_dict(self, in_cls = None) -> dict:
             return {
                 'item1': self.item1,
                 'item2': self.item2
@@ -252,7 +252,7 @@ def test__mro_init(error):
         def item4(self, value):
             self._item4 = value
 
-        def _to_untrimmed_dict(self) -> dict:
+        def _to_untrimmed_dict(self, in_cls = None) -> dict:
             return {
                 'item3': self.item3,
                 'item4': self.item4

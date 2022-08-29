@@ -330,7 +330,7 @@ class TimelineOptions(GenericTypeOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'colorAxis': self.color_axis,
             'colorByPoint': self.color_by_point,

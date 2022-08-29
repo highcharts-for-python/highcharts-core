@@ -153,7 +153,7 @@ class AccessibilitySeries(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'describeSingleSeries': self.describe_single_series,
             'descriptionFormat': self.description_format,

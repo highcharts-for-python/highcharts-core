@@ -730,7 +730,7 @@ class Data(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'beforeParse': self.before_parse,
             'columns': self.columns,

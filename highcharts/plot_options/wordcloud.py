@@ -81,7 +81,7 @@ class RotationOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'from': self.from_,
             'orientations': self.orientations,
@@ -541,7 +541,7 @@ class WordcloudOptions(GenericTypeOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             # Copied from SeriesOptions
             'animationLimit': self.animation_limit,

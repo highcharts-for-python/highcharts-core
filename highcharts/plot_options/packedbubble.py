@@ -39,7 +39,7 @@ class ParentNodeOptions(HighchartsMeta):
             'allow_point_select': as_dict.get('allowPointSelect', None)
         })
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
             'allowPointSelect': self.allow_point_select
         }
@@ -320,7 +320,7 @@ class PackedBubbleOptions(NetworkGraphOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'displayNegative': self.display_negative,
             'maxSize': self.max_size,

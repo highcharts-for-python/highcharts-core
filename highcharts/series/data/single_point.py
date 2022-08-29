@@ -105,7 +105,7 @@ class SinglePointBase(DataBase):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -220,7 +220,7 @@ class SinglePointData(SinglePointBase):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -336,7 +336,7 @@ class SingleValueData(SinglePointBase):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -452,7 +452,7 @@ class SingleXData(SinglePointBase):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -566,7 +566,7 @@ class LabeledSingleXData(SinglePointBase):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
@@ -700,7 +700,7 @@ class ConnectedSingleXData(SingleXData):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,

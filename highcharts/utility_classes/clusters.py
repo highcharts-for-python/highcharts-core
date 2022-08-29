@@ -205,7 +205,7 @@ class VectorLayoutAlgorithm(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'distance': self.distance,
             'gridSize': self.grid_size,
@@ -445,7 +445,7 @@ class ClusterOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'allowOverlap': self.allow_overlap,
             'animation': self.animation,

@@ -367,7 +367,7 @@ class LayoutAlgorithm(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'approximation': self.approximation,
             'attractiveForce': self.attractive_force,
@@ -662,7 +662,7 @@ class NetworkGraphOptions(GenericTypeOptions):
 
         return kwargs
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'colorIndex': self.color_index,
             'crisp': self.crisp,

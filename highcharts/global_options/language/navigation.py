@@ -1483,7 +1483,7 @@ class PopupLanguageOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'addButton': self.add_button,
             'algorithm': self.algorithm,
@@ -1619,7 +1619,7 @@ class NavigationLanguageOptions(HighchartsMeta):
     def from_dict(cls, as_dict):
         return cls(popup = as_dict.get('popup', None))
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
             'popup': self.popup
         }

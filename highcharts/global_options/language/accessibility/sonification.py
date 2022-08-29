@@ -60,7 +60,7 @@ class SonificationLanguageOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'playAsSoundButtonText': self.play_as_sound_button_text,
             'playAsSoundClickAnnouncement': self.play_as_sound_click_announcement

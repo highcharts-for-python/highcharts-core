@@ -115,7 +115,7 @@ class AnnounceNewDataLanguageOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'newDataAnnounce': self.new_data_announce,
             'newPointAnnounceMultiple': self.new_point_announce_multiple,

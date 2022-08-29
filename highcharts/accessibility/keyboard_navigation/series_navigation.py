@@ -126,7 +126,7 @@ class SeriesNavigation(HighchartsMeta):
         }
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'mode': self.mode,
             'pointNavigationEnabledThreshold': self.point_navigation_enabled_threshold,

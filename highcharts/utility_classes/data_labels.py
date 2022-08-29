@@ -90,7 +90,7 @@ class Filter(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
             'operator': self.operator,
             'property': self.property_,
@@ -867,7 +867,7 @@ class DataLabel(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'align': self.align,
             'allowOverlap': self.allow_overlap,
@@ -990,7 +990,7 @@ class NodeDataLabel(DataLabel):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'nodeFormat': self.node_format,
             'nodeFormatter': self.node_formatter,

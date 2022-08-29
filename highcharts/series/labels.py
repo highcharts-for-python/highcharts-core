@@ -82,7 +82,7 @@ class Box(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'bottom': self.bottom,
             'left': self.left,
@@ -315,7 +315,7 @@ class SeriesLabel(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'boxesToAvoid': self.boxes_to_avoid,
             'connectorAllowed': self.connector_allowed,

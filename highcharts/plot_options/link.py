@@ -65,7 +65,7 @@ class LinkOptions(HighchartsMeta):
 
         return cls(**kwargs)
 
-    def _to_untrimmed_dict(self) -> dict:
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'color': self.color,
             'dashStyle': self.dash_style,
