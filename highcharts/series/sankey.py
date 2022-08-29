@@ -35,7 +35,7 @@ class SankeySeries(DependencyWheelSeries, SankeyOptions):
     """
 
     def __init__(self, **kwargs):
-        self.__mro_init__(kwargs)
+        super().__init__(**kwargs)
 
     @property
     def data(self) -> Optional[List[OutgoingWeightedConnectionData]]:

@@ -31,28 +31,6 @@ class HighchartsMeta(ABC):
         for key in kwargs:
             setattr(self, key, kwargs.get(key, None))
 
-    def __mro_init__(self, kwargs) -> None:
-        """Work through the ``self``'s multiple parent classes, executing the appropriate
-        constructor (``__init__()``) method for each parent.
-
-        :param self: The object whose parent constructors will be executed.
-
-        :param kwargs: The keyword arguments to pass to the constructor.
-        :type kwargs: :class:`dict <python:dict>`
-
-        """
-        classes = [x for x in self.__class__.mro()
-                   if x.__name__ not in [self.__class__.__name__,
-                                         'ABC',
-                                         'object',
-                                         'HighchartsMeta']]
-
-        for item in classes:
-            try:
-                super(item, self).__init__(**kwargs)
-            except NotImplementedError:
-                continue
-
     def __eq__(self, other):
         if self.__class__ != other.__class__:
             return False

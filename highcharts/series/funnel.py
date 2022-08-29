@@ -23,7 +23,7 @@ class FunnelSeries(PieSeries, FunnelOptions):
     """
 
     def __init__(self, **kwargs):
-        self.__mro_init__(kwargs)
+        super().__init__(**kwargs)
 
     @property
     def data(self) -> Optional[List[SinglePointData]]:
@@ -178,7 +178,7 @@ class Funnel3DSeries(FunnelSeries, Funnel3DOptions):
     """
 
     def __init__(self, **kwargs):
-        self.__mro_init__(kwargs)
+        super().__init__(**kwargs)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

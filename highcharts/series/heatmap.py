@@ -23,7 +23,7 @@ class HeatmapSeries(SeriesBase, HeatmapOptions):
     """
 
     def __init__(self, **kwargs):
-        self.__mro_init__(kwargs)
+        super().__init__(**kwargs)
 
     @property
     def data(self) -> Optional[List[CartesianValueData]]:
@@ -222,7 +222,7 @@ class TilemapSeries(HeatmapSeries, TilemapOptions):
     """
 
     def __init__(self, **kwargs):
-        self.__mro_init__(kwargs)
+        super().__init__(**kwargs)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

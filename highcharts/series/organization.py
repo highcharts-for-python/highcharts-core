@@ -35,7 +35,7 @@ class OrganizationSeries(BarSeries, OrganizationOptions):
 
         self.nodes = kwargs.pop('nodes', None)
 
-        self.__mro_init__(kwargs)
+        super().__init__(**kwargs)
 
     @property
     def data(self) -> Optional[List[OrganizationData]]:

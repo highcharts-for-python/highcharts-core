@@ -24,7 +24,7 @@ class HistogramSeries(BarSeries, HistogramOptions):
 
         self.base_series = kwargs.pop('base_series', None)
 
-        self.__mro_init__(kwargs)
+        super().__init__(**kwargs)
 
     @property
     def base_series(self) -> Optional[int | str]:
