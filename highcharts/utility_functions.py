@@ -36,6 +36,72 @@ def mro_to_dict(obj):
     return as_dict
 
 
+def get_remaining_mro(cls,
+                      in_cls = None,
+                      method = '_to_untrimmed_dict'):
+    """Retrieve the remaining classes that should be processed for ``method`` when
+    traversing ``cls``.
+
+    :param cls: The class whose ancestors are being traversed.
+    :type cls: :class:`HighchartsMeta`
+
+    :param in_cls: The class that the traversal currently finds itself in. Defaults to
+      :obj:`None <python:None>`
+    :type in_cls: ``type`` or :obj:`None <python:None>`
+
+    :param method: The method to search for in the MRO. Defaults to
+      ``'_to_untrimmed_dict'``.
+    :type method: :class:`str <python:str>`
+
+    :returns: List of classes that have ``method`` that occur *after* ``in_cls`` in
+      the MRO for ``cls``.
+    :rtype: :class:`list <python:list>` of ``type`` objects
+    """
+    mro = [x for x in cls.mro()
+           if hasattr(x, method) and x.__name__ != 'HighchartsMeta']
+    if in_cls is None:
+        return mro[1:]
+    else:
+        index = mro.index(in_cls)
+        return mro[(index + 1):]
+
+
+def mro__to_untrimmed_dict(obj, in_cls = None):
+    """Traverse the ancestor classes of ``obj`` and execute their ``_to_untrimmed_dict()``
+    methods.
+
+    :param obj: The object to be traversed.
+    :type obj: :class:`HighchartsMeta`
+
+    :param in_cls: The class from which ``mro__to_untrimmed_dict()`` was called.
+    :type in_cls: ``type`` or :obj:`None <python:None>`
+
+    :returns: Collection of untrimmed :class:`dict <python:dict>` representations in the
+      same order as the MRO.
+    :rtype: :class:`list <python:list>` of :class:`dict <python:dict>`
+
+    for each class in the MRO, execute _to_untrimmed_dict()
+    do not repeat for each class
+    """
+    cls = obj.__class__
+    remaining_mro = get_remaining_mro(cls,
+                                      in_cls = in_cls,
+                                      method = '_to_untrimmed_dict')
+
+    ancestor_dicts = []
+    for x in remaining_mro:
+        if hasattr(x, '_to_untrimmed_dict') and x != cls:
+            ancestor_dicts.append(x._to_untrimmed_dict(obj,
+                                                       in_cls = x))
+
+    consolidated = {}
+    for item in ancestor_dicts:
+        for key in item:
+            consolidated[key] = item[key]
+
+    return consolidated
+
+
 def validate_color(value):
     """Validate that ``value`` is either a :class:`Gradient`, :class:`Pattern`, or a
     :class:`str <python:str>`.
