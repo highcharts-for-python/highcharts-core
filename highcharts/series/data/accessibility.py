@@ -12,8 +12,8 @@ class DataPointAccessibility(HighchartsMeta):
         self._description = None
         self._enabled = None
 
-        self.description = kwargs.pop('description', None)
-        self.enabled = kwargs.pop('enabled', None)
+        self.description = kwargs.get('description', None)
+        self.enabled = kwargs.get('enabled', None)
 
     @property
     def description(self) -> Optional[str]:
@@ -45,8 +45,8 @@ class DataPointAccessibility(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'description': as_dict.pop('description', None),
-            'enabled': as_dict.pop('enabled', None),
+            'description': as_dict.get('description', None),
+            'enabled': as_dict.get('enabled', None),
         }
 
         return cls(**kwargs)

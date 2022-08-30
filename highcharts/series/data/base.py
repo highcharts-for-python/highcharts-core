@@ -3,9 +3,9 @@ from decimal import Decimal
 
 from validator_collection import validators
 
-from highcharts import errors
+from highcharts import errors, utility_functions
 from highcharts.decorators import class_sensitive
-from highcharts.metaclasses import HighchartsMeta
+from highcharts.metaclasses import HighchartsMeta, JavaScriptDict
 from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
 from highcharts.utility_classes.events import PointEvents
@@ -28,17 +28,17 @@ class DataBase(HighchartsMeta):
         self._name = None
         self._selected = None
 
-        self.accessibility = kwargs.pop('accessibility', None)
-        self.class_name = kwargs.pop('class_name', None)
-        self.color = kwargs.pop('color', None)
-        self.color_index = kwargs.pop('color_index', None)
-        self.custom = kwargs.pop('custom', None)
-        self.description = kwargs.pop('description', None)
-        self.events = kwargs.pop('events', None)
-        self.id = kwargs.pop('id', None)
-        self.label_rank = kwargs.pop('label_rank', None)
-        self.name = kwargs.pop('name', None)
-        self.selected = kwargs.pop('selected', None)
+        self.accessibility = kwargs.get('accessibility', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.color = kwargs.get('color', None)
+        self.color_index = kwargs.get('color_index', None)
+        self.custom = kwargs.get('custom', None)
+        self.description = kwargs.get('description', None)
+        self.events = kwargs.get('events', None)
+        self.id = kwargs.get('id', None)
+        self.label_rank = kwargs.get('label_rank', None)
+        self.name = kwargs.get('name', None)
+        self.selected = kwargs.get('selected', None)
 
     @property
     def accessibility(self) -> Optional[DataPointAccessibility]:
@@ -76,7 +76,6 @@ class DataBase(HighchartsMeta):
 
     @color.setter
     def color(self, value):
-        from highcharts import utility_functions
         self._color = utility_functions.validate_color(value)
 
     @property
@@ -96,7 +95,7 @@ class DataBase(HighchartsMeta):
                                                minimum = 0)
 
     @property
-    def custom(self) -> Optional[dict]:
+    def custom(self) -> Optional[JavaScriptDict]:
         """A reserved subspace to store options and values for customized functionality.
 
         Here you can add additional data for your own event callbacks and formatter
@@ -107,8 +106,9 @@ class DataBase(HighchartsMeta):
         return self._custom
 
     @custom.setter
+    @class_sensitive(JavaScriptDict)
     def custom(self, value):
-        self._custom = validators.dict(value, allow_empty = True) or {}
+        self._custom = value
 
     @property
     def description(self) -> Optional[str]:
@@ -220,17 +220,17 @@ class DataBase(HighchartsMeta):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelRank', None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
         }
 
         return kwargs
@@ -245,7 +245,7 @@ class DataBase(HighchartsMeta):
             'description': self.description,
             'events': self.events,
             'id': self.id,
-            'labelrank': self.label_rank,
+            'labelRank': self.label_rank,
             'name': self.name,
             'selected': self.selected,
         }
