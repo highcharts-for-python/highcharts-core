@@ -47,17 +47,17 @@ class VennOptions(GenericTypeOptions):
         self._brighten = None
         self._cluster = None
 
-        self.animation_limit = kwargs.pop('animation_limit', None)
-        self.color_axis = kwargs.pop('color_axis', None)
-        self.color_index = kwargs.pop('color_index', None)
-        self.color_key = kwargs.pop('color_key', None)
-        self.crisp = kwargs.pop('crisp', None)
-        self.relative_x_value = kwargs.pop('relative_x_value', None)
-        self.step = kwargs.pop('step', None)
+        self.animation_limit = kwargs.get('animation_limit', None)
+        self.color_axis = kwargs.get('color_axis', None)
+        self.color_index = kwargs.get('color_index', None)
+        self.color_key = kwargs.get('color_key', None)
+        self.crisp = kwargs.get('crisp', None)
+        self.relative_x_value = kwargs.get('relative_x_value', None)
+        self.step = kwargs.get('step', None)
 
-        self.border_dash_style = kwargs.pop('border_dash_style', None)
-        self.brighten = kwargs.pop('brighten', None)
-        self.cluster = kwargs.pop('cluster', None)
+        self.border_dash_style = kwargs.get('border_dash_style', None)
+        self.brighten = kwargs.get('brighten', None)
+        self.cluster = kwargs.get('cluster', None)
 
         super().__init__(**kwargs)
 
@@ -283,67 +283,66 @@ class VennOptions(GenericTypeOptions):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'sticky_tracking': as_dict.pop('stickyTracking', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
-            'animation_limit': as_dict.pop('animationLimit', None),
-            'color_axis': as_dict.pop('colorAxis', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'color_key': as_dict.pop('colorKey', None),
-            'crisp': as_dict.pop('crisp', None),
-            'relative_x_value': as_dict.pop('relativeXValue', None),
-            'step': as_dict.pop('step', None),
+            'animation_limit': as_dict.get('animationLimit', None),
+            'color_axis': as_dict.get('colorAxis', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'color_key': as_dict.get('colorKey', None),
+            'crisp': as_dict.get('crisp', None),
+            'relative_x_value': as_dict.get('relativeXValue', None),
+            'step': as_dict.get('step', None),
 
-            'border_dash_style': as_dict.pop('borderDashStyle', None),
-            'brighten': as_dict.pop('brighten', None),
-            'cluster': as_dict.pop('cluster', None)
+            'border_dash_style': as_dict.get('borderDashStyle', None),
+            'brighten': as_dict.get('brighten', None),
+            'cluster': as_dict.get('cluster', None)
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
-            'animation_limit': self.animation_limit,
-            'color_axis': self.color_axis,
-            'color_index': self.color_index,
-            'color_key': self.color_key,
-            'crisp': self.crisp,
-            'relative_x_value': self.relative_x_value,
-            'step': self.step,
-
-            'border_dash_style': self.border_dash_style,
+            'animationLimit': self.animation_limit,
+            'borderDashStyle': self.border_dash_style,
             'brighten': self.brighten,
-            'cluster': self.cluster
+            'cluster': self.cluster,
+            'colorAxis': self.color_axis,
+            'colorIndex': self.color_index,
+            'colorKey': self.color_key,
+            'crisp': self.crisp,
+            'relativeXValue': self.relative_x_value,
+            'step': self.step
         }
 
         parent_as_dict = super()._to_untrimmed_dict() or {}
