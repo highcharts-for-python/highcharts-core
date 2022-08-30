@@ -27,13 +27,13 @@ class RangeData(DataBase):
         self._marker = None
         self._x = None
 
-        self.data_labels = kwargs.pop('data_labels', None)
-        self.drag_drop = kwargs.pop('drag_drop', None)
-        self.drilldown = kwargs.pop('drilldown', None)
-        self.high = kwargs.pop('high', None)
-        self.low = kwargs.pop('low', None)
-        self.marker = kwargs.pop('marker', None)
-        self.x = kwargs.pop('x', None)
+        self.data_labels = kwargs.get('data_labels', None)
+        self.drag_drop = kwargs.get('drag_drop', None)
+        self.drilldown = kwargs.get('drilldown', None)
+        self.high = kwargs.get('high', None)
+        self.low = kwargs.get('low', None)
+        self.marker = kwargs.get('marker', None)
+        self.x = kwargs.get('x', None)
 
         super().__init__(**kwargs)
 
@@ -221,31 +221,41 @@ class RangeData(DataBase):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelrank',
+                                      None) or as_dict.get('labelRank',
+                                                           None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'drilldown': as_dict.pop('drilldown', None),
-            'high': as_dict.pop('high', None),
-            'low': as_dict.pop('low', None),
-            'marker': as_dict.pop('marker', None),
-            'x': as_dict.pop('x', None)
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'drilldown': as_dict.get('drilldown', None),
+            'high': as_dict.get('high', None),
+            'low': as_dict.get('low', None),
+            'marker': as_dict.get('marker', None),
+            'x': as_dict.get('x', None)
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
+            'dataLabels': self.data_labels,
+            'dragDrop': self.drag_drop,
+            'drilldown': self.drilldown,
+            'high': self.high,
+            'low': self.low,
+            'marker': self.marker,
+            'x': self.x,
+
             'accessibility': self.accessibility,
             'className': self.class_name,
             'color': self.color,
@@ -257,14 +267,6 @@ class RangeData(DataBase):
             'labelrank': self.label_rank,
             'name': self.name,
             'selected': self.selected,
-
-            'dataLabels': self.data_labels,
-            'dragDrop': self.drag_drop,
-            'drilldown': self.drilldown,
-            'high': self.high,
-            'low': self.low,
-            'marker': self.marker,
-            'x': self.x,
         }
 
         return untrimmed
@@ -278,9 +280,9 @@ class ConnectedRangeData(RangeData):
         self._connector_width = None
         self._low_color = None
 
-        self.connector_color = kwargs.pop('connector_color', None)
-        self.connector_width = kwargs.pop('connector_width', None)
-        self.low_color = kwargs.pop('low_color', None)
+        self.connector_color = kwargs.get('connector_color', None)
+        self.connector_width = kwargs.get('connector_width', None)
+        self.low_color = kwargs.get('low_color', None)
 
         super().__init__(**kwargs)
 
@@ -339,29 +341,31 @@ class ConnectedRangeData(RangeData):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelRank',
+                                      None) or as_dict.get('labelrank',
+                                                           None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'drilldown': as_dict.pop('drilldown', None),
-            'high': as_dict.pop('high', None),
-            'low': as_dict.pop('low', None),
-            'marker': as_dict.pop('marker', None),
-            'x': as_dict.pop('x', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'drilldown': as_dict.get('drilldown', None),
+            'high': as_dict.get('high', None),
+            'low': as_dict.get('low', None),
+            'marker': as_dict.get('marker', None),
+            'x': as_dict.get('x', None),
 
-            'connector_color': as_dict.pop('connectorColor', None),
-            'connector_width': as_dict.pop('connectorWidth', None),
-            'low_color': as_dict.pop('lowColor', None),
+            'connector_color': as_dict.get('connectorColor', None),
+            'connector_width': as_dict.get('connectorWidth', None),
+            'low_color': as_dict.get('lowColor', None),
         }
 
         return kwargs
