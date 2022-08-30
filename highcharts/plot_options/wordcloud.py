@@ -3,8 +3,8 @@ from decimal import Decimal
 
 from validator_collection import validators
 
-from highcharts import errors
-from highcharts.decorators import class_sensitive, validate_types
+from highcharts import errors, utility_functions
+from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.plot_options.generic import GenericTypeOptions
 from highcharts.utility_classes.gradients import Gradient
@@ -19,9 +19,9 @@ class RotationOptions(HighchartsMeta):
         self._orientations = None
         self._to = None
 
-        self.from_ = kwargs.pop('from_', None)
-        self.orientations = kwargs.pop('orientations', None)
-        self.to = kwargs.pop('to', None)
+        self.from_ = kwargs.get('from_', None)
+        self.orientations = kwargs.get('orientations', None)
+        self.to = kwargs.get('to', None)
 
     @property
     def from_(self) -> Optional[int | float | Decimal]:
@@ -74,9 +74,9 @@ class RotationOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'from_': as_dict.pop('from', None),
-            'orientations': as_dict.pop('orientations', None),
-            'to': as_dict.pop('to', None)
+            'from_': as_dict.get('from', None),
+            'orientations': as_dict.get('orientations', None),
+            'to': as_dict.get('to', None)
         }
 
         return cls(**kwargs)
@@ -128,27 +128,27 @@ class WordcloudOptions(GenericTypeOptions):
         self._spiral = None
 
         # Copied from SeriesOptions
-        self.animation_limit = kwargs.pop('animation_limit', None)
-        self.color_index = kwargs.pop('color_index', None)
-        self.color_key = kwargs.pop('color_key', None)
-        self.relative_x_value = kwargs.pop('relative_x_value', False)
+        self.animation_limit = kwargs.get('animation_limit', None)
+        self.color_index = kwargs.get('color_index', None)
+        self.color_key = kwargs.get('color_key', None)
+        self.relative_x_value = kwargs.get('relative_x_value', None)
 
         # Copied from BaseBarOptions
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_radius = kwargs.pop('border_radius', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.center_in_category = kwargs.pop('center_in_category', None)
-        self.color_by_point = kwargs.pop('color_by_point', None)
-        self.colors = kwargs.pop('colors', None)
-        self.edge_width = kwargs.pop('edge_width', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_radius = kwargs.get('border_radius', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.center_in_category = kwargs.get('center_in_category', None)
+        self.color_by_point = kwargs.get('color_by_point', None)
+        self.colors = kwargs.get('colors', None)
+        self.edge_width = kwargs.get('edge_width', None)
 
         # Native to WordcloudOptions
-        self.allow_extend_playing_field = kwargs.pop('allow_extend_playing_field', None)
-        self.max_font_size = kwargs.pop('max_font_size', None)
-        self.min_font_size = kwargs.pop('min_font_size', None)
-        self.placement_strategy = kwargs.pop('placement_strategy', None)
-        self.rotation = kwargs.pop('rotation', None)
-        self.spiral = kwargs.pop('spiral', None)
+        self.allow_extend_playing_field = kwargs.get('allow_extend_playing_field', None)
+        self.max_font_size = kwargs.get('max_font_size', None)
+        self.min_font_size = kwargs.get('min_font_size', None)
+        self.placement_strategy = kwargs.get('placement_strategy', None)
+        self.rotation = kwargs.get('rotation', None)
+        self.spiral = kwargs.get('spiral', None)
 
         super().__init__(**kwargs)
 
@@ -209,7 +209,6 @@ class WordcloudOptions(GenericTypeOptions):
 
     @border_color.setter
     def border_color(self, value):
-        from highcharts import utility_functions
         self._border_color = utility_functions.validate_color(value)
 
     @property
@@ -331,16 +330,8 @@ class WordcloudOptions(GenericTypeOptions):
             self._colors = None
         else:
             value = validators.iterable(value)
-            checked_values = []
-            for item in value:
-                if isinstance(value, str):
-                    checked_values.append(item)
-                else:
-                    processed_item = validate_types(item,
-                                                    types = (Gradient, Pattern))
-                    checked_values.append(processed_item)
 
-            self._colors = checked_values
+            self._colors = [utility_functions.validate_color(x) for x in value]
 
     @property
     def edge_width(self) -> Optional[int | float | Decimal]:
@@ -482,87 +473,82 @@ class WordcloudOptions(GenericTypeOptions):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'sticky_tracking': as_dict.pop('stickyTracking', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
             # Copied from SeriesOptions
-            'animation_limit': as_dict.pop('animationLimit', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'color_key': as_dict.pop('colorKey', None),
-            'relative_x_value': as_dict.pop('relativeXValue', None),
+            'animation_limit': as_dict.get('animationLimit', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'color_key': as_dict.get('colorKey', None),
+            'relative_x_value': as_dict.get('relativeXValue', None),
 
             # Copied from BaseBarOptions
-            'border_color': as_dict.pop('borderColor', None),
-            'border_radius': as_dict.pop('borderRadius', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'center_in_category': as_dict.pop('centerInCategory', None),
-            'color_by_point': as_dict.pop('colorByPoint', None),
-            'colors': as_dict.pop('colors', None),
-            'edge_width': as_dict.pop('edgeWidth', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'center_in_category': as_dict.get('centerInCategory', None),
+            'color_by_point': as_dict.get('colorByPoint', None),
+            'colors': as_dict.get('colors', None),
+            'edge_width': as_dict.get('edgeWidth', None),
 
             # Native to WordcloudOptions
-            'allow_extend_playing_field': as_dict.pop('allowExtendPlayingField', None),
-            'max_font_size': as_dict.pop('maxFontSize', None),
-            'min_font_size': as_dict.pop('minFontSize', None),
-            'placement_strategy': as_dict.pop('placementStrategy', None),
-            'rotation': as_dict.pop('rotation', None),
-            'spiral': as_dict.pop('spiral', None)
+            'allow_extend_playing_field': as_dict.get('allowExtendPlayingField', None),
+            'max_font_size': as_dict.get('maxFontSize', None),
+            'min_font_size': as_dict.get('minFontSize', None),
+            'placement_strategy': as_dict.get('placementStrategy', None),
+            'rotation': as_dict.get('rotation', None),
+            'spiral': as_dict.get('spiral', None)
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
-            # Copied from SeriesOptions
+            'allowExtendPlayingField': self.allow_extend_playing_field,
             'animationLimit': self.animation_limit,
-            'colorIndex': self.color_index,
-            'colorKey': self.color_key,
-            'relativeXValue': self.relative_x_value,
-
-            # Copied from BaseBarOptions
             'borderColor': self.border_color,
             'borderRadius': self.border_radius,
             'borderWidth': self.border_width,
             'centerInCategory': self.center_in_category,
             'colorByPoint': self.color_by_point,
+            'colorIndex': self.color_index,
+            'colorKey': self.color_key,
             'colors': self.colors,
             'edgeWidth': self.edge_width,
-
-            # Native to WordcloudOptions
-            'allowExtendPlayingField': self.allow_extend_playing_field,
             'maxFontSize': self.max_font_size,
             'minFontSize': self.min_font_size,
             'placementStrategy': self.placement_strategy,
+            'relativeXValue': self.relative_x_value,
             'rotation': self.rotation,
             'spiral': self.spiral
         }
