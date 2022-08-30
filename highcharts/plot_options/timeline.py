@@ -47,16 +47,16 @@ class TimelineOptions(GenericTypeOptions):
         self._relative_x_value = None
         self._shadow = None
 
-        self.color_axis = kwargs.pop('color_axis', None)
-        self.color_by_point = kwargs.pop('color_by_point', None)
-        self.color_index = kwargs.pop('color_index', None)
-        self.color_key = kwargs.pop('color_key', None)
-        self.crisp = kwargs.pop('crisp', True)
-        self.drag_drop = kwargs.pop('drag_drop', None)
-        self.ignore_hidden_point = kwargs.pop('ignore_hidden_point', None)
-        self.linecap = kwargs.pop('linecap', None)
-        self.relative_x_value = kwargs.pop('relative_x_value', None)
-        self.shadow = kwargs.pop('shadow', None)
+        self.color_axis = kwargs.get('color_axis', None)
+        self.color_by_point = kwargs.get('color_by_point', None)
+        self.color_index = kwargs.get('color_index', None)
+        self.color_key = kwargs.get('color_key', None)
+        self.crisp = kwargs.get('crisp', None)
+        self.drag_drop = kwargs.get('drag_drop', None)
+        self.ignore_hidden_point = kwargs.get('ignore_hidden_point', None)
+        self.linecap = kwargs.get('linecap', None)
+        self.relative_x_value = kwargs.get('relative_x_value', None)
+        self.shadow = kwargs.get('shadow', None)
 
         super().__init__(**kwargs)
 
@@ -283,49 +283,49 @@ class TimelineOptions(GenericTypeOptions):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'sticky_tracking': as_dict.pop('stickyTracking', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
-            'color_axis': as_dict.pop('colorAxis', None),
-            'color_by_point': as_dict.pop('colorByPoint', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'color_key': as_dict.pop('colorKey', None),
-            'crisp': as_dict.pop('crisp', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'ignore_hidden_point': as_dict.pop('ignoreHiddenPoint', None),
-            'linecap': as_dict.pop('linecap', None),
-            'relative_x_value': as_dict.pop('relativeXValue', None),
-            'shadow': as_dict.pop('shadow', None)
+            'color_axis': as_dict.get('colorAxis', None),
+            'color_by_point': as_dict.get('colorByPoint', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'color_key': as_dict.get('colorKey', None),
+            'crisp': as_dict.get('crisp', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'ignore_hidden_point': as_dict.get('ignoreHiddenPoint', None),
+            'linecap': as_dict.get('linecap', None),
+            'relative_x_value': as_dict.get('relativeXValue', None),
+            'shadow': as_dict.get('shadow', None)
         }
 
         return kwargs
@@ -340,7 +340,7 @@ class TimelineOptions(GenericTypeOptions):
             'dragDrop': self.drag_drop,
             'ignoreHiddenPoint': self.ignore_hidden_point,
             'linecap': self.linecap,
-            'relative_XValue': self.relative_x_value,
+            'relativeXValue': self.relative_x_value,
             'shadow': self.shadow
         }
         parent_as_dict = super()._to_untrimmed_dict() or {}
