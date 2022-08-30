@@ -36,7 +36,7 @@ class DataBase(HighchartsMeta):
         self.description = kwargs.get('description', None)
         self.events = kwargs.get('events', None)
         self.id = kwargs.get('id', None)
-        self.label_rank = kwargs.get('label_rank', None)
+        self.label_rank = kwargs.get('label_rank', None) or kwargs.get('labelrank', None)
         self.name = kwargs.get('name', None)
         self.selected = kwargs.get('selected', None)
 
@@ -228,7 +228,9 @@ class DataBase(HighchartsMeta):
             'description': as_dict.get('description', None),
             'events': as_dict.get('events', None),
             'id': as_dict.get('id', None),
-            'label_rank': as_dict.get('labelRank', None),
+            'label_rank': as_dict.get('labelRank',
+                                      None) or as_dict.get('labelrank',
+                                                           None),
             'name': as_dict.get('name', None),
             'selected': as_dict.get('selected', None),
         }
@@ -245,7 +247,7 @@ class DataBase(HighchartsMeta):
             'description': self.description,
             'events': self.events,
             'id': self.id,
-            'labelRank': self.label_rank,
+            'labelrank': self.label_rank,
             'name': self.name,
             'selected': self.selected,
         }

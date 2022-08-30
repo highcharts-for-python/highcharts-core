@@ -15,7 +15,7 @@
     mouseOut: function(event) { return true; }
   },
   id: 'some-id-goes-here',
-  labelrank: 3,
+  labelRank: 3,
   name: 'Some Name Goes here',
   selected: false
 }

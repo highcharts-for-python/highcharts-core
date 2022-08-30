@@ -25,12 +25,12 @@ class CartesianData(DataBase):
         self._x = None
         self._y = None
 
-        self.data_labels = kwargs.pop('data_labels', None)
-        self.drag_drop = kwargs.pop('drag_drop', None)
-        self.drilldown = kwargs.pop('drilldown', None)
-        self.marker = kwargs.pop('marker', None)
-        self.x = kwargs.pop('x', None)
-        self.y = kwargs.pop('y', None)
+        self.data_labels = kwargs.get('data_labels', None)
+        self.drag_drop = kwargs.get('drag_drop', None)
+        self.drilldown = kwargs.get('drilldown', None)
+        self.marker = kwargs.get('marker', None)
+        self.x = kwargs.get('x', None)
+        self.y = kwargs.get('y', None)
 
         super().__init__(**kwargs)
 
@@ -199,30 +199,39 @@ class CartesianData(DataBase):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelRank',
+                                      None) or as_dict.get('labelrank',
+                                                           None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'drilldown': as_dict.pop('drilldown', None),
-            'marker': as_dict.pop('marker', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'drilldown': as_dict.get('drilldown', None),
+            'marker': as_dict.get('marker', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
+            'dataLabels': self.data_labels,
+            'dragDrop': self.drag_drop,
+            'drilldown': self.drilldown,
+            'marker': self.marker,
+            'x': self.x,
+            'y': self.y,
+
             'accessibility': self.accessibility,
             'className': self.class_name,
             'color': self.color,
@@ -233,14 +242,7 @@ class CartesianData(DataBase):
             'id': self.id,
             'labelrank': self.label_rank,
             'name': self.name,
-            'selected': self.selected,
-
-            'dataLabels': self.data_labels,
-            'dragDrop': self.drag_drop,
-            'drilldown': self.drilldown,
-            'marker': self.marker,
-            'x': self.x,
-            'y': self.y,
+            'selected': self.selected
         }
 
         return untrimmed
@@ -253,7 +255,7 @@ class Cartesian3DData(CartesianData):
     def __init__(self, **kwargs):
         self._z = None
 
-        self.z = kwargs.pop('z', None)
+        self.z = kwargs.get('z', None)
 
         super().__init__(**kwargs)
 
@@ -338,32 +340,43 @@ class Cartesian3DData(CartesianData):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelrank',
+                                      None) or as_dict.get('labelRank',
+                                                           None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'drilldown': as_dict.pop('drilldown', None),
-            'marker': as_dict.pop('marker', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'drilldown': as_dict.get('drilldown', None),
+            'marker': as_dict.get('marker', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
 
-            'z': as_dict.pop('z', None),
+            'z': as_dict.get('z', None),
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
+            'z': self.z,
+
+            'dataLabels': self.data_labels,
+            'dragDrop': self.drag_drop,
+            'drilldown': self.drilldown,
+            'marker': self.marker,
+            'x': self.x,
+            'y': self.y,
+
             'accessibility': self.accessibility,
             'className': self.class_name,
             'color': self.color,
@@ -375,15 +388,6 @@ class Cartesian3DData(CartesianData):
             'labelrank': self.label_rank,
             'name': self.name,
             'selected': self.selected,
-
-            'dataLabels': self.data_labels,
-            'dragDrop': self.drag_drop,
-            'drilldown': self.drilldown,
-            'marker': self.marker,
-            'x': self.x,
-            'y': self.y,
-
-            'z': self.z,
         }
 
         return untrimmed
@@ -397,8 +401,8 @@ class CartesianValueData(CartesianData):
         self._point_padding = None
         self._value = None
 
-        self.point_padding = kwargs.pop('point_padding', None)
-        self.value = kwargs.pop('value', None)
+        self.point_padding = kwargs.get('point_padding', None)
+        self.value = kwargs.get('value', None)
 
         super().__init__(**kwargs)
 
@@ -494,33 +498,45 @@ class CartesianValueData(CartesianData):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelRank',
+                                      None) or as_dict.get('labelrank',
+                                                           None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'drilldown': as_dict.pop('drilldown', None),
-            'marker': as_dict.pop('marker', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'drilldown': as_dict.get('drilldown', None),
+            'marker': as_dict.get('marker', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
 
-            'point_padding': as_dict.pop('pointPadding', None),
-            'value': as_dict.pop('value', None),
+            'point_padding': as_dict.get('pointPadding', None),
+            'value': as_dict.get('value', None),
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
+            'pointPadding': self.point_padding,
+            'value': self.value,
+
+            'dataLabels': self.data_labels,
+            'dragDrop': self.drag_drop,
+            'drilldown': self.drilldown,
+            'marker': self.marker,
+            'x': self.x,
+            'y': self.y,
+
             'accessibility': self.accessibility,
             'className': self.class_name,
             'color': self.color,
@@ -533,15 +549,6 @@ class CartesianValueData(CartesianData):
             'name': self.name,
             'selected': self.selected,
 
-            'dataLabels': self.data_labels,
-            'dragDrop': self.drag_drop,
-            'drilldown': self.drilldown,
-            'marker': self.marker,
-            'x': self.x,
-            'y': self.y,
-
-            'pointPadding': self.point_padding,
-            'value': self.value,
         }
 
         return untrimmed

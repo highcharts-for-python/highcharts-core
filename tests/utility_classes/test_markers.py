@@ -13,8 +13,8 @@ from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_di
 STANDARD_PARAMS = [
     ({}, None),
     ({
-      'fill_color': '#cccccc',
       'enabled': True,
+      'fill_color': '#cccccc',
       'height': 24,
       'line_width': 2,
       'radius': 2,

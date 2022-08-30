@@ -1,3 +1,4 @@
+import datetime
 import string
 from typing import Optional
 from decimal import Decimal
@@ -44,6 +45,12 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
         for key in item:
             as_dict[key] = serialize_to_js_literal(item[key], encoding = encoding)
         return str(as_dict)
+    elif checkers.is_datetime(item):
+        return item.timestamp()
+    elif checkers.is_date(item):
+        return f'Date.UTC({item.year}, {item.month - 1}, {item.day})'
+    elif checkers.is_time(item):
+        return item.isoformat()
     elif item is None:
         return None
 
@@ -158,7 +165,7 @@ def get_js_literal(item) -> str:
                 as_str += ',\n'
         as_str += ']'
     elif checkers.is_string(item):
-        if item.startswith('{') or item.startswith('['):
+        if item.startswith('{') or item.startswith('[') or item.startswith('Date'):
             as_str += f"""{item}"""
         elif item in string.whitespace:
             as_str += f"""`{item}`"""
@@ -335,6 +342,57 @@ def convert_js_property_to_python(property_definition, original_str = None):
     elif property_definition.value.type == 'ClassExpression':
         return JavaScriptClass._convert_from_js_ast(property_definition.value,
                                                     original_str)
+    elif property_definition.value.type == 'CallExpression':
+        expression = property_definition.value
+        try:
+            callee_obj = expression.callee.object.name
+        except AttributeError:
+            try:
+                callee_obj = expression.callee.name
+            except AttributeError:
+                raise errors.HighchartsParseError('unable to parse the JS Call '
+                                                  'Expression')
+        call_arguments = [x.value for x in expression.arguments]
+        if callee_obj == 'Date':
+            if len(call_arguments) == 1:
+                return validators.datetime(call_arguments[0])
+            elif len(call_arguments) == 2:
+                return datetime.date(year = call_arguments[0],
+                                     month = call_arguments[1] + 1)
+            elif len(call_arguments) == 3:
+                return datetime.date(year = call_arguments[0],
+                                     month = call_arguments[1] + 1,
+                                     day = call_arguments[2])
+            elif len(call_arguments) == 4:
+                return datetime.datetime(year = call_arguments[0],
+                                         month = call_arguments[1] + 1,
+                                         day = call_arguments[2],
+                                         hour = call_arguments[3])
+            elif len(call_arguments) == 5:
+                return datetime.datetime(year = call_arguments[0],
+                                         month = call_arguments[1] + 1,
+                                         day = call_arguments[2],
+                                         hour = call_arguments[3],
+                                         minute = call_arguments[4])
+            elif len(call_arguments) == 6:
+                return datetime.datetime(year = call_arguments[0],
+                                         month = call_arguments[1] + 1,
+                                         day = call_arguments[2],
+                                         hour = call_arguments[3],
+                                         minute = call_arguments[4],
+                                         second = call_arguments[5])
+            elif len(call_arguments) == 7:
+                return datetime.datetime(year = call_arguments[0],
+                                         month = call_arguments[1] + 1,
+                                         day = call_arguments[2],
+                                         hour = call_arguments[3],
+                                         minute = call_arguments[4],
+                                         second = call_arguments[5],
+                                         microsecond = call_arguments[6])
+            else:
+                raise errors.HighchartsParseError('failed to parse the Date() '
+                                                  'constructor from the JS literal')
+
     else:
         raise errors.HighchartsParseError('unable to find a literal, array, or object '
                                           'definition')

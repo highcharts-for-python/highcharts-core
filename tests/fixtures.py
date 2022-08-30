@@ -125,6 +125,8 @@ def to_js_dict(original):
             new_key = 'measureXY'
         elif key == 'use_gpu_translations':
             new_key = 'useGPUTranslations'
+        elif key == 'label_rank':
+            new_key = 'labelrank'
         else:
             new_key = to_camelCase(key)
 
@@ -491,6 +493,11 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
                                                               kwargs_copy[key],
                                                               kwargs_copy[key]],
                                                              result.get('spacing'))
+                elif key == 'label_rank':
+                    new_key = 'labelrank'
+                    matches = does_kwarg_value_match_result(kwargs_copy[key],
+                                                            result.get(new_key))
+                    assert matches is True
                 else:
                     print(f'CHECKING: {key}')
                     assert does_kwarg_value_match_result(kwargs_copy[key],
