@@ -3,7 +3,7 @@ from typing import Optional, List
 from highcharts.series.base import SeriesBase
 from highcharts.series.data.range import ConnectedRangeData
 from highcharts.plot_options.dumbbell import LollipopOptions, DumbbellOptions
-from highcharts.utility_functions import mro_init, mro_to_dict
+from highcharts.utility_functions import mro__to_untrimmed_dict
 
 
 class DumbbellSeries(SeriesBase, DumbbellOptions):
@@ -188,7 +188,7 @@ class DumbbellSeries(SeriesBase, DumbbellOptions):
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
-        untrimmed = mro_to_dict(self)
+        untrimmed = mro__to_untrimmed_dict(self, in_cls = in_cls)
 
         return untrimmed
 

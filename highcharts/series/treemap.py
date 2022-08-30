@@ -3,7 +3,7 @@ from typing import Optional, List
 from highcharts.series.base import SeriesBase
 from highcharts.series.data.sunburst import TreemapData
 from highcharts.plot_options.treemap import TreemapOptions
-from highcharts.utility_functions import mro_init, mro_to_dict
+from highcharts.utility_functions import mro__to_untrimmed_dict
 
 
 class TreemapSeries(SeriesBase, TreemapOptions):

@@ -4,7 +4,7 @@ from validator_collection import validators
 
 from highcharts.series.bar import BarSeries
 from highcharts.plot_options.histogram import HistogramOptions
-from highcharts.utility_functions import mro_init, mro_to_dict
+from highcharts.utility_functions import mro__to_untrimmed_dict
 
 
 class HistogramSeries(BarSeries, HistogramOptions):

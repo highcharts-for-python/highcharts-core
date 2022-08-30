@@ -5,7 +5,7 @@ from highcharts.series.bar import BarSeries
 from highcharts.series.data.boxplot import BoxPlotData
 from highcharts.series.data.range import RangeData
 from highcharts.plot_options.boxplot import BoxPlotOptions
-from highcharts.utility_functions import mro_init, mro_to_dict
+from highcharts.utility_functions import mro__to_untrimmed_dict
 
 
 class BoxPlotSeries(BarSeries, BoxPlotOptions):
@@ -227,7 +227,7 @@ class BoxPlotSeries(BarSeries, BoxPlotOptions):
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
-        untrimmed = mro_to_dict(self)
+        untrimmed = mro__to_untrimmed_dict(self, in_cls = in_cls)
 
         return untrimmed
 

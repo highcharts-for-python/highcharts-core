@@ -3,7 +3,7 @@ from typing import Optional, List
 from highcharts.series.base import SeriesBase
 from highcharts.series.data.sunburst import SunburstData
 from highcharts.plot_options.sunburst import SunburstOptions
-from highcharts.utility_functions import mro_init, mro_to_dict
+from highcharts.utility_functions import mro__to_untrimmed_dict
 
 
 class SunburstSeries(SeriesBase, SunburstOptions):
@@ -142,6 +142,6 @@ class SunburstSeries(SeriesBase, SunburstOptions):
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
-        untrimmed = mro_to_dict(self)
+        untrimmed = mro__to_untrimmed_dict(self, in_cls = in_cls)
 
         return untrimmed

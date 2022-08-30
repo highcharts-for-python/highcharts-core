@@ -3,7 +3,7 @@ from typing import Optional, List
 from highcharts.series.base import SeriesBase
 from highcharts.series.data.wordcloud import WordcloudData
 from highcharts.plot_options.wordcloud import WordcloudOptions
-from highcharts.utility_functions import mro_init, mro_to_dict
+from highcharts.utility_functions import mro__to_untrimmed_dict
 
 
 class WordcloudOptions(SeriesBase, WordcloudOptions):
@@ -145,6 +145,6 @@ class WordcloudOptions(SeriesBase, WordcloudOptions):
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
-        untrimmed = mro_to_dict(self) or {}
+        untrimmed = mro__to_untrimmed_dict(self, in_cls = in_cls) or {}
 
         return untrimmed

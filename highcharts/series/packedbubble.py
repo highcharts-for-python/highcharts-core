@@ -3,7 +3,7 @@ from typing import Optional, List
 from highcharts.series.networkgraph import NetworkGraphSeries
 from highcharts.series.data.single_point import SingleValueData
 from highcharts.plot_options.packedbubble import PackedBubbleOptions
-from highcharts.utility_functions import mro_init, mro_to_dict
+from highcharts.utility_functions import mro__to_untrimmed_dict
 
 
 class PackedBubbleSeries(NetworkGraphSeries, PackedBubbleOptions):
@@ -159,6 +159,6 @@ class PackedBubbleSeries(NetworkGraphSeries, PackedBubbleOptions):
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
-        untrimmed = mro_to_dict(self)
+        untrimmed = mro__to_untrimmed_dict(self, in_cls = in_cls)
 
         return untrimmed

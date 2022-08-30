@@ -5,7 +5,7 @@ from highcharts.series.bar import BarSeries
 from highcharts.series.data.organization import OrganizationData
 from highcharts.plot_options.organization import OrganizationOptions
 from highcharts.utility_classes.nodes import OrganizationNodeOptions
-from highcharts.utility_functions import mro_init, mro_to_dict
+from highcharts.utility_functions import mro__to_untrimmed_dict
 
 
 class OrganizationSeries(BarSeries, OrganizationOptions):

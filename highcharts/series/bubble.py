@@ -3,7 +3,7 @@ from typing import Optional, List
 from highcharts.series.base import SeriesBase
 from highcharts.series.data.cartesian import Cartesian3DData
 from highcharts.plot_options.bubble import BubbleOptions
-from highcharts.utility_functions import mro_init, mro_to_dict
+from highcharts.utility_functions import mro__to_untrimmed_dict
 
 
 class BubbleSeries(SeriesBase, BubbleOptions):
@@ -191,6 +191,6 @@ class BubbleSeries(SeriesBase, BubbleOptions):
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
-        untrimmed = mro_to_dict(self)
+        untrimmed = mro__to_untrimmed_dict(self, in_cls = in_cls)
 
         return untrimmed

@@ -3,7 +3,7 @@ from typing import Optional, List
 from highcharts.series.pie import PieSeries
 from highcharts.plot_options.funnel import FunnelOptions, Funnel3DOptions
 from highcharts.series.data.single_point import SinglePointData
-from highcharts.utility_functions import mro_init, mro_to_dict
+from highcharts.utility_functions import mro__to_untrimmed_dict
 
 
 class FunnelSeries(PieSeries, FunnelOptions):
@@ -159,7 +159,7 @@ class FunnelSeries(PieSeries, FunnelOptions):
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
-        untrimmed = mro_to_dict(self)
+        untrimmed = mro__to_untrimmed_dict(self, in_cls = in_cls)
 
         return untrimmed
 
@@ -249,6 +249,6 @@ class Funnel3DSeries(FunnelSeries, Funnel3DOptions):
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
-        untrimmed = mro_to_dict(self)
+        untrimmed = mro__to_untrimmed_dict(self, in_cls = in_cls)
 
         return untrimmed
