@@ -1,0 +1,3 @@
+{
+  intervals: 3
+}
