@@ -3,8 +3,8 @@ from decimal import Decimal
 
 from validator_collection import validators
 
-from highcharts import errors
-from highcharts.decorators import class_sensitive, validate_types
+from highcharts import errors, utility_functions
+from highcharts.decorators import class_sensitive
 from highcharts.plot_options.generic import GenericTypeOptions
 from highcharts.utility_classes.zones import Zone
 from highcharts.plot_options.levels import TreemapLevelOptions
@@ -64,43 +64,43 @@ class TreemapOptions(GenericTypeOptions):
         self._layout_starting_direction = None
         self._sort_index = None
 
-        self.animation_limit = kwargs.pop('animation_limit', None)
-        self.boost_blending = kwargs.pop('boost_blending', None)
-        self.boost_threshold = kwargs.pop('boost_threshold', 5000)
-        self.color_axis = kwargs.pop('color_axis', None)
-        self.color_key = kwargs.pop('color_key', None)
-        self.colors = kwargs.pop('colors', None)
-        self.crop_threshold = kwargs.pop('crop_threshold', None)
-        self.find_nearest_point_by = kwargs.pop('find_nearest_point_by', None)
-        self.get_extremes_for_all = kwargs.pop('get_extremes_for_all', None)
-        self.ignore_hidden_point = kwargs.pop('ignore_hidden_point', None)
-        self.linecap = kwargs.pop('linecap', None)
-        self.line_width = kwargs.pop('line_width', None)
-        self.negative_color = kwargs.pop('negative_color', None)
-        self.point_interval = kwargs.pop('point_interval', None)
-        self.point_interval_unit = kwargs.pop('point_interval_unit', None)
-        self.point_start = kwargs.pop('point_start', None)
-        self.relative_x_value = kwargs.pop('relative_x_value', None)
-        self.soft_threshold = kwargs.pop('soft_threshold', None)
-        self.stacking = kwargs.pop('stacking', None)
-        self.step = kwargs.pop('step', None)
-        self.zone_axis = kwargs.pop('zone_axis', None)
-        self.zones = kwargs.pop('zones', None)
+        self.animation_limit = kwargs.get('animation_limit', None)
+        self.boost_blending = kwargs.get('boost_blending', None)
+        self.boost_threshold = kwargs.get('boost_threshold', None)
+        self.color_axis = kwargs.get('color_axis', None)
+        self.color_key = kwargs.get('color_key', None)
+        self.colors = kwargs.get('colors', None)
+        self.crop_threshold = kwargs.get('crop_threshold', None)
+        self.find_nearest_point_by = kwargs.get('find_nearest_point_by', None)
+        self.get_extremes_for_all = kwargs.get('get_extremes_for_all', None)
+        self.ignore_hidden_point = kwargs.get('ignore_hidden_point', None)
+        self.linecap = kwargs.get('linecap', None)
+        self.line_width = kwargs.get('line_width', None)
+        self.negative_color = kwargs.get('negative_color', None)
+        self.point_interval = kwargs.get('point_interval', None)
+        self.point_interval_unit = kwargs.get('point_interval_unit', None)
+        self.point_start = kwargs.get('point_start', None)
+        self.relative_x_value = kwargs.get('relative_x_value', None)
+        self.soft_threshold = kwargs.get('soft_threshold', None)
+        self.stacking = kwargs.get('stacking', None)
+        self.step = kwargs.get('step', None)
+        self.zone_axis = kwargs.get('zone_axis', None)
+        self.zones = kwargs.get('zones', None)
 
-        self.color_index = kwargs.pop('color_index', None)
-        self.crisp = kwargs.pop('crisp', None)
-        self.allow_traversing_tree = kwargs.pop('allow_traversing_tree', None)
-        self.breadcrumbs = kwargs.pop('breadcrumbs', None)
-        self.color_by_point = kwargs.pop('color_by_point', None)
-        self.level_is_constant = kwargs.pop('level_is_constant', None)
-        self.levels = kwargs.pop('levels', None)
+        self.color_index = kwargs.get('color_index', None)
+        self.crisp = kwargs.get('crisp', None)
+        self.allow_traversing_tree = kwargs.get('allow_traversing_tree', None)
+        self.breadcrumbs = kwargs.get('breadcrumbs', None)
+        self.color_by_point = kwargs.get('color_by_point', None)
+        self.level_is_constant = kwargs.get('level_is_constant', None)
+        self.levels = kwargs.get('levels', None)
 
-        self.alternate_starting_direction = kwargs.pop('alternate_starting_direction',
+        self.alternate_starting_direction = kwargs.get('alternate_starting_direction',
                                                        None)
-        self.interact_by_leaf = kwargs.pop('interact_by_leaf', None)
-        self.layout_algorithm = kwargs.pop('layout_algorithm', None)
-        self.layout_starting_direction = kwargs.pop('layout_starting_direction', None)
-        self.sort_index = kwargs.pop('sort_index', None)
+        self.interact_by_leaf = kwargs.get('interact_by_leaf', None)
+        self.layout_algorithm = kwargs.get('layout_algorithm', None)
+        self.layout_starting_direction = kwargs.get('layout_starting_direction', None)
+        self.sort_index = kwargs.get('sort_index', None)
 
         super().__init__(**kwargs)
 
@@ -314,16 +314,8 @@ class TreemapOptions(GenericTypeOptions):
             self._colors = None
         else:
             value = validators.iterable(value)
-            checked_values = []
-            for item in value:
-                if isinstance(value, str):
-                    checked_values.append(item)
-                else:
-                    processed_item = validate_types(item,
-                                                    types = (Gradient, Pattern))
-                    checked_values.append(processed_item)
 
-            self._colors = checked_values
+            self._colors = [utility_functions.validate_color(x) for x in value]
 
     @property
     def crisp(self) -> Optional[bool]:
@@ -815,91 +807,103 @@ class TreemapOptions(GenericTypeOptions):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
-            'animation_limit': as_dict.pop('animationLimit', None),
-            'boost_blending': as_dict.pop('boostBlending', None),
-            'boost_threshold': as_dict.pop('boostThreshold', None),
-            'color_axis': as_dict.pop('colorAxis', None),
-            'color_key': as_dict.pop('colorKey', None),
-            'colors': as_dict.pop('colors', None),
-            'crop_threshold': as_dict.pop('cropThreshold', None),
-            'find_nearest_point_by': as_dict.pop('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.pop('getExtremesForAll', None),
-            'ignore_hidden_point': as_dict.pop('ignoreHiddenPoint', None),
-            'linecap': as_dict.pop('linecap', None),
-            'line_width': as_dict.pop('lineWidth', None),
-            'negative_color': as_dict.pop('negativeColor', None),
-            'point_interval': as_dict.pop('pointInterval', None),
-            'point_interval_unit': as_dict.pop('pointIntervalUnit', None),
-            'point_start': as_dict.pop('pointStart', None),
-            'relative_x_value': as_dict.pop('relativeXValue', None),
-            'soft_threshold': as_dict.pop('softThreshold', None),
-            'stacking': as_dict.pop('stacking', None),
-            'step': as_dict.pop('step', None),
-            'zone_axis': as_dict.pop('zoneAxis', None),
-            'zones': as_dict.pop('zones', None),
+            'animation_limit': as_dict.get('animationLimit', None),
+            'boost_blending': as_dict.get('boostBlending', None),
+            'boost_threshold': as_dict.get('boostThreshold', None),
+            'color_axis': as_dict.get('colorAxis', None),
+            'color_key': as_dict.get('colorKey', None),
+            'colors': as_dict.get('colors', None),
+            'crop_threshold': as_dict.get('cropThreshold', None),
+            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
+            'get_extremes_for_all': as_dict.get('getExtremesForAll', None),
+            'ignore_hidden_point': as_dict.get('ignoreHiddenPoint', None),
+            'linecap': as_dict.get('linecap', None),
+            'line_width': as_dict.get('lineWidth', None),
+            'negative_color': as_dict.get('negativeColor', None),
+            'point_interval': as_dict.get('pointInterval', None),
+            'point_interval_unit': as_dict.get('pointIntervalUnit', None),
+            'point_start': as_dict.get('pointStart', None),
+            'relative_x_value': as_dict.get('relativeXValue', None),
+            'soft_threshold': as_dict.get('softThreshold', None),
+            'stacking': as_dict.get('stacking', None),
+            'step': as_dict.get('step', None),
+            'zone_axis': as_dict.get('zoneAxis', None),
+            'zones': as_dict.get('zones', None),
 
-            'color_index': as_dict.pop('colorIndex', None),
-            'crisp': as_dict.pop('crisp', None),
-            'allow_traversing_tree': as_dict.pop('allowTraversingTree', None),
-            'breadcrumbs': as_dict.pop('breadcrumbs', None),
-            'color_by_point': as_dict.pop('colorByPoint', None),
-            'level_is_constant': as_dict.pop('levelIsConstant', None),
-            'levels': as_dict.pop('levels', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'crisp': as_dict.get('crisp', None),
+            'allow_traversing_tree': as_dict.get('allowTraversingTree', None),
+            'breadcrumbs': as_dict.get('breadcrumbs', None),
+            'color_by_point': as_dict.get('colorByPoint', None),
+            'level_is_constant': as_dict.get('levelIsConstant', None),
+            'levels': as_dict.get('levels', None),
 
-            'alternate_starting_direction': as_dict.pop('alternateStartingDirection',
+            'alternate_starting_direction': as_dict.get('alternateStartingDirection',
                                                         None),
-            'interact_by_leaf': as_dict.pop('interactByLeaf', None),
-            'layout_algorithm': as_dict.pop('layoutAlgorithm', None),
-            'layout_starting_direction': as_dict.pop('layoutStartingDirection', None),
-            'sort_index': as_dict.pop('sortIndex', None)
+            'interact_by_leaf': as_dict.get('interactByLeaf', None),
+            'layout_algorithm': as_dict.get('layoutAlgorithm', None),
+            'layout_starting_direction': as_dict.get('layoutStartingDirection', None),
+            'sort_index': as_dict.get('sortIndex', None)
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
+            'allowTraversingTree': self.allow_traversing_tree,
+            'alternateStartingDirection': self.alternate_starting_direction,
             'animationLimit': self.animation_limit,
             'boostBlending': self.boost_blending,
             'boostThreshold': self.boost_threshold,
+            'breadcrumbs': self.breadcrumbs,
             'colorAxis': self.color_axis,
+            'colorByPoint': self.color_by_point,
+            'colorIndex': self.color_index,
             'colorKey': self.color_key,
             'colors': self.colors,
+            'crisp': self.crisp,
             'cropThreshold': self.crop_threshold,
             'findNearestPointBy': self.find_nearest_point_by,
             'getExtremesForAll': self.get_extremes_for_all,
             'ignoreHiddenPoint': self.ignore_hidden_point,
+            'interactByLeaf': self.interact_by_leaf,
+            'layoutAlgorithm': self.layout_algorithm,
+            'layoutStartingDirection': self.layout_starting_direction,
+            'levelIsConstant': self.level_is_constant,
+            'levels': self.levels,
             'linecap': self.linecap,
             'lineWidth': self.line_width,
             'negativeColor': self.negative_color,
@@ -908,24 +912,11 @@ class TreemapOptions(GenericTypeOptions):
             'pointStart': self.point_start,
             'relativeXValue': self.relative_x_value,
             'softThreshold': self.soft_threshold,
+            'sortIndex': self.sort_index,
             'stacking': self.stacking,
             'step': self.step,
             'zoneAxis': self.zone_axis,
-            'zones': self.zones,
-
-            'colorIndex': self.color_index,
-            'crisp': self.crisp,
-            'allowTraversingTree': self.allow_traversing_tree,
-            'breadcrumbs': self.breadcrumbs,
-            'colorByPoint': self.color_by_point,
-            'levelIsConstant': self.level_is_constant,
-            'levels': self.levels,
-
-            'alternateStartingDirection': self.alternate_starting_direction,
-            'interactByLeaf': self.interact_by_leaf,
-            'layoutAlgorithm': self.layout_algorithm,
-            'layoutStartingDirection': self.layout_starting_direction,
-            'sortIndex': self.sort_index
+            'zones': self.zones
         }
         parent_as_dict = super()._to_untrimmed_dict()
 
