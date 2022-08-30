@@ -23,10 +23,10 @@ class BarData(CartesianData):
         self._dash_style = None
         self._point_width = None
 
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.dash_style = kwargs.pop('dash_style', None)
-        self.point_width = kwargs.pop('point_width', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.dash_style = kwargs.get('dash_style', None)
+        self.point_width = kwargs.get('point_width', None)
 
         super().__init__(**kwargs)
 
@@ -130,29 +130,31 @@ class BarData(CartesianData):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelRank',
+                                      None) or as_dict.get('labelrank',
+                                                           None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'drilldown': as_dict.pop('drilldown', None),
-            'marker': as_dict.pop('marker', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'drilldown': as_dict.get('drilldown', None),
+            'marker': as_dict.get('marker', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
 
-            'border_color': as_dict.pop('borderColor', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'point_width': as_dict.pop('pointWidth', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'point_width': as_dict.get('pointWidth', None),
         }
 
         return kwargs
@@ -180,8 +182,8 @@ class WaterfallData(CartesianData):
         self._is_intermediate_sum = None
         self._is_sum = None
 
-        self.is_intermediate_sum = kwargs.pop('is_intermediate_sum', None)
-        self.is_sum = kwargs.pop('is_sum', None)
+        self.is_intermediate_sum = kwargs.get('is_intermediate_sum', None)
+        self.is_sum = kwargs.get('is_sum', None)
 
         super().__init__(**kwargs)
 
@@ -240,27 +242,29 @@ class WaterfallData(CartesianData):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelRank',
+                                      None) or as_dict.get('labelrank',
+                                                           None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'drilldown': as_dict.pop('drilldown', None),
-            'marker': as_dict.pop('marker', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'drilldown': as_dict.get('drilldown', None),
+            'marker': as_dict.get('marker', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
 
-            'is_intermediate_sum': as_dict.pop('isIntermediateSum', None),
-            'is_sum': as_dict.pop('isSum', None),
+            'is_intermediate_sum': as_dict.get('isIntermediateSum', None),
+            'is_sum': as_dict.get('isSum', None),
         }
 
         return kwargs
@@ -286,8 +290,8 @@ class WindBarbData(CartesianData):
         self._direction = None
         self._value = None
 
-        self.direction = kwargs.pop('direction', None)
-        self.value = kwargs.pop('value', None)
+        self.direction = kwargs.get('direction', None)
+        self.value = kwargs.get('value', None)
 
         super().__init__(**kwargs)
 
@@ -383,27 +387,29 @@ class WindBarbData(CartesianData):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelRank',
+                                      None) or as_dict.get('labelrank',
+                                                           None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'drilldown': as_dict.pop('drilldown', None),
-            'marker': as_dict.pop('marker', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'drilldown': as_dict.get('drilldown', None),
+            'marker': as_dict.get('marker', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
 
-            'direction': as_dict.pop('direction', None),
-            'value': as_dict.pop('value', None),
+            'direction': as_dict.get('direction', None),
+            'value': as_dict.get('value', None),
         }
 
         return kwargs
@@ -429,8 +435,8 @@ class XRangeData(CartesianData):
         self._partial_fill = None
         self._x2 = None
 
-        self.partial_fill = kwargs.pop('partial_fill', None)
-        self.x2 = kwargs.pop('x2', None)
+        self.partial_fill = kwargs.get('partial_fill', None)
+        self.x2 = kwargs.get('x2', None)
 
         super().__init__(**kwargs)
 
@@ -558,27 +564,29 @@ class XRangeData(CartesianData):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelRank',
+                                      None) or as_dict.get('labelrank',
+                                                           None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'drilldown': as_dict.pop('drilldown', None),
-            'marker': as_dict.pop('marker', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'drilldown': as_dict.get('drilldown', None),
+            'marker': as_dict.get('marker', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
 
-            'partial_fill': as_dict.pop('partialFill', None),
-            'x2': as_dict.pop('x2', None),
+            'partial_fill': as_dict.get('partialFill', None),
+            'x2': as_dict.get('x2', None),
 
         }
 
@@ -587,6 +595,7 @@ class XRangeData(CartesianData):
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'partialFill': self.partial_fill,
+            'x': self.x,
             'x2': self.x2,
         }
 
