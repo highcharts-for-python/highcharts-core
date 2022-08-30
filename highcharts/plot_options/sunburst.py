@@ -45,23 +45,23 @@ class SunburstOptions(GenericTypeOptions):
         self._sliced_offset = None
         self._start_angle = None
 
-        self.color_index = kwargs.pop('color_index', None)
-        self.crisp = kwargs.pop('crisp', None)
-        self.shadow = kwargs.pop('shadow', None)
-        self.allow_traversing_tree = kwargs.pop('allow_traversing_tree', None)
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.breadcrumbs = kwargs.pop('breadcrumbs', None)
-        self.center = kwargs.pop('center', None)
-        self.color_by_point = kwargs.pop('color_by_point', None)
-        self.fill_color = kwargs.pop('fill_color', None)
-        self.level_is_constant = kwargs.pop('level_is_constant', None)
-        self.levels = kwargs.pop('levels', None)
-        self.level_size = kwargs.pop('level_size', None)
-        self.root_id = kwargs.pop('root_id', None)
-        self.size = kwargs.pop('size', None)
-        self.sliced_offset = kwargs.pop('sliced_offset', None)
-        self.start_angle = kwargs.pop('start_angle', None)
+        self.color_index = kwargs.get('color_index', None)
+        self.crisp = kwargs.get('crisp', None)
+        self.shadow = kwargs.get('shadow', None)
+        self.allow_traversing_tree = kwargs.get('allow_traversing_tree', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.breadcrumbs = kwargs.get('breadcrumbs', None)
+        self.center = kwargs.get('center', None)
+        self.color_by_point = kwargs.get('color_by_point', None)
+        self.fill_color = kwargs.get('fill_color', None)
+        self.level_is_constant = kwargs.get('level_is_constant', None)
+        self.levels = kwargs.get('levels', None)
+        self.level_size = kwargs.get('level_size', None)
+        self.root_id = kwargs.get('root_id', None)
+        self.size = kwargs.get('size', None)
+        self.sliced_offset = kwargs.get('sliced_offset', None)
+        self.start_angle = kwargs.get('start_angle', None)
 
         super().__init__(**kwargs)
 
@@ -159,11 +159,14 @@ class SunburstOptions(GenericTypeOptions):
             processed_values = []
             for item in value:
                 try:
-                    item = validators.string(value)
+                    item = validators.string(item)
                     if '%' not in item:
-                        raise ValueError
-                except ValueError:
-                    item = validators.numeric(value)
+                        raise errors.HighchartsValueError('center expects either numbers '
+                                                          'or percentage strings. No "%" '
+                                                          'character found in string '
+                                                          'received.')
+                except TypeError:
+                    item = validators.numeric(item)
 
                 processed_values.append(item)
 
@@ -356,8 +359,9 @@ class SunburstOptions(GenericTypeOptions):
             try:
                 value = validators.string(value)
                 if '%' not in value:
-                    raise ValueError
-            except ValueError:
+                    raise errors.HighchartsValueError(f'size expects either a number or '
+                                                      f'a % string. Received: {value}')
+            except TypeError:
                 value = validators.integer(value, minimum = 0)
 
             self._size = value
@@ -394,75 +398,76 @@ class SunburstOptions(GenericTypeOptions):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'allow_point_select': as_dict.pop('allowPointSelect', None),
-            'animation': as_dict.pop('animation', None),
-            'class_name': as_dict.pop('className', None),
-            'clip': as_dict.pop('clip', None),
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'custom': as_dict.pop('custom', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'description': as_dict.pop('description', None),
-            'enable_mouse_tracking': as_dict.pop('enableMouseTracking', None),
-            'events': as_dict.pop('events', None),
-            'include_in_data_export': as_dict.pop('includeInDataExport', None),
-            'keys': as_dict.pop('keys', None),
-            'label': as_dict.pop('label', None),
-            'linked_to': as_dict.pop('linkedTo', None),
-            'marker': as_dict.pop('marker', None),
-            'on_point': as_dict.pop('onPoint', None),
-            'opacity': as_dict.pop('opacity', None),
-            'point': as_dict.pop('point', None),
-            'point_description_formatter': as_dict.pop('pointDescriptionFormatter', None),
-            'selected': as_dict.pop('selected', None),
-            'show_checkbox': as_dict.pop('showCheckbox', None),
-            'show_in_legend': as_dict.pop('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.pop('skipKeyboardNavigation', None),
-            'states': as_dict.pop('states', None),
-            'threshold': as_dict.pop('threshold', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'turbo_threshold': as_dict.pop('turboThreshold', None),
-            'visible': as_dict.pop('visible', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
 
-            'color_index': as_dict.pop('colorIndex', None),
-            'crisp': as_dict.pop('crisp', None),
-            'shadow': as_dict.pop('shadow', None),
-            'allow_traversing_tree': as_dict.pop('allowTraversingTree', None),
-            'border_color': as_dict.pop('borderColor', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'breadcrumbs': as_dict.pop('breadcrumbs', None),
-            'center': as_dict.pop('center', None),
-            'color_by_point': as_dict.pop('colorByPoint', None),
-            'fill_color': as_dict.pop('fillColor', None),
-            'level_is_constant': as_dict.pop('levelIsConstant', None),
-            'levels': as_dict.pop('levels', None),
-            'level_size': as_dict.pop('levelSize', None),
-            'root_id': as_dict.pop('rootId', None),
-            'size': as_dict.pop('size', None),
-            'sliced_offset': as_dict.pop('slicedOffset', None),
-            'start_angle': as_dict.pop('startAngle', None)
+            'allow_traversing_tree': as_dict.get('allowTraversingTree', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'breadcrumbs': as_dict.get('breadcrumbs', None),
+            'center': as_dict.get('center', None),
+            'color_by_point': as_dict.get('colorByPoint', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'crisp': as_dict.get('crisp', None),
+            'fill_color': as_dict.get('fillColor', None),
+            'level_is_constant': as_dict.get('levelIsConstant', None),
+            'levels': as_dict.get('levels', None),
+            'level_size': as_dict.get('levelSize', None),
+            'root_id': as_dict.get('rootId', None),
+            'shadow': as_dict.get('shadow', None),
+            'size': as_dict.get('size', None),
+            'sliced_offset': as_dict.get('slicedOffset', None),
+            'start_angle': as_dict.get('startAngle', None)
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
-            'colorIndex': self.color_index,
-            'crisp': self.crisp,
-            'shadow': self.shadow,
             'allowTraversingTree': self.allow_traversing_tree,
             'borderColor': self.border_color,
             'borderWidth': self.border_width,
             'breadcrumbs': self.breadcrumbs,
             'center': self.center,
             'colorByPoint': self.color_by_point,
+            'colorIndex': self.color_index,
+            'crisp': self.crisp,
             'fillColor': self.fill_color,
             'levelIsConstant': self.level_is_constant,
             'levels': self.levels,
             'levelSize': self.level_size,
             'rootId': self.root_id,
+            'shadow': self.shadow,
             'size': self.size,
             'slicedOffset': self.sliced_offset,
             'startAngle': self.start_angle
