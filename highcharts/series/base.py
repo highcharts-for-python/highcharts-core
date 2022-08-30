@@ -32,6 +32,8 @@ class SeriesBase(SeriesOptions):
         self.y_axis = kwargs.get('y_axis', None)
         self.z_index = kwargs.get('z_index', None)
 
+        super().__init__(**kwargs)
+
     @property
     def data(self) -> Optional[List[DataBase]]:
         """The collection of data points for the series. Defaults to
@@ -152,7 +154,7 @@ class SeriesBase(SeriesOptions):
         else:
             try:
                 value = validators.integer(value, minimum = 0)
-            except ValueError:
+            except (ValueError, TypeError):
                 value = validators.string(value)
 
             self._x_axis = value
@@ -178,7 +180,7 @@ class SeriesBase(SeriesOptions):
         else:
             try:
                 value = validators.integer(value, minimum = 0)
-            except ValueError:
+            except (ValueError, TypeError):
                 value = validators.string(value)
 
             self._y_axis = value
