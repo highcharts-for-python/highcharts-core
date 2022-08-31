@@ -105,6 +105,8 @@ class GenericTypeOptions(HighchartsMeta):
         class_name = self.__class__.__name__
         class_name = class_name.replace('TypeOptions', '')
         class_name = class_name.replace('Options', '')
+        if class_name.endswith('Series') and class_name != 'Series':
+            class_name = class_name.replace('Series', '')
 
         return class_name.lower()
 

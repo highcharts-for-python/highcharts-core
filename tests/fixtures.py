@@ -253,6 +253,26 @@ def trim_expected(expected):
     return new_dict
 
 
+def compare_js_literals(original, new):
+    if not isinstance(original, str):
+        original = str(original)
+    if not isinstance(new, str):
+        new = str(new)
+
+    counter = 0
+    for char in original:
+        min_index = max(0, counter - 20)
+        max_index = min(counter + 20, len(original))
+
+        if new[counter] != char:
+            print(f'\nMISMATCH FOUND AT ORIGINAL CHARACTER: {counter}')
+            print(f'-- ORIGINAL: {original[min_index:max_index]}')
+            print(f'-- NEW: {new[min_index:max_index]}')
+            break
+
+        counter += 1
+
+
 def Class__init__(cls, kwargs, error):
     kwargs_copy = deepcopy(kwargs)
     if not error:
@@ -623,6 +643,8 @@ def append_plot_options_type(cls, as_str):
         return as_str
     class_name = class_name.replace('TypeOptions', '')
     class_name = class_name.replace('Options', '')
+    if class_name.endswith('Series') and class_name != 'Series':
+        class_name = class_name.replace('Series', '')
 
     class_name = class_name.lower()
 
@@ -663,7 +685,12 @@ def Class_from_js_literal(cls, input_files, filename, as_file, error):
 
         print(as_js_literal)
         parsed_output, output_str = cls._validate_js_literal(as_js_literal, range = False)
-        assert str(parsed_output) == str(parsed_original)
+        try:
+            assert str(parsed_output) == str(parsed_original)
+        except AssertionError as error:
+            print('\n')
+            compare_js_literals(str(parsed_original), str(parsed_output))
+            raise error
     else:
         with pytest.raises(error):
             result = cls.from_js_literal(input_string)

@@ -97,11 +97,14 @@ def validate_types(value,
     elif allow_dict and isinstance(value, dict):
         try:
             value = primary_type.from_dict(value)
-        except AttributeError:
-            raise errors.HighchartsValueError(f'supplied type '
-                                              f'({primary_type.__name__}) '
-                                              f'does not conform to the '
-                                              f'HighchartsMeta interface')
+        except AttributeError as error:
+            if not hasattr(primary_type, 'from_dict'):
+                raise errors.HighchartsValueError(f'supplied type '
+                                                  f'({primary_type.__name__}) '
+                                                  f'does not conform to the '
+                                                  f'HighchartsMeta interface')
+            else:
+                raise error
     elif allow_js_literal and isinstance(value, str):
         try:
             value = primary_type.from_js_literal(value)

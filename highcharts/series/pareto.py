@@ -152,7 +152,7 @@ class ParetoSeries(SeriesBase, ParetoOptions):
         untrimmed = {
             'baseSeries': self.base_series
         }
-        parent_as_dict = mro_to_dict(self) or {}
+        parent_as_dict = mro__to_untrimmed_dict(self, in_cls = in_cls) or {}
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
