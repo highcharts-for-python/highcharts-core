@@ -652,8 +652,10 @@ def append_plot_options_type(cls, as_str):
         class_name = class_name.replace('Series', '')
 
     class_name = class_name.lower()
+    str_to_append = f"""type: '{class_name}'"""
 
-    as_str = as_str[:-2] + f""",\n  type: '{class_name}'}}"""
+    if str_to_append not in as_str:
+        as_str = as_str[:-2] + """,\n  """ + str_to_append + """}"""
 
     return as_str
 
