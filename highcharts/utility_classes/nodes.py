@@ -24,13 +24,13 @@ class NodeOptions(HighchartsMeta):
         self._offset_horizontal = None
         self._offset_vertical = None
 
-        self.color = kwargs.pop('color', None)
-        self.color_index = kwargs.pop('color_index', None)
-        self.data_labels = kwargs.pop('data_labels', None)
-        self.id = kwargs.pop('id', None)
-        self.name = kwargs.pop('name', None)
-        self.offset_horizontal = kwargs.pop('offset_horizontal', None)
-        self.offset_vertical = kwargs.pop('offset_vertical', None)
+        self.color = kwargs.get('color', None)
+        self.color_index = kwargs.get('color_index', None)
+        self.data_labels = kwargs.get('data_labels', None)
+        self.id = kwargs.get('id', None)
+        self.name = kwargs.get('name', None)
+        self.offset_horizontal = kwargs.get('offset_horizontal', None)
+        self.offset_vertical = kwargs.get('offset_vertical', None)
 
     @property
     def color(self) -> Optional[str | Gradient | Pattern]:
@@ -169,13 +169,13 @@ class NodeOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'id': as_dict.pop('id', None),
-            'name': as_dict.pop('name', None),
-            'offset_horizontal': as_dict.pop('offsetHorizontal', None),
-            'offset_vertical': as_dict.pop('offsetVertical', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'id': as_dict.get('id', None),
+            'name': as_dict.get('name', None),
+            'offset_horizontal': as_dict.get('offsetHorizontal', None),
+            'offset_vertical': as_dict.get('offsetVertical', None),
         }
 
         return cls(**kwargs)
@@ -201,8 +201,8 @@ class DependencyWheelNodeOptions(NodeOptions):
         self._column = None
         self._level = None
 
-        self.column = kwargs.pop('column', None)
-        self.level = kwargs.pop('level', None)
+        self.column = kwargs.get('column', None)
+        self.level = kwargs.get('level', None)
 
         super().__init__(**kwargs)
 
@@ -259,16 +259,16 @@ class DependencyWheelNodeOptions(NodeOptions):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'id': as_dict.pop('id', None),
-            'name': as_dict.pop('name', None),
-            'offset_horizontal': as_dict.pop('offsetHorizontal', None),
-            'offset_vertical': as_dict.pop('offsetVertical', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'id': as_dict.get('id', None),
+            'name': as_dict.get('name', None),
+            'offset_horizontal': as_dict.get('offsetHorizontal', None),
+            'offset_vertical': as_dict.get('offsetVertical', None),
 
-            'column': as_dict.pop('column', None),
-            'level': as_dict.pop('level', None),
+            'column': as_dict.get('column', None),
+            'level': as_dict.get('level', None),
         }
 
         return cls(**kwargs)
@@ -294,9 +294,9 @@ class OrganizationNodeOptions(DependencyWheelNodeOptions):
         self._layout = None
         self._title = None
 
-        self.image = kwargs.pop('image', None)
-        self.layout = kwargs.pop('layout', None)
-        self.title = kwargs.pop('title', None)
+        self.image = kwargs.get('image', None)
+        self.layout = kwargs.get('layout', None)
+        self.title = kwargs.get('title', None)
 
         super().__init__(**kwargs)
 
@@ -373,20 +373,20 @@ class OrganizationNodeOptions(DependencyWheelNodeOptions):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'data_labels': as_dict.pop('dataLabels', None),
-            'id': as_dict.pop('id', None),
-            'name': as_dict.pop('name', None),
-            'offset_horizontal': as_dict.pop('offsetHorizontal', None),
-            'offset_vertical': as_dict.pop('offsetVertical', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'id': as_dict.get('id', None),
+            'name': as_dict.get('name', None),
+            'offset_horizontal': as_dict.get('offsetHorizontal', None),
+            'offset_vertical': as_dict.get('offsetVertical', None),
 
-            'column': as_dict.pop('column', None),
-            'level': as_dict.pop('level', None),
+            'column': as_dict.get('column', None),
+            'level': as_dict.get('level', None),
 
-            'image': as_dict.pop('image', None),
-            'layout': as_dict.pop('layout', None),
-            'title': as_dict.pop('title', None),
+            'image': as_dict.get('image', None),
+            'layout': as_dict.get('layout', None),
+            'title': as_dict.get('title', None),
         }
 
         return cls(**kwargs)

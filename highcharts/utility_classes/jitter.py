@@ -28,8 +28,8 @@ class Jitter(HighchartsMeta):
         self._x = None
         self._y = None
 
-        self.x = kwargs.pop('x', None)
-        self.y = kwargs.pop('y', None)
+        self.x = kwargs.get('x', None)
+        self.y = kwargs.get('y', None)
 
     @property
     def x(self) -> Optional[int | float | Decimal]:
@@ -58,8 +58,8 @@ class Jitter(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         return cls(**{
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None)
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None)
         })
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:

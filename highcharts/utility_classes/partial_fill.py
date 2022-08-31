@@ -21,7 +21,7 @@ class PartialFillOptions(HighchartsMeta):
     def __init__(self, **kwargs):
         self._fill = None
 
-        self.fill = kwargs.pop('fill', None)
+        self.fill = kwargs.get('fill', None)
 
     @property
     def fill(self) -> Optional[str | Gradient | Pattern]:
@@ -39,7 +39,7 @@ class PartialFillOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         return cls(**{
-            'fill': as_dict.pop('fill', None)
+            'fill': as_dict.get('fill', None)
         })
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:

@@ -58,10 +58,10 @@ class ASTNode(HighchartsMeta):
         self._tag_name = None
         self._text_content = None
 
-        self.attributes = kwargs.pop('attributes', None)
-        self.children = kwargs.pop('children', [])
-        self.tag_name = kwargs.pop('tag_name', None)
-        self.text_content = kwargs.pop('text_content', None)
+        self.attributes = kwargs.get('attributes', None)
+        self.children = kwargs.get('children', [])
+        self.tag_name = kwargs.get('tag_name', None)
+        self.text_content = kwargs.get('text_content', None)
 
     @property
     def attributes(self) -> Optional[AttributeObject]:
@@ -127,10 +127,10 @@ class ASTNode(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'attributes': as_dict.pop('attributes', None),
-            'children': as_dict.pop('children', []),
-            'tag_name': as_dict.pop('tagName', None),
-            'text_content': as_dict.pop('textContent', None)
+            'attributes': as_dict.get('attributes', None),
+            'children': as_dict.get('children', []),
+            'tag_name': as_dict.get('tagName', None),
+            'text_content': as_dict.get('textContent', None)
         }
 
         return cls(**kwargs)
@@ -177,8 +177,8 @@ class TextPath(HighchartsMeta):
         self._attributes = None
         self._enabled = None
 
-        self.attributes = kwargs.pop('attributes', None)
-        self.enabled = kwargs.pop('enabled', None)
+        self.attributes = kwargs.get('attributes', None)
+        self.enabled = kwargs.get('enabled', None)
 
     @property
     def attributes(self) -> Optional[AttributeObject]:
@@ -212,8 +212,8 @@ class TextPath(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'attributes': as_dict.pop('attributes', None),
-            'enabled': as_dict.pop('enabled', None)
+            'attributes': as_dict.get('attributes', None),
+            'enabled': as_dict.get('enabled', None)
         }
 
         return cls(**kwargs)

@@ -32,16 +32,16 @@ class DataGroupingOptions(HighchartsMeta):
         self._last_anchor = None
         self._units = None
 
-        self.anchor = kwargs.pop('anchor', None)
-        self.approximation = kwargs.pop('approximation', None)
-        self.date_time_label_formats = kwargs.pop('date_time_label_formats', None)
-        self.enabled = kwargs.pop('enabled', None)
-        self.first_anchor = kwargs.pop('first_anchor', None)
-        self.forced = kwargs.pop('forced', None)
-        self.group_all = kwargs.pop('group_all', None)
-        self.group_pixel_width = kwargs.pop('group_pixel_width', None)
-        self.last_anchor = kwargs.pop('last_anchor', None)
-        self.units = kwargs.pop('units', None)
+        self.anchor = kwargs.get('anchor', None)
+        self.approximation = kwargs.get('approximation', None)
+        self.date_time_label_formats = kwargs.get('date_time_label_formats', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.first_anchor = kwargs.get('first_anchor', None)
+        self.forced = kwargs.get('forced', None)
+        self.group_all = kwargs.get('group_all', None)
+        self.group_pixel_width = kwargs.get('group_pixel_width', None)
+        self.last_anchor = kwargs.get('last_anchor', None)
+        self.units = kwargs.get('units', None)
 
     @property
     def anchor(self) -> Optional[str]:
@@ -336,16 +336,16 @@ class DataGroupingOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'anchor': as_dict.pop('anchor', None),
-            'approximation': as_dict.pop('approximation', None),
-            'date_time_label_formats': as_dict.pop('dateTimeLabelFormats', None),
-            'enabled': as_dict.pop('enabled', None),
-            'first_anchor': as_dict.pop('firstAnchor', None),
-            'forced': as_dict.pop('forced', None),
-            'group_all': as_dict.pop('groupAll', None),
-            'group_pixel_width': as_dict.pop('groupPixelWidth', None),
-            'last_anchor': as_dict.pop('lastAnchor', None),
-            'units': as_dict.pop('units', None)
+            'anchor': as_dict.get('anchor', None),
+            'approximation': as_dict.get('approximation', None),
+            'date_time_label_formats': as_dict.get('dateTimeLabelFormats', None),
+            'enabled': as_dict.get('enabled', None),
+            'first_anchor': as_dict.get('firstAnchor', None),
+            'forced': as_dict.get('forced', None),
+            'group_all': as_dict.get('groupAll', None),
+            'group_pixel_width': as_dict.get('groupPixelWidth', None),
+            'last_anchor': as_dict.get('lastAnchor', None),
+            'units': as_dict.get('units', None)
         }
 
         return cls(**kwargs)
