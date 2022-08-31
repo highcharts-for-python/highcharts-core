@@ -5,11 +5,11 @@ from validator_collection import validators, checkers
 
 from highcharts import constants, errors
 from highcharts.decorators import class_sensitive
-from highcharts.series.data.bar import BarCartesianData
+from highcharts.series.data.bar import BarData
 from highcharts.plot_options.bullet import TargetOptions
 
 
-class BulletData(BarCartesianData):
+class BulletData(BarData):
     """Variant of :class:`BarCartesianData` which is used for data points in a bullet
     chart."""
 
@@ -17,8 +17,8 @@ class BulletData(BarCartesianData):
         self._target = None
         self._target_options = None
 
-        self.target = kwargs.pop('target', None)
-        self.target_options = kwargs.pop('target_options', None)
+        self.target = kwargs.get('target', None)
+        self.target_options = kwargs.get('target_options', None)
 
         super().__init__(**kwargs)
 
@@ -111,32 +111,32 @@ class BulletData(BarCartesianData):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelrank', None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'drilldown': as_dict.pop('drilldown', None),
-            'marker': as_dict.pop('marker', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'drilldown': as_dict.get('drilldown', None),
+            'marker': as_dict.get('marker', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
 
-            'border_color': as_dict.pop('borderColor', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'dash_style': as_dict.pop('dashStyle', None),
-            'point_width': as_dict.pop('pointWidth', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'point_width': as_dict.get('pointWidth', None),
 
-            'target': as_dict.pop('target', None),
-            'target_options': as_dict.pop('targetOptions', None),
+            'target': as_dict.get('target', None),
+            'target_options': as_dict.get('targetOptions', None),
 
         }
 
