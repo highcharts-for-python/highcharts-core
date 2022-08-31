@@ -17,8 +17,8 @@ class ConnectionBase(DataBase):
         self._from_ = None
         self._to = None
 
-        self.from_ = kwargs.pop('from_', None)
-        self.to = kwargs.pop('to', None)
+        self.from_ = kwargs.get('from_', None)
+        self.to = kwargs.get('to', None)
 
         super().__init__(**kwargs)
 
@@ -90,26 +90,31 @@ class ConnectionBase(DataBase):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelrank',
+                                      None) or as_dict.get('labelRank',
+                                                           None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'from_': as_dict.pop('from', None),
-            'to': as_dict.pop('to', None),
+            'from_': as_dict.get('from', None),
+            'to': as_dict.get('to', None),
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
+            'from': self.from_,
+            'to': self.to,
+
             'accessibility': self.accessibility,
             'className': self.class_name,
             'color': self.color,
@@ -121,9 +126,6 @@ class ConnectionBase(DataBase):
             'labelrank': self.label_rank,
             'name': self.name,
             'selected': self.selected,
-
-            'from': self.from_,
-            'to': self.to,
         }
 
         return untrimmed
@@ -136,8 +138,8 @@ class ConnectionData(ConnectionBase):
         self._data_labels = None
         self._drag_drop = None
 
-        self.data_labels = kwargs.pop('data_labels', None)
-        self.drag_drop = kwargs.pop('drag_drop', None)
+        self.data_labels = kwargs.get('data_labels', None)
+        self.drag_drop = kwargs.get('drag_drop', None)
 
         super().__init__(**kwargs)
 
@@ -219,22 +221,24 @@ class ConnectionData(ConnectionBase):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelrank',
+                                      None) or as_dict.get('labelRank',
+                                                           None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'from_': as_dict.pop('from', None),
-            'to': as_dict.pop('to', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'from_': as_dict.get('from', None),
+            'to': as_dict.get('to', None),
         }
 
         return kwargs
@@ -252,14 +256,14 @@ class ConnectionData(ConnectionBase):
         return untrimmed
 
 
-class WeightedConnectionData(ConnectionBase):
+class WeightedConnectionData(ConnectionData):
     """Variant of :class:`ConnectionData` that also applies a ``weight`` to the
     connection."""
 
     def __init__(self, **kwargs):
         self._weight = None
 
-        self.weight = kwargs.pop('weight', None)
+        self.weight = kwargs.get('weight', None)
 
         super().__init__(**kwargs)
 
@@ -319,28 +323,40 @@ class WeightedConnectionData(ConnectionBase):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelrank',
+                                      None) or as_dict.get('labelRank',
+                                                           None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'from_': as_dict.pop('from', None),
-            'to': as_dict.pop('to', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'from_': as_dict.get('from', None),
+            'to': as_dict.get('to', None),
 
-            'weight': as_dict.pop('weight', None),
+            'weight': as_dict.get('weight', None),
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
+            'weight': self.weight,
+
+            'dataLabels': self.data_labels,
+            'dragDrop': self.drag_drop,
+
+            'from': self.from_,
+            'to': self.to,
+
             'accessibility': self.accessibility,
             'className': self.class_name,
             'color': self.color,
@@ -351,24 +367,19 @@ class WeightedConnectionData(ConnectionBase):
             'id': self.id,
             'labelrank': self.label_rank,
             'name': self.name,
-            'selected': self.selected,
-
-            'from': self.from_,
-            'to': self.to,
-
-            'weight': self.weight,
+            'selected': self.selected
         }
 
         return untrimmed
 
 
-class OutgoingWeightedConnectionData(ConnectionBase):
+class OutgoingWeightedConnectionData(WeightedConnectionData):
     """Variant of :class:`WeightedConnectionData` that supports the ``outoging`` flag."""
 
     def __init__(self, **kwargs):
         self._outgoing = None
 
-        self.outgoing = kwargs.pop('outgoing', None)
+        self.outgoing = kwargs.get('outgoing', None)
 
         super().__init__(**kwargs)
 
@@ -433,24 +444,28 @@ class OutgoingWeightedConnectionData(ConnectionBase):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'outgoing': as_dict.get('outgoing', None),
 
-            'from_': as_dict.pop('from', None),
-            'to': as_dict.pop('to', None),
+            'weight': as_dict.get('weight', None),
 
-            'weight': as_dict.pop('weight', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'from_': as_dict.get('from', None),
+            'to': as_dict.get('to', None),
 
-            'outgoing': as_dict.pop('outgoing', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelrank',
+                                      None) or as_dict.get('labelRank',
+                                                           None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None)
         }
 
         return kwargs
