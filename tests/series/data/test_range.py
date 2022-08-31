@@ -387,8 +387,6 @@ STANDARD_PARAMS_2 = [
           'liveRedraw': True
       },
       'drilldown': 'some-id-goes-here',
-      'high': 123,
-      'low': 12,
       'marker': {
         'enabled': True,
         'fillColor': '#cccccc',
@@ -403,7 +401,8 @@ STANDARD_PARAMS_2 = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category'
+      'x': 'some category',
+      'y': 123
     }, None),
     # + DataBase Options
     ({
@@ -493,8 +492,6 @@ STANDARD_PARAMS_2 = [
           'liveRedraw': True
       },
       'drilldown': 'some-id-goes-here',
-      'high': 123,
-      'low': 12,
       'marker': {
         'enabled': True,
         'fillColor': '#cccccc',
@@ -510,6 +507,7 @@ STANDARD_PARAMS_2 = [
         'width': 48
       },
       'x': 'some category',
+      'y': 123,
 
       'accessibility': {
           'description': 'Some description goes here',

@@ -16,11 +16,11 @@ class ShadowOptions(HighchartsMeta):
         self._opacity = None
         self._width = None
 
-        self.color = kwargs.pop('color', None)
-        self.offset_x = kwargs.pop('offset_x', None)
-        self.offset_y = kwargs.pop('offset_y', None)
-        self.opacity = kwargs.pop('opacity', None)
-        self.width = kwargs.pop('width', None)
+        self.color = kwargs.get('color', None)
+        self.offset_x = kwargs.get('offset_x', None)
+        self.offset_y = kwargs.get('offset_y', None)
+        self.opacity = kwargs.get('opacity', None)
+        self.width = kwargs.get('width', None)
 
     @property
     def color(self) -> Optional[str]:
@@ -86,11 +86,11 @@ class ShadowOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'color': as_dict.pop('color', None),
-            'offset_x': as_dict.pop('offsetX', None),
-            'offset_y': as_dict.pop('offsetY', None),
-            'opacity': as_dict.pop('opacity', None),
-            'width': as_dict.pop('width', None)
+            'color': as_dict.get('color', None),
+            'offset_x': as_dict.get('offsetX', None),
+            'offset_y': as_dict.get('offsetY', None),
+            'opacity': as_dict.get('opacity', None),
+            'width': as_dict.get('width', None)
         }
         return cls(**kwargs)
 

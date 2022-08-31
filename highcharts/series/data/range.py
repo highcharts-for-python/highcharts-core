@@ -8,6 +8,7 @@ from validator_collection import validators, checkers
 from highcharts import constants, errors
 from highcharts.decorators import class_sensitive
 from highcharts.series.data.base import DataBase
+from highcharts.series.data.cartesian import CartesianData
 from highcharts.plot_options.drag_drop import DragDropOptions
 from highcharts.utility_classes.data_labels import DataLabel
 from highcharts.utility_classes.markers import Marker
@@ -272,8 +273,9 @@ class RangeData(DataBase):
         return untrimmed
 
 
-class ConnectedRangeData(RangeData):
-    """Variant of :class:`RangeData` which extends the class with connector attributes."""
+class ConnectedRangeData(CartesianData):
+    """Variant of :class:`CartesianData` which extends the class with connector
+    attributes."""
 
     def __init__(self, **kwargs):
         self._connector_color = None
@@ -358,10 +360,9 @@ class ConnectedRangeData(RangeData):
             'data_labels': as_dict.get('dataLabels', None),
             'drag_drop': as_dict.get('dragDrop', None),
             'drilldown': as_dict.get('drilldown', None),
-            'high': as_dict.get('high', None),
-            'low': as_dict.get('low', None),
             'marker': as_dict.get('marker', None),
             'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
 
             'connector_color': as_dict.get('connectorColor', None),
             'connector_width': as_dict.get('connectorWidth', None),
