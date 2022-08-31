@@ -21,15 +21,15 @@ class BoxPlotData(CartesianData):
         self._stem_dash_style = None
         self._whisker_dash_style = None
 
-        self.box_dash_style = kwargs.pop('box_dash_style', None)
-        self.high = kwargs.pop('high', None)
-        self.low = kwargs.pop('low', None)
-        self.median = kwargs.pop('median', None)
-        self.median_dash_style = kwargs.pop('median_dash_style', None)
-        self.q1 = kwargs.pop('q1', None)
-        self.q3 = kwargs.pop('q3', None)
-        self.stem_dash_style = kwargs.pop('stem_dash_style', None)
-        self.whisker_dash_style = kwargs.pop('whisker_dash_style', None)
+        self.box_dash_style = kwargs.get('box_dash_style', None)
+        self.high = kwargs.get('high', None)
+        self.low = kwargs.get('low', None)
+        self.median = kwargs.get('median', None)
+        self.median_dash_style = kwargs.get('median_dash_style', None)
+        self.q1 = kwargs.get('q1', None)
+        self.q3 = kwargs.get('q3', None)
+        self.stem_dash_style = kwargs.get('stem_dash_style', None)
+        self.whisker_dash_style = kwargs.get('whisker_dash_style', None)
 
         super().__init__(**kwargs)
 
@@ -302,34 +302,34 @@ class BoxPlotData(CartesianData):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelrank', None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'drilldown': as_dict.pop('drilldown', None),
-            'marker': as_dict.pop('marker', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'drilldown': as_dict.get('drilldown', None),
+            'marker': as_dict.get('marker', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
 
-            'box_dash_style': as_dict.pop('boxDashStyle', None),
-            'high': as_dict.pop('high', None),
-            'low': as_dict.pop('low', None),
-            'median': as_dict.pop('median', None),
-            'median_dash_style': as_dict.pop('medianDashStyle', None),
-            'q1': as_dict.pop('q1', None),
-            'q3': as_dict.pop('q3', None),
-            'stem_dash_style': as_dict.pop('stemDashStyle', None),
-            'whisker_dash_style': as_dict.pop('whiskerDashStyle', None),
+            'box_dash_style': as_dict.get('boxDashStyle', None),
+            'high': as_dict.get('high', None),
+            'low': as_dict.get('low', None),
+            'median': as_dict.get('median', None),
+            'median_dash_style': as_dict.get('medianDashStyle', None),
+            'q1': as_dict.get('q1', None),
+            'q3': as_dict.get('q3', None),
+            'stem_dash_style': as_dict.get('stemDashStyle', None),
+            'whisker_dash_style': as_dict.get('whiskerDashStyle', None),
         }
 
         return kwargs
