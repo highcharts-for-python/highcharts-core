@@ -245,7 +245,7 @@ class ConnectionData(ConnectionBase):
             'dragDrop': self.drag_drop,
         }
 
-        parent_as_dict = super()._to_untrimmed_dict() or {}
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
@@ -460,7 +460,7 @@ class OutgoingWeightedConnectionData(ConnectionBase):
             'outgoing': self.outgoing
         }
 
-        parent_as_dict = super()._to_untrimmed_dict() or {}
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 

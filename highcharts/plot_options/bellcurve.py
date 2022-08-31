@@ -123,7 +123,7 @@ class BellCurveOptions(AreaOptions):
         untrimmed = {
             'intervals': self.intervals
         }
-        parent_as_dict = super()._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]

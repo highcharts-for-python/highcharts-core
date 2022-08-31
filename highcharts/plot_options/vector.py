@@ -185,7 +185,7 @@ class VectorOptions(SeriesOptions):
             'rotationOrigin': self.rotation_origin,
             'vectorLength': self.vector_length
         }
-        parent_as_dict = super()._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]

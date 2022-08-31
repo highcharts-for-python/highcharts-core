@@ -688,7 +688,7 @@ class AnnotationLabel(LabelOptions):
         untrimmed = {
             'point': self.point
         }
-        parent_as_dict = super()._to_untrimmed_dict() or {}
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 

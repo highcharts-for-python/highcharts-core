@@ -187,7 +187,7 @@ class LevelOptions(BaseLevelOptions):
             'linkOpacity': self.link_opacity,
             'states': self.states
         }
-        parent_as_dict = super()._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
@@ -441,7 +441,7 @@ class SunburstLevelOptions(BaseLevelOptions):
             'levelSize': self.level_size
         }
 
-        parent_as_dict = super()._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
@@ -612,7 +612,7 @@ class TreemapLevelOptions(BaseLevelOptions):
             'layoutStartingDirection': self.layout_starting_direction
         }
 
-        parent_as_dict = super()._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 

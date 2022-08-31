@@ -167,7 +167,7 @@ class BarData(CartesianData):
             'pointWidth': self.point_width,
         }
 
-        parent_as_dict = super()._to_untrimmed_dict() or {}
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
@@ -275,7 +275,7 @@ class WaterfallData(CartesianData):
             'isSum': self.is_sum,
         }
 
-        parent_as_dict = super()._to_untrimmed_dict() or {}
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
@@ -420,7 +420,7 @@ class WindBarbData(CartesianData):
             'value': self.value,
         }
 
-        parent_as_dict = super()._to_untrimmed_dict() or {}
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
@@ -599,7 +599,7 @@ class XRangeData(CartesianData):
             'x2': self.x2,
         }
 
-        parent_as_dict = super()._to_untrimmed_dict() or {}
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 

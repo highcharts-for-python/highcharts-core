@@ -193,7 +193,7 @@ class HeatmapOptions(SeriesOptions):
             'rowsize': self.rowsize
         }
 
-        parent_as_dict = super()._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
@@ -343,7 +343,7 @@ class TilemapOptions(HeatmapOptions):
             'tileShape': self.tile_shape
         }
 
-        parent_as_dict = super()._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 

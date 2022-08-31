@@ -303,7 +303,7 @@ class VariablePieSeries(PieSeries):
             'z_max': self.z_max,
             'z_min': self.z_min
         }
-        parent_as_dict = super()._to_untrimmed_dict()
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
