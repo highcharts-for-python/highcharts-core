@@ -534,7 +534,10 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
 
 
 def Class_from_dict(cls, kwargs, error):
-    as_dict = to_js_dict(deepcopy(kwargs))
+    if kwargs:
+        as_dict = to_js_dict(deepcopy(kwargs))
+    else:
+        as_dict = {}
 
     if not error:
         instance = cls.from_dict(as_dict)
