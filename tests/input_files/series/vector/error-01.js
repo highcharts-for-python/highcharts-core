@@ -1,4 +1,11 @@
 {
+  data: [
+    'invalid value',
+    {
+      direction: 45,
+      length: 12
+    }
+  ],
   cluster: {
     allowOverlap: true,
     animation: {
