@@ -18,9 +18,9 @@ class WordcloudData(DataBase):
         self._drag_drop = None
         self._weight = None
 
-        self.data_labels = kwargs.pop('data_labels', None)
-        self.drag_drop = kwargs.pop('drag_drop', None)
-        self.weight = kwargs.pop('weight', None)
+        self.data_labels = kwargs.get('data_labels', None)
+        self.drag_drop = kwargs.get('drag_drop', None)
+        self.weight = kwargs.get('weight', None)
 
         super().__init__(**kwargs)
 
@@ -119,28 +119,33 @@ class WordcloudData(DataBase):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelrank', None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
 
-            'weight': as_dict.pop('weight', None),
+            'weight': as_dict.get('weight', None),
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
+            'dataLabels': self.data_labels,
+            'dragDrop': self.drag_drop,
+
+            'weight': self.weight,
+
             'accessibility': self.accessibility,
             'className': self.class_name,
             'color': self.color,
@@ -153,10 +158,7 @@ class WordcloudData(DataBase):
             'name': self.name,
             'selected': self.selected,
 
-            'dataLabels': self.data_labels,
-            'dragDrop': self.drag_drop,
 
-            'weight': self.weight,
         }
 
         return untrimmed
