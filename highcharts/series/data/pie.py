@@ -17,7 +17,7 @@ class PieData(SinglePointData):
     def __init__(self, **kwargs):
         self._sliced = None
 
-        self.sliced = kwargs.pop('sliced', None)
+        self.sliced = kwargs.get('sliced', None)
 
         super().__init__(**kwargs)
 
@@ -51,23 +51,23 @@ class PieData(SinglePointData):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelrank', None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'drilldown': as_dict.pop('drilldown', None),
-            'sliced': as_dict.pop('sliced', None),
-            'y': as_dict.pop('y', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'drilldown': as_dict.get('drilldown', None),
+            'sliced': as_dict.get('sliced', None),
+            'y': as_dict.get('y', None),
         }
 
         return kwargs
@@ -91,8 +91,8 @@ class VariablePieData(PieData):
         self._sliced = None
         self._z = None
 
-        self.sliced = kwargs.pop('sliced', None)
-        self.z = kwargs.pop('z', None)
+        self.sliced = kwargs.get('sliced', None)
+        self.z = kwargs.get('z', None)
 
         super().__init__(**kwargs)
 
@@ -160,25 +160,25 @@ class VariablePieData(PieData):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelrank', None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'drilldown': as_dict.pop('drilldown', None),
-            'sliced': as_dict.pop('sliced', None),
-            'y': as_dict.pop('y', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'drilldown': as_dict.get('drilldown', None),
+            'sliced': as_dict.get('sliced', None),
+            'y': as_dict.get('y', None),
 
-            'z': as_dict.pop('z', None),
+            'z': as_dict.get('z', None),
         }
 
         return kwargs
