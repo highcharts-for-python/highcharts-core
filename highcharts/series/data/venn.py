@@ -20,11 +20,11 @@ class VennData(DataBase):
         self._sets = None
         self._value = None
 
-        self.data_labels = kwargs.pop('data_labels', None)
-        self.drag_drop = kwargs.pop('drag_drop', None)
-        self.drilldown = kwargs.pop('drilldown', None)
-        self.sets = kwargs.pop('sets', None)
-        self.value = kwargs.pop('value', None)
+        self.data_labels = kwargs.get('data_labels', None)
+        self.drag_drop = kwargs.get('drag_drop', None)
+        self.drilldown = kwargs.get('drilldown', None)
+        self.sets = kwargs.get('sets', None)
+        self.value = kwargs.get('value', None)
 
         super().__init__(**kwargs)
 
@@ -156,24 +156,24 @@ class VennData(DataBase):
 
         """
         kwargs = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'class_name': as_dict.pop('className', None),
-            'color': as_dict.pop('color', None),
-            'color_index': as_dict.pop('colorIndex', None),
-            'custom': as_dict.pop('custom', None),
-            'description': as_dict.pop('description', None),
-            'events': as_dict.pop('events', None),
-            'id': as_dict.pop('id', None),
-            'label_rank': as_dict.pop('labelrank', None),
-            'name': as_dict.pop('name', None),
-            'selected': as_dict.pop('selected', None),
+            'accessibility': as_dict.get('accessibility', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'custom': as_dict.get('custom', None),
+            'description': as_dict.get('description', None),
+            'events': as_dict.get('events', None),
+            'id': as_dict.get('id', None),
+            'label_rank': as_dict.get('labelrank', None),
+            'name': as_dict.get('name', None),
+            'selected': as_dict.get('selected', None),
 
-            'data_labels': as_dict.pop('dataLabels', None),
-            'drag_drop': as_dict.pop('dragDrop', None),
-            'drilldown': as_dict.pop('drilldown', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'drilldown': as_dict.get('drilldown', None),
 
-            'sets': as_dict.pop('sets', None),
-            'value': as_dict.pop('value', None),
+            'sets': as_dict.get('sets', None),
+            'value': as_dict.get('value', None),
 
         }
 
@@ -181,6 +181,13 @@ class VennData(DataBase):
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
+            'dataLabels': self.data_labels,
+            'dragDrop': self.drag_drop,
+            'drilldown': self.drilldown,
+
+            'sets': self.sets,
+            'value': self.value,
+
             'accessibility': self.accessibility,
             'className': self.class_name,
             'color': self.color,
@@ -192,13 +199,6 @@ class VennData(DataBase):
             'labelrank': self.label_rank,
             'name': self.name,
             'selected': self.selected,
-
-            'dataLabels': self.data_labels,
-            'dragDrop': self.drag_drop,
-            'drilldown': self.drilldown,
-
-            'sets': self.sets,
-            'value': self.value,
         }
 
         return untrimmed
