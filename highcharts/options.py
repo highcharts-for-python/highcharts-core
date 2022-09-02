@@ -1,11 +1,14 @@
-"""Implements the :class:`HighchartOptions` class."""
+"""Implements the :class:`HighchartsOptions` class."""
 from typing import Optional, List
 
 from validator_collection import validators
 
+from highcharts import utility_functions
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.decorators import class_sensitive
 from highcharts.constants import DEFAULT_COLORS
+from highcharts.utility_classes.gradients import Gradient
+from highcharts.utility_classes.patterns import Pattern
 
 from highcharts.accessibility import Accessibility
 from highcharts.annotations import Annotation
@@ -75,29 +78,29 @@ class Options(HighchartsMeta):
         self._x_axis = None
         self._y_axis = None
 
-        self.accessibility = kwargs.pop('accessibility', None)
-        self.annotations = kwargs.pop('annotations', None)
-        self.caption = kwargs.pop('caption', None)
-        self.chart = kwargs.pop('chart', None)
-        self.color_axis = kwargs.pop('color_axis', None)
-        self.colors = kwargs.pop('colors', DEFAULT_COLORS)
-        self.credits = kwargs.pop('credits', None)
-        self.data = kwargs.pop('data', None)
-        self.defs = kwargs.pop('defs', None)
-        self.exporting = kwargs.pop('exporting', None)
-        self.language = kwargs.pop('language', None)
-        self.legend = kwargs.pop('legend', None)
-        self.loading = kwargs.pop('loading', None)
-        self.navigation = kwargs.pop('navigation', None)
-        self.plot_options = kwargs.pop('plot_options', None)
-        self.responsive = kwargs.pop('responsive', None)
-        self.series = kwargs.pop('series', None)
-        self.subtitle = kwargs.pop('subtitle', None)
-        self.time = kwargs.pop('time', None)
-        self.title = kwargs.pop('title', None)
-        self.tooltip = kwargs.pop('tooltip', None)
-        self.x_axis = kwargs.pop('x_axis', None)
-        self.y_axis = kwargs.pop('y_axis', None)
+        self.accessibility = kwargs.get('accessibility', None)
+        self.annotations = kwargs.get('annotations', None)
+        self.caption = kwargs.get('caption', None)
+        self.chart = kwargs.get('chart', None)
+        self.color_axis = kwargs.get('color_axis', None)
+        self.colors = kwargs.get('colors', None)
+        self.credits = kwargs.get('credits', None)
+        self.data = kwargs.get('data', None)
+        self.defs = kwargs.get('defs', None)
+        self.exporting = kwargs.get('exporting', None)
+        self.language = kwargs.get('language', None)
+        self.legend = kwargs.get('legend', None)
+        self.loading = kwargs.get('loading', None)
+        self.navigation = kwargs.get('navigation', None)
+        self.plot_options = kwargs.get('plot_options', None)
+        self.responsive = kwargs.get('responsive', None)
+        self.series = kwargs.get('series', None)
+        self.subtitle = kwargs.get('subtitle', None)
+        self.time = kwargs.get('time', None)
+        self.title = kwargs.get('title', None)
+        self.tooltip = kwargs.get('tooltip', None)
+        self.x_axis = kwargs.get('x_axis', None)
+        self.y_axis = kwargs.get('y_axis', None)
 
     @property
     def accessibility(self) -> Optional[Accessibility]:
@@ -224,7 +227,7 @@ class Options(HighchartsMeta):
         self._color_axis = value
 
     @property
-    def colors(self) -> Optional[List[str]]:
+    def colors(self) -> Optional[List[str | Gradient | Pattern]]:
         """An array containing the default colors for the chart's series.
 
         When all colors are used, new colors are pulled from the start again.
@@ -243,7 +246,18 @@ class Options(HighchartsMeta):
 
           .. code-block:: python
 
-            ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80", "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"]
+            [
+                "#7cb5ec",
+                "#434348",
+                "#90ed7d",
+                "#f7a35c",
+                "#8085e9",
+                "#f15c80",
+                "#e4d354",
+                "#2b908f",
+                "#f45b5b",
+                "#91e8e1"
+            ]
 
         :returns: A collection of hex color strings.
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`
@@ -251,9 +265,12 @@ class Options(HighchartsMeta):
         return self._colors
 
     @colors.setter
-    @class_sensitive(str, force_iterable = True)
     def colors(self, value):
-        self._colors = value
+        if not value:
+            self._colors = None
+        else:
+            value = validators.iterable(value)
+            self._colors = [utility_functions.validate_color(x) for x in value]
 
     @property
     def credits(self) -> Optional[Credits]:
@@ -572,7 +589,7 @@ class Options(HighchartsMeta):
         self._y_axis = value
 
 
-class HighchartOptions(HighchartsMeta):
+class HighchartsOptions(Options):
     """The Python representation of the `Highcharts <https://highcharts.com>`_
     ``options`` `configuration object <https://api.highcharts.com/highcharts/>`_."""
 
@@ -583,11 +600,11 @@ class HighchartOptions(HighchartsMeta):
         self._pane = None
         self._z_axis = None
 
-        self.boost = kwargs.pop('boost', None)
-        self.drilldown = kwargs.pop('drilldown', None)
-        self.no_data = kwargs.pop('no_data', None)
-        self.pane = kwargs.pop('pane', None)
-        self.z_axis = kwargs.pop('z_axis', None)
+        self.boost = kwargs.get('boost', None)
+        self.drilldown = kwargs.get('drilldown', None)
+        self.no_data = kwargs.get('no_data', None)
+        self.pane = kwargs.get('pane', None)
+        self.z_axis = kwargs.get('z_axis', None)
 
         super().__init__(**kwargs)
 
@@ -701,36 +718,36 @@ class HighchartOptions(HighchartsMeta):
 
     @classmethod
     def from_dict(cls, as_dict):
-        as_dict = validators.dict(as_dict, allow_empty = True)
+        as_dict = validators.dict(as_dict, allow_empty = True) or {}
         kwargs_dict = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'annotations': as_dict.pop('annotations', None),
-            'boost': as_dict.pop('boost', None),
-            'caption': as_dict.pop('caption', None),
-            'chart': as_dict.pop('chart', None),
-            'color_axis': as_dict.pop('colorAxis', None),
-            'colors': as_dict.pop('colors', DEFAULT_COLORS),
-            'credits': as_dict.pop('credits', None),
-            'data': as_dict.pop('data', None),
-            'defs': as_dict.pop('defs', None),
-            'drilldown': as_dict.pop('drilldown', None),
-            'exporting': as_dict.pop('exporting', None),
-            'language': as_dict.pop('lang', None),
-            'legend': as_dict.pop('legend', None),
-            'loading': as_dict.pop('loading', None),
-            'navigation': as_dict.pop('navigation', None),
-            'no_data': as_dict.pop('noData', None),
-            'pane': as_dict.pop('pane', None),
-            'plot_options': as_dict.pop('plotOptions', None),
-            'responsive': as_dict.pop('responsive', None),
-            'series': as_dict.pop('series', None),
-            'subtitle': as_dict.pop('subtitle', None),
-            'time': as_dict.pop('time', None),
-            'title': as_dict.pop('title', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'x_axis': as_dict.pop('xAxis', None),
-            'y_axis': as_dict.pop('yAxis', None),
-            'z_axis': as_dict.pop('zAxis', None)
+            'accessibility': as_dict.get('accessibility', None),
+            'annotations': as_dict.get('annotations', None),
+            'boost': as_dict.get('boost', None),
+            'caption': as_dict.get('caption', None),
+            'chart': as_dict.get('chart', None),
+            'color_axis': as_dict.get('colorAxis', None),
+            'colors': as_dict.get('colors', None),
+            'credits': as_dict.get('credits', None),
+            'data': as_dict.get('data', None),
+            'defs': as_dict.get('defs', None),
+            'drilldown': as_dict.get('drilldown', None),
+            'exporting': as_dict.get('exporting', None),
+            'language': as_dict.get('lang', None) or as_dict.get('language', None),
+            'legend': as_dict.get('legend', None),
+            'loading': as_dict.get('loading', None),
+            'navigation': as_dict.get('navigation', None),
+            'no_data': as_dict.get('noData', None),
+            'pane': as_dict.get('pane', None),
+            'plot_options': as_dict.get('plotOptions', None),
+            'responsive': as_dict.get('responsive', None),
+            'series': as_dict.get('series', None),
+            'subtitle': as_dict.get('subtitle', None),
+            'time': as_dict.get('time', None),
+            'title': as_dict.get('title', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'x_axis': as_dict.get('xAxis', None),
+            'y_axis': as_dict.get('yAxis', None),
+            'z_axis': as_dict.get('zAxis', None)
         }
 
         return cls(**kwargs_dict)
@@ -752,7 +769,7 @@ class HighchartOptions(HighchartsMeta):
             'lang': self.language,
             'legend': self.legend,
             'loading': self.loading,
-            'navigation': self.naviation,
+            'navigation': self.navigation,
             'noData': self.no_data,
             'pane': self.pane,
             'plotOptions': self.plot_options,
@@ -782,12 +799,12 @@ class HighchartsStockOptions(Options):
         self._scrollbar = None
         self._stock_tools = None
 
-        self.boost = kwargs.pop('boost', None)
-        self.navigator = kwargs.pop('navigator', None)
-        self.no_data = kwargs.pop('no_data', None)
-        self.range_selector = kwargs.pop('range_selector', None)
-        self.scrollbar = kwargs.pop('scrollbar', None)
-        self.stock_tools = kwargs.pop('stock_tools', None)
+        self.boost = kwargs.get('boost', None)
+        self.navigator = kwargs.get('navigator', None)
+        self.no_data = kwargs.get('no_data', None)
+        self.range_selector = kwargs.get('range_selector', None)
+        self.scrollbar = kwargs.get('scrollbar', None)
+        self.stock_tools = kwargs.get('stock_tools', None)
 
         super().__init__(**kwargs)
 
@@ -934,37 +951,37 @@ class HighchartsStockOptions(Options):
 
     @classmethod
     def from_dict(cls, as_dict):
-        as_dict = validators.dict(as_dict, allow_empty = True)
+        as_dict = validators.dict(as_dict, allow_empty = True) or {}
         kwargs_dict = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'annotations': as_dict.pop('annotations', None),
-            'boost': as_dict.pop('boost', None),
-            'caption': as_dict.pop('caption', None),
-            'chart': as_dict.pop('chart', None),
-            'color_axis': as_dict.pop('colorAxis', None),
-            'colors': as_dict.pop('colors', DEFAULT_COLORS),
-            'credits': as_dict.pop('credits', None),
-            'data': as_dict.pop('data', None),
-            'defs': as_dict.pop('defs', None),
-            'exporting': as_dict.pop('exporting', None),
-            'language': as_dict.pop('lang', None),
-            'legend': as_dict.pop('legend', None),
-            'loading': as_dict.pop('loading', None),
-            'navigation': as_dict.pop('navigation', None),
-            'navigator': as_dict.pop('navigator', None),
-            'no_data': as_dict.pop('noData', None),
-            'plot_options': as_dict.pop('plotOptions', None),
-            'range_selector': as_dict.pop('rangeSelector', None),
-            'responsive': as_dict.pop('responsive', None),
-            'scrollbar': as_dict.pop('scrollbar', None),
-            'series': as_dict.pop('series', None),
-            'stock_tools': as_dict.pop('stockTools', None),
-            'subtitle': as_dict.pop('subtitle', None),
-            'time': as_dict.pop('time', None),
-            'title': as_dict.pop('title', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'x_axis': as_dict.pop('xAxis', None),
-            'y_axis': as_dict.pop('yAxis', None)
+            'accessibility': as_dict.get('accessibility', None),
+            'annotations': as_dict.get('annotations', None),
+            'boost': as_dict.get('boost', None),
+            'caption': as_dict.get('caption', None),
+            'chart': as_dict.get('chart', None),
+            'color_axis': as_dict.get('colorAxis', None),
+            'colors': as_dict.get('colors', None),
+            'credits': as_dict.get('credits', None),
+            'data': as_dict.get('data', None),
+            'defs': as_dict.get('defs', None),
+            'exporting': as_dict.get('exporting', None),
+            'language': as_dict.get('lang', None),
+            'legend': as_dict.get('legend', None),
+            'loading': as_dict.get('loading', None),
+            'navigation': as_dict.get('navigation', None),
+            'navigator': as_dict.get('navigator', None),
+            'no_data': as_dict.get('noData', None),
+            'plot_options': as_dict.get('plotOptions', None),
+            'range_selector': as_dict.get('rangeSelector', None),
+            'responsive': as_dict.get('responsive', None),
+            'scrollbar': as_dict.get('scrollbar', None),
+            'series': as_dict.get('series', None),
+            'stock_tools': as_dict.get('stockTools', None),
+            'subtitle': as_dict.get('subtitle', None),
+            'time': as_dict.get('time', None),
+            'title': as_dict.get('title', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'x_axis': as_dict.get('xAxis', None),
+            'y_axis': as_dict.get('yAxis', None)
         }
 
         return cls(**kwargs_dict)
@@ -985,7 +1002,7 @@ class HighchartsStockOptions(Options):
             'lang': self.language,
             'legend': self.legend,
             'loading': self.loading,
-            'navigation': self.naviation,
+            'navigation': self.navigation,
             'navigator': self.navigator,
             'noData': self.no_data,
             'plotOptions': self.plot_options,
@@ -1014,9 +1031,9 @@ class HighchartsMapsOptions(HighchartsMeta):
         self._map_navigation = None
         self._map_view = None
 
-        self.drilldown = kwargs.pop('drilldown', None)
-        self.map_navigation = kwargs.pop('map_navigation', None)
-        self.map_view = kwargs.pop('map_view', None)
+        self.drilldown = kwargs.get('drilldown', None)
+        self.map_navigation = kwargs.get('map_navigation', None)
+        self.map_view = kwargs.get('map_view', None)
 
     @property
     def drilldown(self) -> Optional[Drilldown]:
@@ -1073,34 +1090,34 @@ class HighchartsMapsOptions(HighchartsMeta):
 
     @classmethod
     def from_dict(cls, as_dict):
-        as_dict = validators.dict(as_dict, allow_empty = True)
+        as_dict = validators.dict(as_dict, allow_empty = True) or {}
         kwargs_dict = {
-            'accessibility': as_dict.pop('accessibility', None),
-            'annotations': as_dict.pop('annotations', None),
-            'caption': as_dict.pop('caption', None),
-            'chart': as_dict.pop('chart', None),
-            'color_axis': as_dict.pop('colorAxis', None),
-            'colors': as_dict.pop('colors', DEFAULT_COLORS),
-            'credits': as_dict.pop('credits', None),
-            'data': as_dict.pop('data', None),
-            'defs': as_dict.pop('defs', None),
-            'drilldown': as_dict.pop('drilldown', None),
-            'exporting': as_dict.pop('exporting', None),
-            'language': as_dict.pop('lang', None),
-            'legend': as_dict.pop('legend', None),
-            'loading': as_dict.pop('loading', None),
-            'map_navigation': as_dict.pop('mapNavigation', None),
-            'map_view': as_dict.pop('mapView', None),
-            'navigation': as_dict.pop('navigation', None),
-            'plot_options': as_dict.pop('plotOptions', None),
-            'responsive': as_dict.pop('responsive', None),
-            'series': as_dict.pop('series', None),
-            'subtitle': as_dict.pop('subtitle', None),
-            'time': as_dict.pop('time', None),
-            'title': as_dict.pop('title', None),
-            'tooltip': as_dict.pop('tooltip', None),
-            'x_axis': as_dict.pop('xAxis', None),
-            'y_axis': as_dict.pop('yAxis', None)
+            'accessibility': as_dict.get('accessibility', None),
+            'annotations': as_dict.get('annotations', None),
+            'caption': as_dict.get('caption', None),
+            'chart': as_dict.get('chart', None),
+            'color_axis': as_dict.get('colorAxis', None),
+            'colors': as_dict.get('colors', None),
+            'credits': as_dict.get('credits', None),
+            'data': as_dict.get('data', None),
+            'defs': as_dict.get('defs', None),
+            'drilldown': as_dict.get('drilldown', None),
+            'exporting': as_dict.get('exporting', None),
+            'language': as_dict.get('lang', None),
+            'legend': as_dict.get('legend', None),
+            'loading': as_dict.get('loading', None),
+            'map_navigation': as_dict.get('mapNavigation', None),
+            'map_view': as_dict.get('mapView', None),
+            'navigation': as_dict.get('navigation', None),
+            'plot_options': as_dict.get('plotOptions', None),
+            'responsive': as_dict.get('responsive', None),
+            'series': as_dict.get('series', None),
+            'subtitle': as_dict.get('subtitle', None),
+            'time': as_dict.get('time', None),
+            'title': as_dict.get('title', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'x_axis': as_dict.get('xAxis', None),
+            'y_axis': as_dict.get('yAxis', None)
         }
 
         return cls(**kwargs_dict)
@@ -1123,7 +1140,7 @@ class HighchartsMapsOptions(HighchartsMeta):
             'loading': self.loading,
             'mapNavigation': self.map_navigation,
             'mapView': self.map_view,
-            'navigation': self.naviation,
+            'navigation': self.navigation,
             'plotOptions': self.plot_options,
             'responsive': self.responsive,
             'series': self.series,
