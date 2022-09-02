@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from validator_collection import validators, checkers
 
-from highcharts import constants, errors
+from highcharts import constants, errors, utility_functions
 from highcharts.decorators import class_sensitive, validate_types
 from highcharts.metaclasses import HighchartsMeta, JavaScriptDict
 from highcharts.plot_options.accessibility import TypeOptionsAccessibility
@@ -807,12 +807,6 @@ class GenericTypeOptions(HighchartsMeta):
         }
 
         return kwargs
-
-    @classmethod
-    def from_dict(cls, as_dict):
-        kwargs = cls._get_kwargs_from_dict(as_dict)
-
-        return cls(**kwargs)
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

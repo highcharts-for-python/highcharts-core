@@ -844,7 +844,7 @@ class Tooltip(HighchartsMeta):
         self._x_date_format = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'animation': as_dict.get('animation', None),
             'background_color': as_dict.get('backgroundColor', None),
@@ -884,7 +884,7 @@ class Tooltip(HighchartsMeta):
             'x_date_format': as_dict.get('xDateFormat', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

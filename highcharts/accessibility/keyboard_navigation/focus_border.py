@@ -65,13 +65,13 @@ class FocusBorderStyle(HighchartsMeta):
         self._line_width = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'border_radius': as_dict.get('borderRadius', None),
             'color': as_dict.get('color', None),
             'line_width': as_dict.get('lineWidth', None)
         }
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -167,14 +167,14 @@ class FocusBorder(HighchartsMeta):
         self._style = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'enabled': as_dict.get('enabled', None),
             'hide_browser_focus_outline': as_dict.get('hideBrowserFocusOutline', None),
             'margin': as_dict.get('margin', None),
             'style': as_dict.get('style', None)
         }
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

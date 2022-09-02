@@ -273,7 +273,7 @@ class Annotation(HighchartsMeta):
         self._z_index = validators.integer(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'animation': as_dict.get('animation', None),
             'control_point_options': as_dict.get('controlPointOptions', None),
@@ -288,7 +288,7 @@ class Annotation(HighchartsMeta):
             'visible': as_dict.get('visible', None),
             'z_index': as_dict.get('zIndex', None),
         }
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

@@ -68,14 +68,14 @@ class DataSorting(HighchartsMeta):
         self._sort_key = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'enabled': as_dict.get('enabled', None),
             'match_by_name': as_dict.get('matchByName', None),
             'sort_key': as_dict.get('sortKey', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

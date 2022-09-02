@@ -697,7 +697,7 @@ class Data(HighchartsMeta):
         self._table = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'before_parse': as_dict.get('beforeParse', None),
             'columns': as_dict.get('columns', None),
@@ -728,7 +728,7 @@ class Data(HighchartsMeta):
             'table': as_dict.get('table', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

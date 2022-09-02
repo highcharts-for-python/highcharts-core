@@ -107,7 +107,7 @@ class PDFFontOptions(HighchartsMeta):
             self._normal = validators.path(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'bold': as_dict.get('bold', None),
             'bolditalic': as_dict.get('bolditalic', None),
@@ -115,7 +115,7 @@ class PDFFontOptions(HighchartsMeta):
             'normal': as_dict.get('normal', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

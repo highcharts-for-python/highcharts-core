@@ -42,13 +42,13 @@ class LegendTitle(HighchartsMeta):
         self._text = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'style': as_dict.get('style', None),
             'text': as_dict.get('text', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

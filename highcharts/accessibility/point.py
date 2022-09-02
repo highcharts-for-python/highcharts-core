@@ -198,7 +198,7 @@ class AccessibilityPoint(HighchartsMeta):
         self._value_suffix = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'date_format': as_dict.get('dateFormat', None),
             'date_formatter': as_dict.get('dateFormatter', None),
@@ -209,7 +209,7 @@ class AccessibilityPoint(HighchartsMeta):
             'value_prefix': as_dict.get('valuePrefix', None),
             'value_suffix': as_dict.get('valueSuffix', None)
         }
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

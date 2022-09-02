@@ -599,7 +599,7 @@ class Language(HighchartsMeta):
             self._weekdays = [validators.string(x) for x in value]
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.get('accessibility', None),
             'context_button_title': as_dict.get('contextButtonTitle', None),
@@ -633,7 +633,7 @@ class Language(HighchartsMeta):
             'weekdays': as_dict.get('weekdays',  None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

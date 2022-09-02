@@ -389,7 +389,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         self._zoom = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'announce_new_data': as_dict.get('announceNewData', None),
             'axis': as_dict.get('axis', None),
@@ -413,7 +413,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
             'zoom': as_dict.get('zoom', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

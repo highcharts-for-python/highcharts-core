@@ -56,11 +56,11 @@ class Jitter(HighchartsMeta):
         self._y = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
-        return cls(**{
+    def _get_kwargs_from_dict(cls, as_dict):
+        return {
             'x': as_dict.get('x', None),
             'y': as_dict.get('y', None)
-        })
+        }
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {

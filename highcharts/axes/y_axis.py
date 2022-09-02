@@ -168,7 +168,7 @@ class YAxis(XAxis):
         self._tooltip_value_format = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.get('accessibility', None),
             'align_ticks': as_dict.get('alignTicks', None),
@@ -255,7 +255,7 @@ class YAxis(XAxis):
             'tooltip_value_format': as_dict.get('tooltipValueFormat', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

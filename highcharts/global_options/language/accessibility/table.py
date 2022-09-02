@@ -45,14 +45,14 @@ class TableLanguageOptions(HighchartsMeta):
                                                                  allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'table_summary': as_dict.get('tableSummary', None),
             'view_as_data_table_button_text': as_dict.get('viewAsDataTableButtonText',
                                                           None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

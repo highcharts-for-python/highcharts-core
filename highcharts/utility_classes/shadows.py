@@ -84,7 +84,7 @@ class ShadowOptions(HighchartsMeta):
         self._width = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'color': as_dict.get('color', None),
             'offset_x': as_dict.get('offsetX', None),
@@ -92,7 +92,7 @@ class ShadowOptions(HighchartsMeta):
             'opacity': as_dict.get('opacity', None),
             'width': as_dict.get('width', None)
         }
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

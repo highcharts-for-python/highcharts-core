@@ -135,7 +135,7 @@ class LegendNavigation(HighchartsMeta):
         self._style = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'active_color': as_dict.get('activeColor', None),
             'animation': as_dict.get('animation', None),
@@ -144,7 +144,7 @@ class LegendNavigation(HighchartsMeta):
             'inactive_color': as_dict.get('inactiveColor', None),
             'style': as_dict.get('style', None),
         }
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

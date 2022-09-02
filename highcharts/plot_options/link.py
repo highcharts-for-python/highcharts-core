@@ -56,14 +56,14 @@ class LinkOptions(HighchartsMeta):
         self._width = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'color': as_dict.get('color', None),
             'dash_style': as_dict.get('dashStyle', None),
             'width': as_dict.get('width', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

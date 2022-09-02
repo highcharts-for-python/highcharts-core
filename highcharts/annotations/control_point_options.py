@@ -32,12 +32,12 @@ class AnnotationControlPointOption(HighchartsMeta):
         self._positioner = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'positioner': as_dict.get('positioner', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

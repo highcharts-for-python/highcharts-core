@@ -100,7 +100,7 @@ class Position(HighchartsMeta):
         self._y = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'align': as_dict.get('align', None),
             'vertical_align': as_dict.get('verticalAlign', None),
@@ -108,7 +108,7 @@ class Position(HighchartsMeta):
             'y': as_dict.get('y', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {

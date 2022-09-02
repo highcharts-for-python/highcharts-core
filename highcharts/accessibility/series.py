@@ -140,7 +140,7 @@ class AccessibilitySeries(HighchartsMeta):
             )
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'describe_single_series': as_dict.get('describeSingleSeries', None),
             'description_format': as_dict.get('descriptionFormat', None),
@@ -151,7 +151,7 @@ class AccessibilitySeries(HighchartsMeta):
             ),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

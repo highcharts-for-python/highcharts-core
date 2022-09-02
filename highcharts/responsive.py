@@ -119,7 +119,7 @@ class Condition(HighchartsMeta):
                                                  minimum = 0)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'callback': as_dict.get('callback', None),
             'max_height': as_dict.get('maxHeight', None),
@@ -128,7 +128,7 @@ class Condition(HighchartsMeta):
             'min_width': as_dict.get('minWidth', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -193,13 +193,13 @@ class ResponsiveRules(HighchartsMeta):
         self._condition = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'chart_options': as_dict.get('chartOptions', None),
             'condition': as_dict.get('condition', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -243,10 +243,10 @@ class Responsive(HighchartsMeta):
         self._rules = value
 
     @classmethod
-    def from_dict(cls, as_dict):
-        return cls(**{
+    def _get_kwargs_from_dict(cls, as_dict):
+        return {
             'rules': as_dict.get('rules', None)
-        })
+        }
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

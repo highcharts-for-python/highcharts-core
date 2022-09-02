@@ -41,13 +41,13 @@ class ExportingLanguageOptions(HighchartsMeta):
         self._menu_button_label = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'chart_menu_label': as_dict.get('chartMenuLabel', None),
             'menu_button_label': as_dict.get('menuButtonLabel', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

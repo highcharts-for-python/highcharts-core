@@ -136,7 +136,7 @@ class DateTimeLabelFormats(HighchartsMeta):
         self._year = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'day': as_dict.get('day', None),
             'hour': as_dict.get('hour', None),
@@ -148,7 +148,7 @@ class DateTimeLabelFormats(HighchartsMeta):
             'year': as_dict.get('year', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

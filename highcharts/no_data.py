@@ -89,7 +89,7 @@ class NoData(HighchartsMeta):
             self._use_html = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'attr': as_dict.get('attr', None),
             'position': as_dict.get('position', None),
@@ -97,7 +97,7 @@ class NoData(HighchartsMeta):
             'use_html': as_dict.get('useHTML', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

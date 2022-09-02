@@ -193,7 +193,7 @@ class PlotBand(HighchartsMeta):
         self._z_index = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'border_color': as_dict.get('borderColor', None),
             'border_width': as_dict.get('borderWidth', None),
@@ -207,7 +207,7 @@ class PlotBand(HighchartsMeta):
             'z_index': as_dict.get('zIndex', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -378,7 +378,7 @@ class PlotLine(HighchartsMeta):
         self._z_index = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'class_name': as_dict.get('className', None),
             'color': as_dict.get('color', None),
@@ -391,7 +391,7 @@ class PlotLine(HighchartsMeta):
             'z_index': as_dict.get('zIndex', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

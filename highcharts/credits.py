@@ -57,14 +57,14 @@ class CreditStyleOptions(HighchartsMeta):
         self._font_size = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'color': as_dict.get('color', None),
             'cursor': as_dict.get('cursor', None),
             'font_size': as_dict.get('fontSize', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -170,7 +170,7 @@ class Credits(HighchartsMeta):
         self._text = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'enabled': as_dict.get('enabled', None),
             'href': as_dict.get('href', None),
@@ -179,7 +179,7 @@ class Credits(HighchartsMeta):
             'text': as_dict.get('text', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

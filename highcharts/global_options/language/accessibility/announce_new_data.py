@@ -103,7 +103,7 @@ class AnnounceNewDataLanguageOptions(HighchartsMeta):
         self._new_series_announce_single = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'new_data_announce': as_dict.get('newDataAnnounce', None),
             'new_point_announce_multiple': as_dict.get('newPointAnnounceMultiple', None),
@@ -113,7 +113,7 @@ class AnnounceNewDataLanguageOptions(HighchartsMeta):
             'new_series_announce_single': as_dict.get('newSeriesAnnounceSingle', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

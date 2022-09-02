@@ -197,7 +197,7 @@ class XAxis(NumericAxis):
             self._width = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.get('accessibility', None),
             'align_ticks': as_dict.get('alignTicks', None),
@@ -278,7 +278,7 @@ class XAxis(NumericAxis):
             'width': as_dict.get('width', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

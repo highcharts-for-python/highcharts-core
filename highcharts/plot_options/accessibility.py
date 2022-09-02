@@ -31,12 +31,12 @@ class SeriesKeyboardNavigation(HighchartsMeta):
             self._enabled = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'enabled': as_dict.get('enabled', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -131,7 +131,7 @@ class TypeOptionsAccessibility(HighchartsMeta):
         self._point = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'description': as_dict.get('description', None),
             'enabled': as_dict.get('enabled', None),
@@ -140,7 +140,7 @@ class TypeOptionsAccessibility(HighchartsMeta):
             'point': as_dict.get('point', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

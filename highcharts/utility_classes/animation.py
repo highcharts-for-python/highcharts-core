@@ -107,7 +107,7 @@ class AnimationOptions(HighchartsMeta):
         self._step = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'complete': as_dict.get('complete', None),
             'defer': as_dict.get('defer', None),
@@ -115,7 +115,7 @@ class AnimationOptions(HighchartsMeta):
             'easing': as_dict.get('easing', None),
             'step': as_dict.get('step', None)
         }
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

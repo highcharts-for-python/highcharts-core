@@ -1593,7 +1593,7 @@ class PlotOptions(HighchartsMeta):
         self._xrange = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'arcdiagram': as_dict.get('arcdiagram', None),
             'area': as_dict.get('area', None),
@@ -1649,7 +1649,7 @@ class PlotOptions(HighchartsMeta):
             'xrange': as_dict.get('xrange', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

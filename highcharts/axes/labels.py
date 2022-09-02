@@ -502,7 +502,7 @@ class AxisLabelOptions(HighchartsMeta):
         self._z_index = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'align': as_dict.get('align', None),
             'allow_overlap': as_dict.get('allowOverlap', None),
@@ -527,7 +527,7 @@ class AxisLabelOptions(HighchartsMeta):
             'z_index': as_dict.get('zIndex', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -760,7 +760,7 @@ class PlotBandLabel(HighchartsMeta):
         self._y = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'align': as_dict.get('align', None),
             'rotation': as_dict.get('rotation', None),
@@ -773,7 +773,7 @@ class PlotBandLabel(HighchartsMeta):
             'y': as_dict.get('y', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -822,7 +822,7 @@ class PlotLineLabel(PlotBandLabel):
         self._formatter = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'align': as_dict.get('align', None),
             'formatter': as_dict.get('formatter', None),
@@ -836,7 +836,7 @@ class PlotLineLabel(PlotBandLabel):
             'y': as_dict.get('y', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

@@ -194,7 +194,7 @@ class VectorLayoutAlgorithm(HighchartsMeta):
         self._type = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'distance': as_dict.get('distance', None),
             'grid_size': as_dict.get('gridSize', None),
@@ -203,7 +203,7 @@ class VectorLayoutAlgorithm(HighchartsMeta):
             'type': as_dict.get('type', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -428,7 +428,7 @@ class ClusterOptions(HighchartsMeta):
         self._zones = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'allow_overlap': as_dict.get('allowOverlap', None),
             'animation': as_dict.get('animation', None),
@@ -443,7 +443,7 @@ class ClusterOptions(HighchartsMeta):
             'zones': as_dict.get('zones', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

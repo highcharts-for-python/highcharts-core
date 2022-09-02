@@ -240,7 +240,7 @@ class PatternOptions(HighchartsMeta):
         self._y = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'aspect_ratio': as_dict.get('aspectRatio', None),
             'background_color': as_dict.get('backgroundColor', None),
@@ -255,7 +255,7 @@ class PatternOptions(HighchartsMeta):
             'x': as_dict.get('x', None),
             'y': as_dict.get('y', None)
         }
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -334,7 +334,7 @@ class Pattern(HighchartsMeta):
                                                  coerce_value = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         pattern_options = as_dict.get('pattern', None) or \
                           as_dict.get('pattern_options', None) or \
                           as_dict.get('patternOptions', None)
@@ -343,7 +343,7 @@ class Pattern(HighchartsMeta):
             'pattern_options': pattern_options,
             'pattern_index': as_dict.get('patternIndex', None)
         }
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

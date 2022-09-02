@@ -150,3 +150,64 @@ def validate_color(value):
                                           f'was: {value}')
 
     return value
+
+
+def to_camelCase(snake_case):
+    """Convert ``snake_case`` to ``camelCase``.
+
+    :param snake_case: A :class:`str <python:str>` which is likely to contain
+      ``snake_case``.
+    :type snake_case: :class:`str <python:str>`
+
+    :returns: A ``camelCase`` representation of ``snake_case``.
+    :rtype: :class:`str <python:str>`
+    """
+    snake_case = validators.string(snake_case)
+
+    if '_' not in snake_case:
+        return snake_case
+
+    if 'url' in snake_case:
+        snake_case = snake_case.replace('url', 'URL')
+    elif 'utc' in snake_case:
+        snake_case = snake_case.replace('utc', 'UTC')
+    elif '_csv' in snake_case:
+        snake_case = snake_case.replace('csv', 'CSV')
+    elif '_jpeg' in snake_case:
+        snake_case = snake_case.replace('jpeg', 'JPEG')
+    elif '_pdf' in snake_case:
+        snake_case = snake_case.replace('pdf', 'PDF')
+    elif '_png' in snake_case:
+        snake_case = snake_case.replace('png', 'PNG')
+    elif '_svg' in snake_case:
+        snake_case = snake_case.replace('svg', 'SVG')
+    elif '_xls' in snake_case:
+        snake_case = snake_case.replace('xls', 'XLS')
+    elif '_atr' in snake_case:
+        snake_case = snake_case.replace('atr', 'ATR')
+    elif snake_case == 'drillup_text':
+        snake_case = 'drillUpText'
+    elif snake_case == 'drillup_button':
+        snake_case = 'drillUpButton'
+    elif snake_case == 'thousands_separator':
+        snake_case = 'thousandsSep'
+    elif snake_case == 'measure_xy':
+        snake_case = 'measureXY'
+    elif snake_case == 'use_gpu_translations':
+        snake_case = 'useGPUTranslations'
+    elif snake_case == 'label_rank':
+        snake_case = 'labelrank'
+
+    camel_case = ''
+    previous_character = ''
+    for character in snake_case:
+        if character != '_' and previous_character != '_':
+            camel_case += character
+            previous_character = character
+        elif character == '_':
+            previous_character = character
+        elif character != '_' and previous_character == '_':
+            camel_case += character.upper()
+            previous_character = character
+
+    return camel_case

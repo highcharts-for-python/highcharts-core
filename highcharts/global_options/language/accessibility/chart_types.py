@@ -337,7 +337,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
         self._unknown_map = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'bar_multiple': as_dict.get('barMultiple', None),
             'bar_single': as_dict.get('barSingle', None),
@@ -363,7 +363,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
             'unknown_map': as_dict.get('unknownMap', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

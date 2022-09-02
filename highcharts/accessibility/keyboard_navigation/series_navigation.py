@@ -116,7 +116,7 @@ class SeriesNavigation(HighchartsMeta):
             self._skip_null_points = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'mode': as_dict.get('mode', None),
             'point_navigation_enabled_threshold': as_dict.get('pointNavigationEnabledThreshold',
@@ -124,7 +124,7 @@ class SeriesNavigation(HighchartsMeta):
             'remember_point_focus': as_dict.get('rememberPointFocus', None),
             'skip_null_points': as_dict.get('skipNullPoints', None),
         }
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

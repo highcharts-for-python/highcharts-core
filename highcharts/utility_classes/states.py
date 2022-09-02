@@ -112,7 +112,7 @@ class HoverState(HighchartsMeta):
             self._enabled = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'animation': as_dict.get('animation', None),
             'border_color': as_dict.get('borderColor', None),
@@ -121,7 +121,7 @@ class HoverState(HighchartsMeta):
             'enabled': as_dict.get('enabled', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -188,14 +188,14 @@ class InactiveState(HighchartsMeta):
         self._opacity = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'animation': as_dict.get('animation', None),
             'enabled': as_dict.get('enabled', None),
             'opacity': as_dict.get('opacity', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -234,12 +234,12 @@ class NormalState(HighchartsMeta):
                                              types = AnimationOptions)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'animation': as_dict.get('animation', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -322,7 +322,7 @@ class SelectState(HighchartsMeta):
             self._enabled = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'animation': as_dict.get('animation', None),
             'border_color': as_dict.get('borderColor', None),
@@ -330,7 +330,7 @@ class SelectState(HighchartsMeta):
             'enabled': as_dict.get('enabled', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -422,7 +422,7 @@ class States(HighchartsMeta):
         self._select = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'hover': as_dict.get('hover', None),
             'inactive': as_dict.get('inactive', None),
@@ -430,7 +430,7 @@ class States(HighchartsMeta):
             'select': as_dict.get('select', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

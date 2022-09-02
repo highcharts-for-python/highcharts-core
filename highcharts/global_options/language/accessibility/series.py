@@ -143,7 +143,7 @@ class SeriesTypeDescriptions(HighchartsMeta):
         self._waterfall = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'arearange': as_dict.get('arearange', None),
             'areasplinerange': as_dict.get('areasplinerange', None),
@@ -156,7 +156,7 @@ class SeriesTypeDescriptions(HighchartsMeta):
             'waterfall': as_dict.get('waterfall', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -571,7 +571,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
         self._spline_combination = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'bar': as_dict.get('bar', None),
             'bar_combination': as_dict.get('barCombination', None),
@@ -599,7 +599,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
             'spline_combination': as_dict.get('splineCombination', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -758,7 +758,7 @@ class SeriesLanguageOptions(HighchartsMeta):
         self._y_axis_description = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'description': as_dict.get('description', None),
             'null_point_value': as_dict.get('nullPointValue', None),
@@ -769,7 +769,7 @@ class SeriesLanguageOptions(HighchartsMeta):
             'y_axis_description': as_dict.get('yAxisDescription', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

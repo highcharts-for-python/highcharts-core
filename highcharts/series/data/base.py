@@ -201,10 +201,10 @@ class DataBase(HighchartsMeta):
             self._selected = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = cls._get_kwargs_from_dict(as_dict)
 
-        return cls(**kwargs)
+        return kwargs
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

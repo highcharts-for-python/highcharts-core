@@ -93,7 +93,7 @@ class MenuItem(HighchartsMeta):
             self._separator = False
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'onclick': as_dict.get('onclick', None),
             'text': as_dict.get('text', None),
@@ -101,7 +101,7 @@ class MenuItem(HighchartsMeta):
             'separator': as_dict.get('separator', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

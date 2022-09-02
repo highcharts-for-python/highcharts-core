@@ -31,8 +31,8 @@ class Grandparent(HighchartsMeta):
         self._item2 = value
 
     @classmethod
-    def from_dict(cls, as_dict):
-        return cls(**as_dict)
+    def _get_kwargs_from_dict(cls, as_dict):
+        return as_dict
 
     def _to_untrimmed_dict(self, in_cls = None):
         untrimmed = {

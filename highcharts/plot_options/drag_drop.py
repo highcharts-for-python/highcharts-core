@@ -175,7 +175,7 @@ class DragHandle(HighchartsMeta):
         self._z_index = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'class_name': as_dict.get('className', None),
             'color': as_dict.get('color', None),
@@ -186,7 +186,7 @@ class DragHandle(HighchartsMeta):
             'z_index': as_dict.get('zIndex', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -348,7 +348,7 @@ class GuideBoxOptions(HighchartsMeta):
         self._z_index = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'class_name': as_dict.get('className', None),
             'color': as_dict.get('color', None),
@@ -358,7 +358,7 @@ class GuideBoxOptions(HighchartsMeta):
             'z_index': as_dict.get('zIndex', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -395,10 +395,10 @@ class GuideBox(HighchartsMeta):
         self._default = value
 
     @classmethod
-    def from_dict(cls, as_dict):
-        return cls(**{
+    def _get_kwargs_from_dict(cls, as_dict):
+        return {
             'default': as_dict.get('default', None)
-        })
+        }
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -651,7 +651,7 @@ class DragDropOptions(HighchartsMeta):
             self._live_redraw = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'draggable_x': as_dict.get('draggableX', None),
             'draggable_y': as_dict.get('draggableY', None),
@@ -668,7 +668,7 @@ class DragDropOptions(HighchartsMeta):
             'live_redraw': as_dict.get('liveRedraw', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -736,7 +736,7 @@ class HighLowDragDropOptions(DragDropOptions):
             self._draggable_low = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'draggable_x': as_dict.get('draggableX', None),
             'draggable_y': as_dict.get('draggableY', None),
@@ -756,7 +756,7 @@ class HighLowDragDropOptions(DragDropOptions):
             'draggable_low': as_dict.get('draggableLow', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -830,7 +830,7 @@ class BoxPlotDragDropOptions(HighLowDragDropOptions):
             self._draggable_q3 = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'draggable_x': as_dict.get('draggableX', None),
             'draggable_y': as_dict.get('draggableY', None),
@@ -852,7 +852,7 @@ class BoxPlotDragDropOptions(HighLowDragDropOptions):
             'draggable_q3': as_dict.get('draggableQ3', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -907,7 +907,7 @@ class BulletDragDropOptions(DragDropOptions):
             self._draggable_target = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'draggable_x': as_dict.get('draggableX', None),
             'draggable_y': as_dict.get('draggableY', None),
@@ -926,7 +926,7 @@ class BulletDragDropOptions(DragDropOptions):
             'draggable_target': as_dict.get('draggableTarget', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

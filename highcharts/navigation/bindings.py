@@ -107,7 +107,7 @@ class Binding(HighchartsMeta):
         self._end = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'class_name': as_dict.get('className', cls._class_name_default),
             'init': as_dict.get('init', None),
@@ -116,7 +116,7 @@ class Binding(HighchartsMeta):
             'end': as_dict.get('end', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -272,7 +272,7 @@ class Bindings(HighchartsMeta):
         self._rectangle_annotation = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'circle_annotation': as_dict.get('circleAnnotation', None),
             'ellipse_annotation': as_dict.get('ellipseAnnotation', None),
@@ -280,7 +280,7 @@ class Bindings(HighchartsMeta):
             'rectangle_annotation': as_dict.get('rectangleAnnotation', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

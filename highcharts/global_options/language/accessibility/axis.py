@@ -153,7 +153,7 @@ class AxisLanguageOptions(HighchartsMeta):
         self._y_axis_description_singular = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'range_categories': as_dict.get('rangeCategories', None),
             'range_from_to': as_dict.get('rangeFromTo', None),
@@ -166,7 +166,7 @@ class AxisLanguageOptions(HighchartsMeta):
             'y_axis_description_plural': as_dict.get('yAxisDescriptionPlural', None),
             'y_axis_description_singular': as_dict.get('yAxisDescriptionSingular', None),
         }
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

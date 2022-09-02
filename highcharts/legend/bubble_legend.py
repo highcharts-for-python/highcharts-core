@@ -168,7 +168,7 @@ class BubbleLegendLabelOptions(HighchartsMeta):
         self._y = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'align': as_dict.get('align', None),
             'allow_overlap': as_dict.get('allowOverlap', None),
@@ -180,7 +180,7 @@ class BubbleLegendLabelOptions(HighchartsMeta):
             'y': as_dict.get('y', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -275,7 +275,7 @@ class BubbleLegendRange(HighchartsMeta):
         self._value = validators.numeric(value_, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'border_color': as_dict.get('borderColor', None),
             'color': as_dict.get('color', None),
@@ -283,7 +283,7 @@ class BubbleLegendRange(HighchartsMeta):
             'value': as_dict.get('value', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -643,7 +643,7 @@ class BubbleLegend(HighchartsMeta):
         self._z_threshold = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'border_color': as_dict.get('borderColor', None),
             'border_width': as_dict.get('borderWidth', None),
@@ -665,7 +665,7 @@ class BubbleLegend(HighchartsMeta):
             'z_threshold': as_dict.get('zThreshold', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

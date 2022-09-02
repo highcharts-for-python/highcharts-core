@@ -196,7 +196,7 @@ class DialOptions(HighchartsMeta):
         self._top_width = validators.numeric(value, minimum = 0)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'background_color': as_dict.get('backgroundColor', None),
             'base_length': as_dict.get('baseLength', None),
@@ -209,7 +209,7 @@ class DialOptions(HighchartsMeta):
             'top_width': as_dict.get('topWidth', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -300,7 +300,7 @@ class PivotOptions(HighchartsMeta):
         self._radius = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'background_color': as_dict.get('backgroundColor', None),
             'border_color': as_dict.get('borderColor', None),
@@ -308,7 +308,7 @@ class PivotOptions(HighchartsMeta):
             'radius': as_dict.get('radius', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

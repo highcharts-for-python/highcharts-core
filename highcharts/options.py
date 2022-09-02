@@ -717,9 +717,9 @@ class HighchartsOptions(Options):
         self._z_axis = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         as_dict = validators.dict(as_dict, allow_empty = True) or {}
-        kwargs_dict = {
+        kwargs = {
             'accessibility': as_dict.get('accessibility', None),
             'annotations': as_dict.get('annotations', None),
             'boost': as_dict.get('boost', None),
@@ -750,7 +750,7 @@ class HighchartsOptions(Options):
             'z_axis': as_dict.get('zAxis', None)
         }
 
-        return cls(**kwargs_dict)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -950,7 +950,7 @@ class HighchartsStockOptions(Options):
         self._stock_tools = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         as_dict = validators.dict(as_dict, allow_empty = True) or {}
         kwargs_dict = {
             'accessibility': as_dict.get('accessibility', None),
@@ -1089,7 +1089,7 @@ class HighchartsMapsOptions(HighchartsMeta):
         self._map_view = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         as_dict = validators.dict(as_dict, allow_empty = True) or {}
         kwargs_dict = {
             'accessibility': as_dict.get('accessibility', None),

@@ -278,7 +278,7 @@ class ChartEvents(HighchartsMeta):
         self._selection = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'add_series': as_dict.get('addSeries', None),
             'after_print': as_dict.get('afterPrint', None),
@@ -295,7 +295,7 @@ class ChartEvents(HighchartsMeta):
             'selection': as_dict.get('selection', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -354,12 +354,12 @@ class BreadcrumbEvents(HighchartsMeta):
         self._click = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'click': as_dict.get('click', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -438,7 +438,7 @@ class NavigationEvents(HighchartsMeta):
         self._show_popup = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'close_popup': as_dict.get('closePopup', None),
             'deselect_button': as_dict.get('deselectButton', None),
@@ -446,7 +446,7 @@ class NavigationEvents(HighchartsMeta):
             'show_popup': as_dict.get('showPopup', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -660,7 +660,7 @@ class PointEvents(HighchartsMeta):
         self._update = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'click': as_dict.get('click', None),
             'drag': as_dict.get('drag', None),
@@ -674,7 +674,7 @@ class PointEvents(HighchartsMeta):
             'update': as_dict.get('update', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -848,7 +848,7 @@ class SeriesEvents(HighchartsMeta):
         self._show = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'after_animate': as_dict.get('afterAnimate', None),
             'checkbox_click': as_dict.get('checkboxClick', None),
@@ -860,7 +860,7 @@ class SeriesEvents(HighchartsMeta):
             'show': as_dict.get('show', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -904,8 +904,10 @@ class ClusterEvents(HighchartsMeta):
         self._drill_to_cluster = value
 
     @classmethod
-    def from_dict(cls, as_dict):
-        return cls(drill_to_cluster = as_dict.get('drillToCluster', None))
+    def _get_kwargs_from_dict(cls, as_dict):
+        return {
+            'drill_to_cluster': as_dict.get('drillToCluster', None)
+        }
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -1023,7 +1025,7 @@ class AxisEvents(HighchartsMeta):
         self._set_extremes = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'after_breaks': as_dict.get('afterBreaks', None),
             'after_set_extremes': as_dict.get('afterSetExtremes', None),
@@ -1032,7 +1034,7 @@ class AxisEvents(HighchartsMeta):
             'set_extremes': as_dict.get('setExtremes', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -1119,7 +1121,7 @@ class MouseEvents(HighchartsMeta):
         self._mouseover = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'click': as_dict.get('click', None),
             'mousemove': as_dict.get('mousemove', None),
@@ -1127,7 +1129,7 @@ class MouseEvents(HighchartsMeta):
             'mouseover': as_dict.get('mouseover', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

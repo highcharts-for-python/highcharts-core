@@ -58,14 +58,14 @@ class ExportDataLanguageOptions(HighchartsMeta):
         self._category_header = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'annotation_header': as_dict.get('annotationHeader', None),
             'category_datetime_header': as_dict.get('categoryDatetimeHeader', None),
             'category_header': as_dict.get('categoryHeader', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

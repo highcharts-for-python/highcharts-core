@@ -38,12 +38,12 @@ class AnnotationAnimation(HighchartsMeta):
                                          minimum = 0)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'defer': as_dict.get('defer', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

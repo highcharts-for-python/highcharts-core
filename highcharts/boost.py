@@ -135,7 +135,7 @@ class BoostDebug(HighchartsMeta):
             self._time_setup = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'show_skip_summary': as_dict.get('showSkipSummary', None),
             'time_buffer_copy': as_dict.get('timeBufferCopy', None),
@@ -145,7 +145,7 @@ class BoostDebug(HighchartsMeta):
             'time_setup': as_dict.get('timeSetup', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
@@ -348,7 +348,7 @@ class Boost(HighchartsMeta):
             self._use_preallocated = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'allow_force': as_dict.get('allowForce', None),
             'debug': as_dict.get('debug', None),
@@ -359,7 +359,7 @@ class Boost(HighchartsMeta):
             'use_preallocated': as_dict.get('usePreallocated', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

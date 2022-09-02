@@ -229,7 +229,7 @@ class Marker(HighchartsMeta):
         self._width = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'enabled': as_dict.get('enabled', None),
             'enabled_threshold': as_dict.get('enabledThreshold', None),
@@ -243,7 +243,7 @@ class Marker(HighchartsMeta):
             'width': as_dict.get('width', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

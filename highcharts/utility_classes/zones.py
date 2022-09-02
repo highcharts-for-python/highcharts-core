@@ -123,7 +123,7 @@ class Zone(HighchartsMeta):
         self._value = validators.numeric(value_, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'class_name': as_dict.get('className', None),
             'color': as_dict.get('color', None),
@@ -132,7 +132,7 @@ class Zone(HighchartsMeta):
             'value': as_dict.get('value', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -214,7 +214,7 @@ class ClusterZone(HighchartsMeta):
         self._to = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'class_name': as_dict.get('className', None),
             'from_': as_dict.get('from', None),
@@ -222,7 +222,7 @@ class ClusterZone(HighchartsMeta):
             'to': as_dict.get('to', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

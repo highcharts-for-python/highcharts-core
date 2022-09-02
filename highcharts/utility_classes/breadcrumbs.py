@@ -47,13 +47,13 @@ class Separator(HighchartsMeta):
         self._text = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'style': as_dict.get('style', None),
             'text': as_dict.get('text', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -324,7 +324,7 @@ class BreadcrumbOptions(HighchartsMeta):
         self._z_index = validators.integer(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'button_spacing': as_dict.get('buttonSpacing', None),
             'button_theme': as_dict.get('buttonTheme', None),
@@ -342,7 +342,7 @@ class BreadcrumbOptions(HighchartsMeta):
             'z_index': as_dict.get('zIndex', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

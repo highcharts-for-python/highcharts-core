@@ -59,13 +59,13 @@ class ButtonTheme(HighchartsMeta):
         self._stroke = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'fill': as_dict.get('fill', None),
             'stroke': as_dict.get('stroke', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -148,7 +148,7 @@ class ButtonConfiguration(HighchartsMeta):
         self._y = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'enabled': as_dict.get('enabled', None),
             'text': as_dict.get('text', None),
@@ -156,7 +156,7 @@ class ButtonConfiguration(HighchartsMeta):
             'y': as_dict.get('y', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -339,7 +339,7 @@ class ContextButtonConfiguration(ButtonConfiguration):
         self._x = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'class_name': as_dict.get('className', None),
             'enabled': as_dict.get('enabled', None),
@@ -355,7 +355,7 @@ class ContextButtonConfiguration(ButtonConfiguration):
             'y': as_dict.get('y', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

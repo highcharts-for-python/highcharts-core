@@ -1,5 +1,6 @@
 """Implements the Python representation of the Accessibility module."""
 from typing import Optional, Any
+from copy import deepcopy
 
 from validator_collection import validators
 
@@ -342,7 +343,7 @@ class Accessibility(HighchartsMeta):
         self._type_description = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'announce_new_data': as_dict.get('announceNewData', None),
             'custom_components': as_dict.get('customComponents', None),
@@ -358,7 +359,7 @@ class Accessibility(HighchartsMeta):
             'type_description': as_dict.get('typeDescription', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

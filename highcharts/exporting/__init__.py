@@ -44,12 +44,12 @@ class ExportingAccessibilityOptions(HighchartsMeta):
             self._enabled = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'enabled': as_dict.get('enabled', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
@@ -637,7 +637,7 @@ class Exporting(HighchartsMeta):
         self._width = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.get('accessibility', None),
             'allow_html': as_dict.get('allowHTML', None),
@@ -665,7 +665,7 @@ class Exporting(HighchartsMeta):
             'width': as_dict.get('width', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

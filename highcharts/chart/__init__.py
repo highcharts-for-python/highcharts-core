@@ -84,13 +84,13 @@ class PanningOptions(HighchartsMeta):
             self._type = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'enabled': as_dict.get('enabled', None),
             'type': as_dict.get('type', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
@@ -1424,7 +1424,7 @@ class ChartOptions(HighchartsMeta):
             self._zoom_type = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'align_thresholds': as_dict.get('alignThresholds', None),
             'align_ticks': as_dict.get('alignTicks', None),
@@ -1480,7 +1480,7 @@ class ChartOptions(HighchartsMeta):
             'zoom_type': as_dict.get('zoomType', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

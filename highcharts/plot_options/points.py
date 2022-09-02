@@ -80,14 +80,14 @@ class ConnectorOptions(HighchartsMeta):
         self._width = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'dashstyle': as_dict.get('dashstyle', None) or as_dict.get('dashStyle', None),
             'stroke': as_dict.get('stroke', None),
             'width': as_dict.get('width', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -157,14 +157,14 @@ class OnPointOptions(HighchartsMeta):
         self._position = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'connector_options': as_dict.get('connectorOptions', None),
             'id': as_dict.get('id', None),
             'position': as_dict.get('position', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -198,12 +198,12 @@ class Point(HighchartsMeta):
         self._events = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'events': as_dict.get('events', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

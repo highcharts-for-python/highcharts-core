@@ -34,10 +34,10 @@ class ParentNodeOptions(HighchartsMeta):
             self._allow_point_select = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
-        return cls(**{
+    def _get_kwargs_from_dict(cls, as_dict):
+        return {
             'allow_point_select': as_dict.get('allowPointSelect', None)
-        })
+        }
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {

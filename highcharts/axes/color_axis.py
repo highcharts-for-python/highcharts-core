@@ -274,7 +274,7 @@ class ColorAxis(GenericAxis):
             self._stops = processed_items
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.get('accessibility', None),
             'angle': as_dict.get('angle', None),
@@ -339,7 +339,7 @@ class ColorAxis(GenericAxis):
             'stops': as_dict.get('stops', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

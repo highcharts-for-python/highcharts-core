@@ -347,7 +347,7 @@ class LayoutAlgorithm(HighchartsMeta):
         self._type = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'approximation': as_dict.get('approximation', None),
             'attractive_force': as_dict.get('attractiveForce', None),
@@ -365,7 +365,7 @@ class LayoutAlgorithm(HighchartsMeta):
             'type': as_dict.get('type', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

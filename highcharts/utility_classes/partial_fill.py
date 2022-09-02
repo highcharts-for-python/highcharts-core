@@ -37,10 +37,10 @@ class PartialFillOptions(HighchartsMeta):
         self._fill = utility_functions.validate_color(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
-        return cls(**{
+    def _get_kwargs_from_dict(cls, as_dict):
+        return {
             'fill': as_dict.get('fill', None)
-        })
+        }
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {

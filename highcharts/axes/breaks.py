@@ -89,7 +89,7 @@ class AxisBreak(HighchartsMeta):
         self._to = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'break_size': as_dict.get('breakSize', None),
             'from_': as_dict.get('from', None),
@@ -97,7 +97,7 @@ class AxisBreak(HighchartsMeta):
             'to': as_dict.get('to', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

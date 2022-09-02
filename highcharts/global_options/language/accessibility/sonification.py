@@ -49,7 +49,7 @@ class SonificationLanguageOptions(HighchartsMeta):
                                                                    allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'play_as_sound_button_text': as_dict.get('playAsSoundButtonText', None),
             'play_as_sound_click_announcement': as_dict.get(
@@ -58,7 +58,7 @@ class SonificationLanguageOptions(HighchartsMeta):
             ),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

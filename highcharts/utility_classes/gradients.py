@@ -81,7 +81,7 @@ class LinearGradient(HighchartsMeta):
                                     maximum = 1)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'x1': as_dict.get('x1', None),
             'x2': as_dict.get('x2', None),
@@ -89,7 +89,7 @@ class LinearGradient(HighchartsMeta):
             'y2': as_dict.get('y2', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -162,14 +162,14 @@ class RadialGradient(HighchartsMeta):
                                    maximum = 1)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'cx': as_dict.get('cx', None),
             'cy': as_dict.get('cy', None),
             'r': as_dict.get('r', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -256,14 +256,14 @@ class Gradient(HighchartsMeta):
             self._stops = stops
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'linear_gradient': as_dict.get('linearGradient', None),
             'radial_gradient': as_dict.get('radialGradient', None),
             'stops': as_dict.get('stops', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

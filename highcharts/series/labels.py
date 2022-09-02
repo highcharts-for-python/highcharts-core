@@ -72,7 +72,7 @@ class Box(HighchartsMeta):
         self._top = validators.numeric(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'bottom': as_dict.get('bottom', None),
             'left': as_dict.get('left', None),
@@ -80,7 +80,7 @@ class Box(HighchartsMeta):
             'top': as_dict.get('top', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -298,7 +298,7 @@ class SeriesLabel(HighchartsMeta):
         self._style = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'boxes_to_avoid': as_dict.get('boxesToAvoid', None),
             'connector_allowed': as_dict.get('connectorAllowed', None),
@@ -313,7 +313,7 @@ class SeriesLabel(HighchartsMeta):
             'style': as_dict.get('style', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

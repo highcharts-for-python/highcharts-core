@@ -164,7 +164,7 @@ class Drilldown(HighchartsMeta):
         self._series = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'active_axis_label_style': as_dict.get('activeAxisLabelStyle', None),
             'active_data_label_style': as_dict.get('activeDataLabelStyle', None),
@@ -174,7 +174,7 @@ class Drilldown(HighchartsMeta):
             'series': as_dict.get('series', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

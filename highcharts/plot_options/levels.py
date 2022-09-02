@@ -82,7 +82,7 @@ class BaseLevelOptions(HighchartsMeta):
         self._level = validators.integer(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'border_color': as_dict.get('borderColor', None),
             'border_width': as_dict.get('borderWidth', None),
@@ -90,7 +90,7 @@ class BaseLevelOptions(HighchartsMeta):
             'level': as_dict.get('level', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -166,7 +166,7 @@ class LevelOptions(BaseLevelOptions):
         self._states = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'border_color': as_dict.get('borderColor', None),
             'border_width': as_dict.get('borderWidth', None),
@@ -178,7 +178,7 @@ class LevelOptions(BaseLevelOptions):
             'states': as_dict.get('states', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -231,13 +231,13 @@ class ColorVariation(HighchartsMeta):
         self._to = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'key': as_dict.get('key', None),
             'to': as_dict.get('to', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -305,13 +305,13 @@ class LevelSize(HighchartsMeta):
         self._value = validators.numeric(value_, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'unit': as_dict.get('unit', None),
             'value': as_dict.get('value', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -418,7 +418,7 @@ class SunburstLevelOptions(BaseLevelOptions):
         self._level_size = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'border_color': as_dict.get('borderColor', None),
             'border_width': as_dict.get('borderWidth', None),
@@ -431,7 +431,7 @@ class SunburstLevelOptions(BaseLevelOptions):
             'level_size': as_dict.get('levelSize', None)
          }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -586,7 +586,7 @@ class TreemapLevelOptions(BaseLevelOptions):
             self._layout_starting_direction = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'border_color': as_dict.get('borderColor', None),
             'border_width': as_dict.get('borderWidth', None),
@@ -601,7 +601,7 @@ class TreemapLevelOptions(BaseLevelOptions):
             'layout_starting_direction': as_dict.get('layoutStartingDirection', None)
          }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

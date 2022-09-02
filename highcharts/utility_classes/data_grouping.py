@@ -334,7 +334,7 @@ class DataGroupingOptions(HighchartsMeta):
             self._units = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'anchor': as_dict.get('anchor', None),
             'approximation': as_dict.get('approximation', None),
@@ -348,7 +348,7 @@ class DataGroupingOptions(HighchartsMeta):
             'units': as_dict.get('units', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

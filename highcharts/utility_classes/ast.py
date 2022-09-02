@@ -125,7 +125,7 @@ class ASTNode(HighchartsMeta):
         self._text_content = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'attributes': as_dict.get('attributes', None),
             'children': as_dict.get('children', []),
@@ -133,7 +133,7 @@ class ASTNode(HighchartsMeta):
             'text_content': as_dict.get('textContent', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -210,13 +210,13 @@ class TextPath(HighchartsMeta):
             self._enabled = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'attributes': as_dict.get('attributes', None),
             'enabled': as_dict.get('enabled', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

@@ -167,7 +167,7 @@ class NodeOptions(HighchartsMeta):
             self._offset_vertical = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'color': as_dict.get('color', None),
             'color_index': as_dict.get('colorIndex', None),
@@ -178,7 +178,7 @@ class NodeOptions(HighchartsMeta):
             'offset_vertical': as_dict.get('offsetVertical', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -257,7 +257,7 @@ class DependencyWheelNodeOptions(NodeOptions):
         self._level = validators.integer(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'color': as_dict.get('color', None),
             'color_index': as_dict.get('colorIndex', None),
@@ -271,7 +271,7 @@ class DependencyWheelNodeOptions(NodeOptions):
             'level': as_dict.get('level', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -371,7 +371,7 @@ class OrganizationNodeOptions(DependencyWheelNodeOptions):
         self._title = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'color': as_dict.get('color', None),
             'color_index': as_dict.get('colorIndex', None),
@@ -389,7 +389,7 @@ class OrganizationNodeOptions(DependencyWheelNodeOptions):
             'title': as_dict.get('title', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

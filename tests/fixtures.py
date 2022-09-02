@@ -677,23 +677,23 @@ def Class_from_js_literal(cls, input_files, filename, as_file, error):
     as_str = append_plot_options_type(cls, as_str)
 
     if not error:
-        print('-------------------')
-        print('ORIGINAL VALIDATION')
+        #print('-------------------')
+        #print('ORIGINAL VALIDATION')
         parsed_original, original_str = cls._validate_js_literal(as_str, range = False)
-        print('-------------')
-        print('ORIGINAL CALL')
-        print(as_str)
+        #print('-------------')
+        #print('ORIGINAL CALL')
+        #print(as_str)
         result = cls.from_js_literal(input_string)
         assert result is not None
         assert isinstance(result, cls) is True
 
         as_js_literal = result.to_js_literal()
-        print('-----------------')
-        print('RESULT VALIDATION')
+        #print('-----------------')
+        #print('RESULT VALIDATION')
         if 'pattern:' in as_js_literal:
             as_js_literal = as_js_literal.replace('pattern:', 'patternOptions:')
 
-        print(as_js_literal)
+        #print(as_js_literal)
         parsed_output, output_str = cls._validate_js_literal(as_js_literal, range = False)
         try:
             assert str(parsed_output) == str(parsed_original)

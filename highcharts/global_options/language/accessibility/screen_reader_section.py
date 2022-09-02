@@ -75,7 +75,7 @@ class ScreenReaderSectionAnnotationLanguage(HighchartsMeta):
         self._heading = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'description_multiple_points': as_dict.get('descriptionMultiplePoints', None),
             'description_no_points': as_dict.get('descriptionNoPoints', None),
@@ -83,7 +83,7 @@ class ScreenReaderSectionAnnotationLanguage(HighchartsMeta):
             'heading': as_dict.get('heading', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -164,7 +164,7 @@ class ScreenReaderSectionLanguageOptions(HighchartsMeta):
         self._end_of_chart_marker = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'after_region_label': as_dict.get('afterRegionLabel', None),
             'annotations': as_dict.get('annotations', None),
@@ -172,7 +172,7 @@ class ScreenReaderSectionLanguageOptions(HighchartsMeta):
             'end_of_chart_marker': as_dict.get('endOfChartMarker', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

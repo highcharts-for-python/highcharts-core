@@ -123,7 +123,7 @@ class KeyboardNavigation(HighchartsMeta):
             self._wrap_around = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         as_dict = validators.dict(as_dict, allow_empty = True) or {}
         kwargs = {
             'enabled': as_dict.get('enabled', None),
@@ -133,7 +133,7 @@ class KeyboardNavigation(HighchartsMeta):
             'wrap_around': as_dict.get('wrapAround', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

@@ -1380,7 +1380,7 @@ class PopupLanguageOptions(HighchartsMeta):
         self._x_axis_unit = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'add_button': as_dict.get('addButton', None),
             'algorithm': as_dict.get('algorithm', None),
@@ -1481,7 +1481,7 @@ class PopupLanguageOptions(HighchartsMeta):
             'x_axis_unit': as_dict.get('xAxisUnit', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -1616,8 +1616,12 @@ class NavigationLanguageOptions(HighchartsMeta):
         self._popup = value
 
     @classmethod
-    def from_dict(cls, as_dict):
-        return cls(popup = as_dict.get('popup', None))
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'popup': as_dict.get('popup', None)
+        }
+
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {

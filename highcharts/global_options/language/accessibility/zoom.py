@@ -58,14 +58,14 @@ class ZoomLanguageOptions(HighchartsMeta):
         self._reset_zoom_button = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'map_zoom_in': as_dict.get('mapZoomIn', None),
             'map_zoom_out': as_dict.get('mapZoomOut', None),
             'reset_zoom_button': as_dict.get('resetZoomButton', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

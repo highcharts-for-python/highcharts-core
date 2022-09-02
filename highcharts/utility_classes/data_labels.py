@@ -81,14 +81,14 @@ class Filter(HighchartsMeta):
         self._value = validators.numeric(value_, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'operator': as_dict.get('operator', None),
             'property_': as_dict.get('property', None),
             'value': as_dict.get('value', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
@@ -830,7 +830,7 @@ class DataLabel(HighchartsMeta):
         self._z = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'align': as_dict.get('align', None),
             'allow_overlap': as_dict.get('allowOverlap', None),
@@ -865,7 +865,7 @@ class DataLabel(HighchartsMeta):
             'z': as_dict.get('z', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -950,7 +950,7 @@ class NodeDataLabel(DataLabel):
         self._node_formatter = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'align': as_dict.get('align', None),
             'allow_overlap': as_dict.get('allowOverlap', None),
@@ -988,7 +988,7 @@ class NodeDataLabel(DataLabel):
             'node_formatter': as_dict.get('nodeFormatter', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

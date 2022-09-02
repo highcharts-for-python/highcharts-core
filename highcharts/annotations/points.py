@@ -108,7 +108,7 @@ class AnnotationPoint(HighchartsMeta):
                                                   'supported type.')
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'x': as_dict.get('x', None),
             'x_axis': as_dict.get('xAxis', None),
@@ -116,7 +116,7 @@ class AnnotationPoint(HighchartsMeta):
             'y_axis': as_dict.get('yAxis', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {

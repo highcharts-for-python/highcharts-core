@@ -132,7 +132,7 @@ class TargetOptions(HighchartsMeta):
             self._width = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'border_color': as_dict.get('borderColor', None),
             'border_radius': as_dict.get('borderRadius', None),
@@ -142,7 +142,7 @@ class TargetOptions(HighchartsMeta):
             'width': as_dict.get('width', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

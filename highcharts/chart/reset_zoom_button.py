@@ -82,14 +82,14 @@ class ResetZoomButtonOptions(HighchartsMeta):
         self._theme = validators.dict(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'position': as_dict.get('position', None),
             'relative_to': as_dict.get('relativeTo', None),
             'theme': as_dict.get('theme', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

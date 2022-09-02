@@ -164,7 +164,7 @@ class PaneBackground(HighchartsMeta):
             self._shape = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'background_color': as_dict.get('backgroundColor', None),
             'border_color': as_dict.get('borderColor', None),
@@ -175,7 +175,7 @@ class PaneBackground(HighchartsMeta):
             'shape': as_dict.get('shape', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -333,7 +333,7 @@ class Pane(HighchartsMeta):
         self._start_angle = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'background': as_dict.get('background', None),
             'center': as_dict.get('center', None),
@@ -343,7 +343,7 @@ class Pane(HighchartsMeta):
             'start_angle': as_dict.get('startAngle', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

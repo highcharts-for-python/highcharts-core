@@ -110,14 +110,14 @@ class CallbackFunction(HighchartsMeta):
         self._body = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'function_name': as_dict.get('function_name', None),
             'arguments': as_dict.get('arguments', None),
             'body': as_dict.get('body', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
@@ -382,13 +382,13 @@ class JavaScriptClass(HighchartsMeta):
             self._methods = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'class_name': as_dict.get('className', None),
             'methods': as_dict.get('methods', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {

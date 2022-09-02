@@ -141,7 +141,7 @@ class Navigation(HighchartsMeta):
         self._icons_url = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'annotation_options': as_dict.get('annotationOptions', None),
             'bindings': as_dict.get('bindings', None),
@@ -152,7 +152,7 @@ class Navigation(HighchartsMeta):
             'icons_url': as_dict.get('iconsURL', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

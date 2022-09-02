@@ -424,7 +424,7 @@ class NumericAxis(GenericAxis):
             self._zoom_enabled = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'accessibility': as_dict.get('accessibility', None),
             'align_ticks': as_dict.get('alignTicks', None),
@@ -496,7 +496,7 @@ class NumericAxis(GenericAxis):
             'zoom_enabled': as_dict.get('zoomEnabled', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

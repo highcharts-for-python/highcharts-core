@@ -73,7 +73,7 @@ class RangeSelectorLanguageOptions(HighchartsMeta):
         self._min_input_label = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'click_button_announcement': as_dict.get('clickButtonAnnouncement', None),
             'dropdown_label': as_dict.get('dropdownLabel', None),
@@ -81,7 +81,7 @@ class RangeSelectorLanguageOptions(HighchartsMeta):
             'min_input_label': as_dict.get('minInputLabel', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

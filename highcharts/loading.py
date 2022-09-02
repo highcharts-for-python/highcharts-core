@@ -90,7 +90,7 @@ class Loading(HighchartsMeta):
         self._style = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'hide_duration': as_dict.get('hideDuration', None),
             'label_style': as_dict.get('labelStyle', None),
@@ -98,7 +98,7 @@ class Loading(HighchartsMeta):
             'style': as_dict.get('style', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

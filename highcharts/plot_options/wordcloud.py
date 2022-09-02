@@ -72,14 +72,14 @@ class RotationOptions(HighchartsMeta):
                                       minimum = 0)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'from_': as_dict.get('from', None),
             'orientations': as_dict.get('orientations', None),
             'to': as_dict.get('to', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

@@ -284,7 +284,7 @@ class ShapeOptions(HighchartsMeta):
                                           coerce_value = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'dash_style': as_dict.get('dashStyle', None),
             'fill': as_dict.get('fill', None),
@@ -300,7 +300,7 @@ class ShapeOptions(HighchartsMeta):
             'x_axis': as_dict.get('xAxis', None),
             'y_axis': as_dict.get('yAxis', None)
         }
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -452,7 +452,7 @@ class AnnotationShape(ShapeOptions):
                                               'supported type.')
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             # from ShapeOptions
             'dash_style': as_dict.get('dashStyle', None),
@@ -475,7 +475,8 @@ class AnnotationShape(ShapeOptions):
             'point': as_dict.get('point', None),
             'points': as_dict.get('points', None),
         }
-        return cls(**kwargs)
+
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

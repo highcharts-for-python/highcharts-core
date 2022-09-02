@@ -85,14 +85,14 @@ class PanelOptions(HighchartsMeta):
             self._visible = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'color': as_dict.get('color', None),
             'size': as_dict.get('size', None),
             'visible': as_dict.get('visible', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
@@ -252,7 +252,7 @@ class Frame(HighchartsMeta):
             self._visible = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'back': as_dict.get('back', None),
             'bottom': as_dict.get('bottom', None),
@@ -264,7 +264,7 @@ class Frame(HighchartsMeta):
             'visible': as_dict.get('visible', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
@@ -439,7 +439,7 @@ class Options3D(HighchartsMeta):
         self._view_distance = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'alpha': as_dict.get('alpha', None),
             'axis_label_position': as_dict.get('axisLabelPosition', None),
@@ -451,7 +451,7 @@ class Options3D(HighchartsMeta):
             'view_distance': as_dict.get('viewDistance', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

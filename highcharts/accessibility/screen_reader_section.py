@@ -218,7 +218,7 @@ class ScreenReaderSection(HighchartsMeta):
         self._on_view_data_table_click = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'after_chart_format': as_dict.get('afterChartFormat', None),
             'after_chart_formatter': as_dict.get('afterChartFormatter', None),
@@ -229,7 +229,7 @@ class ScreenReaderSection(HighchartsMeta):
             'on_view_data_table_click': as_dict.get('onViewDataTableClick', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

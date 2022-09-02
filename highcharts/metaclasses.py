@@ -131,16 +131,49 @@ class HighchartsMeta(ABC):
 
     @classmethod
     @abstractmethod
-    def from_dict(cls, as_dict: dict):
+    def _get_kwargs_from_dict(cls, as_dict):
+        """Convenience method which returns the keyword arguments used to initialize the
+        class from a Highcharts Javascript-compatible :class:`dict <python:dict>` object.
+
+        :param as_dict: The HighCharts JS compatible :class:`dict <python:dict>`
+          representation of the object.
+        :type as_dict: :class:`dict <python:dict>`
+
+        :returns: The keyword arguments that would be used to initialize an instance.
+        :rtype: :class:`dict <python:dict>`
+
+        """
+        raise NotImplementedError()
+
+    @classmethod
+    def from_dict(cls,
+                  as_dict: dict,
+                  allow_snake_case: bool = True):
         """Construct an instance of the class from a :class:`dict <python:dict>` object.
 
         :param as_dict: A :class:`dict <python:dict>` representation of the object.
         :type as_dict: :class:`dict <python:dict>`
 
+        :param allow_snake_case: If ``True``, interprets ``snake_case`` keys as equivalent
+          to ``camelCase`` keys. Defaults to ``True``.
+        :type allow_snake_case: :class:`bool <python:bool>`
+
         :returns: A Python object representation of ``as_dict``.
         :rtype: :class:`HighchartsMeta`
         """
-        raise NotImplementedError()
+        as_dict = validators.dict(as_dict, allow_empty = True) or {}
+        clean_as_dict = {}
+        for key in as_dict:
+            if allow_snake_case:
+                clean_key = utility_functions.to_camelCase(key)
+            else:
+                clean_key = key
+
+            clean_as_dict[clean_key] = as_dict[key]
+
+        kwargs = cls._get_kwargs_from_dict(as_dict)
+
+        return cls(**kwargs)
 
     @classmethod
     def from_json(cls, as_json: str | bytes):

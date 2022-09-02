@@ -73,14 +73,14 @@ class AxisAccessibility(HighchartsMeta):
             self._range_description = validators.string(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'description': as_dict.get('description', None),
             'enabled': as_dict.get('enabled', None),
             'range_description': as_dict.get('rangeDescription', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

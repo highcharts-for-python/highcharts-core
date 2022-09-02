@@ -55,13 +55,13 @@ class LegendLanguageOptions(HighchartsMeta):
         self._legend_label_no_title = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'legend_item': as_dict.get('legendItem', None),
             'legend_label': as_dict.get('legendLabel', None),
             'legend_label_no_title': as_dict.get('legendLabelNoTitle', None),
         }
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

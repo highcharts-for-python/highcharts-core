@@ -48,13 +48,13 @@ class CSVAnnotationOptions(HighchartsMeta):
             self._join = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'item_delimiter': as_dict.get('itemDelimiter', None),
             'join': as_dict.get('join', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -216,7 +216,7 @@ class ExportingCSV(HighchartsMeta):
         self._line_delimiter = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'annotations': as_dict.get('annotations', None),
             'column_header_formatter': as_dict.get('columnHeaderFormatter', None),
@@ -226,7 +226,7 @@ class ExportingCSV(HighchartsMeta):
             'line_delimiter': as_dict.get('lineDelimiter', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

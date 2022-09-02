@@ -118,7 +118,7 @@ class ScrollablePlotArea(HighchartsMeta):
                                                      maximum = 1)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'minimum_height': as_dict.get('minHeight', None),
             'minimum_width': as_dict.get('minWidth', None),
@@ -127,7 +127,7 @@ class ScrollablePlotArea(HighchartsMeta):
             'scroll_position_y': as_dict.get('scrollPositionY', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

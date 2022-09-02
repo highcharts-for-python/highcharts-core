@@ -19,13 +19,13 @@ class TestClass(HighchartsMeta):
         super().__init__(**kwargs)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'item1': as_dict.get('item1', None),
             'item2': as_dict.get('item2', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return {
@@ -58,7 +58,7 @@ def test__init__(kwargs, error):
 @pytest.mark.parametrize('cls, as_dict, error', [
     (TestClass, {'item1': 123, 'item2': 456}, None),
     (TestClass, {}, None),
-    (TestClass, 'not-a-dict', AttributeError),
+    (TestClass, 'not-a-dict', (TypeError, AttributeError)),
 ])
 def test_from_dict(cls, as_dict, error):
     if not error:

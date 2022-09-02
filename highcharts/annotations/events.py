@@ -79,7 +79,7 @@ class AnnotationEvent(HighchartsMeta):
         self._remove = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'add': as_dict.get('add', None),
             'after_update': as_dict.get('afterUpdate', None),
@@ -87,7 +87,7 @@ class AnnotationEvent(HighchartsMeta):
             'remove': as_dict.get('remove', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

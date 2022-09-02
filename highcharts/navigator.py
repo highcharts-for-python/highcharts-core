@@ -146,7 +146,7 @@ class HandleOptions(HighchartsMeta):
         self._width = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'background_color': as_dict.get('backgroundColor', None),
             'border_color': as_dict.get('borderColor', None),
@@ -157,7 +157,7 @@ class HandleOptions(HighchartsMeta):
             'width': as_dict.get('width', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
@@ -470,7 +470,7 @@ class Navigator(HighchartsMeta):
         self._y_axis = value
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'adapt_to_updated_data': as_dict.get('adaptToUpdatedData', None),
             'enabled': as_dict.get('enabled', None),
@@ -487,7 +487,7 @@ class Navigator(HighchartsMeta):
             'y_axis': as_dict.get('yAxis', None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

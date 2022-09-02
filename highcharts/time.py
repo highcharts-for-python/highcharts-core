@@ -167,7 +167,7 @@ class Time(HighchartsMeta):
             self._use_utc = bool(value)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'Date': as_dict.get('Date', None),
             'get_timezone_offset': as_dict.get('getTimezoneOffset', None),
@@ -177,7 +177,7 @@ class Time(HighchartsMeta):
             'use_utc': as_dict.get('useUTC', None)
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {

@@ -142,7 +142,7 @@ class AnnounceNewData(HighchartsMeta):
                                                                  minimum = 0)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'announcement_formatter': as_dict.get('announcementFormatter', None),
             'enabled': as_dict.get('enabled', None),
@@ -151,7 +151,7 @@ class AnnounceNewData(HighchartsMeta):
                                                             None),
         }
 
-        return cls(**kwargs)
+        return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
