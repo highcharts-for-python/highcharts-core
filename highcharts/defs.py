@@ -25,11 +25,11 @@ class MarkerAttributeObject(AttributeObject):
         self['markerWidth'] = None
         self['markerHeight'] = None
 
-        self.id = kwargs.pop('id', None)
-        self.ref_x = kwargs.pop('ref_x', None)
-        self.ref_y = kwargs.pop('ref_y', None)
-        self.marker_width = kwargs.pop('marker_width', None)
-        self.marker_height = kwargs.pop('marker_height', None)
+        self.id = kwargs.get('id', None)
+        self.ref_x = kwargs.get('ref_x', None)
+        self.ref_y = kwargs.get('ref_y', None)
+        self.marker_width = kwargs.get('marker_width', None)
+        self.marker_height = kwargs.get('marker_height', None)
 
     @property
     def id(self) -> Optional[str]:

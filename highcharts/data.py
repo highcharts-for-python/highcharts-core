@@ -56,33 +56,33 @@ class Data(HighchartsMeta):
         self._switch_rows_and_columns = None
         self._table = None
 
-        self.before_parse = kwargs.pop('before_parse', None)
-        self.columns = kwargs.pop('columns', None)
-        self.columns_url = kwargs.pop('columns_url', None)
-        self.complete = kwargs.pop('complete', None)
-        self.csv = kwargs.pop('csv', None)
-        self.csv_url = kwargs.pop('csv_url', None)
-        self.data_refresh_rate = kwargs.pop('data_refresh_rate', None)
-        self.date_format = kwargs.pop('date_format', None)
-        self.decimal_point = kwargs.pop('decimal_point', None)
-        self.enable_polling = kwargs.pop('enable_polling', None)
-        self.end_column = kwargs.pop('end_column', None)
-        self.end_row = kwargs.pop('end_row', None)
-        self.first_row_as_names = kwargs.pop('first_row_as_names', None)
-        self.google_api_key = kwargs.pop('google_api_key', None)
-        self.google_spreadsheet_key = kwargs.pop('google_spreadsheet_key', None)
-        self.google_spreadsheet_range = kwargs.pop('google_spreadsheet_range', None)
-        self.item_delimiter = kwargs.pop('item_delimiter', None)
-        self.line_delimiter = kwargs.pop('line_delimiter', None)
-        self.parsed = kwargs.pop('parsed', None)
-        self.parse_date = kwargs.pop('parse_date', None)
-        self.rows = kwargs.pop('rows', None)
-        self.rows_url = kwargs.pop('rows_url', None)
-        self.series_mapping = kwargs.pop('series_mapping', None)
-        self.start_column = kwargs.pop('start_column', None)
-        self.start_row = kwargs.pop('start_row', None)
-        self.switch_rows_and_columns = kwargs.pop('switch_rows_and_columns', None)
-        self.table = kwargs.pop('table', None)
+        self.before_parse = kwargs.get('before_parse', None)
+        self.columns = kwargs.get('columns', None)
+        self.columns_url = kwargs.get('columns_url', None)
+        self.complete = kwargs.get('complete', None)
+        self.csv = kwargs.get('csv', None)
+        self.csv_url = kwargs.get('csv_url', None)
+        self.data_refresh_rate = kwargs.get('data_refresh_rate', None)
+        self.date_format = kwargs.get('date_format', None)
+        self.decimal_point = kwargs.get('decimal_point', None)
+        self.enable_polling = kwargs.get('enable_polling', None)
+        self.end_column = kwargs.get('end_column', None)
+        self.end_row = kwargs.get('end_row', None)
+        self.first_row_as_names = kwargs.get('first_row_as_names', None)
+        self.google_api_key = kwargs.get('google_api_key', None)
+        self.google_spreadsheet_key = kwargs.get('google_spreadsheet_key', None)
+        self.google_spreadsheet_range = kwargs.get('google_spreadsheet_range', None)
+        self.item_delimiter = kwargs.get('item_delimiter', None)
+        self.line_delimiter = kwargs.get('line_delimiter', None)
+        self.parsed = kwargs.get('parsed', None)
+        self.parse_date = kwargs.get('parse_date', None)
+        self.rows = kwargs.get('rows', None)
+        self.rows_url = kwargs.get('rows_url', None)
+        self.series_mapping = kwargs.get('series_mapping', None)
+        self.start_column = kwargs.get('start_column', None)
+        self.start_row = kwargs.get('start_row', None)
+        self.switch_rows_and_columns = kwargs.get('switch_rows_and_columns', None)
+        self.table = kwargs.get('table', None)
 
     @property
     def before_parse(self) -> Optional[CallbackFunction]:
@@ -699,33 +699,33 @@ class Data(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'before_parse': as_dict.pop('beforeParse', None),
-            'columns': as_dict.pop('columns', None),
-            'columns_url': as_dict.pop('columnsURL', None),
-            'complete': as_dict.pop('complete', None),
-            'csv': as_dict.pop('csv', None),
-            'csv_url': as_dict.pop('csvURL', None),
-            'data_refresh_rate': as_dict.pop('dataRefreshRate', None),
-            'date_format': as_dict.pop('dateFormat', None),
-            'decimal_point': as_dict.pop('decimalPoint', None),
-            'enable_polling': as_dict.pop('enablePolling', None),
-            'end_column': as_dict.pop('endColumn', None),
-            'end_row': as_dict.pop('endRow', None),
-            'first_row_as_names': as_dict.pop('firstRowAsNames', None),
-            'google_api_key': as_dict.pop('googleAPIKey', None),
-            'google_spreadsheet_key': as_dict.pop('googleSpreadsheetKey', None),
-            'google_spreadsheet_range': as_dict.pop('googleSpreadsheetRange', None),
-            'item_delimiter': as_dict.pop('itemDelimiter', None),
-            'line_delimiter': as_dict.pop('lineDelimiter', None),
-            'parsed': as_dict.pop('parsed', None),
-            'parse_date': as_dict.pop('parseDate', None),
-            'rows': as_dict.pop('rows', None),
-            'rows_url': as_dict.pop('rowsURL', None),
-            'series_mapping': as_dict.pop('seriesMapping', None),
-            'start_column': as_dict.pop('startColumn', None),
-            'start_row': as_dict.pop('startRow', None),
-            'switch_rows_and_columns': as_dict.pop('switchRowsAndColumns', None),
-            'table': as_dict.pop('table', None)
+            'before_parse': as_dict.get('beforeParse', None),
+            'columns': as_dict.get('columns', None),
+            'columns_url': as_dict.get('columnsURL', None),
+            'complete': as_dict.get('complete', None),
+            'csv': as_dict.get('csv', None),
+            'csv_url': as_dict.get('csvURL', None),
+            'data_refresh_rate': as_dict.get('dataRefreshRate', None),
+            'date_format': as_dict.get('dateFormat', None),
+            'decimal_point': as_dict.get('decimalPoint', None),
+            'enable_polling': as_dict.get('enablePolling', None),
+            'end_column': as_dict.get('endColumn', None),
+            'end_row': as_dict.get('endRow', None),
+            'first_row_as_names': as_dict.get('firstRowAsNames', None),
+            'google_api_key': as_dict.get('googleAPIKey', None),
+            'google_spreadsheet_key': as_dict.get('googleSpreadsheetKey', None),
+            'google_spreadsheet_range': as_dict.get('googleSpreadsheetRange', None),
+            'item_delimiter': as_dict.get('itemDelimiter', None),
+            'line_delimiter': as_dict.get('lineDelimiter', None),
+            'parsed': as_dict.get('parsed', None),
+            'parse_date': as_dict.get('parseDate', None),
+            'rows': as_dict.get('rows', None),
+            'rows_url': as_dict.get('rowsURL', None),
+            'series_mapping': as_dict.get('seriesMapping', None),
+            'start_column': as_dict.get('startColumn', None),
+            'start_row': as_dict.get('startRow', None),
+            'switch_rows_and_columns': as_dict.get('switchRowsAndColumns', None),
+            'table': as_dict.get('table', None)
         }
 
         return cls(**kwargs)

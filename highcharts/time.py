@@ -22,12 +22,12 @@ class Time(HighchartsMeta):
         self._timezone_offset = None
         self._use_utc = None
 
-        self.Date = kwargs.pop('Date', None)
-        self.get_timezone_offset = kwargs.pop('get_timezone_offset', None)
-        self.moment = kwargs.pop('moment', None)
-        self.timezone = kwargs.pop('timezone', None)
-        self.timezone_offset = kwargs.pop('timezone_offset', None)
-        self.use_utc = kwargs.pop('use_utc', None)
+        self.Date = kwargs.get('Date', None)
+        self.get_timezone_offset = kwargs.get('get_timezone_offset', None)
+        self.moment = kwargs.get('moment', None)
+        self.timezone = kwargs.get('timezone', None)
+        self.timezone_offset = kwargs.get('timezone_offset', None)
+        self.use_utc = kwargs.get('use_utc', None)
 
     @property
     def Date(self) -> Optional[JavaScriptClass]:
@@ -169,12 +169,12 @@ class Time(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'Date': as_dict.pop('Date', None),
-            'get_timezone_offset': as_dict.pop('getTimezoneOffset', None),
-            'moment': as_dict.pop('moment', None),
-            'timezone': as_dict.pop('timezone', None),
-            'timezone_offset': as_dict.pop('timezoneOffset', None),
-            'use_utc': as_dict.pop('useUTC', None)
+            'Date': as_dict.get('Date', None),
+            'get_timezone_offset': as_dict.get('getTimezoneOffset', None),
+            'moment': as_dict.get('moment', None),
+            'timezone': as_dict.get('timezone', None),
+            'timezone_offset': as_dict.get('timezoneOffset', None),
+            'use_utc': as_dict.get('useUTC', None)
         }
 
         return cls(**kwargs)

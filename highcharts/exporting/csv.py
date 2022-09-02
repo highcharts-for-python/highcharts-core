@@ -51,7 +51,7 @@ class CSVAnnotationOptions(HighchartsMeta):
     def from_dict(cls, as_dict):
         kwargs = {
             'item_delimiter': as_dict.get('itemDelimiter', None),
-            'join': as_dict.pop('join', None)
+            'join': as_dict.get('join', None)
         }
 
         return cls(**kwargs)

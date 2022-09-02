@@ -26,10 +26,10 @@ class PDFFontOptions(HighchartsMeta):
         self._italic = None
         self._normal = None
 
-        self.bold = kwargs.pop('bold', None)
-        self.bolditalic = kwargs.pop('bolditalic', None)
-        self.italic = kwargs.pop('italic', None)
-        self.normal = kwargs.pop('normal', None)
+        self.bold = kwargs.get('bold', None)
+        self.bolditalic = kwargs.get('bolditalic', None)
+        self.italic = kwargs.get('italic', None)
+        self.normal = kwargs.get('normal', None)
 
     @property
     def bold(self) -> Optional[str]:
@@ -109,10 +109,10 @@ class PDFFontOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'bold': as_dict.pop('bold', None),
-            'bolditalic': as_dict.pop('bolditalic', None),
-            'italic': as_dict.pop('italic', None),
-            'normal': as_dict.pop('normal', None)
+            'bold': as_dict.get('bold', None),
+            'bolditalic': as_dict.get('bolditalic', None),
+            'italic': as_dict.get('italic', None),
+            'normal': as_dict.get('normal', None)
         }
 
         return cls(**kwargs)

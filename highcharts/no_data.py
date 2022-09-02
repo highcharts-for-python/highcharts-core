@@ -29,10 +29,10 @@ class NoData(HighchartsMeta):
         self._style = None
         self._use_html = None
 
-        self.attr = kwargs.pop('attr', None)
-        self.position = kwargs.pop('position', None)
-        self.style = kwargs.pop('style', None)
-        self.use_html = kwargs.pop('use_html', None)
+        self.attr = kwargs.get('attr', None)
+        self.position = kwargs.get('position', None)
+        self.style = kwargs.get('style', None)
+        self.use_html = kwargs.get('use_html', None)
 
     @property
     def attr(self) -> Optional[AttributeObject]:
@@ -91,10 +91,10 @@ class NoData(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'attr': as_dict.pop('attr', None),
-            'position': as_dict.pop('position', None),
-            'style': as_dict.pop('style', None),
-            'use_html': as_dict.pop('useHTML', None)
+            'attr': as_dict.get('attr', None),
+            'position': as_dict.get('position', None),
+            'style': as_dict.get('style', None),
+            'use_html': as_dict.get('useHTML', None)
         }
 
         return cls(**kwargs)

@@ -22,13 +22,13 @@ class PaneBackground(HighchartsMeta):
         self._outer_radius = None
         self._shape = None
 
-        self.background_color = kwargs.pop('background_color', None)
-        self.border_color = kwargs.pop('border_color', None)
-        self.border_width = kwargs.pop('border_width', None)
-        self.class_name = kwargs.pop('class_name', None)
-        self.inner_radius = kwargs.pop('inner_radius', None)
-        self.outer_radius = kwargs.pop('outer_radius', None)
-        self.shape = kwargs.pop('shape', None)
+        self.background_color = kwargs.get('background_color', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.class_name = kwargs.get('class_name', None)
+        self.inner_radius = kwargs.get('inner_radius', None)
+        self.outer_radius = kwargs.get('outer_radius', None)
+        self.shape = kwargs.get('shape', None)
 
     @property
     def background_color(self) -> Optional[str | Gradient | Pattern]:
@@ -166,13 +166,13 @@ class PaneBackground(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'background_color': as_dict.pop('backgroundColor', None),
-            'border_color': as_dict.pop('borderColor', None),
-            'border_width': as_dict.pop('borderWidth', None),
-            'class_name': as_dict.pop('className', None),
-            'inner_radius': as_dict.pop('innerRadius', None),
-            'outer_radius': as_dict.pop('outerRadius', None),
-            'shape': as_dict.pop('shape', None),
+            'background_color': as_dict.get('backgroundColor', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'class_name': as_dict.get('className', None),
+            'inner_radius': as_dict.get('innerRadius', None),
+            'outer_radius': as_dict.get('outerRadius', None),
+            'shape': as_dict.get('shape', None),
         }
 
         return cls(**kwargs)
@@ -203,12 +203,12 @@ class Pane(HighchartsMeta):
         self._size = None
         self._start_angle = None
 
-        self.background = kwargs.pop('background', None)
-        self.center = kwargs.pop('center', None)
-        self.end_angle = kwargs.pop('end_angle', None)
-        self.inner_size = kwargs.pop('inner_size', None)
-        self.size = kwargs.pop('size', None)
-        self.start_angle = kwargs.pop('start_angle', None)
+        self.background = kwargs.get('background', None)
+        self.center = kwargs.get('center', None)
+        self.end_angle = kwargs.get('end_angle', None)
+        self.inner_size = kwargs.get('inner_size', None)
+        self.size = kwargs.get('size', None)
+        self.start_angle = kwargs.get('start_angle', None)
 
     @property
     def background(self) -> Optional[List[PaneBackground]]:
@@ -335,12 +335,12 @@ class Pane(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'background': as_dict.pop('background', None),
-            'center': as_dict.pop('center', None),
-            'end_angle': as_dict.pop('endAngle', None),
-            'inner_size': as_dict.pop('innerSize', None),
-            'size': as_dict.pop('size', None),
-            'start_angle': as_dict.pop('startAngle', None),
+            'background': as_dict.get('background', None),
+            'center': as_dict.get('center', None),
+            'end_angle': as_dict.get('endAngle', None),
+            'inner_size': as_dict.get('innerSize', None),
+            'size': as_dict.get('size', None),
+            'start_angle': as_dict.get('startAngle', None),
         }
 
         return cls(**kwargs)

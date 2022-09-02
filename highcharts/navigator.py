@@ -25,13 +25,13 @@ class HandleOptions(HighchartsMeta):
         self._symbols = None
         self._width = None
 
-        self.background_color = kwargs.pop('background_color', None)
-        self.border_color = kwargs.pop('border_color', None)
-        self.enabled = kwargs.pop('enabled', None)
-        self.height = kwargs.pop('height', None)
-        self.line_width = kwargs.pop('line_width', None)
-        self.symbols = kwargs.pop('symbols', None)
-        self.width = kwargs.pop('width', None)
+        self.background_color = kwargs.get('background_color', None)
+        self.border_color = kwargs.get('border_color', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.height = kwargs.get('height', None)
+        self.line_width = kwargs.get('line_width', None)
+        self.symbols = kwargs.get('symbols', None)
+        self.width = kwargs.get('width', None)
 
     @property
     def background_color(self) -> Optional[str | Gradient | Pattern]:
@@ -148,13 +148,13 @@ class HandleOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'background_color': as_dict.pop('backgroundColor', None),
-            'border_color': as_dict.pop('borderColor', None),
-            'enabled': as_dict.pop('enabled', None),
-            'height': as_dict.pop('height', None),
-            'line_width': as_dict.pop('lineWidth', None),
-            'symbols': as_dict.pop('symbols', None),
-            'width': as_dict.pop('width', None),
+            'background_color': as_dict.get('backgroundColor', None),
+            'border_color': as_dict.get('borderColor', None),
+            'enabled': as_dict.get('enabled', None),
+            'height': as_dict.get('height', None),
+            'line_width': as_dict.get('lineWidth', None),
+            'symbols': as_dict.get('symbols', None),
+            'width': as_dict.get('width', None),
         }
 
         return cls(**kwargs)
@@ -193,19 +193,19 @@ class Navigator(HighchartsMeta):
         self._x_axis = None
         self._y_axis = None
 
-        self.adapt_to_updated_data = kwargs.pop('adapt_to_updated_data', None)
-        self.enabled = kwargs.pop('enabled', None)
-        self.handles = kwargs.pop('handles', None)
-        self.height = kwargs.pop('height', None)
-        self.margin = kwargs.pop('margin', None)
-        self.mask_fill = kwargs.pop('mask_fill', None)
-        self.mask_inside = kwargs.pop('mask_inside', None)
-        self.opposite = kwargs.pop('opposite', None)
-        self.outline_color = kwargs.pop('outline_color', None)
-        self.outline_width = kwargs.pop('outline_width', None)
-        self.series = kwargs.pop('series', None)
-        self.x_axis = kwargs.pop('x_axis', None)
-        self.y_axis = kwargs.pop('y_axis', None)
+        self.adapt_to_updated_data = kwargs.get('adapt_to_updated_data', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.handles = kwargs.get('handles', None)
+        self.height = kwargs.get('height', None)
+        self.margin = kwargs.get('margin', None)
+        self.mask_fill = kwargs.get('mask_fill', None)
+        self.mask_inside = kwargs.get('mask_inside', None)
+        self.opposite = kwargs.get('opposite', None)
+        self.outline_color = kwargs.get('outline_color', None)
+        self.outline_width = kwargs.get('outline_width', None)
+        self.series = kwargs.get('series', None)
+        self.x_axis = kwargs.get('x_axis', None)
+        self.y_axis = kwargs.get('y_axis', None)
 
     @property
     def adapt_to_updated_data(self) -> Optional[bool]:
@@ -472,19 +472,19 @@ class Navigator(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'adapt_to_updated_data': as_dict.pop('adaptToUpdatedData', None),
-            'enabled': as_dict.pop('enabled', None),
-            'handles': as_dict.pop('handles', None),
-            'height': as_dict.pop('height', None),
-            'margin': as_dict.pop('margin', None),
-            'mask_fill': as_dict.pop('maskFill', None),
-            'mask_inside': as_dict.pop('maskInside', None),
-            'opposite': as_dict.pop('opposite', None),
-            'outline_color': as_dict.pop('outlineColor', None),
-            'outline_width': as_dict.pop('outlineWidth', None),
-            'series': as_dict.pop('series', None),
-            'x_axis': as_dict.pop('xAxis', None),
-            'y_axis': as_dict.pop('yAxis', None),
+            'adapt_to_updated_data': as_dict.get('adaptToUpdatedData', None),
+            'enabled': as_dict.get('enabled', None),
+            'handles': as_dict.get('handles', None),
+            'height': as_dict.get('height', None),
+            'margin': as_dict.get('margin', None),
+            'mask_fill': as_dict.get('maskFill', None),
+            'mask_inside': as_dict.get('maskInside', None),
+            'opposite': as_dict.get('opposite', None),
+            'outline_color': as_dict.get('outlineColor', None),
+            'outline_width': as_dict.get('outlineWidth', None),
+            'series': as_dict.get('series', None),
+            'x_axis': as_dict.get('xAxis', None),
+            'y_axis': as_dict.get('yAxis', None),
         }
 
         return cls(**kwargs)

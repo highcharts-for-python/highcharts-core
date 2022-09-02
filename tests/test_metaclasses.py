@@ -13,16 +13,16 @@ class TestClass(HighchartsMeta):
     """Class used to test the :class:`HighchartsMeta` functionality."""
 
     def __init__(self, **kwargs):
-        self.item1 = kwargs.pop('item1', None)
-        self.item2 = kwargs.pop('item2', None)
+        self.item1 = kwargs.get('item1', None)
+        self.item2 = kwargs.get('item2', None)
 
         super().__init__(**kwargs)
 
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'item1': as_dict.pop('item1', None),
-            'item2': as_dict.pop('item2', None)
+            'item1': as_dict.get('item1', None),
+            'item2': as_dict.get('item2', None)
         }
 
         return cls(**kwargs)
@@ -199,8 +199,8 @@ def test__mro_init(error):
             self._item1 = None
             self._item2 = None
 
-            self.item1 = kwargs.pop('item1', 123)
-            self.item2 = kwargs.pop('item2', 456)
+            self.item1 = kwargs.get('item1', 123)
+            self.item2 = kwargs.get('item2', 456)
 
         @property
         def item1(self):
@@ -233,8 +233,8 @@ def test__mro_init(error):
             self._item3 = None
             self._item4 = None
 
-            self.item3 = kwargs.pop('item3', 789)
-            self.item4 = kwargs.pop('item4', 987)
+            self.item3 = kwargs.get('item3', 789)
+            self.item4 = kwargs.get('item4', 987)
 
         @property
         def item3(self):
@@ -269,7 +269,7 @@ def test__mro_init(error):
             self._item3 = None
             self._item4 = None
 
-            self.child_item = kwargs.pop('child_item', 'test value')
+            self.child_item = kwargs.get('child_item', 'test value')
 
         def to_dict(self) -> dict:
             return {

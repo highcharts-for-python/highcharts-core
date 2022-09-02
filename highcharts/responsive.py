@@ -19,11 +19,11 @@ class Condition(HighchartsMeta):
         self._min_height = None
         self._min_width = None
 
-        self.callback = kwargs.pop('callback', None)
-        self.max_height = kwargs.pop('max_height', None)
-        self.max_width = kwargs.pop('max_width', None)
-        self.min_height = kwargs.pop('min_height', None)
-        self.min_width = kwargs.pop('min_width', None)
+        self.callback = kwargs.get('callback', None)
+        self.max_height = kwargs.get('max_height', None)
+        self.max_width = kwargs.get('max_width', None)
+        self.min_height = kwargs.get('min_height', None)
+        self.min_width = kwargs.get('min_width', None)
 
     @property
     def callback(self) -> Optional[CallbackFunction]:
@@ -121,11 +121,11 @@ class Condition(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'callback': as_dict.pop('callback', None),
-            'max_height': as_dict.pop('maxHeight', None),
-            'max_width': as_dict.pop('maxWidth', None),
-            'min_height': as_dict.pop('minHeight', None),
-            'min_width': as_dict.pop('minWidth', None)
+            'callback': as_dict.get('callback', None),
+            'max_height': as_dict.get('maxHeight', None),
+            'max_width': as_dict.get('maxWidth', None),
+            'min_height': as_dict.get('minHeight', None),
+            'min_width': as_dict.get('minWidth', None)
         }
 
         return cls(**kwargs)
@@ -149,8 +149,8 @@ class ResponsiveRules(HighchartsMeta):
         self._chart_options = None
         self._condition = None
 
-        self.chart_options = kwargs.pop('chart_options', None)
-        self.condition = kwargs.pop('condition', None)
+        self.chart_options = kwargs.get('chart_options', None)
+        self.condition = kwargs.get('condition', None)
 
     @property
     def chart_options(self) -> Optional[HighchartsMeta]:
@@ -195,8 +195,8 @@ class ResponsiveRules(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'chart_options': as_dict.pop('chartOptions', None),
-            'condition': as_dict.pop('condition', None)
+            'chart_options': as_dict.get('chartOptions', None),
+            'condition': as_dict.get('condition', None)
         }
 
         return cls(**kwargs)
@@ -222,7 +222,7 @@ class Responsive(HighchartsMeta):
     def __init__(self, **kwargs):
         self._rules = None
 
-        self.rules = kwargs.pop('rules', None)
+        self.rules = kwargs.get('rules', None)
 
     @property
     def rules(self) -> Optional[List[ResponsiveRules]]:
@@ -245,7 +245,7 @@ class Responsive(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         return cls(**{
-            'rules': as_dict.pop('rules', None)
+            'rules': as_dict.get('rules', None)
         })
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:

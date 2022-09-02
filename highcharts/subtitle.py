@@ -28,15 +28,15 @@ class Subtitle(HighchartsMeta):
         self._x = None
         self._y = None
 
-        self.align = kwargs.pop('align', None)
-        self.floating = kwargs.pop('floating', None)
-        self.style = kwargs.pop('style', None)
-        self.text = kwargs.pop('text', None)
-        self.use_html = kwargs.pop('use_html', None)
-        self.vertical_align = kwargs.pop('vertical_align', None)
-        self.width_adjust = kwargs.pop('width_adjust', None)
-        self.x = kwargs.pop('x', None)
-        self.y = kwargs.pop('y', None)
+        self.align = kwargs.get('align', None)
+        self.floating = kwargs.get('floating', None)
+        self.style = kwargs.get('style', None)
+        self.text = kwargs.get('text', None)
+        self.use_html = kwargs.get('use_html', None)
+        self.vertical_align = kwargs.get('vertical_align', None)
+        self.width_adjust = kwargs.get('width_adjust', None)
+        self.x = kwargs.get('x', None)
+        self.y = kwargs.get('y', None)
 
     @property
     def align(self) -> Optional[str]:
@@ -202,15 +202,15 @@ class Subtitle(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.pop('align', None),
-            'floating': as_dict.pop('floating', None),
-            'style': as_dict.pop('style', None),
-            'text': as_dict.pop('text', None),
-            'use_html': as_dict.pop('useHTML', None),
-            'vertical_align': as_dict.pop('verticalAlign', None),
-            'width_adjust': as_dict.pop('widthAdjust', None),
-            'x': as_dict.pop('x', None),
-            'y': as_dict.pop('y', None)
+            'align': as_dict.get('align', None),
+            'floating': as_dict.get('floating', None),
+            'style': as_dict.get('style', None),
+            'text': as_dict.get('text', None),
+            'use_html': as_dict.get('useHTML', None),
+            'vertical_align': as_dict.get('verticalAlign', None),
+            'width_adjust': as_dict.get('widthAdjust', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None)
         }
 
         return cls(**kwargs)

@@ -28,10 +28,10 @@ class Loading(HighchartsMeta):
         self._show_duration = None
         self._style = None
 
-        self.hide_duration = kwargs.pop('hide_duration', None)
-        self.label_style = kwargs.pop('label_style', None)
-        self.show_duration = kwargs.pop('show_duration', None)
-        self.style = kwargs.pop('style', None)
+        self.hide_duration = kwargs.get('hide_duration', None)
+        self.label_style = kwargs.get('label_style', None)
+        self.show_duration = kwargs.get('show_duration', None)
+        self.style = kwargs.get('style', None)
 
     @property
     def hide_duration(self) -> Optional[int]:
@@ -92,10 +92,10 @@ class Loading(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'hide_duration': as_dict.pop('hideDuration', None),
-            'label_style': as_dict.pop('labelStyle', None),
-            'show_duration': as_dict.pop('showDuration', None),
-            'style': as_dict.pop('style', None),
+            'hide_duration': as_dict.get('hideDuration', None),
+            'label_style': as_dict.get('labelStyle', None),
+            'show_duration': as_dict.get('showDuration', None),
+            'style': as_dict.get('style', None),
         }
 
         return cls(**kwargs)

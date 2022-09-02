@@ -16,9 +16,9 @@ class CreditStyleOptions(HighchartsMeta):
         self._cursor = None
         self._font_size = None
 
-        self.color = kwargs.pop('color', None)
-        self.cursor = kwargs.pop('cursor', None)
-        self.font_size = kwargs.pop('font_size', None)
+        self.color = kwargs.get('color', None)
+        self.cursor = kwargs.get('cursor', None)
+        self.font_size = kwargs.get('font_size', None)
 
     @property
     def color(self) -> Optional[str]:
@@ -59,9 +59,9 @@ class CreditStyleOptions(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'color': as_dict.pop('color', None),
-            'cursor': as_dict.pop('cursor', None),
-            'font_size': as_dict.pop('fontSize', None)
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'font_size': as_dict.get('fontSize', None)
         }
 
         return cls(**kwargs)
@@ -87,11 +87,11 @@ class Credits(HighchartsMeta):
         self._style = None
         self._text = None
 
-        self.enabled = kwargs.pop('enabled', None)
-        self.href = kwargs.pop('href', None)
-        self.position = kwargs.pop('position', None)
-        self.style = kwargs.pop('style', None)
-        self.text = kwargs.pop('text', None)
+        self.enabled = kwargs.get('enabled', None)
+        self.href = kwargs.get('href', None)
+        self.position = kwargs.get('position', None)
+        self.style = kwargs.get('style', None)
+        self.text = kwargs.get('text', None)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -172,11 +172,11 @@ class Credits(HighchartsMeta):
     @classmethod
     def from_dict(cls, as_dict):
         kwargs = {
-            'enabled': as_dict.pop('enabled', None),
-            'href': as_dict.pop('href', None),
-            'position': as_dict.pop('position', None),
-            'style': as_dict.pop('style', None),
-            'text': as_dict.pop('text', None)
+            'enabled': as_dict.get('enabled', None),
+            'href': as_dict.get('href', None),
+            'position': as_dict.get('position', None),
+            'style': as_dict.get('style', None),
+            'text': as_dict.get('text', None)
         }
 
         return cls(**kwargs)
