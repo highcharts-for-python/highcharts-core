@@ -6,7 +6,6 @@ from validator_collection import validators
 from highcharts import utility_functions
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.decorators import class_sensitive
-from highcharts.constants import DEFAULT_COLORS
 from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
 
@@ -787,7 +786,7 @@ class HighchartsOptions(Options):
         return untrimmed
 
 
-class HighchartsStockOptions(Options):
+class HighchartsStockOptions(HighchartsOptions):
     """The Python representation of the
     `Highcharts Stock <https://api.highcharts.com/highstock/>`_ configuration object."""
 
