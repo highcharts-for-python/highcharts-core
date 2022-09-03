@@ -61,3 +61,34 @@ class HighchartsMissingClassNameError(JavaScriptError):
     JavaScriptClass instance to JavaScript, but the instance has no class_name provided.
     """
     pass
+
+
+class HighchartsExportServerError(HighchartsValueError):
+    """:exc:`ValueError <python:ValueError>` encountered when trying to use the Node
+    Export Server."""
+    pass
+
+
+class HighchartsUnsupportedProtocolError(HighchartsExportServerError):
+    """:exc:`ValueError <pythoN:ValueError>` encountered when trying to use an unsupported
+    protocol to communicate with the :term:`Export Server`."""
+    pass
+
+
+class HighchartsUnsupportedExportType(HighchartsExportServerError):
+    """:exc:`ValueError <python:ValueError>` encountered when requesting an unsupported
+    image type from a :term:`Export Server`."""
+    pass
+
+
+class HighchartsUnsupportedConstructorError(HighchartsExportServerError):
+    """:exc:`ValueError <python:ValueError>` encountered when supplying an unsupported
+    constructor to an :term:`Export Server` instance."""
+    pass
+
+
+class HighchartsMissingExportSettingsError(HighchartsExportServerError):
+    """:exc:`ValueError <python:ValueError>` encountered when attempting to
+    programmatically export a chart image, but key settings were not supplied to the
+    :class:`ExportServer` instance."""
+    pass
