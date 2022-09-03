@@ -704,3 +704,58 @@ def Class_from_js_literal(cls, input_files, filename, as_file, error):
     else:
         with pytest.raises(error):
             result = cls.from_js_literal(input_string)
+
+
+def Class_from_js_literal_with_expected(cls,
+                                        input_files,
+                                        filename,
+                                        expected_filename,
+                                        as_file,
+                                        error):
+    input_file = check_input_file(input_files, filename)
+    expected_file = check_input_file(input_files, expected_filename)
+
+    with open(input_file, 'r') as file_:
+        as_str = file_.read()
+
+    with open(expected_file, 'r') as file_:
+        expected_as_str = file_.read()
+
+    if as_file:
+        input_string = input_file
+        expected_string = expected_file
+    else:
+        input_string = as_str
+        expected_string = expected_as_str
+
+    as_str = append_plot_options_type(cls, as_str)
+
+    if not error:
+        # print('-------------------')
+        # print('ORIGINAL VALIDATION')
+        parsed_expected, parsed_expected_str = cls._validate_js_literal(expected_string,
+                                                                        range = False)
+        # print('-------------')
+        # print('ORIGINAL CALL')
+        # print(as_str)
+        result = cls.from_js_literal(input_string)
+        assert result is not None
+        assert isinstance(result, cls) is True
+
+        as_js_literal = result.to_js_literal()
+        # print('-----------------')
+        # print('RESULT VALIDATION')
+        if 'pattern:' in as_js_literal:
+            as_js_literal = as_js_literal.replace('pattern:', 'patternOptions:')
+
+        # print(as_js_literal)
+        parsed_output, output_str = cls._validate_js_literal(as_js_literal, range = False)
+        try:
+            assert str(parsed_output) == str(parsed_expected)
+        except AssertionError as error:
+            print('\n')
+            compare_js_literals(str(parsed_expected), str(parsed_output))
+            raise error
+    else:
+        with pytest.raises(error):
+            result = cls.from_js_literal(input_string)
