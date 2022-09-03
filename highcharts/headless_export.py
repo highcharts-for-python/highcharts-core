@@ -11,7 +11,6 @@ from highcharts.decorators import class_sensitive
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.utility_classes.javascript_functions import CallbackFunction
 from highcharts.options import HighchartsOptions
-from highcharts.global_options import SharedOptions
 from highcharts.options.data import Data
 
 
@@ -61,7 +60,7 @@ class ExportServer(HighchartsMeta):
         self.path = kwargs.get('path', os.getenv('HIGHCHARTS_EXPORT_SERVER_PATH',
                                                  ''))
         self.options = kwargs.get('options', None)
-        self.format = kwargs.get('format', 'png')
+        self.format = kwargs.get('format', kwargs.get('type', 'png'))
         self.scale = kwargs.get('scale', 1)
         self.width = kwargs.get('width', None)
         self.callback = kwargs.get('callback', None)
@@ -107,6 +106,9 @@ class ExportServer(HighchartsMeta):
                                                             f'"https" or "http". '
                                                             f'Received: "{value}"')
 
+        self._protocol = value
+        self._url = None
+
     @property
     def domain(self) -> Optional[str]:
         """The domain where the Node Export Server can be found. Defaults to the
@@ -135,6 +137,7 @@ class ExportServer(HighchartsMeta):
             value = os.getenv('HIGHCHARTS_EXPORT_SERVER_DOMAIN',
                               'export.highcharts.com')
         self._domain = value
+        self._url = None
 
     @property
     def port(self) -> Optional[int]:
@@ -159,14 +162,16 @@ class ExportServer(HighchartsMeta):
 
     @port.setter
     def port(self, value):
-        value = validators.integer(value,
-                                   allow_empty = True,
-                                   minimum = 0,
-                                   maximum = 65536)
-        if value is None:
+        if value or value == 0:
+            value = validators.integer(value,
+                                       allow_empty = True,
+                                       minimum = 0,
+                                       maximum = 65536)
+        else:
             value = os.getenv('HIGHCHARTS_EXPORT_SERVER_PORT', None)
 
         self._port = value
+        self._url = None
 
     @property
     def path(self) -> Optional[str]:
@@ -197,6 +202,7 @@ class ExportServer(HighchartsMeta):
             value = os.getenv('HIGHCHARTS_EXPORT_SERVER_PATH', None)
 
         self._path = value
+        self._url = None
 
     @property
     def url(self) -> Optional[str]:
@@ -236,41 +242,66 @@ class ExportServer(HighchartsMeta):
             self.port = None
             self.path = None
         else:
+            original_value = value
             self.protocol = value[:value.index(':')]
+            print(f'Found Protocol: {self.protocol}')
+
+            protocol = self.protocol + '://'
+            value = value.replace(protocol, '')
 
             no_port = False
-            start_of_domain = value.index(':') + 2
             try:
-                end_of_domain = value[start_of_domain:].index(':')
+                end_of_domain = value.index(':')
+                self.domain = value[:end_of_domain]
             except ValueError:
                 no_port = True
                 try:
-                    end_of_domain = value[start_of_domain:].index('/')
+                    end_of_domain = value.index('/')
+                    self.domain = value[:end_of_domain]
                 except ValueError:
-                    end_of_domain = len(value) - 1
+                    self.domain = value
 
-            self.domain = value[start_of_domain:end_of_domain]
+            print(f'Found Domain: {self.domain}')
 
-            no_path = False
-            if no_port:
-                self.port = None
+            domain = self.domain + '/'
+            if domain in value:
+                value = value.replace(domain, '')
+            elif self.domain in value:
+                value = value.replace(self.domain, '')
+
+            if value and no_port:
+                if value.startswith('/'):
+                    self.path = value[1:]
+                else:
+                    self.path = value
             else:
-                start_of_port = end_of_domain + 1
+                if value.startswith(':'):
+                    start_of_port = 1
+                else:
+                    start_of_port = 0
                 try:
-                    end_of_port = value[end_of_domain:].index('/')
+                    end_of_port = value.index('/')
                 except ValueError:
-                    no_path = True
-                    end_of_port = len(value) - 1
+                    end_of_port = None
 
-                self.port = value[start_of_port:end_of_port]
+                if end_of_port:
+                    self.port = value[start_of_port:end_of_port]
+                else:
+                    self.port = value[start_of_port:]
 
-            if no_path:
-                self.path = None
-            else:
-                start_of_path = end_of_port + 1
-                self.path = value[start_of_path:]
+                port = f':{self.port}'
+                value = value.replace(port, '')
+                if value.startswith('/'):
+                    self.path = value[1:]
+                elif value:
+                    self.path = value
+                else:
+                    self.path = None
 
-            self._url = value
+            print(f'Found Port: {self.port}')
+            print(f'Found Path: {self.path}')
+
+            self._url = original_value
 
     @property
     def options(self) -> Optional[HighchartsOptions]:
@@ -453,17 +484,17 @@ class ExportServer(HighchartsMeta):
         self._async_rendering = bool(value)
 
     @property
-    def global_options(self) -> Optional[SharedOptions]:
+    def global_options(self) -> Optional[HighchartsOptions]:
         """The global options which will be passed to the (JavaScript)
         ``Highcharts.setOptions()`` method, and which will be applied to the exported
         chart. Defaults to :obj:`None <python:None>`.
 
-        :rtype: :class:`SharedOptions`
+        :rtype: :class:`HighchartsOptions`
         """
         return self._global_options
 
     @global_options.setter
-    @class_sensitive(SharedOptions)
+    @class_sensitive(HighchartsOptions)
     def global_options(self, value):
         self._global_options = value
 
@@ -513,7 +544,7 @@ class ExportServer(HighchartsMeta):
 
         kwargs = {
             'options': as_dict.get('options', None),
-            'type': as_dict.get('type', 'png'),
+            'format': as_dict.get('type', as_dict.get('format', 'png')),
             'scale': as_dict.get('scale', 1),
             'width': as_dict.get('width', None),
             'callback': as_dict.get('callback', None),
@@ -550,7 +581,7 @@ class ExportServer(HighchartsMeta):
         untrimmed = {
             'url': self.url,
             'options': self.options,
-            'type': self.type,
+            'type': self.format,
             'scale': self.scale,
             'width': self.width,
             'callback': self.callback,
