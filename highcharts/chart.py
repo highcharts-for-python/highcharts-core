@@ -70,7 +70,7 @@ class Chart(HighchartsMeta):
 
     @container.setter
     def container(self, value):
-        self._container = validators.variable_name(value, allow_empty = True)
+        self._container = validators.string(value, allow_empty = True)
 
     @property
     def variable_name(self) -> Optional[str]:
@@ -107,7 +107,8 @@ class Chart(HighchartsMeta):
             'callback': as_dict.get('callback', None),
             'container': as_dict.get('container', None) or as_dict.get('renderTo', None),
             'options': as_dict.get('options', None) or as_dict.get('userOptions', None),
-            'variable_name': as_dict.get('variable_name', None)
+            'variable_name': as_dict.get('variable_name',
+                                         None) or as_dict.get('variableName', None)
         }
 
         return kwargs
@@ -179,15 +180,15 @@ class Chart(HighchartsMeta):
             callback_as_str = f"""callback = {callback_as_str}"""
             signature_elements += 1
 
-        signature = """new Chart("""
+        signature = """new Highcharts.chart("""
         if container_as_str:
             signature += container_as_str
             if signature_elements > 1:
-                signature += ', '
+                signature += ',\n'
         if options_as_str:
             signature += options_as_str
             if signature_elements > 1:
-                signature += ', '
+                signature += ',\n'
         if callback_as_str:
             signature += callback_as_str
         signature += ');'
@@ -255,7 +256,7 @@ class Chart(HighchartsMeta):
                                           **kwargs)
 
         if not isinstance(server_instance, ExportServer):
-            raise errors.HighchartsValueError(f'server_instance is expected to be a '
+            raise errors.HighchartsValueError(f'server_instance is expected to be an '
                                               f'ExportServer instance. Was: '
                                               f'{server_instance.__class__.__name__}')
 
