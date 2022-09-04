@@ -10,7 +10,7 @@ from highcharts.options import HighchartsOptions
 from highcharts import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
-    Class_from_js_literal
+    Class_from_js_literal, run_download_tests
 
 STANDARD_PARAMS = [
     ({}, None),
@@ -165,22 +165,28 @@ def test_url(value, error):
      },
      None),
 ])
-def test_get_chart(input_files, input_filename, target_filename, kwargs, error):
-    input_file = check_input_file(input_files, input_filename)
-    target_file = check_input_file(input_files, target_filename)
+def test_get_chart(input_files,
+                   run_download_tests,
+                   input_filename,
+                   target_filename,
+                   kwargs,
+                   error):
+    if run_download_tests:
+        input_file = check_input_file(input_files, input_filename)
+        target_file = check_input_file(input_files, target_filename)
 
-    with open(input_file, 'r') as file_:
-        as_str = file_.read()
+        with open(input_file, 'r') as file_:
+            as_str = file_.read()
 
-    options = HighchartsOptions.from_js_literal(as_str)
+        options = HighchartsOptions.from_js_literal(as_str)
 
-    kwargs['options'] = options
+        kwargs['options'] = options
 
-    if target_filename:
-        kwargs['filename'] = target_file
-
-    if not error:
-        result = cls.get_chart(**kwargs)
-        assert result is not None
         if target_filename:
-            assert checkers.is_on_filesystem(target_file) is True
+            kwargs['filename'] = target_file
+
+        if not error:
+            result = cls.get_chart(**kwargs)
+            assert result is not None
+            if target_filename:
+                assert checkers.is_on_filesystem(target_file) is True

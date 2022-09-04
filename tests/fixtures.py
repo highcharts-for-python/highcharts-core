@@ -46,6 +46,17 @@ def run_pyspark_tests(request):
 
 
 @pytest.fixture
+def run_download_tests(request):
+    """Return the ``--downloads`` command-line option."""
+    value = request.config.getoption("--downloads")
+    value = value.lower()
+    if value in ['false', False, 0, 'no', 'no']:
+        return False
+    else:
+        return True
+
+
+@pytest.fixture
 def input_files(request):
     """Return the ``--inputs`` command-line option."""
     return request.config.getoption("--inputs")
