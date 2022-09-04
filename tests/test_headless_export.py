@@ -3,8 +3,10 @@ from copy import deepcopy
 import pytest
 
 from json.decoder import JSONDecodeError
+from validator_collection import checkers
 
 from highcharts.headless_export import ExportServer as cls
+from highcharts.options import HighchartsOptions
 from highcharts import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
@@ -41,11 +43,13 @@ def test_to_dict(kwargs, error):
         kwargs_copy['use_base64'] = False
         kwargs_copy['no_download'] = False
         kwargs_copy['async_rendering'] = False
+        kwargs_copy['constructor'] = 'Chart'
 
         untrimmed_expected = {
             'url': kwargs_copy['url'],
             'type': kwargs_copy['format'],
             'scale': kwargs_copy['scale'],
+            'constr': kwargs_copy['constructor'],
             'b64': kwargs_copy['use_base64'],
             'noDownload': kwargs_copy['no_download'],
             'asyncRendering': kwargs_copy['async_rendering']
@@ -133,3 +137,50 @@ def test_url(value, error):
     else:
         with pytest.raises(error):
             instance.url = value.get('url')
+
+
+@pytest.mark.parametrize('input_filename, target_filename, kwargs, error', [
+    ('headless_export/basic.json',
+     'headless_export/output/test-basic.png',
+     {
+      'timeout': 5,
+      'format': 'png',
+      'constructor': 'Chart'
+     },
+     None),
+    ('headless_export/with-series-types.js',
+     'headless_export/output/test-with-series-types.png',
+     {
+      'timeout': 5,
+      'format': 'png',
+      'constructor': 'Chart'
+     },
+     None),
+    ('headless_export/with-chart-type.js',
+     'headless_export/output/test-with-chart-type.png',
+     {
+      'timeout': 5,
+      'format': 'png',
+      'constructor': 'Chart'
+     },
+     None),
+])
+def test_get_chart(input_files, input_filename, target_filename, kwargs, error):
+    input_file = check_input_file(input_files, input_filename)
+    target_file = check_input_file(input_files, target_filename)
+
+    with open(input_file, 'r') as file_:
+        as_str = file_.read()
+
+    options = HighchartsOptions.from_js_literal(as_str)
+
+    kwargs['options'] = options
+
+    if target_filename:
+        kwargs['filename'] = target_file
+
+    if not error:
+        result = cls.get_chart(**kwargs)
+        assert result is not None
+        if target_filename:
+            assert checkers.is_on_filesystem(target_file) is True

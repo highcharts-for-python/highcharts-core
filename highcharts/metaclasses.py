@@ -66,8 +66,17 @@ class HighchartsMeta(ABC):
         raise NotImplementedError()
 
     @staticmethod
-    def trim_iterable(untrimmed):
+    def trim_iterable(untrimmed,
+                      to_json = False):
         """Convert any :class:`EnforcedNullType` values in ``untrimmed`` to ``'null'``.
+
+        :param untrimmed: The iterable whose members may still be
+          :obj:`None <python:None>` or Python objects.
+        :type untrimmed: iterable
+
+        :param to_json: If ``True``, will remove all members from ``untrimmed`` that are
+          not serializable to JSON. Defaults to ``False``.
+        :type to_json: :class:`bool <python:bool>`
 
         :rtype: iterable
         """
@@ -76,27 +85,39 @@ class HighchartsMeta(ABC):
 
         trimmed = []
         for item in untrimmed:
-            if item is None or item == constants.EnforcedNull:
+            if checkers.is_type(item, 'CallbackFunction') and to_json:
+                continue
+            elif item is None or item == constants.EnforcedNull:
                 trimmed.append('null')
-            elif hasattr(item, 'to_dict'):
-                item_as_dict = item.to_dict()
+            elif hasattr(item, 'trim_dict'):
+                untrimmed_item = item._to_untrimmed_dict()
+                item_as_dict = HighchartsMeta.trim_dict(untrimmed_item, to_json = to_json)
                 if item_as_dict:
                     trimmed.append(item_as_dict)
             elif isinstance(item, dict):
                 if item:
-                    trimmed.append(item)
-            elif checkers.is_iterable(item):
+                    trimmed.append(HighchartsMeta.trim_dict(item, to_json = to_json))
+            elif checkers.is_iterable(item, forbid_literals = (str, bytes, dict)):
                 if item:
-                    trimmed.append(HighchartsMeta.trim_iterable(item))
+                    trimmed.append(HighchartsMeta.trim_iterable(item, to_json = to_json))
             else:
                 trimmed.append(item)
 
         return trimmed
 
     @staticmethod
-    def trim_dict(untrimmed: Optional[dict]) -> dict:
+    def trim_dict(untrimmed: dict,
+                  to_json: bool = False) -> dict:
         """Remove keys from ``untrimmed`` whose values are :obj:`None <python:None>` and
         convert values that have ``.to_dict()`` methods.
+
+        :param untrimmed: The :class:`dict <python:dict>` whose values may still be
+          :obj:`None <python:None>` or Python objects.
+        :type untrimmed: :class:`dict <python:dict>`
+
+        :param to_json: If ``True``, will remove all keys from ``untrimmed`` that are not
+          serializable to JSON. Defaults to ``False``.
+        :type to_json: :class:`bool <python:bool>`
 
         :returns: Trimmed :class:`dict <python:dict>`
         :rtype: :class:`dict <python:dict>`
@@ -104,26 +125,39 @@ class HighchartsMeta(ABC):
         as_dict = {}
         for key in untrimmed:
             value = untrimmed.get(key, None)
+            # bool -> Boolean
             if isinstance(value, bool):
                 as_dict[key] = value
-            elif value and hasattr(value, 'to_dict'):
-                trimmed_value = value.to_dict()
+            # Callback Function
+            elif checkers.is_type(value, 'CallbackFunction') and to_json:
+                continue
+            # HighchartsMeta -> dict --> object
+            elif value and hasattr(value, '_to_untrimmed_dict'):
+                untrimmed_value = value._to_untrimmed_dict()
+                trimmed_value = HighchartsMeta.trim_dict(untrimmed_value,
+                                                         to_json = to_json)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
+            # Enforced null
             elif value == constants.EnforcedNull:
                 as_dict[key] = 'null'
+            # dict -> object
             elif isinstance(value, dict):
-                trimmed_value = HighchartsMeta.trim_dict(value)
+                trimmed_value = HighchartsMeta.trim_dict(value,
+                                                         to_json = to_json)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
+            # iterable -> array
             elif checkers.is_iterable(value, forbid_literals = (str, bytes, dict)):
-                trimmed_value = HighchartsMeta.trim_iterable(value)
+                trimmed_value = HighchartsMeta.trim_iterable(value, to_json = to_json)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
+            # other truthy -> str / number
             elif value:
-                trimmed_value = HighchartsMeta.trim_iterable(value)
+                trimmed_value = HighchartsMeta.trim_iterable(value, to_json = to_json)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
+            # other falsy -> str / number
             elif value in [0, 0., False]:
                 as_dict[key] = value
 
@@ -228,9 +262,12 @@ class HighchartsMeta(ABC):
           library.
         :rtype: :class:`str <python:str>` or :class:`bytes <python:bytes>`
         """
-        as_dict = self.to_dict()
+        untrimmed = self._to_untrimmed_dict()
+
+        as_dict = self.trim_dict(untrimmed, to_json = True)
+
         for key in as_dict:
-            if as_dict[key] == constants.EnforcedNull:
+            if as_dict[key] == constants.EnforcedNull or as_dict[key] == 'null':
                 as_dict[key] = None
         try:
             as_json = json.dumps(as_dict, encoding = encoding)

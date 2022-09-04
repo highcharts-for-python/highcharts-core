@@ -63,7 +63,7 @@ def check_input_file(input_directory, input_value):
     except (TypeError, AttributeError):
         input_file = None
 
-    if input_file is not None and checkers.is_file(input_file):
+    if input_file is not None:
         input_value = input_file
 
     return input_value

@@ -8,6 +8,7 @@ from highcharts.metaclasses import HighchartsMeta
 from highcharts.decorators import class_sensitive
 from highcharts.utility_classes.gradients import Gradient
 from highcharts.utility_classes.patterns import Pattern
+from highcharts.options.series.series_generator import create_series_obj
 
 from highcharts.options.accessibility import Accessibility
 from highcharts.options.annotations import Annotation
@@ -479,9 +480,17 @@ class Options(HighchartsMeta):
         return self._series
 
     @series.setter
-    @class_sensitive(GenericTypeOptions, force_iterable = True)
     def series(self, value):
-        self._series = value
+        value = validators.iterable(value, allow_empty = True)
+        default_series_type = None
+        if self.chart:
+            default_series_type = self.chart.type
+        if not value:
+            self._series = None
+        else:
+            self._series = [create_series_obj(x,
+                                              default_type = default_series_type)
+                            for x in value]
 
     @property
     def subtitle(self) -> Optional[Subtitle]:

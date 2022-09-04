@@ -17578,7 +17578,6 @@
         }
       ]
     },
-    series: [],
     subtitle: {
       align: 'left',
       floating: true,

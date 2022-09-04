@@ -443,6 +443,8 @@ class ExportServer(HighchartsMeta):
                                                                    f'"Stock", but '
                                                                    f'received: "{value}"')
 
+            self._constructor = value
+
     @property
     def use_base64(self) -> bool:
         """If ``True``, returns the exported chart in base64 encoding. If ``False``,
@@ -671,19 +673,19 @@ class ExportServer(HighchartsMeta):
         as_json = json.dumps(payload)
 
         as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH OPTIONS"',
-                                  self.options.to_js_literal())
+                                  self.options.to_json())
         if self.callback:
             as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH CALLBACK"',
-                                      self.callback.to_js_literal())
+                                      self.callback.to_json())
         if self.global_options:
             as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH GLOBAL"',
-                                      self.global_options.to_js_literal())
+                                      self.global_options.to_json())
         if self.data_options:
             as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH DATA"',
-                                      self.data_options.to_js_literal())
+                                      self.data_options.to_json())
         if self.custom_code:
             as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH CUSTOM"',
-                                      self.custom_code.to_js_literal())
+                                      self.custom_code.to_json())
 
         result = requests.post(self.url,
                                data = as_json,
@@ -692,10 +694,16 @@ class ExportServer(HighchartsMeta):
                                },
                                auth = basic_auth,
                                timeout = timeout)
+
+        #if result.status_code > 300:
+        #    target_json_file = filename.replace('.png', '.json')
+        #    with open(target_json_file, 'w') as file_:
+        #        file_.write(as_json)
+
         result.raise_for_status()
 
         if filename:
-            with open(filename, 'w') as file_:
+            with open(filename, 'wb') as file_:
                 file_.write(result.content)
 
         return result.content

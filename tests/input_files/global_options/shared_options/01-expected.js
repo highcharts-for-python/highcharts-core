@@ -17575,7 +17575,6 @@ Highcharts.setOptions({
       }
     ]
   },
-  series: [],
   subtitle: {
     align: 'left',
     floating: true,

@@ -17576,7 +17576,6 @@ options = {
       }
     ]
   },
-  series: [],
   subtitle: {
     align: 'left',
     floating: true,

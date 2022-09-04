@@ -126,6 +126,9 @@ class CallbackFunction(HighchartsMeta):
             'body': self.body
         }
 
+    def to_json(self, encoding = 'utf-8'):
+        return None
+
     def to_js_literal(self,
                       filename = None,
                       encoding = 'utf-8') -> str:
