@@ -10,16 +10,16 @@
 Highcharts for Python Toolkit
 ###################################################
 
-**High-end data visualization for the Python ecosystem***
+**High-end data visualization for the Python ecosystem**
 
 .. sidebar:: Version Compatibility
 
   **Highcharts for Python** is designed to be compatible with:
 
-    * Python 3.6 or higher,
+    * Python 3.9 or higher,
     * Highcharts JS 10.2 or higher,
     * Jupyter Notebook 6.4 or higher,
-    * Pandas 0.23 or higher
+    * Pandas 1.3 or higher
     * PySpark 3.3 or higher
 
 .. include:: _unit_tests_code_coverage.rst
@@ -31,11 +31,9 @@ Highcharts for Python Toolkit
 
   Home <self>
   Quickstart: Patterns and Best Practices <quickstart>
-  Toolkit Components <toolkit>
+  FAQ <faq>
+  Toolkit Components and Roadmap <toolkit>
   Using Highcharts for Python <using>
-  Designing High-end Data Visualizations <designing>
-  Integrating with Your Application <integrating>
-  Highcharts for Python Roadmap <roadmap>
   API Reference <api>
   Error Reference <errors>
   Contributor Guide <contributing>
@@ -76,7 +74,7 @@ features native integration with:
 Installation
 *********************************
 
-.. include:: _installations.rst
+.. include:: _installation.rst
 
 Dependencies
 ===============
@@ -127,22 +125,28 @@ back-and-forth to JavaScript object literal notation.
 Key Highcharts for Python Features
 ======================================
 
-* **Pythonic Syntax**: For Python developers, switching between Pythonic syntax and style
-  to JS syntax and style can be...annoying. So **Highcharts for Python** applies Pythonic
-  syntax with automatic conversion between Pythonic ``snake_case`` notation and
-  JavaScript ``camelCase`` styles.
-* **Full Highcharts JS Support**: Every single chart type and every single configuration
-  option is supported in **Highcharts for Python**. This includes the use of Highcharts'
-  rich JavaScript formatter (JS callback function) capabilities that are often used to
-  get the most out of Highcharts' visualization capabilities.
-* With one method call, produce production-ready JavaScript code to render your
-  interactive visualizations using Highcharts' rich capabilities.
-* With one method call, produce high-end static visualizations that can be downloaded
-  or shared as files with your audience.
-* With two lines of code, produce a high-end interactive visualization of your Pandas or
-  PySpark dataframe.
+* **Clean and consistent API**. No reliance on "hacky" code, :class:`dict <python:dict>`
+  and JSON serialization, or impossible to maintain / copy-pasted "spaghetti code".
+* **Comprehensive Highcharts support**. Every single Highcharts chart type and every
+  single configuration option is supported in **Highcharts for Python**. This includes the
+  use of Highcharts' rich JavaScript formatter (JS callback function) capabilities that
+  are often needed to get the most out of Highcharts' visualization and interaction
+  capabilities.
+* **Simple JavaScript Code Generation**. With one method call, produce production-ready
+  JavaScript code to render your interactive visualizations using Highcharts' rich
+  capabilities.
+* **Easy and Robust Chart Download**. With one method call, produce high-end static
+  visualizations that can be downloaded or shared as files with your audience. Produce
+  static charts using the Highsoft-provided :term:`Highcharts Export Server`, or using
+  your own private export server as needed.
+* **Integration with Pandas and PySpark**. With two lines of code, produce a high-end
+  interactive visualization of your Pandas or PySpark dataframe.
 * Leverage Highcharts visualization templates in your Python code to eliminate "fiddly"
   configuration tweaks.
+* **Consistent code style**. For Python developers, switching between Pythonic code
+  conventions and JavaScript code conventions can be...annoying. So
+  **Highcharts for Python** applies Pythonic syntax with automatic conversion between
+  Pythonic ``snake_case`` notation and JavaScript ``camelCase`` styles.
 
 |
 
@@ -166,7 +170,7 @@ Hello World, and Basic Usage
 
   .. seealso::
 
-    * :ref:`Importing Your Configuration Objects <importing_config_objects>'`
+    * :ref:`Importing Your Configuration Objects <importing_config_objects>`
 
 2. Create Your Chart
 ================================
@@ -274,7 +278,7 @@ Hello World, and Basic Usage
 
     * :ref:`Configuring Your Charts <configuring>`
 
-5. Generate the JavaScript Code for your Chart
+5. Generate the JavaScript Code for Your Chart
 =================================================
 
 Now having configured your chart in full, you can easily generate the JavaScript code
@@ -294,7 +298,7 @@ that will render the chart wherever it is you want it to go:
     * :ref:`Using Highcharts for Python with Flask`
     * :ref:`Using Highcharts for Python with Django`
 
-6. Generate the JavaScript Code for your Global Settings (optional)
+6. Generate the JavaScript Code for Your Global Settings (optional)
 =========================================================================
 
   .. code-block:: python
@@ -334,7 +338,7 @@ Questions and Issues
 *********************
 
 You can ask questions and report issues on the project's
-`Github Issues Page <https://github.com/insightindustry/sqlathanor/issues>`_
+`Github Issues Page <https://github.com/hcpllc/highcharts-python/issues>`_
 
 -----------------
 

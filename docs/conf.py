@@ -41,7 +41,9 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
-    'sphinx_tabs.tabs'
+    'sphinx_tabs.tabs',
+    'sphinx_toolbox.shields',
+    'sphinx_toolbox.issues',
 ]
 
 templates_path = ['_templates']
@@ -62,7 +64,6 @@ html_theme_options = {
 html_logo = '_static/highcharts-python-logo-100x50.png'
 html_favicon = '_static/highcharts-python-logo-32x32.png'
 
-
 html_context = {
     "display_github": True,                 # Integrate GitHub
     "github_user": "insightindustry",       # Username
@@ -70,3 +71,6 @@ html_context = {
     "github_version": "master",             # Version
     "conf_py_path": "/docs/",               # Path in the checkout to the docs root
 }
+
+github_username = 'insightindustry'
+github_repository = 'highcharts-python'
