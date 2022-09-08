@@ -23,7 +23,7 @@ class Data(HighchartsMeta):
     .. warning::
 
       Please note that the default way of adding data in Highcharts, without the need
-      of a module, is through the ``series.type.data`` property.
+      of a module, is through the ``series.data`` property.
 
     """
 
