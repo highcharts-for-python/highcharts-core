@@ -210,18 +210,33 @@ class HighchartsMeta(ABC):
         return cls(**kwargs)
 
     @classmethod
-    def from_json(cls, as_json: str | bytes):
+    def from_json(cls,
+                  as_json_or_file: str | bytes,
+                  allow_snake_case: bool = True):
         """Construct an instance of the class from a JSON string.
 
-        :param as_json: The JSON string for the object.
+        :param as_json_or_file: The JSON string for the object or the filename of a file
+          that contains the JSON string.
         :type as_json: :class:`str <python:str>` or :class:`bytes <python:bytes>`
+
+        :param allow_snake_case: If ``True``, interprets ``snake_case`` keys as equivalent
+          to ``camelCase`` keys. Defaults to ``True``.
+        :type allow_snake_case: :class:`bool <python:bool>`
 
         :returns: A Python objcet representation of ``as_json``.
         :rtype: :class:`HighchartsMeta`
         """
-        as_dict = json.loads(as_json)
+        is_file = checkers.is_file(as_json_or_file)
+        if is_file:
+            with open(as_json_or_file, 'r') as file_:
+                as_str = file_.read()
+        else:
+            as_str = as_json_or_file
 
-        return cls.from_dict(as_dict)
+        as_dict = json.loads(as_str)
+
+        return cls.from_dict(as_dict,
+                             allow_snake_case = allow_snake_case)
 
     def to_dict(self) -> dict:
         """Generate a :class:`dict <python:dict>` representation of the object compatible
@@ -241,7 +256,9 @@ class HighchartsMeta(ABC):
 
         return self.trim_dict(untrimmed)
 
-    def to_json(self, encoding = 'utf-8'):
+    def to_json(self,
+                filename = None,
+                encoding = 'utf-8'):
         """Generate a JSON string/byte string representation of the object compatible with
         the Highcharts JavaScript library.
 
@@ -254,6 +271,10 @@ class HighchartsMeta(ABC):
           :class:`bytes <python:bytes>` representation of the string. For more
           information, please see :doc:`JSON Serialization and Deserialization`.
 
+        :param filename: The name of a file to which the JSON string should be persisted.
+          Defaults to :obj:`None <python:None>`
+        :type filename: Path-like
+
         :param encoding: The character encoding to apply to the resulting object. Defaults
           to ``'utf-8'``.
         :type encoding: :class:`str <python:str>`
@@ -262,6 +283,9 @@ class HighchartsMeta(ABC):
           library.
         :rtype: :class:`str <python:str>` or :class:`bytes <python:bytes>`
         """
+        if filename:
+            filename = validators.path(filename)
+
         untrimmed = self._to_untrimmed_dict()
 
         as_dict = self.trim_dict(untrimmed, to_json = True)
@@ -273,6 +297,15 @@ class HighchartsMeta(ABC):
             as_json = json.dumps(as_dict, encoding = encoding)
         except TypeError:
             as_json = json.dumps(as_dict)
+
+        if filename:
+            if isinstance(as_json, bytes):
+                write_type = 'wb'
+            else:
+                write_type = 'w'
+
+            with open(filename, write_type, encoding = encoding) as file_:
+                file_.write(as_json)
 
         return as_json
 
@@ -355,13 +388,18 @@ class HighchartsMeta(ABC):
     @classmethod
     def from_js_literal(cls,
                         as_str_or_file,
-                        _break_loop_on_failure = False):
+                        allow_snake_case: bool = True,
+                        _break_loop_on_failure: bool = False):
         """Return a Python object representation of a Highcharts JavaScript object
         literal.
 
         :param as_str_or_file: The JavaScript object literal, represented either as a
           :class:`str <python:str>` or as a filename which contains the JS object literal.
         :type as_str_or_file: :class:`str <python:str>`
+
+        :param allow_snake_case: If ``True``, interprets ``snake_case`` keys as equivalent
+          to ``camelCase`` keys. Defaults to ``True``.
+        :type allow_snake_case: :class:`bool <python:bool>`
 
         :param _break_loop_on_failure: If ``True``, will break any looping operations in
           the event of a failure. Otherwise, will attempt to repair the failure. Defaults
@@ -431,7 +469,108 @@ class HighchartsMeta(ABC):
         for pair in key_value_pairs:
             as_dict[pair[0]] = pair[1]
 
-        return cls.from_dict(as_dict)
+        return cls.from_dict(as_dict,
+                             allow_snake_case = allow_snake_case)
+
+    @classmethod
+    def _copy_dict_key(cls,
+                       key,
+                       original,
+                       other,
+                       overwrite = True,
+                       **kwargs):
+        """Copies the value of ``key`` from ``original`` to ``other``.
+
+        :param key: The key that is to be copied.
+        :type key: :class:`str <python:str>`
+
+        :param original: The original :class:`dict <python:dict>` from which it should
+          be copied.
+        :type original: :class:`dict <python:dict>`
+
+        :param other: The :class:`dict <python:dict>` to which it should be copied.
+        :type other: :class:`dict <python:dict>`
+
+        :returns: The value that should be placed in ``other`` for ``key``.
+        """
+        original_value = original[key]
+        other_value = other.get(key, None)
+
+        if isinstance(original_value, (dict, UserDict)):
+            new_value = {}
+            for subkey in original_value:
+                new_key_value = cls._copy_dict_key(subkey,
+                                                   original_value,
+                                                   other_value,
+                                                   overwrite = overwrite,
+                                                   **kwargs)
+                new_value[subkey] = new_key_value
+
+            return new_value
+
+        elif checkers.is_iterable(original_value,
+                                  forbid_literals = (str,
+                                                     bytes,
+                                                     dict,
+                                                     UserDict)):
+            if overwrite:
+                new_value = [x for x in original_value]
+
+                return new_value
+            else:
+                return other_value
+
+        elif other_value and not overwrite:
+            return other_value
+        else:
+            return original_value
+
+    def copy(self,
+             other = None,
+             overwrite = True,
+             **kwargs):
+        """Copy the configuration settings from this instance to the ``other`` instance.
+
+        :param other: The target instance to which the properties of this instance should
+          be copied. If :obj:`None <python:None>`, will create a new instance and populate
+          it with properties copied from ``self``. Defaults to :obj:`None <python:None>`.
+        :type other: :class:`HighchartsMeta`
+
+        :param overwrite: if ``True``, properties in ``other`` that are already set will
+          be overwritten by their counterparts in ``self``. Defaults to ``True``.
+        :type overwrite: :class:`bool <python:bool>`
+
+        :param kwargs: Additional keyword arguments. Some special descendents of
+          :class:`HighchartsMeta` may have special implementations of this method which
+          rely on additional keyword arguments.
+
+        :returns: A mutated version of ``other`` with new property values
+
+        """
+        if not other:
+            other = self.__class__()
+
+        if not isinstance(other, self.__class__):
+            raise errors.HighchartsValueError(f'other is expected to be a '
+                                              f'{self.__class__.__name__} instance. Was: '
+                                              f'{other.__class__.__name__}')
+
+        self_as_dict = self.to_dict()
+        other_as_dict = other.to_dict()
+
+        new_dict = {}
+        for key in self_as_dict:
+            new_dict[key] = self._copy_dict_key(key,
+                                                original = self_as_dict,
+                                                other = other_as_dict,
+                                                overwrite = overwrite,
+                                                **kwargs)
+
+        cls = other.__class__
+
+        other = cls.from_dict(new_dict)
+
+        return other
 
 
 class JavaScriptDict(UserDict):
@@ -538,7 +677,9 @@ class JavaScriptDict(UserDict):
         """
         return self.data
 
-    def to_json(self, encoding = 'utf-8'):
+    def to_json(self,
+                filename = None,
+                encoding = 'utf-8'):
         """Generate a JSON string/byte string representation of the object compatible with
         the Highcharts JavaScript library.
 
@@ -551,6 +692,10 @@ class JavaScriptDict(UserDict):
           :class:`bytes <python:bytes>` representation of the string. For more
           information, please see :doc:`JSON Serialization and Deserialization`.
 
+        :param filename: The name of a file to which the JSON string should be persisted.
+          Defaults to :obj:`None <python:None>`
+        :type filename: Path-like
+
         :param encoding: The character encoding to apply to the resulting object. Defaults
           to ``'utf8'``.
         :type encoding: :class:`str <python:str>`
@@ -559,11 +704,23 @@ class JavaScriptDict(UserDict):
           library.
         :rtype: :class:`str <python:str>` or :class:`bytes <python:bytes>`
         """
+        if filename:
+            filename = validators.path(filename)
+
         as_dict = self.to_dict()
         try:
             as_json = json.dumps(as_dict, encoding = encoding)
         except TypeError:
             as_json = json.dumps(as_dict)
+
+        if filename:
+            if isinstance(as_json, bytes):
+                write_type = 'wb'
+            else:
+                write_type = 'w'
+
+            with open(filename, write_type, encoding = encoding) as file_:
+                file_.write(as_json)
 
         return as_json
 

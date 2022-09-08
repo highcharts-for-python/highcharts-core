@@ -203,13 +203,18 @@ class CallbackFunction(HighchartsMeta):
     @classmethod
     def from_js_literal(cls,
                         as_str_or_file,
-                        _break_loop_on_failure = False):
+                        allow_snake_case: bool = True,
+                        _break_loop_on_failure: bool = False):
         """Return a Python object representation of a Highcharts JavaScript object
         literal.
 
         :param as_str_or_file: The JavaScript object literal, represented either as a
           :class:`str <python:str>` or as a filename which contains the JS object literal.
         :type as_str_or_file: :class:`str <python:str>`
+
+        :param allow_snake_case: If ``True``, interprets ``snake_case`` keys as equivalent
+          to ``camelCase`` keys. Defaults to ``True``.
+        :type allow_snake_case: :class:`bool <python:bool>`
 
         :param _break_loop_on_failure: If ``True``, will break any looping operations in
           the event of a failure. Otherwise, will attempt to repair the failure. Defaults

@@ -1,6 +1,7 @@
 from typing import Optional
+from collections import UserDict
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
 from highcharts import errors
 from highcharts.decorators import class_sensitive
@@ -264,3 +265,127 @@ class Chart(HighchartsMeta):
                                              auth_user = auth_user,
                                              auth_password = auth_password,
                                              timeout = timeout)
+
+    @classmethod
+    def _copy_dict_key(cls,
+                       key,
+                       original,
+                       other,
+                       overwrite = True,
+                       **kwargs):
+        """Copies the value of ``key`` from ``original`` to ``other``.
+
+        :param key: The key that is to be copied.
+        :type key: :class:`str <python:str>`
+
+        :param original: The original :class:`dict <python:dict>` from which it should
+          be copied.
+        :type original: :class:`dict <python:dict>`
+
+        :param other: The :class:`dict <python:dict>` to which it should be copied.
+        :type other: :class:`dict <python:dict>`
+
+        :returns: The value that should be placed in ``other`` for ``key``.
+        """
+        preserve_data = kwargs.get('preserve_data', True)
+
+        original_value = original[key]
+        other_value = other.get(key, None)
+
+        if key == 'data' and preserve_data:
+            return other_value
+        elif key == 'points' and preserve_data:
+            return other_value
+        elif key == 'series' and preserve_data:
+            if not other_value:
+                return [x for x in original_value]
+            if len(other_value) != len(original_value):
+                matched_series = []
+                new_series = []
+                for original_item in original_value:
+                    matched = False
+                    for other_item in other_value:
+                        if checkers.are_dicts_equivalent(original_item, other_item):
+                            matched_series.append((original_item, other_item))
+                            matched = True
+                            break
+                    if not matched:
+                        new_series.append(original_item)
+                updated_series = []
+                for items in matched_series:
+                    original_item = items[0]
+                    other_item = items[1]
+                    new_item = {}
+                    for subkey in original_item:
+                        new_item_value = cls._copy_dict_key(subkey,
+                                                            original_item,
+                                                            new_item,
+                                                            overwrite = overwrite,
+                                                            **kwargs)
+                        new_item[subkey] = new_item_value
+                    updated_series.append(new_item)
+                updated_series.extend(new_series)
+
+                return updated_series
+
+        elif isinstance(original_value, (dict, UserDict)):
+            new_value = {}
+            for subkey in original_value:
+                new_key_value = cls._copy_dict_key(subkey,
+                                                   original_value,
+                                                   other_value,
+                                                   overwrite = overwrite,
+                                                   **kwargs)
+                new_value[subkey] = new_key_value
+
+            return new_value
+
+        elif checkers.is_iterable(original_value,
+                                  forbid_literals = (str,
+                                                     bytes,
+                                                     dict,
+                                                     UserDict)):
+            if overwrite:
+                new_value = [x for x in original_value]
+
+                return new_value
+            else:
+                return other_value
+
+        elif other_value and not overwrite:
+            return other_value
+        else:
+            return original_value
+
+    def copy(self,
+             other,
+             overwrite = True,
+             **kwargs):
+        """Copy the configuration settings from this chart to the ``other`` chart.
+
+        :param other: The target chart to which the properties of this chart should
+          be copied. If :obj:`None <python:None>`, will create a new chart and populate
+          it with properties copied from ``self``. Defaults to :obj:`None <python:None>`.
+        :type other: :class:`Chart`
+
+        :param overwrite: if ``True``, properties in ``other`` that are already set will
+          be overwritten by their counterparts in ``self``. Defaults to ``True``.
+        :type overwrite: :class:`bool <python:bool>`
+
+        :param preserve_data: If ``True``, will preserve the data values in any
+          :term:`series` contained in ``other`` and the configuration of the
+          :meth:`options.data <Options.data>` property, but will still copy other
+          properties as applicable. If ``False``, will overwrite data in ``other``
+          with data from ``self``. Defaults to ``True``.
+        :type preserve_data: :class:`bool <python:bool>`
+
+        :param kwargs: Additional keyword arguments. Some special descendents of
+          :class:`HighchartsMeta` may have special implementations of this method which
+          rely on additional keyword arguments.
+
+        :returns: A mutated version of ``other`` with new property values
+
+        """
+        super().copy(other,
+                     overwrite = overwrite,
+                     **kwargs)
