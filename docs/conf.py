@@ -44,6 +44,7 @@ extensions = [
     'sphinx_tabs.tabs',
     'sphinx_toolbox.shields',
     'sphinx_toolbox.issues',
+    'sphinx_toolbox.formatting',
 ]
 
 templates_path = ['_templates']
@@ -74,3 +75,14 @@ html_context = {
 
 github_username = 'insightindustry'
 github_repository = 'highcharts-python'
+
+# Example configuration for intersphinx: refer to the Python standard library.
+intersphinx_mapping = {
+    'python': ('https://docs.python.org/3.10', None),
+    'validator-collection': ('http://validator-collection.readthedocs.io/en/latest/', None),
+}
+
+# -- Options for todo extension ----------------------------------------------
+
+# If true, `todo` and `todoList` produce output, else they produce nothing.
+todo_include_todos = True
