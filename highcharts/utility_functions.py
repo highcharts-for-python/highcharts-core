@@ -1,6 +1,7 @@
 """Collection of utility functions used across the library."""
+import csv
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
 from highcharts import errors
 
@@ -211,3 +212,82 @@ def to_camelCase(snake_case):
             previous_character = character
 
     return camel_case
+
+
+def parse_csv(csv_data,
+              has_header_row = True,
+              delimiter = ',',
+              null_text = 'None',
+              wrapper_character = "'",
+              wrap_all_strings = False,
+              double_wrapper_character_when_nested = False,
+              escape_character = "\\",
+              line_terminator = '\r\n'):
+    """Parse ``csv_data`` to return a list of :class:`dict <python:dict>` objects, one
+    for each record.
+
+    :param csv_data: The CSV record expressed as a :class:`str <python:str>`
+    :type csv_data: :class:`str <python:str>`
+
+    :param delimiter: The delimiter used between columns. Defaults to ``,``.
+    :type delimiter: :class:`str <python:str>`
+
+    :param wrapper_character: The string used to wrap string values when
+      wrapping is applied. Defaults to ``'``.
+    :type wrapper_character: :class:`str <python:str>`
+
+    :param null_text: The string used to indicate an empty value if empty
+      values are wrapped. Defaults to `None`.
+    :type null_text: :class:`str <python:str>`
+
+    :returns: Collection of column names (or numerical keys) and CSV records as
+      :class:`dict <python:dict>` values
+    :rtype: :class:`tuple <python:tuple>` of a :class:`list <python:list>` of column names
+      and :class:`list <python:list>` of :class:`dict <python:dict>`
+    """
+    csv_data = validators.string(csv_data, allow_empty = True)
+    if not csv_data:
+        return [], []
+
+    if not wrapper_character:
+        wrapper_character = '\''
+
+    if wrap_all_strings:
+        quoting = csv.QUOTE_NONNUMERIC
+    else:
+        quoting = csv.QUOTE_MINIMAL
+
+    if 'highcharts' in csv.list_dialects():
+        csv.unregister_dialect('highcharts')
+
+    csv.register_dialect('highcharts',
+                         delimiter = delimiter,
+                         doublequote = double_wrapper_character_when_nested,
+                         escapechar = escape_character,
+                         quotechar = wrapper_character,
+                         quoting = quoting,
+                         lineterminator = line_terminator)
+
+    if has_header_row:
+        csv_reader = csv.DictReader(csv_data,
+                                    dialect = 'highcharts',
+                                    restkey = None,
+                                    restval = None)
+        records_as_dicts = [x for x in csv_reader]
+        columns = csv_reader.fieldnames
+    else:
+        csv_reader = csv.reader(csv_data,
+                                dialect = 'highcharts')
+        records_as_dicts = []
+        columns = []
+        for row in csv_reader:
+            record_as_dict = {}
+            column_counter = 0
+            for column in row:
+                record_as_dict[column_counter] = column
+                columns.append(column_counter)
+                column_counter += 1
+
+            records_as_dicts.append(record_as_dict)
+
+    return columns, records_as_dicts

@@ -34,6 +34,11 @@ class HighchartsParseError(HighchartsError):
     unable to parse a JavaScript object literal correctly."""
     pass
 
+class HighchartsCSVDeserializationError(HighchartsError):
+    """:exc:`ValueError <python:ValueError>` encountered when Highcharts for Python is
+    unable to properly deserialize CSV data."""
+    pass
+
 
 class HighchartsMissingKeyError(HighchartsParseError):
     """:exc:`ValueError <python:ValueError>` encountered when Highcharts for Python

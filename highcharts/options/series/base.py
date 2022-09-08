@@ -1,8 +1,9 @@
 from typing import Optional, List
 from decimal import Decimal
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
+from highcharts import errors, utility_functions
 from highcharts.decorators import class_sensitive
 from highcharts.options.plot_options.series import SeriesOptions
 from highcharts.options.series.data.base import DataBase
@@ -296,3 +297,282 @@ class SeriesBase(SeriesOptions):
             untrimmed[key] = parent_as_dict[key]
 
         return untrimmed
+
+    def load_from_csv(self,
+                      as_string_or_file,
+                      property_column_map,
+                      has_header_row = True,
+                      delimiter = ',',
+                      null_text = 'None',
+                      wrapper_character = "'",
+                      line_terminator = '\r\n',
+                      wrap_all_strings = False,
+                      double_wrapper_character_when_nested = False,
+                      escape_character = "\\"):
+        """Replace the existing
+        :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
+        with a new value populated from data in a CSV string or file.
+
+          .. note::
+
+            For an example
+            :class:`LineSeries <highcharts_python.options.series.area.LineSeries>`, the
+            minimum code required would be:
+
+              .. code-block:: python
+
+                my_series = LineSeries()
+                my_series = my_series.from_csv('some-csv-file.csv',
+                                               property_column_map = {
+                                                   'x': 0,
+                                                   'y': 3,
+                                                   'id': 'id'
+                                               })
+
+            As the example above shows, data is loaded into the ``my_series`` instance
+            from the CSV file with a filename ``some-csv-file.csv``. The
+            :meth:`x <CartesianData.x>`
+            values for each data point will be taken from the first (index 0) column in
+            the CSV file. The :meth:`y <CartesianData.y>` values will be taken from the
+            fourth (index 3) column in the CSV file. And the :meth:`id <CartesianData.id>`
+            values will be taken from a column whose header row is labeled ``'id'``
+            (regardless of its index).
+
+        :param as_string_or_file: The CSV data to use to pouplate data. Accepts either
+          the raw CSV data as a :class:`str <python:str>` or a path to a file in the
+          runtime environment that contains the CSV data.
+
+          .. tip::
+
+            Unwrapped empty column values are automatically interpreted as null
+            (:obj:`None <python:None>`).
+
+        :type as_string_or_file: :class:`str <python:str>` or Path-like
+
+        :param property_column_map: A :class:`dict <python:dict>` used to indicate which
+          data point property should be set to which CSV column. The keys in the
+          :class:`dict <python:dict>` should correspond to properties in the data point
+          class, while the value can either be a numerical index (starting with 0) or a
+          :class:`str <python:str>` indicating the label for the CSV column.
+
+          .. warning::
+
+            If the ``property_column_map`` uses :class:`str <python:str>` values, the CSV
+            file *must* have a header row (this is expected, by default). If there is no
+            header row and a :class:`str <python:str>` value is found, a
+            :exc:`HighchartsCSVDeserializationError` will be raised.
+
+        :type property_column_map: :class:`dict <python:dict>`
+
+        :param has_header_row: If ``True``, indicates that the first row of
+          ``as_string_or_file`` contains column labels, rather than actual data. Defaults
+          to ``True``.
+        :type has_header_row: :class:`bool <python:bool>`
+
+        :param delimiter: The delimiter used between columns. Defaults to ``,``.
+        :type delimiter: :class:`str <python:str>`
+
+        :param wrapper_character: The string used to wrap string values when
+          wrapping is applied. Defaults to ``'``.
+        :type wrapper_character: :class:`str <python:str>`
+
+        :param null_text: The string used to indicate an empty value if empty
+          values are wrapped. Defaults to `None`.
+        :type null_text: :class:`str <python:str>`
+
+        :param line_terminator: The string used to indicate the end of a line/record in
+          the CSV data. Defaults to ``'\r\n'``.
+        :type line_terminator: :class:`str <python:str>`
+
+        :raises HighchartsCSVDeserializationError: if ``property_column_map`` references
+          CSV columns by their label, but the CSV data does not contain a header row
+        """
+        try:
+            as_string_or_file = as_string_or_file.strip()
+        except AttributeError:
+            pass
+
+        if checkers.is_file_on_filesystem(as_string_or_file):
+            with open(as_string_or_file, 'r') as file_:
+                as_str = file_.read()
+        else:
+            as_str = as_string_or_file
+
+        property_column_map = validators.dict(property_column_map, allow_empty = False)
+        cleaned_column_map = {}
+        for key in property_column_map:
+            map_value = property_column_map.get(key, None)
+            if map_value is None:
+                continue
+            if not isinstance(map_value, int) and not has_header_row:
+                raise errors.HighchartsCSVDeserializationError(f'The supplied CSV '
+                                                               f'data does not have a'
+                                                               f'header row, but the '
+                                                               f'property_column_map '
+                                                               f'did not supply an '
+                                                               f'index. Received: '
+                                                               f'column name '
+                                                               f'"{map_value}" '
+                                                               f'instead.')
+            cleaned_column_map[key] = map_value
+
+        columns, csv_records = utility_functions.parse_csv(
+            as_str,
+            has_header_row = has_header_row,
+            delimiter = delimiter,
+            null_text = null_text,
+            wrapper_character = wrapper_character,
+            line_terminator = line_terminator,
+            wrap_all_strings = False,
+            double_wrapper_character_when_nested = False,
+            escape_character = "\\"
+        )
+
+        for key in cleaned_column_map:
+            map_value = cleaned_column_map[key]
+            if map_value not in columns:
+                if isinstance(map_value, str):
+                    raise errors.HighchartsCSVDeserializationError(
+                        f'property_column_map is looking for a column labeled '
+                        f'"{map_value}", but no corresponding column was found.'
+                    )
+                else:
+                    raise errors.HighchartsCSVDeserializationError(
+                        f'property_column_map is looking for a column indexed '
+                        f'{map_value}, but no corresponding column was found.'
+                    )
+
+        data_point_dicts = []
+        for record in csv_records:
+            data_point_dict = {}
+            for key in cleaned_column_map:
+                map_value = cleaned_column_map[key]
+                data_point_dict[key] = record.get(map_value, None)
+            data_point_dicts.append(data_point_dict)
+
+        self.data = data_point_dicts
+
+    @classmethod
+    def from_csv(cls,
+                 as_string_or_file,
+                 property_column_map,
+                 has_header_row = True,
+                 delimiter = ',',
+                 null_text = 'None',
+                 wrapper_character = "'",
+                 line_terminator = '\r\n',
+                 wrap_all_strings = False,
+                 double_wrapper_character_when_nested = False,
+                 escape_character = "\\",
+                 series_kwargs = None):
+        """Create a new :term:`series` instance with a
+        :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
+        populated from data in a CSV string or file.
+
+          .. note::
+
+            For an example
+            :class:`LineSeries <highcharts_python.options.series.area.LineSeries>`, the
+            minimum code required would be:
+
+              .. code-block:: python
+
+                my_series = LineSeries.from_csv('some-csv-file.csv',
+                                                property_column_map = {
+                                                    'x': 0,
+                                                    'y': 3,
+                                                    'id': 'id'
+                                                })
+
+            As the example above shows, data is loaded into the ``my_series`` instance
+            from the CSV file with a filename ``some-csv-file.csv``. The
+            :meth:`x <CartesianData.x>`
+            values for each data point will be taken from the first (index 0) column in
+            the CSV file. The :meth:`y <CartesianData.y>` values will be taken from the
+            fourth (index 3) column in the CSV file. And the :meth:`id <CartesianData.id>`
+            values will be taken from a column whose header row is labeled ``'id'``
+            (regardless of its index).
+
+        :param as_string_or_file: The CSV data to use to pouplate data. Accepts either
+          the raw CSV data as a :class:`str <python:str>` or a path to a file in the
+          runtime environment that contains the CSV data.
+
+          .. tip::
+
+            Unwrapped empty column values are automatically interpreted as null
+            (:obj:`None <python:None>`).
+
+        :type as_string_or_file: :class:`str <python:str>` or Path-like
+
+        :param property_column_map: A :class:`dict <python:dict>` used to indicate which
+          data point property should be set to which CSV column. The keys in the
+          :class:`dict <python:dict>` should correspond to properties in the data point
+          class, while the value can either be a numerical index (starting with 0) or a
+          :class:`str <python:str>` indicating the label for the CSV column.
+
+          .. warning::
+
+            If the ``property_column_map`` uses :class:`str <python:str>` values, the CSV
+            file *must* have a header row (this is expected, by default). If there is no
+            header row and a :class:`str <python:str>` value is found, a
+            :exc:`HighchartsCSVDeserializationError` will be raised.
+
+        :type property_column_map: :class:`dict <python:dict>`
+
+        :param has_header_row: If ``True``, indicates that the first row of
+          ``as_string_or_file`` contains column labels, rather than actual data. Defaults
+          to ``True``.
+        :type has_header_row: :class:`bool <python:bool>`
+
+        :param delimiter: The delimiter used between columns. Defaults to ``,``.
+        :type delimiter: :class:`str <python:str>`
+
+        :param wrapper_character: The string used to wrap string values when
+          wrapping is applied. Defaults to ``'``.
+        :type wrapper_character: :class:`str <python:str>`
+
+        :param null_text: The string used to indicate an empty value if empty
+          values are wrapped. Defaults to `None`.
+        :type null_text: :class:`str <python:str>`
+
+        :param line_terminator: The string used to indicate the end of a line/record in
+          the CSV data. Defaults to ``'\r\n'``.
+        :type line_terminator: :class:`str <python:str>`
+
+        :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the series instance. Defaults
+          to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``series_kwargs`` contains a ``data`` key, its value will be *ignored*.
+            The ``data`` value will be created from the CSV file instead.
+
+        :type series_kwargs: :class:`dict <python:dict>`
+
+        :returns: A :term:`series` instance (descended from
+          :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`) with its
+          :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
+          populated from the CSV data in ``as_string_or_file``.
+        :rtype: :class:`list <python:list>` of series instances (descended from
+          :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`)
+
+        :raises HighchartsCSVDeserializationError: if ``property_column_map`` references
+          CSV columns by their label, but the CSV data does not contain a header row
+        """
+        if not series_kwargs:
+            series_kwargs = {}
+
+        instance = cls(**series_kwargs)
+        instance.load_from_csv(as_string_or_file,
+                               property_column_map,
+                               has_header_row = True,
+                               delimiter = ',',
+                               null_text = 'None',
+                               wrapper_character = "'",
+                               line_terminator = '\r\n',
+                               wrap_all_strings = False,
+                               double_wrapper_character_when_nested = False,
+                               escape_character = "\\")
+
+        return instance
