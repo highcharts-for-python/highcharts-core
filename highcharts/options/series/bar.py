@@ -89,7 +89,7 @@ class BaseBarSeries(SeriesBase, BaseBarOptions):
         if not value:
             self._data = None
         else:
-            self._data = BarData.from_setter(value)
+            self._data = BarData.from_array(value)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -434,7 +434,7 @@ class ColumnPyramidSeries(ColumnSeries):
         if not value:
             self._data = None
         else:
-            self._data = CartesianData.from_setter(value)
+            self._data = CartesianData.from_array(value)
 
 
 class ColumnRangeSeries(ColumnSeries):
@@ -535,7 +535,7 @@ class ColumnRangeSeries(ColumnSeries):
         if not value:
             self._data = None
         else:
-            self._data = RangeData.from_setter(value)
+            self._data = RangeData.from_array(value)
 
 
 class CylinderSeries(BarSeries):
@@ -657,7 +657,7 @@ class VariwideSeries(BaseBarSeries):
         if not value:
             self._data = None
         else:
-            self._data = Cartesian3DData.from_setter(value)
+            self._data = Cartesian3DData.from_array(value)
 
 
 class WaterfallSeries(ColumnSeries, WaterfallOptions):
@@ -764,7 +764,7 @@ class WaterfallSeries(ColumnSeries, WaterfallOptions):
         if not value:
             self._data = None
         else:
-            self._data = WaterfallData.from_setter(value)
+            self._data = WaterfallData.from_array(value)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -967,7 +967,7 @@ class WindBarbSeries(BarSeries, WindBarbOptions):
         if not value:
             self._data = None
         else:
-            self._data = WindBarbData.from_setter(value)
+            self._data = WindBarbData.from_array(value)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -1122,7 +1122,7 @@ class XRangeSeries(BaseBarSeries, XRangeOptions):
         if not value:
             self._data = None
         else:
-            self._data = XRangeData.from_setter(value)
+            self._data = XRangeData.from_array(value)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

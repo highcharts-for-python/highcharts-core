@@ -4,11 +4,21 @@ import pytest
 
 from json.decoder import JSONDecodeError
 
-from highcharts.options.series.data.base import DataBase as cls
+from highcharts.options.series.data.base import DataBase
 from highcharts import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
     Class_from_js_literal
+
+
+class NonAbstractDataBase(DataBase):
+
+    @classmethod
+    def from_array(cls, value):
+        pass
+
+cls = NonAbstractDataBase
+
 
 STANDARD_PARAMS = [
     ({}, None),

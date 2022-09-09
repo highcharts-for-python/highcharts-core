@@ -384,6 +384,41 @@ class SeriesBase(SeriesOptions):
           the CSV data. Defaults to ``'\r\n'``.
         :type line_terminator: :class:`str <python:str>`
 
+        :param line_terminator: The string used to indicate the end of a line/record in the
+          CSV data. Defaults to ``'\r\n'``.
+
+          .. note::
+
+            The Python :mod:`csv <python:csv>` currently ignores the ``line_terminator``
+            parameter and always applies ``'\r\n'``, by design. The Python docs say this may
+            change in the future, so for future backwards compatibility we are including it
+            here.
+
+        :type line_terminator: :class:`str <python:str>`
+
+        :param wrap_all_strings: If ``True``, indicates that the CSV file has all string data
+          values wrapped in quotation marks. Defaults to ``False``.
+
+          .. warning::
+
+            If set to ``True``, the :module:`csv <python:csv>` module will try to coerce any
+            value that is *not* wrapped in quotation marks to a :class:`float <python:float>`.
+            This can cause unexpected behavior, and typically we recommend leaving this as
+            ``False`` and then re-casting values after they have been parsed.
+
+        :type wrap_all_strings: :class:`bool <python:bool>`
+
+        :param double_wrapper_character_when_nested: If ``True``, quote character is doubled
+          when appearing within a string value. If ``False``, the ``escpae_character`` is used
+          to prefix quotation marks. Defaults to ``False``.
+        :type double_wrapper_character_when_nested: :class:`bool <python:bool>`
+
+        :param escape_character: A one-character string that indicates the character used to
+          escape quotation marks if they appear within a string value that is already wrapped
+          in quotation marks. Defaults to ``\\`` (which is Python for ``'\'``, which is
+          Python's native escape character).
+        :type escape_character: :class:`str <python:str>`
+
         :raises HighchartsCSVDeserializationError: if ``property_column_map`` references
           CSV columns by their label, but the CSV data does not contain a header row
         """
@@ -457,14 +492,14 @@ class SeriesBase(SeriesOptions):
                  as_string_or_file,
                  property_column_map,
                  has_header_row = True,
+                 series_kwargs = None,
                  delimiter = ',',
                  null_text = 'None',
                  wrapper_character = "'",
                  line_terminator = '\r\n',
                  wrap_all_strings = False,
                  double_wrapper_character_when_nested = False,
-                 escape_character = "\\",
-                 series_kwargs = None):
+                 escape_character = "\\"):
         """Create a new :term:`series` instance with a
         :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
         populated from data in a CSV string or file.
@@ -524,6 +559,17 @@ class SeriesBase(SeriesOptions):
           to ``True``.
         :type has_header_row: :class:`bool <python:bool>`
 
+        :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the series instance. Defaults
+          to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``series_kwargs`` contains a ``data`` key, its value will be *overwritten*.
+            The ``data`` value will be created from the CSV file instead.
+
+        :type series_kwargs: :class:`dict <python:dict>`
+
         :param delimiter: The delimiter used between columns. Defaults to ``,``.
         :type delimiter: :class:`str <python:str>`
 
@@ -539,16 +585,40 @@ class SeriesBase(SeriesOptions):
           the CSV data. Defaults to ``'\r\n'``.
         :type line_terminator: :class:`str <python:str>`
 
-        :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
-          arguments that should be used when instantiating the series instance. Defaults
-          to :obj:`None <python:None>`.
+        :param line_terminator: The string used to indicate the end of a line/record in the
+          CSV data. Defaults to ``'\r\n'``.
+
+          .. note::
+
+            The Python :mod:`csv <python:csv>` currently ignores the ``line_terminator``
+            parameter and always applies ``'\r\n'``, by design. The Python docs say this may
+            change in the future, so for future backwards compatibility we are including it
+            here.
+
+        :type line_terminator: :class:`str <python:str>`
+
+        :param wrap_all_strings: If ``True``, indicates that the CSV file has all string data
+          values wrapped in quotation marks. Defaults to ``False``.
 
           .. warning::
 
-            If ``series_kwargs`` contains a ``data`` key, its value will be *ignored*.
-            The ``data`` value will be created from the CSV file instead.
+            If set to ``True``, the :module:`csv <python:csv>` module will try to coerce any
+            value that is *not* wrapped in quotation marks to a :class:`float <python:float>`.
+            This can cause unexpected behavior, and typically we recommend leaving this as
+            ``False`` and then re-casting values after they have been parsed.
 
-        :type series_kwargs: :class:`dict <python:dict>`
+        :type wrap_all_strings: :class:`bool <python:bool>`
+
+        :param double_wrapper_character_when_nested: If ``True``, quote character is doubled
+          when appearing within a string value. If ``False``, the ``escpae_character`` is used
+          to prefix quotation marks. Defaults to ``False``.
+        :type double_wrapper_character_when_nested: :class:`bool <python:bool>`
+
+        :param escape_character: A one-character string that indicates the character used to
+          escape quotation marks if they appear within a string value that is already wrapped
+          in quotation marks. Defaults to ``\\`` (which is Python for ``'\'``, which is
+          Python's native escape character).
+        :type escape_character: :class:`str <python:str>`
 
         :returns: A :term:`series` instance (descended from
           :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`) with its
@@ -659,7 +729,7 @@ class SeriesBase(SeriesOptions):
 
           .. warning::
 
-            If ``series_kwargs`` contains a ``data`` key, its value will be *ignored*.
+            If ``series_kwargs`` contains a ``data`` key, its value will be *overwritten*.
             The ``data`` value will be created from ``df`` instead.
 
         :type series_kwargs: :class:`dict <python:dict>`
@@ -771,7 +841,7 @@ class SeriesBase(SeriesOptions):
 
           .. warning::
 
-            If ``series_kwargs`` contains a ``data`` key, its value will be *ignored*.
+            If ``series_kwargs`` contains a ``data`` key, its value will be *overwritten*.
             The ``data`` value will be created from ``df`` instead.
 
         :type series_kwargs: :class:`dict <python:dict>`

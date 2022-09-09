@@ -47,13 +47,7 @@ class ConnectionBase(DataBase):
         self._to = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_setter(cls, value):
-        """Generator method which produces a collection of :class:`ConnectionData`
-        instances derived from ``value``. Generally consumed by the setter methods in
-        series-type specific data classes.
-
-        :rtype: :class:`list <python:list>` of :obj:`ConnectionData` instances
-        """
+    def from_array(cls, value):
         if not value:
             return []
         elif not checkers.is_iterable(value):
@@ -178,7 +172,7 @@ class ConnectionData(ConnectionBase):
         self._drag_drop = value
 
     @classmethod
-    def from_setter(cls, value):
+    def from_array(cls, value):
         """Generator method which produces a collection of :class:`ConnectionData`
         instances derived from ``value``. Generally consumed by the setter methods in
         series-type specific data classes.
@@ -280,7 +274,7 @@ class WeightedConnectionData(ConnectionData):
         self._weight = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_setter(cls, value):
+    def from_array(cls, value):
         """Generator method which produces a collection of :class:`ConnectionData`
         instances derived from ``value``. Generally consumed by the setter methods in
         series-type specific data classes.
@@ -400,7 +394,7 @@ class OutgoingWeightedConnectionData(WeightedConnectionData):
             self._outgoing = bool(value)
 
     @classmethod
-    def from_setter(cls, value):
+    def from_array(cls, value):
         """Generator method which produces a collection of
         :class:`OutgoingWeightedConnectionData` instances derived from ``value``.
         Generally consumed by the setter methods in series-type specific data classes.

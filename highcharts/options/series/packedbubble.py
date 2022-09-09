@@ -67,7 +67,7 @@ class PackedBubbleSeries(NetworkGraphSeries, PackedBubbleOptions):
         if not value:
             self._data = None
         else:
-            self._data = SingleValueData.from_setter(value)
+            self._data = SingleValueData.from_array(value)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

@@ -157,13 +157,7 @@ class SinglePointData(SinglePointBase):
             self._y = validators.numeric(value)
 
     @classmethod
-    def from_setter(cls, value):
-        """Generator method which produces a collection of :class:`SinglePointData`
-        instances derived from ``value``. Generally consumed by the setter methods in
-        series-type specific data classes.
-
-        :rtype: :class:`list <python:list>` of :obj:`SinglePointData` instances
-        """
+    def from_array(cls, value):
         if not value:
             return []
         elif not checkers.is_iterable(value):
@@ -277,13 +271,7 @@ class SingleValueData(SinglePointBase):
             self._value = validators.numeric(value_)
 
     @classmethod
-    def from_setter(cls, value):
-        """Generator method which produces a collection of :class:`SingleValueData`
-        instances derived from ``value``. Generally consumed by the setter methods in
-        series-type specific data classes.
-
-        :rtype: :class:`list <python:list>` of :obj:`SingleValueData` instances
-        """
+    def from_array(cls, value):
         if not value:
             return []
         elif not checkers.is_iterable(value):
@@ -396,13 +384,7 @@ class SingleXData(SinglePointBase):
             self._x = validators.numeric(value)
 
     @classmethod
-    def from_setter(cls, value):
-        """Generator method which produces a collection of :class:`SinglePointData`
-        instances derived from ``value``. Generally consumed by the setter methods in
-        series-type specific data classes.
-
-        :rtype: :class:`list <python:list>` of :obj:`SinglePointData` instances
-        """
+    def from_array(cls, value):
         if not value:
             return []
         elif not checkers.is_iterable(value):
@@ -512,13 +494,7 @@ class LabeledSingleXData(SingleXData):
         self._label = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_setter(cls, value):
-        """Generator method which produces a collection of :class:`LabeledSingleXData`
-        instances derived from ``value``. Generally consumed by the setter methods in
-        series-type specific data classes.
-
-        :rtype: :class:`list <python:list>` of :obj:`LabeledSingleXData` instances
-        """
+    def from_array(cls, value):
         if not value:
             return []
         elif not checkers.is_iterable(value):
@@ -648,13 +624,7 @@ class ConnectedSingleXData(SingleXData):
         self._connector_width = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_setter(cls, value):
-        """Generator method which produces a collection of :class:`ConnectedSingleXData`
-        instances derived from ``value``. Generally consumed by the setter methods in
-        series-type specific data classes.
-
-        :rtype: :class:`list <python:list>` of :obj:`ConnectedSingleXData` instances
-        """
+    def from_array(cls, value):
         if not value:
             return []
         elif not checkers.is_iterable(value):

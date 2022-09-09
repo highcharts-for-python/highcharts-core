@@ -110,7 +110,7 @@ class OrganizationSeries(BarSeries, OrganizationOptions):
         if not value:
             self._data = None
         else:
-            self._data = OutgoingWeightedConnectionData.from_setter(value)
+            self._data = OutgoingWeightedConnectionData.from_array(value)
 
     @property
     def nodes(self) -> Optional[List[OrganizationNodeOptions]]:

@@ -113,13 +113,7 @@ class VennData(DataBase):
         self._value = validators.numeric(value_, allow_empty = True)
 
     @classmethod
-    def from_setter(cls, value):
-        """Generator method which produces a collection of :class:`VennData`
-        instances derived from ``value``. Generally consumed by the setter methods in
-        series-type specific data classes.
-
-        :rtype: :class:`list <python:list>` of :obj:`VennData` instances
-        """
+    def from_array(cls, value):
         if not value:
             return []
         elif not checkers.is_iterable(value):

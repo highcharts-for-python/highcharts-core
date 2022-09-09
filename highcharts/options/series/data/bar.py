@@ -321,13 +321,7 @@ class WindBarbData(CartesianData):
         self._value = validators.numeric(value_, allow_empty = True)
 
     @classmethod
-    def from_setter(cls, value):
-        """Generator method which produces a collection of :class:`WindBarbData`
-        instances derived from ``value``. Generally consumed by the setter methods in
-        series-type specific data classes.
-
-        :rtype: :class:`list <python:list>` of :class:`WindBarbData` instances
-        """
+    def from_array(cls, value):
         if not value:
             return []
         elif not checkers.is_iterable(value):
@@ -521,13 +515,7 @@ class XRangeData(CartesianData):
             self._x2 = value
 
     @classmethod
-    def from_setter(cls, value):
-        """Generator method which produces a collection of :class:`XRangeData`
-        instances derived from ``value``. Generally consumed by the setter methods in
-        series-type specific data classes.
-
-        :rtype: :class:`list <python:list>` of :obj:`XRangeData` instances
-        """
+    def from_array(cls, value):
         if not value:
             return []
         elif not checkers.is_iterable(value):

@@ -63,7 +63,7 @@ class SankeySeries(DependencyWheelSeries, SankeyOptions):
         if not value:
             self._data = None
         else:
-            self._data = OutgoingWeightedConnectionData.from_setter(value)
+            self._data = OutgoingWeightedConnectionData.from_array(value)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

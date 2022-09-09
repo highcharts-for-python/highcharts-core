@@ -145,13 +145,7 @@ class CartesianData(DataBase):
             self._y = validators.numeric(value)
 
     @classmethod
-    def from_setter(cls, value):
-        """Generator method which produces a collection of :class:`CartesianData`
-        instances derived from ``value``. Generally consumed by the setter methods in
-        series-type specific data classes.
-
-        :rtype: :class:`list <python:list>` of :obj:`CartesianData` instances
-        """
+    def from_array(cls, value):
         if not value:
             return []
         elif not checkers.is_iterable(value):
@@ -276,13 +270,7 @@ class Cartesian3DData(CartesianData):
             self._z = validators.numeric(value)
 
     @classmethod
-    def from_setter(cls, value):
-        """Generator method which produces a collection of :class:`Cartesian3DData`
-        instances derived from ``value``. Generally consumed by the setter methods in
-        series-type specific data classes.
-
-        :rtype: :class:`list <python:list>` of :obj:`Cartesian3DData` instances
-        """
+    def from_array(cls, value):
         if not value:
             return []
         elif not checkers.is_iterable(value):
@@ -434,13 +422,7 @@ class CartesianValueData(CartesianData):
             self._value = validators.numeric(value_)
 
     @classmethod
-    def from_setter(cls, value):
-        """Generator method which produces a collection of :class:`CartesianValueData`
-        instances derived from ``value``. Generally consumed by the setter methods in
-        series-type specific data classes.
-
-        :rtype: :class:`list <python:list>` of :obj:`CartesianValueData` instances
-        """
+    def from_array(cls, value):
         if not value:
             return []
         elif not checkers.is_iterable(value):

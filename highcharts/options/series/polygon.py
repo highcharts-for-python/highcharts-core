@@ -96,7 +96,7 @@ class PolygonSeries(SeriesBase, PolygonOptions):
         if not value:
             self._data = None
         else:
-            self._data = CartesianData.from_setter(value)
+            self._data = CartesianData.from_array(value)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

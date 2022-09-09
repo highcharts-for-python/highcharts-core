@@ -1,9 +1,9 @@
 from typing import Optional, List
 from decimal import Decimal
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
-from highcharts import errors, utility_functions
+from highcharts import constants, errors, utility_functions
 from highcharts.decorators import class_sensitive
 from highcharts.options.series.base import SeriesBase
 from highcharts.options.series.data.base import DataBase

@@ -65,7 +65,7 @@ class PieSeries(SeriesBase, PieOptions):
         if not value:
             self._data = None
         else:
-            self._data = PieData.from_setter(value)
+            self._data = PieData.from_array(value)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -233,7 +233,7 @@ class VariablePieSeries(PieSeries):
         if not value:
             self._data = None
         else:
-            self._data = VariablePieData.from_setter(value)
+            self._data = VariablePieData.from_array(value)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

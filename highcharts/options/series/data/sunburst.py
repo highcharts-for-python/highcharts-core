@@ -125,13 +125,7 @@ class TreemapData(DataBase):
             self._value = validators.numeric(value_)
 
     @classmethod
-    def from_setter(cls, value):
-        """Generator method which produces a collection of :class:`TreemapData`
-        instances derived from ``value``. Generally consumed by the setter methods in
-        series-type specific data classes.
-
-        :rtype: :class:`list <python:list>` of :obj:`TreemapData` instances
-        """
+    def from_array(cls, value):
         if not value:
             return []
         elif not checkers.is_iterable(value):
@@ -262,13 +256,7 @@ class SunburstData(TreemapData):
             self._sliced = bool(value)
 
     @classmethod
-    def from_setter(cls, value):
-        """Generator method which produces a collection of :class:`SunburstData`
-        instances derived from ``value``. Generally consumed by the setter methods in
-        series-type specific data classes.
-
-        :rtype: :class:`list <python:list>` of :obj:`SunburstData` instances
-        """
+    def from_array(cls, value):
         if not value:
             return []
         elif not checkers.is_iterable(value):

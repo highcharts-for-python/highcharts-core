@@ -53,7 +53,7 @@ class DependencyWheelSeries(SeriesBase, DependencyWheelOptions):
         if not value:
             self._data = None
         else:
-            self._data = WeightedConnectionData.from_setter(value)
+            self._data = WeightedConnectionData.from_array(value)
 
     @property
     def nodes(self) -> Optional[List[DependencyWheelNodeOptions]]:

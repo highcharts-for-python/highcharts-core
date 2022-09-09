@@ -113,7 +113,7 @@ class BoxPlotSeries(BarSeries, BoxPlotOptions):
         if not value:
             self._data = None
         else:
-            self._data = BoxPlotData.from_setter(value)
+            self._data = BoxPlotData.from_array(value)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -325,4 +325,4 @@ class ErrorBarSeries(BoxPlotSeries):
         if not value:
             self._data = None
         else:
-            self._data = RangeData.from_setter(value)
+            self._data = RangeData.from_array(value)

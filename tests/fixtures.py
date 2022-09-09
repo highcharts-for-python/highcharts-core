@@ -206,7 +206,7 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
         print('- evaluating a KWARG value that is iterable')
         if hasattr(result_value, 'from_setter'):
             print('- converting iterable to a HighchartsMeta from_setter()')
-            updated_kwarg_value = result_value.__class__.from_setter([kwarg_value])[0]
+            updated_kwarg_value = result_value.__class__.from_array([kwarg_value])[0]
             matches = does_kwarg_value_match_result(updated_kwarg_value, result_value)
             return matches
         elif len(kwarg_value) != len(result_value):

@@ -102,7 +102,7 @@ class DumbbellSeries(SeriesBase, DumbbellOptions):
         if not value:
             self._data = None
         else:
-            self._data = ConnectedRangeData.from_setter(value)
+            self._data = ConnectedRangeData.from_array(value)
 
     @property
     def drag_drop(self) -> Optional[HighLowDragDropOptions]:
