@@ -399,8 +399,11 @@ Organizing Your Highcharts for Python Project
 
 **Highcharts for Python** is a utility that can integrate with - quite literally - any
 frontend framework. Whether your Python application is relying on iPython (e.g.
-`Jupyter Notebook <>`_ or `Jupyter Labs <>`_), `Flask <>`_, `Django <>`_, `FastAPI <>`_,
-`Pyramid <>`_, `Tornado <>`_, or some completely home-grown solution all Highcharts for
+`Jupyter Notebook`_ or `Jupyter Labs`_),
+`Flask <https://flask.palletsprojects.com/en/2.2.x/>`_,
+`Django <https://www.djangoproject.com/>`_,  `FastAPI <https://fastapi.tiangolo.com/>`_,
+`Pyramid <https://trypyramid.com/>`_, `Tornado <https://www.tornadoweb.org/en/stable/>`_,
+or some completely home-grown solution all Highcharts for
 Python needs is a place where `Highcharts JS`_ JavaScript code can be executed.
 
 All of those frameworks I mentioned have their own best practices for organizing their
@@ -817,7 +820,7 @@ Obviously, if you are going to use **Highcharts for Python** and `Highcharts JS`
 need to have data to visualize. Python is rapidly becoming the *lingua franca* in the
 world of data manipulation, transformation, and analysis and **Highcharts for Python**
 is specifically designed to play well within that ecosystem to make it easy to visualize
-data from CSV files, from `pandas <>`_ dataframes, or `PySpark <>`_ dataframes.
+data from CSV files, from `pandas`_ dataframes, or `PySpark`_ dataframes.
 
 How Data is Represented
 ==================================
@@ -1142,7 +1145,7 @@ Loading to an Existing Series
 
     Replace the contents of the
     :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
-    with data points populated from a `pandas <https://pandas.pydata.org/>`_
+    with data points populated from a `pandas`_
     :class:`DataFrame <pandas:DataFrame>`.
 
     :param df: The :class:`DataFrame <pandas:DataFrame>` from which data should be
@@ -1158,7 +1161,7 @@ Loading to an Existing Series
 
     :raises HighchartsPandasDeserializationError: if ``property_map`` references
       a column that does not exist in the data frame
-    :raises HighchartsDependencyError: if `pandas <https://pandas.pydata.org/>`_ is
+    :raises HighchartsDependencyError: if `pandas`_ is
       not available in the runtime environment
 
   .. method:: .load_from_pyspark(self, df, property_map)
@@ -1208,7 +1211,7 @@ Creating a Brand New Series
             my_series = LineSeries.from_csv('some-csv-file.csv',
                                             property_column_map = {
                                                 'x': 0,
-                                                'y': 3,
+                                                  'y': 3,
                                                 'id': 'id'
                                             })
 
@@ -1328,7 +1331,7 @@ Creating a Brand New Series
 
     Create a :term:`series` instance whose
     :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
-    is populated from a `pandas <https://pandas.pydata.org/>`_
+    is populated from a `pandas`_
     :class:`DataFrame <pandas:DataFrame>`.
 
     :param df: The :class:`DataFrame <pandas:DataFrame>` from which data should be
@@ -1362,7 +1365,7 @@ Creating a Brand New Series
 
     :raises HighchartsPandasDeserializationError: if ``property_map`` references
       a column that does not exist in the data frame
-    :raises HighchartsDependencyError: if `pandas <https://pandas.pydata.org/>`_ is
+    :raises HighchartsDependencyError: if `pandas`_ is
       not available in the runtime environment
 
   .. method:: .from_pyspark(cls, df, property_map, series_kwargs = None)
@@ -1569,10 +1572,12 @@ For example:
 
     # This will produce a string equivalent to:
     #
-    # const myChart = Highcharts.Chart('target_div', {
-    #    series: {
-    #        data: [0, 5, 3, 5]
-    #    }
+    # document.addEventListener('DOMContentLoaded', function() {
+    #   const myChart = Highcharts.chart('target_div', {
+    #      series: {
+    #          data: [0, 5, 3, 5]
+    #      }
+    #   });
     # });
 
 Now you can use whatever front-end framework you are using to insert that string into your
@@ -1596,7 +1601,7 @@ Rendering Highcharts for Python in Jupyter Labs or Jupyter Notebooks
 ======================================================================
 
 You can also render **Highcharts for Python** visualizations inside your
-`Jupyter Labs <>` notebook. This is as simple as executing a single
+`Jupyter <https://jupyter.org/>`_ notebook. This is as simple as executing a single
 :meth:`.display() <highcharts_python.chart.Chart.display>` call on your
 :class:`Chart <highcharts_python.chart.Chart>` instance:
 
@@ -1612,12 +1617,17 @@ You can also render **Highcharts for Python** visualizations inside your
 
     my_chart.display()
 
+    # You can also supply shared options to display to make sure that they are applied:
+    my_shared_options = SharedOptions()
+    my_chart.display(global_options = my_shared_options)
+
 You can call the ``.display()`` method from anywhere within any notebook cell, and it
 will render the resulting chart in your notebook's output. That's it!
 
   .. caution::
 
-    If you are not operating within an `iPython <>` environment, calling
+    If `iPython <https://ipython.readthedocs.io/>`_ is not available in your runtime
+    environment, calling
     :meth:`.display() <highcharts_python.chart.Chart.display>` will raise a
     :exc:`HighchartsDependencyError`.
 
@@ -1759,3 +1769,8 @@ environment. The actual file itself is produced using a
 
 
 .. _Highcharts JS: https://www.highcharts.com
+.. _Jupyter Notebook: https://jupyter.org
+.. _Jupyter Labs: https://jupyter.org
+.. _IPython: https://ipython.readthedocs.io/
+.. _pandas: https://pandas.pydata.org
+.. _PySpark: https://spark.apache.org/docs/latest/api/python/
