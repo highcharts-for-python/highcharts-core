@@ -596,6 +596,65 @@ class Options(HighchartsMeta):
     def y_axis(self, value):
         self._y_axis = value
 
+    def add_series(self, *series):
+        """Adds ``series`` to the
+        :meth:`series <highcharts_python.options.HighchartsOptions.series>` property.
+
+        :param series: One or more :term:`series` instances (descended from
+          :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`) or an
+          instance (e.g. :class:`dict <python:dict>`, :class:`str <python:str>`, etc.)
+          coercable to one
+        :type series: one or more
+          :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`
+          or coercable
+
+        """
+        new_series = []
+        for item in series:
+            item_series = create_series_obj(item)
+            new_series.append(item_series)
+
+        if self.series:
+            existing_series = [x for x in self.series]
+        else:
+            existing_series = []
+
+        updated_series = existing_series + new_series
+
+        self.series = updated_series
+
+    @classmethod
+    def from_series(cls, *series, kwargs = None):
+        """Creates a new :class:`Options <highcharts_python.options.Options>` instance
+        populated with ``series``.
+
+        :param series: One or more :term:`series` instances (descended from
+          :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`) or an
+          instance (e.g. :class:`dict <python:dict>`, :class:`str <python:str>`, etc.)
+          coercable to one
+        :type series: one or more
+          :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`
+          or coercable
+
+        :param kwargs: Other properties to use as keyword arguments for the instance to be
+          created.
+
+          .. warning::
+
+            If ``kwargs`` sets the
+            :meth:`.series <highcharts_python.options.Options.series>`
+            property, that setting will be *overridden* by the contents of ``series``.
+
+        :type kwargs: :class:`dict <python:dict>`
+
+        :returns: A new :class:`Options <highcharts_python.options.Options>` instance
+        :rtype: :class:`Options <highcharts_python.options.Options>`
+        """
+        kwargs = validators.dict(kwargs, allow_empty = True) or {}
+        instance = cls(**kwargs)
+
+        instance.add_series(series)
+
 
 class HighchartsOptions(Options):
     """The Python representation of the `Highcharts <https://highcharts.com>`_
