@@ -602,7 +602,8 @@ class ExportServer(HighchartsMeta):
                       filename = None,
                       auth_user = None,
                       auth_password = None,
-                      timeout = 0.5):
+                      timeout = 0.5,
+                      **kwargs):
         """Execute a request against the export server based on the configuration in the
         instance.
 
@@ -625,11 +626,29 @@ class ExportServer(HighchartsMeta):
           than the ``timeout`` value. Defaults to ``0.5``.
         :type timeout: numeric or :obj:`None <python:None>`
 
+        .. note::
+
+          All other keyword arguments are as per the :class:`ExportServer` constructor
+          :meth:`ExportServer.__init__() <highcharts_python.headless_export.ExportServer.__init__>`
+
         :returns: The exported chart image, either as a :class:`bytes <python:bytes>`
           binary object or as a base-64 encoded string (depending on the
           :meth:`use_base64 <ExportServer.use_base64>` property).
         :rtype: :class:`bytes <python:bytes>` or :class:`str <python:str>`
         """
+        self.options = kwargs.get('options', self.options)
+        self.format = kwargs.get('format', kwargs.get('type', self.format))
+        self.scale = kwargs.get('scale', self.scale)
+        self.width = kwargs.get('width', self.width)
+        self.callback = kwargs.get('callback', self.callback)
+        self.constructor = kwargs.get('constructor', self.constructor)
+        self.use_base64 = kwargs.get('use_base64', self.use_base64)
+        self.no_download = kwargs.get('no_download', self.no_download)
+        self.async_rendering = kwargs.get('async_rendering', self.async_rendering)
+        self.global_options = kwargs.get('global_options', self.global_options)
+        self.data_options = kwargs.get('data_options', self.data_options)
+        self.custom_code = kwargs.get('custom_code', self.custom_code)
+
         missing_details = []
         if not self.options:
             missing_details.append('options')
@@ -689,16 +708,9 @@ class ExportServer(HighchartsMeta):
 
         result = requests.post(self.url,
                                data = as_json,
-                               headers = {
-                                   'Content-Type': 'application/json'
-                               },
+                               headers = { 'Content-Type': 'application/json' },
                                auth = basic_auth,
                                timeout = timeout)
-
-        #if result.status_code > 300:
-        #    target_json_file = filename.replace('.png', '.json')
-        #    with open(target_json_file, 'w') as file_:
-        #        file_.write(as_json)
 
         result.raise_for_status()
 
@@ -738,7 +750,8 @@ class ExportServer(HighchartsMeta):
 
         .. note::
 
-          All other keyword arguments are as per the :class:`ExportServer` constructor.
+          All other keyword arguments are as per the :class:`ExportServer` constructor
+          :meth:`ExportServer.__init__() <highcharts_python.headless_export.ExportServer.__init__>`
 
         :returns: The exported chart image, either as a :class:`bytes <python:bytes>`
           binary object or as a base-64 encoded string (depending on the ``use_base64``

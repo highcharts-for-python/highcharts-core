@@ -1469,8 +1469,7 @@ property. You can do this in several ways:
         :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`) or an
         instance (e.g. :class:`dict <python:dict>`, :class:`str <python:str>`, etc.)
         coercable to one
-      :type series: one or more
-        :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`
+      :type series: :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`
         or coercable
 
   .. tab:: Using ``.from_series()``
@@ -1497,12 +1496,11 @@ property. You can do this in several ways:
         :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`) or an
         instance (e.g. :class:`dict <python:dict>`, :class:`str <python:str>`, etc.)
         coercable to one
-      :type series: one or more
-        :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`
+      :type series: :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`
         or coercable
 
       :param kwargs: Other properties to use as keyword arguments for the instance to be
-            created.
+        created.
 
         .. warning::
 
@@ -1522,9 +1520,106 @@ property. You can do this in several ways:
 Rendering Your Visualizations
 **************************************
 
-.. todo::
+Once you have created your :class:`Chart <highcharts_python.chart.Chart>` instance or
+instances, you can render them very easily. There are really only two ways to display
+your visualizations:
 
-  Add a section for how to render your data visualization.
+  #. :ref:`Render Visualizations in Web Content <web_rendering>`
+  #. :ref:`Render Visualizations in Jupyter Labs / Jupyter Notebook <jupyter_rendering>`
+
+.. _web_rendering:
+
+Rendering Highcharts Visualizations in Web Content
+========================================================
+
+`Highcharts JS`_ is a JavaScript library specifically designed to enable rendering
+high-end data visualizations in a web context. The library is designed and optimized to
+operate within a web browser. **Highcharts for Python** therefore fully supports this
+capability, and we've enabled it using the *batteries included* principle.
+
+To render a **Highcharts for Python** visualization in a web context, all you need is
+for the browser to execute the output of the chart's
+:meth:`.to_js_literal() <highcharts_python.chart.Chart.to_js_literal>` method.
+
+That method will return a snippet of JavaScript code which when included in a web page
+will display the chart in full.
+
+.. warning::
+
+  The current version of **Highcharts for Python** assumes that your web content already
+  has all the ``<script/>`` tags which include the `Highcharts JS`_ modules your chart
+  relies on.
+
+  This is likely to change in a future version of **Highcharts for Python**, where the
+  library will support the production of ``<script/>`` tags (see roadmap :issue:`2`).
+
+For example:
+
+  .. code-block:: python
+
+    my_chart = Chart(container = 'target_div',
+                     options = {
+                         'series': [
+                             LineSeries.from_array([0, 5, 3, 5])
+                         ]
+                     },
+                     variable_name = 'myChart')
+
+    as_js_literal = my_chart.to_js_literal()
+
+    # This will produce a string equivalent to:
+    #
+    # const myChart = Highcharts.Chart('target_div', {
+    #    series: {
+    #        data: [0, 5, 3, 5]
+    #    }
+    # });
+
+Now you can use whatever front-end framework you are using to insert that string into your
+application's HTML output (in an appropriate ``<script/>`` tag, of course).
+
+.. tip::
+
+  The same principle applies to the use of
+  :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`.
+
+  It is recommended to place the JS literal form of your shared options *before* any of
+  the charts that you will be visualizing.
+
+  .. seealso::
+
+    * :ref:`Organizing Your Highcharts for Python Project > Use Shared Options <shared_options>`
+
+.. _jupyter_rendering:
+
+Rendering Highcharts for Python in Jupyter Labs or Jupyter Notebooks
+======================================================================
+
+You can also render **Highcharts for Python** visualizations inside your
+`Jupyter Labs <>` notebook. This is as simple as executing a single
+:meth:`.display() <highcharts_python.chart.Chart.display>` call on your
+:class:`Chart <highcharts_python.chart.Chart>` instance:
+
+  .. code-block:: python
+
+    my_chart = Chart(container = 'target_div',
+                     options = {
+                         'series': [
+                             LineSeries.from_array([0, 5, 3, 5])
+                         ]
+                     },
+                     variable_name = 'myChart')
+
+    my_chart.display()
+
+You can call the ``.display()`` method from anywhere within any notebook cell, and it
+will render the resulting chart in your notebook's output. That's it!
+
+  .. caution::
+
+    If you are not operating within an `iPython <>` environment, calling
+    :meth:`.display() <highcharts_python.chart.Chart.display>` will raise a
+    :exc:`HighchartsDependencyError`.
 
 ---------------------------
 
@@ -1532,9 +1627,133 @@ Rendering Your Visualizations
 Downloading Your Visualizations
 ********************************************
 
-.. todo::
+.. sidebar:: Highcharts Export Server
 
-  Add a section for how to export your charts.
+  Highsoft - the developers of `Highcharts JS`_ - are kind enough to provide a
+  rate-limited publicly available :term:`Export Server` that can be used by
+  `Highcharts JS`_ license-holders. By default, **Highcharts for Python** is configured to
+  use this server.
+
+  However, there are many use cases where you may be deploying your own
+  :term:`Export Server` and wish to use that instead. You can do this by
+  creating your own
+  :class:`ExportServer <highcharts_python.headless_export.ExportServer>` instance and
+  supplying it as the ``server_instance`` keyword argument to the ``.download_chart()``
+  method.
+
+Sometimes you are not looking to produce an interactive web-based visualization of your
+data, but instead are looking to produce a static image of your visualization that can
+be downloaded, emailed, or embedded in some other documents.
+
+With **Highcharts for Python**, that's as simple as executing the
+:meth:`Chart.download_chart() <highcharts_python.chart.Chart.download_chart>` method.
+
+When you have defined a :class:`Chart <highcharts_python.chart.Chart>` instance, you can
+download a static version of that chart or persist it to a file in your runtime
+environment. The actual file itself is produced using a
+:term:`Highcharts Export Server <Export Server>`.
+
+  .. code-block:: python
+
+    my_chart = Chart(container = 'target_div',
+                     options = {
+                         'series': [
+                             LineSeries.from_array(
+                                 [0, 5, 3, 5]
+                             )
+                         ]
+                     },
+                     variable_name = 'myChart')
+
+    my_png_image = my_chart.download_chart(
+        format = 'png'
+    )
+
+    # also saves the file to "/images/my-chart-file.png"
+    my_png_image = my_chart.download_chart(
+        format = 'png',
+        filename = '/images/my-chart-file.png'
+    )
+
+  .. method:: .download_chart(self, filename = None, format = 'png', server_instance = None, scale = 1, width = None, auth_user = None, auth_password = None, timeout = 0.5, global_options = None, **kwargs)
+
+    Export a downloaded form of the chart using a Highcharts :term:`Export Server`.
+
+    :param filename: The name of the file where the exported chart should (optionally)
+      be persisted. Defaults to :obj:`None <python:None>`.
+    :type filename: Path-like or :obj:`None <python:None>`
+
+    :param server_instance: Provide an already-configured :class:`ExportServer`
+      instance to use to programmatically produce the exported chart. Defaults to
+      :obj:`None <python:None>`, which causes **Highcharts for Python** to instantiate
+      a new :class:`ExportServer` instance with all applicable defaults.
+    :type server_instance: :class:`ExportServer` or :obj:`None <python:None>`
+
+    :param format: The format in which the exported chart should be returned. Defaults to
+      ``'png'``.
+
+      Accepts:
+
+        * ``'png'``
+        * ``'jpeg'``
+        * ``'pdf'``
+        * ``'svg'``
+
+    :type format: :class:`str <python:str>`
+
+    :param scale: The scale factor by which the exported chart image should be scaled. Defaults
+      to ``1``.
+
+      .. tip::
+
+        Use this setting to improve resolution when exporting PNG or JPEG images. For
+        example, setting ``scale = 2`` on a chart whose width is 600px will produce
+        an image file with a width of 1200px.
+
+      .. warning::
+
+        If ``width`` is explicitly set, this setting will be *overridden*.
+
+    :type scale: numeric
+
+    :param width: The width that the exported chart should have. Defaults to
+      :obj:`None <python:None>`.
+
+      .. warning::
+
+        If explicitly set, this setting will override ``scale``.
+
+    :type width: numeric or :obj:`None <python:None>`
+
+    :param auth_user: The username to use to authenticate against the
+      Export Server, using :term:`basic authentication`. Defaults to
+      :obj:`None <python:None>`.
+    :type auth_user: :class:`str <python:str>` or :obj:`None <python:None>`
+
+    :param auth_password: The password to use to authenticate against the Export
+      Server (using :term:`basic authentication`). Defaults to
+      :obj:`None <python:None>`.
+    :type auth_password: :class:`str <python:str>` or :obj:`None <python:None>`
+
+    :param timeout: The number of seconds to wait before issuing a timeout error.
+      The timeout check is passed if bytes have been received on the socket in less
+      than the ``timeout`` value. Defaults to ``0.5``.
+    :type timeout: numeric or :obj:`None <python:None>`
+
+    :param global_options: The global options which will be passed to the (JavaScript)
+      ``Highcharts.setOptions()`` method, and which will be applied to the exported
+      chart. Defaults to :obj:`None <python:None>`.
+
+    :type global_options: :class:`HighchartsOptions` or :obj:`None <python:None>`
+
+    .. note::
+
+      All other keyword arguments are as per the :class:`ExportServer` constructor.
+
+    :returns: The exported chart image, either as a :class:`bytes <python:bytes>`
+      binary object or as a base-64 encoded string (depending on the ``use_base64``
+      keyword argument).
+    :rtype: :class:`bytes <python:bytes>` or :class:`str <python:str>`
 
 -----------------------------
 

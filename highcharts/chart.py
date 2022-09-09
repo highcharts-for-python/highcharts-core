@@ -208,6 +208,9 @@ class Chart(HighchartsMeta):
         return as_str
 
     def download_chart(self,
+                       format = 'png',
+                       scale = 1,
+                       width = None,
                        filename = None,
                        auth_user = None,
                        auth_password = None,
@@ -250,11 +253,20 @@ class Chart(HighchartsMeta):
           keyword argument).
         :rtype: :class:`bytes <python:bytes>` or :class:`str <python:str>`
         """
+        if checkers.is_type(self.options, 'HighchartsStockOptions'):
+            constructor = 'Stock'
+        else:
+            constructor = 'Chart'
+
         if not server_instance:
             return ExportServer.get_chart(filename = filename,
                                           auth_user = auth_user,
                                           auth_password = auth_password,
                                           timeout = timeout,
+                                          options = self.options,
+                                          constructor = constructor,
+                                          scale = scale,
+                                          width = width,
                                           **kwargs)
 
         if not isinstance(server_instance, ExportServer):
@@ -265,7 +277,10 @@ class Chart(HighchartsMeta):
         return server_instance.request_chart(filename = filename,
                                              auth_user = auth_user,
                                              auth_password = auth_password,
-                                             timeout = timeout)
+                                             timeout = timeout,
+                                             options = self.options,
+                                             constructor = constructor,
+                                             **kwargs)
 
     @classmethod
     def _copy_dict_key(cls,
