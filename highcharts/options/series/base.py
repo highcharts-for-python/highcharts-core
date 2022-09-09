@@ -579,9 +579,9 @@ class SeriesBase(SeriesOptions):
     def load_from_pandas(self,
                          df,
                          property_map):
-        """Create a :term:`series` instance whose
+        """Replace the contents of the
         :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
-        is populated from a `pandas <https://pandas.pydata.org/>`_
+        with data points populated from a `pandas <https://pandas.pydata.org/>`_
         :class:`DataFrame <pandas:DataFrame>`.
 
         :param df: The :class:`DataFrame <pandas:DataFrame>` from which data should be
@@ -595,26 +595,10 @@ class SeriesBase(SeriesOptions):
           :class:`DataFrame <pandas:DataFrame>` column.
         :type property_map: :class:`dict <python:dict>`
 
-        :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
-          arguments that should be used when instantiating the series instance. Defaults
-          to :obj:`None <python:None>`.
-
-          .. warning::
-
-            If ``series_kwargs`` contains a ``data`` key, its value will be *ignored*.
-            The ``data`` value will be created from ``df`` instead.
-
-        :type series_kwargs: :class:`dict <python:dict>`
-
-        :returns: A :term:`series` instance (descended from
-          :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`) with its
-          :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
-          populated from the data in ``df``.
-        :rtype: :class:`list <python:list>` of series instances (descended from
-          :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`)
-
         :raises HighchartsPandasDeserializationError: if ``property_map`` references
           a column that does not exist in the data frame
+        :raises HighchartsDependencyError: if `pandas <https://pandas.pydata.org/>`_ is
+          not available in the runtime environment
         """
         try:
             from pandas import DataFrame
@@ -689,10 +673,125 @@ class SeriesBase(SeriesOptions):
 
         :raises HighchartsPandasDeserializationError: if ``property_map`` references
           a column that does not exist in the data frame
+        :raises HighchartsDependencyError: if `pandas <https://pandas.pydata.org/>`_ is
+          not available in the runtime environment
         """
         series_kwargs = validators.dict(series_kwargs, allow_empty = True) or {}
 
         instance = cls(**series_kwargs)
         instance.load_from_pandas(df, property_map)
+
+        return instance
+
+    def load_from_pyspark(self,
+                          df,
+                          property_map):
+        """Replaces the contents of the
+        :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
+        with values from a `PySpark <https://spark.apache.org/docs/latest/api/python/>`_
+        :class:`DataFrame <pyspark:pyspark.sql.DataFrame>`.
+
+        :param df: The :class:`DataFrame <pyspark:pyspark.sql.DataFrame>` from which data
+          should be loaded.
+        :type df: :class:`DataFrame <pyspark:pyspark.sql.DataFrame>`
+
+        :param property_map: A :class:`dict <python:dict>` used to indicate which
+          data point property should be set to which column in ``df``. The keys in the
+          :class:`dict <python:dict>` should correspond to properties in the data point
+          class, while the value should indicate the label for the
+          :class:`DataFrame <pyspark:pyspark.sql.DataFrame>` column.
+        :type property_map: :class:`dict <python:dict>`
+
+        :raises HighchartsPySparkDeserializationError: if ``property_map`` references
+          a column that does not exist in the data frame
+        :raises HighchartsDependencyError: if
+          `PySpark <https://spark.apache.org/docs/latest/api/python/>`_ is not available
+          in the runtime environment
+        """
+        try:
+            from pyspark.sql import DataFrame
+        except ImportError:
+            raise errors.HighchartsDependencyError('pyspark is not available in the '
+                                                   'runtime environment. Please install '
+                                                   'using "pip install pyspark"')
+
+        if not checkers.is_type(df, ('DataFrame')):
+            raise errors.HighchartsValueError(f'df is expected to be a PySpark DataFrame.'
+                                              f'Was: {df.__class__.__name__}')
+
+        property_map = validators.dict(property_map)
+        column_instances = []
+        for key in property_map:
+            map_value = property_map[key]
+            if map_value not in df.columns:
+                raise errors.HighchartsPySparkDeserializationError(
+                    f'Unable to find a column labeled "{map_value}" in df.'
+                )
+            column_instance = getattr(df, map_value)
+            column_instances.append(column_instance)
+
+        narrower_df = df.select(*column_instances)
+        df_as_jsons = narrower_df.toJSON()
+
+        df_as_dicts = [json.loads(x) for x in rdd_as_jsons.toLocalIterator()]
+        for record in df_as_dicts:
+            record_as_dict = {}
+            for key in property_map:
+                map_value = property_map[key]
+                record_as_dict[key] = record_as_dict.get(map_value, None)
+            records_as_dicts.append(record_as_dict)
+
+        self.data = records_as_dicts
+
+
+    @classmethod
+    def from_pyspark(cls,
+                     df,
+                     property_map,
+                     series_kwargs = None):
+        """Create a :term:`series` instance whose
+        :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
+        is populated from a `PySpark <https://spark.apache.org/docs/latest/api/python/>`_
+        :class:`DataFrame <pyspark:pyspark.sql.DataFrame>`.
+
+        :param df: The :class:`DataFrame <pyspark:pyspark.sql.DataFrame>` from which data
+          should be loaded.
+        :type df: :class:`DataFrame <pyspark:pyspark.sql.DataFrame>`
+
+        :param property_map: A :class:`dict <python:dict>` used to indicate which
+          data point property should be set to which column in ``df``. The keys in the
+          :class:`dict <python:dict>` should correspond to properties in the data point
+          class, while the value should indicate the label for the
+          :class:`DataFrame <pyspark:pyspark.sql.DataFrame>` column.
+        :type property_map: :class:`dict <python:dict>`
+
+        :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the series instance. Defaults
+          to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``series_kwargs`` contains a ``data`` key, its value will be *ignored*.
+            The ``data`` value will be created from ``df`` instead.
+
+        :type series_kwargs: :class:`dict <python:dict>`
+
+        :returns: A :term:`series` instance (descended from
+          :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`) with its
+          :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
+          populated from the data in ``df``.
+        :rtype: :class:`list <python:list>` of series instances (descended from
+          :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`)
+
+        :raises HighchartsPySparkDeserializationError: if ``property_map`` references
+          a column that does not exist in the data frame
+        :raises HighchartsDependencyError: if
+          `PySpark <https://spark.apache.org/docs/latest/api/python/>`_ is not available
+          in the runtime environment
+        """
+        series_kwargs = validators.dict(series_kwargs, allow_empty = True) or {}
+
+        instance = cls(**series_kwargs)
+        instance.load_from_pyspark(df, property_map)
 
         return instance
