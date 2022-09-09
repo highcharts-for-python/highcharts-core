@@ -5,12 +5,12 @@ import pytest
 from json.decoder import JSONDecodeError
 from copy import deepcopy
 
-from highcharts.utility_classes.ast import AttributeObject as cls
-from highcharts.utility_classes.ast import ASTNode as cls2
-from highcharts.utility_classes.ast import ASTMap as cls3
-from highcharts.utility_classes.ast import TextPath as cls4
+from highcharts_python.utility_classes.ast import AttributeObject as cls
+from highcharts_python.utility_classes.ast import ASTNode as cls2
+from highcharts_python.utility_classes.ast import ASTMap as cls3
+from highcharts_python.utility_classes.ast import TextPath as cls4
 
-from highcharts import errors
+from highcharts_python import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
     Class_from_js_literal

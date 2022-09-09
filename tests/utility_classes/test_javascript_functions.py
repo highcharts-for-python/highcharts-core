@@ -8,8 +8,8 @@ from validator_collection import checkers
 import esprima
 from esprima.error_handler import Error as ParseError
 
-from highcharts.utility_classes import javascript_functions as js_f
-from highcharts import errors
+from highcharts_python.utility_classes import javascript_functions as js_f
+from highcharts_python import errors
 
 
 def validate_js_function(as_str, _break_loop_on_failure = False, range = True):

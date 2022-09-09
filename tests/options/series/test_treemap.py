@@ -4,8 +4,8 @@ import pytest
 
 from json.decoder import JSONDecodeError
 
-from highcharts.options.series.treemap import TreemapSeries as cls
-from highcharts import errors
+from highcharts_python.options.series.treemap import TreemapSeries as cls
+from highcharts_python import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
     Class_from_js_literal

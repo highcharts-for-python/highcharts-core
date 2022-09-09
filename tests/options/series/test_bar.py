@@ -4,17 +4,17 @@ import pytest
 
 from json.decoder import JSONDecodeError
 
-from highcharts.options.series.bar import BaseBarSeries as cls
-from highcharts.options.series.bar import BarSeries as cls2
-from highcharts.options.series.bar import ColumnSeries as cls3
-from highcharts.options.series.bar import ColumnPyramidSeries as cls4
-from highcharts.options.series.bar import ColumnRangeSeries as cls5
-from highcharts.options.series.bar import CylinderSeries as cls6
-from highcharts.options.series.bar import VariwideSeries as cls7
-from highcharts.options.series.bar import WaterfallSeries as cls8
-from highcharts.options.series.bar import WindBarbSeries as cls9
-from highcharts.options.series.bar import XRangeSeries as cls10
-from highcharts import errors
+from highcharts_python.options.series.bar import BaseBarSeries as cls
+from highcharts_python.options.series.bar import BarSeries as cls2
+from highcharts_python.options.series.bar import ColumnSeries as cls3
+from highcharts_python.options.series.bar import ColumnPyramidSeries as cls4
+from highcharts_python.options.series.bar import ColumnRangeSeries as cls5
+from highcharts_python.options.series.bar import CylinderSeries as cls6
+from highcharts_python.options.series.bar import VariwideSeries as cls7
+from highcharts_python.options.series.bar import WaterfallSeries as cls8
+from highcharts_python.options.series.bar import WindBarbSeries as cls9
+from highcharts_python.options.series.bar import XRangeSeries as cls10
+from highcharts_python import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
     Class_from_js_literal

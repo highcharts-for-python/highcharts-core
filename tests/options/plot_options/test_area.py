@@ -4,13 +4,13 @@ import pytest
 
 from json.decoder import JSONDecodeError
 
-from highcharts.options.plot_options.area import AreaOptions as cls
-from highcharts.options.plot_options.area import AreaRangeOptions as cls2
-from highcharts.options.plot_options.area import AreaSplineOptions as cls3
-from highcharts.options.plot_options.area import AreaSplineRangeOptions as cls4
-from highcharts.options.plot_options.area import LineOptions as cls5
-from highcharts.options.plot_options.area import StreamGraphOptions as cls6
-from highcharts import errors
+from highcharts_python.options.plot_options.area import AreaOptions as cls
+from highcharts_python.options.plot_options.area import AreaRangeOptions as cls2
+from highcharts_python.options.plot_options.area import AreaSplineOptions as cls3
+from highcharts_python.options.plot_options.area import AreaSplineRangeOptions as cls4
+from highcharts_python.options.plot_options.area import LineOptions as cls5
+from highcharts_python.options.plot_options.area import StreamGraphOptions as cls6
+from highcharts_python import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
     Class_from_js_literal

@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__name__), '..'))
 version_dict = {}
 with open(os.path.join(os.path.dirname(__file__),
                        '../',
-                       'highcharts',
+                       'highcharts_python',
                        '__version__.py')) as version_file:
     exec(version_file.read(), version_dict)                   # pylint: disable=W0122
 

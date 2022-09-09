@@ -5,9 +5,9 @@ import pytest
 from json.decoder import JSONDecodeError
 from validator_collection import checkers
 
-from highcharts.headless_export import ExportServer as cls
-from highcharts.options import HighchartsOptions
-from highcharts import errors
+from highcharts_python.headless_export import ExportServer as cls
+from highcharts_python.options import HighchartsOptions
+from highcharts_python import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
     Class_from_js_literal, run_download_tests

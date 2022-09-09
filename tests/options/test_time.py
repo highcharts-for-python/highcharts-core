@@ -4,10 +4,10 @@ import pytest
 
 from validator_collection import checkers
 
-from highcharts.options.time import Time as cls
-from highcharts.utility_classes.javascript_functions import CallbackFunction, \
+from highcharts_python.options.time import Time as cls
+from highcharts_python.utility_classes.javascript_functions import CallbackFunction, \
     JavaScriptClass
-from highcharts import errors
+from highcharts_python import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
     Class_from_js_literal
