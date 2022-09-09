@@ -366,6 +366,11 @@ class HighchartsMeta(ABC):
         :rtype: 2-member :class:`tuple <python:tuple>` of :class:`esprima.nodes.Script`
           and :class:`str <python:str>`
         """
+        if """document.addEventListener('DOMContentLoaded', function() {\n""" in as_str:
+            as_str = as_str.replace(
+                """document.addEventListener('DOMContentLoaded', function() {\n""", ''
+            )
+            as_str = as_str[:-3]
         try:
             parsed = esprima.parseScript(as_str, loc = range, range = range)
         except ParseError:

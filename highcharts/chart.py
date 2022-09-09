@@ -221,11 +221,15 @@ class Chart(HighchartsMeta):
             signature += callback_as_str
         signature += ');'
 
-        prefix = ''
+        constructor_prefix = ''
         if self.variable_name:
-            prefix = f'var {self.variable_name} = '
+            constructor_prefix = f'var {self.variable_name} = '
 
-        as_str = prefix + signature
+        as_str = constructor_prefix + signature
+
+        prefix = """document.addEventListener('DOMContentLoaded', function() {\n"""
+        suffix = """});"""
+        as_str = prefix + as_str + '\n' + suffix
 
         if filename:
             with open(filename, 'w', encoding = encoding) as file_:
