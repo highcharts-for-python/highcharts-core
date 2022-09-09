@@ -3,6 +3,13 @@ class HighchartsError(ValueError):
     """Basic error that all other Highcharts for Python exceptions inherit from."""
     pass
 
+class HighchartsDependencyError(ImportError):
+    """:exc:`ImportError <python:ImportError>` encountered when attempting to use a
+    **Highcharts for Python** method that relies on a third-party library (e.g.
+    `pandas <https://pandas.pydata.org>`_, `PySpark <>`_, etc.) which is not available in
+    the runtime environment."""
+    pass
+
 
 class ImplementationError(HighchartsError):
     """Error that indicates you have implemented something incorrectly in your code."""

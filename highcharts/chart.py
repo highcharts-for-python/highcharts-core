@@ -3,14 +3,15 @@ from collections import UserDict
 
 from validator_collection import validators, checkers
 
-from highcharts import errors
-from highcharts.decorators import class_sensitive
+from highcharts import constants, errors
+from highcharts.decorators import class_sensitive, validate_types
 from highcharts.metaclasses import HighchartsMeta
 from highcharts.options import HighchartsOptions
 from highcharts.utility_classes.javascript_functions import CallbackFunction
 from highcharts.js_literal_functions import serialize_to_js_literal
 from highcharts.headless_export import ExportServer
 from highcharts.options.series.series_generator import create_series_obj
+from highcharts.global_options.shared_options import SharedOptions
 
 
 class Chart(HighchartsMeta):
@@ -26,6 +27,31 @@ class Chart(HighchartsMeta):
         self.container = kwargs.get('container', None)
         self.options = kwargs.get('options', None)
         self.variable_name = kwargs.get('variable_name', None)
+
+    def _repr_html_(self):
+        """Produce the HTML representation of the chart.
+
+        .. note::
+
+          Currently includes *all* `Highcharts JS <https://www.highcharts.com/>`_ modules
+          in the HTML. This issue will be addressed when roadmap issue :issue:`2` is
+          released.
+
+        :returns: The HTML representation of the chart.
+        :rtype: :class:`str <python:str>`
+        """
+        if self.options.chart:
+            height = self.options.chart.height or 400
+        else:
+            height = 400
+
+        container_str = f"""<div id=\"{self.container}\" style=\"width:100%; height:{height};\"></div>\n"""
+        as_str = self.to_js_literal()
+        script_str = '<script>\n' + as_str + '\n</script>'
+
+        html_str = container_str + script_str
+
+        return html_str
 
     @property
     def callback(self) -> Optional[CallbackFunction]:
@@ -468,3 +494,30 @@ class Chart(HighchartsMeta):
         instance = cls(**kwargs)
 
         instance.add_series(series)
+
+    def display(self, global_options = None):
+        """Display the chart in `Jupyter Labs <https://jupyter.org/>`_ or
+        `Jupyter Notebooks <https://jupyter.org/>`_.
+
+        :raises HighchartsDependencyError: if
+          `ipython <https://ipython.readthedocs.io/en/stable/>`_ is not available in the
+          runtime environment
+        """
+        try:
+            from IPython import display
+        except ImportError:
+            raise errors.HighchartsDependencyError('Unable to import IPython.display. '
+                                                   'Make sure that it is available in '
+                                                   'your runtime environment. To install,'
+                                                   'use: pip install ipython')
+
+        if global_options is not None:
+            global_options = validate_types(global_options,
+                                            types = SharedOptions)
+
+        html_str = constants.INCLUDE_STR + '\n'
+        if global_options:
+            html_str += global_options._repr_html_() + '\n'
+        html_str += self._repr_html_()
+
+        display.display_html(html_str, raw = True)

@@ -23,6 +23,25 @@ while indent_count < int(JAVASCRIPT_INDENT_SPACES):
 DEFAULT_COLORS = ["#7cb5ec", "#434348", "#90ed7d", "#f7a35c", "#8085e9", "#f15c80",
                   "#e4d354", "#2b908f", "#f45b5b", "#91e8e1"]
 
+INCLUDE_STR = """<script src="https://code.highcharts.com/highcharts.js"/>
+<script src="https://code.highcharts.com/highcharts-more.js"/>
+<script src="https://code.highcharts.com/highcharts-3d.js"/>
+<script src="https://code.highcharts.com/modules/accessibility.js"/>
+<script src="https://code.highcharts.com/modules/annotations.js"/>
+<script src="https://code.highcharts.com/modules/boost.js"/>
+<script src="https://code.highcharts.com/modules/broken-axis.js"/>
+<script src="https://code.highcharts.com/modules/canvas-tools.js"/>
+<script src="https://code.highcharts.com/modules/data.js"/>
+<script src="https://code.highcharts.com/modules/exporting.js"/>
+<script src="https://code.highcharts.com/modules/drilldown.js"/>
+<script src="https://code.highcharts.com/modules/funnel.js"/>
+<script src="https://code.highcharts.com/modules/heatmap.js"/>
+<script src="https://code.highcharts.com/modules/no-data-to-display.js"/>
+<script src="https://code.highcharts.com/modules/offline-exporting.js"/>
+<script src="https://code.highcharts.com/modules/solid-gauge.js"/>
+<script src="https://code.highcharts.com/modules/treemap.js"/>
+"""
+
 AXIS_TYPES = [
     'linear',
     'logarithmic',
