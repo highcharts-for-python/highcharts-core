@@ -21,9 +21,9 @@ class ExportDataLanguageOptions(HighchartsMeta):
     @property
     def annotation_header(self) -> Optional[str]:
         f"""The annotation column title. Defaults to
-        ``'{constants.DEFAULT_LANG_EXPORT_DATA.get('annotation_header')}'.
+        ``'{constants.DEFAULT_LANG_EXPORT_DATA.get('annotation_header')}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._annotation_header
 
@@ -34,9 +34,9 @@ class ExportDataLanguageOptions(HighchartsMeta):
     @property
     def category_datetime_header(self) -> Optional[str]:
         f"""The category column title when axis type set to "datetime". Defaults to
-        ``'{constants.DEFAULT_LANG_EXPORT_DATA.get('category_datetime_header')}'.
+        ``'{constants.DEFAULT_LANG_EXPORT_DATA.get('category_datetime_header')}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._category_datetime_header
 
@@ -47,9 +47,9 @@ class ExportDataLanguageOptions(HighchartsMeta):
     @property
     def category_header(self) -> Optional[str]:
         f"""The category column title. Defaults to
-        ``'{constants.DEFAULT_LANG_EXPORT_DATA.get('category_header')}'.
+        ``'{constants.DEFAULT_LANG_EXPORT_DATA.get('category_header')}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._category_header
 

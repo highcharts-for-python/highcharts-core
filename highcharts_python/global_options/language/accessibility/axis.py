@@ -34,9 +34,9 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def range_categories(self) -> Optional[str]:
-        """Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_RANGE_CATEGORIES}'``.
+        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_RANGE_CATEGORIES}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._range_categories
 
@@ -46,9 +46,9 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def range_from_to(self) -> Optional[str]:
-        """Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_RANGE_FROM_TO}'``.
+        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_RANGE_FROM_TO}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._range_from_to
 
@@ -58,9 +58,9 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def time_range_days(self) -> Optional[str]:
-        """Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_TIME_RANGE_DAYS}'``.
+        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_TIME_RANGE_DAYS}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._time_range_days
 
@@ -70,9 +70,9 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def time_range_hours(self) -> Optional[str]:
-        """Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_TIME_RANGE_HOURS}'``.
+        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_TIME_RANGE_HOURS}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._time_range_hours
 
@@ -82,9 +82,9 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def time_range_minutes(self) -> Optional[str]:
-        """Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_TIME_RANGE_MINUTES}'``.
+        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_TIME_RANGE_MINUTES}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._time_range_minutes
 
@@ -94,9 +94,9 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def time_range_seconds(self) -> Optional[str]:
-        """Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_TIME_RANGE_SECONDS}'``.
+        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_TIME_RANGE_SECONDS}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._time_range_seconds
 
@@ -106,9 +106,9 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def x_axis_description_plural(self) -> Optional[str]:
-        """Defaults to ``'{constants.DEFAULT_LANG_ACS_X_AXIS_DESCRIPTION_PLURAL}'``.
+        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_X_AXIS_DESCRIPTION_PLURAL}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._x_axis_description_plural
 
@@ -118,9 +118,9 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def x_axis_description_singular(self) -> Optional[str]:
-        """Defaults to ``'{constants.DEFAULT_LANG_ACS_X_AXIS_DESCRIPTION_SINGULAR}'``.
+        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_X_AXIS_DESCRIPTION_SINGULAR}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._x_axis_description_singular
 
@@ -130,9 +130,9 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def y_axis_description_plural(self) -> Optional[str]:
-        """Defaults to ``'{constants.DEFAULT_LANG_ACS_Y_AXIS_DESCRIPTION_PLURAL}'``.
+        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_Y_AXIS_DESCRIPTION_PLURAL}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._y_axis_description_plural
 
@@ -142,9 +142,9 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def y_axis_description_singular(self) -> Optional[str]:
-        """Defaults to ``'{constants.DEFAULT_LANG_ACS_Y_AXIS_DESCRIPTION_SINGULAR}'``.
+        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_Y_AXIS_DESCRIPTION_SINGULAR}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._y_axis_description_singular
 

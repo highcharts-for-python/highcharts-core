@@ -1,0 +1,20 @@
+#########################################################################################################
+:mod:`.chart_types <highcharts_python.global_options.language.accessibility.chart_types>`
+#########################################################################################################
+
+.. contents:: Module Contents
+  :local:
+  :depth: 3
+  :backlinks: entry
+
+--------------
+
+.. module:: highcharts_python.global_options.language.accessibility.chart_types
+
+*************************************************************************************************************************************************************
+class: :class:`ChartTypesLanguageOptions <highcharts_python.global_options.language.accessibility.chart_types.ChartTypesLanguageOptions>`
+*************************************************************************************************************************************************************
+
+.. autoclass:: ChartTypesLanguageOptions
+  :members:
+  :inherited-members:

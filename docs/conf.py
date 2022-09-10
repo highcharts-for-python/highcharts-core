@@ -50,6 +50,12 @@ extensions = [
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
+# Autodoc configuration settings.
+autoclass_content = 'class'
+autodoc_member_order = 'groupwise'
+add_module_names = False
+
+
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
@@ -80,6 +86,9 @@ github_repository = 'highcharts-python'
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3.10', None),
     'validator-collection': ('http://validator-collection.readthedocs.io/en/latest/', None),
+    'ipython': ('https://ipython.readthedocs.io/en/stable/', None),
+    'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
+    'pyspark': ('https://spark.apache.org/docs/latest/api/python/', None),
 }
 
 # -- Options for todo extension ----------------------------------------------

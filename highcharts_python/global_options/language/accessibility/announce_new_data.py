@@ -39,10 +39,10 @@ class AnnounceNewDataLanguageOptions(HighchartsMeta):
 
     @property
     def new_data_announce(self) -> Optional[str]:
-        """Announcement for any new data. Defaults to:
+        f"""Announcement for any new data. Defaults to:
         ``'{constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_DATA}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._new_data_announce
 
@@ -52,10 +52,10 @@ class AnnounceNewDataLanguageOptions(HighchartsMeta):
 
     @property
     def new_point_announce_multiple(self) -> Optional[str]:
-        """Announcement when multiple new points have been added. Defaults to:
+        f"""Announcement when multiple new points have been added. Defaults to:
         ``'{constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_POINT_MULTIPLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._new_point_announce_multiple
 
@@ -65,10 +65,10 @@ class AnnounceNewDataLanguageOptions(HighchartsMeta):
 
     @property
     def new_point_announce_single(self) -> Optional[str]:
-        """Announcement when a single new point has been added. Defaults to:
+        f"""Announcement when a single new point has been added. Defaults to:
         ``'{constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_POINT_SINGLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._new_point_announce_single
 
@@ -78,10 +78,10 @@ class AnnounceNewDataLanguageOptions(HighchartsMeta):
 
     @property
     def new_series_announce_multiple(self) -> Optional[str]:
-        """Announcement when multiple new series have been added. Defaults to:
+        f"""Announcement when multiple new series have been added. Defaults to:
         ``'{constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_SERIES_MULTIPLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._new_series_announce_multiple
 
@@ -91,10 +91,10 @@ class AnnounceNewDataLanguageOptions(HighchartsMeta):
 
     @property
     def new_series_announce_single(self) -> Optional[str]:
-        """Announcement when a single new series has been added. Defaults to:
+        f"""Announcement when a single new series has been added. Defaults to:
         ``'{constants.DEFAULT_LANG_ACS_ANNOUNCE_NEW_SERIES_SINGLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._new_series_announce_single
 

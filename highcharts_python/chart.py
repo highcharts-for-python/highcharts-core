@@ -548,9 +548,8 @@ class Chart(HighchartsMeta):
                  wrap_all_strings = False,
                  double_wrapper_character_when_nested = False,
                  escape_character = "\\"):
-        """Create a new :class:`Chart` instance with a
-        :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
-        populated from data in a CSV string or file.
+        """Create a new :class:`Chart <highcharts_python.chart.Chart>` instance with
+        data populated from a CSV string or file.
 
           .. note::
 
@@ -658,18 +657,14 @@ class Chart(HighchartsMeta):
         :type null_text: :class:`str <python:str>`
 
         :param line_terminator: The string used to indicate the end of a line/record in
-          the CSV data. Defaults to ``'\r\n'``.
-        :type line_terminator: :class:`str <python:str>`
-
-        :param line_terminator: The string used to indicate the end of a line/record in the
-          CSV data. Defaults to ``'\r\n'``.
+          the CSV data. Defaults to ``'\\r\\n'``.
 
           .. note::
 
             The Python :mod:`csv <python:csv>` currently ignores the ``line_terminator``
-            parameter and always applies ``'\r\n'``, by design. The Python docs say this may
-            change in the future, so for future backwards compatibility we are including it
-            here.
+            parameter and always applies ``'\\r\\n'``, by design. The Python docs say this
+            may change in the future, so for future backwards compatibility we are
+            including it here.
 
         :type line_terminator: :class:`str <python:str>`
 

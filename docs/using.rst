@@ -3,7 +3,7 @@ Using Highcharts for Python
 #############################
 
 .. contents::
-  :depth: 2
+  :depth: 3
   :backlinks: entry
 
 --------------
@@ -57,64 +57,7 @@ that you should be aware of:
 Code Style: Python vs JavaScript Naming Conventions
 =======================================================
 
-  *There are only two hard things in Computer Science: cache invalidation and naming
-  things.* -- Phil Karlton
-
-Highcharts JS is a JavaScript library, and as such it adheres to the code conventions that
-are popular (practically standard) when working in JavaScript. Chief among these
-conventions is that variables and object properties (keys) are typically written in
-``camelCase``.
-
-A lot of (digital) ink has been spilled writing about the pros and cons of ``camelCase``
-vs ``snake_case``. While I have a scientific evidence-based opinion on the matter, in
-practice it is simply a convention that developers adopt in a particular programming
-language. The issue, however, is that while JavaScript has adopted the ``camelCase``
-convention, Python generally skews towards the ``snake_case`` convention.
-
-For most Python developers, using ``snake_case`` is the "default" mindset. Most of their
-Python code will use ``snake_case``. So having to switch into ``camelcase`` to interact
-with Highcharts JS forces us to context switch, increases cognitive load, and is an easy
-place for us to overlook things and make a mistake that can be quite annoying to
-track down and fix later.
-
-Therefore, when designing **Highcharts for Python**, we made several carefully considered
-design choices when it comes to naming conventions:
-
-  #. All **Highcharts for Python** classes follow the Pythonic ``PascalCase`` class-naming
-     convention.
-  #. All **Highcharts for Python** properties and methods follow the Pythonic
-     ``snake_case`` property/method/variable/function-naming convention.
-  #. All *inputs* to properties and methods support *both* ``snake_case`` and
-     ``camelCase`` (aka ``mixedCase``) convention by default. This means that you can take
-     something directly from Highcharts JS' JavaScript code and supply it to
-     **Highcharts for Python** without having to convert case or conventions. But if you
-     are constructing and configuring something directly in Python using explicit
-     :ref:`deserialization methods <deserialization_methods>`, you can use ``snake_case``
-     if you prefer (and most Python developers will prefer).
-
-     For example, if you supply a JSON file to a ``from_json()`` method, that file can
-     leverage Highcharts JS natural ``camelCase`` convention OR Highcharts for Python's
-     ``snake_case`` convention.
-
-     .. warning::
-
-       Note that this dual-convention support only applies to
-       :ref:`deserialization methods` and does *not* apply to the
-       **Highcharts for Python** ``__init__()`` class constructors. All ``__init__()``
-       methods expect ``snake_case`` properties to be supplied as keywords.
-
-  #. All *outputs* from serialization methods (e.g. ``to_dict()`` or ``to_js_literal()``)
-     will produce outputs that are Highcharts JS-compatible, meaning that they apply the
-     ``camelCase`` convention.
-
-.. tip::
-
-  **Best Practice**
-
-  If you are using external files to provide templates or themes for your Highcharts
-  data visualizations, produce those external files using Highcharts JS' natural
-  ``camelCase`` convention. That will make it easier to re-use them elsewhere within a
-  JavaScript context if you need to in the future.
+.. include:: using/_code_style_naming_conventions.rst
 
 Standard Methods
 =======================================
@@ -131,265 +74,36 @@ Thankfully, their signatures and behavior is generally consistent - even if what
 
 The standard methods exposed by the classes are:
 
-.. _deserialization_methods:
+.. _using_deserialization_methods:
 
 Deserialization Methods
 ---------------------------
 
-  .. method:: from_js_literal(cls, as_string_or_file, allow_snake_case = True)
-    :classmethod:
+.. include:: api/_deserialization_methods.rst
 
-    Convert a JavaScript object defined using :term:`JavaScript literal notation` into a
-    **Highcharts for Python** Python object, typically descended from
-    :class:`HighchartsMeta`.
-
-    :param cls: The class object itself.
-    :type cls: :class:`type <python:type>`
-
-    :param as_string_or_file: The JavaScript object you wish to convert. Expects either a
-      :class:`str <python:str>` containing the JavaScript object, or a path to a file which
-      consists of the object.
-    :type as_string_or_file: :class:`str <python:str>`
-
-    :param allow_snake_case: If ``True``, allows keys in ``as_string_or_file`` to apply the
-      ``snake_case`` convention. If ``False``, will ignore keys that apply the
-      ``snake_case`` convention and only process keys that use the ``camelCase`` convention.
-      Defaults to ``True``.
-    :type allow_snake_case: :class:`bool <python:bool>`
-
-    :returns: A **Highcharts for Python** object corresponding to the JavaScript
-      object supplied in ``as_string_or_file``.
-    :rtype: Descendent of :class:`HighchartsMeta`
-
-
-  .. method:: from_json(cls, as_json_or_file, allow_snake_case = True)
-    :classmethod:
-
-    Convert a Highcharts JS object represented as JSON (in either :class:`str <python:str>`
-    or :class:`bytes <python:bytes>` form, or as a file name) into a
-    **Highcharts for Python** object, typically descended from :class:`HighchartsMeta`.
-
-    :param cls: The class object itself.
-    :type cls: :class:`type <python:type>`
-
-    :param as_json_or_file: The JSON object you wish to convert, or a filename that contains
-      the JSON object that you wish to convert.
-    :type as_json_or_file: :class:`str <python:str>` or :class:`bytes <python:bytes>`
-
-    :param allow_snake_case: If ``True``, allows keys in ``as_json`` to apply the
-      ``snake_case`` convention. If ``False``, will ignore keys that apply the
-      ``snake_case`` convention and only process keys that use the ``camelCase`` convention.
-      Defaults to ``True``.
-    :type allow_snake_case: :class:`bool <python:bool>`
-
-    :returns: A **Highcharts for Python** Python object corresponding to the JSON
-      object supplied in ``as_json``.
-    :rtype: Descendent of :class:`HighchartsMeta`
-
-
-  .. method:: from_dict(cls, as_dict, allow_snake_case = True)
-    :classmethod:
-
-    Convert a :class:`dict <python:dict>` representation of a Highcharts JS object into a
-    Python object representation, typically descended from :class:`HighchartsMeta`.
-
-    :param cls: The class object itself.
-    :type cls: :class:`type <python:type>`
-
-    :param as_dict: The :class:`dict <python:dict>` representation of the object.
-    :type as_dict: :class:`dict <python:dict>`
-
-    :param allow_snake_case: If ``True``, allows keys in ``as_dict`` to apply the
-      ``snake_case`` convention. If ``False``, will ignore keys that apply the
-      ``snake_case`` convention and only process keys that use the ``camelCase`` convention.
-      Defaults to ``True``.
-    :type allow_snake_case: :class:`bool <python:bool>`
-
-
-.. _serialization_methods:
+.. _using_serialization_methods:
 
 Serialization Methods
 --------------------------
 
-  .. method:: to_js_literal(self, filename = None, encoding = 'utf-8')
+.. include:: api/_serialization_methods.rst
 
-    Convert the **Highcharts for Python** instance to Highcharts JS-compatible JavaScript
-    code using :term:`JavaScript literal notation`.
+.. _using_other_methods:
 
-    :param filename: If supplied, persists the JavaScript code to the file indicated.
-      Defaults to :obj:`None <python:None>`.
-    :type filename: Path-like or :obj:`None <python:None>`
+Other Convenience Methods
+------------------------------
 
-    :param encoding: Indicates the character encoding to use when producing the JavaScript
-      literal string. Defaults to ``'utf-8'``.
-    :type encoding: :class:`str <python:str>`
-
-    :returns: Highcharts JS-compatible JavaScript code using
-      :term:`JavaScript literal notation`.
-    :rtype: :class:`str <python:str>`
-
-
-  .. method:: to_json(self, filename = None, encoding = 'utf-8')
-
-    Convert the **Highcharts for Python** instance to Highcharts JS-compatible JSON.
-
-    .. warning::
-
-      While similar, JSON is inherently different from
-      :term:`JavaScript object literal notation`. In particular, it cannot include
-      JavaScript functions. This means if you try to convert a Highcharts for Python object
-      to JSON, any properties that are :class:`CallbackFunction` instances will not be
-      included. If you want to convert those functions, please use ``.to_js_literal()``
-      instead.
-
-    :param filename: If supplied, persists the JSON is persisted to the file indicated.
-      Defaults to :obj:`None <python:None>`.
-    :type filename: Path-like or :obj:`None <python:None>`
-
-    :param encoding: Indicates the character encoding to use when producing the JSON.
-      Defaults to ``'utf-8'``.
-    :type encoding: :class:`str <python:str>`
-
-    :returns: Highcharts JS-compatible JSON representation of the object.
-    :rtype: :class:`str <python:str>` or :class:`bytes <python:bytes>`
-
-      .. note::
-
-        **Highcharts for Python** works with different JSON encoders. If your environment
-        has `orjson <https://github.com/ijl/orjson>`_, for example, the result will be
-        returned as a :class:`bytes <python:bytes>` instance. Otherwise, the library will
-        fallback to various other JSON encoders until finally falling back to the Python
-        standard library's JSON encoder/decoder.
-
-
-  .. method:: to_dict(self)
-
-    Convert the **Highcharts for Python** object into a Highcharts JS-compatible
-    :class:`dict <python:dict>` object.
-
-    :returns: Highcharts JS-compatible :class:`dict <python:dict>` object
-    :rtype: :class:`dict <python:dict>`
-
-
-.. _other_methods:
-
-Other Methods
---------------------------
-
-  .. method:: copy(self, other, overwrite = True, **kwargs)
-
-    Copy the properties from ``self`` to ``other``.
-
-    :param other: The target instance to which the properties of this instance should
-      be copied.
-    :type other: :class:`HighchartsMeta`
-
-    :param overwrite: if ``True``, properties in ``other`` that are already set will
-      be overwritten by their counterparts in ``self``. Defaults to ``True``.
-    :type overwrite: :class:`bool <python:bool>`
-
-    :param kwargs: Additional keyword arguments. Some special descendents of
-      :class:`HighchartsMeta` may have special implementations of this method which
-      rely on additional keyword arguments.
-
-    :returns: A mutated version of ``other`` with new property values
-
-    :raises HighchartsValueError: if ``other`` is not the same class as (or subclass of)
-      ``self``
-
+.. include:: api/_other_convenience_methods.rst
 
 Module Structure
 =====================
 
-The structure of the **Highcharts for Python** library closely matches the structure
-of the `Highcharts JS`_ options object (see the relevant
-`reference documentation <https://api.highcharts.com/highcharts/>`_).
-
-At the root of the library - importable from ``highcharts_python`` you will find the
-``highcharts`` module. This module is a catch-all importable module, which allows you to
-easily access all of the Highcharts for Python classes defined.
-
-.. note::
-
-  Whlie you can access all of the **Highcharts for Python** classes from
-  ``highcharts_python.highcharts``, if you want to more precisely navigate to sepcific
-  class definitions you can do fairly easily using the folder organization and naming
-  conventions used in the library.
-
-  In the root of the ``highcharts_python`` library you can find universally-shared
-  class definitions, like ``metaclasses`` which contains the :class:`HighchartsMeta`
-  definition and the :class:`JavaScriptDict` definition or ``decorators`` which define
-  method/property decorators that are used throughout the library.
-
-  The ``utility_classes`` folder contains class definitions for classes that are
-  referenced or used throughout the other class definitions.
-
-  And you can find the Highcharts JS options object and all of its
-  properties defined in the ``options`` folder, with specific (complicated or extensive)
-  sub-folders providing property-specific classes (e.g. the ``options/plot_options``
-  folder defines all of the different configuration options for different series types,
-  while the ``options/series`` folder defines all of the classes that represent
-  :term:`series` of data in a given chart).
-
-.. tip::
-
-  To keep things simple, we recommend importing classes you need directly from the
-  ``highcharts_python.highcharts`` module. There are two paths to do so easily:
-
-  .. code-block:: python
-
-    # APPROACH #1: Import the highcharts module, and access its child classes directly.
-    #              for example by now calling highcharts.Chart().
-    from highcharts_python import highcharts
-
-    # APPROACH #2: Import a specific class by name from the "highcharts" module.
-    from highcharts_python.highcharts import Chart
+.. include:: api/_module_structure.rst
 
 Class Structures and Inheritance
 ====================================
 
-`Highcharts JS`_ objects re-use many of the same properties. This is one of the strengths
-of the Highcharts API, in that it is internally consistent and that behavior configured on
-one object should be readily transferrable to a second object provided it shares the same
-properties. However, Highcharts JS has a *lot* of properties. For example, I estimate that
-the ``options.plotOptions`` objects and their sub-properties have close to 3,000
-properties. But because they are heavily repeated, those 3,000 or so properties can be
-reduced to only 421 unique property names. That's almost an 85% reduction.
-
-:iabbr:`DRY (Don't Repeat Yourself)` is an important principle in software development.
-Can you imagine propagating changes in seven places (on average) in your code? That would
-be a maintenance nightmare! And it is exactly the kind of maintenance nightmare that class
-inheritance was designed to fix.
-
-For that reason, the **Highcharts for Python** classes have a deeply nested inheritance
-structure. This is important to understand both for evaluating ``isinstance()`` checks
-in your code, or for understanding how to further subclass Highcharts for Python
-components.
-
-  .. seealso::
-
-    For a full diagram of Highcharts for Python class structure, please see the
-    :ref:`Highcharts for Python API Reference: Class Hierarchy <class_hierarchy>`.
-
-.. warning::
-
-  Certain sections of the **Highcharts for Python** library - in particular the
-  ``options.series`` classes - rely heavily on multiple inheritance. This is a known
-  anti-pattern in Python development as it runs the risk of encountering the
-  :term:`diamond of death` inheritance problem. This complicates the process of inheriting
-  methods or properties from parent classes when properties or methods share names
-  across multiple parents.
-
-  I know this is an anti-pattern, but it was a necessary one to minimize code duplication
-  and maximize consistency. For that reason, I implemented it properly *despite* the
-  anti-pattern, using some advanced Python concepts to navigate the Python MRO
-  (Method Resolution Order) system cleanly. However, an awareness of the pattern used
-  may prove helpful if your code inherits from the Highcharts for Python classes.
-
-  .. seealso::
-
-    For a more in-depth discussion of how the anti-pattern was implemented safely and
-    reliably, please review the :doc:`Contributor Guidelines <contributing.rst>`.
+.. include:: api/_class_structures.rst
 
 --------------------------
 
@@ -836,7 +550,7 @@ data dynamically from a CSV file or an HTML table.
 
 `Highcharts JS`_ organizes data into :term:`series`. You can think of a series as a single
 line on a graph that shows a set of values. The set of values that make up the series are
-:term:`data points`, which are defined by a set of properties that indicate the data
+:term:`data points <data point>`, which are defined by a set of properties that indicate the data
 point's position on one or more axes. As a result, `Highcharts JS`_ and
 **Highcharts for Python** both represent the data points in series as a list of data point
 objects in the ``data`` property within the series:

@@ -121,7 +121,7 @@ class Language(HighchartsMeta):
 
         Defaults to ``'{constants.DEFAULT_LANG_CONTEXT_BUTTON_TITLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._context_button_title
 
@@ -134,7 +134,7 @@ class Language(HighchartsMeta):
         f"""Decimal point used in (JavaScript) ``Highcharts.numberFormat``. Defaults to
         ``.``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._decimal_point
 
@@ -147,7 +147,7 @@ class Language(HighchartsMeta):
         f"""Text for the context menu item that allows the user to download a CSV of the
         chart/data. Defaults to ``'{constants.DEFAULT_LANG_DOWNLOAD_CSV}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._download_csv
 
@@ -160,7 +160,7 @@ class Language(HighchartsMeta):
         f"""Text for the context menu item that allows the user to download a JPEG of the
         chart/data. Defaults to ``'{constants.DEFAULT_LANG_DOWNLOAD_CSV}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._download_jpeg
 
@@ -173,7 +173,7 @@ class Language(HighchartsMeta):
         f"""Text for the context menu item that allows the user to download a PDF of the
         chart/data. Defaults to ``'{constants.DEFAULT_LANG_DOWNLOAD_PDF}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._download_pdf
 
@@ -186,7 +186,7 @@ class Language(HighchartsMeta):
         f"""Text for the context menu item that allows the user to download a PNG of the
         chart/data. Defaults to ``'{constants.DEFAULT_LANG_DOWNLOAD_PNG}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._download_png
 
@@ -199,7 +199,7 @@ class Language(HighchartsMeta):
         f"""Text for the context menu item that allows the user to download an SVG of the
         chart/data. Defaults to ``'{constants.DEFAULT_LANG_DOWNLOAD_SVG}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._download_svg
 
@@ -213,7 +213,7 @@ class Language(HighchartsMeta):
         Excel file  of the chart/data. Defaults to
         ``'{constants.DEFAULT_LANG_DOWNLOAD_XLS}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._download_xls
 
@@ -245,7 +245,7 @@ class Language(HighchartsMeta):
         f"""The text for the menu item to exit the chart from full screen. Defaults to
         ``'{constants.DEFAULT_LANG_EXIT_FULLSCREEN}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._exit_fullscreen
 
@@ -271,7 +271,7 @@ class Language(HighchartsMeta):
         f"""Text used for the hide data table menu item. Defaults to:
         ``'{constants.DEFAULT_LANG_HIDE_DATA}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._hide_data
 
@@ -284,7 +284,7 @@ class Language(HighchartsMeta):
         f"""Text to show in a date field for invalid dates. Defaults to
         ``'{constants.DEFAULT_LANG_INVALID_DATE}'`` (an empty string).
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._invalid_date
 
@@ -311,7 +311,7 @@ class Language(HighchartsMeta):
         """The root item in the breadcrums used when in drilldown mode. Defaults to
         ``'{constants.DEFAULT_LANG_MAIN_BREADCRUMB}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._main_breadcrumb
 
@@ -372,7 +372,7 @@ class Language(HighchartsMeta):
         f"""The text to display when the chart contains no data. Defaults to
         ``'{constants.DEFAULT_LANG_NO_DATA}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._no_data
 
@@ -444,7 +444,7 @@ class Language(HighchartsMeta):
         f"""The text for the menu item to print the chart. Defaults to
         ``'{constants.DEFAULT_LANG_PRINT_CHART}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._print_chart
 
@@ -457,7 +457,7 @@ class Language(HighchartsMeta):
         f"""The text for the label of the button to reset the zoom when a chart is zoomed.
         Defaults to ``'{constants.DEFAULT_LANG_RESET_ZOOM}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._reset_zoom
 
@@ -470,7 +470,7 @@ class Language(HighchartsMeta):
         f"""The text for the tooltip which appears above the button to reset the zoom when
         a chart is zoomed. Defaults to ``'{constants.DEFAULT_LANG_RESET_ZOOM_TITLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._reset_zoom_title
 
@@ -539,7 +539,7 @@ class Language(HighchartsMeta):
         Defaults to a single space character, which is recommended in ISO 31-0 and works
         across Anglo-American and continental European languages.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._thousands_separator
 
@@ -552,7 +552,7 @@ class Language(HighchartsMeta):
         f"""The text for the menu item to view the chart's data table. Defaults to:
         ``'{constants.DEFAULT_LANG_VIEW_DATA}'``
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._view_data
 
@@ -565,7 +565,7 @@ class Language(HighchartsMeta):
         f"""The text for the menu item to view the chart in fullscreen mode. Defaults to:
         ``'{constants.DEFAULT_LANG_VIEW_FULLSCREEN}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._view_fullscreen
 

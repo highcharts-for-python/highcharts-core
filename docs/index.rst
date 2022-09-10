@@ -26,7 +26,7 @@ Highcharts for Python Toolkit
 
 .. toctree::
   :hidden:
-  :maxdepth: 3
+  :maxdepth: 6
   :caption: Contents
 
   Home <self>
@@ -58,8 +58,8 @@ toolkit includes support for:
 In order to integrate **Highcharts for Python** into the Python ecosystem, the library
 features native integration with:
 
-  * **Jupyter Notebook**. You can now produce high-end and interactive plots and renders
-    using the full suite of Highcharts visualization capabilities.
+  * **Jupyter Labs/Notebook**. You can now produce high-end and interactive plots and
+    renders using the full suite of Highcharts visualization capabilities.
   * **Pandas**. Automatically produce data visualizations from your Pandas dataframes
   * **PySpark**. Automatically produce data visualizations from data in a PySpark
     dataframe.
@@ -212,7 +212,7 @@ Hello World, and Basic Usage
   .. code-block:: python
 
     # Import SharedOptions
-    from highcharts.global_options.shared_options import SharedOptions
+    from highcharts_python.global_options.shared_options import SharedOptions
 
     # from a JavaScript file
     my_global_settings = SharedOptions.from_js_literal('my_js_literal.js')
@@ -236,8 +236,8 @@ Hello World, and Basic Usage
 
   .. code-block:: python
 
-    from highcharts.options.title import Title
-    from highcharts.options.credits import Credits
+    from highcharts_python.options.title import Title
+    from highcharts_python.options.credits import Credits
 
     # Using dicts
     my_chart.title = {
@@ -265,8 +265,8 @@ Hello World, and Basic Usage
     }
 
     # Using direct objects
-    from highcharts.options.title import Title
-    from highcharts.options.credits import Credits
+    from highcharts_python.options.title import Title
+    from highcharts_python.options.credits import Credits
 
     my_title = Title(text = 'The Title for My Chart', floating = True, align = 'center')
     my_chart.options.title = my_title
