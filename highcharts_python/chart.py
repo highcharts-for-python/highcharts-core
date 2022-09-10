@@ -10,7 +10,7 @@ from highcharts_python.options import HighchartsOptions
 from highcharts_python.utility_classes.javascript_functions import CallbackFunction
 from highcharts_python.js_literal_functions import serialize_to_js_literal
 from highcharts_python.headless_export import ExportServer
-from highcharts_python.options.series.series_generator import create_series_obj
+from highcharts_python.options.series.series_generator import create_series_obj, SERIES_CLASSES
 from highcharts_python.global_options.shared_options import SharedOptions
 
 
@@ -94,7 +94,13 @@ class Chart(HighchartsMeta):
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return self._container
+        if self._container:
+            return self._container
+
+        if self.options and self.options.chart and self.options.chart.render_to:
+            return self.options.chart.render_to
+
+        return None
 
     @container.setter
     def container(self, value):
@@ -525,3 +531,428 @@ class Chart(HighchartsMeta):
         html_str += self._repr_html_()
 
         display.display_html(html_str, raw = True)
+
+    @classmethod
+    def from_csv(cls,
+                 as_string_or_file,
+                 property_column_map,
+                 series_type,
+                 has_header_row = True,
+                 series_kwargs = None,
+                 options_kwargs = None,
+                 chart_kwargs = None,
+                 delimiter = ',',
+                 null_text = 'None',
+                 wrapper_character = "'",
+                 line_terminator = '\r\n',
+                 wrap_all_strings = False,
+                 double_wrapper_character_when_nested = False,
+                 escape_character = "\\"):
+        """Create a new :class:`Chart` instance with a
+        :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
+        populated from data in a CSV string or file.
+
+          .. note::
+
+            For an example
+            :class:`LineSeries <highcharts_python.options.series.area.LineSeries>`, the
+            minimum code required would be:
+
+              .. code-block:: python
+
+                my_chart = Chart.from_csv('some-csv-file.csv',
+                                          property_column_map = {
+                                              'x': 0,
+                                              'y': 3,
+                                              'id': 'id'
+                                          },
+                                          series_type = 'line')
+
+            As the example above shows, data is loaded into the ``my_chart`` instance
+            from the CSV file with a filename ``some-csv-file.csv``. The
+            :meth:`x <CartesianData.x>`
+            values for each data point will be taken from the first (index 0) column in
+            the CSV file. The :meth:`y <CartesianData.y>` values will be taken from the
+            fourth (index 3) column in the CSV file. And the :meth:`id <CartesianData.id>`
+            values will be taken from a column whose header row is labeled ``'id'``
+            (regardless of its index).
+
+        :param as_string_or_file: The CSV data to use to pouplate data. Accepts either
+          the raw CSV data as a :class:`str <python:str>` or a path to a file in the
+          runtime environment that contains the CSV data.
+
+          .. tip::
+
+            Unwrapped empty column values are automatically interpreted as null
+            (:obj:`None <python:None>`).
+
+        :type as_string_or_file: :class:`str <python:str>` or Path-like
+
+        :param property_column_map: A :class:`dict <python:dict>` used to indicate which
+          data point property should be set to which CSV column. The keys in the
+          :class:`dict <python:dict>` should correspond to properties in the data point
+          class, while the value can either be a numerical index (starting with 0) or a
+          :class:`str <python:str>` indicating the label for the CSV column.
+
+          .. warning::
+
+            If the ``property_column_map`` uses :class:`str <python:str>` values, the CSV
+            file *must* have a header row (this is expected, by default). If there is no
+            header row and a :class:`str <python:str>` value is found, a
+            :exc:`HighchartsCSVDeserializationError` will be raised.
+
+        :type property_column_map: :class:`dict <python:dict>`
+
+        :param series_type: Indicates the series type that should be created from the CSV
+          data.
+        :type series_type: :class:`str <python:str>`
+
+        :param has_header_row: If ``True``, indicates that the first row of
+          ``as_string_or_file`` contains column labels, rather than actual data. Defaults
+          to ``True``.
+        :type has_header_row: :class:`bool <python:bool>`
+
+        :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the series instance. Defaults
+          to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``series_kwargs`` contains a ``data`` key, its value will be *overwritten*.
+            The ``data`` value will be created from the CSV file instead.
+
+        :type series_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>
+
+        :param options_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the :class:`HighchartsOptions`
+          instance. Defaults to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``options_kwargs`` contains a ``series`` key, the ``series`` value will be
+            *overwritten*. The ``series`` value will be created from the CSV file instead.
+
+        :type options_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
+
+        :param chart_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the :class:`Chart` instance.
+          Defaults to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``chart_kwargs`` contains an ``options`` key, ``options`` will be
+            *overwritten*. The ``options`` value will be created from the
+            ``options_kwargs`` and CSV file instead.
+
+        :type chart_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
+
+        :param delimiter: The delimiter used between columns. Defaults to ``,``.
+        :type delimiter: :class:`str <python:str>`
+
+        :param wrapper_character: The string used to wrap string values when
+          wrapping is applied. Defaults to ``'``.
+        :type wrapper_character: :class:`str <python:str>`
+
+        :param null_text: The string used to indicate an empty value if empty
+          values are wrapped. Defaults to `None`.
+        :type null_text: :class:`str <python:str>`
+
+        :param line_terminator: The string used to indicate the end of a line/record in
+          the CSV data. Defaults to ``'\r\n'``.
+        :type line_terminator: :class:`str <python:str>`
+
+        :param line_terminator: The string used to indicate the end of a line/record in the
+          CSV data. Defaults to ``'\r\n'``.
+
+          .. note::
+
+            The Python :mod:`csv <python:csv>` currently ignores the ``line_terminator``
+            parameter and always applies ``'\r\n'``, by design. The Python docs say this may
+            change in the future, so for future backwards compatibility we are including it
+            here.
+
+        :type line_terminator: :class:`str <python:str>`
+
+        :param wrap_all_strings: If ``True``, indicates that the CSV file has all string data
+          values wrapped in quotation marks. Defaults to ``False``.
+
+          .. warning::
+
+            If set to ``True``, the :module:`csv <python:csv>` module will try to coerce any
+            value that is *not* wrapped in quotation marks to a :class:`float <python:float>`.
+            This can cause unexpected behavior, and typically we recommend leaving this as
+            ``False`` and then re-casting values after they have been parsed.
+
+        :type wrap_all_strings: :class:`bool <python:bool>`
+
+        :param double_wrapper_character_when_nested: If ``True``, quote character is doubled
+          when appearing within a string value. If ``False``, the ``escpae_character`` is used
+          to prefix quotation marks. Defaults to ``False``.
+        :type double_wrapper_character_when_nested: :class:`bool <python:bool>`
+
+        :param escape_character: A one-character string that indicates the character used to
+          escape quotation marks if they appear within a string value that is already wrapped
+          in quotation marks. Defaults to ``\\`` (which is Python for ``'\'``, which is
+          Python's native escape character).
+        :type escape_character: :class:`str <python:str>`
+
+        :returns: A :class:`Chart <highcharts_python.chart.Chart>` instance with its
+          data populated from the CSV data.
+        :rtype: :class:`Chart <highcharts_python.chart.Chart>`
+
+        :raises HighchartsCSVDeserializationError: if ``property_column_map`` references
+          CSV columns by their label, but the CSV data does not contain a header row
+        """
+        series_type = validators.string(series_type, allow_empty = False)
+        series_type = series_type.lower()
+        if series_type not in SERIES_CLASSES:
+            raise errors.HighchartsValueError(f'series_type expects a valid Highcharts '
+                                              f'series type. Received: {series_type}')
+
+        options_kwargs = validators.dict(options_kwargs, allow_empty = True) or {}
+        chart_kwargs = validators.dict(chart_kwargs, allow_empty = True) or {}
+
+        series_cls = SERIES_CLASSES.get(series_type, None)
+
+        series = series_cls.from_csv(as_string_or_file,
+                                     property_column_map,
+                                     has_header_row = has_header_row,
+                                     series_kwargs = series_kwargs,
+                                     delimiter = delimiter,
+                                     null_text = nulL_text,
+                                     wrapper_character = wrapper_character,
+                                     line_terminator = line_terminator,
+                                     wrap_all_strings = wrap_all_strings,
+                                     double_wrapper_character_when_nested = double_wrapper_character_when_nested,
+                                     escape_character = escape_character)
+
+        options = HighchartsOptions(**options_kwargs)
+        options.series = [series]
+
+        instance = cls(**chart_kwargs)
+        instance.options = options
+
+        return instance
+
+    @classmethod
+    def from_pandas(cls,
+                    df,
+                    property_map,
+                    series_type,
+                    series_kwargs = None,
+                    options_kwargs = None,
+                    chart_kwargs = None):
+        """Create a :class:`Chart <highcharts_python.chart.Chart>` instance whose
+        data is populated from a `pandas <https://pandas.pydata.org/>`_
+        :class:`DataFrame <pandas:DataFrame>`.
+
+        :param df: The :class:`DataFrame <pandas:DataFrame>` from which data should be
+          loaded.
+        :type df: :class:`DataFrame <pandas:DataFrame>`
+
+        :param property_map: A :class:`dict <python:dict>` used to indicate which
+          data point property should be set to which column in ``df``. The keys in the
+          :class:`dict <python:dict>` should correspond to properties in the data point
+          class, while the value should indicate the label for the
+          :class:`DataFrame <pandas:DataFrame>` column.
+        :type property_map: :class:`dict <python:dict>`
+
+        :param series_type: Indicates the series type that should be created from the data
+          in ``df``.
+        :type series_type: :class:`str <python:str>`
+
+        :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the series instance. Defaults
+          to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``series_kwargs`` contains a ``data`` key, its value will be *overwritten*.
+            The ``data`` value will be created from ``df`` instead.
+
+        :type series_kwargs: :class:`dict <python:dict>`
+
+        :param options_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the :class:`HighchartsOptions`
+          instance. Defaults to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``options_kwargs`` contains a ``series`` key, the ``series`` value will be
+            *overwritten*. The ``series`` value will be created from the data in ``df``.
+
+        :type options_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
+
+        :param chart_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the :class:`Chart` instance.
+          Defaults to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``chart_kwargs`` contains an ``options`` key, ``options`` will be
+            *overwritten*. The ``options`` value will be created from the
+            ``options_kwargs`` and the data in ``df`` instead.
+
+        :type chart_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
+
+        :returns: A :class:`Chart <highcharts_python.chart.Chart>` instance with its
+          data populated from the data in ``df``.
+        :rtype: :class:`Chart <highcharts_python.chart.Chart>`
+
+        :raises HighchartsPandasDeserializationError: if ``property_map`` references
+          a column that does not exist in the data frame
+        :raises HighchartsDependencyError: if `pandas <https://pandas.pydata.org/>`_ is
+          not available in the runtime environment
+        """
+        series_type = validators.string(series_type, allow_empty = False)
+        series_type = series_type.lower()
+        if series_type not in SERIES_CLASSES:
+            raise errors.HighchartsValueError(f'series_type expects a valid Highcharts '
+                                              f'series type. Received: {series_type}')
+
+        options_kwargs = validators.dict(options_kwargs, allow_empty = True) or {}
+        chart_kwargs = validators.dict(chart_kwargs, allow_empty = True) or {}
+
+        series_cls = SERIES_CLASSES.get(series_type, None)
+
+        series = series_cls.from_pandas(df,
+                                        property_map,
+                                        series_kwargs)
+
+        options = HighchartsOptions(**options_kwargs)
+        options.series = [series]
+
+        instance = cls(**chart_kwargs)
+        instance.options = options
+
+        return instance
+
+    @classmethod
+    def from_pyspark(cls,
+                     df,
+                     property_map,
+                     series_type,
+                     series_kwargs = None,
+                     options_kwargs = None,
+                     chart_kwargs = None):
+        """Create a :class:`Chart <highcharts_python.chart.Chart>` instance whose
+        data is populated from a
+        `PySpark <https://spark.apache.org/docs/latest/api/python/>`_
+        :class:`DataFrame <pyspark:pyspark.sql.DataFrame>`.
+
+        :param df: The :class:`DataFrame <pyspark:pyspark.sql.DataFrame>` from which data
+          should be loaded.
+        :type df: :class:`DataFrame <pyspark:pyspark.sql.DataFrame>`
+
+        :param property_map: A :class:`dict <python:dict>` used to indicate which
+          data point property should be set to which column in ``df``. The keys in the
+          :class:`dict <python:dict>` should correspond to properties in the data point
+          class, while the value should indicate the label for the
+          :class:`DataFrame <pyspark:pyspark.sql.DataFrame>` column.
+        :type property_map: :class:`dict <python:dict>`
+
+        :param series_type: Indicates the series type that should be created from the data
+          in ``df``.
+        :type series_type: :class:`str <python:str>`
+
+        :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the series instance. Defaults
+          to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``series_kwargs`` contains a ``data`` key, its value will be *overwritten*.
+            The ``data`` value will be created from ``df`` instead.
+
+        :type series_kwargs: :class:`dict <python:dict>`
+
+        :param options_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the :class:`HighchartsOptions`
+          instance. Defaults to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``options_kwargs`` contains a ``series`` key, the ``series`` value will be
+            *overwritten*. The ``series`` value will be created from the data in ``df``.
+
+        :type options_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
+
+        :param chart_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the :class:`Chart` instance.
+          Defaults to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``chart_kwargs`` contains an ``options`` key, ``options`` will be
+            *overwritten*. The ``options`` value will be created from the
+            ``options_kwargs`` and the data in ``df`` instead.
+
+        :type chart_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
+
+        :returns: A :class:`Chart <highcharts_python.chart.Chart>` instance with its
+          data populated from the data in ``df``.
+        :rtype: :class:`Chart <highcharts_python.chart.Chart>`
+
+        :raises HighchartsPySparkDeserializationError: if ``property_map`` references
+          a column that does not exist in the data frame
+        :raises HighchartsDependencyError: if
+          `PySpark <https://spark.apache.org/docs/latest/api/python/>`_ is not available
+          in the runtime environment
+        """
+        series_type = validators.string(series_type, allow_empty = False)
+        series_type = series_type.lower()
+        if series_type not in SERIES_CLASSES:
+            raise errors.HighchartsValueError(f'series_type expects a valid Highcharts '
+                                              f'series type. Received: {series_type}')
+
+        options_kwargs = validators.dict(options_kwargs, allow_empty = True) or {}
+        chart_kwargs = validators.dict(chart_kwargs, allow_empty = True) or {}
+
+        series_cls = SERIES_CLASSES.get(series_type, None)
+
+        series = series_cls.from_pyspark(df,
+                                         property_map,
+                                         series_kwargs)
+
+        options = HighchartsOptions(**options_kwargs)
+        options.series = [series]
+
+        instance = cls(**chart_kwargs)
+        instance.options = options
+
+        return instance
+
+    @classmethod
+    def from_options(cls,
+                     options,
+                     chart_kwargs = None):
+        """Create a :class:`Chart <highcharts_python.chart.Chart>` instance from a
+        :class:`HighchartsOptions <highcharts_python.options.HighchartsOptions>` object.
+
+        :param options: The configuration options to use to instantiate the chart.
+        :type options:
+          :class:`HighchartsOptions <highcharts_python.options.HighchartsOptions>` or
+          coercable
+
+        :param chart_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the instance. Defaults to
+          :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``chart_kwargs`` contains an ``options`` key, ``options`` will be
+            *overwritten* by the contents of ``options``.
+
+        :type chart_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
+
+        :returns: The :class:`Chart <highcharts_python.chart.Chart>` instance
+        :rtype: :class:`Chart <highcharts_python.chart.Chart>`
+        """
+        chart_kwargs = validators.dict(chart_kwargs, allow_empty = True) or {}
+        options = validate_types(options,
+                                 types = (HighchartsOptions))
+
+        instance = cls(**chart_kwargs)
+        instance.options = options
+
+        return instance

@@ -4,6 +4,7 @@ import esprima
 from esprima.error_handler import Error as ParseError
 
 from highcharts_python import errors
+from highcharts.decorators import validate_types
 from highcharts_python.options import HighchartsOptions
 
 
@@ -87,3 +88,31 @@ class SharedOptions(HighchartsOptions):
                                                       'find a valid function.')
 
         return parsed, as_str
+
+    @classmethod
+    def from_options(cls, options):
+        """Create a
+        :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
+        instance from a :class:`HighchartsOptions <highcharts_python.options.HighchartsOptions>`
+        object.
+
+        :param options: A :class:`HighchartsOptions` object to use for the shared options
+          instance.
+        :type options:
+          :class:`HighchartsOptions <highcharts_python.options.HighchartsOptions>` or
+          coercable
+
+        :returns: A
+          :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
+          instance
+        :rtype: :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
+        """
+        if not options:
+            return cls()
+
+        options = validate_types(options, types = (HighchartsOptions))
+        options_as_dict = options.to_dict()
+
+        instance = SharedOptions.from_dict(options_as_dict)
+
+        return instance
