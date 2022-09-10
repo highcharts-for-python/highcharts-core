@@ -1,6 +1,17 @@
 from typing import Optional, List
 from decimal import Decimal
 
+try:
+    import orjson as json
+except ImportError:
+    try:
+        import rapidjson as json
+    except ImportError:
+        try:
+            import simplejson as json
+        except ImportError:
+            import json
+
 from validator_collection import validators, checkers
 
 from highcharts_python import errors, utility_functions
@@ -801,9 +812,10 @@ class SeriesBase(SeriesOptions):
             column_instances.append(column_instance)
 
         narrower_df = df.select(*column_instances)
-        df_as_jsons = narrower_df.toJSON()
+        rdd_as_jsons = narrower_df.toJSON()
 
         df_as_dicts = [json.loads(x) for x in rdd_as_jsons.toLocalIterator()]
+        records_as_dicts = []
         for record in df_as_dicts:
             record_as_dict = {}
             for key in property_map:
@@ -812,7 +824,6 @@ class SeriesBase(SeriesOptions):
             records_as_dicts.append(record_as_dict)
 
         self.data = records_as_dicts
-
 
     @classmethod
     def from_pyspark(cls,
