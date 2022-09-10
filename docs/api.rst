@@ -127,10 +127,26 @@ Core Components
   * - :mod:`.headless_export <highcharts_python.headless_export>`
     - :class:`ExportServer <highcharts_python.headless_export.ExportServer>`
   * - :mod:`.options <highcharts_python.options>`
-    - :class:`Options <highcharts_python.options.Options>`
-      :class:`HighchartsOptions <highcharts_python.options.HighchartsOptions>`
+    - :class:`HighchartsOptions <highcharts_python.options.HighchartsOptions>`
+      :class:`Options <highcharts_python.options.Options>`
   * - :mod:`.options.accessibility <highcharts_python.options.accessibility>`
-    -
+    - :class:`Accessibility <highcharts_python.options.accessibility.Accessibility>`
+      :class:`CustomAccessibilityComponents <highcharts_python.options.accessibility.CustomAccessibilityComponents>`
+  * - :mod:`.options.accessibility.announce_new_data <highcharts_python.options.accessibility.announce_new_data>`
+    - :class:`AnnounceNewData <highcharts_python.options.accessibility.announce_new_data.AnnounceNewData>`
+  * - :mod:`.options.accessibility.keyboard_navigation <highcharts_python.options.accessibility.keyboard_navigation>`
+    - :class:`KeyboardNavigation <highcharts_python.options.accessibility.keyboard_navigation.KeyboardNavigation>`
+  * - :mod:`.options.accessibility.keyboard_navigation.focus_border <highcharts_python.options.accessibility.keyboard_navigation.focus_border>`
+    - :class:`FocusBorder <highcharts_python.options.accessibility.keyboard_navigation.focus_border.FocusBorder>`
+      :class:`FocusBorderStyle <highcharts_python.options.accessibility.keyboard_navigation.focus_border.FocusBorderStyle>`
+  * - :mod:`.options.accessibility.keyboard_navigation.series_navigation <highcharts_python.options.accessibility.keyboard_navigation.series_navigation>`
+    - :class:`SeriesNavigation <highcharts_python.options.accessibility.keyboard_navigation.series_navigation.SeriesNavigation>`
+  * - :mod:`options.accessibility.point <highcharts_python.options.accessibility.point>`
+    - :class:`AccessibilityPoint <highcharts_python.options.accessibility.point.AccessibilityPoint>`
+  * - :mod:`options.accessibility.screen_reader_section <highcharts_python.options.accessibility.screen_reader_section>`
+    - :class:`ScreenReaderSection <highcharts_python.options.accessibility.screen_reader_section.ScreenReaderSection>`
+  * - :mod:`options.accessibility.series <highcharts_python.options.accessibility.series>`
+    - :class:`SeriesAccessibility <highcharts_python.options.accessibility.series.SeriesAccessibility>`
   * - :mod:`.options.annotations <highcharts_python.options.annotations>`
     -
   * - :mod:`.options.axes <highcharts_python.options.axes>`
@@ -185,8 +201,8 @@ Core Components
   api/chart
   api/global_options/index
   api/headless_export
-  api/options
-  api/utility_classes
+  api/options/index
+  api/utility_classes/index
 
 *********************
 Library Internals

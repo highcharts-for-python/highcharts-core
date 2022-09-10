@@ -8,7 +8,7 @@ from highcharts_python.metaclasses import HighchartsMeta
 from highcharts_python.utility_classes.javascript_functions import CallbackFunction
 
 
-class AccessibilitySeries(HighchartsMeta):
+class SeriesAccessibility(HighchartsMeta):
     """Accessibility options global to all data series.
 
     .. hint::
