@@ -36,6 +36,7 @@ release = __version__
 
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.inheritance_diagram',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',

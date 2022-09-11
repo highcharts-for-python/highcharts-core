@@ -38,6 +38,7 @@ class: :class:`CustomAccessibilityComponents <highcharts_python.options.accessib
   :members:
   :inherited-members:
 
+--------------------
 
 ***************************
 Sub-components

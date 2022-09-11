@@ -148,7 +148,22 @@ Core Components
   * - :mod:`options.accessibility.series <highcharts_python.options.accessibility.series>`
     - :class:`SeriesAccessibility <highcharts_python.options.accessibility.series.SeriesAccessibility>`
   * - :mod:`.options.annotations <highcharts_python.options.annotations>`
-    -
+    - :class:`Annotation <highcharts_python.options.annotations.Annotation>`
+  * - :mod:`.options.annotations.animation <highcharts_python.options.annotations.animation>`
+    - :class:`AnnotationAnimation <highcharts_python.options.annotations.animation.AnnotationAnimation>`
+  * - :mod:`.options.annotations.control_point_options <highcharts_python.options.annotations.control_point_options>`
+    - :class:`AnnotationControlPointOption <highcharts_python.options.annotations.control_point_options.AnnotationControlPointOption>`
+  * - :mod:`.options.annotations.events <highcharts_python.options.annotations.events>`
+    - :class:`AnnotationEvent <highcharts_python.options.annotations.events.AnnotationEvent>`
+  * - :mod:`.options.annotations.label_options <highcharts_python.options.annotations.label_options>`
+    - :class:`AnnotationLabel <highcharts_python.options.annotations.label_options.AnnotationLabel>`
+      :class:`AnnotationLabelOptionAccessibility <highcharts_python.options.annotations.label_options.AnnotationLabelOptionAccessibility>`
+      :class:`LabelOptions <highcharts_python.options.annotations.label_options.LabelOptions>`
+  * - :mod:`.options.annotations.options.annotations.points <highcharts_python.options.annotations.points>`
+    - :class:`AnnotationPoint <highcharts_python.options.annotations.points.AnnotationPoint>`
+  * - :mod:`.options.annotations.shape_options <highcharts_python.options.annotations.shape_options>`
+    - :class:`AnnotationShape <highcharts_python.options.annotations.shape_options.AnnotationShape>`
+      :class:`ShapeOptions <highcharts_python.options.annotations.shape_options.ShapeOptions>`
   * - :mod:`.options.axes <highcharts_python.options.axes>`
     -
   * - :mod:`.options.boost <highcharts_python.options.boost>`
