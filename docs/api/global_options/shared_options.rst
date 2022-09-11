@@ -18,3 +18,11 @@ class: :class:`SharedOptions <highcharts_python.global_options.shared_options.Sh
 .. autoclass:: SharedOptions
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: SharedOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

@@ -26,6 +26,14 @@ class: :class:`Language <highcharts_python.global_options.language.Language>`
   :members:
   :inherited-members:
 
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: Language
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
 --------------------
 
 ******************

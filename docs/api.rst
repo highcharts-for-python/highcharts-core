@@ -61,15 +61,6 @@ Class Structures and Inheritance
 
 .. include:: api/_class_structures.rst
 
-.. _class_hierarchy:
-
-Class Hierarchies
----------------------
-
-.. todo::
-
-  Prepare a series of class hierarchy diagrams.
-
 --------------------------
 
 .. _module_toc:

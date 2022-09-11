@@ -18,3 +18,11 @@ class: :class:`SeriesAccessibility <highcharts_python.options.accessibility.seri
 .. autoclass:: SeriesAccessibility
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: SeriesAccessibility
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

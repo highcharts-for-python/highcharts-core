@@ -18,8 +18,8 @@ components.
 
   .. seealso::
 
-    For a full diagram of Highcharts for Python class structure, please see the
-    :ref:`Highcharts for Python API Reference: Class Hierarchy <class_hierarchy>`.
+    For more details, please review the :doc:`API documentation <api>`, in particular the
+    class inheritance diagram included for each documented class.
 
 .. warning::
 

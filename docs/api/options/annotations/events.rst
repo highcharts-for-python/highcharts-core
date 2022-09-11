@@ -18,3 +18,11 @@ class: :class:`AnnotationEvent <highcharts_python.options.annotations.events.Ann
 .. autoclass:: AnnotationEvent
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: AnnotationEvent
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

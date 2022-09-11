@@ -18,3 +18,11 @@ class: :class:`AccessibilityPoint <highcharts_python.options.accessibility.point
 .. autoclass:: AccessibilityPoint
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: AccessibilityPoint
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

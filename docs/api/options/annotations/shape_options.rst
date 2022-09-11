@@ -19,6 +19,12 @@ class: :class:`AnnotationShape <highcharts_python.options.annotations.shape_opti
   :members:
   :inherited-members:
 
+  **Class Inheritance:**
+
+    .. inheritance-diagram:: AnnotationShape
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
 -----------------------
 
 *******************************************************************************************************************************************
@@ -28,3 +34,9 @@ class: :class:`ShapeOptions <highcharts_python.options.annotations.shape_options
 .. autoclass:: ShapeOptions
   :members:
   :inherited-members:
+
+  **Class Inheritance:**
+
+    .. inheritance-diagram:: ShapeOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1

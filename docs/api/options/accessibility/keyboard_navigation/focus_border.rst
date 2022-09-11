@@ -19,6 +19,14 @@ class: :class:`FocusBorder <highcharts_python.options.accessibility.keyboard_nav
   :members:
   :inherited-members:
 
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: FocusBorder
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
 -------------------
 
 **********************************************************************************************************************************************
@@ -28,3 +36,11 @@ class: :class:`FocusBorderStyle <highcharts_python.options.accessibility.keyboar
 .. autoclass:: FocusBorderStyle
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: FocusBorderStyle
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

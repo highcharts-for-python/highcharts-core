@@ -25,6 +25,14 @@ class: :class:`KeyboardNavigation <highcharts_python.options.accessibility.keybo
   :members:
   :inherited-members:
 
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: KeyboardNavigation
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
 ----------------------
 
 

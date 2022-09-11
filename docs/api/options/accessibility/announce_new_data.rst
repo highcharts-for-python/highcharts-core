@@ -18,3 +18,11 @@ class: :class:`AnnounceNewData <highcharts_python.options.accessibility.announce
 .. autoclass:: AnnounceNewData
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: AnnounceNewData
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

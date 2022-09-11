@@ -18,3 +18,11 @@ class: :class:`ScreenReaderSection <highcharts_python.options.accessibility.scre
 .. autoclass:: ScreenReaderSection
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: ScreenReaderSection
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

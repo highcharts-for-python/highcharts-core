@@ -19,6 +19,14 @@ class: :class:`SeriesLanguageOptions <highcharts_python.global_options.language.
   :members:
   :inherited-members:
 
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: SeriesLanguageOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
 -----------------
 
 *************************************************************************************************************************************************************
@@ -29,6 +37,14 @@ class: :class:`SeriesSummaryLanguageOptions <highcharts_python.global_options.la
   :members:
   :inherited-members:
 
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: SeriesSummaryLanguageOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
 ------------------
 
 *************************************************************************************************************************************************************
@@ -38,3 +54,11 @@ class: :class:`SeriesTypeDescriptions <highcharts_python.global_options.language
 .. autoclass:: SeriesTypeDescriptions
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: SeriesTypeDescriptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

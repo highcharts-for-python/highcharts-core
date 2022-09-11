@@ -18,3 +18,11 @@ class: :class:`AnnounceNewDataLanguageOptions <highcharts_python.global_options.
 .. autoclass:: AnnounceNewDataLanguageOptions
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: AnnounceNewDataLanguageOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

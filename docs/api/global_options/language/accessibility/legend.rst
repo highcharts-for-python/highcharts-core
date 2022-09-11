@@ -18,3 +18,11 @@ class: :class:`LegendLanguageOptions <highcharts_python.global_options.language.
 .. autoclass:: LegendLanguageOptions
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: LegendLanguageOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

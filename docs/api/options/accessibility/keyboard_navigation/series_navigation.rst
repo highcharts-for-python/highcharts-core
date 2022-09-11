@@ -18,3 +18,11 @@ class: :class:`SeriesNavigation <highcharts_python.options.accessibility.keyboar
 .. autoclass:: SeriesNavigation
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: SeriesNavigation
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

@@ -34,6 +34,14 @@ class: :class:`AccessibilityLanguageOptions <highcharts_python.global_options.la
   :members:
   :inherited-members:
 
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: AccessibilityLanguageOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
 --------------------
 
 ******************

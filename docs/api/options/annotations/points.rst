@@ -18,3 +18,11 @@ class: :class:`AnnotationPoint <highcharts_python.options.annotations.points.Ann
 .. autoclass:: AnnotationPoint
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: AnnotationPoint
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

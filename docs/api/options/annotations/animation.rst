@@ -18,3 +18,11 @@ class: :class:`AnnotationAnimation <highcharts_python.options.annotations.animat
 .. autoclass:: AnnotationAnimation
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: AnnotationAnimation
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

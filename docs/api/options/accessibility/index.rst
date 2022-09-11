@@ -28,6 +28,14 @@ class: :class:`Accessibility <highcharts_python.options.accessibility.Accessibil
   :members:
   :inherited-members:
 
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: Accessibility
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
 -----------------------
 
 ***************************************************************************************************************************
@@ -37,6 +45,14 @@ class: :class:`CustomAccessibilityComponents <highcharts_python.options.accessib
 .. autoclass:: CustomAccessibilityComponents
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: CustomAccessibilityComponents
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
 
 --------------------
 

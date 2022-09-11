@@ -36,6 +36,7 @@ release = __version__
 
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.graphviz',
     'sphinx.ext.inheritance_diagram',
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
@@ -46,6 +47,7 @@ extensions = [
     'sphinx_toolbox.shields',
     'sphinx_toolbox.issues',
     'sphinx_toolbox.formatting',
+    'sphinx_toolbox.collapse',
 ]
 
 templates_path = ['_templates']
@@ -96,3 +98,14 @@ intersphinx_mapping = {
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
+
+# Inheritance Diagram configuration
+inheritance_graph_attrs = {
+    'rankdir': 'TB'
+}
+
+suppress_warnings = [
+    'ref.term',
+    'ref.ref',
+    'toc.not_readable'
+]

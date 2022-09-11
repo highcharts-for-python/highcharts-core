@@ -18,3 +18,11 @@ class: :class:`ZoomLanguageOptions <highcharts_python.global_options.language.ac
 .. autoclass:: ZoomLanguageOptions
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: ZoomLanguageOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

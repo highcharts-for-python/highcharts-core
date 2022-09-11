@@ -18,3 +18,11 @@ class: :class:`RangeSelectorLanguageOptions <highcharts_python.global_options.la
 .. autoclass:: RangeSelectorLanguageOptions
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: RangeSelectorLanguageOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

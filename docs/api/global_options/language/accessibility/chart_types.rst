@@ -18,3 +18,11 @@ class: :class:`ChartTypesLanguageOptions <highcharts_python.global_options.langu
 .. autoclass:: ChartTypesLanguageOptions
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: ChartTypesLanguageOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

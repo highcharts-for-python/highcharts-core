@@ -18,3 +18,11 @@ class: :class:`SonificationLanguageOptions <highcharts_python.global_options.lan
 .. autoclass:: SonificationLanguageOptions
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: SonificationLanguageOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

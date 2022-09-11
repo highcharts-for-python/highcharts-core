@@ -29,6 +29,14 @@ class: :class:`Annotation <highcharts_python.options.annotations.Annotation>`
   :members:
   :inherited-members:
 
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: Annotation
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
 -----------------------
 
 ***************************

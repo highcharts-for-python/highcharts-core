@@ -19,6 +19,14 @@ class: :class:`NavigationLanguageOptions <highcharts_python.global_options.langu
   :members:
   :inherited-members:
 
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: NavigationLanguageOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
 ----------------
 
 *********************************************************************************************************************************
@@ -28,3 +36,11 @@ class: :class:`PopupLanguageOptions <highcharts_python.global_options.language.n
 .. autoclass:: PopupLanguageOptions
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: PopupLanguageOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

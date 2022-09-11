@@ -18,3 +18,11 @@ class: :class:`AxisLanguageOptions <highcharts_python.global_options.language.ac
 .. autoclass:: AxisLanguageOptions
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: AxisLanguageOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

@@ -19,6 +19,14 @@ class: :class:`AnnotationLabel <highcharts_python.options.annotations.label_opti
   :members:
   :inherited-members:
 
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: AnnotationLabel
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
 -------------------
 
 ********************************************************************************************************************************************
@@ -29,6 +37,14 @@ class: :class:`AnnotationLabelOptionAccessibility <highcharts_python.options.ann
   :members:
   :inherited-members:
 
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: AnnotationLabelOptionAccessibility
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
 -------------------
 
 ********************************************************************************************************************************************
@@ -38,3 +54,11 @@ class: :class:`LabelOptions <highcharts_python.options.annotations.label_options
 .. autoclass:: LabelOptions
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: LabelOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

@@ -19,6 +19,14 @@ class: :class:`ScreenReaderSectionLanguageOptions <highcharts_python.global_opti
   :members:
   :inherited-members:
 
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: ScreenReaderSectionLanguageOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
 ---------------
 
 *****************************************************************************************************************************************************************************
@@ -28,3 +36,11 @@ class: :class:`ScreenReaderSectionAnnotationLanguage <highcharts_python.global_o
 .. autoclass:: ScreenReaderSectionAnnotationLanguage
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: ScreenReaderSectionAnnotationLanguage
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

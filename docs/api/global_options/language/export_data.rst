@@ -18,3 +18,11 @@ class: :class:`ExportDataLanguageOptions <highcharts_python.global_options.langu
 .. autoclass:: ExportDataLanguageOptions
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: ExportDataLanguageOptions
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

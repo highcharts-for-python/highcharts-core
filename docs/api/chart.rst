@@ -18,3 +18,11 @@ class: :class:`Chart <highcharts_python.chart.Chart>`
 .. autoclass:: Chart
   :members:
   :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: Chart
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
