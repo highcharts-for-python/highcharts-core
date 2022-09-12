@@ -13,7 +13,7 @@ class NetworkGraphSeries(SeriesBase, NetworkGraphOptions):
     A network graph is a type of relationship chart, where connnections (links)
     attract nodes (points) and other nodes repulse each other.
 
-    .. figure:: _static/networkgraph-example.png
+    .. figure:: ../../../_static/networkgraph-example.png
       :alt: NetworkGraph Example Chart
       :align: center
 

@@ -18,7 +18,7 @@ class ArcDiagramSeries(SeriesBase, ArcDiagramOptions):
     semicircle in one of the two half-planes delimited by the line, or as smooth
     curves formed by sequences of semicircles.
 
-    .. figure:: _static/arcdiagram-example.png
+    .. figure:: ../../../_static/arcdiagram-example.png
       :alt: Arc Diagram Example Chart
       :align: center
 

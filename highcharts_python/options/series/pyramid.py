@@ -12,7 +12,7 @@ class PyramidSeries(FunnelSeries, PyramidOptions):
     A pyramid series is a special type of funnel, without neck and reversed by
     default.
 
-    .. figure:: _static/pyramid-example.png
+    .. figure:: ../../../_static/pyramid-example.png
       :alt: Pyramid Example Chart
       :align: center
 
@@ -26,7 +26,7 @@ class Pyramid3DSeries(PyramidOptions, PieSeries):
     A pyramid 3d series is a special type of funnel, without neck and reversed by
     default.
 
-    .. figure:: _static/pyramid_3d-example.png
+    .. figure:: ../../../_static/pyramid_3d-example.png
       :alt: Pyramid 3D Example Chart
       :align: center
 

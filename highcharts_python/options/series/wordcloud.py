@@ -12,7 +12,7 @@ class WordcloudSeries(SeriesBase, WordcloudOptions):
     A word cloud is a visualization of a set of words, where the size and placement of
     a word is determined by how it is weighted.
 
-    .. figure:: _static/wordcloud-example.png
+    .. figure:: ../../../_static/wordcloud-example.png
       :alt: Wordcloud Example Chart
       :align: center
 

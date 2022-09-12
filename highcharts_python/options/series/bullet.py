@@ -13,7 +13,7 @@ class BulletSeries(BarSeries, BulletOptions):
     measure, compares it to a target, and displays it in the context of qualitative
     ranges of performance that could be set using :meth:`YAxis.plot_bands`.
 
-    .. figure:: _static/bullet-example.png
+    .. figure:: ../../../_static/bullet-example.png
       :alt: Bullet Example Chart
       :align: center
 
