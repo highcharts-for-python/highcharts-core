@@ -7,7 +7,7 @@ class SplineOptions(SeriesOptions):
     A spline series is a special type of line series, where the segments between the
     data points are smoothed.
 
-    .. figure:: _static/spline-example.png
+    .. figure:: ../../../_static/spline-example.png
       :alt: Spline Example Chart
       :align: center
 

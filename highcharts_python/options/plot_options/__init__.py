@@ -140,7 +140,7 @@ class PlotOptions(HighchartsMeta):
         semicircle in one of the two half-planes delimited by the line, or as smooth
         curves formed by sequences of semicircles.
 
-        .. figure:: _static/arcdiagram-example.png
+        .. figure:: ../../../_static/arcdiagram-example.png
           :alt: Arc Diagram Example Chart
           :align: center
 
@@ -161,7 +161,7 @@ class PlotOptions(HighchartsMeta):
     def area(self) -> Optional[AreaOptions]:
         """General options to apply to all Area series types.
 
-        .. figure:: _static/area-example.png
+        .. figure:: ../../../_static/area-example.png
           :alt: Area Example Chart
           :align: center
 
@@ -184,7 +184,7 @@ class PlotOptions(HighchartsMeta):
         is a carteseian series with higher and lower values for each point along an X
         axis, where the area between the values is shaded.
 
-        .. figure:: _static/arearange-example.png
+        .. figure:: ../../../_static/arearange-example.png
           :alt: AreaRange Example Chart
           :align: center
 
@@ -206,7 +206,7 @@ class PlotOptions(HighchartsMeta):
         """General options to apply to all AreaSpline series types. The area spline series
         is an area series where the graph between the points is smoothed into a spline.
 
-        .. figure:: _static/areaspline-example.png
+        .. figure:: ../../../_static/areaspline-example.png
           :alt: AreaSpline Example Chart
           :align: center
 
@@ -249,7 +249,7 @@ class PlotOptions(HighchartsMeta):
         """General options to apply to all Bar series types. A bar series is a special
         type of column series where the columns are horizontal.
 
-        .. figure:: _static/bar-example.png
+        .. figure:: ../../../_static/bar-example.png
           :alt: Bar Example Chart
           :align: center
 
@@ -274,7 +274,7 @@ class PlotOptions(HighchartsMeta):
         function of the normal distribution. It calculates mean and standard deviation of
         the base series data and plots the curve according to the calculated parameters.
 
-        .. figure:: _static/bellcurve-example.png
+        .. figure:: ../../../_static/bellcurve-example.png
           :alt: Bell Curve Example Chart
           :align: center
 
@@ -304,7 +304,7 @@ class PlotOptions(HighchartsMeta):
           * upper quartile (Q3), and
           * largest observation (sample maximum).
 
-        .. figure:: _static/boxplot-example.png
+        .. figure:: ../../../_static/boxplot-example.png
           :alt: Box Plot Example Chart
           :align: center
 
@@ -330,7 +330,7 @@ class PlotOptions(HighchartsMeta):
         and Y axes mark the X and Y values, and the size of the bubble relates to the Z
         value.
 
-        .. figure:: _static/bubble-example.png
+        .. figure:: ../../../_static/bubble-example.png
           :alt: Bubble Example Chart
           :align: center
 
@@ -355,7 +355,7 @@ class PlotOptions(HighchartsMeta):
         measure, compares it to a target, and displays it in the context of qualitative
         ranges of performance that could be set using :meth:`YAxis.plot_bands`.
 
-        .. figure:: _static/bullet-example.png
+        .. figure:: ../../../_static/bullet-example.png
           :alt: Bullet Example Chart
           :align: center
 
@@ -378,7 +378,7 @@ class PlotOptions(HighchartsMeta):
 
         Column series display one column per value along an X axis.
 
-        .. figure:: _static/column-example.png
+        .. figure:: ../../../_static/column-example.png
           :alt: Column Example Chart
           :align: center
 
@@ -409,19 +409,19 @@ class PlotOptions(HighchartsMeta):
 
           .. tab:: Standard
 
-            .. figure:: _static/columnpyramid-example.png
+            .. figure:: ../../../_static/columnpyramid-example.png
               :alt: ColumnPyramid Example Chart
               :align: center
 
           .. tab:: Stacked
 
-            .. figure:: _static/columnpyramid-example-stacked.png
+            .. figure:: ../../../_static/columnpyramid-example-stacked.png
               :alt: Stacked Column Pyramid Example Chart
               :align: center
 
           .. tab:: Stacked + Inverted
 
-            .. figure:: _static/columnpyramid-example-stacked-horizontal.png
+            .. figure:: ../../../_static/columnpyramid-example-stacked-horizontal.png
               :alt: Stacked and Inverted Column Pyramid Example Chart
               :align: center
 
@@ -453,13 +453,13 @@ class PlotOptions(HighchartsMeta):
 
           .. tab:: Standard
 
-            .. figure:: _static/columnrange-example.png
+            .. figure:: ../../../_static/columnrange-example.png
               :alt: ColumnRange Example Chart
               :align: center
 
           .. tab:: Horizontal
 
-            .. figure:: _static/columnrange-example-horizontal.png
+            .. figure:: ../../../_static/columnrange-example-horizontal.png
               :alt: Inverted Column Range Example Chart
               :align: center
 
@@ -483,7 +483,7 @@ class PlotOptions(HighchartsMeta):
         A cylinder graph is a variation of a 3d column graph. The cylinder graph features
         cylindrical points.
 
-        .. figure:: _static/cylinder-example.png
+        .. figure:: ../../../_static/cylinder-example.png
           :alt: Cylinder Example Chart
           :align: center
 
@@ -507,7 +507,7 @@ class PlotOptions(HighchartsMeta):
         A dependency wheel chart is a type of flow diagram, where all nodes are laid out
         in a circle, and the flow between the are drawn as link bands.
 
-        .. figure:: _static/dependencywheel-example.png
+        .. figure:: ../../../_static/dependencywheel-example.png
           :alt: Dependency Wheel Example Chart
           :align: center
 
@@ -532,7 +532,7 @@ class PlotOptions(HighchartsMeta):
         The dumbbell series is a cartesian series with higher and lower values for each
         point along an X axis, connected with a line between the values.
 
-        .. figure:: _static/dumbbell-example.png
+        .. figure:: ../../../_static/dumbbell-example.png
           :alt: Dumbbell Example Chart
           :align: center
 
@@ -561,7 +561,7 @@ class PlotOptions(HighchartsMeta):
         Error bars are a graphical representation of the variability of data and are used
         on graphs to indicate the error, or uncertainty in a reported measurement.
 
-        .. figure:: _static/errorbar-example.png
+        .. figure:: ../../../_static/errorbar-example.png
           :alt: Error Bar Example Chart
           :align: center
 
@@ -589,7 +589,7 @@ class PlotOptions(HighchartsMeta):
 
           Funnel charts require that the ``modules/funnel.js`` file is loaded client-side.
 
-        .. figure:: _static/funnel-example.png
+        .. figure:: ../../../_static/funnel-example.png
           :alt: Funnel Example Chart
           :align: center
 
@@ -622,7 +622,7 @@ class PlotOptions(HighchartsMeta):
             * ``cylinder.js`` and
             * ``funnel3d.js``
 
-        .. figure:: _static/funnel_3d-example.png
+        .. figure:: ../../../_static/funnel_3d-example.png
           :alt: Funnel 3D Example Chart
           :align: center
 
@@ -646,7 +646,7 @@ class PlotOptions(HighchartsMeta):
         Gauges are circular plots displaying one or more values with a dial pointing to
         values along the perimeter.
 
-        .. figure:: _static/gauge-example.png
+        .. figure:: ../../../_static/gauge-example.png
           :alt: Gauge Example Chart
           :align: center
 
@@ -674,7 +674,7 @@ class PlotOptions(HighchartsMeta):
 
           Heatmaps require that ``modules/heatmap`` is loaded client-side.
 
-        .. figure:: _static/heatmap-example.png
+        .. figure:: ../../../_static/heatmap-example.png
           :alt: Heatmap Example Chart
           :align: center
 
@@ -698,7 +698,7 @@ class PlotOptions(HighchartsMeta):
         A histogram is a column series which represents the distribution of the data set
         in the base series. Histogram splits data into bins and shows their frequencies.
 
-        .. figure:: _static/histogram-example.png
+        .. figure:: ../../../_static/histogram-example.png
           :alt: Histogram Example Chart
           :align: center
 
@@ -731,19 +731,19 @@ class PlotOptions(HighchartsMeta):
 
           .. tab:: Circular Item Chart
 
-            .. figure:: _static/item-example-circular.png
+            .. figure:: ../../../_static/item-example-circular.png
               :alt: Circular Item Example Chart
               :align: center
 
           .. tab:: Rectangular Item Chart
 
-            .. figure:: _static/item-example-rectangular.png
+            .. figure:: ../../../_static/item-example-rectangular.png
               :alt: Rectangular Item Example Chart
               :align: center
 
           .. tab:: Item Chart with Symbols
 
-            .. figure:: _static/item-example-symbols.png
+            .. figure:: ../../../_static/item-example-symbols.png
               :alt: Item Example Chart with Symbols
               :align: center
 
@@ -767,7 +767,7 @@ class PlotOptions(HighchartsMeta):
         A line series displays information as a series of data points connected by
         straight line segments.
 
-        .. figure:: _static/line-example.png
+        .. figure:: ../../../_static/line-example.png
           :alt: Line Example Chart
           :align: center
 
@@ -796,7 +796,7 @@ class PlotOptions(HighchartsMeta):
           Requires ``highcharts-more.js``, ``modules/dumbbell.js``, and
           ``modules/lollipop.js`` to be loaded client-side.
 
-        .. figure:: _static/lollipop-example.png
+        .. figure:: ../../../_static/lollipop-example.png
           :alt: Lollipop Example Chart
           :align: center
 
@@ -820,7 +820,7 @@ class PlotOptions(HighchartsMeta):
         A network graph is a type of relationship chart, where connnections (links)
         attract nodes (points) and other nodes repulse each other.
 
-        .. figure:: _static/networkgraph-example.png
+        .. figure:: ../../../_static/networkgraph-example.png
           :alt: NetworkGraph Example Chart
           :align: center
 
@@ -848,13 +848,13 @@ class PlotOptions(HighchartsMeta):
 
           .. tab:: Standard Organization Chart
 
-            .. figure:: _static/organization-example.png
+            .. figure:: ../../../_static/organization-example.png
               :alt: Organization Example Chart
               :align: center
 
           .. tab:: Horizontal Organization Chart
 
-            .. figure:: _static/organization-example-horizontal.png
+            .. figure:: ../../../_static/organization-example-horizontal.png
               :alt: Horizontal Organization Example Chart
               :align: center
 
@@ -883,13 +883,13 @@ class PlotOptions(HighchartsMeta):
 
           .. tab:: Standard Packed Bubble
 
-            .. figure:: _static/packedbubble-example.png
+            .. figure:: ../../../_static/packedbubble-example.png
               :alt: Split Packed Bubble Example Chart
               :align: center
 
           .. tab:: Split Packed Bubble
 
-            .. figure:: _static/packedbubble-example-split.png
+            .. figure:: ../../../_static/packedbubble-example-split.png
               :alt: Split Packed Bubble Example Chart
               :align: center
 
@@ -914,7 +914,7 @@ class PlotOptions(HighchartsMeta):
         where individual values are represented in descending order by bars, and the
         cumulative total is represented by the line.
 
-        .. figure:: _static/pareto-example.png
+        .. figure:: ../../../_static/pareto-example.png
           :alt: Pareto Example Chart
           :align: center
 
@@ -942,13 +942,13 @@ class PlotOptions(HighchartsMeta):
 
           .. tab:: Pie Chart
 
-            .. figure:: _static/pie-example.png
+            .. figure:: ../../../_static/pie-example.png
               :alt: Pie Example Chart
               :align: center
 
           .. tab:: Donut Chart
 
-            .. figure:: _static/pie-example-donut.png
+            .. figure:: ../../../_static/pie-example-donut.png
               :alt: Donut Example Chart
               :align: center
 
@@ -974,7 +974,7 @@ class PlotOptions(HighchartsMeta):
         setting, and stroke is applied through :meth:`PolygonOptions.line_width` and
         :meth:`PolygonOptions.line_color`.
 
-        .. figure:: _static/polygon-example.png
+        .. figure:: ../../../_static/polygon-example.png
           :alt: Polygon Example Chart
           :align: center
 
@@ -998,7 +998,7 @@ class PlotOptions(HighchartsMeta):
         A pyramid series is a special type of funnel, without neck and reversed by
         default.
 
-        .. figure:: _static/pyramid-example.png
+        .. figure:: ../../../_static/pyramid-example.png
           :alt: Pyramid Example Chart
           :align: center
 
@@ -1022,7 +1022,7 @@ class PlotOptions(HighchartsMeta):
         A pyramid 3d series is a special type of funnel, without neck and reversed by
         default.
 
-        .. figure:: _static/pyramid_3d-example.png
+        .. figure:: ../../../_static/pyramid_3d-example.png
           :alt: Pyramid 3D Example Chart
           :align: center
 
@@ -1050,19 +1050,19 @@ class PlotOptions(HighchartsMeta):
 
           .. tab:: Standard Sankey
 
-            .. figure:: _static/sankey-example.png
+            .. figure:: ../../../_static/sankey-example.png
               :alt: Sankey Example Chart
               :align: center
 
           .. tab:: Inverted Sankey
 
-            .. figure:: _static/sankey-example-inverted.png
+            .. figure:: ../../../_static/sankey-example-inverted.png
               :alt: Inverted Sankey Example Chart
               :align: center
 
           .. tab:: Sankey with Outgoing Links
 
-            .. figure:: _static/sankey-example-outgoing.png
+            .. figure:: ../../../_static/sankey-example-outgoing.png
               :alt: Sankey Example Chart with Outgoing Links
               :align: center
 
@@ -1086,7 +1086,7 @@ class PlotOptions(HighchartsMeta):
         A scatter plot uses cartesian coordinates to display values for two variables for
         a set of data.
 
-        .. figure:: _static/scatter-example.png
+        .. figure:: ../../../_static/scatter-example.png
           :alt: Scatter Example Chart
           :align: center
 
@@ -1110,7 +1110,7 @@ class PlotOptions(HighchartsMeta):
         A 3D scatter plot uses x, y and z coordinates to display values for three
         variables for a set of data.
 
-        .. figure:: _static/scatter_3d-example.png
+        .. figure:: ../../../_static/scatter_3d-example.png
           :alt: Scatter 3D Example Chart
           :align: center
 
@@ -1151,7 +1151,7 @@ class PlotOptions(HighchartsMeta):
         A solid gauge is a circular gauge where the value is indicated by a filled arc,
         and the color of the arc may variate with the value.
 
-        .. figure:: _static/solidgauge-example.png
+        .. figure:: ../../../_static/solidgauge-example.png
           :alt: SolidGauge Example Chart
           :align: center
 
@@ -1175,7 +1175,7 @@ class PlotOptions(HighchartsMeta):
         A spline series is a special type of line series, where the segments between the
         data points are smoothed.
 
-        .. figure:: _static/spline-example.png
+        .. figure:: ../../../_static/spline-example.png
           :alt: Spline Example Chart
           :align: center
 
@@ -1199,7 +1199,7 @@ class PlotOptions(HighchartsMeta):
         A streamgraph is a type of stacked area graph which is displaced around a central
         axis, resulting in a flowing, organic shape.
 
-        .. figure:: _static/streamgraph-example.png
+        .. figure:: ../../../_static/streamgraph-example.png
           :alt: StreamGraph Example Chart
           :align: center
 
@@ -1224,7 +1224,7 @@ class PlotOptions(HighchartsMeta):
         represented by a circle. The center represents the root node of the tree. The
         visualization bears a resemblance to both treemap and pie charts.
 
-        .. figure:: _static/sunburst-example.png
+        .. figure:: ../../../_static/sunburst-example.png
           :alt: Sunburst Example Chart
           :align: center
 
@@ -1251,19 +1251,19 @@ class PlotOptions(HighchartsMeta):
 
           .. tab:: Honeycomb Tilemap
 
-            .. figure:: _static/tilemap-example.png
+            .. figure:: ../../../_static/tilemap-example.png
               :alt: Honeycomb Tilemap Example Chart
               :align: center
 
           .. tab:: Circle Tilemap
 
-            .. figure:: _static/tilemap-example-circle.png
+            .. figure:: ../../../_static/tilemap-example-circle.png
               :alt: Tilemap Example Chart
               :align: center
 
           .. tab:: Diamond Tilemap
 
-            .. figure:: _static/tilemap-example-diamond.png
+            .. figure:: ../../../_static/tilemap-example-diamond.png
               :alt: Tilemap Example Chart
               :align: center
 
@@ -1290,19 +1290,19 @@ class PlotOptions(HighchartsMeta):
 
           .. tab:: Standard Timeline
 
-            .. figure:: _static/timeline-example.png
+            .. figure:: ../../../_static/timeline-example.png
               :alt: Timeline Example Chart
               :align: center
 
           .. tab:: Inverted Timeline
 
-            .. figure:: _static/timeline-example-inverted.png
+            .. figure:: ../../../_static/timeline-example-inverted.png
               :alt: Inverted Timeline Example Chart
               :align: center
 
           .. tab:: With True Datetime Axis
 
-            .. figure:: _static/timeline-example-datetime.png
+            .. figure:: ../../../_static/timeline-example-datetime.png
               :alt: Timeline Example Chart with Datetime Axis
               :align: center
 
@@ -1326,7 +1326,7 @@ class PlotOptions(HighchartsMeta):
         A treemap displays hierarchical data using nested rectangles. The data can be laid
         out in varying ways depending on options.
 
-        .. figure:: _static/treemap-example.png
+        .. figure:: ../../../_static/treemap-example.png
           :alt: Treemap Example Chart
           :align: center
 
@@ -1351,7 +1351,7 @@ class PlotOptions(HighchartsMeta):
         an Y and Z value. Each point is drawn as a pie slice where the size (arc) of the
         slice relates to the Y value and the radius of pie slice relates to the Z value.
 
-        .. figure:: _static/variablepie-example.png
+        .. figure:: ../../../_static/variablepie-example.png
           :alt: Variable Pie Example Chart
           :align: center
 
@@ -1379,19 +1379,19 @@ class PlotOptions(HighchartsMeta):
 
           .. tab:: Standard Variwide
 
-            .. figure:: _static/variwide-example.png
+            .. figure:: ../../../_static/variwide-example.png
               :alt: Variwide Example Chart
               :align: center
 
           .. tab:: Inverted Variwide
 
-            .. figure:: _static/variwide-example-inverted.png
+            .. figure:: ../../../_static/variwide-example-inverted.png
               :alt: Variwide Example Chart
               :align: center
 
           .. tab:: with Datetime Axis
 
-            .. figure:: _static/variwide-example-datetime.png
+            .. figure:: ../../../_static/variwide-example-datetime.png
               :alt: Variwide Example Chart
               :align: center
 
@@ -1415,7 +1415,7 @@ class PlotOptions(HighchartsMeta):
         A vector plot is a type of cartesian chart where each point has an X and Y
         position, a length and a direction. Vectors are drawn as arrows.
 
-        .. figure:: _static/vector-example.png
+        .. figure:: ../../../_static/vector-example.png
           :alt: Vector Example Chart
           :align: center
 
@@ -1446,13 +1446,13 @@ class PlotOptions(HighchartsMeta):
 
           .. tab:: Venn Diagram
 
-            .. figure:: _static/venn-example.png
+            .. figure:: ../../../_static/venn-example.png
               :alt: Venn Example Chart
               :align: center
 
           .. tab:: Euler Diagram
 
-            .. figure:: _static/venn-example-euler.png
+            .. figure:: ../../../_static/venn-example-euler.png
               :alt: Euler Example Chart
               :align: center
 
@@ -1480,19 +1480,19 @@ class PlotOptions(HighchartsMeta):
 
           .. tab:: Standard Waterfall
 
-            .. figure:: _static/waterfall-example.png
+            .. figure:: ../../../_static/waterfall-example.png
               :alt: Waterfall Example Chart
               :align: center
 
           .. tab:: Horizontal (Inverted) Waterfall
 
-            .. figure:: _static/waterfall-example-inverted.png
+            .. figure:: ../../../_static/waterfall-example-inverted.png
               :alt: Waterfall Example Chart
               :align: center
 
           .. tab:: Stacked Waterfall
 
-            .. figure:: _static/waterfall-example-stacked.png
+            .. figure:: ../../../_static/waterfall-example-stacked.png
               :alt: Waterfall Example Chart
               :align: center
 
@@ -1517,7 +1517,7 @@ class PlotOptions(HighchartsMeta):
         graphical form. Wind direction is given by the stem direction, and wind speed by
         the number and shape of barbs.
 
-        .. figure:: _static/windbarb-example.png
+        .. figure:: ../../../_static/windbarb-example.png
           :alt: Wind Barb Example Chart
           :align: center
 
@@ -1541,7 +1541,7 @@ class PlotOptions(HighchartsMeta):
         A word cloud is a visualization of a set of words, where the size and placement of
         a word is determined by how it is weighted.
 
-        .. figure:: _static/wordcloud-example.png
+        .. figure:: ../../../_static/wordcloud-example.png
           :alt: Wordcloud Example Chart
           :align: center
 
@@ -1569,13 +1569,13 @@ class PlotOptions(HighchartsMeta):
 
           .. tab:: Standard X-Range
 
-            .. figure:: _static/xrange-example.png
+            .. figure:: ../../../_static/xrange-example.png
               :alt: X-Range Example Chart
               :align: center
 
           .. tab:: Inverted X-Range
 
-            .. figure:: _static/xrange-example-inverted.png
+            .. figure:: ../../../_static/xrange-example-inverted.png
               :alt: Inverted X-Range Example Chart
               :align: center
 

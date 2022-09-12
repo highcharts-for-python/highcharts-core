@@ -21,13 +21,13 @@ class VennOptions(GenericTypeOptions):
 
       .. tab:: Venn Diagram
 
-        .. figure:: _static/venn-example.png
+        .. figure:: ../../../_static/venn-example.png
           :alt: Venn Example Chart
           :align: center
 
       .. tab:: Euler Diagram
 
-        .. figure:: _static/venn-example-euler.png
+        .. figure:: ../../../_static/venn-example-euler.png
           :alt: Euler Example Chart
           :align: center
 

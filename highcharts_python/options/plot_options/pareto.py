@@ -8,7 +8,7 @@ class ParetoOptions(SeriesOptions):
     where individual values are represented in descending order by bars, and the
     cumulative total is represented by the line.
 
-    .. figure:: _static/pareto-example.png
+    .. figure:: ../../../_static/pareto-example.png
       :alt: Pareto Example Chart
       :align: center
 

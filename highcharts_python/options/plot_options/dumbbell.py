@@ -20,7 +20,7 @@ class DumbbellOptions(GenericTypeOptions):
     The dumbbell series is a cartesian series with higher and lower values for each
     point along an X axis, connected with a line between the values.
 
-    .. figure:: _static/dumbbell-example.png
+    .. figure:: ../../../_static/dumbbell-example.png
       :alt: Dumbbell Example Chart
       :align: center
 
@@ -884,7 +884,7 @@ class LollipopOptions(DumbbellOptions):
       Requires ``highcharts-more.js``, ``modules/dumbbell.js``, and
       ``modules/lollipop.js`` to be loaded client-side.
 
-    .. figure:: _static/lollipop-example.png
+    .. figure:: ../../../_static/lollipop-example.png
       :alt: Lollipop Example Chart
       :align: center
 

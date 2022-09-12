@@ -17,7 +17,7 @@ class BubbleOptions(SeriesOptions):
     and Y axes mark the X and Y values, and the size of the bubble relates to the Z
     value.
 
-    .. figure:: _static/bubble-example.png
+    .. figure:: ../../../_static/bubble-example.png
       :alt: Bubble Example Chart
       :align: center
 

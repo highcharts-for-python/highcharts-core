@@ -11,7 +11,7 @@ class ScatterOptions(SeriesOptions):
     A scatter plot uses cartesian coordinates to display values for two variables for
     a set of data.
 
-    .. figure:: _static/scatter-example.png
+    .. figure:: ../../../_static/scatter-example.png
       :alt: Scatter Example Chart
       :align: center
 
@@ -139,7 +139,7 @@ class Scatter3DOptions(ScatterOptions):
     A 3D scatter plot uses x, y and z coordinates to display values for three
     variables for a set of data.
 
-    .. figure:: _static/scatter_3d-example.png
+    .. figure:: ../../../_static/scatter_3d-example.png
       :alt: Scatter 3D Example Chart
       :align: center
 

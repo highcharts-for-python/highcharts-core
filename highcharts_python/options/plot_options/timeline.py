@@ -17,19 +17,19 @@ class TimelineOptions(GenericTypeOptions):
 
       .. tab:: Standard Timeline
 
-        .. figure:: _static/timeline-example.png
+        .. figure:: ../../../_static/timeline-example.png
           :alt: Timeline Example Chart
           :align: center
 
       .. tab:: Inverted Timeline
 
-        .. figure:: _static/timeline-example-inverted.png
+        .. figure:: ../../../_static/timeline-example-inverted.png
           :alt: Inverted Timeline Example Chart
           :align: center
 
       .. tab:: With True Datetime Axis
 
-        .. figure:: _static/timeline-example-datetime.png
+        .. figure:: ../../../_static/timeline-example-datetime.png
           :alt: Timeline Example Chart with Datetime Axis
           :align: center
 

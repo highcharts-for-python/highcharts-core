@@ -20,7 +20,7 @@ class SunburstOptions(GenericTypeOptions):
     represented by a circle. The center represents the root node of the tree. The
     visualization bears a resemblance to both treemap and pie charts.
 
-    .. figure:: _static/sunburst-example.png
+    .. figure:: ../../../_static/sunburst-example.png
       :alt: Sunburst Example Chart
       :align: center
 

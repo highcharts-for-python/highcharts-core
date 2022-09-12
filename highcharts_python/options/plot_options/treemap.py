@@ -19,7 +19,7 @@ class TreemapOptions(GenericTypeOptions):
     A treemap displays hierarchical data using nested rectangles. The data can be laid
     out in varying ways depending on options.
 
-    .. figure:: _static/treemap-example.png
+    .. figure:: ../../../_static/treemap-example.png
       :alt: Treemap Example Chart
       :align: center
 

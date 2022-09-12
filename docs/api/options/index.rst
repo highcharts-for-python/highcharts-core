@@ -32,6 +32,7 @@
   series/index
   subtitle
   time
+  title
   tooltips
 
 --------------

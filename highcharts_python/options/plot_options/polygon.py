@@ -9,7 +9,7 @@ class PolygonOptions(SeriesOptions):
     setting, and stroke is applied through :meth:`PolygonOptions.line_width` and
     :meth:`PolygonOptions.line_color`.
 
-    .. figure:: _static/polygon-example.png
+    .. figure:: ../../../_static/polygon-example.png
       :alt: Polygon Example Chart
       :align: center
 

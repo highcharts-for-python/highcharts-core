@@ -15,7 +15,7 @@ class VectorOptions(SeriesOptions):
     A vector plot is a type of cartesian chart where each point has an X and Y
     position, a length and a direction. Vectors are drawn as arrows.
 
-    .. figure:: _static/vector-example.png
+    .. figure:: ../../../_static/vector-example.png
       :alt: Vector Example Chart
       :align: center
 

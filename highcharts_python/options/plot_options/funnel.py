@@ -19,7 +19,7 @@ class FunnelOptions(PieOptions):
 
       Funnel charts require that the ``modules/funnel.js`` file is loaded client-side.
 
-    .. figure:: _static/funnel-example.png
+    .. figure:: ../../../_static/funnel-example.png
       :alt: Funnel Example Chart
       :align: center
 
@@ -260,7 +260,7 @@ class Funnel3DOptions(FunnelOptions, ColumnOptions):
         * ``cylinder.js`` and
         * ``funnel3d.js``
 
-    .. figure:: _static/funnel_3d-example.png
+    .. figure:: ../../../_static/funnel_3d-example.png
       :alt: Funnel 3D Example Chart
       :align: center
 
