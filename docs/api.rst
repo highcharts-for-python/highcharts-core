@@ -220,23 +220,23 @@ Core Components
   * - :mod:`.options.exporting <highcharts_python.options.exporting>`
     - :class:`Exporting <highcharts_python.options.exporting.Exporting>`
       :class:`ExportingAccessibilityOptions <highcharts_python.options.exporting.ExportingAccessibilityOptions>`
-  * - :mod:`.csv <highcharts_python.options.exporting.csv>`
+  * - :mod:`.options.exporting.csv <highcharts_python.options.exporting.csv>`
     - :class:`ExportingCSV <highcharts_python.options.exporting.csv.ExportingCSV>`
       :class:`CSVAnnotationOptions <highcharts_python.options.exporting.csv.CSVAnnotationOptions>`
-  * - :mod:`.exporting.pdf_font <highcharts_python.options.exporting.pdf_font>`
+  * - :mod:`.options.exporting.exporting.pdf_font <highcharts_python.options.exporting.pdf_font>`
     - :class:`PDFFontOptions <highcharts_python.options.exporting.pdf_font.PDFFontOptions>`
   * - :mod:`.options.legend <highcharts_python.options.legend>`
     - :class:`Legend <highcharts_python.options.legend.Legend>`
-  * - accessibility
+  * - :mod:`.options.legend.accessibility <highcharts_python.options.legend.accessibility>`
     - :class:`LegendAccessibilityOptions <highcharts_python.options.legend.accessibility.LegendAccessibilityOptions>`
       :class:`LegendKeyboardNavigation <highcharts_python.options.legend.accessibility.LegendKeyboardNavigation>`
-  * - :mod:`.bubble_legend <highcharts_python.options.legend.bubble_legend>`
+  * - :mod:`.options.legend.bubble_legend <highcharts_python.options.legend.bubble_legend>`
     - :class:`BubbleLegend <highcharts_python.options.legend.bubble_legend.BubbleLegend>`
       :class:`BubbleLegendRange <highcharts_python.options.legend.bubble_legend.BubbleLegendRange>`
       :class:`BubbleLegendLabelOptions <highcharts_python.options.legend.bubble_legend.BubbleLegendLabelOptions>`
-  * - :mod:`.navigation <highcharts_python.options.legend.navigation>`
+  * - :mod:`.options.legend.navigation <highcharts_python.options.legend.navigation>`
     - :class:`LegendNavigation <highcharts_python.options.legend.navigation.LegendNavigation>`
-  * - :mod:`.title <highcharts_python.options.legend.title>`
+  * - :mod:`.options.legend.title <highcharts_python.options.legend.title>`
     - :class:`LegendTitle <highcharts_python.options.legend.title.LegendTitle>`
   * - :mod:`.options.loading <highcharts_python.options.loading>`
     - :class:`Loading <highcharts_python.options.loading.Loading>`
