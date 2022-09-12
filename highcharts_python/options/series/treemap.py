@@ -1,7 +1,7 @@
 from typing import Optional, List
 
 from highcharts_python.options.series.base import SeriesBase
-from highcharts_python.options.series.data.sunburst import TreemapData
+from highcharts_python.options.series.data.treemap import TreemapData
 from highcharts_python.options.plot_options.treemap import TreemapOptions
 from highcharts_python.utility_functions import mro__to_untrimmed_dict
 

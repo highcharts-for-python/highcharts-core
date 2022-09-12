@@ -4,7 +4,7 @@ import pytest
 
 from json.decoder import JSONDecodeError
 
-from highcharts_python.options.series.data.sunburst import TreemapData as cls
+from highcharts_python.options.series.data.treemap import TreemapData as cls
 from highcharts_python.options.series.data.sunburst import SunburstData as cls2
 from highcharts_python import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
