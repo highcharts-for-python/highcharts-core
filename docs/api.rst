@@ -191,9 +191,10 @@ Core Components
   * - :mod:`.options.axes.z_axis <highcharts_python.options.axes.z_axis>`
     - :class:`ZAxis <highcharts_python.options.axes.z_axis.ZAxis>`
   * - :mod:`.options.boost <highcharts_python.options.boost>`
-    -
-  * - :mod:`.caption <highcharts_python.options.caption>`
-    -
+    - :class:`Boost <highcharts_python.options.boost.Boost>`
+      :class:`BoostDebug <highcharts_python.options.boost.BoostDebug>`
+  * - :mod:`.options.caption <highcharts_python.options.caption>`
+    - :class:`Caption <highcharts_python.options.caption.Caption>`
   * - :mod:`.options.chart <highcharts_python.options.chart>`
     -
   * - :mod:`.options.credits <highcharts_python.options.credits>`
