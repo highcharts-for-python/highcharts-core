@@ -128,7 +128,7 @@ Class Structures and Inheritance
   .. seealso::
 
     For a more in-depth discussion of how the anti-pattern was implemented safely and
-    reliably, please review the :doc:`Contributor Guidelines <contributing.rst>`.
+    reliably, please review the :doc:`Contributor Guidelines <contributing>`.
 
 --------------------------
 

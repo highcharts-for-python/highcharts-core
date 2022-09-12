@@ -1,6 +1,7 @@
 
   .. method:: from_js_literal(cls, as_string_or_file, allow_snake_case = True)
     :classmethod:
+    :noindex:
 
     Convert a JavaScript object defined using :term:`JavaScript literal notation` into a
     **Highcharts for Python** Python object, typically descended from
@@ -27,6 +28,7 @@
 
   .. method:: from_json(cls, as_json_or_file, allow_snake_case = True)
     :classmethod:
+    :noindex:
 
     Convert a Highcharts JS object represented as JSON (in either :class:`str <python:str>`
     or :class:`bytes <python:bytes>` form, or as a file name) into a
@@ -52,6 +54,7 @@
 
   .. method:: from_dict(cls, as_dict, allow_snake_case = True)
     :classmethod:
+    :noindex:
 
     Convert a :class:`dict <python:dict>` representation of a Highcharts JS object into a
     Python object representation, typically descended from :class:`HighchartsMeta`.

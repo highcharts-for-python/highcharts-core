@@ -1,5 +1,6 @@
 
   .. method:: to_js_literal(self, filename = None, encoding = 'utf-8')
+    :noindex:
 
     Convert the **Highcharts for Python** instance to Highcharts JS-compatible JavaScript
     code using :term:`JavaScript literal notation`.
@@ -18,6 +19,7 @@
 
 
   .. method:: to_json(self, filename = None, encoding = 'utf-8')
+    :noindex:
 
     Convert the **Highcharts for Python** instance to Highcharts JS-compatible JSON.
 
@@ -51,6 +53,7 @@
 
 
   .. method:: to_dict(self)
+    :noindex:
 
     Convert the **Highcharts for Python** object into a Highcharts JS-compatible
     :class:`dict <python:dict>` object.

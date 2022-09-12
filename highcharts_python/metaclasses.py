@@ -268,8 +268,7 @@ class HighchartsMeta(ABC):
           :class:`bytes <python:bytes>` object depending on the JSON serialization library
           you are using. For example, if your environment has
           `orjson <https://github.com/ijl/orjson>`_, the result will be a
-          :class:`bytes <python:bytes>` representation of the string. For more
-          information, please see :doc:`JSON Serialization and Deserialization`.
+          :class:`bytes <python:bytes>` representation of the string.
 
         :param filename: The name of a file to which the JSON string should be persisted.
           Defaults to :obj:`None <python:None>`
@@ -694,8 +693,7 @@ class JavaScriptDict(UserDict):
           :class:`bytes <python:bytes>` object depending on the JSON serialization library
           you are using. For example, if your environment has
           `orjson <https://github.com/ijl/orjson>`_, the result will be a
-          :class:`bytes <python:bytes>` representation of the string. For more
-          information, please see :doc:`JSON Serialization and Deserialization`.
+          :class:`bytes <python:bytes>` representation of the string.
 
         :param filename: The name of a file to which the JSON string should be persisted.
           Defaults to :obj:`None <python:None>`

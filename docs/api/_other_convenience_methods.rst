@@ -1,5 +1,6 @@
 
   .. method:: copy(self, other, overwrite = True, **kwargs)
+    :noindex:
 
     Copy the properties from ``self`` to ``other``.
 
