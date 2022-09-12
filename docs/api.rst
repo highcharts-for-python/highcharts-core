@@ -196,7 +196,16 @@ Core Components
   * - :mod:`.options.caption <highcharts_python.options.caption>`
     - :class:`Caption <highcharts_python.options.caption.Caption>`
   * - :mod:`.options.chart <highcharts_python.options.chart>`
-    -
+    - :class:`ChartOptions <highcharts_python.options.chart.ChartOptions>`
+      :class:`PanningOptions <highcharts_python.options.chart.PanningOptions>`
+  * - :mod:`.options_3d <highcharts_python.options.chart.options_3d>`
+    - :class:`Options3D <highcharts_python.options.chart.options_3d.Options3D>`
+      :class:`Frame <highcharts_python.options.chart.options_3d.Frame>`
+      :class:`PanelOptions <highcharts_python.options.chart.options_3d.PanelOptions>`
+  * - :mod:`.reset_zoom_button <highcharts_python.options.chart.reset_zoom_button>`
+    - :class:`ResetZoomButtonOptions <highcharts_python.options.chart.reset_zoom_button.ResetZoomButtonOptions>`
+  * - :mod:`.scrollable_plot_area <highcharts_python.options.chart.scrollable_plot_area>`
+    - :class:`ScrollablePlotArea <highcharts_python.options.chart.scrollable_plot_area.ScrollablePlotArea>`
   * - :mod:`.options.credits <highcharts_python.options.credits>`
     -
   * - :mod:`.options.data <highcharts_python.options.data>`
