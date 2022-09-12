@@ -144,10 +144,6 @@ class PlotOptions(HighchartsMeta):
           :alt: Arc Diagram Example Chart
           :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`ArcDiagramOptions.type` setting must always be set.
-
         :rtype: :class:`ArcDiagramOptions` or :obj:`None <python:None>`
         """
         return self._arcdiagram
@@ -164,10 +160,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/area-example.png
           :alt: Area Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`AreaOptions.type` setting must always be set.
 
         :rtype: :class:`AreaOptions` or :obj:`None <python:None>`
         """
@@ -188,10 +180,6 @@ class PlotOptions(HighchartsMeta):
           :alt: AreaRange Example Chart
           :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`AreaRangeOptions.type` setting must always be set.
-
         :rtype: :class:`AreaRangeOptions` or :obj:`None <python:None>`
         """
         return self._arearange
@@ -210,10 +198,6 @@ class PlotOptions(HighchartsMeta):
           :alt: AreaSpline Example Chart
           :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`AreaSplineOptions.type` setting must always be set.
-
         :rtype: :class:`AreaSplineOptions` or :obj:`None <python:None>`
         """
         return self._areaspline
@@ -229,11 +213,6 @@ class PlotOptions(HighchartsMeta):
         range series is a carteseian series type with higher and lower Y values along an X
         axis. The area inside the range is colored, and the graph outlining the area is a
         smoothed spline.
-
-        .. note::
-
-          In TypeScript the :meth:`AreaSplineRangeOptions.type` setting must always be
-          set.
 
         :rtype: :class:`AreaSplineRangeOptions` or :obj:`None <python:None>`
         """
@@ -252,10 +231,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/bar-example.png
           :alt: Bar Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`BarOptions.type` setting must always be set.
 
         :rtype: :class:`BarOptions` or :obj:`None <python:None>`
         """
@@ -277,10 +252,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/bellcurve-example.png
           :alt: Bell Curve Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`BellCurveOptions.type` setting must always be set.
 
         :rtype: :class:`BellCurveOptions` or :obj:`None <python:None>`
         """
@@ -308,10 +279,6 @@ class PlotOptions(HighchartsMeta):
           :alt: Box Plot Example Chart
           :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`BoxPlotOptions.type` setting must always be set.
-
         :rtype: :class:`BoxPlotOptions` or :obj:`None <python:None>`
         """
         return self._boxplot
@@ -334,10 +301,6 @@ class PlotOptions(HighchartsMeta):
           :alt: Bubble Example Chart
           :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`BubbleOptions.type` setting must always be set.
-
         :rtype: :class:`BubbleOptions` or :obj:`None <python:None>`
         """
         return self._bubble
@@ -359,10 +322,6 @@ class PlotOptions(HighchartsMeta):
           :alt: Bullet Example Chart
           :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`BulletOptions.type` setting must always be set.
-
         :rtype: :class:`BulletOptions` or :obj:`None <python:None>`
         """
         return self._bullet
@@ -381,10 +340,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/column-example.png
           :alt: Column Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`ColumnOptions.type` setting must always be set.
 
         :rtype: :class:`ColumnOptions` or :obj:`None <python:None>`
         """
@@ -425,10 +380,6 @@ class PlotOptions(HighchartsMeta):
               :alt: Stacked and Inverted Column Pyramid Example Chart
               :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`ColumnPyramidOptions.type` setting must always be set.
-
         :rtype: :class:`ColumnPyramidOptions` or :obj:`None <python:None>`
         """
         return self._columnpyramid
@@ -463,10 +414,6 @@ class PlotOptions(HighchartsMeta):
               :alt: Inverted Column Range Example Chart
               :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`ColumnRangeOptions.type` setting must always be set.
-
         :rtype: :class:`ColumnRangeOptions` or :obj:`None <python:None>`
         """
         return self._columnrange
@@ -487,10 +434,6 @@ class PlotOptions(HighchartsMeta):
           :alt: Cylinder Example Chart
           :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`CylinderOptions.type` setting must always be set.
-
         :rtype: :class:`CylinderOptions` or :obj:`None <python:None>`
         """
         return self._cylinder
@@ -510,11 +453,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/dependencywheel-example.png
           :alt: Dependency Wheel Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`DependencyWheelOptions.type` setting must always be
-          set.
 
         :rtype: :class:`DependencyWheelOptions` or :obj:`None <python:None>`
         """
@@ -541,10 +479,6 @@ class PlotOptions(HighchartsMeta):
           Requires ``highcharts-more.js`` and ``modules/dumbbell.js`` be loaded
           client-side.
 
-        .. note::
-
-          In TypeScript the :meth:`DumbbellOptions.type` setting must always be set.
-
         :rtype: :class:`DumbbellOptions` or :obj:`None <python:None>`
         """
         return self._dumbbell
@@ -564,10 +498,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/errorbar-example.png
           :alt: Error Bar Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`ErrorBarOptions.type` setting must always be set.
 
         :rtype: :class:`ErrorBarOptions` or :obj:`None <python:None>`
         """
@@ -592,10 +522,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/funnel-example.png
           :alt: Funnel Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`FunnelOptions.type` setting must always be set.
 
         :rtype: :class:`FunnelOptions` or :obj:`None <python:None>`
         """
@@ -626,10 +552,6 @@ class PlotOptions(HighchartsMeta):
           :alt: Funnel 3D Example Chart
           :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`FunnelOptions.type` setting must always be set.
-
         :rtype: :class:`FunnelOptions` or :obj:`None <python:None>`
         """
         return self._funnel_3d
@@ -649,10 +571,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/gauge-example.png
           :alt: Gauge Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`GaugeOptions.type` setting must always be set.
 
         :rtype: :class:`GaugeOptions` or :obj:`None <python:None>`
         """
@@ -678,10 +596,6 @@ class PlotOptions(HighchartsMeta):
           :alt: Heatmap Example Chart
           :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`HeatmapOptions.type` setting must always be set.
-
         :rtype: :class:`HeatmapOptions` or :obj:`None <python:None>`
         """
         return self._heatmap
@@ -701,10 +615,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/histogram-example.png
           :alt: Histogram Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`HistogramOptions.type` setting must always be set.
 
         :rtype: :class:`HistogramOptions` or :obj:`None <python:None>`
         """
@@ -747,10 +657,6 @@ class PlotOptions(HighchartsMeta):
               :alt: Item Example Chart with Symbols
               :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`ItemOptions.type` setting must always be set.
-
         :rtype: :class:`ItemOptions` or :obj:`None <python:None>`
         """
         return self._item
@@ -770,10 +676,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/line-example.png
           :alt: Line Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`LineOptions.type` setting must always be set.
 
         :rtype: :class:`LineOptions` or :obj:`None <python:None>`
         """
@@ -800,10 +702,6 @@ class PlotOptions(HighchartsMeta):
           :alt: Lollipop Example Chart
           :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`LollipopOptions.type` setting must always be set.
-
         :rtype: :class:`LollipopOptions` or :obj:`None <python:None>`
         """
         return self._lollipop
@@ -823,10 +721,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/networkgraph-example.png
           :alt: NetworkGraph Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`NetworkGraphOptions.type` setting must always be set.
 
         :rtype: :class:`NetworkGraphOptions` or :obj:`None <python:None>`
         """
@@ -857,10 +751,6 @@ class PlotOptions(HighchartsMeta):
             .. figure:: ../../../_static/organization-example-horizontal.png
               :alt: Horizontal Organization Example Chart
               :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`OrganizationOptions.type` setting must always be set.
 
         :rtype: :class:`OrganizationOptions` or :obj:`None <python:None>`
         """
@@ -893,10 +783,6 @@ class PlotOptions(HighchartsMeta):
               :alt: Split Packed Bubble Example Chart
               :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`PackedBubbleOptions.type` setting must always be set.
-
         :rtype: :class:`PackedBubbleOptions` or :obj:`None <python:None>`
         """
         return self._packedbubble
@@ -917,10 +803,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/pareto-example.png
           :alt: Pareto Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`ParetoOptions.type` setting must always be set.
 
         :rtype: :class:`ParetoOptions` or :obj:`None <python:None>`
         """
@@ -952,10 +834,6 @@ class PlotOptions(HighchartsMeta):
               :alt: Donut Example Chart
               :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`PieOptions.type` setting must always be set.
-
         :rtype: :class:`PieOptions` or :obj:`None <python:None>`
         """
         return self._pie
@@ -978,10 +856,6 @@ class PlotOptions(HighchartsMeta):
           :alt: Polygon Example Chart
           :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`PolygonOptions.type` setting must always be set.
-
         :rtype: :class:`PolygonOptions` or :obj:`None <python:None>`
         """
         return self._polygon
@@ -1002,10 +876,6 @@ class PlotOptions(HighchartsMeta):
           :alt: Pyramid Example Chart
           :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`PyramidOptions.type` setting must always be set.
-
         :rtype: :class:`PyramidOptions` or :obj:`None <python:None>`
         """
         return self._pyramid
@@ -1025,10 +895,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/pyramid_3d-example.png
           :alt: Pyramid 3D Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`Pyramid3DOptions.type` setting must always be set.
 
         :rtype: :class:`Pyramid3DOptions` or :obj:`None <python:None>`
         """
@@ -1066,10 +932,6 @@ class PlotOptions(HighchartsMeta):
               :alt: Sankey Example Chart with Outgoing Links
               :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`SankeyOptions.type` setting must always be set.
-
         :rtype: :class:`SankeyOptions` or :obj:`None <python:None>`
         """
         return self._sankey
@@ -1089,10 +951,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/scatter-example.png
           :alt: Scatter Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`ScatterOptions.type` setting must always be set.
 
         :rtype: :class:`ScatterOptions` or :obj:`None <python:None>`
         """
@@ -1114,10 +972,6 @@ class PlotOptions(HighchartsMeta):
           :alt: Scatter 3D Example Chart
           :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`Scatter3DOptions.type` setting must always be set.
-
         :rtype: :class:`Scatter3DOptions` or :obj:`None <python:None>`
         """
         return self._scatter_3d
@@ -1130,10 +984,6 @@ class PlotOptions(HighchartsMeta):
     @property
     def series(self) -> Optional[SeriesOptions]:
         """General options to apply to all series types.
-
-        .. note::
-
-          In TypeScript the :meth:`SeriesOptions.type` setting must always be set.
 
         :rtype: :class:`ScatterOptions` or :obj:`None <python:None>`
         """
@@ -1155,10 +1005,6 @@ class PlotOptions(HighchartsMeta):
           :alt: SolidGauge Example Chart
           :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`SolidGaugeOptions.type` setting must always be set.
-
         :rtype: :class:`SolidGaugeOptions` or :obj:`None <python:None>`
         """
         return self._solidgauge
@@ -1178,10 +1024,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/spline-example.png
           :alt: Spline Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`SplineOptions.type` setting must always be set.
 
         :rtype: :class:`SplineOptions` or :obj:`None <python:None>`
         """
@@ -1203,10 +1045,6 @@ class PlotOptions(HighchartsMeta):
           :alt: StreamGraph Example Chart
           :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`StreamGraphOptions.type` setting must always be set.
-
         :rtype: :class:`StreamGraphOptions` or :obj:`None <python:None>`
         """
         return self._streamgraph
@@ -1227,10 +1065,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/sunburst-example.png
           :alt: Sunburst Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`SunburstOptions.type` setting must always be set.
 
         :rtype: :class:`SunburstOptions` or :obj:`None <python:None>`
         """
@@ -1267,10 +1101,6 @@ class PlotOptions(HighchartsMeta):
               :alt: Tilemap Example Chart
               :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`TilemapOptions.type` setting must always be set.
-
         :rtype: :class:`TilemapOptions` or :obj:`None <python:None>`
         """
         return self._tilemap
@@ -1306,10 +1136,6 @@ class PlotOptions(HighchartsMeta):
               :alt: Timeline Example Chart with Datetime Axis
               :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`TimelineOptions.type` setting must always be set.
-
         :rtype: :class:`TimelineOptions` or :obj:`None <python:None>`
         """
         return self._timeline
@@ -1329,10 +1155,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/treemap-example.png
           :alt: Treemap Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`TreemapOptions.type` setting must always be set.
 
         :rtype: :class:`TreemapOptions` or :obj:`None <python:None>`
         """
@@ -1354,10 +1176,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/variablepie-example.png
           :alt: Variable Pie Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`VariablePieOptions.type` setting must always be set.
 
         :rtype: :class:`VariablePieOptions` or :obj:`None <python:None>`
         """
@@ -1395,10 +1213,6 @@ class PlotOptions(HighchartsMeta):
               :alt: Variwide Example Chart
               :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`VariwideOptions.type` setting must always be set.
-
         :rtype: :class:`VariwideOptions` or :obj:`None <python:None>`
         """
         return self._variwide
@@ -1418,10 +1232,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/vector-example.png
           :alt: Vector Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`VectorOptions.type` setting must always be set.
 
         :rtype: :class:`VectorOptions` or :obj:`None <python:None>`
         """
@@ -1455,10 +1265,6 @@ class PlotOptions(HighchartsMeta):
             .. figure:: ../../../_static/venn-example-euler.png
               :alt: Euler Example Chart
               :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`VennOptions.type` setting must always be set.
 
         :rtype: :class:`VennOptions` or :obj:`None <python:None>`
         """
@@ -1496,10 +1302,6 @@ class PlotOptions(HighchartsMeta):
               :alt: Waterfall Example Chart
               :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`WaterfallOptions.type` setting must always be set.
-
         :rtype: :class:`WaterfallOptions` or :obj:`None <python:None>`
         """
         return self._waterfall
@@ -1521,10 +1323,6 @@ class PlotOptions(HighchartsMeta):
           :alt: Wind Barb Example Chart
           :align: center
 
-        .. note::
-
-          In TypeScript the :meth:`WindBarbOptions.type` setting must always be set.
-
         :rtype: :class:`WindBarbOptions` or :obj:`None <python:None>`
         """
         return self._windbarb
@@ -1544,10 +1342,6 @@ class PlotOptions(HighchartsMeta):
         .. figure:: ../../../_static/wordcloud-example.png
           :alt: Wordcloud Example Chart
           :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`WordcloudOptions.type` setting must always be set.
 
         :rtype: :class:`WordcloudOptions` or :obj:`None <python:None>`
         """
@@ -1578,10 +1372,6 @@ class PlotOptions(HighchartsMeta):
             .. figure:: ../../../_static/xrange-example-inverted.png
               :alt: Inverted X-Range Example Chart
               :align: center
-
-        .. note::
-
-          In TypeScript the :meth:`XRangeOptions.type` setting must always be set.
 
         :rtype: :class:`XRangeOptions` or :obj:`None <python:None>`
         """
