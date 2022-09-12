@@ -30,26 +30,26 @@ These methods are the "workhorses" of **Highcharts for Python** and you will be 
 heavily on them when using the library. Thankfully, their signatures and behavior is
 generally consistent - even if what happens "under the hood" is class-specific at times.
 
-.. _deserialization_methods:
-
 Deserialization Methods
 ---------------------------
 
 .. include:: api/_deserialization_methods.rst
-
-.. _serialization_methods:
 
 Serialization Methods
 --------------------------
 
 .. include:: api/_serialization_methods.rst
 
-.. _other_methods:
-
 Other Convenience Methods
 ------------------------------
 
 .. include:: api/_other_convenience_methods.rst
+
+Handling Default Values
+===============================
+
+.. include:: api/_handling_defaults.rst
+
 
 Module Structure
 =====================
@@ -60,6 +60,26 @@ Class Structures and Inheritance
 ====================================
 
 .. include:: api/_class_structures.rst
+
+.. warning::
+
+  Certain sections of the **Highcharts for Python** library - in particular the
+  ``options.series`` classes - rely heavily on multiple inheritance. This is a known
+  anti-pattern in Python development as it runs the risk of encountering the
+  :term:`diamond of death` inheritance problem. This complicates the process of inheriting
+  methods or properties from parent classes when properties or methods share names
+  across multiple parents.
+
+  I know this is an anti-pattern, but it was a necessary one to minimize code duplication
+  and maximize consistency. For that reason, I implemented it properly *despite* the
+  anti-pattern, using some advanced Python concepts to navigate the Python MRO
+  (Method Resolution Order) system cleanly. However, an awareness of the pattern used
+  may prove helpful if your code inherits from the Highcharts for Python classes.
+
+  .. seealso::
+
+    For a more in-depth discussion of how the anti-pattern was implemented safely and
+    reliably, please review the :doc:`Contributor Guidelines <contributing.rst>`.
 
 --------------------------
 

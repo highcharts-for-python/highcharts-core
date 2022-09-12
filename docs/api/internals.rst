@@ -26,6 +26,7 @@ class: :class:`HighchartsMeta <highcharts_python.metaclasses.HighchartsMeta>`
 .. autoclass:: HighchartsMeta
   :members:
   :inherited-members:
+  :private-members:
 
   .. collapse:: Class Inheritance
 
@@ -40,6 +41,7 @@ class: :class:`JavaScriptDict <highcharts_python.metaclasses.JavaScriptDict>`
 .. autoclass:: JavaScriptDict
   :members:
   :inherited-members:
+  :private-members:
 
   .. collapse:: Class Inheritance
 

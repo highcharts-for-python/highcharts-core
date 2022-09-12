@@ -20,23 +20,3 @@ components.
 
     For more details, please review the :doc:`API documentation <api>`, in particular the
     class inheritance diagram included for each documented class.
-
-.. warning::
-
-  Certain sections of the **Highcharts for Python** library - in particular the
-  ``options.series`` classes - rely heavily on multiple inheritance. This is a known
-  anti-pattern in Python development as it runs the risk of encountering the
-  :term:`diamond of death` inheritance problem. This complicates the process of inheriting
-  methods or properties from parent classes when properties or methods share names
-  across multiple parents.
-
-  I know this is an anti-pattern, but it was a necessary one to minimize code duplication
-  and maximize consistency. For that reason, I implemented it properly *despite* the
-  anti-pattern, using some advanced Python concepts to navigate the Python MRO
-  (Method Resolution Order) system cleanly. However, an awareness of the pattern used
-  may prove helpful if your code inherits from the Highcharts for Python classes.
-
-  .. seealso::
-
-    For a more in-depth discussion of how the anti-pattern was implemented safely and
-    reliably, please review the :doc:`Contributor Guidelines <contributing.rst>`.
