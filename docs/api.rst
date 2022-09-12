@@ -207,39 +207,45 @@ Core Components
   * - :mod:`.scrollable_plot_area <highcharts_python.options.chart.scrollable_plot_area>`
     - :class:`ScrollablePlotArea <highcharts_python.options.chart.scrollable_plot_area.ScrollablePlotArea>`
   * - :mod:`.options.credits <highcharts_python.options.credits>`
-    -
+    - :class:`Credits <highcharts_python.options.credits.Credits>`
+      :class:`CreditStyleOptions <highcharts_python.options.credits.CreditStyleOptions>`
   * - :mod:`.options.data <highcharts_python.options.data>`
-    -
+    - :class:`Data <highcharts_python.options.data.Data>`
   * - :mod:`.options.defs <highcharts_python.options.defs>`
-    -
+    - :class:`MarkerDefinition <highcharts_python.options.defs.MarkerDefinition>`
+      :class:`MarkerASTNode <highcharts_python.options.defs.MarkerASTNode>`
+      :class:`MarkerAttributeObject <highcharts_python.options.defs.MarkerAttributeObject>`
   * - :mod:`.options.drilldown <highcharts_python.options.drilldown>`
-    -
+    - :class:`Drilldown <highcharts_python.options.drilldown.Drilldown>`
   * - :mod:`.options.exporting <highcharts_python.options.exporting>`
     -
   * - :mod:`.options.legend <highcharts_python.options.legend>`
     -
   * - :mod:`.options.loading <highcharts_python.options.loading>`
-    -
+    - :class:`Loading <highcharts_python.options.loading.Loading>`
   * - :mod:`.options.navigation <highcharts_python.options.navigation>`
     -
   * - :mod:`.options.no_data <highcharts_python.options.no_data>`
-    -
+    - :class:`NoData <highcharts_python.options.no_data.NoData>`
   * - :mod:`.options.pane <highcharts_python.options.pane>`
-    -
+    - :class:`Pane <highcharts_python.options.pane.Pane>`
+      :class:`PaneBackground <highcharts_python.options.pane.PaneBackground>`
   * - :mod:`.options.plot_options <highcharts_python.options.plot_options>`
     -
   * - :mod:`.options.responsive <highcharts_python.options.responsive>`
-    -
+    - :class:`Responsive <highcharts_python.options.responsive.Responsive>`
+      :class:`ResponsiveRules <highcharts_python.options.responsive.ResponsiveRules>`
+      :class:`Condition <highcharts_python.options.responsive.Condition>`
   * - :mod:`.options.series <highcharts_python.options.series>`
     -
   * - :mod:`.options.subtitle <highcharts_python.options.subtitle>`
-    -
+    - :class:`Subtitle <highcharts_python.options.subtitle.Subtitle>`
   * - :mod:`.options.time <highcharts_python.options.time>`
-    -
+    - :class:`Time <highcharts_python.options.time.Time>`
   * - :mod:`.options.title <highcharts_python.options.title>`
     -
   * - :mod:`.options.tooltips <highcharts_python.options.tooltips>`
-    -
+    - :class:`Tooltip <highcharts_python.options.tooltips.Tooltip>`
   * - :mod:`.utility_classes <highcharts_python.utility_classes>`
     -
 
