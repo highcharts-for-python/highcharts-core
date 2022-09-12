@@ -241,7 +241,14 @@ Core Components
   * - :mod:`.options.loading <highcharts_python.options.loading>`
     - :class:`Loading <highcharts_python.options.loading.Loading>`
   * - :mod:`.options.navigation <highcharts_python.options.navigation>`
-    -
+    - :class:`Navigation <highcharts_python.options.navigation.Navigation>`
+  * - :mod:`.bindings <highcharts_python.options.navigation.bindings>`
+    - :class:`Bindings <highcharts_python.options.navigation.bindings.Bindings>`
+      :class:`RectangleAnnotationBinding <highcharts_python.options.navigation.bindings.RectangleAnnotationBinding>`
+      :class:`LabelAnnotationBinding <highcharts_python.options.navigation.bindings.LabelAnnotationBinding>`
+      :class:`EllipseAnnotationBinding <highcharts_python.options.navigation.bindings.EllipseAnnotationBinding>`
+      :class:`CircleAnnotationBinding <highcharts_python.options.navigation.bindings.CircleAnnotationBinding>`
+      :class:`Binding <highcharts_python.options.navigation.bindings.Binding>`
   * - :mod:`.options.no_data <highcharts_python.options.no_data>`
     - :class:`NoData <highcharts_python.options.no_data.NoData>`
   * - :mod:`.options.pane <highcharts_python.options.pane>`
