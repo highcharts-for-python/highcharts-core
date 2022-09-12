@@ -1,7 +1,7 @@
 """Collection of utility functions used across the library."""
 import csv
 
-from validator_collection import validators, checkers
+from validator_collection import validators
 
 from highcharts_python import errors
 

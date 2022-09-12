@@ -45,6 +45,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx_tabs.tabs',
     'sphinx_toolbox.shields',
+    'sphinx_toolbox.decorators',
     'sphinx_toolbox.issues',
     'sphinx_toolbox.formatting',
     'sphinx_toolbox.collapse',

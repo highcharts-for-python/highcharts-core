@@ -63,7 +63,7 @@ Class Structures and Inheritance
 
 --------------------------
 
-.. _module_toc:
+.. _core_components:
 
 ********************************
 Core Components
@@ -614,6 +614,42 @@ Core Components
 Library Internals
 *********************
 
-.. todo::
+.. toctree::
+  :hidden:
 
-  Add navigation for library internals.
+  Internal Reference <api/internals>
+
+While most users will be interacting with the :doc:`Core Components <core_components>` of
+**Highcharts for Python**, you may need (or choose to) work with various internals of the
+library. If you're :doc:`contributing` to the library, then you will definitely need to
+familiarize yourself with these internals.
+
+.. list-table::
+  :widths: 60 40
+  :header-rows: 1
+
+  * - Module
+    - Classes / Functions
+  * - :mod:`.metaclasses <highcharts_python.metaclasses>`
+    - :class:`HighchartsMeta <highcharts_python.metaclasses.HighchartsMeta>`
+      :class:`JavaScriptDict <highcharts_python.metaclasses.JavaScriptDict>`
+  * - :mod:`.decorators <highcharts_python.decorators>`
+    - :deco:`@class_sensitive() <highcharts_python.decorators.class_sensitive>`
+      :func:`validate_types() <highcharts_python.decorators.validate_types>`
+  * - :mod:`.js_literal_functions <highcharts_python.js_literal_functions>`
+    - :func:`serialize_to_js_literal() <highcharts_python.js_literal_functions.serialize_to_js_literal>`
+      :func:`attempt_variable_declaration() <highcharts_python.js_literal_functions.attempt_variable_declaration>`
+      :func:`is_js_function_or_class() <highcharts_python.js_literal_functions.is_js_function_or_class>`
+      :func:`get_js_literal() <highcharts_python.js_literal_functions.get_js_literal>`
+      :func:`assemble_js_literal() <highcharts_python.js_literal_functions.assemble_js_literal>`
+      :func:`convert_js_literal_to_python() <highcharts_python.js_literal_functions.convert_js_literal_to_python>`
+      :func:`convert_js_property_to_python() <highcharts_python.js_literal_functions.convert_js_property_to_python>`
+      :func:`convert_js_to_python() <highcharts_python.js_literal_functions.convert_js_to_python>`
+      :func:`get_key_value_pairs() <highcharts_python.js_literal_functions.get_key_value_pairs>`
+  * - :mod:`.utility_functions <highcharts_python.utility_functions>`
+    - :func:`mro_to_dict() <highcharts_python.utility_functions.mro_to_dict>`
+      :func:`get_remaining_mro() <highcharts_python.utility_functions.get_remaining_mro>`
+      :func:`mro__to_untrimmed_dict() <highcharts_python.utility_functions.mro__to_untrimmed_dict>`
+      :func:`validate_color() <highcharts_python.utility_functions.validate_color>`
+      :func:`to_camelCase() <highcharts_python.utility_functions.to_camelCase>`
+      :func:`parse_csv() <highcharts_python.utility_functions.parse_csv>`
