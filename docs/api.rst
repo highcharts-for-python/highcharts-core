@@ -272,6 +272,77 @@ Core Components
     - :class:`Tooltip <highcharts_python.options.tooltips.Tooltip>`
   * - :mod:`.utility_classes <highcharts_python.utility_classes>`
     -
+  * - :mod:`.utility_classes.animation <highcharts_python.utility_classes.animation>`
+    - :class:`AnimationOptions <highcharts_python.utility_classes.animation.AnimationOptions>`
+  * - :mod:`.utility_classes.ast <highcharts_python.utility_classes.ast>`
+    - :class:`ASTMap <highcharts_python.utility_classes.ast.ASTMap>`
+      :class:`ASTNode <highcharts_python.utility_classes.ast.ASTNode>`
+      :class:`TextPath <highcharts_python.utility_classes.ast.TextPath>`
+      :class:`AttributeObject <highcharts_python.utility_classes.ast.AttributeObject>`
+  * - :mod:`.utility_classes.breadcrumbs <highcharts_python.utility_classes.breadcrumbs>`
+    - :class:`BreadcrumbOptions <highcharts_python.utility_classes.breadcrumbs.BreadcrumbOptions>`
+      :class:`Separator <highcharts_python.utility_classes.breadcrumbs.Separator>`
+  * - :mod:`.utility_classes.buttons <highcharts_python.utility_classes.buttons>`
+    - :class:`ExportingButtons <highcharts_python.utility_classes.buttons.ExportingButtons>`
+      :class:`ContextButtonConfiguration <highcharts_python.utility_classes.buttons.ContextButtonConfiguration>`
+      :class:`ButtonConfiguration <highcharts_python.utility_classes.buttons.ButtonConfiguration>`
+      :class:`ButtonTheme <highcharts_python.utility_classes.buttons.ButtonTheme>`
+  * - :mod:`.utility_classes.clusters <highcharts_python.utility_classes.clusters>`
+    - :class:`ClusterOptions <highcharts_python.utility_classes.clusters.ClusterOptions>`
+      :class:`VectorLayoutAlgorithm <highcharts_python.utility_classes.clusters.VectorLayoutAlgorithm>`
+  * - :mod:`.utility_classes.data_grouping <highcharts_python.utility_classes.data_grouping>`
+    - :class:`DataGroupingOptions <highcharts_python.utility_classes.data_grouping.DataGroupingOptions>`
+  * - :mod:`.utility_classes.data_labels <highcharts_python.utility_classes.data_labels>`
+    - :class:`DataLabel <highcharts_python.utility_classes.data_labels.DataLabel>`
+      :class:`NodeDataLabel <highcharts_python.utility_classes.data_labels.NodeDataLabel>`
+      :class:`Filter <highcharts_python.utility_classes.data_labels.Filter>`
+  * - :mod:`.utility_classes.date_time_label_formats <highcharts_python.utility_classes.date_time_label_formats>`
+    - :class:`DateTimeLabelFormats <highcharts_python.utility_classes.date_time_label_formats.DateTimeLabelFormats>`
+  * - :mod:`.utility_classes.events <highcharts_python.utility_classes.events>`
+    - :class:`ChartEvents <highcharts_python.utility_classes.events.ChartEvents>`
+      :class:`BreadcrumbEvents <highcharts_python.utility_classes.events.BreadcrumbEvents>`
+      :class:`NavigationEvents <highcharts_python.utility_classes.events.NavigationEvents>`
+      :class:`PointEvents <highcharts_python.utility_classes.events.PointEvents>`
+      :class:`SeriesEvents <highcharts_python.utility_classes.events.SeriesEvents>`
+      :class:`ClusterEvents <highcharts_python.utility_classes.events.ClusterEvents>`
+      :class:`AxisEvents <highcharts_python.utility_classes.events.AxisEvents>`
+      :class:`MouseEvents <highcharts_python.utility_classes.events.MouseEvents>`
+  * - :mod:`.utility_classes.gradients <highcharts_python.utility_classes.gradients>`
+    - :class:`Gradient <highcharts_python.utility_classes.gradients.Gradient>`
+      :class:`LinearGradient <highcharts_python.utility_classes.gradients.LinearGradient>`
+      :class:`RadialGradient <highcharts_python.utility_classes.gradients.RadialGradient>`
+  * - :mod:`.utility_classes.javascript_functions <highcharts_python.utility_classes.javascript_functions>`
+    - :class:`CallbackFunction <highcharts_python.utility_classes.javascript_functions.CallbackFunction>`
+      :class:`JavaScriptClass <highcharts_python.utility_classes.javascript_functions.JavaScriptClass>`
+  * - :mod:`.utility_classes.jitter <highcharts_python.utility_classes.jitter>`
+    - :class:`Jitter <highcharts_python.utility_classes.jitter.Jitter>`
+  * - :mod:`.utility_classes.markers <highcharts_python.utility_classes.markers>`
+    - :class:`Marker <highcharts_python.utility_classes.markers.Marker>`
+  * - :mod:`.utility_classes.menus <highcharts_python.utility_classes.menus>`
+    - :class:`MenuObject <highcharts_python.utility_classes.menus.MenuObject>`
+      :class:`MenuItem <highcharts_python.utility_classes.menus.MenuItem>`
+  * - :mod:`.utility_classes.nodes <highcharts_python.utility_classes.nodes>`
+    - :class:`NodeOptions <highcharts_python.utility_classes.nodes.NodeOptions>`
+      :class:`DependencyWheelNodeOptions <highcharts_python.utility_classes.nodes.DependencyWheelNodeOptions>`
+      :class:`OrganizationNodeOptions <highcharts_python.utility_classes.nodes.OrganizationNodeOptions>`
+  * - :mod:`.utility_classes.partial_fill <highcharts_python.utility_classes.partial_fill>`
+    - :class:`PartialFillOptions <highcharts_python.utility_classes.partial_fill.PartialFillOptions>`
+  * - :mod:`.utility_classes.patterns <highcharts_python.utility_classes.patterns>`
+    - :class:`Pattern <highcharts_python.utility_classes.patterns.Pattern>`
+      :class:`PatternOptions <highcharts_python.utility_classes.patterns.PatternOptions>`
+  * - :mod:`.utility_classes.position <highcharts_python.utility_classes.position>`
+    - :class:`Position <highcharts_python.utility_classes.position.Position>`
+  * - :mod:`.utility_classes.shadows <highcharts_python.utility_classes.shadows>`
+    - :class:`ShadowOptions <highcharts_python.utility_classes.shadows.ShadowOptions>`
+  * - :mod:`.utility_classes.states <highcharts_python.utility_classes.states>`
+    - :class:`States <highcharts_python.utility_classes.states.States>`
+      :class:`HoverState <highcharts_python.utility_classes.states.HoverState>`
+      :class:`InactiveState <highcharts_python.utility_classes.states.InactiveState>`
+      :class:`NormalState <highcharts_python.utility_classes.states.NormalState>`
+      :class:`SelectState <highcharts_python.utility_classes.states.SelectState>`
+  * - :mod:`.utility_classes.zones <highcharts_python.utility_classes.zones>`
+    - :class:`Zone <highcharts_python.utility_classes.zones.Zone>`
+      :class:`ClusterZone <highcharts_python.utility_classes.zones.ClusterZone>`
 
 .. toctree::
   :hidden:
