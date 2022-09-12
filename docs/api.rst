@@ -267,7 +267,7 @@ Core Components
   * - :mod:`.options.time <highcharts_python.options.time>`
     - :class:`Time <highcharts_python.options.time.Time>`
   * - :mod:`.options.title <highcharts_python.options.title>`
-    -
+    - :class:`Title <highcharts_python.options.title.Title>`
   * - :mod:`.options.tooltips <highcharts_python.options.tooltips>`
     - :class:`Tooltip <highcharts_python.options.tooltips.Tooltip>`
   * - :mod:`.utility_classes <highcharts_python.utility_classes>`
