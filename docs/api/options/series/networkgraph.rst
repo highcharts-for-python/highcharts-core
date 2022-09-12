@@ -26,21 +26,3 @@ class: :class:`NetworkGraphSeries <highcharts_python.options.series.networkgraph
       :parts: -1
 
   |
-
-----------------
-
-********************************************************************************************************************
-class: :class:`LayoutAlgorithm <highcharts_python.options.series.networkgraph.LayoutAlgorithm>`
-********************************************************************************************************************
-
-.. autoclass:: LayoutAlgorithm
-  :members:
-  :inherited-members:
-
-  .. collapse:: Class Inheritance
-
-    .. inheritance-diagram:: LayoutAlgorithm
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
-      :parts: -1
-
-  |

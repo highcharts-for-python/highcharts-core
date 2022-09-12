@@ -26,21 +26,3 @@ class: :class:`BulletSeries <highcharts_python.options.series.bullet.BulletSerie
       :parts: -1
 
   |
-
-----------------
-
-********************************************************************************************************************
-class: :class:`TargetSeries <highcharts_python.options.series.bullet.TargetSeries>`
-********************************************************************************************************************
-
-.. autoclass:: TargetSeries
-  :members:
-  :inherited-members:
-
-  .. collapse:: Class Inheritance
-
-    .. inheritance-diagram:: TargetSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
-      :parts: -1
-
-  |

@@ -26,21 +26,3 @@ class: :class:`PackedBubbleSeries <highcharts_python.options.series.packedbubble
       :parts: -1
 
   |
-
--------------
-
-********************************************************************************************************************
-class: :class:`ParentNodeSeries <highcharts_python.options.series.packedbubble.ParentNodeSeries>`
-********************************************************************************************************************
-
-.. autoclass:: ParentNodeSeries
-  :members:
-  :inherited-members:
-
-  .. collapse:: Class Inheritance
-
-    .. inheritance-diagram:: ParentNodeSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
-      :parts: -1
-
-  |

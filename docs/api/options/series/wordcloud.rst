@@ -26,21 +26,3 @@ class: :class:`WordcloudSeries <highcharts_python.options.series.wordcloud.Wordc
       :parts: -1
 
   |
-
-------------------
-
-********************************************************************************************************************
-class: :class:`RotationSeries <highcharts_python.options.series.wordcloud.RotationSeries>`
-********************************************************************************************************************
-
-.. autoclass:: RotationSeries
-  :members:
-  :inherited-members:
-
-  .. collapse:: Class Inheritance
-
-    .. inheritance-diagram:: RotationSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
-      :parts: -1
-
-  |
