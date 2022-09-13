@@ -408,7 +408,7 @@ class Data(HighchartsMeta):
 
     @property
     def google_spreadsheet_key(self) -> Optional[str]:
-        """The :term:`key <spreadsheet key>` or ``spreadsheetId`` value for the Google
+        """The key or ``spreadsheetId`` value for the Google
         Sheets spreadsheet from which you wish to load data. Defaults to
         :obj:`None <python:None>`.
 

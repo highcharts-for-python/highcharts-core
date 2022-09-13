@@ -43,12 +43,12 @@ class ColorAxis(GenericAxis):
       :class:`ColorAxis` does not work with the following series types:
 
         * :term:`sankey <Sankey Chart>`
-        * :term:`sunburst <Sunburst Chart>`
+        * :term:`sunburst <Sunburst>`
         * :term:`dependency wheels <Dependency Wheel>`
         * :term:`network graphs <Network Graph>`
         * :term:`wordclouds <Wordcloud>`
         * :term:`venn diagrams <Venn Diagram>`
-        * :term:`solidgauge <Solidgauge>`
+        * :term:`solidgauge <SolidGauge>`
 
     """
 

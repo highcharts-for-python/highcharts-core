@@ -34,7 +34,6 @@ HighchartsError (from :exc:`ValueError <python:ValueError>`)
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsError
-      :top-classes: Exception
       :parts: -1
 
 ----------------
@@ -47,7 +46,6 @@ HighchartsDependencyError (from :exc:`ImportError <python:ImportError>`)
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsDependencyError
-      :top-classes: Exception
       :parts: -1
 
 -----------------
@@ -60,7 +58,6 @@ HighchartsImplementationError (from :exc:`ValueError <python:ValueError>`)
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsImplementationError
-      :top-classes: Exception
       :parts: -1
 
 ------------------
@@ -73,7 +70,6 @@ HighchartsValueError (from :exc:`ValueError <python:ValueError>`)
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsValueError
-      :top-classes: Exception
       :parts: -1
 
 --------------------
@@ -86,7 +82,6 @@ HighchartsNotSupportedError (from :exc:`ValueError <python:ValueError>` and :exc
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsNotSupportedError
-      :top-classes: Exception
       :parts: -1
 
 --------------
@@ -99,7 +94,6 @@ HighchartsJavaScriptError (from :class:`ValueError <python:ValueError>`)
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsJavaScriptError
-      :top-classes: Exception
       :parts: -1
 
 ---------------
@@ -112,7 +106,6 @@ HighchartsParseError (from :class:`ValueError <python:ValueError>`)
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsParseError
-      :top-classes: Exception
       :parts: -1
 
 --------------
@@ -125,7 +118,6 @@ HighchartsCSVDeserializationError (from :class:`ValueError <python:ValueError>`)
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsCSVDeserializationError
-      :top-classes: Exception
       :parts: -1
 
 --------------
@@ -138,7 +130,6 @@ HighchartsMissingKeyError (from :class:`ValueError <python:ValueError>`)
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsMissingKeyError
-      :top-classes: Exception
       :parts: -1
 
 ----------------
@@ -151,7 +142,6 @@ HighchartsCollectionError (from :class:`ValueError <python:ValueError>`)
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsCollectionError
-      :top-classes: Exception
       :parts: -1
 
 --------------
@@ -164,7 +154,6 @@ HighchartsVariableDeclarationError (from :class:`ValueError <python:ValueError>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsVariableDeclarationError
-      :top-classes: Exception
       :parts: -1
 
 -------------
@@ -177,7 +166,6 @@ HighchartsMissingClassNameError (from :class:`ValueError <python:ValueError>`)
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsMissingClassNameError
-      :top-classes: Exception
       :parts: -1
 
 ---------------
@@ -190,7 +178,6 @@ HighchartsExportServerError (from :class:`ValueError <python:ValueError>`)
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsExportServerError
-      :top-classes: Exception
       :parts: -1
 
 --------------
@@ -203,7 +190,6 @@ HighchartsUnsupportedProtocolError (from :class:`ValueError <python:ValueError>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsUnsupportedProtocolError
-      :top-classes: Exception
       :parts: -1
 
 --------------
@@ -216,7 +202,6 @@ HighchartsUnsupportedExportTypeError (from :class:`ValueError <python:ValueError
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsUnsupportedExportTypeError
-      :top-classes: Exception
       :parts: -1
 
 ------------------
@@ -229,7 +214,6 @@ HighchartsUnsupportedConstructorError (from :class:`ValueError <python:ValueErro
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsUnsupportedConstructorError
-      :top-classes: Exception
       :parts: -1
 
 ------------
@@ -242,5 +226,4 @@ HighchartsMissingExportSettingsError (from :class:`ValueError <python:ValueError
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HighchartsMissingExportSettingsError
-      :top-classes: Exception
       :parts: -1

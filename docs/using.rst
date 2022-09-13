@@ -96,6 +96,8 @@ Other Convenience Methods
 
 .. include:: api/_other_convenience_methods.rst
 
+.. _handling_defaults:
+
 Handling Default Values
 ===============================
 
@@ -243,7 +245,8 @@ As with all **Highcharts for Python** objects, you can instantiate them in sever
     images, or the files that contain data you might be using in your application. It also
     contains a **highcharts_config** folder, which contains several files with a ``.js``
     extension. Of particular note is the file in bold, ``shared_options.js``. This file
-    should contain a :term:`JavaScript object literal <JavaScript object literal>`
+    should contain a
+    :term:`JavaScript object literal <JavaScript object literal notation>`
     version of the configuration settings you want to apply to *all* of your
     visualizations. This file might look something like this:
 

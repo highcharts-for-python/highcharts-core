@@ -3,7 +3,7 @@
     :noindex:
 
     Convert the **Highcharts for Python** instance to Highcharts JS-compatible JavaScript
-    code using :term:`JavaScript literal notation`.
+    code using :term:`JavaScript object literal notation`.
 
     :param filename: If supplied, persists the JavaScript code to the file indicated.
       Defaults to :obj:`None <python:None>`.
@@ -14,7 +14,7 @@
     :type encoding: :class:`str <python:str>`
 
     :returns: Highcharts JS-compatible JavaScript code using
-      :term:`JavaScript literal notation`.
+      :term:`JavaScript object literal notation`.
     :rtype: :class:`str <python:str>`
 
 

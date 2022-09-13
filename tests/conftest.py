@@ -33,7 +33,7 @@ def pytest_addoption(parser):
                      action="store",
                      default="true",
                      help=("downloads: set to 'false' to disable tests of chart export "
-                           "via the Highsoft-provided Node Export Server."))
+                           "via the Highsoft-provided Export Server."))
     parser.addoption("--pyspark",
                      action="store",
                      default="true",

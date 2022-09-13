@@ -60,7 +60,7 @@ class OrganizationOptions(BarOptions):
 
     @property
     def hanging_indent(self) -> Optional[int | float | Decimal]:
-        """The indentation in pixels of :term:`hanging nodes` (nodes whose parent has
+        """The indentation in pixels of hanging nodes (nodes whose parent has
         ``layout`` set to ``'hanging'``). Defaults to ``20``.
 
         :rtype: numeric or :obj:`None <python:None>`

@@ -762,7 +762,7 @@ class GenericAxis(HighchartsMeta):
     def show_last_label(self) -> Optional[bool]:
         """If ``True``, renders the last tick label by the axis. If
         :obj:`None <python:None>`, defaults to ``True`` on
-        :term:`cartesian charts <Cartesian Chart>` and ``False`` on
+        :term:`cartesian charts` and ``False`` on
         :term:`polar charts <Polar Chart>`.
 
         :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`

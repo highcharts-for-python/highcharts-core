@@ -106,7 +106,7 @@ inheritance_graph_attrs = {
 }
 
 suppress_warnings = [
-    'ref.term',
+    # 'ref.term',
     'ref.ref',
     'toc.not_readable'
 ]

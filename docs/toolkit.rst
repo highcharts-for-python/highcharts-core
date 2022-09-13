@@ -98,9 +98,14 @@ project project repo, the lists below provides some high-level information.
       to support the production of the relevant ``<script/>`` tags needed to include the
       Highcharts JS modules that are needed to render a specific chart (and to *not*
       include the modules that are not needed).
+    * Styled Mode Configuration ( :issue:`7` ). While :term:`styled mode` can currently be
+      enabled in **Highcharts for Python**, the library does not provide for the actual
+      definition or configuration of Highcharts CSS. It would be good if it did, so that
+      all Highcharts-related configuration could be handled within the library.
 
   .. tab:: Extensions
 
+    * Implement and release **Highcharts Gantt for Python** ( :issue:`6` ).
     * Implement and release **Highcharts for Dash** ( :issue:`3` ).
     * Implement and release **Flask-Highcharts** ( :issue:`4` ).
     * Implement and release **Highcharts for Django** ( :issue:`5` ).

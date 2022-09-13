@@ -3,8 +3,8 @@
     :classmethod:
     :noindex:
 
-    Convert a JavaScript object defined using :term:`JavaScript literal notation` into a
-    **Highcharts for Python** Python object, typically descended from
+    Convert a JavaScript object defined using :term:`JavaScript object literal notation`
+    into a **Highcharts for Python** Python object, typically descended from
     :class:`HighchartsMeta`.
 
     :param cls: The class object itself.
