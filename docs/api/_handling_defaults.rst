@@ -1,9 +1,9 @@
   *Explicit is better than implicit.*
   -- The Zen of Python
 
-`Highcharts JS`_ has a *lot* of default values. These default values are generally applied
-if a JavaScript property is ``undefined`` (missing or otherwise not specified), which is
-different from the JavaScript value of ``null``.
+`Highcharts JS <https://www.highcharts.com/>`_ has a *lot* of default values. These
+default values are generally applied if a JavaScript property is ``undefined`` (missing or
+otherwise not specified), which is different from the JavaScript value of ``null``.
 
 While my Pythonic instinct is to:
 
@@ -30,6 +30,6 @@ while still providing an internally consistent logic to follow.
 
 .. note::
 
-  There's an item on the **Highcharts for Python** :doc:`roadmap <toolkit>` (:issue:`1`)
+  There's an item on the **Highcharts for Python** :doc:`roadmap <../toolkit>` (:issue:`1`)
   to *optionally* surface defaults when explicitly requested. Not sure when it will be
   implemented, but we'll get there at some point.

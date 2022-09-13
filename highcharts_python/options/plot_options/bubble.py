@@ -193,7 +193,7 @@ class BubbleOptions(SeriesOptions):
     @property
     def z_max(self) -> Optional[int | float | Decimal]:
         """The maximum for the Z value range. When :obj:`None <python:None>`, defaults to
-        the highest Z value in the data. Defaults to :obj:`None <python:None>``.
+        the highest Z value in the data. Defaults to :obj:`None <python:None>`.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -206,7 +206,7 @@ class BubbleOptions(SeriesOptions):
     @property
     def z_min(self) -> Optional[int | float | Decimal]:
         """The minimum for the Z value range. When :obj:`None <python:None>`, defaults to
-        the lowest Z value in the data. Defaults to :obj:`None <python:None>``.
+        the lowest Z value in the data. Defaults to :obj:`None <python:None>`.
 
         :rtype: numeric or :obj:`None <python:None>`
         """

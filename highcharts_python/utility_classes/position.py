@@ -32,7 +32,7 @@ class Position(HighchartsMeta):
           * ``'right'``
 
         :returns: The horizontal alignment of the button.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._align
 

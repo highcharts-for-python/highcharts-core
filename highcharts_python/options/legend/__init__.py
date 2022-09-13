@@ -143,7 +143,7 @@ class Legend(HighchartsMeta):
         :meth:`Legend.layout` setting will determine whether to place it above/below or on
         the side of the plot area.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._align
 
@@ -168,7 +168,7 @@ class Legend(HighchartsMeta):
 
         Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._align_columns
 
@@ -282,7 +282,7 @@ class Legend(HighchartsMeta):
           legend. In some series types this is ``False`` by default, so it must set to
           ``True`` in order to show the legend for the series.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
@@ -299,7 +299,7 @@ class Legend(HighchartsMeta):
         legend. If ``False``, the legend is rendered visually distinct (not overlapping)
         the plot area. Defaults to ``{constants.DEFAULT_LEGEND.get('floating')}``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._floating
 
@@ -506,7 +506,7 @@ class Legend(HighchartsMeta):
         they're representing, except in inverted charts or when the legend position does
         not allow it.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._layout
 
@@ -593,7 +593,7 @@ class Legend(HighchartsMeta):
         series/points as defined in the configuration object.
         Defaults to ``{constants.DEFAULT_LEGEND.get('reversed')}``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._reversed
 
@@ -610,7 +610,7 @@ class Legend(HighchartsMeta):
         the left (this is common in RTL languages like Arabic or Hebrew). Defaults to
         ``{constants.DEFAULT_LEGEND.get('rtl')}``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._rtl
 
@@ -656,7 +656,7 @@ class Legend(HighchartsMeta):
         which in turn defaults to the font size of the legend items. Defaults to
         ``{constants.DEFAULT_LEGEND.get('square_symbol')}``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._square_symbol
 
@@ -745,7 +745,7 @@ class Legend(HighchartsMeta):
         Defaults to ``False``.
 
         :returns: Flag indicating whether to render annotation labels using HTML.
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._use_html
 
@@ -798,7 +798,7 @@ class Legend(HighchartsMeta):
     @property
     def width(self) -> Optional[str | int | float | Decimal]:
         """The width of the legend box. If expressed as a numeric value, the value is in
-        pixels. If as a :str:class:`str <python:str>`, then accepts a value expressed as a
+        pixels. If as a :class:`str <python:str>`, then accepts a value expressed as a
         percentage of the chart area (e.g. ``'40%'``).
 
         If :obj:`None <python:None>`, then defaults to the full chart width if above or

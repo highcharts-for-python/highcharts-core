@@ -25,7 +25,7 @@ class RangeSelectorLanguageOptions(HighchartsMeta):
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_RANGE_SELECTOR_CLICK_BTN_ANNOUNCEMENT}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._click_button_announcement
 
@@ -38,7 +38,7 @@ class RangeSelectorLanguageOptions(HighchartsMeta):
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_RANGE_SELECTOR_DROPDOWN_LBL}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._dropdown_label
 
@@ -51,7 +51,7 @@ class RangeSelectorLanguageOptions(HighchartsMeta):
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_RANGE_SELECTOR_MAX_INPUT_LBL}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._max_input_label
 
@@ -64,7 +64,7 @@ class RangeSelectorLanguageOptions(HighchartsMeta):
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_RANGE_SELECTOR_MIN_INPUT_LBL}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._min_input_label
 

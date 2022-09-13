@@ -23,7 +23,7 @@ class ZoomLanguageOptions(HighchartsMeta):
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_ZOOM_MAP_ZOOM_IN}'``
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._map_zoom_in
 
@@ -36,7 +36,7 @@ class ZoomLanguageOptions(HighchartsMeta):
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_ZOOM_MAP_ZOOM_OUT}'``
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._map_zoom_out
 
@@ -49,7 +49,7 @@ class ZoomLanguageOptions(HighchartsMeta):
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_ZOOM_RESET_ZOOM_BTN}'``
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._reset_zoom_button
 

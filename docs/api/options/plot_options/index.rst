@@ -139,9 +139,9 @@ Sub-components
       :class:`SolidGaugeOptions <highcharts_python.options.plot_options.gauge.SolidGaugeOptions>`
   * - :mod:`.plot_options.generic <highcharts_python.options.plot_options.generic>`
     - :class:`GenericTypeOptions <highcharts_python.options.plot_options.generic.GenericTypeOptions>`
-  * - :mod:`.plot_options.Heatmap <highcharts_python.options.plot_options.Heatmap>`
-    - :class:`HeatmapOptions <highcharts_python.options.plot_options.Heatmap.HeatmapOptions>`
-      :class:`TilemapOptions <highcharts_python.options.plot_options.Tilemap.TilemapOptions>`
+  * - :mod:`.plot_options.heatmap <highcharts_python.options.plot_options.heatmap>`
+    - :class:`HeatmapOptions <highcharts_python.options.plot_options.heatmap.HeatmapOptions>`
+      :class:`TilemapOptions <highcharts_python.options.plot_options.heatmap.TilemapOptions>`
   * - :mod:`.plot_options.histogram <highcharts_python.options.plot_options.histogram>`
     - :class:`HistogramOptions <highcharts_python.options.plot_options.histogram.HistogramOptions>`
   * - :mod:`.plot_options.item <highcharts_python.options.plot_options.item>`

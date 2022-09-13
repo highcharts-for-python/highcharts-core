@@ -481,7 +481,7 @@ class Data(HighchartsMeta):
     @property
     def line_delimiter(self) -> Optional[str]:
         """The string used to delimit records (lines) when parsing CSV data. Defaults to
-        :obj:`None <python:None>`, which assumes ``'\n'``.
+        :obj:`None <python:None>`, which assumes ``'\\n'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """

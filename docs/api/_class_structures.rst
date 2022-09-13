@@ -18,5 +18,5 @@ components.
 
   .. seealso::
 
-    For more details, please review the :doc:`API documentation <api>`, in particular the
+    For more details, please review the :doc:`API documentation <../api>`, in particular the
     class inheritance diagram included for each documented class.

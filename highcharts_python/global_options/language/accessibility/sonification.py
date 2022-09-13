@@ -26,7 +26,7 @@ class SonificationLanguageOptions(HighchartsMeta):
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SONIFICATION_PLAY_AS_SOUND_BTN_TXT}'``
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._play_as_sound_button_text
 
@@ -39,7 +39,7 @@ class SonificationLanguageOptions(HighchartsMeta):
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_SONIFICATION_PLAY_AS_SOUND_CLK_ANNOUNCEMENT}'``
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._play_as_sound_click_announcement
 

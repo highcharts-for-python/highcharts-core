@@ -101,7 +101,7 @@ class DragHandle(HighchartsMeta):
           * ``'w-resize'``
           * ``'wait'``
           * ``'zoom-in'``
-          * ``'zoom-out'
+          * ``'zoom-out'``
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -289,7 +289,7 @@ class GuideBoxOptions(HighchartsMeta):
           * ``'w-resize'``
           * ``'wait'``
           * ``'zoom-in'``
-          * ``'zoom-out'
+          * ``'zoom-out'``
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """

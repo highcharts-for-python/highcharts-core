@@ -620,7 +620,7 @@ class Chart(HighchartsMeta):
             If ``series_kwargs`` contains a ``data`` key, its value will be *overwritten*.
             The ``data`` value will be created from the CSV file instead.
 
-        :type series_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>
+        :type series_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
 
         :param options_kwargs: An optional :class:`dict <python:dict>` containing keyword
           arguments that should be used when instantiating the :class:`HighchartsOptions`
@@ -668,27 +668,28 @@ class Chart(HighchartsMeta):
 
         :type line_terminator: :class:`str <python:str>`
 
-        :param wrap_all_strings: If ``True``, indicates that the CSV file has all string data
-          values wrapped in quotation marks. Defaults to ``False``.
+        :param wrap_all_strings: If ``True``, indicates that the CSV file has all string
+          data values wrapped in quotation marks. Defaults to ``False``.
 
           .. warning::
 
-            If set to ``True``, the :module:`csv <python:csv>` module will try to coerce any
-            value that is *not* wrapped in quotation marks to a :class:`float <python:float>`.
-            This can cause unexpected behavior, and typically we recommend leaving this as
-            ``False`` and then re-casting values after they have been parsed.
+            If set to ``True``, the :mod:`csv <python:csv>` module will try to coerce
+            any value that is *not* wrapped in quotation marks to a
+            :class:`float <python:float>`. This can cause unexpected behavior, and
+            typically we recommend leaving this as ``False`` and then re-casting values
+            after they have been parsed.
 
         :type wrap_all_strings: :class:`bool <python:bool>`
 
-        :param double_wrapper_character_when_nested: If ``True``, quote character is doubled
-          when appearing within a string value. If ``False``, the ``escpae_character`` is used
-          to prefix quotation marks. Defaults to ``False``.
+        :param double_wrapper_character_when_nested: If ``True``, quote character is
+          doubled when appearing within a string value. If ``False``, the
+          ``escape_character`` is used to prefix quotation marks. Defaults to ``False``.
         :type double_wrapper_character_when_nested: :class:`bool <python:bool>`
 
-        :param escape_character: A one-character string that indicates the character used to
-          escape quotation marks if they appear within a string value that is already wrapped
-          in quotation marks. Defaults to ``\\`` (which is Python for ``'\'``, which is
-          Python's native escape character).
+        :param escape_character: A one-character string that indicates the character used
+          to escape quotation marks if they appear within a string value that is already
+          wrapped in quotation marks. Defaults to ``\\\\`` (which is Python for ``'\\'``,
+          which is Python's native escape character).
         :type escape_character: :class:`str <python:str>`
 
         :returns: A :class:`Chart <highcharts_python.chart.Chart>` instance with its
@@ -697,6 +698,7 @@ class Chart(HighchartsMeta):
 
         :raises HighchartsCSVDeserializationError: if ``property_column_map`` references
           CSV columns by their label, but the CSV data does not contain a header row
+
         """
         series_type = validators.string(series_type, allow_empty = False)
         series_type = series_type.lower()

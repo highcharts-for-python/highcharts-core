@@ -1,6 +1,6 @@
 
 The structure of the **Highcharts for Python** library closely matches the structure
-of the `Highcharts JS`_ options object (see the relevant
+of the `Highcharts JS <https://www.highcharts.com/>`_ options object (see the relevant
 `reference documentation <https://api.highcharts.com/highcharts/>`_).
 
 At the root of the library - importable from ``highcharts_python`` you will find the

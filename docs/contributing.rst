@@ -448,8 +448,7 @@ References
 
 .. target-notes::
 
-.. _Sphinx: http://sphinx-doc.org
 .. _ReadTheDocs: https://readthedocs.org
 .. _reStructuredText: http://www.sphinx-doc.org/en/stable/rest.html
-.. _Documentation Style Guide: http://documentation-style-guide-sphinx.readthedocs.io/en/latest/style-guide.html
-.. _talk given by Luciano Ramalho at PyCon 2016: https://www.youtube.com/watch?v=k55d3ZUF3ZQ
+.. _`Documentation Style Guide`: http://documentation-style-guide-sphinx.readthedocs.io/en/latest/style-guide.html
+.. _`talk given by Luciano Ramalho at PyCon 2016`: https://www.youtube.com/watch?v=k55d3ZUF3ZQ

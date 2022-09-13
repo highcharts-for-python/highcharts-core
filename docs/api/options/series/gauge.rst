@@ -44,39 +44,3 @@ class: :class:`SolidGaugeSeries <highcharts_python.options.series.gauge.SolidGau
       :parts: -1
 
   |
-
-----------------
-
-********************************************************************************************************************
-class: :class:`PivotSeries <highcharts_python.options.series.gauge.PivotSeries>`
-********************************************************************************************************************
-
-.. autoclass:: PivotSeries
-  :members:
-  :inherited-members:
-
-  .. collapse:: Class Inheritance
-
-    .. inheritance-diagram:: PivotSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
-      :parts: -1
-
-  |
-
------------------
-
-********************************************************************************************************************
-class: :class:`DialSeries <highcharts_python.options.series.gauge.DialSeries>`
-********************************************************************************************************************
-
-.. autoclass:: DialSeries
-  :members:
-  :inherited-members:
-
-  .. collapse:: Class Inheritance
-
-    .. inheritance-diagram:: DialSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
-      :parts: -1
-
-  |

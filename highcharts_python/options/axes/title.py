@@ -237,7 +237,7 @@ class AxisTitle(HighchartsMeta):
 
             * when ``align == 'low'``, defaults to ``'left'``
             * when ``align == 'middle'``, defaults to ``'center'``
-            * when ``align == 'high'``, defaults to ``'right'
+            * when ``align == 'high'``, defaults to ``'right'``
 
           * For Vertical Axes:
 

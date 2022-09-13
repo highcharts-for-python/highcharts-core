@@ -20,7 +20,7 @@ class ExportingLanguageOptions(HighchartsMeta):
     def chart_menu_label(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_EXPORTING_CHART_MENU_LABEL}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._chart_menu_label
 
@@ -32,7 +32,7 @@ class ExportingLanguageOptions(HighchartsMeta):
     def menu_button_label(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_EXPORTING_MENU_BTN_LABEL}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._menu_button_label
 

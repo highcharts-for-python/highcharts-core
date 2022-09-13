@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.Heatmap <highcharts_python.options.series.Heatmap>`
+:mod:`.Heatmap <highcharts_python.options.series.heatmap>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.Heatmap
+.. module:: highcharts_python.options.series.heatmap
 
 ********************************************************************************************************************
-class: :class:`HeatmapSeries <highcharts_python.options.series.Heatmap.HeatmapSeries>`
+class: :class:`HeatmapSeries <highcharts_python.options.series.heatmap.HeatmapSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: HeatmapSeries
@@ -30,7 +30,7 @@ class: :class:`HeatmapSeries <highcharts_python.options.series.Heatmap.HeatmapSe
 --------------------
 
 ********************************************************************************************************************
-class: :class:`TilemapSeries <highcharts_python.options.series.Tilemap.TilemapSeries>`
+class: :class:`TilemapSeries <highcharts_python.options.series.heatmap.TilemapSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: TilemapSeries

@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.Heatmap <highcharts_python.options.plot_options.Heatmap>`
+:mod:`.heatmap <highcharts_python.options.plot_options.heatmap>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.Heatmap
+.. module:: highcharts_python.options.plot_options.heatmap
 
 ********************************************************************************************************************
-class: :class:`HeatmapOptions <highcharts_python.options.plot_options.Heatmap.HeatmapOptions>`
+class: :class:`HeatmapOptions <highcharts_python.options.plot_options.heatmap.HeatmapOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: HeatmapOptions
@@ -30,7 +30,7 @@ class: :class:`HeatmapOptions <highcharts_python.options.plot_options.Heatmap.He
 --------------------
 
 ********************************************************************************************************************
-class: :class:`TilemapOptions <highcharts_python.options.plot_options.Tilemap.TilemapOptions>`
+class: :class:`TilemapOptions <highcharts_python.options.plot_options.heatmap.TilemapOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: TilemapOptions

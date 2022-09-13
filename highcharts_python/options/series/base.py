@@ -111,10 +111,10 @@ class SeriesBase(SeriesOptions):
     @property
     def name(self) -> Optional[str]:
         """The name of the series as shown in the legend, tooltip, etc. Defaults to
-        :obj:`None <python:None>.
+        :obj:`None <python:None>`.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
-        `"""
+        """
         return self._name
 
     @name.setter
@@ -392,46 +392,48 @@ class SeriesBase(SeriesOptions):
         :type null_text: :class:`str <python:str>`
 
         :param line_terminator: The string used to indicate the end of a line/record in
-          the CSV data. Defaults to ``'\r\n'``.
+          the CSV data. Defaults to ``'\\r\\n'``.
         :type line_terminator: :class:`str <python:str>`
 
-        :param line_terminator: The string used to indicate the end of a line/record in the
-          CSV data. Defaults to ``'\r\n'``.
+        :param line_terminator: The string used to indicate the end of a line/record in
+          the CSV data. Defaults to ``'\\r\\n'``.
 
           .. note::
 
             The Python :mod:`csv <python:csv>` currently ignores the ``line_terminator``
-            parameter and always applies ``'\r\n'``, by design. The Python docs say this may
-            change in the future, so for future backwards compatibility we are including it
-            here.
+            parameter and always applies ``'\\r\\n'``, by design. The Python docs say this
+            may change in the future, so for future backwards compatibility we are
+            including it here.
 
         :type line_terminator: :class:`str <python:str>`
 
-        :param wrap_all_strings: If ``True``, indicates that the CSV file has all string data
-          values wrapped in quotation marks. Defaults to ``False``.
+        :param wrap_all_strings: If ``True``, indicates that the CSV file has all string
+          data values wrapped in quotation marks. Defaults to ``False``.
 
           .. warning::
 
-            If set to ``True``, the :module:`csv <python:csv>` module will try to coerce any
-            value that is *not* wrapped in quotation marks to a :class:`float <python:float>`.
-            This can cause unexpected behavior, and typically we recommend leaving this as
-            ``False`` and then re-casting values after they have been parsed.
+            If set to ``True``, the :mod:`csv <python:csv>` module will try to coerce any
+            value that is *not* wrapped in quotation marks to a
+            :class:`float <python:float>`. This can cause unexpected behavior, and
+            typically we recommend leaving this as ``False`` and then re-casting values
+            after they have been parsed.
 
         :type wrap_all_strings: :class:`bool <python:bool>`
 
-        :param double_wrapper_character_when_nested: If ``True``, quote character is doubled
-          when appearing within a string value. If ``False``, the ``escpae_character`` is used
-          to prefix quotation marks. Defaults to ``False``.
+        :param double_wrapper_character_when_nested: If ``True``, quote character is
+          doubled when appearing within a string value. If ``False``, the
+          ``escape_character`` is used to prefix quotation marks. Defaults to ``False``.
         :type double_wrapper_character_when_nested: :class:`bool <python:bool>`
 
-        :param escape_character: A one-character string that indicates the character used to
-          escape quotation marks if they appear within a string value that is already wrapped
-          in quotation marks. Defaults to ``\\`` (which is Python for ``'\'``, which is
-          Python's native escape character).
+        :param escape_character: A one-character string that indicates the character used
+          to escape quotation marks if they appear within a string value that is already
+          wrapped in quotation marks. Defaults to ``\\`` (which is Python for ``'\'``,
+          which is Python's native escape character).
         :type escape_character: :class:`str <python:str>`
 
         :raises HighchartsCSVDeserializationError: if ``property_column_map`` references
           CSV columns by their label, but the CSV data does not contain a header row
+
         """
         try:
             as_string_or_file = as_string_or_file.strip()
@@ -593,42 +595,43 @@ class SeriesBase(SeriesOptions):
         :type null_text: :class:`str <python:str>`
 
         :param line_terminator: The string used to indicate the end of a line/record in
-          the CSV data. Defaults to ``'\r\n'``.
+          the CSV data. Defaults to ``'\\r\\n'``.
         :type line_terminator: :class:`str <python:str>`
 
-        :param line_terminator: The string used to indicate the end of a line/record in the
-          CSV data. Defaults to ``'\r\n'``.
+        :param line_terminator: The string used to indicate the end of a line/record in
+          the CSV data. Defaults to ``'\\r\\n'``.
 
           .. note::
 
             The Python :mod:`csv <python:csv>` currently ignores the ``line_terminator``
-            parameter and always applies ``'\r\n'``, by design. The Python docs say this may
-            change in the future, so for future backwards compatibility we are including it
-            here.
+            parameter and always applies ``'\\r\\n'``, by design. The Python docs say this
+            may change in the future, so for future backwards compatibility we are
+            including it here.
 
         :type line_terminator: :class:`str <python:str>`
 
-        :param wrap_all_strings: If ``True``, indicates that the CSV file has all string data
-          values wrapped in quotation marks. Defaults to ``False``.
+        :param wrap_all_strings: If ``True``, indicates that the CSV file has all string
+          data values wrapped in quotation marks. Defaults to ``False``.
 
           .. warning::
 
-            If set to ``True``, the :module:`csv <python:csv>` module will try to coerce any
-            value that is *not* wrapped in quotation marks to a :class:`float <python:float>`.
-            This can cause unexpected behavior, and typically we recommend leaving this as
-            ``False`` and then re-casting values after they have been parsed.
+            If set to ``True``, the :mod:`csv <python:csv>` module will try to coerce any
+            value that is *not* wrapped in quotation marks to a
+            :class:`float <python:float>`. This can cause unexpected behavior, and
+            typically we recommend leaving this as ``False`` and then re-casting values
+            after they have been parsed.
 
         :type wrap_all_strings: :class:`bool <python:bool>`
 
-        :param double_wrapper_character_when_nested: If ``True``, quote character is doubled
-          when appearing within a string value. If ``False``, the ``escpae_character`` is used
-          to prefix quotation marks. Defaults to ``False``.
+        :param double_wrapper_character_when_nested: If ``True``, quote character is
+          doubled when appearing within a string value. If ``False``, the
+          ``escape_character`` is used to prefix quotation marks. Defaults to ``False``.
         :type double_wrapper_character_when_nested: :class:`bool <python:bool>`
 
-        :param escape_character: A one-character string that indicates the character used to
-          escape quotation marks if they appear within a string value that is already wrapped
-          in quotation marks. Defaults to ``\\`` (which is Python for ``'\'``, which is
-          Python's native escape character).
+        :param escape_character: A one-character string that indicates the character used
+          to escape quotation marks if they appear within a string value that is already
+          wrapped in quotation marks. Defaults to ``\\\\`` (which is Python for ``'\\'``,
+          which is Python's native escape character).
         :type escape_character: :class:`str <python:str>`
 
         :returns: A :term:`series` instance (descended from
@@ -640,6 +643,7 @@ class SeriesBase(SeriesOptions):
 
         :raises HighchartsCSVDeserializationError: if ``property_column_map`` references
           CSV columns by their label, but the CSV data does not contain a header row
+
         """
         series_kwargs = validators.dict(series_kwargs, allow_empty = True) or {}
 

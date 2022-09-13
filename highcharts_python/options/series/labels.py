@@ -287,7 +287,7 @@ class SeriesLabel(HighchartsMeta):
     @property
     def style(self) -> Optional[str]:
         """Styles for the series label. The color defaults to the series color, or a
-        contrast color if ``on_area`.
+        contrast color if ``on_area``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """

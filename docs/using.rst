@@ -45,7 +45,7 @@ Key Design Patterns in Highcharts for Python
 
 `Highcharts JS`_ is a large, robust, and complicated JavaScript library. If in doubt, take
 a look at their extensive `documentation <https://www.highcharts.com/docs/index>`_ and in
-particular their `API reference <https://api.highcharts.com/highcharts>`_. Because
+particular their `API reference`_. Because
 **Highcharts for Python** wraps the Highcharts JS API, its design is heavily shaped by
 Highcharts JS' own design - as one should expect.
 
@@ -66,11 +66,12 @@ Every single object supported by the Highcharts JS API corresponds to a Python c
 **Highcharts for Python**. You can find the complete list in our comprehensive
 :doc:`Highcharts for Python API Reference <api>`.
 
-These classes generally inherit from the :class:`HighchartsMeta` metaclass, which provides
-each class with a number of standard methods. These methods are the "workhorses" of
-**Highcharts for Python** and you will be relying heavily on them when using the library.
-Thankfully, their signatures and behavior is generally consistent - even if what happens
-"under the hood" is class-specific at times.
+These classes generally inherit from the
+:class:`HighchartsMeta <highcharts_python.metaclasses.HighchartsMeta>` metaclass, which
+provides each class with a number of standard methods. These methods are the "workhorses"
+of **Highcharts for Python** and you will be relying heavily on them when using the
+library. Thankfully, their signatures and behavior is generally consistent - even if what
+happens "under the hood" is class-specific at times.
 
 The standard methods exposed by the classes are:
 
@@ -113,11 +114,11 @@ Class Structures and Inheritance
 .. warning::
 
   Certain sections of the **Highcharts for Python** library - in particular the
-  ``options.series`` classes - rely heavily on multiple inheritance. This is a known
-  anti-pattern in Python development as it runs the risk of encountering the
-  :term:`diamond of death` inheritance problem. This complicates the process of inheriting
-  methods or properties from parent classes when properties or methods share names
-  across multiple parents.
+  :mod:`options.series <highcharts_python.options.series>` classes - rely heavily on
+  multiple inheritance. This is a known anti-pattern in Python development as it runs the
+  risk of encountering the :term:`diamond of death` inheritance problem. This complicates
+  the process of inheriting methods or properties from parent classes when properties or
+  methods share names across multiple parents.
 
   I know this is an anti-pattern, but it was a necessary one to minimize code duplication
   and maximize consistency. For that reason, I implemented it properly *despite* the
@@ -862,7 +863,7 @@ Loading to an Existing Series
     :type wrap_all_strings: :class:`bool <python:bool>`
 
     :param double_wrapper_character_when_nested: If ``True``, quote character is doubled
-      when appearing within a string value. If ``False``, the ``escpae_character`` is used
+      when appearing within a string value. If ``False``, the ``escape_character`` is used
       to prefix quotation marks. Defaults to ``False``.
     :type double_wrapper_character_when_nested: :class:`bool <python:bool>`
 
@@ -1045,7 +1046,7 @@ Creating a Brand New Series
     :type wrap_all_strings: :class:`bool <python:bool>`
 
     :param double_wrapper_character_when_nested: If ``True``, quote character is doubled
-      when appearing within a string value. If ``False``, the ``escpae_character`` is used
+      when appearing within a string value. If ``False``, the ``escape_character`` is used
       to prefix quotation marks. Defaults to ``False``.
     :type double_wrapper_character_when_nested: :class:`bool <python:bool>`
 
@@ -1506,10 +1507,12 @@ environment. The actual file itself is produced using a
 
 -----------------------------
 
+.. target-notes::
 
-.. _Highcharts JS: https://www.highcharts.com
-.. _Jupyter Notebook: https://jupyter.org
-.. _Jupyter Labs: https://jupyter.org
+.. include:: links.txt
+
+.. _`Jupyter Notebook`: https://jupyter.org
+.. _`Jupyter Labs`: https://jupyter.org
 .. _IPython: https://ipython.readthedocs.io/
 .. _pandas: https://pandas.pydata.org
 .. _PySpark: https://spark.apache.org/docs/latest/api/python/

@@ -135,7 +135,7 @@ class GenericTypeOptions(HighchartsMeta):
 
         Defaults to ``False``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._allow_point_select
 
@@ -156,7 +156,7 @@ class GenericTypeOptions(HighchartsMeta):
         (JavaScript) API methods. The following properties are supported:
 
           * ``defer``: The animation delay time in milliseconds.
-          * ``duration: The duration of the animation in milliseconds.
+          * ``duration``: The duration of the animation in milliseconds.
           * ``easing``: Can be a string reference to an easing function set on the Math
             object or a function.
 
@@ -196,7 +196,7 @@ class GenericTypeOptions(HighchartsMeta):
         ``True``, constrains where the series can be rendered within the plot area.
         Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._clip
 
@@ -267,7 +267,7 @@ class GenericTypeOptions(HighchartsMeta):
           * ``'w-resize'``
           * ``'wait'``
           * ``'zoom-in'``
-          * ``'zoom-out'
+          * ``'zoom-out'``
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -369,7 +369,7 @@ class GenericTypeOptions(HighchartsMeta):
         """A description of the series to add to the screen reader information about the
         series.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._description
 
@@ -383,7 +383,7 @@ class GenericTypeOptions(HighchartsMeta):
         tooltips, click events on graphs and points, etc.). If ``False``, disables
         mouse tracking for the series (which can help performance). Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enable_mouse_tracking
 
@@ -417,7 +417,7 @@ class GenericTypeOptions(HighchartsMeta):
         """If ``False``, will prevent the data series from being included in any form of
         data export. Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._include_in_data_export
 
@@ -575,7 +575,7 @@ class GenericTypeOptions(HighchartsMeta):
           If :meth:`GenericTypeOptions.show_checkbox` is ``True``, then the checkbox
           will be checked if ``selected`` is ``True``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._selected
 
@@ -596,7 +596,7 @@ class GenericTypeOptions(HighchartsMeta):
           The state of the checkbox is controlled by the
           :meth:`GenericTypeOptions.selected` property.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._show_checkbox
 
@@ -612,7 +612,7 @@ class GenericTypeOptions(HighchartsMeta):
         """Whether to display this particular series or series type in the legend.
         Standalone series are shown in the legend by default, and linked series are not.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._show_in_legend
 
@@ -628,7 +628,7 @@ class GenericTypeOptions(HighchartsMeta):
         """If ``True``, the accessibility module will skip past this series when executing
         keyboard navigation.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._skip_keyboard_navigation
 
@@ -673,7 +673,7 @@ class GenericTypeOptions(HighchartsMeta):
 
           The boost module will force this option because of technical limitations.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._sticky_tracking
 
@@ -747,7 +747,7 @@ class GenericTypeOptions(HighchartsMeta):
         """If ``True``, the series is initially visible. If ``False``, the series is
         hidden by default. Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._visible
 

@@ -341,7 +341,7 @@ class ExportServer(HighchartsMeta):
         else:
             value = value.lower()
             if value not in ['png', 'jpeg', 'pdf', 'svg']:
-                raise errors.HighchartsUnsupportedExportType(f'format expects either '
+                raise errors.HighchartsUnsupportedExportTypeError(f'format expects either '
                                                              f'"png", "jpeg", "pdf", or '
                                                              f'"svg". Received: {value}')
             self._format = value

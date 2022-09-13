@@ -83,7 +83,7 @@ class ShapeOptions(HighchartsMeta):
         f"""The color of the shape's fill. Defaults to {constants.DEFAULT_SHAPES_FILL}.
 
         :rtype: :class:`str <python:str>` (for colors), :class:`Gradient` for gradients,
-          :clsas:`Pattern` for pattern definitions, or :obj:`None <python:None>`
+          :class:`Pattern` for pattern definitions, or :obj:`None <python:None>`
         """
         return self._fill
 

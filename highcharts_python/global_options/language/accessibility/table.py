@@ -22,7 +22,7 @@ class TableLanguageOptions(HighchartsMeta):
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_TABLE_SUMMARY}'``
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._table_summary
 
@@ -35,7 +35,7 @@ class TableLanguageOptions(HighchartsMeta):
         f"""Defaults to
         ``'{constants.DEFAULT_LANG_ACS_TABLE_VIEW_AS_DATA_TABLE}'``
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._view_as_data_table_button_text
 

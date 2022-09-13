@@ -151,9 +151,9 @@ Sub-components
   * - :mod:`.options.series.gauge <highcharts_python.options.series.gauge>`
     - :class:`GaugeSeries <highcharts_python.options.series.gauge.GaugeSeries>`
       :class:`SolidGaugeSeries <highcharts_python.options.series.gauge.SolidGaugeSeries>`
-  * - :mod:`.options.series.Heatmap <highcharts_python.options.series.Heatmap>`
-    - :class:`HeatmapSeries <highcharts_python.options.series.Heatmap.HeatmapSeries>`
-      :class:`TilemapSeries <highcharts_python.options.series.Tilemap.TilemapSeries>`
+  * - :mod:`.options.series.heatmap <highcharts_python.options.series.heatmap>`
+    - :class:`HeatmapSeries <highcharts_python.options.series.heatmap.HeatmapSeries>`
+      :class:`TilemapSeries <highcharts_python.options.series.heatmap.TilemapSeries>`
   * - :mod:`.options.series.histogram <highcharts_python.options.series.histogram>`
     - :class:`HistogramSeries <highcharts_python.options.series.histogram.HistogramSeries>`
   * - :mod:`.options.series.item <highcharts_python.options.series.item>`

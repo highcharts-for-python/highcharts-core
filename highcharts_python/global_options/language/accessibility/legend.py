@@ -22,7 +22,7 @@ class LegendLanguageOptions(HighchartsMeta):
     def legend_item(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_LEGEND_ITEM}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._legend_item
 
@@ -34,7 +34,7 @@ class LegendLanguageOptions(HighchartsMeta):
     def legend_label(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_LEGEND_LABEL}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._legend_label
 
@@ -46,7 +46,7 @@ class LegendLanguageOptions(HighchartsMeta):
     def legend_label_no_title(self) -> Optional[str]:
         f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_LEGEND_LABEL_NO_TITLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._legend_label_no_title
 

@@ -11,25 +11,25 @@ class HighchartsDependencyError(ImportError):
     pass
 
 
-class ImplementationError(HighchartsError):
+class HighchartsImplementationError(HighchartsError):
     """Error that indicates you have implemented something incorrectly in your code."""
     pass
 
 
-class HighchartsValueError(ImplementationError):
+class HighchartsValueError(HighchartsImplementationError):
     """:exc:`ValueError <python:ValueError>` encountered in the operation of Highcharts
     for Python. Typically an implementation error.
     """
     pass
 
 
-class NotSupportedError(HighchartsError, TypeError):
+class HighchartsNotSupportedError(HighchartsError, TypeError):
     """:exc:`TypeError <python:TypeError>` encountered when attempting functionality that
     is not (and is not intended to be) supported."""
     pass
 
 
-class JavaScriptError(HighchartsValueError):
+class HighchartsJavaScriptError(HighchartsValueError):
     """:exc:`ValueError <python:ValueError>` encountered when a Python representation of
     some JavaScript code has been badly constructed. Typically an implementation error in
     your source code."""
@@ -68,7 +68,7 @@ class HighchartsVariableDeclarationError(HighchartsParseError):
     pass
 
 
-class HighchartsMissingClassNameError(JavaScriptError):
+class HighchartsMissingClassNameError(HighchartsJavaScriptError):
     """:exc:`ValueError <python:ValueError>` encountered when trying to serialize a
     JavaScriptClass instance to JavaScript, but the instance has no class_name provided.
     """
@@ -87,7 +87,7 @@ class HighchartsUnsupportedProtocolError(HighchartsExportServerError):
     pass
 
 
-class HighchartsUnsupportedExportType(HighchartsExportServerError):
+class HighchartsUnsupportedExportTypeError(HighchartsExportServerError):
     """:exc:`ValueError <python:ValueError>` encountered when requesting an unsupported
     image type from a :term:`Export Server`."""
     pass

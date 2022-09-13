@@ -36,7 +36,7 @@ class DateTimeLabelFormats(HighchartsMeta):
         f"""Label format to apply to days. Defaults to
         ``{constants.DEFAULT_DATE_TIME_LABEL_FORMATS.get('day')}``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._day
 
@@ -49,7 +49,7 @@ class DateTimeLabelFormats(HighchartsMeta):
         f"""Label format to apply to hours. Defaults to
         ``{constants.DEFAULT_DATE_TIME_LABEL_FORMATS.get('hour')}``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._hour
 
@@ -62,7 +62,7 @@ class DateTimeLabelFormats(HighchartsMeta):
         f"""Label format to apply to milliseconds. Defaults to
         ``{constants.DEFAULT_DATE_TIME_LABEL_FORMATS.get('millisecond')}``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._millisecond
 
@@ -75,7 +75,7 @@ class DateTimeLabelFormats(HighchartsMeta):
         f"""Label format to apply to minutes. Defaults to
         ``{constants.DEFAULT_DATE_TIME_LABEL_FORMATS.get('minute')}``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._minute
 
@@ -88,7 +88,7 @@ class DateTimeLabelFormats(HighchartsMeta):
         f"""Label format to apply to months. Defaults to
         ``{constants.DEFAULT_DATE_TIME_LABEL_FORMATS.get('month')}``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._month
 
@@ -101,7 +101,7 @@ class DateTimeLabelFormats(HighchartsMeta):
         f"""Label format to apply to seconds. Defaults to
         ``{constants.DEFAULT_DATE_TIME_LABEL_FORMATS.get('second')}``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._second
 
@@ -114,7 +114,7 @@ class DateTimeLabelFormats(HighchartsMeta):
         f"""Label format to apply to weeks. Defaults to
         ``{constants.DEFAULT_DATE_TIME_LABEL_FORMATS.get('week')}``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._week
 
@@ -127,7 +127,7 @@ class DateTimeLabelFormats(HighchartsMeta):
         f"""Label format to apply to years. Defaults to
         ``{constants.DEFAULT_DATE_TIME_LABEL_FORMATS.get('year')}``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._year
 

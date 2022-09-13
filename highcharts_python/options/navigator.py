@@ -361,7 +361,7 @@ class Navigator(HighchartsMeta):
     @property
     def outline_color(self) -> Optional[str | Gradient | Pattern]:
         """The color of the line marking the currently zoomed area in the navigator.
-        Defaults to ``'#cccccc'.
+        Defaults to ``'#cccccc'``.
 
         :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
           :obj:`None <python:None>`

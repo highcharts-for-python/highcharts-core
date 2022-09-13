@@ -118,7 +118,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         f"""Label applied to the chart container. Defaults to
         ``'{constants.DEFAULT_LANG_ACCESSIBILITY_CHART_CONTAINER_LABEL}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._chart_container_label
 
@@ -153,7 +153,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         f"""Content of the credits section. Defaults to:
         ``'{constants.DEFAULT_LANG_ACCESSIBILITY_CREDITS}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._credits
 
@@ -166,7 +166,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         """The default title applied ot the chart. Defaults to
         ``'{constants.DEFAULT_LANG_ACCESSIBILITY_DEFAULT_CHART_TITLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._default_chart_title
 
@@ -179,7 +179,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         f"""String for the drill-up button. Defaults to
         ``'{constants.DEFAULT_LANG_ACCESSIBILITY_DRILLUP_BUTTON}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._drillup_button
 
@@ -206,7 +206,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         ``'{constants.DEFAULT_LANG_ACCESSIBILITY_GRAPHIC_CONTAINER_LABEL}'`` (an empty
         string).
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._graphic_container_label
 
@@ -305,7 +305,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         f"""Set a label on the container wrapping the SVG. Defaults to
         ``'{constants.DEFAULT_LANG_ACCESSIBILITY_SVG_CONTAINER_LABEL}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._svg_container_label
 
@@ -325,7 +325,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
           content when hovering over elements in the chart. Assistive technology may use
           this element to label the chart.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._svg_container_title
 

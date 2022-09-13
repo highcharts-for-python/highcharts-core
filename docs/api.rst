@@ -79,7 +79,7 @@ Class Structures and Inheritance
   .. seealso::
 
     For a more in-depth discussion of how the anti-pattern was implemented safely and
-    reliably, please review the :doc:`Contributor Guidelines <contributing.rst>`.
+    reliably, please review the :doc:`Contributor Guidelines <contributing>`.
 
 --------------------------
 
@@ -276,19 +276,19 @@ Core Components
       :class:`PaneBackground <highcharts_python.options.pane.PaneBackground>`
   * - :mod:`.options.plot_options <highcharts_python.options.plot_options>`
     - :class:`PlotOptions <highcharts_python.options.plot_options.PlotOptions>`
-  * - :mod:`.plot_options.accessibility <highcharts_python.options.plot_options.accessibility>`
+  * - :mod:`.options.plot_options.accessibility <highcharts_python.options.plot_options.accessibility>`
     - :class:`TypeOptionsAccessibility <highcharts_python.options.plot_options.accessibility.TypeOptionsAccessibility>`
       :class:`SeriesKeyboardNavigation <highcharts_python.options.plot_options.accessibility.SeriesKeyboardNavigation>`
-  * - :mod:`.plot_options.arcdiagram <highcharts_python.options.plot_options.arcdiagram>`
+  * - :mod:`.options.plot_options.arcdiagram <highcharts_python.options.plot_options.arcdiagram>`
     - :class:`ArcDiagramOptions <highcharts_python.options.plot_options.arcdiagram.ArcDiagramOptions>`
-  * - :mod:`.plot_options.area <highcharts_python.options.plot_options.area>`
+  * - :mod:`.options.plot_options.area <highcharts_python.options.plot_options.area>`
     - :class:`AreaOptions <highcharts_python.options.plot_options.area.AreaOptions>`
       :class:`AreaRangeOptions <highcharts_python.options.plot_options.area.AreaRangeOptions>`
       :class:`AreaSplineOptions <highcharts_python.options.plot_options.area.AreaSplineOptions>`
       :class:`AreaSplineRangeOptions <highcharts_python.options.plot_options.area.AreaSplineRangeOptions>`
       :class:`LineOptions <highcharts_python.options.plot_options.area.LineOptions>`
       :class:`StreamGraphOptions <highcharts_python.options.plot_options.area.StreamGraphOptions>`
-  * - :mod:`.plot_options.bar <highcharts_python.options.plot_options.bar>`
+  * - :mod:`.options.plot_options.bar <highcharts_python.options.plot_options.bar>`
     - :class:`BarOptions <highcharts_python.options.plot_options.bar.BarOptions>`
       :class:`ColumnOptions <highcharts_python.options.plot_options.bar.ColumnOptions>`
       :class:`ColumnPyramidOptions <highcharts_python.options.plot_options.bar.ColumnPyramidOptions>`
@@ -299,21 +299,21 @@ Core Components
       :class:`WindBarbOptions <highcharts_python.options.plot_options.bar.WindBarbOptions>`
       :class:`XRangeOptions <highcharts_python.options.plot_options.bar.XRangeOptions>`
       :class:`BaseBarOptions <highcharts_python.options.plot_options.bar.BaseBarOptions>`
-  * - :mod:`.plot_options.bellcurve <highcharts_python.options.plot_options.bellcurve>`
+  * - :mod:`.options.plot_options.bellcurve <highcharts_python.options.plot_options.bellcurve>`
     - :class:`BellCurveOptions <highcharts_python.options.plot_options.bellcurve.BellCurveOptions>`
-  * - :mod:`.plot_options.boxplot <highcharts_python.options.plot_options.boxplot>`
+  * - :mod:`.options.plot_options.boxplot <highcharts_python.options.plot_options.boxplot>`
     - :class:`BoxPlotOptions <highcharts_python.options.plot_options.boxplot.BoxPlotOptions>`
       :class:`ErrorBarOptions <highcharts_python.options.plot_options.boxplot.ErrorBarOptions>`
-  * - :mod:`.plot_options.bubble <highcharts_python.options.plot_options.bubble>`
+  * - :mod:`.options.plot_options.bubble <highcharts_python.options.plot_options.bubble>`
     - :class:`BubbleOptions <highcharts_python.options.plot_options.bubble.BubbleOptions>`
-  * - :mod:`.plot_options.bullet <highcharts_python.options.plot_options.bullet>`
+  * - :mod:`.options.plot_options.bullet <highcharts_python.options.plot_options.bullet>`
     - :class:`BulletOptions <highcharts_python.options.plot_options.bullet.BulletOptions>`
       :class:`TargetOptions <highcharts_python.options.plot_options.bullet.TargetOptions>`
-  * - :mod:`.plot_options.data_sorting <highcharts_python.options.plot_options.data_sorting>`
+  * - :mod:`.options.plot_options.data_sorting <highcharts_python.options.plot_options.data_sorting>`
     - :class:`DataSorting <highcharts_python.options.plot_options.data_sorting.DataSorting>`
-  * - :mod:`.plot_options.dependencywheel <highcharts_python.options.plot_options.dependencywheel>`
+  * - :mod:`.options.plot_options.dependencywheel <highcharts_python.options.plot_options.dependencywheel>`
     - :class:`DependencyWheelOptions <highcharts_python.options.plot_options.dependencywheel.DependencyWheelOptions>`
-  * - :mod:`.plot_options.drag_drop <highcharts_python.options.plot_options.drag_drop>`
+  * - :mod:`.options.plot_options.drag_drop <highcharts_python.options.plot_options.drag_drop>`
     - :class:`DragDropOptions <highcharts_python.options.plot_options.drag_drop.DragDropOptions>`
       :class:`HighLowDragDropOptions <highcharts_python.options.plot_options.drag_drop.HighLowDragDropOptions>`
       :class:`BoxPlotDragDropOptions <highcharts_python.options.plot_options.drag_drop.BoxPlotDragDropOptions>`
@@ -321,91 +321,81 @@ Core Components
       :class:`GuideBox <highcharts_python.options.plot_options.drag_drop.GuideBox>`
       :class:`GuideBoxOptions <highcharts_python.options.plot_options.drag_drop.GuideBoxOptions>`
       :class:`DragHandle <highcharts_python.options.plot_options.drag_drop.DragHandle>`
-  * - :mod:`.plot_options.dumbbell <highcharts_python.options.plot_options.dumbbell>`
+  * - :mod:`.options.plot_options.dumbbell <highcharts_python.options.plot_options.dumbbell>`
     - :class:`DumbbellOptions <highcharts_python.options.plot_options.dumbbell.DumbbellOptions>`
       :class:`LollipopOptions <highcharts_python.options.plot_options.dumbbell.LollipopOptions>`
-  * - :mod:`.plot_options.funnel <highcharts_python.options.plot_options.funnel>`
+  * - :mod:`.options.plot_options.funnel <highcharts_python.options.plot_options.funnel>`
     - :class:`FunnelOptions <highcharts_python.options.plot_options.funnel.FunnelOptions>`
       :class:`Funnel3DOptions <highcharts_python.options.plot_options.funnel.Funnel3DOptions>`
-  * - :mod:`.plot_options.gauge <highcharts_python.options.plot_options.gauge>`
+  * - :mod:`.options.plot_options.gauge <highcharts_python.options.plot_options.gauge>`
     - :class:`GaugeOptions <highcharts_python.options.plot_options.gauge.GaugeOptions>`
       :class:`SolidGaugeOptions <highcharts_python.options.plot_options.gauge.SolidGaugeOptions>`
-  * - :mod:`.plot_options.generic <highcharts_python.options.plot_options.generic>`
+  * - :mod:`.options.plot_options.generic <highcharts_python.options.plot_options.generic>`
     - :class:`GenericTypeOptions <highcharts_python.options.plot_options.generic.GenericTypeOptions>`
-  * - :mod:`.plot_options.Heatmap <highcharts_python.options.plot_options.Heatmap>`
+  * - :mod:`.options.plot_options.Heatmap <highcharts_python.options.plot_options.Heatmap>`
     - :class:`HeatmapOptions <highcharts_python.options.plot_options.Heatmap.HeatmapOptions>`
       :class:`TilemapOptions <highcharts_python.options.plot_options.Tilemap.TilemapOptions>`
-  * - :mod:`.plot_options.histogram <highcharts_python.options.plot_options.histogram>`
+  * - :mod:`.options.plot_options.histogram <highcharts_python.options.plot_options.histogram>`
     - :class:`HistogramOptions <highcharts_python.options.plot_options.histogram.HistogramOptions>`
-  * - :mod:`.plot_options.item <highcharts_python.options.plot_options.item>`
+  * - :mod:`.options.plot_options.item <highcharts_python.options.plot_options.item>`
     - :class:`ItemOptions <highcharts_python.options.plot_options.item.ItemOptions>`
-  * - :mod:`.plot_options.levels <highcharts_python.options.plot_options.levels>`
+  * - :mod:`.options.plot_options.levels <highcharts_python.options.plot_options.levels>`
     - :class:`LevelOptions <highcharts_python.options.plot_options.levels.LevelOptions>`
       :class:`SunburstLevelOptions <highcharts_python.options.plot_options.levels.SunburstLevelOptions>`
       :class:`TreemapLevelOptions <highcharts_python.options.plot_options.levels.TreemapLevelOptions>`
       :class:`LevelSize <highcharts_python.options.plot_options.levels.LevelSize>`
       :class:`ColorVariation <highcharts_python.options.plot_options.levels.ColorVariation>`
       :class:`BaseLevelOptions <highcharts_python.options.plot_options.levels.BaseLevelOptions>`
-  * - :mod:`.plot_options.link <highcharts_python.options.plot_options.link>`
+  * - :mod:`.options.plot_options.link <highcharts_python.options.plot_options.link>`
     - :class:`LinkOptions <highcharts_python.options.plot_options.link.LinkOptions>`
-  * - :mod:`.plot_options.networkgraph <highcharts_python.options.plot_options.networkgraph>`
+  * - :mod:`.options.plot_options.networkgraph <highcharts_python.options.plot_options.networkgraph>`
     - :class:`NetworkGraphOptions <highcharts_python.options.plot_options.networkgraph.NetworkGraphOptions>`
       :class:`LayoutAlgorithm <highcharts_python.options.plot_options.networkgraph.LayoutAlgorithm>`
-  * - :mod:`.plot_options.organization <highcharts_python.options.plot_options.organization>`
+  * - :mod:`.options.plot_options.organization <highcharts_python.options.plot_options.organization>`
     - :class:`OrganizationOptions <highcharts_python.options.plot_options.organization.OrganizationOptions>`
-  * - :mod:`.plot_options.packedbubble <highcharts_python.options.plot_options.packedbubble>`
+  * - :mod:`.options.plot_options.packedbubble <highcharts_python.options.plot_options.packedbubble>`
     - :class:`PackedBubbleOptions <highcharts_python.options.plot_options.packedbubble.PackedBubbleOptions>`
       :class:`ParentNodeOptions <highcharts_python.options.plot_options.packedbubble.ParentNodeOptions>`
-  * - :mod:`.plot_options.pareto <highcharts_python.options.plot_options.pareto>`
+  * - :mod:`.options.plot_options.pareto <highcharts_python.options.plot_options.pareto>`
     - :class:`ParetoOptions <highcharts_python.options.plot_options.pareto.ParetoOptions>`
-  * - :mod:`.plot_options.pie <highcharts_python.options.plot_options.pie>`
+  * - :mod:`.options.plot_options.pie <highcharts_python.options.plot_options.pie>`
     - :class:`PieOptions <highcharts_python.options.plot_options.pie.PieOptions>`
       :class:`VariablePieOptions <highcharts_python.options.plot_options.pie.VariablePieOptions>`
-  * - :mod:`.plot_options.points <highcharts_python.options.plot_options.points>`
+  * - :mod:`.options.plot_options.points <highcharts_python.options.plot_options.points>`
     - :class:`Point <highcharts_python.options.plot_options.points.Point>`
       :class:`OnPointOptions <highcharts_python.options.plot_options.points.OnPointOptions>`
       :class:`ConnectorOptions <highcharts_python.options.plot_options.points.ConnectorOptions>`
-  * - :mod:`.plot_options.polygon <highcharts_python.options.plot_options.polygon>`
+  * - :mod:`.options.plot_options.polygon <highcharts_python.options.plot_options.polygon>`
     - :class:`PolygonOptions <highcharts_python.options.plot_options.polygon.PolygonOptions>`
-  * - :mod:`.plot_options.pyramid <highcharts_python.options.plot_options.pyramid>`
+  * - :mod:`.options.plot_options.pyramid <highcharts_python.options.plot_options.pyramid>`
     - :class:`PyramidOptions <highcharts_python.options.plot_options.pyramid.PyramidOptions>`
       :class:`Pyramid3DOptions <highcharts_python.options.plot_options.pyramid.Pyramid3DOptions>`
-  * - :mod:`.plot_options.sankey <highcharts_python.options.plot_options.sankey>`
+  * - :mod:`.options.plot_options.sankey <highcharts_python.options.plot_options.sankey>`
     - :class:`SankeyOptions <highcharts_python.options.plot_options.sankey.SankeyOptions>`
-  * - :mod:`.plot_options.scatter <highcharts_python.options.plot_options.scatter>`
+  * - :mod:`.options.plot_options.scatter <highcharts_python.options.plot_options.scatter>`
     - :class:`ScatterOptions <highcharts_python.options.plot_options.scatter.ScatterOptions>`
       :class:`Scatter3DOptions <highcharts_python.options.plot_options.scatter.Scatter3DOptions>`
-  * - :mod:`.plot_options.series <highcharts_python.options.plot_options.series>`
+  * - :mod:`.options.plot_options.series <highcharts_python.options.plot_options.series>`
     - :class:`SeriesOptions <highcharts_python.options.plot_options.series.SeriesOptions>`
-  * - :mod:`.plot_options.spline <highcharts_python.options.plot_options.spline>`
+  * - :mod:`.options.plot_options.spline <highcharts_python.options.plot_options.spline>`
     - :class:`SplineOptions <highcharts_python.options.plot_options.spline.SplineOptions>`
-  * - :mod:`.plot_options.sunburst <highcharts_python.options.plot_options.sunburst>`
+  * - :mod:`.options.plot_options.sunburst <highcharts_python.options.plot_options.sunburst>`
     - :class:`SunburstOptions <highcharts_python.options.plot_options.sunburst.SunburstOptions>`
-  * - :mod:`.plot_options.timeline <highcharts_python.options.plot_options.timeline>`
+  * - :mod:`.options.plot_options.timeline <highcharts_python.options.plot_options.timeline>`
     - :class:`TimelineOptions <highcharts_python.options.plot_options.timeline.TimelineOptions>`
-  * - :mod:`.plot_options.treemap <highcharts_python.options.plot_options.treemap>`
+  * - :mod:`.options.plot_options.treemap <highcharts_python.options.plot_options.treemap>`
     - :class:`TreemapOptions <highcharts_python.options.plot_options.treemap.TreemapOptions>`
-  * - :mod:`.plot_options.vector <highcharts_python.options.plot_options.vector>`
+  * - :mod:`.options.plot_options.vector <highcharts_python.options.plot_options.vector>`
     - :class:`VectorOptions <highcharts_python.options.plot_options.vector.VectorOptions>`
-  * - :mod:`.plot_options.venn <highcharts_python.options.plot_options.venn>`
+  * - :mod:`.options.plot_options.venn <highcharts_python.options.plot_options.venn>`
     - :class:`VennOptions <highcharts_python.options.plot_options.venn.VennOptions>`
-  * - :mod:`.plot_options.wordcloud <highcharts_python.options.plot_options.wordcloud>`
+  * - :mod:`.options.plot_options.wordcloud <highcharts_python.options.plot_options.wordcloud>`
     - :class:`WordcloudOptions <highcharts_python.options.plot_options.wordcloud.WordcloudOptions>`
       :class:`RotationOptions <highcharts_python.options.plot_options.wordcloud.RotationOptions>`
   * - :mod:`.options.responsive <highcharts_python.options.responsive>`
     - :class:`Responsive <highcharts_python.options.responsive.Responsive>`
       :class:`ResponsiveRules <highcharts_python.options.responsive.ResponsiveRules>`
       :class:`Condition <highcharts_python.options.responsive.Condition>`
-  * - :mod:`.options.series <highcharts_python.options.series>`
-    -
-  * - :mod:`.options.subtitle <highcharts_python.options.subtitle>`
-    - :class:`Subtitle <highcharts_python.options.subtitle.Subtitle>`
-  * - :mod:`.options.time <highcharts_python.options.time>`
-    - :class:`Time <highcharts_python.options.time.Time>`
-  * - :mod:`.options.title <highcharts_python.options.title>`
-    - :class:`Title <highcharts_python.options.title.Title>`
-  * - :mod:`.options.tooltips <highcharts_python.options.tooltips>`
-    - :class:`Tooltip <highcharts_python.options.tooltips.Tooltip>`
   * - :mod:`.options.series <highcharts_python.options.series>`
     -
   * - :mod:`.options.series.arcdiagram <highcharts_python.options.series.arcdiagram>`
@@ -499,9 +489,9 @@ Core Components
   * - :mod:`.options.series.gauge <highcharts_python.options.series.gauge>`
     - :class:`GaugeSeries <highcharts_python.options.series.gauge.GaugeSeries>`
       :class:`SolidGaugeSeries <highcharts_python.options.series.gauge.SolidGaugeSeries>`
-  * - :mod:`.options.series.Heatmap <highcharts_python.options.series.Heatmap>`
-    - :class:`HeatmapSeries <highcharts_python.options.series.Heatmap.HeatmapSeries>`
-      :class:`TilemapSeries <highcharts_python.options.series.Tilemap.TilemapSeries>`
+  * - :mod:`.options.series.heatmap <highcharts_python.options.series.heatmap>`
+    - :class:`HeatmapSeries <highcharts_python.options.series.heatmap.HeatmapSeries>`
+      :class:`TilemapSeries <highcharts_python.options.series.heatmap.TilemapSeries>`
   * - :mod:`.options.series.histogram <highcharts_python.options.series.histogram>`
     - :class:`HistogramSeries <highcharts_python.options.series.histogram.HistogramSeries>`
   * - :mod:`.options.series.item <highcharts_python.options.series.item>`
@@ -546,6 +536,14 @@ Core Components
     - :class:`VennSeries <highcharts_python.options.series.venn.VennSeries>`
   * - :mod:`.options.series.wordcloud <highcharts_python.options.series.wordcloud>`
     - :class:`WordcloudSeries <highcharts_python.options.series.wordcloud.WordcloudSeries>`
+  * - :mod:`.options.subtitle <highcharts_python.options.subtitle>`
+    - :class:`Subtitle <highcharts_python.options.subtitle.Subtitle>`
+  * - :mod:`.options.time <highcharts_python.options.time>`
+    - :class:`Time <highcharts_python.options.time.Time>`
+  * - :mod:`.options.title <highcharts_python.options.title>`
+    - :class:`Title <highcharts_python.options.title.Title>`
+  * - :mod:`.options.tooltips <highcharts_python.options.tooltips>`
+    - :class:`Tooltip <highcharts_python.options.tooltips.Tooltip>`
   * - :mod:`.utility_classes <highcharts_python.utility_classes>`
     -
   * - :mod:`.utility_classes.animation <highcharts_python.utility_classes.animation>`
@@ -639,7 +637,7 @@ Library Internals
 
   Internal Reference <api/internals>
 
-While most users will be interacting with the :doc:`Core Components <core_components>` of
+While most users will be interacting with the :ref:`Core Components <core_components>` of
 **Highcharts for Python**, you may need (or choose to) work with various internals of the
 library. If you're :doc:`contributing` to the library, then you will definitely need to
 familiarize yourself with these internals.
@@ -673,3 +671,7 @@ familiarize yourself with these internals.
       :func:`validate_color() <highcharts_python.utility_functions.validate_color>`
       :func:`to_camelCase() <highcharts_python.utility_functions.to_camelCase>`
       :func:`parse_csv() <highcharts_python.utility_functions.parse_csv>`
+
+.. target-notes::
+
+.. include:: links.txt

@@ -122,7 +122,7 @@ class OrganizationOptions(BarOptions):
 
     @property
     def link_color(self) -> Optional[str]:
-        """The color of the links between nodes. Defaults to ``'#666666'.
+        """The color of the links between nodes. Defaults to ``'#666666'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
