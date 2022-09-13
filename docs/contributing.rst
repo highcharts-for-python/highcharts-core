@@ -47,7 +47,7 @@ In other words:
 
   Users should simply be able to drive the car without looking at the engine.
 
-The good news is that `Highcharts JS`_ applies a very similar philosophy, and so that
+The good news is that `Highcharts JS <https://www.highcharts.com>`__ applies a very similar philosophy, and so that
 makes the job for **Highcharts for Python** that much simpler.
 
 *************************
@@ -150,7 +150,7 @@ Basic Design Conventions
 
 * Separate a function or method's final (or default) ``return`` from the rest of
   the code with a blank line (except for single-line functions/methods).
-* Because `Highcharts JS`_ repeats many of the same properties and groups of properties,
+* Because `Highcharts JS <https://www.highcharts.com>`__ repeats many of the same properties and groups of properties,
   be sure to practice :iabbr:`DRY (Do Not Repeat Yourself)`. Use inheritance to your
   advantage, and don't be afraid of the :term:`diamond of death` inheritance problem.
 
@@ -164,11 +164,11 @@ Documentation Conventions
 We are very big believers in documentation (maybe you can tell). To document
 **Highcharts for Python** we rely on several tools:
 
-`Sphinx`_
+Sphinx
 ---------------
 
-`Sphinx`_ is used to organize the library's documentation into this lovely
-readable format (which is also published to `ReadTheDocs`_). This
+`Sphinx <https://www.sphinx-doc.org/>`__ is used to organize the library's documentation
+into this lovely readable format (which is also published to `ReadTheDocs`_). This
 documentation is written in `reStructuredText`_ files which are stored in
 ``<project>/docs``.
 
@@ -213,7 +213,7 @@ Docstrings
 Design Patterns and Standards
 ***************************************************
 
-`Highcharts JS`_ is a large, robust, and complicated JavaScript library. If in doubt, take
+`Highcharts JS <https://www.highcharts.com>`__ is a large, robust, and complicated JavaScript library. If in doubt, take
 a look at their extensive `documentation <https://www.highcharts.com/docs/index>`_ and in
 particular their `API reference <https://api.highcharts.com/highcharts>`_. Because
 **Highcharts for Python** wraps the Highcharts JS API, its design is heavily shaped by
@@ -285,7 +285,7 @@ because it makes debugging code much, much harder - particuarly in Python, which
 bit of a "magic" secret sauce called the MRO (Method Resolution Order) to determine which
 parent class' methods to execute and when.
 
-However, `Highcharts JS`_ - and by consequence, **Highcharts for Python** - is a very
+However, `Highcharts JS <https://www.highcharts.com>`__ - and by consequence, **Highcharts for Python** - is a very
 verbose library. I estimate that the full set of objects in the library has about 15,000
 properties in total. A great many of these properties are identical in terms of their
 syntax, and their meaning (in context). So this is a classic example of where we can apply

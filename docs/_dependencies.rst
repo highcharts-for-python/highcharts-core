@@ -20,7 +20,7 @@
       Highcharts JS itself, all of the other hard dependencies are automatically installed
       when installing **Highcharts for Python**.
 
-    * `Highcharts JS`_ v.10.2 or higher
+    * `Highcharts JS <https://www.highcharts.com>`__ v.10.2 or higher
 
       .. note::
 

@@ -6,8 +6,9 @@ class HighchartsError(ValueError):
 class HighchartsDependencyError(ImportError):
     """:exc:`ImportError <python:ImportError>` encountered when attempting to use a
     **Highcharts for Python** method that relies on a third-party library (e.g.
-    `pandas <https://pandas.pydata.org>`_, `PySpark <>`_, etc.) which is not available in
-    the runtime environment."""
+    `pandas <https://pandas.pydata.org>`_,
+    `PySpark <https://spark.apache.org/docs/latest/api/python/>`_, etc.) which is not
+    available in the runtime environment."""
     pass
 
 

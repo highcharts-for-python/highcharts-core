@@ -1,4 +1,1 @@
-.. _`Highcharts JS`: https://www.highcharts.com
-.. _`JavaScript documentation`: https://api.highcharts.com/highcharts/
 .. _`API reference`: https://api.highcharts.com/highcharts/
-.. _`Sphinx`: https://sphinx-doc.org

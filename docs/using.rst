@@ -12,7 +12,7 @@ Using Highcharts for Python
 Introduction to Highcharts JS and Highcharts for Python
 ***************************************************************
 
-`Highcharts JS`_  is the gold-standard in JavaScript data visualization libraries,
+`Highcharts JS <https://www.highcharts.com>`__  is the gold-standard in JavaScript data visualization libraries,
 enabling you to design rich, beautiful, and highly interactive data visualizations of
 (almost) any kind imaginable, and to render those visualizations in your web or mobile
 applications. Take a look at some of their
@@ -20,7 +20,7 @@ applications. Take a look at some of their
 `demo gallery <https://www.highcharts.com/demo>`_ to see what you can do with Highcharts.
 
 **Highcharts for Python** is a Python wrapper for the
-`Highcharts JS`_ JavaScript library, which means that it is designed to give developers
+`Highcharts JS <https://www.highcharts.com>`__ JavaScript library, which means that it is designed to give developers
 working in Python a simple and Pythonic way of interacting with Highcharts JS. Highcharts
 for Python will *not* render data visualizations itself - that's what Highcharts JS does -
 but it *will* allow you to:
@@ -43,7 +43,7 @@ but it *will* allow you to:
 Key Design Patterns in Highcharts for Python
 *************************************************
 
-`Highcharts JS`_ is a large, robust, and complicated JavaScript library. If in doubt, take
+`Highcharts JS <https://www.highcharts.com>`__ is a large, robust, and complicated JavaScript library. If in doubt, take
 a look at their extensive `documentation <https://www.highcharts.com/docs/index>`_ and in
 particular their `API reference`_. Because
 **Highcharts for Python** wraps the Highcharts JS API, its design is heavily shaped by
@@ -144,7 +144,7 @@ frontend framework. Whether your Python application is relying on iPython (e.g.
 `Django <https://www.djangoproject.com/>`_,  `FastAPI <https://fastapi.tiangolo.com/>`_,
 `Pyramid <https://trypyramid.com/>`_, `Tornado <https://www.tornadoweb.org/en/stable/>`_,
 or some completely home-grown solution all Highcharts for
-Python needs is a place where `Highcharts JS`_ JavaScript code can be executed.
+Python needs is a place where `Highcharts JS <https://www.highcharts.com>`__ JavaScript code can be executed.
 
 All of those frameworks I mentioned have their own best practices for organizing their
 application structures, and those should *always* take priority. Even in a data-centric
@@ -170,13 +170,13 @@ files and code to work with **Highcharts for Python**:
 Use Shared Options
 ========================
 
-One of the most challenging aspects of `Highcharts JS`_ is its sheer breadth of
+One of the most challenging aspects of `Highcharts JS <https://www.highcharts.com>`__ is its sheer breadth of
 functionality and configurability. That's simultaneously the library's greatest strength,
 and its greatest weakness. This is because it can be quite challenging to wrangle
 thousands of properties - especially when one single visualization can use thousands
 of properties!
 
-This is a challenge that the developers of `Highcharts JS`_ are keenly aware of, and one
+This is a challenge that the developers of `Highcharts JS <https://www.highcharts.com>`__ are keenly aware of, and one
 which we've given some thought to in the **Highcharts for Python** library. A core
 principle you should use throughout your project is to practice
 :iabbr:`DRY (Do Not Repeat Yourself)` programming. If your application will be generating
@@ -355,7 +355,7 @@ As with all **Highcharts for Python** objects, you can instantiate them in sever
       .. tip::
 
         This method is particularly helpful and easy to maintain if you are only using a
-        *very* small subset of the `Highcharts JS`_ configuration options.
+        *very* small subset of the `Highcharts JS <https://www.highcharts.com>`__ configuration options.
 
   .. tab:: with ``__init__()``
 
@@ -519,7 +519,7 @@ of your charts.
       .. tip::
 
         This method is particularly helpful and easy to maintain if you are only using a
-        *very* small subset of the `Highcharts JS`_ configuration options.
+        *very* small subset of the `Highcharts JS <https://www.highcharts.com>`__ configuration options.
 
   .. tab:: with ``.copy()``
 
@@ -556,7 +556,7 @@ of your charts.
 Working with Data
 **************************************
 
-Obviously, if you are going to use **Highcharts for Python** and `Highcharts JS`_ you will
+Obviously, if you are going to use **Highcharts for Python** and `Highcharts JS <https://www.highcharts.com>`__ you will
 need to have data to visualize. Python is rapidly becoming the *lingua franca* in the
 world of data manipulation, transformation, and analysis and **Highcharts for Python**
 is specifically designed to play well within that ecosystem to make it easy to visualize
@@ -565,7 +565,7 @@ data from CSV files, from `pandas`_ dataframes, or `PySpark`_ dataframes.
 How Data is Represented
 ==================================
 
-`Highcharts JS`_ supports two different ways of representing data: as an individual
+`Highcharts JS <https://www.highcharts.com>`__ supports two different ways of representing data: as an individual
 :term:`series` comprised of individual data points, and as a set of instructions to read
 data dynamically from a CSV file or an HTML table.
 
@@ -574,10 +574,10 @@ data dynamically from a CSV file or an HTML table.
     * :class:`DataBase <highcharts_python.options.series.data.base.DataBase>` class
     * :class:`options.Data <highcharts_python.options.data.Data>` class
 
-`Highcharts JS`_ organizes data into :term:`series`. You can think of a series as a single
+`Highcharts JS <https://www.highcharts.com>`__ organizes data into :term:`series`. You can think of a series as a single
 line on a graph that shows a set of values. The set of values that make up the series are
 :term:`data points <data point>`, which are defined by a set of properties that indicate the data
-point's position on one or more axes. As a result, `Highcharts JS`_ and
+point's position on one or more axes. As a result, `Highcharts JS <https://www.highcharts.com>`__ and
 **Highcharts for Python** both represent the data points in series as a list of data point
 objects in the ``data`` property within the series:
 
@@ -641,7 +641,7 @@ objects in the ``data`` property within the series:
         ])
 
 As you can see, **Highcharts for Python** represents its data the same way that
-`Highcharts JS`_ does. That should be expected. However, constructing tens, hundreds, or
+`Highcharts JS <https://www.highcharts.com>`__ does. That should be expected. However, constructing tens, hundreds, or
 possibly thousands of data points individually in your code would be a nightmare. For that
 reason, **Highcharts for Python** provides a number of convenience methods to make it
 easier to populate your series.
@@ -676,7 +676,7 @@ However, they also have a special data point-specific deserialization method:
     Creates a collection of data point instances, parsing the contents of ``value`` as an
     array (iterable). This method is specifically used to parse data that is input to
     **Highcharts for Python** without property names, in an array-organized structure as
-    described in the `Highcharts JS`_ documentation.
+    described in the `Highcharts JS <https://www.highcharts.com>`__ documentation.
 
     .. seealso::
 
@@ -1165,7 +1165,7 @@ an instance of :class:`HighchartsOptions <highcharts_python.options.HighchartsOp
   .. note::
 
     This structure - where the chart object contains an options object - is a little
-    nested for my tastes, but it is the structure which `Highcharts JS`_ has adopted and
+    nested for my tastes, but it is the structure which `Highcharts JS <https://www.highcharts.com>`__ has adopted and
     so for the sake of consistency **Highcharts for Python** uses it as well.
 
 To be visualized on your chart, you will need to add your series instances to the
@@ -1275,7 +1275,7 @@ your visualizations:
 Rendering Highcharts Visualizations in Web Content
 ========================================================
 
-`Highcharts JS`_ is a JavaScript library specifically designed to enable rendering
+`Highcharts JS <https://www.highcharts.com>`__ is a JavaScript library specifically designed to enable rendering
 high-end data visualizations in a web context. The library is designed and optimized to
 operate within a web browser. **Highcharts for Python** therefore fully supports this
 capability, and we've enabled it using the *batteries included* principle.
@@ -1290,7 +1290,7 @@ will display the chart in full.
 .. warning::
 
   The current version of **Highcharts for Python** assumes that your web content already
-  has all the ``<script/>`` tags which include the `Highcharts JS`_ modules your chart
+  has all the ``<script/>`` tags which include the `Highcharts JS <https://www.highcharts.com>`__ modules your chart
   relies on.
 
   This is likely to change in a future version of **Highcharts for Python**, where the
@@ -1379,9 +1379,9 @@ Downloading Your Visualizations
 
 .. sidebar:: Highcharts Export Server
 
-  Highsoft - the developers of `Highcharts JS`_ - are kind enough to provide a
+  Highsoft - the developers of `Highcharts JS <https://www.highcharts.com>`__ - are kind enough to provide a
   rate-limited publicly available :term:`Export Server` that can be used by
-  `Highcharts JS`_ license-holders. By default, **Highcharts for Python** is configured to
+  `Highcharts JS <https://www.highcharts.com>`__ license-holders. By default, **Highcharts for Python** is configured to
   use this server.
 
   However, there are many use cases where you may be deploying your own

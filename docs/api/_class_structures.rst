@@ -1,4 +1,4 @@
-`Highcharts JS`_ objects re-use many of the same properties. This is one of the strengths
+`Highcharts JS <https://www.highcharts.com>`__ objects re-use many of the same properties. This is one of the strengths
 of the Highcharts API, in that it is internally consistent and that behavior configured on
 one object should be readily transferrable to a second object provided it shares the same
 properties. However, Highcharts JS has a *lot* of properties. For example, I estimate that

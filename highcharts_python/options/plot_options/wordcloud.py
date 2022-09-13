@@ -391,7 +391,7 @@ class WordcloudOptions(GenericTypeOptions):
 
           It is possible for users to add their own custom placement strategies as
           described in the
-          `JavaScript documentation <https://www.highcharts.com/docs/chart-and-series-types/word-cloud-series#custom-placement-strategies>`_
+          `JavaScript documentation <https://www.highcharts.com/docs/chart-and-series-types/word-cloud-series#custom-placement-strategies>`__
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -424,7 +424,7 @@ class WordcloudOptions(GenericTypeOptions):
 
           It is possible for users to add their own custom spiralling algorithms for use
           in wordclouds. For more information, please see the
-          `JavaScript documentation <https://www.highcharts.com/docs/chart-and-series-types/word-cloud-series#custom-spiralling-algorithm>`_
+          `JavaScript documentation <https://www.highcharts.com/docs/chart-and-series-types/word-cloud-series#custom-spiralling-algorithm>`__
 
         :rtype: :class:`str <python:str>`
         """
