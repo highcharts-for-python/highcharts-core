@@ -186,6 +186,16 @@ def to_camelCase(snake_case):
         snake_case = snake_case.replace('xls', 'XLS')
     elif '_atr' in snake_case:
         snake_case = snake_case.replace('atr', 'ATR')
+    elif '_hlc' in snake_case:
+        snake_case = snake_case.replace('hlc', 'HLC')
+    elif '_ohlc' in snake_case:
+        snake_case = snake_case.replace('ohlc', 'OHLC')
+    elif '_xy' in snake_case:
+        snake_case = snake_case.replace('xy', 'XY')
+    elif snake_case.endswith('_x'):
+        snake_case = snake_case.replace('_x', '_X')
+    elif snake_case.endswith('_y'):
+        snake_case = snake_case.replace('_y', '_Y')
     elif snake_case == 'drillup_text':
         snake_case = 'drillUpText'
     elif snake_case == 'drillup_button':

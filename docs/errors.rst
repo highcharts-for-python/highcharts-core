@@ -50,6 +50,18 @@ HighchartsDependencyError (from :exc:`ImportError <python:ImportError>`)
 
 -----------------
 
+HighchartsReadOnlyError (from :exc:`ValueError <python:ValueError>` and :exc:`AttributeError <python:AttributeError>`)
+=============================================================================================================================
+
+.. autoexception:: HighchartsReadOnlyError
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: HighchartsReadOnlyError
+      :parts: -1
+
+-----------------
+
 HighchartsImplementationError (from :exc:`ValueError <python:ValueError>`)
 ==========================================================================================
 

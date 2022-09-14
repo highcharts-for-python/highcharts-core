@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from validator_collection import validators, checkers
 
-from highcharts_python import constants, errors, utility_functions
+from highcharts_python import constants, errors
 from highcharts_python.decorators import class_sensitive, validate_types
 from highcharts_python.metaclasses import HighchartsMeta, JavaScriptDict
 from highcharts_python.options.plot_options.accessibility import TypeOptionsAccessibility
@@ -109,6 +109,11 @@ class GenericTypeOptions(HighchartsMeta):
             class_name = class_name.replace('Series', '')
 
         return class_name.lower()
+
+    @type.setter
+    def type(self, value):
+        raise errors.HighchartsReadOnlyError('type is a read-only property and cannot be '
+                                             'set manually')
 
     @property
     def accessibility(self) -> Optional[TypeOptionsAccessibility]:

@@ -3,6 +3,7 @@ class HighchartsError(ValueError):
     """Basic error that all other Highcharts for Python exceptions inherit from."""
     pass
 
+
 class HighchartsDependencyError(ImportError):
     """:exc:`ImportError <python:ImportError>` encountered when attempting to use a
     **Highcharts for Python** method that relies on a third-party library (e.g.
@@ -10,6 +11,12 @@ class HighchartsDependencyError(ImportError):
     `PySpark <https://spark.apache.org/docs/latest/api/python/>`_, etc.) which is not
     available in the runtime environment."""
     pass
+
+
+class HighchartsReadOnlyError(HighchartsError, AttributeError):
+    """:exc:`AttributeError <python:AttributeError>` encountered when attempting to set
+    a **Highcharts for Python** property that is only available as a read-only property.
+    """
 
 
 class HighchartsImplementationError(HighchartsError):
@@ -41,6 +48,7 @@ class HighchartsParseError(HighchartsError):
     """:exc:`ValueError <python:ValueError>` encountered when Highcharts for Python is
     unable to parse a JavaScript object literal correctly."""
     pass
+
 
 class HighchartsCSVDeserializationError(HighchartsError):
     """:exc:`ValueError <python:ValueError>` encountered when Highcharts for Python is
