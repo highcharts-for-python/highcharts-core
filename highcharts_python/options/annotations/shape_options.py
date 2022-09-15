@@ -12,35 +12,29 @@ from highcharts_python.utility_classes.javascript_functions import CallbackFunct
 from highcharts_python.utility_functions import validate_color
 
 
-class ShapeOptions(HighchartsMeta):
-    """Global options applied to all annotation shapes."""
+class ShapeOptionsBase(HighchartsMeta):
+    """Base set of options applied to all annotation shapes."""
 
     def __init__(self, **kwargs):
         self._dash_style = None
         self._fill = None
         self._height = None
-        self._r = None
         self._ry = None
         self._snap = None
         self._src = None
         self._stroke = None
         self._stroke_width = None
-        self._type = None
-        self._width = None
         self._x_axis = None
         self._y_axis = None
 
         self.dash_style = kwargs.get('dash_style', None)
         self.fill = kwargs.get('fill', None)
         self.height = kwargs.get('height', None)
-        self.r = kwargs.get('r', None)
         self.ry = kwargs.get('ry', None)
         self.snap = kwargs.get('snap', None)
         self.src = kwargs.get('src', None)
         self.stroke = kwargs.get('stroke', None)
         self.stroke_width = kwargs.get('stroke_width', None)
-        self.type = kwargs.get('type', None)
-        self.width = kwargs.get('width', None)
         self.x_axis = kwargs.get('x_axis', None)
         self.y_axis = kwargs.get('y_axis', None)
 
@@ -102,18 +96,6 @@ class ShapeOptions(HighchartsMeta):
     @height.setter
     def height(self, value):
         self._height = validators.numeric(value, allow_empty = True)
-
-    @property
-    def r(self) -> Optional[int | float | Decimal]:
-        f"""The radius of the shape in pixels. Defaults to {constants.DEFAULT_SHAPES_R}.
-
-        :rtype: numeric or :obj:`None <python:None>`
-        """
-        return self._r
-
-    @r.setter
-    def r(self, value):
-        self._r = validators.numeric(value, allow_empty = True)
 
     @property
     def ry(self) -> Optional[int | float | Decimal]:
@@ -199,48 +181,6 @@ class ShapeOptions(HighchartsMeta):
         self._stroke_width = validators.numeric(value, allow_empty = True)
 
     @property
-    def type(self) -> Optional[str]:
-        f"""The type of the shape. Defaults to ``{constants.DEFAULT_SHAPES_TYPE}``.
-
-        Accepts:
-
-          * ``'rect'``
-          * ``'circle'``
-          * ``'ellipse'``
-          * ``'image'``
-
-        :returns: :class:`str <python:str>` or :obj:`None <python:None>`
-
-        :raises HighchartsValueError: if type not supported
-        """
-        return self._type
-
-    @type.setter
-    def type(self, value):
-        value = validators.string(value, allow_empty = True)
-        if not value:
-            self._type = None
-        else:
-            value = value.lower()
-            if value not in ['rect', 'circle', 'ellipse']:
-                raise errors.HighchartsValueError(f'ShapeOptions.type accepts either '
-                                                  f'"rect", "circle", "image", or '
-                                                  f'"ellipse". Received: {value}')
-            self._type = value
-
-    @property
-    def width(self) -> Optional[int | float | Decimal]:
-        """The width of the shape, expressed in pixels.
-
-        :rtype: numeric or :obj:`None <python:None>`
-        """
-        return self._width
-
-    @width.setter
-    def width(self, value):
-        self._width = validators.numeric(value, allow_empty = True)
-
-    @property
     def x_axis(self) -> Optional[int]:
         """The X-Axis index to which the points should be attached.
 
@@ -282,6 +222,107 @@ class ShapeOptions(HighchartsMeta):
                                           allow_empty = True,
                                           minimum = 0,
                                           coerce_value = True)
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'dash_style': as_dict.get('dashStyle', None),
+            'fill': as_dict.get('fill', None),
+            'height': as_dict.get('height', None),
+            'ry': as_dict.get('ry', None),
+            'snap': as_dict.get('snap', None),
+            'src': as_dict.get('src', None),
+            'stroke': as_dict.get('stroke', None),
+            'stroke_width': as_dict.get('strokeWidth', None),
+            'x_axis': as_dict.get('xAxis', None),
+            'y_axis': as_dict.get('yAxis', None)
+        }
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        untrimmed = {
+            'dashStyle': self.dash_style,
+            'fill': self.fill,
+            'height': self.height,
+            'ry': self.ry,
+            'snap': self.snap,
+            'src': self.src,
+            'stroke': self.stroke,
+            'strokeWidth': self.stroke_width,
+            'xAxis': self.x_axis,
+            'yAxis': self.y_axis
+        }
+
+        return untrimmed
+
+
+class ShapeOptions(ShapeOptionsBase):
+    """Global options applied to all annotation shapes."""
+
+    def __init__(self, **kwargs):
+        self._r = None
+        self._type = None
+        self._width = None
+
+        self.r = kwargs.get('r', None)
+        self.type = kwargs.get('type', None)
+        self.width = kwargs.get('width', None)
+
+        super().__init__(**kwargs)
+
+    @property
+    def r(self) -> Optional[int | float | Decimal]:
+        f"""The radius of the shape in pixels. Defaults to {constants.DEFAULT_SHAPES_R}.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._r
+
+    @r.setter
+    def r(self, value):
+        self._r = validators.numeric(value, allow_empty = True)
+
+    @property
+    def type(self) -> Optional[str]:
+        f"""The type of the shape. Defaults to ``{constants.DEFAULT_SHAPES_TYPE}``.
+
+        Accepts:
+
+          * ``'rect'``
+          * ``'circle'``
+          * ``'ellipse'``
+          * ``'image'``
+
+        :returns: :class:`str <python:str>` or :obj:`None <python:None>`
+
+        :raises HighchartsValueError: if type not supported
+        """
+        return self._type
+
+    @type.setter
+    def type(self, value):
+        value = validators.string(value, allow_empty = True)
+        if not value:
+            self._type = None
+        else:
+            value = value.lower()
+            if value not in ['rect', 'circle', 'ellipse']:
+                raise errors.HighchartsValueError(f'ShapeOptions.type accepts either '
+                                                  f'"rect", "circle", "image", or '
+                                                  f'"ellipse". Received: {value}')
+            self._type = value
+
+    @property
+    def width(self) -> Optional[int | float | Decimal]:
+        """The width of the shape, expressed in pixels.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._width
+
+    @width.setter
+    def width(self, value):
+        self._width = validators.numeric(value, allow_empty = True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -493,5 +534,7 @@ class AnnotationShape(ShapeOptions):
 
 
 __all__ = [
-    'ShapeOptions'
+    'ShapeOptions',
+    'AnnotationShape',
+    'ShapeOptionsBase'
 ]
