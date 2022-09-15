@@ -12,7 +12,7 @@ from highcharts_python.utility_classes.buttons import ButtonConfiguration
 from highcharts_python.utility_classes.events import NavigationEvents
 
 
-class Navigation(HighchartsMeta):
+class NavigationBase(HighchartsMeta):
     """A collection of options for buttons and menus appearing in the exporting
     module or in Stock Tools.
     """
@@ -21,7 +21,6 @@ class Navigation(HighchartsMeta):
         self._annotation_options = None
         self._bindings = None
         self._bindings_class_name = None
-        self._breadcrumbs = None
         self._button_options = None
         self._events = None
         self._icons_url = None
@@ -29,7 +28,6 @@ class Navigation(HighchartsMeta):
         self.annotation_options = kwargs.get('annotation_options', None)
         self.bindings = kwargs.get('bindings', None)
         self.bindings_class_name = kwargs.get('bindings_class_name', None)
-        self.breadcrumbs = kwargs.get('breadcrumbs', None)
         self.button_options = kwargs.get('button_options', None)
         self.events = kwargs.get('events', None)
         self.icons_url = kwargs.get('icons_url', None)
@@ -79,27 +77,6 @@ class Navigation(HighchartsMeta):
         self._bindings_class_name = validators.string(value, allow_empty = True)
 
     @property
-    def breadcrumbs(self) -> Optional[BreadcrumbOptions]:
-        """Options for breadcrumbs.
-
-        .. note::
-
-          Breadcrumbs general options are defined in :meth:`Navigation.breadcrumbs`.
-
-          Specific options for drilldown are set in `:meth:Drilldown.breadcrumbs` and for
-          tree-like series traversing, in
-          :meth:`PlotOptions[series].breadbrumbs <Series.breadcrumbs>`.
-
-        :rtype: :class:`BreadcrumbOptions` or :obj:`None <python:None>`
-        """
-        return self._breadcrumbs
-
-    @breadcrumbs.setter
-    @class_sensitive(BreadcrumbOptions)
-    def breadcrumbs(self, value):
-        self._breadcrumbs = value
-
-    @property
     def button_options(self) -> Optional[ButtonConfiguration]:
         """Configuration options for navigation buttons.
 
@@ -146,7 +123,6 @@ class Navigation(HighchartsMeta):
             'annotation_options': as_dict.get('annotationOptions', None),
             'bindings': as_dict.get('bindings', None),
             'bindings_class_name': as_dict.get('bindingsClassName', None),
-            'breadcrumbs': as_dict.get('breadcrumbs', None),
             'button_options': as_dict.get('buttonOptions', None),
             'events': as_dict.get('events', None),
             'icons_url': as_dict.get('iconsURL', None),
@@ -159,10 +135,70 @@ class Navigation(HighchartsMeta):
             'annotationOptions': self.annotation_options,
             'bindings': self.bindings,
             'bindingsClassName': self.bindings_class_name,
-            'breadcrumbs': self.breadcrumbs,
             'buttonOptions': self.button_options,
             'events': self.events,
             'iconsURL': self.icons_url
         }
+
+        return untrimmed
+
+
+class Navigation(NavigationBase):
+    """A collection of options for buttons and menus appearing in the exporting
+    module or in Stock Tools.
+    """
+
+    def __init__(self, **kwargs):
+        self._breadcrumbs = None
+
+        self.breadcrumbs = kwargs.get('breadcrumbs', None)
+
+        super().__init__(**kwargs)
+
+    @property
+    def breadcrumbs(self) -> Optional[BreadcrumbOptions]:
+        """Options for breadcrumbs.
+
+        .. note::
+
+          Breadcrumbs general options are defined in :meth:`Navigation.breadcrumbs`.
+
+          Specific options for drilldown are set in `:meth:Drilldown.breadcrumbs` and for
+          tree-like series traversing, in
+          :meth:`PlotOptions[series].breadbrumbs <Series.breadcrumbs>`.
+
+        :rtype: :class:`BreadcrumbOptions` or :obj:`None <python:None>`
+        """
+        return self._breadcrumbs
+
+    @breadcrumbs.setter
+    @class_sensitive(BreadcrumbOptions)
+    def breadcrumbs(self, value):
+        self._breadcrumbs = value
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'annotation_options': as_dict.get('annotationOptions', None),
+            'bindings': as_dict.get('bindings', None),
+            'bindings_class_name': as_dict.get('bindingsClassName', None),
+            'button_options': as_dict.get('buttonOptions', None),
+            'events': as_dict.get('events', None),
+            'icons_url': as_dict.get('iconsURL', None),
+
+            'breadcrumbs': as_dict.get('breadcrumbs', None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        untrimmed = {
+            'breadcrumbs': self.breadcrumbs,
+        }
+
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
+
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
 
         return untrimmed
