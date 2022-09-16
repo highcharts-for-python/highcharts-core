@@ -108,7 +108,7 @@ class WordcloudOptions(GenericTypeOptions):
         self._animation_limit = None
         self._color_index = None
         self._color_key = None
-        self._relative_x_value = False
+        self._relative_x_value = None
 
         # Copied from BaseBarOptions
         self._border_color = None
