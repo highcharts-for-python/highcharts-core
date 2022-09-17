@@ -283,7 +283,7 @@ class PackedBubbleOptions(NetworkGraphOptions):
             'drag_drop': as_dict.get('dragDrop', None),
             'fill_color': as_dict.get('fillColor', None),
             'fill_opacity': as_dict.get('fillOpacity', None),
-            'get_extremes_for_all': as_dict.get('getExtremesForAll', None),
+            'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
             'linecap': as_dict.get('linecap', None),
             'line_color': as_dict.get('lineColor', None),
             'negative_color': as_dict.get('negativeColor', None),

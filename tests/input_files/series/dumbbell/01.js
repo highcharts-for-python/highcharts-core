@@ -176,7 +176,7 @@
       liveRedraw: true
   },
   findNearestPointBy: 'xy',
-  getExtremesForAll: true,
+  getExtremesFromAll: true,
   linecap: 'round',
   negativeColor: '#ee0000',
   pointInterval: 5,

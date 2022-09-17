@@ -192,7 +192,7 @@ class DataGroupingOptions(HighchartsMeta):
 
           Setting this option to ``True`` prevents for example a column series from
           calculating a grouped point only for part of the dataset. The effect is similar
-          to :meth:`SeriesOptions.get_extremes_for_all` but does not affect yAxis
+          to :meth:`SeriesOptions.get_extremes_from_all` but does not affect yAxis
           extremes.
 
         :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`

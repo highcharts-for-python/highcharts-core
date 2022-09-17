@@ -62,7 +62,7 @@ STANDARD_PARAMS = [
           'liveRedraw': True
       },
       'find_nearest_point_by': 'x',
-      'get_extremes_for_all': True,
+      'get_extremes_from_all': True,
       'linecap': 'round',
       'line_width': 2,
       'negative_color': '#fff',
@@ -150,7 +150,7 @@ STANDARD_PARAMS = [
           'liveRedraw': True
       },
       'find_nearest_point_by': 'x',
-      'get_extremes_for_all': True,
+      'get_extremes_from_all': True,
       'linecap': 'round',
       'line_width': 2,
       'negative_color': '#fff',

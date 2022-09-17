@@ -1386,7 +1386,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -1729,7 +1729,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -2072,7 +2072,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -2415,7 +2415,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -3050,7 +3050,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -3727,7 +3727,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -6072,7 +6072,7 @@ options = {
             liveRedraw: true
         },
         findNearestPointBy: 'xy',
-        getExtremesForAll: true,
+        getExtremesFromAll: true,
         groupPadding: 12,
         linecap: 'round',
         lineColor: '#ccc',
@@ -7376,7 +7376,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -8306,7 +8306,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -8634,7 +8634,7 @@ options = {
             liveRedraw: true
         },
         findNearestPointBy: 'xy',
-        getExtremesForAll: true,
+        getExtremesFromAll: true,
         groupPadding: 12,
         linecap: 'round',
         lineColor: '#ccc',
@@ -9865,7 +9865,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -10481,7 +10481,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -11929,7 +11929,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -12259,7 +12259,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -12585,7 +12585,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -12916,7 +12916,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -13242,7 +13242,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -13585,7 +13585,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -14217,7 +14217,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -14815,7 +14815,7 @@ options = {
       crisp: true,
       cropThreshold: 500,
       findNearestPointBy: 'xy',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       ignoreHiddenPoint: true,
       interactByLeaf: true,
       layoutAlgorithm: 'sliceAndDice',
@@ -15669,7 +15669,7 @@ options = {
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',

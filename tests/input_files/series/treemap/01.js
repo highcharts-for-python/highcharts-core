@@ -120,7 +120,7 @@
   crisp: true,
   cropThreshold: 500,
   findNearestPointBy: 'xy',
-  getExtremesForAll: true,
+  getExtremesFromAll: true,
   linecap: 'round',
   lineWidth: 1,
   negativeColor: '#ccc',

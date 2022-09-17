@@ -162,7 +162,7 @@ STANDARD_PARAMS = [
           'liveRedraw': True
       },
       'find_nearest_point_by': 'x',
-      'get_extremes_for_all': True,
+      'get_extremes_from_all': True,
       'linecap': 'round',
       'line_width': 2,
       'negative_color': '#fff',
@@ -665,7 +665,7 @@ STANDARD_PARAMS_2 = [
           'liveRedraw': True
       },
       'find_nearest_point_by': 'x',
-      'get_extremes_for_all': True,
+      'get_extremes_from_all': True,
       'linecap': 'round',
       'line_width': 2,
       'negative_color': '#fff',
@@ -1168,7 +1168,7 @@ STANDARD_PARAMS_3 = [
           'liveRedraw': True
       },
       'find_nearest_point_by': 'x',
-      'get_extremes_for_all': True,
+      'get_extremes_from_all': True,
       'linecap': 'round',
       'line_width': 2,
       'negative_color': '#fff',
@@ -1671,7 +1671,7 @@ STANDARD_PARAMS_4 = [
           'liveRedraw': True
       },
       'find_nearest_point_by': 'x',
-      'get_extremes_for_all': True,
+      'get_extremes_from_all': True,
       'linecap': 'round',
       'line_width': 2,
       'negative_color': '#fff',
@@ -2174,7 +2174,7 @@ STANDARD_PARAMS_5 = [
           'liveRedraw': True
       },
       'find_nearest_point_by': 'x',
-      'get_extremes_for_all': True,
+      'get_extremes_from_all': True,
       'linecap': 'round',
       'line_width': 2,
       'negative_color': '#fff',
@@ -2677,7 +2677,7 @@ STANDARD_PARAMS_6 = [
           'liveRedraw': True
       },
       'find_nearest_point_by': 'x',
-      'get_extremes_for_all': True,
+      'get_extremes_from_all': True,
       'linecap': 'round',
       'line_width': 2,
       'negative_color': '#fff',
@@ -3164,7 +3164,7 @@ STANDARD_PARAMS_7 = [
           'liveRedraw': True
       },
       'find_nearest_point_by': 'x',
-      'get_extremes_for_all': True,
+      'get_extremes_from_all': True,
       'linecap': 'round',
       'line_width': 2,
       'negative_color': '#fff',
@@ -3658,7 +3658,7 @@ STANDARD_PARAMS_8 = [
           'liveRedraw': True
       },
       'find_nearest_point_by': 'x',
-      'get_extremes_for_all': True,
+      'get_extremes_from_all': True,
       'linecap': 'round',
       'line_width': 2,
       'negative_color': '#fff',
@@ -4340,7 +4340,7 @@ STANDARD_PARAMS_9 = [
           'liveRedraw': True
       },
       'find_nearest_point_by': 'x',
-      'get_extremes_for_all': True,
+      'get_extremes_from_all': True,
       'linecap': 'round',
       'line_width': 2,
       'negative_color': '#fff',
@@ -4843,7 +4843,7 @@ STANDARD_PARAMS_10 = [
           'liveRedraw': True
       },
       'find_nearest_point_by': 'x',
-      'get_extremes_for_all': True,
+      'get_extremes_from_all': True,
       'linecap': 'round',
       'line_width': 2,
       'negative_color': '#fff',

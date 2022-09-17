@@ -219,7 +219,7 @@
       liveRedraw: true
   },
   findNearestPointBy: 'x',
-  getExtremesForAll: true,
+  getExtremesFromAll: true,
   linecap: 'round',
   lineWidth: 2,
   negativeColor: '#fff',

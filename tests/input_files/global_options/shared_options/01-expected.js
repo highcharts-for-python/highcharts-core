@@ -1385,7 +1385,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -1728,7 +1728,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -2071,7 +2071,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -2414,7 +2414,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -3049,7 +3049,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -3726,7 +3726,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -6071,7 +6071,7 @@ Highcharts.setOptions({
             liveRedraw: true
         },
         findNearestPointBy: 'xy',
-        getExtremesForAll: true,
+        getExtremesFromAll: true,
         groupPadding: 12,
         linecap: 'round',
         lineColor: '#ccc',
@@ -7375,7 +7375,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -8305,7 +8305,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -8633,7 +8633,7 @@ Highcharts.setOptions({
             liveRedraw: true
         },
         findNearestPointBy: 'xy',
-        getExtremesForAll: true,
+        getExtremesFromAll: true,
         groupPadding: 12,
         linecap: 'round',
         lineColor: '#ccc',
@@ -9864,7 +9864,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -10480,7 +10480,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -11928,7 +11928,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -12258,7 +12258,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -12584,7 +12584,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -12915,7 +12915,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -13241,7 +13241,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -13584,7 +13584,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -14216,7 +14216,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',
@@ -14814,7 +14814,7 @@ Highcharts.setOptions({
       crisp: true,
       cropThreshold: 500,
       findNearestPointBy: 'xy',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       ignoreHiddenPoint: true,
       interactByLeaf: true,
       layoutAlgorithm: 'sliceAndDice',
@@ -15668,7 +15668,7 @@ Highcharts.setOptions({
           liveRedraw: true
       },
       findNearestPointBy: 'x',
-      getExtremesForAll: true,
+      getExtremesFromAll: true,
       linecap: 'round',
       lineWidth: 2,
       negativeColor: '#fff',

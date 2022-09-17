@@ -35,7 +35,7 @@ class TreemapOptions(GenericTypeOptions):
         self._colors = None
         self._crop_threshold = None
         self._find_nearest_point_by = None
-        self._get_extremes_for_all = None
+        self._get_extremes_from_all = None
         self._ignore_hidden_point = None
         self._linecap = None
         self._line_width = None
@@ -72,7 +72,7 @@ class TreemapOptions(GenericTypeOptions):
         self.colors = kwargs.get('colors', None)
         self.crop_threshold = kwargs.get('crop_threshold', None)
         self.find_nearest_point_by = kwargs.get('find_nearest_point_by', None)
-        self.get_extremes_for_all = kwargs.get('get_extremes_for_all', None)
+        self.get_extremes_from_all = kwargs.get('get_extremes_from_all', None)
         self.ignore_hidden_point = kwargs.get('ignore_hidden_point', None)
         self.linecap = kwargs.get('linecap', None)
         self.line_width = kwargs.get('line_width', None)
@@ -383,7 +383,7 @@ class TreemapOptions(GenericTypeOptions):
         self._find_nearest_point_by = validators.string(value, allow_empty = True)
 
     @property
-    def get_extremes_for_all(self) -> Optional[bool]:
+    def get_extremes_from_all(self) -> Optional[bool]:
         """If ``True``, uses the Y extremes of the total chart width or only the zoomed
         area when zooming in on parts of the X axis. By default, the Y axis adjusts to the
         min and max of the visible data.
@@ -394,14 +394,14 @@ class TreemapOptions(GenericTypeOptions):
 
         :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
-        return self._get_extremes_for_all
+        return self._get_extremes_from_all
 
-    @get_extremes_for_all.setter
-    def get_extremes_for_all(self, value):
+    @get_extremes_from_all.setter
+    def get_extremes_from_all(self, value):
         if value is None:
-            self._get_extremes_for_all = None
+            self._get_extremes_from_all = None
         else:
-            self._get_extremes_for_all = bool(value)
+            self._get_extremes_from_all = bool(value)
 
     @property
     def ignore_hidden_point(self) -> Optional[bool]:
@@ -848,7 +848,7 @@ class TreemapOptions(GenericTypeOptions):
             'colors': as_dict.get('colors', None),
             'crop_threshold': as_dict.get('cropThreshold', None),
             'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.get('getExtremesForAll', None),
+            'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
             'ignore_hidden_point': as_dict.get('ignoreHiddenPoint', None),
             'linecap': as_dict.get('linecap', None),
             'line_width': as_dict.get('lineWidth', None),
@@ -897,7 +897,7 @@ class TreemapOptions(GenericTypeOptions):
             'crisp': self.crisp,
             'cropThreshold': self.crop_threshold,
             'findNearestPointBy': self.find_nearest_point_by,
-            'getExtremesForAll': self.get_extremes_for_all,
+            'getExtremesFromAll': self.get_extremes_from_all,
             'ignoreHiddenPoint': self.ignore_hidden_point,
             'interactByLeaf': self.interact_by_leaf,
             'layoutAlgorithm': self.layout_algorithm,
