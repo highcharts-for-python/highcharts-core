@@ -196,6 +196,8 @@ def to_camelCase(snake_case):
         snake_case = snake_case.replace('_x', '_X')
     elif snake_case.endswith('_y'):
         snake_case = snake_case.replace('_y', '_Y')
+    elif snake_case.endswith('_id'):
+        snake_case = snake_case.replace('_id', '_ID')
     elif snake_case == 'drillup_text':
         snake_case = 'drillUpText'
     elif snake_case == 'drillup_button':
@@ -208,6 +210,8 @@ def to_camelCase(snake_case):
         snake_case = 'useGPUTranslations'
     elif snake_case == 'label_rank':
         snake_case = 'labelrank'
+    elif '_di_line' in snake_case:
+        snake_case = snake_case.replace('_di_line', '_DILine')
 
     camel_case = ''
     previous_character = ''

@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from validator_collection import validators
 
-from highcharts_python import constants, errors
+from highcharts_python import constants
 from highcharts_python.options.plot_options.series import SeriesOptions
 from highcharts_python.utility_classes.gradients import Gradient
 from highcharts_python.utility_classes.patterns import Pattern
