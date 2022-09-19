@@ -240,7 +240,7 @@ class AreaSplineRangeOptions(AreaOptions):
     pass
 
 
-class LineOptions(AreaOptions):
+class LineOptions(SeriesOptions):
     """General options to apply to all Line series types.
 
     A line series displays information as a series of data points connected by
