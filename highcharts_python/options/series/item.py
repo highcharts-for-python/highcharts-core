@@ -21,19 +21,19 @@ class ItemSeries(PieSeries, ItemOptions):
 
       .. tab:: Circular Item Chart
 
-        .. figure:: _static/item-example-circular.png
+        .. figure:: ../../../_static/item-example-circular.png
           :alt: Circular Item Example Chart
           :align: center
 
       .. tab:: Rectangular Item Chart
 
-        .. figure:: _static/item-example-rectangular.png
+        .. figure:: ../../../_static/item-example-rectangular.png
           :alt: Rectangular Item Example Chart
           :align: center
 
       .. tab:: Item Chart with Symbols
 
-        .. figure:: _static/item-example-symbols.png
+        .. figure:: ../../../_static/item-example-symbols.png
           :alt: Item Example Chart with Symbols
           :align: center
 

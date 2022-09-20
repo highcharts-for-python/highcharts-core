@@ -25,7 +25,7 @@ class RangeSelectorLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Viewing {axisRangeDescription}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._click_button_announcement
 
@@ -38,7 +38,7 @@ class RangeSelectorLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'{rangeTitle}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._dropdown_label
 
@@ -51,7 +51,7 @@ class RangeSelectorLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Select end date.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._max_input_label
 
@@ -64,7 +64,7 @@ class RangeSelectorLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Select start date.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._min_input_label
 

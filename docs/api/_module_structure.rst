@@ -1,11 +1,12 @@
 
 The structure of the **Highcharts for Python** library closely matches the structure
-of the `Highcharts JS`_ options object (see the relevant
+of the `Highcharts JS <https://www.highcharts.com/>`_ options object (see the relevant
 `reference documentation <https://api.highcharts.com/highcharts/>`_).
 
 At the root of the library - importable from ``highcharts_python`` you will find the
-``highcharts`` module. This module is a catch-all importable module, which allows you to
-easily access all of the Highcharts for Python classes defined.
+:mod:`highcharts_python.highcharts` module. This module is a catch-all importable module,
+which allows you to easily access the most-commonly-used Highcharts for Python classes and
+modules.
 
 .. note::
 
@@ -15,24 +16,27 @@ easily access all of the Highcharts for Python classes defined.
   conventions used in the library.
 
   In the root of the ``highcharts_python`` library you can find universally-shared
-  class definitions, like ``metaclasses`` which contains the :class:`HighchartsMeta`
-  definition and the :class:`JavaScriptDict` definition or ``decorators`` which define
+  class definitions, like :mod:`.metaclasses <highcharts_python.metaclasses>` which
+  contains the :class:`HighchartsMeta`  definition and the :class:`JavaScriptDict`
+  definition or :mod:`.decorators <highcharts_python.decorators>` which define
   method/property decorators that are used throughout the library.
 
-  The ``utility_classes`` folder contains class definitions for classes that are
-  referenced or used throughout the other class definitions.
+  The :mod:`.utility_classes <highcharts_python.utility_classes>` folder contains class
+  definitions for classes that are referenced or used throughout the other class
+  definitions.
 
   And you can find the Highcharts JS options object and all of its
-  properties defined in the ``options`` folder, with specific (complicated or extensive)
-  sub-folders providing property-specific classes (e.g. the ``options/plot_options``
-  folder defines all of the different configuration options for different series types,
-  while the ``options/series`` folder defines all of the classes that represent
-  :term:`series` of data in a given chart).
+  properties defined in the :mod:`.options <highcharts_python.options>` module, with
+  specific (complicated or extensive) sub-folders providing property-specific classes
+  (e.g. the :mod:`.options.plot_options <highcharts_python.options.plot_options>`
+  module defines all of the different configuration options for different series types,
+  while the :mod:`.options.series <highcharts_python.options.series>` module defines all
+  of the classes that represent :term:`series` of data in a given chart).
 
 .. tip::
 
   To keep things simple, we recommend importing classes you need directly from the
-  ``highcharts_python.highcharts`` module. There are two paths to do so easily:
+  :mod:`highcharts_python.highcharts` module. There are two paths to do so easily:
 
   .. code-block:: python
 

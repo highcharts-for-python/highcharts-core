@@ -60,7 +60,7 @@ class OrganizationOptions(BarOptions):
 
     @property
     def hanging_indent(self) -> Optional[int | float | Decimal]:
-        """The indentation in pixels of :term:`hanging nodes` (nodes whose parent has
+        """The indentation in pixels of hanging nodes (nodes whose parent has
         ``layout`` set to ``'hanging'``). Defaults to ``20``.
 
         :rtype: numeric or :obj:`None <python:None>`
@@ -122,7 +122,7 @@ class OrganizationOptions(BarOptions):
 
     @property
     def link_color(self) -> Optional[str]:
-        """The color of the links between nodes. Defaults to ``'#666666'.
+        """The color of the links between nodes. Defaults to ``'#666666'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """

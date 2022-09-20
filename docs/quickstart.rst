@@ -84,14 +84,14 @@ Delivering Highcharts Visualizations to Your Front-end
 Downloading a Rendered Highcharts Visualization
 ***************************************************
 
-Using the Highsoft-provided :term:`Export Server <Node Export Server>`
+Using the Highsoft-provided :term:`Export Server <Export Server>`
 =========================================================================
 
 .. todo::
 
   Add guidance on how to use ``Chart.download_chart()``.
 
-Using a Custom :term:`Export Server <Node Export Server>`
+Using a Custom :term:`Export Server <Export Server>`
 =============================================================
 
 .. todo::

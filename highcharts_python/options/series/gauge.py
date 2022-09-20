@@ -12,7 +12,7 @@ class GaugeSeries(SeriesBase, GaugeOptions):
     Gauges are circular plots displaying one or more values with a dial pointing to
     values along the perimeter.
 
-    .. figure:: _static/gauge-example.png
+    .. figure:: ../../../_static/gauge-example.png
       :alt: Gauge Example Chart
       :align: center
 
@@ -152,7 +152,7 @@ class SolidGaugeSeries(SeriesBase, SolidGaugeOptions):
     A solid gauge is a circular gauge where the value is indicated by a filled arc,
     and the color of the arc may variate with the value.
 
-    .. figure:: _static/solidgauge-example.png
+    .. figure:: ../../../_static/solidgauge-example.png
       :alt: SolidGauge Example Chart
       :align: center
 

@@ -153,11 +153,11 @@ class YAxis(XAxis):
 
           #. :meth:`YAxis.labels.format <AxisLabelOptions.format>` if set
           #. If :meth:`YAxis.type` is ``'category'``, then category name will be
-            displayed.
+             displayed.
           #. If :meth:`YAxis.type` is ``'datetime'``, then the value will use the same
-            format as :meth:`YAxis.labels`.
+             format as :meth:`YAxis.labels`.
           #. If :meth:`YAxis.type` is ``'linear'`` or ``'logarithmic'``, then the simple
-            value will be displayed.
+             value will be displayed.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`.
         """

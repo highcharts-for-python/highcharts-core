@@ -19,7 +19,7 @@ load_dotenv()
 
 class ExportServer(HighchartsMeta):
     """Class that provides methods for interacting with the Highcharts
-    `Node Export Server <https://github.com/highcharts/node-export-server>`_.
+    `Export Server <https://github.com/highcharts/node-export-server>`_.
 
     .. note::
 
@@ -75,8 +75,8 @@ class ExportServer(HighchartsMeta):
     @property
     def protocol(self) -> Optional[str]:
         """The protocol over which the Highcharts for Python library should communicate
-        with the Export Server. Accepts either ``'https'`` or ``'http'``. Defaults to
-        the ``HIGHCHARTS_EXPORT_SERVER_PROTOCOL`` environment variable if present,
+        with the :term:`Export Server`. Accepts either ``'https'`` or ``'http'``. Defaults
+        to the ``HIGHCHARTS_EXPORT_SERVER_PROTOCOL`` environment variable if present,
         otherwise falls back to default of ``'https'``.
 
         .. tip::
@@ -111,7 +111,7 @@ class ExportServer(HighchartsMeta):
 
     @property
     def domain(self) -> Optional[str]:
-        """The domain where the Node Export Server can be found. Defaults to the
+        """The domain where the :term:`Export Server` can be found. Defaults to the
         Highsoft-provided Export Server at ``'export.highcharts.com'``, unless over-ridden
         by the ``HIGHCHARTS_EXPORT_SERVER_DOMAIN`` environment variable.
 
@@ -141,7 +141,7 @@ class ExportServer(HighchartsMeta):
 
     @property
     def port(self) -> Optional[int]:
-        """The port on which the Node Export Server can be found. Defaults to
+        """The port on which the :term:`Export Server` can be found. Defaults to
         :obj:`None <python:None>` (for the Highsoft-provided export server), unless
         over-ridden by the ``HIGHCHARTS_EXPORT_SERVER_PORT`` environment variable.
 
@@ -175,10 +175,10 @@ class ExportServer(HighchartsMeta):
 
     @property
     def path(self) -> Optional[str]:
-        """The path (at the :meth:`ExportServer.url`) where the export server can be
-        reached. Defaults to :obj:`None <python:None>` (for the Highsoft-provided export
-        server), unless over-ridden by the ``HIGHCHARTS_EXPORT_SERVER_PATH`` environment
-        variable.
+        """The path (at the :meth:`ExportServer.url`) where the :term:`Export Server` can
+        be reached. Defaults to :obj:`None <python:None>` (for the Highsoft-provided
+        export server), unless over-ridden by the ``HIGHCHARTS_EXPORT_SERVER_PATH``
+        environment variable.
 
         .. tip::
 
@@ -206,7 +206,7 @@ class ExportServer(HighchartsMeta):
 
     @property
     def url(self) -> Optional[str]:
-        """The fully-formed URL for the Export Server, consisting of a
+        """The fully-formed URL for the :term:`Export Server`, consisting of a
         :meth:`protocol <ExportServer.protocol>`, a :meth:`domain <ExportServer.domain>`,
         and optional :meth:`port <ExportServer.port>` and
         :meth:`path <ExportServer.path>`.
@@ -341,7 +341,7 @@ class ExportServer(HighchartsMeta):
         else:
             value = value.lower()
             if value not in ['png', 'jpeg', 'pdf', 'svg']:
-                raise errors.HighchartsUnsupportedExportType(f'format expects either '
+                raise errors.HighchartsUnsupportedExportTypeError(f'format expects either '
                                                              f'"png", "jpeg", "pdf", or '
                                                              f'"svg". Received: {value}')
             self._format = value

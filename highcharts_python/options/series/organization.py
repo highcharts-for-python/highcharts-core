@@ -18,13 +18,13 @@ class OrganizationSeries(BarSeries, OrganizationOptions):
 
       .. tab:: Standard Organization Chart
 
-        .. figure:: _static/organization-example.png
+        .. figure:: ../../../_static/organization-example.png
           :alt: Organization Example Chart
           :align: center
 
       .. tab:: Horizontal Organization Chart
 
-        .. figure:: _static/organization-example-horizontal.png
+        .. figure:: ../../../_static/organization-example-horizontal.png
           :alt: Horizontal Organization Example Chart
           :align: center
 

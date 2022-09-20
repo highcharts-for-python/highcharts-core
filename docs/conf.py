@@ -45,6 +45,7 @@ extensions = [
     'sphinx.ext.viewcode',
     'sphinx_tabs.tabs',
     'sphinx_toolbox.shields',
+    'sphinx_toolbox.decorators',
     'sphinx_toolbox.issues',
     'sphinx_toolbox.formatting',
     'sphinx_toolbox.collapse',
@@ -105,7 +106,7 @@ inheritance_graph_attrs = {
 }
 
 suppress_warnings = [
-    'ref.term',
+    # 'ref.term',
     'ref.ref',
     'toc.not_readable'
 ]

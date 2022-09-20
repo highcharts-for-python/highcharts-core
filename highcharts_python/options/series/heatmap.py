@@ -16,7 +16,7 @@ class HeatmapSeries(SeriesBase, HeatmapOptions):
 
       Heatmaps require that ``modules/heatmap`` is loaded client-side.
 
-    .. figure:: _static/heatmap-example.png
+    .. figure:: ../../../_static/heatmap-example.png
       :alt: Heatmap Example Chart
       :align: center
 
@@ -204,19 +204,19 @@ class TilemapSeries(HeatmapSeries, TilemapOptions):
 
       .. tab:: Honeycomb Tilemap
 
-        .. figure:: _static/tilemap-example.png
+        .. figure:: ../../../_static/tilemap-example.png
           :alt: Honeycomb Tilemap Example Chart
           :align: center
 
       .. tab:: Circle Tilemap
 
-        .. figure:: _static/tilemap-example-circle.png
+        .. figure:: ../../../_static/tilemap-example-circle.png
           :alt: Tilemap Example Chart
           :align: center
 
       .. tab:: Diamond Tilemap
 
-        .. figure:: _static/tilemap-example-diamond.png
+        .. figure:: ../../../_static/tilemap-example-diamond.png
           :alt: Tilemap Example Chart
           :align: center
 

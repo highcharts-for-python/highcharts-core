@@ -19,7 +19,7 @@ class BoxPlotSeries(BarSeries, BoxPlotOptions):
       * upper quartile (Q3), and
       * largest observation (sample maximum).
 
-    .. figure:: _static/boxplot-example.png
+    .. figure:: ../../../_static/boxplot-example.png
       :alt: Box Plot Example Chart
       :align: center
 
@@ -240,7 +240,7 @@ class ErrorBarSeries(BoxPlotSeries):
     Error bars are a graphical representation of the variability of data and are used
     on graphs to indicate the error, or uncertainty in a reported measurement.
 
-    .. figure:: _static/errorbar-example.png
+    .. figure:: ../../../_static/errorbar-example.png
       :alt: Error Bar Example Chart
       :align: center
 

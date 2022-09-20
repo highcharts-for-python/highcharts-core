@@ -16,13 +16,13 @@ class PieSeries(SeriesBase, PieOptions):
 
       .. tab:: Pie Chart
 
-        .. figure:: _static/pie-example.png
+        .. figure:: ../../../_static/pie-example.png
           :alt: Pie Example Chart
           :align: center
 
       .. tab:: Donut Chart
 
-        .. figure:: _static/pie-example-donut.png
+        .. figure:: ../../../_static/pie-example-donut.png
           :alt: Donut Example Chart
           :align: center
 
@@ -173,7 +173,7 @@ class VariablePieSeries(PieSeries):
     an Y and Z value. Each point is drawn as a pie slice where the size (arc) of the
     slice relates to the Y value and the radius of pie slice relates to the Z value.
 
-    .. figure:: _static/variablepie-example.png
+    .. figure:: ../../../_static/variablepie-example.png
       :alt: Variable Pie Example Chart
       :align: center
 

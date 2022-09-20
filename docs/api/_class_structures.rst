@@ -1,4 +1,4 @@
-`Highcharts JS`_ objects re-use many of the same properties. This is one of the strengths
+`Highcharts JS <https://www.highcharts.com>`__ objects re-use many of the same properties. This is one of the strengths
 of the Highcharts API, in that it is internally consistent and that behavior configured on
 one object should be readily transferrable to a second object provided it shares the same
 properties. However, Highcharts JS has a *lot* of properties. For example, I estimate that
@@ -18,25 +18,5 @@ components.
 
   .. seealso::
 
-    For more details, please review the :doc:`API documentation <api>`, in particular the
+    For more details, please review the :doc:`API documentation <../api>`, in particular the
     class inheritance diagram included for each documented class.
-
-.. warning::
-
-  Certain sections of the **Highcharts for Python** library - in particular the
-  ``options.series`` classes - rely heavily on multiple inheritance. This is a known
-  anti-pattern in Python development as it runs the risk of encountering the
-  :term:`diamond of death` inheritance problem. This complicates the process of inheriting
-  methods or properties from parent classes when properties or methods share names
-  across multiple parents.
-
-  I know this is an anti-pattern, but it was a necessary one to minimize code duplication
-  and maximize consistency. For that reason, I implemented it properly *despite* the
-  anti-pattern, using some advanced Python concepts to navigate the Python MRO
-  (Method Resolution Order) system cleanly. However, an awareness of the pattern used
-  may prove helpful if your code inherits from the Highcharts for Python classes.
-
-  .. seealso::
-
-    For a more in-depth discussion of how the anti-pattern was implemented safely and
-    reliably, please review the :doc:`Contributor Guidelines <contributing.rst>`.

@@ -56,7 +56,7 @@ def validate_types(value,
       :class:`type <python:type>` in ``types``)
     :rtype: first :class:`type <python:type>` in ``types``
 
-    :raises ImplementationError: if ``types`` is empty
+    :raises HighchartsImplementationError: if ``types`` is empty
 
     :raises HighchartsValueError: if ``types`` does not contain a
       :class:`type <python:type>` or iterable of :class:`type <python:type>` objects
@@ -66,11 +66,11 @@ def validate_types(value,
 
     """
     if not types:
-        raise errors.ImplementationError('types cannot be empty - must be a type or '
+        raise errors.HighchartsImplementationError('types cannot be empty - must be a type or '
                                          'iterable of types')
 
     if not types:
-        raise errors.ImplementationError('types cannot be empty - must be a type or '
+        raise errors.HighchartsImplementationError('types cannot be empty - must be a type or '
                                          'iterable of types')
 
     try:
@@ -225,7 +225,7 @@ def class_sensitive(types = None,
     :returns: The result of the decorated function or method having validated the class
       typing.
 
-    :raises ImplementationError: if ``types`` is empty
+    :raises HighchartsImplementationError: if ``types`` is empty
 
     :raises HighchartsValueError: if ``types`` does not contain a
       :class:`type <python:type>` or iterable of :class:`type <python:type>` objects

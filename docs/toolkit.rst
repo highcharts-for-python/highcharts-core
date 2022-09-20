@@ -30,17 +30,12 @@ The **Highcharts for Python** toolkit includes two categories of tools:
       `Highcharts Stock <https://www.highcharts.com/blog/products/#highcharts-stock>`_
       JavaScript library, which provides extensive visualizations for time series and
       stock price visualizations. For more details, please see the relevant
-      `documentation <https://highcharts-stock-python.readthedocs.io>`_
+      `Highcharts Stock for Python documentation <https://highcharts-stock-python.readthedocs.io>`_
     * **Highcharts Maps for Python**: This is the Python wrapper for the
       `Highcharts Maps <https://www.highcharts.com/blog/products/#highcharts-maps>`_
       JavaScript library, which provides extensive geographic data visualization options
       with rich interactive maps. For more details, please see the relevant
-      `documentation <https://highcharts-maps-python.readthedocs.io>`_
-    * **Highcharts Gantt for Python**: This is the Python wrapper for the
-      `Highcharts Gantt <https://www.highcharts.com/blog/products/#highcharts>`_
-      JavaScript library, which provides rich visualizations for resource allocation over
-      time. For more details, please see the relevant
-      `documentation <https://highcharts-gantt-python.readthedocs.io>`_
+      `Highcharts Maps for Python documentation <https://highcharts-maps-python.readthedocs.io>`_
 
   .. tab:: Extensions
 
@@ -52,18 +47,23 @@ The **Highcharts for Python** toolkit includes two categories of tools:
 
       The libraries below are in-progress, but have not yet been released.
 
+    * **Highcharts Gantt for Python**: This is the Python wrapper for the
+      `Highcharts Gantt <https://www.highcharts.com/blog/products/#highcharts>`_
+      JavaScript library, which provides rich visualizations for resource allocation over
+      time. For more details, please see the relevant
+      `Highcharts Gantt for Python documentation <https://highcharts-gantt-python.readthedocs.io>`_
     * **Highcharts for Dash**: This is a set of components for the
       `Dash <https://dash.plotly.com/>`_ data visualization framework which makes it easy
       to use Highcharts visualizations in your Dash dashboards. For more details, please
-      see the relevant `documentation <https://highcharts-dash.readthedocs.io>`_.
+      see the relevant `Highcharts for Dash documentation <https://highcharts-dash.readthedocs.io>`_.
     * **Flask-Highcharts**: This is an extension to the Flask microframework which makes
       integrating Highcharts visualizations into Flask views super simple. For more
       details, please see the relevant
-      `documentation <https://flask-highcharts.readthedocs.io>`_.
+      `Flask-Highcharts documentation <https://flask-highcharts.readthedocs.io>`_.
     * **Highcharts for Django**: This is an extension to the Django web framework which
       makes utilizing Highcharts visualizations in your Django application super simple.
       For more details, please see the
-      `documentation <https://highcharts-django.readthedocs.io>`_.
+      `Highcharts for Django documentation <https://highcharts-django.readthedocs.io>`_.
 
     .. note::
 
@@ -98,9 +98,14 @@ project project repo, the lists below provides some high-level information.
       to support the production of the relevant ``<script/>`` tags needed to include the
       Highcharts JS modules that are needed to render a specific chart (and to *not*
       include the modules that are not needed).
+    * Styled Mode Configuration ( :issue:`7` ). While :term:`styled mode` can currently be
+      enabled in **Highcharts for Python**, the library does not provide for the actual
+      definition or configuration of Highcharts CSS. It would be good if it did, so that
+      all Highcharts-related configuration could be handled within the library.
 
   .. tab:: Extensions
 
+    * Implement and release **Highcharts Gantt for Python** ( :issue:`6` ).
     * Implement and release **Highcharts for Dash** ( :issue:`3` ).
     * Implement and release **Flask-Highcharts** ( :issue:`4` ).
     * Implement and release **Highcharts for Django** ( :issue:`5` ).

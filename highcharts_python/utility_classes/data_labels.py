@@ -211,7 +211,7 @@ class DataLabel(HighchartsMeta):
           can be set to ``0``.
 
         :returns: Flag indicating whether to allow data labels to overlap.
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._allow_overlap
 
@@ -353,7 +353,7 @@ class DataLabel(HighchartsMeta):
 
         :returns: Flag indicating whether to clip a data label that extends beyond
           the plot area.
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._crop
 
@@ -741,7 +741,7 @@ class DataLabel(HighchartsMeta):
         Defaults to ``False``.
 
         :returns: Flag indicating whether to render data labels using HTML.
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._use_html
 

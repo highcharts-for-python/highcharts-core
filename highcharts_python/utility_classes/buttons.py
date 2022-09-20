@@ -38,7 +38,7 @@ class ButtonTheme(HighchartsMeta):
         events.
 
         :rtype: :class:`str <python:str>` (for colors), :class:`Gradient` for gradients,
-          :clsas:`Pattern` for pattern definitions, or :obj:`None <python:None>`
+          :class:`Pattern` for pattern definitions, or :obj:`None <python:None>`
         """
         return self._fill
 

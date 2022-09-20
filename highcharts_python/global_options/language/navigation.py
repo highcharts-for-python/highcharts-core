@@ -211,7 +211,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def add_button(self) -> Optional[str]:
         """Defaults to ``'add'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._add_button
 
@@ -223,7 +223,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def algorithm(self) -> Optional[str]:
         """Defaults to ``'Algorithm'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._algorithm
 
@@ -236,7 +236,7 @@ class PopupLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Arrow line'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._arrow_infinity_line
 
@@ -248,7 +248,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def arrow_ray(self) -> Optional[str]:
         """Defaults to ``'Arrow ray'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._arrow_ray
 
@@ -260,7 +260,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def arrow_segment(self) -> Optional[str]:
         """Defaults to ``'Arrow segment'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._arrow_segment
 
@@ -272,7 +272,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def average(self) -> Optional[str]:
         """Defaults to ``'Average'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._average
 
@@ -284,7 +284,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def background(self) -> Optional[str]:
         """Defaults to ``'Background'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._background
 
@@ -296,7 +296,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def background_color(self) -> Optional[str]:
         """Defaults to ``'Background color'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._background_color
 
@@ -309,7 +309,7 @@ class PopupLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Background colors'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._background_colors
 
@@ -321,7 +321,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def border_color(self) -> Optional[str]:
         """Defaults to ``'Border color'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._border_color
 
@@ -333,7 +333,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def border_radius(self) -> Optional[str]:
         """Defaults to ``'Border radius'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._border_radius
 
@@ -345,7 +345,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def border_width(self) -> Optional[str]:
         """Defaults to ``'Border width'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._border_width
 
@@ -357,7 +357,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def bottom_band(self) -> Optional[str]:
         """Defaults to ``'Bottom band'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._bottom_band
 
@@ -369,7 +369,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def circle(self) -> Optional[str]:
         """Defaults to ``'Circle'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._circle
 
@@ -381,7 +381,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def clear_filter(self) -> Optional[str]:
         """Defaults to ``'X Clear Filter'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._clear_filter
 
@@ -393,7 +393,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def color(self) -> Optional[str]:
         """Defaults to ``'Color'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._color
 
@@ -405,7 +405,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def connector(self) -> Optional[str]:
         """Defaults to ``'Connector'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._connector
 
@@ -417,7 +417,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def crooked3(self) -> Optional[str]:
         """Defaults to ``'Crooked 3 line'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._crooked3
 
@@ -429,7 +429,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def crooked5(self) -> Optional[str]:
         """Defaults to ``'Crooked 5 line'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._crooked5
 
@@ -441,7 +441,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def crosshairX(self) -> Optional[str]:
         """Defaults to ``'Crosshair X'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._crosshairX
 
@@ -453,7 +453,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def crosshairY(self) -> Optional[str]:
         """Defaults to ``'Crosshair Y'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._crosshairY
 
@@ -465,7 +465,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def decimals(self) -> Optional[str]:
         """Defaults to ``'Decimals``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._decimals
 
@@ -477,7 +477,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def deviation(self) -> Optional[str]:
         """Defaults to ``'Deviation'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._deviation
 
@@ -489,7 +489,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def edit_button(self) -> Optional[str]:
         """Defaults to ``'edit'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._edit_button
 
@@ -501,7 +501,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def elliott3(self) -> Optional[str]:
         """Defaults to ``'Elliott 3 line'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._elliott3
 
@@ -513,7 +513,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def elliott5(self) -> Optional[str]:
         """Defaults to ``'Elliott 5 line'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._elliott5
 
@@ -525,7 +525,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def ellipse(self) -> Optional[str]:
         """Defaults to ``'Ellipse``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._ellipse
 
@@ -537,7 +537,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def factor(self) -> Optional[str]:
         """Defaults to ``'Factor``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._factor
 
@@ -549,7 +549,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def fast_avg_period(self) -> Optional[str]:
         """Defaults to ``'Fast average period'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._fast_avg_period
 
@@ -561,7 +561,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def fibonacci(self) -> Optional[str]:
         """Defaults to ``'Fibonacci``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._fibonacci
 
@@ -574,7 +574,7 @@ class PopupLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Fibonacci Time Zones'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._fibonacci_time_zones
 
@@ -586,7 +586,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def fill(self) -> Optional[str]:
         """Defaults to ``'Fill``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._fill
 
@@ -598,7 +598,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def flags(self) -> Optional[str]:
         """Defaults to ``'Flags``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._flags
 
@@ -610,7 +610,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def font_size(self) -> Optional[str]:
         """Defaults to ``'Font size'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._font_size
 
@@ -622,7 +622,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def format(self) -> Optional[str]:
         """Defaults to ``'Text'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._format
 
@@ -634,7 +634,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def height(self) -> Optional[str]:
         """Defaults to ``'Height``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._height
 
@@ -646,7 +646,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def high_index(self) -> Optional[str]:
         """Defaults to ``'High index'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._high_index
 
@@ -658,7 +658,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def horizontal_line(self) -> Optional[str]:
         """Defaults to ``'Horizontal line'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._horizontal_line
 
@@ -670,7 +670,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def increment(self) -> Optional[str]:
         """Defaults to ``'Increment``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._increment
 
@@ -682,7 +682,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def index(self) -> Optional[str]:
         """Defaults to ``'Index``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._index
 
@@ -694,7 +694,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def infinity_line(self) -> Optional[str]:
         """Defaults to ``'Infinity line'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._infinity_line
 
@@ -707,7 +707,7 @@ class PopupLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Initial acceleration factor'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._initial_acceleration_factor
 
@@ -719,7 +719,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def inner_background(self) -> Optional[str]:
         """Defaults to ``'Inner background'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._inner_background
 
@@ -731,7 +731,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def label(self) -> Optional[str]:
         """Defaults to ``'Label``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._label
 
@@ -743,7 +743,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def label_options(self) -> Optional[str]:
         """Defaults to ``'Label options'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._label_options
 
@@ -755,7 +755,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def labels(self) -> Optional[str]:
         """Defaults to ``'Labels``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._labels
 
@@ -767,7 +767,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def line(self) -> Optional[str]:
         """Defaults to ``'Line``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._line
 
@@ -779,7 +779,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def lines(self) -> Optional[str]:
         """Defaults to ``'Lines``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._lines
 
@@ -791,7 +791,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def long_period(self) -> Optional[str]:
         """Defaults to ``'Long period'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._long_period
 
@@ -803,7 +803,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def low_index(self) -> Optional[str]:
         """Defaults to ``'Low index'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._low_index
 
@@ -816,7 +816,7 @@ class PopupLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Max acceleration factor'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._max_acceleration_factor
 
@@ -828,7 +828,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def measure(self) -> Optional[str]:
         """Defaults to ``'Measure``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._measure
 
@@ -840,7 +840,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def measure_x(self) -> Optional[str]:
         """Defaults to ``'Measure X'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._measure_x
 
@@ -852,7 +852,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def measure_xy(self) -> Optional[str]:
         """Defaults to ``'Measure XY'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._measure_xy
 
@@ -864,7 +864,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def measure_y(self) -> Optional[str]:
         """Defaults to ``'Measure Y'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._measure_y
 
@@ -876,7 +876,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def multiplier(self) -> Optional[str]:
         """Defaults to ``'Multiplier``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._multiplier
 
@@ -888,7 +888,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def multiplier_atr(self) -> Optional[str]:
         """Defaults to ``'ATR multiplier'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._multiplier_atr
 
@@ -900,7 +900,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def name(self) -> Optional[str]:
         """Defaults to ``'Name``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._name
 
@@ -912,7 +912,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def no_filter_match(self) -> Optional[str]:
         """Defaults to ``'No match'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._no_filter_match
 
@@ -924,7 +924,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def outer_background(self) -> Optional[str]:
         """Defaults to ``'Outer background'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._outer_background
 
@@ -936,7 +936,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def padding(self) -> Optional[str]:
         """Defaults to ``'Padding``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._padding
 
@@ -948,7 +948,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def parallel_channel(self) -> Optional[str]:
         """Defaults to ``'Parallel channel'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._parallel_channel
 
@@ -960,7 +960,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def period(self) -> Optional[str]:
         """Defaults to ``'Period``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._period
 
@@ -972,7 +972,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def period_atr(self) -> Optional[str]:
         """Defaults to ``'ATR period'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._period_atr
 
@@ -984,7 +984,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def periods(self) -> Optional[str]:
         """Defaults to ``'Periods``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._periods
 
@@ -997,7 +997,7 @@ class PopupLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Senkou Span B period'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._period_senkou_span_b
 
@@ -1009,7 +1009,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def period_tenkan(self) -> Optional[str]:
         """Defaults to ``'Tenkan period'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._period_tenkan
 
@@ -1021,7 +1021,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def pitchfork(self) -> Optional[str]:
         """Defaults to ``'Pitchfork``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._pitchfork
 
@@ -1033,7 +1033,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def ranges(self) -> Optional[str]:
         """Defaults to ``'Ranges``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._ranges
 
@@ -1045,7 +1045,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def ray(self) -> Optional[str]:
         """Defaults to ``'Ray``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._ray
 
@@ -1057,7 +1057,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def rectangle(self) -> Optional[str]:
         """Defaults to ``'Rectangle``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._rectangle
 
@@ -1069,7 +1069,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def remove_button(self) -> Optional[str]:
         """Defaults to ``'remove'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._remove_button
 
@@ -1081,7 +1081,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def save_button(self) -> Optional[str]:
         """Defaults to ``'save'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._save_button
 
@@ -1094,7 +1094,7 @@ class PopupLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Search Indicators'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._search_indicators
 
@@ -1106,7 +1106,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def segment(self) -> Optional[str]:
         """Defaults to ``'Segment``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._segment
 
@@ -1118,7 +1118,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def series(self) -> Optional[str]:
         """Defaults to ``'Series``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._series
 
@@ -1130,7 +1130,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def shape_options(self) -> Optional[str]:
         """Defaults to ``'Shape options'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._shape_options
 
@@ -1142,7 +1142,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def shapes(self) -> Optional[str]:
         """Defaults to ``'Shapes``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._shapes
 
@@ -1154,7 +1154,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def short_period(self) -> Optional[str]:
         """Defaults to ``'Short period'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._short_period
 
@@ -1166,7 +1166,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def signal_period(self) -> Optional[str]:
         """Defaults to ``'Signal period'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._signal_period
 
@@ -1178,7 +1178,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def simple_shapes(self) -> Optional[str]:
         """Defaults to ``'Simple shapes'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._simple_shapes
 
@@ -1190,7 +1190,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def slow_avg_period(self) -> Optional[str]:
         """Defaults to ``'Slow average period'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._slow_avg_period
 
@@ -1203,7 +1203,7 @@ class PopupLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Standard deviation'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._standard_deviation
 
@@ -1215,7 +1215,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def stroke(self) -> Optional[str]:
         """Defaults to ``'Line color'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._stroke
 
@@ -1227,7 +1227,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def stroke_width(self) -> Optional[str]:
         """Defaults to ``'Line width'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._stroke_width
 
@@ -1239,7 +1239,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def style(self) -> Optional[str]:
         """Defaults to ``'Style``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._style
 
@@ -1251,7 +1251,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def time_cycles(self) -> Optional[str]:
         """Defaults to ``'Time Cycles'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._time_cycles
 
@@ -1263,7 +1263,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def title(self) -> Optional[str]:
         """Defaults to ``'Title``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._title
 
@@ -1275,7 +1275,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def top_band(self) -> Optional[str]:
         """Defaults to ``'Top band'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._top_band
 
@@ -1287,7 +1287,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def tunnel(self) -> Optional[str]:
         """Defaults to ``'Tunnel``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._tunnel
 
@@ -1299,7 +1299,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def type_options(self) -> Optional[str]:
         """Defaults to ``'Details'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._type_options
 
@@ -1311,7 +1311,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def vertical_arrow(self) -> Optional[str]:
         """Defaults to ``'Vertical arrow'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._vertical_arrow
 
@@ -1323,7 +1323,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def vertical_counter(self) -> Optional[str]:
         """Defaults to ``'Vertical counter'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._vertical_counter
 
@@ -1335,7 +1335,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def vertical_label(self) -> Optional[str]:
         """Defaults to ``'Vertical label'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._vertical_label
 
@@ -1347,7 +1347,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def vertical_line(self) -> Optional[str]:
         """Defaults to ``'Vertical line'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._vertical_line
 
@@ -1359,7 +1359,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def volume(self) -> Optional[str]:
         """Defaults to ``'Volume'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._volume
 
@@ -1371,7 +1371,7 @@ class PopupLanguageOptions(HighchartsMeta):
     def x_axis_unit(self) -> Optional[str]:
         """Defaults to ``'x-axis unit'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._x_axis_unit
 

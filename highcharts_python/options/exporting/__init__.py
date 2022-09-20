@@ -499,7 +499,7 @@ class Exporting(HighchartsMeta):
 
     @property
     def table_caption(self) -> Optional[bool | str]:
-        """Caption for the data table. If not specified (:obj:`None <python:None>)`), will
+        """Caption for the data table. If not specified (:obj:`None <python:None>`)`), will
         default to the chart title.
 
         Also accepts a :class:`bool <python:bool>` value of ``False``, which disables

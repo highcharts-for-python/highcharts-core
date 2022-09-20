@@ -89,7 +89,7 @@ class ArcDiagramOptions(GenericTypeOptions):
         """The option to center links rather than position them one after another.
         Defaults to ``False``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._centered_links
 
@@ -108,7 +108,7 @@ class ArcDiagramOptions(GenericTypeOptions):
 
         Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._color_by_point
 
@@ -163,7 +163,7 @@ class ArcDiagramOptions(GenericTypeOptions):
         If ``True``, all nodes are calculated based on the ``nodePadding`` and current
         plot area. It is possible to override it using the :meth:`Marker.radius` setting.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._equal_nodes
 
@@ -239,7 +239,7 @@ class ArcDiagramOptions(GenericTypeOptions):
         """If ``True``, places the series on the other side of the plot area. Defaults to
         ``False``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._reversed
 

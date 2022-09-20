@@ -10,7 +10,7 @@ from highcharts_python.utility_functions import mro__to_untrimmed_dict
 class AreaSeries(SeriesBase, AreaOptions):
     """Options for a specific Area series.
 
-    .. figure:: _static/area-example.png
+    .. figure:: ../../../_static/area-example.png
       :alt: Area Example Chart
       :align: center
 
@@ -189,7 +189,7 @@ class AreaRangeSeries(AreaSeries):
     is a carteseian series with higher and lower values for each point along an X
     axis, where the area between the values is shaded.
 
-    .. figure:: _static/arearange-example.png
+    .. figure:: ../../../_static/arearange-example.png
       :alt: AreaRange Example Chart
       :align: center
 
@@ -281,7 +281,7 @@ class AreaSplineSeries(AreaSeries):
     """Options to apply to an AreaSpline series. The area spline series
     is an area series where the graph between the points is smoothed into a spline.
 
-    .. figure:: _static/areaspline-example.png
+    .. figure:: ../../../_static/areaspline-example.png
       :alt: AreaSpline Example Chart
       :align: center
 
@@ -303,7 +303,7 @@ class LineSeries(AreaSeries):
     A line series displays information as a series of data points connected by
     straight line segments.
 
-    .. figure:: _static/line-example.png
+    .. figure:: ../../../_static/line-example.png
       :alt: Line Example Chart
       :align: center
 
@@ -317,7 +317,7 @@ class StreamGraphSeries(AreaSeries):
     A streamgraph is a type of stacked area graph which is displaced around a central
     axis, resulting in a flowing, organic shape.
 
-    .. figure:: _static/streamgraph-example.png
+    .. figure:: ../../../_static/streamgraph-example.png
       :alt: StreamGraph Example Chart
       :align: center
 

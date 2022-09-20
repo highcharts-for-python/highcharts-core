@@ -17,13 +17,13 @@ class PackedBubbleSeries(NetworkGraphSeries, PackedBubbleOptions):
 
       .. tab:: Standard Packed Bubble
 
-        .. figure:: _static/packedbubble-example.png
+        .. figure:: ../../../_static/packedbubble-example.png
           :alt: Split Packed Bubble Example Chart
           :align: center
 
       .. tab:: Split Packed Bubble
 
-        .. figure:: _static/packedbubble-example-split.png
+        .. figure:: ../../../_static/packedbubble-example-split.png
           :alt: Split Packed Bubble Example Chart
           :align: center
 

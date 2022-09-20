@@ -201,7 +201,7 @@ class BarSeries(BaseBarSeries, BarOptions):
 
       A bar series is a special type of column series where the columns are horizontal.
 
-    .. figure:: _static/bar-example.png
+    .. figure:: ../../../_static/bar-example.png
       :alt: Bar Example Chart
       :align: center
 
@@ -323,7 +323,7 @@ class ColumnSeries(BarSeries):
 
     Column series display one column per value along an X axis.
 
-    .. figure:: _static/column-example.png
+    .. figure:: ../../../_static/column-example.png
       :alt: Column Example Chart
       :align: center
 
@@ -344,19 +344,19 @@ class ColumnPyramidSeries(ColumnSeries):
 
       .. tab:: Standard
 
-        .. figure:: _static/columnpyramid-example.png
+        .. figure:: ../../../_static/columnpyramid-example.png
           :alt: ColumnPyramid Example Chart
           :align: center
 
       .. tab:: Stacked
 
-        .. figure:: _static/columnpyramid-example-stacked.png
+        .. figure:: ../../../_static/columnpyramid-example-stacked.png
           :alt: Stacked Column Pyramid Example Chart
           :align: center
 
       .. tab:: Stacked + Inverted
 
-        .. figure:: _static/columnpyramid-example-stacked-horizontal.png
+        .. figure:: ../../../_static/columnpyramid-example-stacked-horizontal.png
           :alt: Stacked and Inverted Column Pyramid Example Chart
           :align: center
 
@@ -451,13 +451,13 @@ class ColumnRangeSeries(ColumnSeries):
 
       .. tab:: Standard
 
-        .. figure:: _static/columnrange-example.png
+        .. figure:: ../../../_static/columnrange-example.png
           :alt: ColumnRange Example Chart
           :align: center
 
       .. tab:: Horizontal
 
-        .. figure:: _static/columnrange-example-horizontal.png
+        .. figure:: ../../../_static/columnrange-example-horizontal.png
           :alt: Inverted Column Range Example Chart
           :align: center
 
@@ -544,7 +544,7 @@ class CylinderSeries(BarSeries):
     A cylinder graph is a variation of a 3d column graph. The cylinder graph features
     cylindrical points.
 
-    .. figure:: _static/cylinder-example.png
+    .. figure:: ../../../_static/cylinder-example.png
       :alt: Cylinder Example Chart
       :align: center
 
@@ -562,19 +562,19 @@ class VariwideSeries(BaseBarSeries):
 
       .. tab:: Standard Variwide
 
-        .. figure:: _static/variwide-example.png
+        .. figure:: ../../../_static/variwide-example.png
           :alt: Variwide Example Chart
           :align: center
 
       .. tab:: Inverted Variwide
 
-        .. figure:: _static/variwide-example-inverted.png
+        .. figure:: ../../../_static/variwide-example-inverted.png
           :alt: Variwide Example Chart
           :align: center
 
       .. tab:: with Datetime Axis
 
-        .. figure:: _static/variwide-example-datetime.png
+        .. figure:: ../../../_static/variwide-example-datetime.png
           :alt: Variwide Example Chart
           :align: center
 
@@ -670,19 +670,19 @@ class WaterfallSeries(ColumnSeries, WaterfallOptions):
 
       .. tab:: Standard Waterfall
 
-        .. figure:: _static/waterfall-example.png
+        .. figure:: ../../../_static/waterfall-example.png
           :alt: Waterfall Example Chart
           :align: center
 
       .. tab:: Horizontal (Inverted) Waterfall
 
-        .. figure:: _static/waterfall-example-inverted.png
+        .. figure:: ../../../_static/waterfall-example-inverted.png
           :alt: Waterfall Example Chart
           :align: center
 
       .. tab:: Stacked Waterfall
 
-        .. figure:: _static/waterfall-example-stacked.png
+        .. figure:: ../../../_static/waterfall-example-stacked.png
           :alt: Waterfall Example Chart
           :align: center
 
@@ -883,7 +883,7 @@ class WindBarbSeries(BarSeries, WindBarbOptions):
     graphical form. Wind direction is given by the stem direction, and wind speed by
     the number and shape of barbs.
 
-    .. figure:: _static/windbarb-example.png
+    .. figure:: ../../../_static/windbarb-example.png
       :alt: Wind Barb Example Chart
       :align: center
 
@@ -1088,13 +1088,13 @@ class XRangeSeries(BaseBarSeries, XRangeOptions):
 
       .. tab:: Standard X-Range
 
-        .. figure:: _static/xrange-example.png
+        .. figure:: ../../../_static/xrange-example.png
           :alt: X-Range Example Chart
           :align: center
 
       .. tab:: Inverted X-Range
 
-        .. figure:: _static/xrange-example-inverted.png
+        .. figure:: ../../../_static/xrange-example-inverted.png
           :alt: Inverted X-Range Example Chart
           :align: center
 

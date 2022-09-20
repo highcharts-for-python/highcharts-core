@@ -14,7 +14,7 @@ class DependencyWheelSeries(SeriesBase, DependencyWheelOptions):
     A dependency wheel chart is a type of flow diagram, where all nodes are laid out
     in a circle, and the flow between the are drawn as link bands.
 
-    .. figure:: _static/dependencywheel-example.png
+    .. figure:: ../../../_static/dependencywheel-example.png
       :alt: Dependency Wheel Example Chart
       :align: center
 

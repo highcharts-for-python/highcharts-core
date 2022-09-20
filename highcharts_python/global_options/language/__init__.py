@@ -416,7 +416,7 @@ class Language(HighchartsMeta):
 
     @property
     def numeric_symbols(self) -> Optional[List[str] | constants.EnforcedNullType]:
-        """:term:`Metric prefixes <Metric Prefix>` used to shorten high numbers in axis
+        """:term:`Metric suffixes <Metric Suffix>` used to shorten high numbers in axis
         labels. Defaults to ``["k", "M", "G", "T", "P", "E"]``.
 
         .. note::

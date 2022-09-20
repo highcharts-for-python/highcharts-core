@@ -45,7 +45,7 @@ class BubbleLegendLabelOptions(HighchartsMeta):
           * ``'right'``
 
         :returns: The alignment of the annotation's label.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._align
 
@@ -69,7 +69,7 @@ class BubbleLegendLabelOptions(HighchartsMeta):
         Defaults to ``False``.
 
         :returns: Flag indicating whether to allow data labels to overlap.
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._allow_overlap
 
@@ -475,7 +475,7 @@ class BubbleLegend(HighchartsMeta):
         """If ``True``, displays the bubble legend. If ``False``, hides the legend.
         Defaults to ``False``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._enabled
 
@@ -580,7 +580,7 @@ class BubbleLegend(HighchartsMeta):
           * ``'area'``
           * ``'width'``
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._size_by
 
@@ -605,7 +605,7 @@ class BubbleLegend(HighchartsMeta):
 
         Defaults to ``False``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._size_by_absolute_value
 

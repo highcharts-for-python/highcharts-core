@@ -149,7 +149,7 @@ class DependencyWheelOptions(GenericTypeOptions):
 
         Defaults to ``True``.
 
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._color_by_point
 

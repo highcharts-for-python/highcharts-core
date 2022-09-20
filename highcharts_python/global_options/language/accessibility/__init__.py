@@ -118,7 +118,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         """Label applied to the chart container. Defaults to
         ``'{title}. Highcharts interactive chart.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._chart_container_label
 
@@ -153,7 +153,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         """Content of the credits section. Defaults to:
         ``'Chart credits: {creditsStr}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._credits
 
@@ -166,7 +166,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         """The default title applied ot the chart. Defaults to
         ``'Chart'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._default_chart_title
 
@@ -179,7 +179,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         """String for the drill-up button. Defaults to
         ``'{buttonText}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._drillup_button
 
@@ -206,7 +206,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         ``''`` (an empty
         string).
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._graphic_container_label
 
@@ -305,7 +305,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         """Set a label on the container wrapping the SVG. Defaults to
         ``'Interactive chart'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._svg_container_label
 
@@ -325,7 +325,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
           content when hovering over elements in the chart. Assistive technology may use
           this element to label the chart.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._svg_container_title
 

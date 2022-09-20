@@ -228,7 +228,7 @@ class BoxPlotOptions(BarOptions):
         Defaults to :obj:`None <python:None>`.
 
         :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern`, or
-        :obj:`None <python:None>`
+          :obj:`None <python:None>`
         """
         return self._whisker_color
 

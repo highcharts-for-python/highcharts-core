@@ -36,7 +36,7 @@ class SeriesTypeDescriptions(HighchartsMeta):
     def arearange(self) -> Optional[str]:
         """Defaults to ``'Arearange charts are line charts displaying a range between a lower and higher value for each point.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._arearange
 
@@ -49,7 +49,7 @@ class SeriesTypeDescriptions(HighchartsMeta):
         """Defaults to
         ``'These charts are line charts displaying a range between a lower and higher value for each point.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._areasplinerange
 
@@ -61,7 +61,7 @@ class SeriesTypeDescriptions(HighchartsMeta):
     def boxplot(self) -> Optional[str]:
         """Defaults to ``'Box plot charts are typically used to display groups of statistical data. Each data point in the chart can have up to 5 values: minimum, lower quartile, median, upper quartile, and maximum.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._boxplot
 
@@ -73,7 +73,7 @@ class SeriesTypeDescriptions(HighchartsMeta):
     def bubble(self) -> Optional[str]:
         """Defaults to ``'Bubble charts are scatter charts where each data point also has a size value.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._bubble
 
@@ -86,7 +86,7 @@ class SeriesTypeDescriptions(HighchartsMeta):
         """Defaults to
         ``'Columnrange charts are column charts displaying a range between a lower and higher value for each point.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._columnrange
 
@@ -98,7 +98,7 @@ class SeriesTypeDescriptions(HighchartsMeta):
     def errorbar(self) -> Optional[str]:
         """Defaults to ``'Errorbar series are used to display the variability of the data.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._errorbar
 
@@ -110,7 +110,7 @@ class SeriesTypeDescriptions(HighchartsMeta):
     def funnel(self) -> Optional[str]:
         """Defaults to ``'Funnel charts are used to display reduction of data in stages.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._funnel
 
@@ -122,7 +122,7 @@ class SeriesTypeDescriptions(HighchartsMeta):
     def pyramid(self) -> Optional[str]:
         """Defaults to ``'Pyramid charts consist of a single pyramid with item heights corresponding to each point value.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._pyramid
 
@@ -134,7 +134,7 @@ class SeriesTypeDescriptions(HighchartsMeta):
     def waterfall(self) -> Optional[str]:
         """Defaults to ``'A waterfall chart is a column chart where each column contributes towards a total end value.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._waterfall
 
@@ -274,7 +274,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
     def bar(self) -> Optional[str]:
         """Defaults to ``'{series.name}, bar series {seriesNumber} of {chart.series.length} with {series.points.length} {#plural(series.points.length, bars, bar)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._bar
 
@@ -287,7 +287,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'{series.name}, series {seriesNumber} of {chart.series.length}. Bar series with {series.points.length} {#plural(series.points.length, bars, bar)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._bar_combination
 
@@ -299,7 +299,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
     def boxplot(self) -> Optional[str]:
         """Defaults to ``'{series.name}, boxplot {seriesNumber} of {chart.series.length} with {series.points.length} {#plural(series.points.length, boxes, box)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._boxplot
 
@@ -312,7 +312,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'{series.name}, series {seriesNumber} of {chart.series.length}. Boxplot with {series.points.length} {#plural(series.points.length, boxes, box)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._boxplot_combination
 
@@ -324,7 +324,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
     def bubble(self) -> Optional[str]:
         """Defaults to ``'{series.name}, bubble series {seriesNumber} of {chart.series.length} with {series.points.length} {#plural(series.points.length, bubbles, bubble)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._bubble
 
@@ -337,7 +337,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'{series.name}, series {seriesNumber} of {chart.series.length}. Bubble series with {series.points.length} {#plural(series.points.length, bubbles, bubble)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._bubble_combination
 
@@ -349,7 +349,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
     def column(self) -> Optional[str]:
         """Defaults to ``'{series.name}, bar series {seriesNumber} of {chart.series.length} with {series.points.length} {#plural(series.points.length, bars, bar)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._column
 
@@ -362,7 +362,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'{series.name}, series {seriesNumber} of {chart.series.length}. Bar series with {series.points.length} {#plural(series.points.length, bars, bar)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._column_combination
 
@@ -374,7 +374,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
     def default(self) -> Optional[str]:
         """Defaults to ``'{series.name}, series {seriesNumber} of {chart.series.length} with {series.points.length} data {#plural(series.points.length, points, point)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._default
 
@@ -387,7 +387,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'{series.name}, series {seriesNumber} of {chart.series.length} with {series.points.length} data {#plural(series.points.length, points, point)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._default_combination
 
@@ -399,7 +399,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
     def line(self) -> Optional[str]:
         """Defaults to ``'{series.name}, line {seriesNumber} of {chart.series.length} with {series.points.length} data {#plural(series.points.length, points, point)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._line
 
@@ -412,7 +412,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'{series.name}, series {seriesNumber} of {chart.series.length}. Line with {series.points.length} data {#plural(series.points.length, points, point)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._line_combination
 
@@ -424,7 +424,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
     def map(self) -> Optional[str]:
         """Defaults to ``'{series.name}, map {seriesNumber} of {chart.series.length} with {series.points.length} {#plural(series.points.length, areas, area)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._map
 
@@ -437,7 +437,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'{series.name}, series {seriesNumber} of {chart.series.length}. Map with {series.points.length} {#plural(series.points.length, areas, area)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._map_combination
 
@@ -449,7 +449,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
     def mapbubble(self) -> Optional[str]:
         """Defaults to ``'{series.name}, bubble series {seriesNumber} of {chart.series.length} with {series.points.length} {#plural(series.points.length, bubbles, bubble)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._mapbubble
 
@@ -462,7 +462,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'{series.name}, series {seriesNumber} of {chart.series.length}. Bubble series with {series.points.length} {#plural(series.points.length, bubbles, bubble)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._mapbubble_combination
 
@@ -474,7 +474,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
     def mapline(self) -> Optional[str]:
         """Defaults to ``'{series.name}, line {seriesNumber} of {chart.series.length} with {series.points.length} data {#plural(series.points.length, points, point)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._mapline
 
@@ -487,7 +487,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'{series.name}, series {seriesNumber} of {chart.series.length}. Line with {series.points.length} data {#plural(series.points.length, points, point)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._mapline_combination
 
@@ -499,7 +499,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
     def pie(self) -> Optional[str]:
         """Defaults to ``'{series.name}, pie {seriesNumber} of {chart.series.length} with {series.points.length} {#plural(series.points.length, slices, slice)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._pie
 
@@ -512,7 +512,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'{series.name}, series {seriesNumber} of {chart.series.length}. Pie with {series.points.length} {#plural(series.points.length, slices, slice)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._pie_combination
 
@@ -524,7 +524,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
     def scatter(self) -> Optional[str]:
         """Defaults to ``'{series.name}, scatter plot {seriesNumber} of {chart.series.length} with {series.points.length} {#plural(series.points.length, points, point)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._scatter
 
@@ -537,7 +537,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'{series.name}, series {seriesNumber} of {chart.series.length}, scatter plot with {series.points.length} {#plural(series.points.length, points, point)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._scatter_combination
 
@@ -549,7 +549,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
     def spline(self) -> Optional[str]:
         """Defaults to ``'{series.name}, line {seriesNumber} of {chart.series.length} with {series.points.length} data {#plural(series.points.length, points, point)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._spline
 
@@ -562,7 +562,7 @@ class SeriesSummaryLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'{series.name}, series {seriesNumber} of {chart.series.length}. Line with {series.points.length} data {#plural(series.points.length, points, point)}.'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._spline_combination
 
@@ -667,7 +667,7 @@ class SeriesLanguageOptions(HighchartsMeta):
 
           This is added in the point comment description by default if present.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._description
 
@@ -680,7 +680,7 @@ class SeriesLanguageOptions(HighchartsMeta):
         """Description for the value of null points. Defaults to:
         ``''``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._null_point_value
 
@@ -694,7 +694,7 @@ class SeriesLanguageOptions(HighchartsMeta):
         technology. Defaults to:
         ``''``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._point_annotations_description
 
@@ -736,7 +736,7 @@ class SeriesLanguageOptions(HighchartsMeta):
         """xAxis description for series if there are multiple xAxes in the chart. Defaults
         to: ``''``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._x_axis_description
 
@@ -749,7 +749,7 @@ class SeriesLanguageOptions(HighchartsMeta):
         """yAxis description for series if there are multiple yAxes in the chart. Defaults
         to: ``''``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._y_axis_description
 

@@ -1,0 +1,1 @@
+.. _`API reference`: https://api.highcharts.com/highcharts/

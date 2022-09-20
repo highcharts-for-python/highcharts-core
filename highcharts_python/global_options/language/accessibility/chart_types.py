@@ -71,7 +71,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def bar_multiple(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_BAR_MULTIPLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._bar_multiple
 
@@ -87,7 +87,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def bar_single(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_BAR_SINGLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._bar_single
 
@@ -99,7 +99,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def boxplot_multiple(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_BOXPLOT_MULTIPLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._boxplot_multiple
 
@@ -111,7 +111,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def boxplot_single(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_BOXPLOT_SINGLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._boxplot_single
 
@@ -123,7 +123,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def bubble_multiple(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_BUBBLE_MULTIPLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._bubble_multiple
 
@@ -135,7 +135,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def bubble_single(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_BUBBLE_SINGLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._bubble_single
 
@@ -147,7 +147,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def column_multiple(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_COLUMN_MULTIPLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._column_multiple
 
@@ -159,7 +159,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def column_single(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_COLUMN_SINGLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._column_single
 
@@ -171,7 +171,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def combination_chart(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_COMBO}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._combination_chart
 
@@ -183,7 +183,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def default_multiple(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_DEFAULT_MULTIPLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._default_multiple
 
@@ -195,7 +195,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def default_single(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_DEFAULT_SINGLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._default_single
 
@@ -207,7 +207,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def empty_chart(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_EMPTY_CHART}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._empty_chart
 
@@ -219,7 +219,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def line_multiple(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_LINE_MULTIPLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._line_multiple
 
@@ -231,7 +231,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def line_single(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_LINE_SINGLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._line_single
 
@@ -244,7 +244,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_MAP_TYPE_DESCRIPTION}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._map_type_description
 
@@ -256,7 +256,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def pie_multiple(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_PIE_MULTIPLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._pie_multiple
 
@@ -268,7 +268,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def pie_single(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_PIE_SINGLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._pie_single
 
@@ -280,7 +280,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def scatter_multiple(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_SCATTER_MULTIPLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._scatter_multiple
 
@@ -292,7 +292,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def scatter_single(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_SCATTER_SINGLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._scatter_single
 
@@ -304,7 +304,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def spline_multiple(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_SPLINE_MULTIPLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._spline_multiple
 
@@ -316,7 +316,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def spline_single(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_SPLINE_SINGLE}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._spline_single
 
@@ -328,7 +328,7 @@ class ChartTypesLanguageOptions(HighchartsMeta):
     def unknown_map(self) -> Optional[str]:
         """Defaults to ``'{constants.DEFAULT_LANG_ACS_CHART_TYPES_UNKNOWN_MAP}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._unknown_map
 

@@ -43,7 +43,7 @@ Highcharts for Python Toolkit
   Licensing <license>
 
 The **Highcharts for Python Toolkit** is a Python library that provides a Python wrapper
-for the fantastic `Highcharts JS <https://www.highcharts.com/>`_ suite of JavaScript data
+for the fantastic `Highcharts JS <https://www.highcharts.com>`__ suite of JavaScript data
 visualization libraries, with full integration into the robust Python ecosystem. The full
 toolkit includes support for:
 
@@ -85,7 +85,7 @@ Dependencies
 Why Highcharts for Python?
 *********************************
 
-Odds are you are aware of `Highcharts JS <https://www.highcharts.com/>`_. If not, why not?
+Odds are you are aware of `Highcharts JS <https://www.highcharts.com>`__. If not, why not?
 It is the world's most popular, most powerful, category-defining JavaScript data
 visualization library. If you are building a web or mobile app/dashboard that will be
 visualizing data in some fashion, you should absolutely take a look at the Highcharts
@@ -137,8 +137,9 @@ Key Highcharts for Python Features
   capabilities.
 * **Easy and Robust Chart Download**. With one method call, produce high-end static
   visualizations that can be downloaded or shared as files with your audience. Produce
-  static charts using the Highsoft-provided :term:`Highcharts Export Server`, or using
-  your own private export server as needed.
+  static charts using the Highsoft-provided
+  :term:`Highcharts Export Server <Export Server>`, or using your own private export
+  server as needed.
 * **Integration with Pandas and PySpark**. With two lines of code, produce a high-end
   interactive visualization of your Pandas or PySpark dataframe.
 * Leverage Highcharts visualization templates in your Python code to eliminate "fiddly"
@@ -373,3 +374,7 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+.. target-notes::
+
+.. include:: links.txt

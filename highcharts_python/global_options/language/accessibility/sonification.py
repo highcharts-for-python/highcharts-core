@@ -26,7 +26,7 @@ class SonificationLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Play as sound, {chartTitle}'``
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._play_as_sound_button_text
 
@@ -39,7 +39,7 @@ class SonificationLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Play'``
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._play_as_sound_click_announcement
 

@@ -1281,11 +1281,6 @@ class ChartOptions(HighchartsMeta):
         Can be any of the chart types listed under :class:`PlotOptions` and
         :class:`Series`, or can be a series provided by an additional module.
 
-        .. note::
-
-          In TypeScript this option has no effect in sense of typing and instead the type
-          option must always be set in the series.
-
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._type

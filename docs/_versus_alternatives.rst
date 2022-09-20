@@ -25,8 +25,8 @@ alternatives:
         visualize.
       * **Custom Serialization**. The most sophisticated implementations I have seen
         actually replicate much of the functionality of **Highcharts for Python**, where
-        they construct JavaScript literal notation serialization and de-serialization for
-        their robust use cases.
+        they construct :term:`JavaScript object literal notation` serialization and
+        de-serialization for their robust use cases.
       * **Don't Use Highcharts**. In many cases, particularly when working with data
         science teams who are data scientists first and software developers by necessity,
         the team turns to weaker data visualization packages because they are available

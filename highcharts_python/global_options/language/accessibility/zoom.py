@@ -23,7 +23,7 @@ class ZoomLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Zoom chart'``
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._map_zoom_in
 
@@ -36,7 +36,7 @@ class ZoomLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Zoom out chart'``
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._map_zoom_out
 
@@ -49,7 +49,7 @@ class ZoomLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Reset zoom'``
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._reset_zoom_button
 

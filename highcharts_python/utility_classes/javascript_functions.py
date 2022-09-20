@@ -361,7 +361,7 @@ class JavaScriptClass(HighchartsMeta):
         :rtype: :class:`list <python:list>` of :class:`CallbackFunction`, or
           :obj:`None <python:None>`
 
-        :raises JavaScriptError: if one or more methods lacks a function name OR if there
+        :raises HighchartsJavaScriptError: if one or more methods lacks a function name OR if there
           is no ``constructor`` method included in
           :meth:`.methods <JavaScriptClass.methods>`.
         """
@@ -378,13 +378,13 @@ class JavaScriptClass(HighchartsMeta):
             has_constructor = False
             for method in value:
                 if not method.function_name:
-                    raise errors.JavaScriptError('All JavaScriptClass methods '
+                    raise errors.HighchartsJavaScriptError('All JavaScriptClass methods '
                                                  'require a function name.')
                 if method.function_name == 'constructor':
                     has_constructor = True
 
             if not has_constructor:
-                raise errors.JavaScriptError('A JavaScriptClass requires at least '
+                raise errors.HighchartsJavaScriptError('A JavaScriptClass requires at least '
                                              'one "constructor" method. Yours had none.')
 
             self._methods = value

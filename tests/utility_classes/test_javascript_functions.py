@@ -258,8 +258,8 @@ def test_CallbackFunction_from_js_literal(original_str, error):
                   """testMethod(test1, test2) { return true; }"""]}, None),
 
 
-    ({'methods': ["""function wrongName() { return true; }"""]}, errors.JavaScriptError),
-    ({'methods': ["""function() { return true;}"""]}, errors.JavaScriptError),
+    ({'methods': ["""function wrongName() { return true; }"""]}, errors.HighchartsJavaScriptError),
+    ({'methods': ["""function() { return true;}"""]}, errors.HighchartsJavaScriptError),
 ])
 def test_JavaScriptClass__init__(kwargs, error):
     if not error:
@@ -296,8 +296,8 @@ def test_JavaScriptClass__init__(kwargs, error):
                   """testMethod(test1, test2) { return true; }"""]}, None),
 
 
-    ({'methods': ["""function wrongName() { return true; }"""]}, errors.JavaScriptError),
-    ({'methods': ["""function() { return true;}"""]}, errors.JavaScriptError),
+    ({'methods': ["""function wrongName() { return true; }"""]}, errors.HighchartsJavaScriptError),
+    ({'methods': ["""function() { return true;}"""]}, errors.HighchartsJavaScriptError),
 ])
 def test_JavaScriptClass_from_dict(as_dict, error):
     if not error:

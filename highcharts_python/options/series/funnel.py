@@ -16,7 +16,7 @@ class FunnelSeries(PieSeries, FunnelOptions):
 
       Funnel charts require that the ``modules/funnel.js`` file is loaded client-side.
 
-    .. figure:: _static/funnel-example.png
+    .. figure:: ../../../_static/funnel-example.png
       :alt: Funnel Example Chart
       :align: center
 
@@ -173,7 +173,7 @@ class Funnel3DSeries(PieSeries, FunnelOptions):
     an Y and Z value. Each point is drawn as a pie slice where the size (arc) of the
     slice relates to the Y value and the radius of pie slice relates to the Z value.
 
-    .. figure:: _static/variablepie-example.png
+    .. figure:: ../../../_static/variablepie-example.png
       :alt: Variable Pie Example Chart
       :align: center
 

@@ -22,7 +22,7 @@ class TableLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'Table representation of chart.'``
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._table_summary
 
@@ -35,7 +35,7 @@ class TableLanguageOptions(HighchartsMeta):
         """Defaults to
         ``'View as data table, {chartTitle}'``
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._view_as_data_table_button_text
 

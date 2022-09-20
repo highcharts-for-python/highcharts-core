@@ -16,19 +16,19 @@ class SankeySeries(DependencyWheelSeries, SankeyOptions):
 
       .. tab:: Standard Sankey
 
-        .. figure:: _static/sankey-example.png
+        .. figure:: ../../../_static/sankey-example.png
           :alt: Sankey Example Chart
           :align: center
 
       .. tab:: Inverted Sankey
 
-        .. figure:: _static/sankey-example-inverted.png
+        .. figure:: ../../../_static/sankey-example-inverted.png
           :alt: Inverted Sankey Example Chart
           :align: center
 
       .. tab:: Sankey with Outgoing Links
 
-        .. figure:: _static/sankey-example-outgoing.png
+        .. figure:: ../../../_static/sankey-example-outgoing.png
           :alt: Sankey Example Chart with Outgoing Links
           :align: center
 

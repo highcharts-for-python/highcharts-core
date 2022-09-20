@@ -14,7 +14,7 @@ class BellCurveSeries(AreaSeries, BellCurveOptions):
     function of the normal distribution. It calculates mean and standard deviation of
     the base series data and plots the curve according to the calculated parameters.
 
-    .. figure:: _static/bellcurve-example.png
+    .. figure:: ../../../_static/bellcurve-example.png
       :alt: Bell Curve Example Chart
       :align: center
 

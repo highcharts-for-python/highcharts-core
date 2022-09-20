@@ -14,8 +14,8 @@ from highcharts_python.utility_classes.markers import Marker
 
 
 class CartesianData(DataBase):
-    """Data point that can be represented on a :term:`Cartesian` graph, featuring an ``x``
-    and ``y`` value."""
+    """Data point that can be represented on a :term:`Cartesian chart <Cartesian Charts>`,
+    featuring an ``x`` and ``y`` value."""
 
     def __init__(self, **kwargs):
         self._data_labels = None

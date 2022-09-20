@@ -458,7 +458,7 @@ class TreemapOptions(GenericTypeOptions):
 
           You also have the ability to extend Highcharts with your own layout algorithm.
           For more information, read the
-          `original JavaScript documentation <https://www.highcharts.com/docs/chart-and-series-types/treemap#add-your-own-algorithm>`_.
+          `original JavaScript documentation <https://www.highcharts.com/docs/chart-and-series-types/treemap#add-your-own-algorithm>`__.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """

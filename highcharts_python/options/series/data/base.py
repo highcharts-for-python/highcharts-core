@@ -260,7 +260,8 @@ class DataBase(HighchartsMeta):
         """Creates a collection of data point instances, parsing the contents of ``value``
         as an array (iterable). This method is specifically used to parse data that is
         input to **Highcharts for Python** without property names, in an array-organized
-        structure as described in the `Highcharts JS`_ documentation.
+        structure as described in the `Highcharts JS <https://www.highcharts.com>`__
+        documentation.
 
           .. seealso::
 
