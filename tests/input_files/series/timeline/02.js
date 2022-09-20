@@ -111,9 +111,6 @@
     }
   ],
   colorAxis: 'some-id-goes-here',
-  colorIndex: 2,
-  colorKey: 'some-key-goes-here',
-  crisp: false,
   dragDrop: {
       draggableX: true,
       draggableY: true,
@@ -146,6 +143,9 @@
       },
       liveRedraw: true
   },
+  colorIndex: 2,
+  colorKey: 'some-key-goes-here',
+  crisp: false,
   linecap: 'round',
   relativeXValue: true,
 
