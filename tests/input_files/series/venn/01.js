@@ -114,8 +114,8 @@
       selected: false
     }
   ],
-  animationLimit: 10,
   colorAxis: 'some-id-goes-here',
+  animationLimit: 10,
   colorIndex: 2,
   colorKey: 'some-key-goes-here',
   crisp: true,

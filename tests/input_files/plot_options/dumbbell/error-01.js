@@ -49,7 +49,7 @@
         liveRedraw: true
     },
     findNearestPointBy: 'xy',
-    getExtremesForAll: true,
+    getExtremesFromAll: true,
     groupPadding: 12,
     linecap: 'round',
     lineColor: '#ccc',

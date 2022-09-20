@@ -4,9 +4,10 @@ from decimal import Decimal
 from validator_collection import validators
 
 from highcharts_python import constants, errors
-from highcharts_python.decorators import class_sensitive
+from highcharts_python.decorators import class_sensitive, validate_types
 from highcharts_python.metaclasses import HighchartsMeta
 from highcharts_python.utility_classes.date_time_label_formats import DateTimeLabelFormats
+from highcharts_python.utility_classes.javascript_functions import CallbackFunction
 
 
 class DataGroupingOptions(HighchartsMeta):
@@ -75,18 +76,28 @@ class DataGroupingOptions(HighchartsMeta):
             self._anchor = value
 
     @property
-    def approximation(self) -> Optional[str]:
+    def approximation(self) -> Optional[str | CallbackFunction]:
         """Approximation function for the data grouping. The default (``'windbarb'``)
         returns an average of wind speed and a vector average direction weighted by wind
         speed.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`str <python:str>` or
+          :class:`CallbackFunction <highcharts_python.utility_classes.javascript_functions.CallbackFunction>`
+          or :obj:`None <python:None>`
         """
         return self._approximation
 
     @approximation.setter
     def approximation(self, value):
-        self._approximation = validators.string(value, allow_empty = True)
+        if not value:
+            self._approximation = None
+        else:
+            try:
+                value = validate_types(value, CallbackFunction)
+            except (ValueError, TypeError):
+                value = validators.string(value)
+
+            self._approximation = value
 
     @property
     def date_time_label_formats(self) -> Optional[DateTimeLabelFormats]:
@@ -192,7 +203,7 @@ class DataGroupingOptions(HighchartsMeta):
 
           Setting this option to ``True`` prevents for example a column series from
           calculating a grouped point only for part of the dataset. The effect is similar
-          to :meth:`SeriesOptions.get_extremes_for_all` but does not affect yAxis
+          to :meth:`SeriesOptions.get_extremes_from_all` but does not affect yAxis
           extremes.
 
         :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`

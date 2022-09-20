@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from validator_collection import validators
 
-from highcharts_python import constants, errors
+from highcharts_python import constants
 from highcharts_python.options.plot_options.series import SeriesOptions
 from highcharts_python.utility_classes.gradients import Gradient
 from highcharts_python.utility_classes.patterns import Pattern
@@ -169,7 +169,7 @@ class AreaOptions(SeriesOptions):
             'fill_color': as_dict.get('fillColor', None),
             'fill_opacity': as_dict.get('fillOpacity', None),
             'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.get('getExtremesForAll', None),
+            'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
             'linecap': as_dict.get('linecap', None),
             'line_color': as_dict.get('lineColor', None),
             'line_width': as_dict.get('lineWidth', None),

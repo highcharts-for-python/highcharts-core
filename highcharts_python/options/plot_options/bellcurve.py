@@ -95,7 +95,7 @@ class BellCurveOptions(AreaOptions):
             'fill_color': as_dict.get('fillColor', None),
             'fill_opacity': as_dict.get('fillOpacity', None),
             'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.get('getExtremesForAll', None),
+            'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
             'linecap': as_dict.get('linecap', None),
             'line_color': as_dict.get('lineColor', None),
             'line_width': as_dict.get('lineWidth', None),

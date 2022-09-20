@@ -14,35 +14,26 @@ from highcharts_python.options.plot_options.data_sorting import DataSorting
 from highcharts_python.options.plot_options.drag_drop import DragDropOptions
 
 
-class SeriesOptions(GenericTypeOptions):
+class SeriesBaseOptions(GenericTypeOptions):
     """General options to apply to all series types."""
 
     def __init__(self, **kwargs):
         self._animation_limit = None
         self._boost_blending = None
         self._boost_threshold = None
-        self._color_axis = None
         self._color_index = None
         self._color_key = None
-        self._connect_ends = None
         self._connect_nulls = None
         self._crisp = None
         self._crop_threshold = None
         self._data_sorting = None
-        self._drag_drop = None
         self._find_nearest_point_by = None
-        self._get_extremes_for_all = None
+        self._get_extremes_from_all = None
         self._linecap = None
         self._line_width = None
-        self._negative_color = None
-        self._point_interval = None
-        self._point_interval_unit = None
-        self._point_placement = None
-        self._point_start = None
         self._relative_x_value = None
         self._shadow = None
         self._soft_threshold = None
-        self._stacking = None
         self._step = None
         self._zone_axis = None
         self._zones = None
@@ -50,28 +41,19 @@ class SeriesOptions(GenericTypeOptions):
         self.animation_limit = kwargs.get('animation_limit', None)
         self.boost_blending = kwargs.get('boost_blending', None)
         self.boost_threshold = kwargs.get('boost_threshold', None)
-        self.color_axis = kwargs.get('color_axis', None)
         self.color_index = kwargs.get('color_index', None)
         self.color_key = kwargs.get('color_key', None)
-        self.connect_ends = kwargs.get('connect_ends', None)
         self.connect_nulls = kwargs.get('connect_nulls', None)
         self.crisp = kwargs.get('crisp', None)
         self.crop_threshold = kwargs.get('crop_threshold', None)
         self.data_sorting = kwargs.get('data_sorting', None)
-        self.drag_drop = kwargs.get('drag_drop', None)
         self.find_nearest_point_by = kwargs.get('find_nearest_point_by', None)
-        self.get_extremes_for_all = kwargs.get('get_extremes_for_all', None)
+        self.get_extremes_from_all = kwargs.get('get_extremes_from_all', None)
         self.linecap = kwargs.get('linecap', None)
         self.line_width = kwargs.get('line_width', None)
-        self.negative_color = kwargs.get('negative_color', None)
-        self.point_interval = kwargs.get('point_interval', None)
-        self.point_interval_unit = kwargs.get('point_interval_unit', None)
-        self.point_placement = kwargs.get('point_placement', None)
-        self.point_start = kwargs.get('point_start', None)
         self.relative_x_value = kwargs.get('relative_x_value', None)
         self.shadow = kwargs.get('shadow', None)
         self.soft_threshold = kwargs.get('soft_threshold',  None)
-        self.stacking = kwargs.get('stacking', None)
         self.step = kwargs.get('step', None)
         self.zone_axis = kwargs.get('zone_axis', None)
         self.zones = kwargs.get('zones', None)
@@ -144,34 +126,6 @@ class SeriesOptions(GenericTypeOptions):
                                                    minimum = 0)
 
     @property
-    def color_axis(self) -> Optional[str | int | bool]:
-        """When using dual or multiple color axes, this setting defines which
-        :term:`color axis` the particular series is connected to. It refers to either the
-        :meth:`ColorAxis.id` or the index of the axis in the :class:`ColorAxis` array,
-        with ``0`` being the first. Set this option to ``False`` to prevent a series from
-        connecting to the default color axis.
-
-        Defaults to ``0``.
-
-        :rtype: :obj:`None <python:None>` or :class:`str <python:str>` or
-          :class:`int <python:int>` or :class:`bool <python:bool>`
-        """
-        return self._color_axis
-
-    @color_axis.setter
-    def color_axis(self, value):
-        if value is None:
-            self._color_axis = None
-        elif value is False:
-            self._color_axis = False
-        else:
-            try:
-                self._color_axis = validators.string(value)
-            except TypeError:
-                self._color_axis = validators.integer(value,
-                                                      minimum = 0)
-
-    @property
     def color_index(self) -> Optional[int]:
         """When operating in :term:`styled mode`, a specific color index to use for the
         series, so that its graphic representations are given the class name
@@ -206,26 +160,6 @@ class SeriesOptions(GenericTypeOptions):
     @color_key.setter
     def color_key(self, value):
         self._color_key = validators.string(value, allow_empty = True)
-
-    @property
-    def connect_ends(self) -> Optional[bool]:
-        """If ``True``, connect the ends of a line series plot across the extremes.
-        Defaults to :obj:`None <python:None>`.
-
-        .. warning::
-
-          Applies to :term:`polar charts <polar chart>` only.
-
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
-        """
-        return self._connect_ends
-
-    @connect_ends.setter
-    def connect_ends(self, value):
-        if value is None:
-            self._connect_ends = None
-        else:
-            self._connect_ends = bool(value)
 
     @property
     def connect_nulls(self) -> Optional[bool]:
@@ -302,27 +236,6 @@ class SeriesOptions(GenericTypeOptions):
         self._data_sorting = value
 
     @property
-    def drag_drop(self) -> Optional[DragDropOptions]:
-        """The draggable-points module allows points to be moved around or modified in the
-        chart.
-
-        In addition to the options mentioned under the dragDrop API structure, the module
-        fires three (JavaScript) events:
-
-          * ``point.dragStart``
-          * ``point.drag``
-          * ``point.drop``
-
-        :rtype: :class:`DragDropOptions` or :obj:`None <python:None>`
-        """
-        return self._drag_drop
-
-    @drag_drop.setter
-    @class_sensitive(DragDropOptions)
-    def drag_drop(self, value):
-        self._drag_drop = value
-
-    @property
     def find_nearest_point_by(self) -> Optional[str]:
         """Determines whether the series should look for the nearest point in both
         dimensions or just the x-dimension when hovering the series.
@@ -343,7 +256,7 @@ class SeriesOptions(GenericTypeOptions):
         self._find_nearest_point_by = validators.string(value, allow_empty = True)
 
     @property
-    def get_extremes_for_all(self) -> Optional[bool]:
+    def get_extremes_from_all(self) -> Optional[bool]:
         """If ``True``, uses the Y extremes of the total chart width or only the zoomed
         area when zooming in on parts of the X axis. By default, the Y axis adjusts to the
         min and max of the visible data.
@@ -354,14 +267,14 @@ class SeriesOptions(GenericTypeOptions):
 
         :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
-        return self._get_extremes_for_all
+        return self._get_extremes_from_all
 
-    @get_extremes_for_all.setter
-    def get_extremes_for_all(self, value):
+    @get_extremes_from_all.setter
+    def get_extremes_from_all(self, value):
         if value is None:
-            self._get_extremes_for_all = None
+            self._get_extremes_from_all = None
         else:
-            self._get_extremes_for_all = bool(value)
+            self._get_extremes_from_all = bool(value)
 
     @property
     def linecap(self) -> Optional[str]:
@@ -390,6 +303,313 @@ class SeriesOptions(GenericTypeOptions):
         self._line_width = validators.numeric(value,
                                               allow_empty = True,
                                               minimum = 0)
+
+    @property
+    def relative_x_value(self) -> Optional[bool]:
+        """When ``True``, X values in the data set are relative to the current
+        :meth:`point_start <AreaOptions.point_start>`,
+        :meth:`point_interval <AreaOptions.point_interval>`, and
+        :meth:`point_interval_unit <AreaOptions.point_interval_unit>` settings. This
+        allows compression of the data for datasets with irregular X values. Defaults to
+        ``False``.
+
+        The real X values are computed on the formula ``f(x) = ax + b``, where ``a`` is
+        the :meth:`point_interval <AreaOptions.point_interval>` (optionally with a time
+        unit given by :meth:`point_interval_unit <AreaOptions.point_interval_unit>`), and
+        ``b`` is the :meth:`point_start <AreaOptions.point_start>`.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._relative_x_value
+
+    @relative_x_value.setter
+    def relative_x_value(self, value):
+        if value is None:
+            self._relative_x_value = None
+        else:
+            self._relative_x_value = bool(value)
+
+    @property
+    def shadow(self) -> Optional[bool | ShadowOptions]:
+        """Configuration for the shadow to apply to the tooltip. Defaults to
+        ``False``.
+
+        If ``False``, no shadow is applied.
+
+        :returns: The shadow configuration to apply or a boolean setting which hides the
+          shadow or displays the default shadow.
+        :rtype: :class:`bool <python:bool>` or :class:`ShadowOptions`
+        """
+        return self._shadow
+
+    @shadow.setter
+    def shadow(self, value):
+        if isinstance(value, bool):
+            self._shadow = value
+        elif not value:
+            self._shadow = None
+        else:
+            value = validate_types(value,
+                                   types = ShadowOptions)
+            self._shadow = value
+
+    @property
+    def soft_threshold(self) -> Optional[bool]:
+        """When ``True``, the series will not cause the Y axis to cross the zero plane (or
+        threshold option) unless the data actually crosses the plane. Defaults to
+        ``True``.
+
+        For example, if ``False``, a series of ``0, 1, 2, 3`` will make the Y axis show
+        negative values according to the ``min_padidng`` option. If ``True``, the Y axis
+        starts at 0.
+
+        :rtype: :class:`bool <python:bool>`
+        """
+        return self._soft_threshold
+
+    @soft_threshold.setter
+    def soft_threshold(self, value):
+        if value is None:
+            self._soft_threshold = None
+        else:
+            self._soft_threshold = bool(value)
+
+    @property
+    def step(self) -> Optional[str]:
+        """Whether to apply steps to the line. Defaults to :obj:`None <python:None>`.
+
+        Possible values are:
+
+          * :obj:`None <python:None>`
+          * ``'left'``
+          * ``'center'``
+          * ``'right'``
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._step
+
+    @step.setter
+    def step(self, value):
+        self._step = validators.string(value, allow_empty = True)
+
+    @property
+    def zone_axis(self) -> Optional[str]:
+        """Defines the Axis on which the zones are applied. Defaults to ``'y'``.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._zone_axis
+
+    @zone_axis.setter
+    def zone_axis(self, value):
+        self._zone_axis = validators.string(value, allow_empty = True)
+
+    @property
+    def zones(self) -> Optional[List[Zone]]:
+        """An array defining zones within a series. Defaults to :obj:`None <python:None>`.
+
+        Zones can be applied to the X axis, Y axis or Z axis for bubbles, according to the
+        :meth:`zone_axis <AreaOptions.zone_axis>` setting.
+
+        .. warning::
+
+          The zone definitions have to be in ascending order regarding to the value.
+
+        :rtype: :obj:`None <python:None>` or :class:`list <python:list>` of
+          :class:`Zone` instances
+        """
+        return self._zones
+
+    @zones.setter
+    @class_sensitive(Zone,
+                     force_iterable = True)
+    def zones(self, value):
+        self._zones = value
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
+
+            'animation_limit': as_dict.get('animationLimit', None),
+            'boost_blending': as_dict.get('boostBlending', None),
+            'boost_threshold': as_dict.get('boostThreshold', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'color_key': as_dict.get('colorKey', None),
+            'connect_nulls': as_dict.get('connectNulls', None),
+            'crisp': as_dict.get('crisp', None),
+            'crop_threshold': as_dict.get('cropThreshold', None),
+            'data_sorting': as_dict.get('dataSorting', None),
+            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
+            'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
+            'linecap': as_dict.get('linecap', None),
+            'line_width': as_dict.get('lineWidth', None),
+            'relative_x_value': as_dict.get('relativeXValue', None),
+            'shadow': as_dict.get('shadow', None),
+            'soft_threshold': as_dict.get('softThreshold', None),
+            'step': as_dict.get('step', None),
+            'zone_axis': as_dict.get('zoneAxis', None),
+            'zones': as_dict.get('zones', None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        untrimmed = {
+            'animationLimit': self.animation_limit,
+            'boostBlending': self.boost_blending,
+            'boostThreshold': self.boost_threshold,
+            'colorIndex': self.color_index,
+            'colorKey': self.color_key,
+            'connectNulls': self.connect_nulls,
+            'crisp': self.crisp,
+            'cropThreshold': self.crop_threshold,
+            'dataSorting': self.data_sorting,
+            'findNearestPointBy': self.find_nearest_point_by,
+            'getExtremesFromAll': self.get_extremes_from_all,
+            'linecap': self.linecap,
+            'lineWidth': self.line_width,
+            'relativeXValue': self.relative_x_value,
+            'shadow': self.shadow,
+            'softThreshold': self.soft_threshold,
+            'step': self.step,
+            'zoneAxis': self.zone_axis,
+            'zones': self.zones
+        }
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
+
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
+
+        return untrimmed
+
+
+class SeriesOptions(SeriesBaseOptions):
+    """General options to apply to all (core) series types."""
+
+    def __init__(self, **kwargs):
+        self._color_axis = None
+        self._connect_ends = None
+        self._drag_drop = None
+        self._negative_color = None
+        self._point_interval = None
+        self._point_interval_unit = None
+        self._point_placement = None
+        self._point_start = None
+        self._stacking = None
+
+        self.color_axis = kwargs.get('color_axis', None)
+        self.connect_ends = kwargs.get('connect_ends', None)
+        self.drag_drop = kwargs.get('drag_drop', None)
+        self.negative_color = kwargs.get('negative_color', None)
+        self.point_interval = kwargs.get('point_interval', None)
+        self.point_interval_unit = kwargs.get('point_interval_unit', None)
+        self.point_placement = kwargs.get('point_placement', None)
+        self.point_start = kwargs.get('point_start', None)
+        self.stacking = kwargs.get('stacking', None)
+
+        super().__init__(**kwargs)
+
+    @property
+    def color_axis(self) -> Optional[str | int | bool]:
+        """When using dual or multiple color axes, this setting defines which
+        :term:`color axis` the particular series is connected to. It refers to either the
+        :meth:`ColorAxis.id` or the index of the axis in the :class:`ColorAxis` array,
+        with ``0`` being the first. Set this option to ``False`` to prevent a series from
+        connecting to the default color axis.
+
+        Defaults to ``0``.
+
+        :rtype: :obj:`None <python:None>` or :class:`str <python:str>` or
+          :class:`int <python:int>` or :class:`bool <python:bool>`
+        """
+        return self._color_axis
+
+    @color_axis.setter
+    def color_axis(self, value):
+        if value is None:
+            self._color_axis = None
+        elif value is False:
+            self._color_axis = False
+        else:
+            try:
+                self._color_axis = validators.string(value)
+            except TypeError:
+                self._color_axis = validators.integer(value,
+                                                      minimum = 0)
+
+    @property
+    def connect_ends(self) -> Optional[bool]:
+        """If ``True``, connect the ends of a line series plot across the extremes.
+        Defaults to :obj:`None <python:None>`.
+
+        .. warning::
+
+          Applies to :term:`polar charts <polar chart>` only.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._connect_ends
+
+    @connect_ends.setter
+    def connect_ends(self, value):
+        if value is None:
+            self._connect_ends = None
+        else:
+            self._connect_ends = bool(value)
+
+    @property
+    def drag_drop(self) -> Optional[DragDropOptions]:
+        """The draggable-points module allows points to be moved around or modified in the
+        chart.
+
+        In addition to the options mentioned under the dragDrop API structure, the module
+        fires three (JavaScript) events:
+
+          * ``point.dragStart``
+          * ``point.drag``
+          * ``point.drop``
+
+        :rtype: :class:`DragDropOptions` or :obj:`None <python:None>`
+        """
+        return self._drag_drop
+
+    @drag_drop.setter
+    @class_sensitive(DragDropOptions)
+    def drag_drop(self, value):
+        self._drag_drop = value
 
     @property
     def negative_color(self) -> Optional[str | Gradient | Pattern]:
@@ -546,76 +766,6 @@ class SeriesOptions(GenericTypeOptions):
         self._point_start = validators.numeric(value, allow_empty = True)
 
     @property
-    def relative_x_value(self) -> Optional[bool]:
-        """When ``True``, X values in the data set are relative to the current
-        :meth:`point_start <AreaOptions.point_start>`,
-        :meth:`point_interval <AreaOptions.point_interval>`, and
-        :meth:`point_interval_unit <AreaOptions.point_interval_unit>` settings. This
-        allows compression of the data for datasets with irregular X values. Defaults to
-        ``False``.
-
-        The real X values are computed on the formula ``f(x) = ax + b``, where ``a`` is
-        the :meth:`point_interval <AreaOptions.point_interval>` (optionally with a time
-        unit given by :meth:`point_interval_unit <AreaOptions.point_interval_unit>`), and
-        ``b`` is the :meth:`point_start <AreaOptions.point_start>`.
-
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
-        """
-        return self._relative_x_value
-
-    @relative_x_value.setter
-    def relative_x_value(self, value):
-        if value is None:
-            self._relative_x_value = None
-        else:
-            self._relative_x_value = bool(value)
-
-    @property
-    def shadow(self) -> Optional[bool | ShadowOptions]:
-        """Configuration for the shadow to apply to the tooltip. Defaults to
-        ``False``.
-
-        If ``False``, no shadow is applied.
-
-        :returns: The shadow configuration to apply or a boolean setting which hides the
-          shadow or displays the default shadow.
-        :rtype: :class:`bool <python:bool>` or :class:`ShadowOptions`
-        """
-        return self._shadow
-
-    @shadow.setter
-    def shadow(self, value):
-        if isinstance(value, bool):
-            self._shadow = value
-        elif not value:
-            self._shadow = None
-        else:
-            value = validate_types(value,
-                                   types = ShadowOptions)
-            self._shadow = value
-
-    @property
-    def soft_threshold(self) -> Optional[bool]:
-        """When ``True``, the series will not cause the Y axis to cross the zero plane (or
-        threshold option) unless the data actually crosses the plane. Defaults to
-        ``True``.
-
-        For example, if ``False``, a series of ``0, 1, 2, 3`` will make the Y axis show
-        negative values according to the ``min_padidng`` option. If ``True``, the Y axis
-        starts at 0.
-
-        :rtype: :class:`bool <python:bool>`
-        """
-        return self._soft_threshold
-
-    @soft_threshold.setter
-    def soft_threshold(self, value):
-        if value is None:
-            self._soft_threshold = None
-        else:
-            self._soft_threshold = bool(value)
-
-    @property
     def stacking(self) -> Optional[str]:
         """Whether to stack the values of each series on top of each other. Defaults to
         :obj:`None <python:None>`.
@@ -647,59 +797,6 @@ class SeriesOptions(GenericTypeOptions):
                 raise errors.HighchartsValueError(f'stacking expects a valid stacking '
                                                   f'value. However, received: {value}')
             self._stacking = value
-
-    @property
-    def step(self) -> Optional[str]:
-        """Whether to apply steps to the line. Defaults to :obj:`None <python:None>`.
-
-        Possible values are:
-
-          * :obj:`None <python:None>`
-          * ``'left'``
-          * ``'center'``
-          * ``'right'``
-
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
-        """
-        return self._step
-
-    @step.setter
-    def step(self, value):
-        self._step = validators.string(value, allow_empty = True)
-
-    @property
-    def zone_axis(self) -> Optional[str]:
-        """Defines the Axis on which the zones are applied. Defaults to ``'y'``.
-
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
-        """
-        return self._zone_axis
-
-    @zone_axis.setter
-    def zone_axis(self, value):
-        self._zone_axis = validators.string(value, allow_empty = True)
-
-    @property
-    def zones(self) -> Optional[List[Zone]]:
-        """An array defining zones within a series. Defaults to :obj:`None <python:None>`.
-
-        Zones can be applied to the X axis, Y axis or Z axis for bubbles, according to the
-        :meth:`zone_axis <AreaOptions.zone_axis>` setting.
-
-        .. warning::
-
-          The zone definitions have to be in ascending order regarding to the value.
-
-        :rtype: :obj:`None <python:None>` or :class:`list <python:list>` of
-          :class:`Zone` instances
-        """
-        return self._zones
-
-    @zones.setter
-    @class_sensitive(Zone,
-                     force_iterable = True)
-    def zones(self, value):
-        self._zones = value
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -740,65 +837,47 @@ class SeriesOptions(GenericTypeOptions):
             'animation_limit': as_dict.get('animationLimit', None),
             'boost_blending': as_dict.get('boostBlending', None),
             'boost_threshold': as_dict.get('boostThreshold', None),
-            'color_axis': as_dict.get('colorAxis', None),
             'color_index': as_dict.get('colorIndex', None),
             'color_key': as_dict.get('colorKey', None),
-            'connect_ends': as_dict.get('connectEnds', None),
             'connect_nulls': as_dict.get('connectNulls', None),
             'crisp': as_dict.get('crisp', None),
             'crop_threshold': as_dict.get('cropThreshold', None),
             'data_sorting': as_dict.get('dataSorting', None),
-            'drag_drop': as_dict.get('dragDrop', None),
             'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.get('getExtremesForAll', None),
+            'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
             'linecap': as_dict.get('linecap', None),
             'line_width': as_dict.get('lineWidth', None),
+            'relative_x_value': as_dict.get('relativeXValue', None),
+            'shadow': as_dict.get('shadow', None),
+            'soft_threshold': as_dict.get('softThreshold', None),
+            'step': as_dict.get('step', None),
+            'zone_axis': as_dict.get('zoneAxis', None),
+            'zones': as_dict.get('zones', None),
+
+            'color_axis': as_dict.get('colorAxis', None),
+            'connect_ends': as_dict.get('connectEnds', None),
+            'drag_drop': as_dict.get('dragDrop', None),
             'negative_color': as_dict.get('negativeColor', None),
             'point_interval': as_dict.get('pointInterval', None),
             'point_interval_unit': as_dict.get('pointIntervalUnit', None),
             'point_placement': as_dict.get('pointPlacement', None),
             'point_start': as_dict.get('pointStart', None),
-            'relative_x_value': as_dict.get('relativeXValue', None),
-            'shadow': as_dict.get('shadow', None),
-            'soft_threshold': as_dict.get('softThreshold', None),
             'stacking': as_dict.get('stacking', None),
-            'step': as_dict.get('step', None),
-            'zone_axis': as_dict.get('zoneAxis', None),
-            'zones': as_dict.get('zones', None),
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
-            'animationLimit': self.animation_limit,
-            'boostBlending': self.boost_blending,
-            'boostThreshold': self.boost_threshold,
             'colorAxis': self.color_axis,
-            'colorIndex': self.color_index,
-            'colorKey': self.color_key,
             'connectEnds': self.connect_ends,
-            'connectNulls': self.connect_nulls,
-            'crisp': self.crisp,
-            'cropThreshold': self.crop_threshold,
-            'dataSorting': self.data_sorting,
             'dragDrop': self.drag_drop,
-            'findNearestPointBy': self.find_nearest_point_by,
-            'getExtremesForAll': self.get_extremes_for_all,
-            'linecap': self.linecap,
-            'lineWidth': self.line_width,
             'negativeColor': self.negative_color,
             'pointInterval': self.point_interval,
             'pointIntervalUnit': self.point_interval_unit,
             'pointPlacement': self.point_placement,
             'pointStart': self.point_start,
-            'relativeXValue': self.relative_x_value,
-            'shadow': self.shadow,
-            'softThreshold': self.soft_threshold,
             'stacking': self.stacking,
-            'step': self.step,
-            'zoneAxis': self.zone_axis,
-            'zones': self.zones
         }
         parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
 

@@ -110,13 +110,14 @@
     }
   ],
 
+  pointInterval: 5,
+  pointIntervalUnit: 'day',
+  pointStart: 5,
+
   colorIndex: 3,
   crisp: true,
   linecap: 'round',
   lineWidth: 1,
-  pointInterval: 5,
-  pointIntervalUnit: 'day',
-  pointStart: 5,
   relativeXValue: true,
   shadow: false,
   dial: {
@@ -138,6 +139,7 @@
       radius: 60
   },
   wrap: false,
+
 
   accessibility: {
       description: 'Description goes here',

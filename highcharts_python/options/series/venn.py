@@ -110,7 +110,7 @@ class VennSeries(SeriesBase, VennOptions):
             'data_sorting': as_dict.get('dataSorting', None),
             'drag_drop': as_dict.get('dragDrop', None),
             'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.get('getExtremesForAll', None),
+            'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
             'linecap': as_dict.get('linecap', None),
             'line_width': as_dict.get('lineWidth', None),
             'negative_color': as_dict.get('negativeColor', None),
