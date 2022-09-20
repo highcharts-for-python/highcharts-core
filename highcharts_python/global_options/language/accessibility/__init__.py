@@ -115,8 +115,8 @@ class AccessibilityLanguageOptions(HighchartsMeta):
 
     @property
     def chart_container_label(self) -> Optional[str]:
-        f"""Label applied to the chart container. Defaults to
-        ``'{constants.DEFAULT_LANG_ACCESSIBILITY_CHART_CONTAINER_LABEL}'``.
+        """Label applied to the chart container. Defaults to
+        ``'{title}. Highcharts interactive chart.'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -150,8 +150,8 @@ class AccessibilityLanguageOptions(HighchartsMeta):
 
     @property
     def credits(self) -> Optional[str]:
-        f"""Content of the credits section. Defaults to:
-        ``'{constants.DEFAULT_LANG_ACCESSIBILITY_CREDITS}'``.
+        """Content of the credits section. Defaults to:
+        ``'Chart credits: {creditsStr}'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -164,7 +164,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
     @property
     def default_chart_title(self) -> Optional[str]:
         """The default title applied ot the chart. Defaults to
-        ``'{constants.DEFAULT_LANG_ACCESSIBILITY_DEFAULT_CHART_TITLE}'``.
+        ``'Chart'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -176,8 +176,8 @@ class AccessibilityLanguageOptions(HighchartsMeta):
 
     @property
     def drillup_button(self) -> Optional[str]:
-        f"""String for the drill-up button. Defaults to
-        ``'{constants.DEFAULT_LANG_ACCESSIBILITY_DRILLUP_BUTTON}'``.
+        """String for the drill-up button. Defaults to
+        ``'{buttonText}'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -202,8 +202,8 @@ class AccessibilityLanguageOptions(HighchartsMeta):
 
     @property
     def graphic_container_label(self) -> Optional[str]:
-        f"""Set a label on the container wrapping the SVG. Defaults to
-        ``'{constants.DEFAULT_LANG_ACCESSIBILITY_GRAPHIC_CONTAINER_LABEL}'`` (an empty
+        """Set a label on the container wrapping the SVG. Defaults to
+        ``''`` (an empty
         string).
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
@@ -302,8 +302,8 @@ class AccessibilityLanguageOptions(HighchartsMeta):
 
     @property
     def svg_container_label(self) -> Optional[str]:
-        f"""Set a label on the container wrapping the SVG. Defaults to
-        ``'{constants.DEFAULT_LANG_ACCESSIBILITY_SVG_CONTAINER_LABEL}'``.
+        """Set a label on the container wrapping the SVG. Defaults to
+        ``'Interactive chart'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -315,8 +315,8 @@ class AccessibilityLanguageOptions(HighchartsMeta):
 
     @property
     def svg_container_title(self) -> Optional[str]:
-        f"""Title element text for the chart SVG element. Defaults to
-        ``'{constants.DEFAULT_LANG_ACCESSIBILITY_SVG_CONTAINER_TITLE}'`` (an empty
+        """Title element text for the chart SVG element. Defaults to
+        ``''`` (an empty
         string).
 
         .. note::
@@ -349,8 +349,8 @@ class AccessibilityLanguageOptions(HighchartsMeta):
 
     @property
     def thousands_separator(self) -> Optional[str | constants.EnforcedNullType]:
-        f"""Thousands separator to use when formatting numbers for screen readers.
-        Defaults to ``'{constants.DEFAULT_LANG_ACCESSIBILITY_THOUSANDSSEP}'``.
+        """Thousands separator to use when formatting numbers for screen readers.
+        Defaults to ``','``.
 
         Set to :obj:`None <python:None>` or to an :class:`EnforcedNullType` to use the
         separator defined in :meth:`Language.thousands_separator`.

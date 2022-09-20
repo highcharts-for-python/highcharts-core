@@ -60,8 +60,8 @@ class NavigationBase(HighchartsMeta):
 
     @property
     def bindings_class_name(self) -> Optional[str]:
-        f"""A CSS class name where all bindings will be attached to. Defaults to
-        ``'{constants.DEFAULT_NAVIGATION.get('bindings_class_name')}'``.
+        """A CSS class name where all bindings will be attached to. Defaults to
+        ``'highcharts-bindings-container'``.
 
         .. hint::
 
@@ -104,8 +104,8 @@ class NavigationBase(HighchartsMeta):
 
     @property
     def icons_url(self) -> Optional[str]:
-        f"""Path where Highcharts will look for icons. Defaults to
-        ``'{constants.DEFAULT_NAVIGATION.get('icons_url')}'``.
+        """Path where Highcharts will look for icons. Defaults to
+        ``'https://code.highcharts.com/@product.version@/gfx/stock-icons/'``.
 
         Change this to use icons from a different server.
 

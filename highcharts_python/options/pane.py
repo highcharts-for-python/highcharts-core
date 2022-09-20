@@ -32,8 +32,8 @@ class PaneBackground(HighchartsMeta):
 
     @property
     def background_color(self) -> Optional[str | Gradient | Pattern]:
-        f"""The background color or gradient for the pane. Defaults to
-        ``'{constants.DEFAULT_PANE_BACKGROUND.get('background_color')}'``.
+        """The background color or gradient for the pane. Defaults to
+        ``'{ "linearGradient": { "x1": 0, "y1": 0, "x2": 0, "y2": 1 }, stops: [[0, "#ffffff"], [1, "#e6e6e6"]] }'``.
 
         :returns: The backgorund color for the outer chart area.
         :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
@@ -47,8 +47,8 @@ class PaneBackground(HighchartsMeta):
 
     @property
     def border_color(self) -> Optional[str | Gradient | Pattern]:
-        f"""The color of the pane border. Defaults to
-        ``'{constants.DEFAULT_PANE_BACKGROUND.get('border_color')}'``.
+        """The color of the pane border. Defaults to
+        ``'#cccccc'``.
 
         :returns: The color of the pane's border.
         :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
@@ -63,8 +63,8 @@ class PaneBackground(HighchartsMeta):
 
     @property
     def border_width(self) -> Optional[int | float | Decimal]:
-        f"""The border width (in pixels) applied to the outer chart border. Defaults to
-        ``{constants.DEFAULT_PANE_BACKGROUND.get('border_width')}``.
+        """The border width (in pixels) applied to the outer chart border. Defaults to
+        ``1``.
 
         :returns: The border width to apply to the pane.
         :rtype: numeric or :obj:`None <python:None>`
@@ -77,8 +77,8 @@ class PaneBackground(HighchartsMeta):
 
     @property
     def class_name(self) -> Optional[str]:
-        f"""A classname to apply styling using CSS. Defaults to
-        ``'{constants.DEFAULT_PANE_BACKGROUND.get('class_name')}'``.
+        """A classname to apply styling using CSS. Defaults to
+        ``'highcharts-pane'``.
 
         :returns: The classname to apply to enable styling via CSS.
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
@@ -91,8 +91,8 @@ class PaneBackground(HighchartsMeta):
 
     @property
     def inner_radius(self) -> Optional[int | float | Decimal | str]:
-        f"""The inner radius (in pixels if numeric or as a percentage string) applied to
-        the pane. Defaults to ``{constants.DEFAULT_PANE_BACKGROUND.get('inner_radius')}``.
+        """The inner radius (in pixels if numeric or as a percentage string) applied to
+        the pane. Defaults to ``0``.
 
         :returns: The inner radius of the pane background.
         :rtype: numeric or :obj:`None <python:None>`
@@ -111,9 +111,9 @@ class PaneBackground(HighchartsMeta):
 
     @property
     def outer_radius(self) -> Optional[int | float | Decimal | str]:
-        f"""The outer radius (in pixels if numeric or as a percentage string) applied to
+        """The outer radius (in pixels if numeric or as a percentage string) applied to
         a circular pane background. Defaults to
-        ``{constants.DEFAULT_PANE_BACKGROUND.get('outer_radius')}``.
+        ``'105%'``.
 
         :returns: The outer radius of the pane background.
         :rtype: numeric or :obj:`None <python:None>`
@@ -132,8 +132,8 @@ class PaneBackground(HighchartsMeta):
 
     @property
     def shape(self) -> Optional[str]:
-        f"""The shape of the pane background. Defaults to
-        ``'{constants.DEFAULT_PANE_BACKGROUND.get('shape')}'``.
+        """The shape of the pane background. Defaults to
+        ``'circle'``.
 
         Accepts:
 
@@ -226,10 +226,10 @@ class Pane(HighchartsMeta):
 
     @property
     def center(self) -> Optional[List[str | int]]:
-        f"""The center of a polar chart or angular gauge, given as an array of ``[x, y]``
+        """The center of a polar chart or angular gauge, given as an array of ``[x, y]``
         positions. Positions can be given as integers that transform to pixels, or as
         percentages of the plot area size. Defaults to
-        ``{constants.DEFAULT_PANE.get('center')}``.
+        ``[['50%', '50%']]``.
 
         :returns: Collection of positions, or :obj:`None <python:None>`
         :rtype: :class:`list <python:list>` of two-item :class:`list <python:list>`
@@ -277,9 +277,9 @@ class Pane(HighchartsMeta):
 
     @property
     def inner_size(self) -> Optional[int | float | Decimal | str]:
-        f"""The inner size of the pane, either as a number defining pixels, or a
+        """The inner size of the pane, either as a number defining pixels, or a
         percentage defining a percentage of the pane's size. Defaults to
-        ``{constants.DEFAULT_PANE.get('inner_size')}``.
+        ``'0%'``.
 
         :rtype: numeric or :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -297,9 +297,9 @@ class Pane(HighchartsMeta):
 
     @property
     def size(self) -> Optional[int | float | Decimal | str]:
-        f"""The size of the pane, either as a number defining pixels, or a
+        """The size of the pane, either as a number defining pixels, or a
         percentage defining a percentage of the pane's size. Defaults to
-        ``{constants.DEFAULT_PANE.get('size')}``.
+        ``'85%'``.
 
         :rtype: numeric or :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -321,8 +321,8 @@ class Pane(HighchartsMeta):
 
     @property
     def start_angle(self) -> Optional[int | float | Decimal]:
-        f"""The start angle of the polar X axis or gauge value axis, given in degrees where
-        ``0`` is north. Defaults to ``{constants.DEFAULT_PANE.get('start_angle')}``.
+        """The start angle of the polar X axis or gauge value axis, given in degrees where
+        ``0`` is north. Defaults to ``0``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """

@@ -231,7 +231,7 @@ class Accessibility(HighchartsMeta):
 
     @property
     def linked_description(self) -> Optional[str]:
-        f"""Link the chart to an HTML element describing the contents of the chart.
+        """Link the chart to an HTML element describing the contents of the chart.
 
         .. hint::
 
@@ -261,7 +261,7 @@ class Accessibility(HighchartsMeta):
           If you need the description to be hidden visually, use the
           :meth:`Accessibility.description` option.
 
-        Defaults to ``'{constants.DEFAULT_LINKED_DESCRIPTION}'``.
+        Defaults to ``'*[data-highcharts-chart="{index}"] + .highcharts-description'``.
 
         :returns: The CSS selector used to indicate the HTML element containing a
           description of the chart.

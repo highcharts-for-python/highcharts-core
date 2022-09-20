@@ -51,10 +51,10 @@ class SeriesAccessibility(HighchartsMeta):
 
     @property
     def description_format(self) -> Optional[str]:
-        f"""Format to use for describing the data series group to assistive technology -
+        """Format to use for describing the data series group to assistive technology -
         including screen readers.
 
-        Defaults to ``'{constants.DEFAULT_DESCRIPTION_FORMAT}'``.
+        Defaults to ``'{seriesDescription}{authorDescription}{axisDescription}'``.
 
         The series context and its subproperties are available under the variable
         ``{{series}}``, for example ``{{series.name}}`` for the series name, and

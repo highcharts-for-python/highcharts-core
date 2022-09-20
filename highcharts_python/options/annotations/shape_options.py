@@ -74,7 +74,7 @@ class ShapeOptionsBase(HighchartsMeta):
 
     @property
     def fill(self) -> Optional[str | Gradient | Pattern]:
-        f"""The color of the shape's fill. Defaults to {constants.DEFAULT_SHAPES_FILL}.
+        """The color of the shape's fill. Defaults to ``'rgba(0, 0, 0, 0.75)'``.
 
         :rtype: :class:`str <python:str>` (for colors), :class:`Gradient` for gradients,
           :class:`Pattern` for pattern definitions, or :obj:`None <python:None>`
@@ -98,6 +98,18 @@ class ShapeOptionsBase(HighchartsMeta):
         self._height = validators.numeric(value, allow_empty = True)
 
     @property
+    def r(self) -> Optional[int | float | Decimal]:
+        """The radius of the shape in pixels. Defaults to ``0``.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._r
+
+    @r.setter
+    def r(self, value):
+        self._r = validators.numeric(value, allow_empty = True)
+
+    @property
     def ry(self) -> Optional[int | float | Decimal]:
         """The radius of the shape along the vertical dimension. Used to draw ellipses.
 
@@ -111,10 +123,10 @@ class ShapeOptionsBase(HighchartsMeta):
 
     @property
     def snap(self) -> Optional[int | float | Decimal]:
-        f"""Defines additional snapping area around an annotation making this annotation
+        """Defines additional snapping area around an annotation making this annotation
         to focus. Defined in pixels.
 
-        Defaults to ``{constants.DEFAULT_SHAPES_SNAP}``
+        Defaults to ``2``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -156,8 +168,8 @@ class ShapeOptionsBase(HighchartsMeta):
 
     @property
     def stroke(self) -> Optional[str]:
-        f"""The color of the shape's stroke. Defaults to
-        ``{constants.DEFAULT_SHAPES_STROKE}``.
+        """The color of the shape's stroke. Defaults to
+        ``'rgba(0, 0, 0, 0.75)'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -169,8 +181,8 @@ class ShapeOptionsBase(HighchartsMeta):
 
     @property
     def stroke_width(self) -> Optional[int | float | Decimal]:
-        f"""The pixel stroke width of the shape. Defaults to
-        ``{constants.DEFAULT_SHAPES_STROKE_WIDTH}``.
+        """The pixel stroke width of the shape. Defaults to
+        ``1``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -179,6 +191,48 @@ class ShapeOptionsBase(HighchartsMeta):
     @stroke_width.setter
     def stroke_width(self, value):
         self._stroke_width = validators.numeric(value, allow_empty = True)
+
+    @property
+    def type(self) -> Optional[str]:
+        """The type of the shape. Defaults to ``'rect'``.
+
+        Accepts:
+
+          * ``'rect'``
+          * ``'circle'``
+          * ``'ellipse'``
+          * ``'image'``
+
+        :returns: :class:`str <python:str>` or :obj:`None <python:None>`
+
+        :raises HighchartsValueError: if type not supported
+        """
+        return self._type
+
+    @type.setter
+    def type(self, value):
+        value = validators.string(value, allow_empty = True)
+        if not value:
+            self._type = None
+        else:
+            value = value.lower()
+            if value not in ['rect', 'circle', 'ellipse']:
+                raise errors.HighchartsValueError(f'ShapeOptions.type accepts either '
+                                                  f'"rect", "circle", "image", or '
+                                                  f'"ellipse". Received: {value}')
+            self._type = value
+
+    @property
+    def width(self) -> Optional[int | float | Decimal]:
+        """The width of the shape, expressed in pixels.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._width
+
+    @width.setter
+    def width(self, value):
+        self._width = validators.numeric(value, allow_empty = True)
 
     @property
     def x_axis(self) -> Optional[int]:

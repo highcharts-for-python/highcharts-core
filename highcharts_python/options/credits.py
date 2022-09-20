@@ -111,8 +111,8 @@ class Credits(HighchartsMeta):
 
     @property
     def href(self) -> Optional[str]:
-        f"""The URL for the credits label. Defaults to
-        ``'{constants.DEFAULT_CREDITS_HREF}'``.
+        """The URL for the credits label. Defaults to
+        ``'https://www.highcharts.com?credits'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
 
@@ -139,13 +139,17 @@ class Credits(HighchartsMeta):
 
     @property
     def style(self) -> Optional[CreditStyleOptions]:
-        f"""CSS Styles for the credits label.
+        """CSS Styles for the credits label.
 
         Defaults to:
 
         .. code-block:: python
 
-          {constants.DEFAULT_CREDITS_STYLE}
+          {
+              'color': '#999999',
+              'cursor': 'pointer',
+              'fontSize': '9px'
+          }
 
         :rtype: :class:`CreditStyleOptions` or :obj:`None <python:None>`
         """
@@ -158,8 +162,8 @@ class Credits(HighchartsMeta):
 
     @property
     def text(self) -> Optional[str]:
-        f"""The text for the credits label. Defaults to
-        ``'{constants.DEFAULT_CREDITS_TEXT}'``.
+        """The text for the credits label. Defaults to
+        ``'Highcharts'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """

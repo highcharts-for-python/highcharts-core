@@ -22,8 +22,8 @@ class RangeSelectorLanguageOptions(HighchartsMeta):
 
     @property
     def click_button_announcement(self) -> Optional[str]:
-        f"""Defaults to
-        ``'{constants.DEFAULT_LANG_ACS_RANGE_SELECTOR_CLICK_BTN_ANNOUNCEMENT}'``.
+        """Defaults to
+        ``'Viewing {axisRangeDescription}'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -35,8 +35,8 @@ class RangeSelectorLanguageOptions(HighchartsMeta):
 
     @property
     def dropdown_label(self) -> Optional[str]:
-        f"""Defaults to
-        ``'{constants.DEFAULT_LANG_ACS_RANGE_SELECTOR_DROPDOWN_LBL}'``.
+        """Defaults to
+        ``'{rangeTitle}'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -48,8 +48,8 @@ class RangeSelectorLanguageOptions(HighchartsMeta):
 
     @property
     def max_input_label(self) -> Optional[str]:
-        f"""Defaults to
-        ``'{constants.DEFAULT_LANG_ACS_RANGE_SELECTOR_MAX_INPUT_LBL}'``.
+        """Defaults to
+        ``'Select end date.'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -61,8 +61,8 @@ class RangeSelectorLanguageOptions(HighchartsMeta):
 
     @property
     def min_input_label(self) -> Optional[str]:
-        f"""Defaults to
-        ``'{constants.DEFAULT_LANG_ACS_RANGE_SELECTOR_MIN_INPUT_LBL}'``.
+        """Defaults to
+        ``'Select start date.'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """

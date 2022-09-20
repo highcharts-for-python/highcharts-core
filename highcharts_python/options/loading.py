@@ -35,8 +35,8 @@ class Loading(HighchartsMeta):
 
     @property
     def hide_duration(self) -> Optional[int]:
-        f"""The duration in milliseconds of the fade out effect. Defaults to
-        ``{constants.DEFAULT_LOADING.get('hide_duration')}``.
+        """The duration in milliseconds of the fade out effect. Defaults to
+        ``100``.
 
         :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
         """
@@ -50,8 +50,8 @@ class Loading(HighchartsMeta):
 
     @property
     def label_style(self) -> Optional[str]:
-        f"""CSS styles applied to the loading label's ``<span>``. Defaults to
-        ``'{constants.DEFAULT_LOADING.get('label_style')}'``.
+        """CSS styles applied to the loading label's ``<span>``. Defaults to
+        ``'{"fontWeight": "bold", "position": "relative", "top": "45%"}'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -63,8 +63,8 @@ class Loading(HighchartsMeta):
 
     @property
     def show_duration(self) -> Optional[int]:
-        f"""The duration in milliseconds of the fade in effect. Defaults to
-        ``{constants.DEFAULT_LOADING.get('show_duration')}``.
+        """The duration in milliseconds of the fade in effect. Defaults to
+        ``100``.
 
         :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
         """
@@ -78,8 +78,8 @@ class Loading(HighchartsMeta):
 
     @property
     def style(self) -> Optional[str]:
-        f"""CSS styles for the loading screen that covers the plot area. Defaults to
-        ``'{constants.DEFAULT_LOADING.get('style')}'``.
+        """CSS styles for the loading screen that covers the plot area. Defaults to
+        ``'{"position": "absolute", "backgroundColor": "#ffffff", "opacity": 0.5, "textAlign": "center"}'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """

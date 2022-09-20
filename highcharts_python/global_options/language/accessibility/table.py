@@ -19,8 +19,8 @@ class TableLanguageOptions(HighchartsMeta):
 
     @property
     def table_summary(self) -> Optional[str]:
-        f"""Defaults to
-        ``'{constants.DEFAULT_LANG_ACS_TABLE_SUMMARY}'``
+        """Defaults to
+        ``'Table representation of chart.'``
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -32,8 +32,8 @@ class TableLanguageOptions(HighchartsMeta):
 
     @property
     def view_as_data_table_button_text(self) -> Optional[str]:
-        f"""Defaults to
-        ``'{constants.DEFAULT_LANG_ACS_TABLE_VIEW_AS_DATA_TABLE}'``
+        """Defaults to
+        ``'View as data table, {chartTitle}'``
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """

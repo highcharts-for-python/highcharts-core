@@ -168,8 +168,8 @@ class DataLabel(HighchartsMeta):
 
     @property
     def align(self) -> Optional[str]:
-        f"""The alignment of the data label compared to the point. Defaults to
-        ``'{constants.DEFAULT_DATA_LABEL.get('align', None)}'``.
+        """The alignment of the data label compared to the point. Defaults to
+        ``None``.
 
         Accepts:
 
@@ -280,8 +280,8 @@ class DataLabel(HighchartsMeta):
 
     @property
     def border_radius(self) -> Optional[int | float | Decimal]:
-        f"""The border radius (in pixels) applied to the data label. Defaults to
-        ``{constants.DEFAULT_DATA_LABEL.get('border_radius')}``.
+        """The border radius (in pixels) applied to the data label. Defaults to
+        ``0``.
 
         :returns: The border radius to apply to the data label.
         :rtype: numeric or :obj:`None <python:None>`
@@ -294,8 +294,8 @@ class DataLabel(HighchartsMeta):
 
     @property
     def border_width(self) -> Optional[int | float | Decimal]:
-        f"""The border width (in pixels) applied to the data label. Defaults to
-        ``{constants.DEFAULT_DATA_LABEL.get('border_width')}``.
+        """The border width (in pixels) applied to the data label. Defaults to
+        ``0``.
 
         :returns: The border width to apply to the data label.
         :rtype: numeric or :obj:`None <python:None>`
@@ -308,8 +308,8 @@ class DataLabel(HighchartsMeta):
 
     @property
     def class_name(self) -> Optional[str]:
-        f"""A classname to apply styling using CSS. Defaults to
-        ``'{constants.DEFAULT_LABEL_CLASS_NAME}'``.
+        """A classname to apply styling using CSS. Defaults to
+        ``'highcharts-no-tooltip'``.
 
         :returns: The classname to apply to enable styling via CSS.
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
@@ -428,8 +428,8 @@ class DataLabel(HighchartsMeta):
 
     @property
     def format(self) -> Optional[str]:
-        f"""A format string to apply to the label. Defaults to
-        ``'{constants.DEFAULT_DATA_LABEL.get('format')}'``.
+        """A format string to apply to the label. Defaults to
+        ``'point.value'``.
 
 
         :returns: The format string to apply to the labels.
@@ -523,8 +523,8 @@ class DataLabel(HighchartsMeta):
 
     @property
     def overflow(self) -> Optional[str]:
-        f"""Configuration on how to handle a data label that overflows outside of
-        the plot area.  Defaults to ``'{constants.DEFAULT_DATA_LABEL.get('overflow')}'``,
+        """Configuration on how to handle a data label that overflows outside of
+        the plot area.  Defaults to ``'justify'``,
         which aligns them inside the plot area. For columns and bars, this means the data
         label will be moved inside the bar.
 
@@ -562,10 +562,10 @@ class DataLabel(HighchartsMeta):
 
     @property
     def padding(self) -> Optional[int]:
-        f"""The padding within the border box when either
+        """The padding within the border box when either
         :meth:`DataLabel.border_width` or :meth:`DataLabel.background_color` is set.
 
-        Defaults to ``{constants.DEFAULT_DATA_LABEL.get('padding')}``.
+        Defaults to ``5``.
 
         :returns: The padding to apply to the data label.
         :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
@@ -578,8 +578,8 @@ class DataLabel(HighchartsMeta):
 
     @property
     def position(self) -> Optional[str]:
-        f"""Aligns data labels relative to points. Defaults to
-        ``'{constants.DEFAULT_DATA_LABEL.get('position')}'``.
+        """Aligns data labels relative to points. Defaults to
+        ``'center'``.
 
         Accepts the following values:
 
@@ -609,8 +609,8 @@ class DataLabel(HighchartsMeta):
 
     @property
     def rotation(self) -> Optional[int | float | Decimal]:
-        f"""Text rotation in degrees. Defaults to
-        ``{constants.DEFAULT_DATA_LABEL.get('rotation')}``
+        """Text rotation in degrees. Defaults to
+        ``0``
 
         .. warning::
 
@@ -651,8 +651,8 @@ class DataLabel(HighchartsMeta):
 
     @property
     def shape(self) -> Optional[str]:
-        f"""The name of the symbol to use for the border around the label. Defaults to
-        ``'{constants.DEFAULT_DATA_LABEL.get('shape')}'``.
+        """The name of the symbol to use for the border around the label. Defaults to
+        ``'square'``.
 
         Accepts:
 
@@ -786,8 +786,8 @@ class DataLabel(HighchartsMeta):
 
     @property
     def x(self) -> Optional[int | float | Decimal]:
-        f"""The x position offset of the label relative to the point. Defaults to
-        ``{constants.DEFAULT_DATA_LABEL.get('x')}``.
+        """The x position offset of the label relative to the point. Defaults to
+        ``0``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -799,8 +799,8 @@ class DataLabel(HighchartsMeta):
 
     @property
     def y(self) -> Optional[int | float | Decimal]:
-        f"""The y position offset of the label relative to the point. Defaults to
-        ``{constants.DEFAULT_DATA_LABEL.get('y')}``.
+        """The y position offset of the label relative to the point. Defaults to
+        ``None``.
 
         :rtype: numeric
         """
@@ -812,8 +812,8 @@ class DataLabel(HighchartsMeta):
 
     @property
     def z(self) -> Optional[int]:
-        f"""The Z index of the data labels. Defaults to
-        ``{constants.DEFAULT_DATA_LABEL.get('z')}``.
+        """The Z index of the data labels. Defaults to
+        ``6``.
 
         If :obj:`None <python:None>`, will be placed above the series.
 
