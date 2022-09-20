@@ -734,7 +734,6 @@ options = {
     showDuration: 150
   },
   navigation: {
-    bindingsClassName: 'some-class-name',
     breadcrumbs: {
       buttonSpacing: 6,
       buttonTheme: {
@@ -757,6 +756,7 @@ options = {
       useHTML: false,
       zIndex: 3
     },
+    bindingsClassName: 'some-class-name',
     buttonOptions: {
       enabled: true,
       text: 'Button Label',
