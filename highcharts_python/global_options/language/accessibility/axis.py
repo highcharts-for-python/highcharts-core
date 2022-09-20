@@ -34,7 +34,7 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def range_categories(self) -> Optional[str]:
-        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_RANGE_CATEGORIES}'``.
+        """Defaults to ``'Data range: {numCategories} categories.'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -46,7 +46,7 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def range_from_to(self) -> Optional[str]:
-        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_RANGE_FROM_TO}'``.
+        """Defaults to ``'Data ranges from {rangeFrom} to {rangeTo}.'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -58,7 +58,7 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def time_range_days(self) -> Optional[str]:
-        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_TIME_RANGE_DAYS}'``.
+        """Defaults to ``'Data range: {range} days.'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -70,7 +70,7 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def time_range_hours(self) -> Optional[str]:
-        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_TIME_RANGE_HOURS}'``.
+        """Defaults to ``'Data range: {range} hours.'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -82,7 +82,7 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def time_range_minutes(self) -> Optional[str]:
-        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_TIME_RANGE_MINUTES}'``.
+        """Defaults to ``'Data range: {range} minutes.'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -94,7 +94,7 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def time_range_seconds(self) -> Optional[str]:
-        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_AXIS_TIME_RANGE_SECONDS}'``.
+        """Defaults to ``'Data range: {range} seconds.'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -106,7 +106,7 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def x_axis_description_plural(self) -> Optional[str]:
-        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_X_AXIS_DESCRIPTION_PLURAL}'``.
+        """Defaults to ``'The chart has {numAxes} X axes displaying {#each(names, -1), }and {names[-1]}.'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -118,7 +118,7 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def x_axis_description_singular(self) -> Optional[str]:
-        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_X_AXIS_DESCRIPTION_SINGULAR}'``.
+        """Defaults to ``'The chart has 1 X axis displaying {names[0]}. {ranges[0]}'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -130,7 +130,7 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def y_axis_description_plural(self) -> Optional[str]:
-        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_Y_AXIS_DESCRIPTION_PLURAL}'``.
+        """Defaults to ``'The chart has {numAxes} Y axes displaying {#each(names, -1), }and {names[-1]}.'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -142,7 +142,7 @@ class AxisLanguageOptions(HighchartsMeta):
 
     @property
     def y_axis_description_singular(self) -> Optional[str]:
-        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_Y_AXIS_DESCRIPTION_SINGULAR}'``.
+        """Defaults to ``'The chart has 1 Y axis displaying {names[0]}. {ranges[0]}'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """

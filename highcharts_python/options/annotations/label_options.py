@@ -118,8 +118,8 @@ class LabelOptions(HighchartsMeta):
 
     @property
     def align(self) -> Optional[str]:
-        f"""The alignment of the annotation's label. Defaults to
-        ``'{constants.DEFAULT_LABEL_ALIGN}'``.
+        """The alignment of the annotation's label. Defaults to
+        ``'center'``.
 
         Accepts:
 
@@ -169,8 +169,8 @@ class LabelOptions(HighchartsMeta):
 
     @property
     def background_color(self) -> Optional[str | Gradient | Pattern]:
-        f"""The background color or gradient for the annotation's label. Defaults to
-        ``'{constants.DEFAULT_LABEL_BACKGROUND_COLOR}'``.
+        """The background color or gradient for the annotation's label. Defaults to
+        ``'rgba(0, 0, 0, 0.75)'``.
 
         :returns: The backgorund color for the annotation's label.
         :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
@@ -185,8 +185,8 @@ class LabelOptions(HighchartsMeta):
 
     @property
     def border_color(self) -> Optional[str]:
-        f"""The border color for the annotation's label. Defaults to
-        ``'{constants.DEFAULT_LABEL_BORDER_COLOR}'``.
+        """The border color for the annotation's label. Defaults to
+        ``'#000000'``.
 
         :returns: The border color for the annotation's label.
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
@@ -199,8 +199,8 @@ class LabelOptions(HighchartsMeta):
 
     @property
     def border_radius(self) -> Optional[int | float | Decimal]:
-        f"""The border radius (in pixels) applied to the annotation's label. Defaults to
-        ``{constants.DEFAULT_LABEL_BORDER_RADIUS}``.
+        """The border radius (in pixels) applied to the annotation's label. Defaults to
+        ``3``.
 
         :returns: The border radius to apply to the annotation's label.
         :rtype: numeric or :obj:`None <python:None>`
@@ -213,8 +213,8 @@ class LabelOptions(HighchartsMeta):
 
     @property
     def border_width(self) -> Optional[int | float | Decimal]:
-        f"""The border width (in pixels) applied to the annotation's label. Defaults to
-        ``{constants.DEFAULT_LABEL_BORDER_WIDTH}``.
+        """The border width (in pixels) applied to the annotation's label. Defaults to
+        ``1``.
 
         :returns: The border width to apply to the annotation's label.
         :rtype: numeric or :obj:`None <python:None>`
@@ -227,8 +227,8 @@ class LabelOptions(HighchartsMeta):
 
     @property
     def class_name(self) -> Optional[str]:
-        f"""A classname to apply styling using CSS. Defaults to
-        ``'{constants.DEFAULT_LABEL_CLASS_NAME}'``.
+        """A classname to apply styling using CSS. Defaults to
+        ``'highcharts-no-tooltip'``.
 
         :returns: The classname to apply to enable styling via CSS.
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
@@ -290,9 +290,9 @@ class LabelOptions(HighchartsMeta):
 
     @property
     def formatter(self) -> Optional[CallbackFunction]:
-        f"""JavaScript callback function to format the annotation's label.
+        """JavaScript callback function to format the annotation's label.
 
-        Defaults to {constants.DEFAULT_LABEL_FORMATTER}.
+        Defaults to ``function () { return defined(this.y) ? this.y : 'Annotation label'; }``.
 
         .. note::
 
@@ -333,8 +333,8 @@ class LabelOptions(HighchartsMeta):
 
     @property
     def overflow(self) -> Optional[str]:
-        f"""Configuration on how to handle an annotation label that overflows outside of
-        the plot area.  Defaults to {constants.DEFAULT_LABEL_OVERFLOW}.
+        """Configuration on how to handle an annotation label that overflows outside of
+        the plot area.  Defaults to ``'justify'``.
 
         Accepts:
 
@@ -365,10 +365,10 @@ class LabelOptions(HighchartsMeta):
 
     @property
     def padding(self) -> Optional[int]:
-        f"""The padding within the border box when either
+        """The padding within the border box when either
         :meth:`LabelOptions.border_width` or :meth:`LabelOptions.background_color` is set.
 
-        Defaults to ``{constants.DEFAULT_LABEL_PADDING}``.
+        Defaults to ``5``.
 
         :returns: The padding to apply to the annotation label.
         :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
@@ -405,8 +405,8 @@ class LabelOptions(HighchartsMeta):
 
     @property
     def shape(self) -> Optional[str]:
-        f"""The name of the symbol to use for the border around the label. Defaults to
-        ``'{constants.DEFAULT_LABEL_SHAPE}'``.
+        """The name of the symbol to use for the border around the label. Defaults to
+        ``'callout'``.
 
         Accepts:
 
@@ -485,8 +485,8 @@ class LabelOptions(HighchartsMeta):
 
     @property
     def vertical_align(self) -> Optional[str]:
-        f"""The vertical alignment of the annotation's label. Defaults to
-        {constants.DEFAULT_LABEL_VERTICAL_ALIGN}
+        """The vertical alignment of the annotation's label. Defaults to
+        ``'bottom'``
 
         Accepts:
 
@@ -512,8 +512,8 @@ class LabelOptions(HighchartsMeta):
 
     @property
     def x(self) -> Optional[int]:
-        f"""The x position offset of the label relative to the point. Defaults to
-        ``{constants.DEFAULT_LABEL_X}``.
+        """The x position offset of the label relative to the point. Defaults to
+        ``0``.
 
         .. note::
 
@@ -529,8 +529,8 @@ class LabelOptions(HighchartsMeta):
 
     @property
     def y(self) -> Optional[int]:
-        f"""The y position offset of the label relative to the point. Defaults to
-        ``{constants.DEFAULT_LABEL_Y}``.
+        """The y position offset of the label relative to the point. Defaults to
+        ``-16``.
 
         .. note::
 

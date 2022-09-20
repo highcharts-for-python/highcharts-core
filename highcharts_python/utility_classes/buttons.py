@@ -195,8 +195,8 @@ class ContextButtonConfiguration(ButtonConfiguration):
 
     @property
     def class_name(self) -> Optional[str]:
-        f"""The class name of the context button. Defaults to
-        ``'{constants.DEFAULT_CONTEXT_BUTTON_CLASS_NAME}'``.
+        """The class name of the context button. Defaults to
+        ``'highcharts-contextbutton'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -208,8 +208,8 @@ class ContextButtonConfiguration(ButtonConfiguration):
 
     @property
     def menu_class_name(self) -> Optional[str]:
-        f"""The class name of the context menu that appears from the button. Defaults to
-        ``'{constants.DEFAULT_CONTEXT_MENU_CLASS_NAME}'``.
+        """The class name of the context menu that appears from the button. Defaults to
+        ``'highcharts-contextmenu'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -221,7 +221,7 @@ class ContextButtonConfiguration(ButtonConfiguration):
 
     @property
     def menu_items(self) -> Optional[List[str]]:
-        f"""A collection of strings pointing to config options for the menu items.
+        """A collection of strings pointing to config options for the menu items.
 
         The config options are defined in the :class:`Exporting.menu_item_definitions`
         option.
@@ -235,7 +235,15 @@ class ContextButtonConfiguration(ButtonConfiguration):
 
         .. code-block:: python
 
-          {constants.DEFAULT_CONTEXT_MENU_ITEMS}
+          [
+              "viewFullscreen",
+              "printChart",
+              "separator",
+              "downloadPNG",
+              "downloadJPEG",
+              "downloadPDF",
+              "downloadSVG"
+          ]
 
         :rtype: :class:`list <python:list>` of :class:`str <python:str>` or
           :obj:`None <python:None>`

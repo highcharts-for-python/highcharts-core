@@ -39,9 +39,9 @@ class LegendNavigation(HighchartsMeta):
 
     @property
     def active_color(self) -> Optional[str | Gradient | Pattern]:
-        f"""The color or gradient of the active up or down arrow in the legend page
+        """The color or gradient of the active up or down arrow in the legend page
         navigation. Defaults to
-        ``'{constants.DEFAULT_LEGEND.get('navigation', {}).get('active_color')}'``.
+        ``'#003399'``.
 
         :returns: The color of the active up or down arrow in the legend page navigation.
         :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
@@ -79,8 +79,8 @@ class LegendNavigation(HighchartsMeta):
 
     @property
     def arrow_size(self) -> Optional[int | float | Decimal]:
-        f"""The pixel size of the up and down arrows in the legend paging navigation.
-        Defaults to ``{constants.DEFAULT_LEGEND.get('navigation', {}).get('arrow_size')}.
+        """The pixel size of the up and down arrows in the legend paging navigation.
+        Defaults to ``12``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -107,9 +107,9 @@ class LegendNavigation(HighchartsMeta):
 
     @property
     def inactive_color(self) -> Optional[str | Gradient | Pattern]:
-        f"""The color or gradient of the inactive up or down arrow in the legend page
+        """The color or gradient of the inactive up or down arrow in the legend page
         navigation. Defaults to
-        ``'{constants.DEFAULT_LEGEND.get('navigation', {}).get('inactive_color')}'``.
+        ``'#cccccc'``.
 
         :returns: The color of the active up or down arrow in the legend page navigation.
         :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
