@@ -117,9 +117,9 @@ class Language(HighchartsMeta):
 
     @property
     def context_button_title(self) -> Optional[str]:
-        f"""The tooltip title for the context menu holding print and export menu items.
+        """The tooltip title for the context menu holding print and export menu items.
 
-        Defaults to ``'{constants.DEFAULT_LANG_CONTEXT_BUTTON_TITLE}'``.
+        Defaults to ``'Chart context menu'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -131,7 +131,7 @@ class Language(HighchartsMeta):
 
     @property
     def decimal_point(self) -> Optional[str]:
-        f"""Decimal point used in (JavaScript) ``Highcharts.numberFormat``. Defaults to
+        """Decimal point used in (JavaScript) ``Highcharts.numberFormat``. Defaults to
         ``.``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
@@ -144,8 +144,8 @@ class Language(HighchartsMeta):
 
     @property
     def download_csv(self) -> Optional[str]:
-        f"""Text for the context menu item that allows the user to download a CSV of the
-        chart/data. Defaults to ``'{constants.DEFAULT_LANG_DOWNLOAD_CSV}'``.
+        """Text for the context menu item that allows the user to download a CSV of the
+        chart/data. Defaults to ``'Download CSV'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -157,8 +157,8 @@ class Language(HighchartsMeta):
 
     @property
     def download_jpeg(self) -> Optional[str]:
-        f"""Text for the context menu item that allows the user to download a JPEG of the
-        chart/data. Defaults to ``'{constants.DEFAULT_LANG_DOWNLOAD_CSV}'``.
+        """Text for the context menu item that allows the user to download a JPEG of the
+        chart/data. Defaults to ``'Download JPEG'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -170,8 +170,8 @@ class Language(HighchartsMeta):
 
     @property
     def download_pdf(self) -> Optional[str]:
-        f"""Text for the context menu item that allows the user to download a PDF of the
-        chart/data. Defaults to ``'{constants.DEFAULT_LANG_DOWNLOAD_PDF}'``.
+        """Text for the context menu item that allows the user to download a PDF of the
+        chart/data. Defaults to ``'Download PDF'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -183,8 +183,8 @@ class Language(HighchartsMeta):
 
     @property
     def download_png(self) -> Optional[str]:
-        f"""Text for the context menu item that allows the user to download a PNG of the
-        chart/data. Defaults to ``'{constants.DEFAULT_LANG_DOWNLOAD_PNG}'``.
+        """Text for the context menu item that allows the user to download a PNG of the
+        chart/data. Defaults to ``'Download PNG'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -196,8 +196,8 @@ class Language(HighchartsMeta):
 
     @property
     def download_svg(self) -> Optional[str]:
-        f"""Text for the context menu item that allows the user to download an SVG of the
-        chart/data. Defaults to ``'{constants.DEFAULT_LANG_DOWNLOAD_SVG}'``.
+        """Text for the context menu item that allows the user to download an SVG of the
+        chart/data. Defaults to ``'Download SVG'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -209,9 +209,9 @@ class Language(HighchartsMeta):
 
     @property
     def download_xls(self) -> Optional[str]:
-        f"""Text for the context menu item that allows the user to download a Microsoft
+        """Text for the context menu item that allows the user to download a Microsoft
         Excel file  of the chart/data. Defaults to
-        ``'{constants.DEFAULT_LANG_DOWNLOAD_XLS}'``.
+        ``'Download Excel'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -242,8 +242,8 @@ class Language(HighchartsMeta):
 
     @property
     def exit_fullscreen(self) -> Optional[str]:
-        f"""The text for the menu item to exit the chart from full screen. Defaults to
-        ``'{constants.DEFAULT_LANG_EXIT_FULLSCREEN}'``.
+        """The text for the menu item to exit the chart from full screen. Defaults to
+        ``'Exit from full screen'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -268,8 +268,8 @@ class Language(HighchartsMeta):
 
     @property
     def hide_data(self) -> Optional[str]:
-        f"""Text used for the hide data table menu item. Defaults to:
-        ``'{constants.DEFAULT_LANG_HIDE_DATA}'``.
+        """Text used for the hide data table menu item. Defaults to:
+        ``'Hide data table'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -281,8 +281,8 @@ class Language(HighchartsMeta):
 
     @property
     def invalid_date(self) -> Optional[str]:
-        f"""Text to show in a date field for invalid dates. Defaults to
-        ``'{constants.DEFAULT_LANG_INVALID_DATE}'`` (an empty string).
+        """Text to show in a date field for invalid dates. Defaults to
+        ``''`` (an empty string).
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -294,9 +294,9 @@ class Language(HighchartsMeta):
 
     @property
     def loading(self) -> Optional[str]:
-        f"""The loading text that appears when the chart is set into the loading state
+        """The loading text that appears when the chart is set into the loading state
         following a (JavaScript) call to ``chart.showLoading()``. Defaults to
-        ``'{constants.DEFAULT_LANG_LOADING}'``.
+        ``'Loading...'``.
 
         :rtype: :class:`str <python:None>`
         """
@@ -309,7 +309,7 @@ class Language(HighchartsMeta):
     @property
     def main_breadcrumb(self) -> Optional[str]:
         """The root item in the breadcrums used when in drilldown mode. Defaults to
-        ``'{constants.DEFAULT_LANG_MAIN_BREADCRUMB}'``.
+        ``'Main'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -321,8 +321,21 @@ class Language(HighchartsMeta):
 
     @property
     def months(self) -> Optional[List[str]]:
-        f"""An array containing the months names. Defaults to:
-        ``{constants.DEFAULT_LANG_MONTHS}``
+        """An array containing the months names. Defaults to:
+        ``[
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ]``
 
         .. note::
 
@@ -369,8 +382,8 @@ class Language(HighchartsMeta):
 
     @property
     def no_data(self) -> Optional[str]:
-        f"""The text to display when the chart contains no data. Defaults to
-        ``'{constants.DEFAULT_LANG_NO_DATA}'``.
+        """The text to display when the chart contains no data. Defaults to
+        ``'No data to display'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -383,7 +396,7 @@ class Language(HighchartsMeta):
     @property
     def numeric_symbol_magnitude(self) -> Optional[int]:
         """The magnitude of replacements for :meth:`Language.numeric_symbols`
-        replacements. Defaults to ``{constants.DEFAULT_LANG_NUMERIC_SYMBOL_MAGNITUDE}``.
+        replacements. Defaults to ``1000``.
 
         .. hint::
 
@@ -404,7 +417,7 @@ class Language(HighchartsMeta):
     @property
     def numeric_symbols(self) -> Optional[List[str] | constants.EnforcedNullType]:
         """:term:`Metric suffixes <Metric Suffix>` used to shorten high numbers in axis
-        labels. Defaults to ``{constants.DEFAULT_LANG_NUMERIC_SYMBOLS}``.
+        labels. Defaults to ``["k", "M", "G", "T", "P", "E"]``.
 
         .. note::
 
@@ -441,8 +454,8 @@ class Language(HighchartsMeta):
 
     @property
     def print_chart(self) -> Optional[str]:
-        f"""The text for the menu item to print the chart. Defaults to
-        ``'{constants.DEFAULT_LANG_PRINT_CHART}'``.
+        """The text for the menu item to print the chart. Defaults to
+        ``'Print chart'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -454,8 +467,8 @@ class Language(HighchartsMeta):
 
     @property
     def reset_zoom(self) -> Optional[str]:
-        f"""The text for the label of the button to reset the zoom when a chart is zoomed.
-        Defaults to ``'{constants.DEFAULT_LANG_RESET_ZOOM}'``.
+        """The text for the label of the button to reset the zoom when a chart is zoomed.
+        Defaults to ``'Reset zoom'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -467,8 +480,8 @@ class Language(HighchartsMeta):
 
     @property
     def reset_zoom_title(self) -> Optional[str]:
-        f"""The text for the tooltip which appears above the button to reset the zoom when
-        a chart is zoomed. Defaults to ``'{constants.DEFAULT_LANG_RESET_ZOOM_TITLE}'``.
+        """The text for the tooltip which appears above the button to reset the zoom when
+        a chart is zoomed. Defaults to ``'Reset zoom level 1:1'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -480,8 +493,21 @@ class Language(HighchartsMeta):
 
     @property
     def short_months(self) -> Optional[List[str]]:
-        f"""A collection containing the months names in abbreviated form. Defaults to:
-        ``{constants.DEFAULT_LANG_SHORT_MONTHS}``.
+        """A collection containing the months names in abbreviated form. Defaults to:
+        ``[
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        ]``.
 
         .. note::
 
@@ -549,8 +575,8 @@ class Language(HighchartsMeta):
 
     @property
     def view_data(self) -> Optional[str]:
-        f"""The text for the menu item to view the chart's data table. Defaults to:
-        ``'{constants.DEFAULT_LANG_VIEW_DATA}'``
+        """The text for the menu item to view the chart's data table. Defaults to:
+        ``'View data table'``
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -562,8 +588,8 @@ class Language(HighchartsMeta):
 
     @property
     def view_fullscreen(self) -> Optional[str]:
-        f"""The text for the menu item to view the chart in fullscreen mode. Defaults to:
-        ``'{constants.DEFAULT_LANG_VIEW_FULLSCREEN}'``.
+        """The text for the menu item to view the chart in fullscreen mode. Defaults to:
+        ``'View in full screen'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -575,8 +601,16 @@ class Language(HighchartsMeta):
 
     @property
     def weekdays(self) -> Optional[List[str]]:
-        f"""An array containing the days of the week, starting with Sunday. Defaults to:
-        ``{constants.DEFAULT_LANG_WEEKDAYS}``
+        """An array containing the days of the week, starting with Sunday. Defaults to:
+        ``[
+            "Sunday",
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday"
+        ]``
 
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`, or
           :obj:`None <python:None>`

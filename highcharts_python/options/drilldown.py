@@ -43,14 +43,19 @@ class Drilldown(HighchartsMeta):
 
     @property
     def active_axis_label_style(self) -> Optional[dict]:
-        f"""Additional styles to apply to the X axis label for a point that has drilldown
+        """Additional styles to apply to the X axis label for a point that has drilldown
         data. By default, it is underlined and blue to invite to interaction.
 
         Defaults to:
 
         .. code-block:: python
 
-          {constants.DEFAULT_DRILLDOWN_ACTIVE_AXIS_LABEL_STYLE}
+          {
+              "cursor": "pointer",
+              "color": "#003399",
+              "fontWeight": "bold",
+              "textDecoration": "underline"
+          }
 
         In styled mode, active label styles can be set with the
         ``.highcharts-drilldown-axis-label`` class.
@@ -65,14 +70,19 @@ class Drilldown(HighchartsMeta):
 
     @property
     def active_data_label_style(self) -> Optional[dict]:
-        f"""Additional styles to apply to the data label of a point that has drilldown
+        """Additional styles to apply to the data label of a point that has drilldown
         data. By default, it is underlined and blue to invite to interaction.
 
         Defaults to:
 
         .. code-block:: python
 
-          {constants.DEFAULT_DRILLDOWN_ACTIVE_DATA_LABEL_STYLE}
+          {
+              'color': '#003399',
+              'cursor': 'pointer',
+              'fontWeight': 'bold',
+              'textDecoration': 'underline'
+          }
 
         In styled mode, active label styles can be set with the
         ``.highcharts-drilldown-data-label`` class.

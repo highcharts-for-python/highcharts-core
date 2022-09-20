@@ -145,8 +145,8 @@ class ExportingCSV(HighchartsMeta):
 
     @property
     def date_format(self) -> Optional[str]:
-        f"""The date format to apply to exported dates on a datetime axis. Defaults to
-        ``'{constants.DEFAULT_CSV_DATE_FORMAT}'
+        """The date format to apply to exported dates on a datetime axis. Defaults to
+        ``'%Y-%m-%d %H:%M:%S'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """

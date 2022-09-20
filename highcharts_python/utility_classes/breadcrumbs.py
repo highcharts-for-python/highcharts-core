@@ -35,8 +35,8 @@ class Separator(HighchartsMeta):
 
     @property
     def text(self) -> Optional[str]:
-        f"""The text to use as the separator. Defaults to
-        ``'{constants.DEFAULT_BREADCRUMBS_SEPARATOR_TEXT}'``.
+        """The text to use as the separator. Defaults to
+        ``'/'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -207,8 +207,8 @@ class BreadcrumbOptions(HighchartsMeta):
 
     @property
     def relative_to(self) -> Optional[str]:
-        f"""What frame the button placement should be related to. Defaults to
-        ``'{constants.DEFAULT_BREADCRUMBS_RELATIVE_TO}'``.
+        """What frame the button placement should be related to. Defaults to
+        ``'plotBox'``.
 
         Accepts:
 

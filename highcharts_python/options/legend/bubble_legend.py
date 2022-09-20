@@ -35,8 +35,8 @@ class BubbleLegendLabelOptions(HighchartsMeta):
 
     @property
     def align(self) -> Optional[str]:
-        f"""The alignment of the labels relative to the bubble legend. Defaults to
-        ``'{constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('align')}'``.
+        """The alignment of the labels relative to the bubble legend. Defaults to
+        ``'right'``.
 
         Accepts:
 
@@ -82,8 +82,8 @@ class BubbleLegendLabelOptions(HighchartsMeta):
 
     @property
     def class_name(self) -> Optional[str]:
-        f"""A classname to apply styling using CSS. Defaults to
-        ``'{constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('class_name')}'``.
+        """A classname to apply styling using CSS. Defaults to
+        ``'None'``.
 
         :returns: The classname to apply to enable styling via CSS.
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
@@ -143,8 +143,8 @@ class BubbleLegendLabelOptions(HighchartsMeta):
 
     @property
     def x(self) -> Optional[int]:
-        f"""The x position offset of the label relative to the connector. Defaults to
-        ``{constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('x')}``.
+        """The x position offset of the label relative to the connector. Defaults to
+        ``0``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -156,8 +156,8 @@ class BubbleLegendLabelOptions(HighchartsMeta):
 
     @property
     def y(self) -> Optional[int]:
-        f"""The y position offset of the label relative to the connector. Defaults to
-        ``{constants.DEFAULT_BUBBLE_LEGEND.get('labels', {}).get('y')}``.
+        """The y position offset of the label relative to the connector. Defaults to
+        ``0``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -440,8 +440,8 @@ class BubbleLegend(HighchartsMeta):
 
     @property
     def connector_distance(self) -> Optional[int | float | Decimal]:
-        f"""The length of the connector in pixels. Defaults to
-        ``{constants.DEFAULT_BUBBLE_LEGEND.get('connector_distance', 60)}``.
+        """The length of the connector in pixels. Defaults to
+        ``60``.
 
         .. note::
 
@@ -458,8 +458,8 @@ class BubbleLegend(HighchartsMeta):
 
     @property
     def connector_width(self) -> Optional[int | float | Decimal]:
-        f"""The width of the connector in pixels. Defaults to
-        ``{constants.DEFAULT_BUBBLE_LEGEND.get('connector_width', 1)}``.
+        """The width of the connector in pixels. Defaults to
+        ``1``.
 
         :returns: The border width to apply to the range borders.
         :rtype: numeric or :obj:`None <python:None>`
@@ -472,8 +472,8 @@ class BubbleLegend(HighchartsMeta):
 
     @property
     def enabled(self) -> Optional[bool]:
-        f"""If ``True``, displays the bubble legend. If ``False``, hides the legend.
-        Defaults to ``{constants.DEFAULT_LEGEND.get('enabled')}``.
+        """If ``True``, displays the bubble legend. If ``False``, hides the legend.
+        Defaults to ``False``.
 
         :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
@@ -502,8 +502,8 @@ class BubbleLegend(HighchartsMeta):
 
     @property
     def legend_index(self) -> Optional[int]:
-        f"""The position of the bubble legend within the legend. Defaults to
-        ``{constants.DEFAULT_BUBBLE_LEGEND.get('legend_index', 0)}``.
+        """The position of the bubble legend within the legend. Defaults to
+        ``0``.
 
         :returns: The position of the bubble legend within the legend.
         :rtype: numeric or :obj:`None <python:None>`
@@ -518,8 +518,8 @@ class BubbleLegend(HighchartsMeta):
 
     @property
     def max_size(self) -> Optional[int | float | Decimal]:
-        f"""The maximum bubble legend range size, in pixels. Defaults to
-        ``{constants.DEFAULT_BUBBLE_LEGEND.get('max_size', 60)}``.
+        """The maximum bubble legend range size, in pixels. Defaults to
+        ``60``.
 
         .. note::
 
@@ -536,8 +536,8 @@ class BubbleLegend(HighchartsMeta):
 
     @property
     def min_size(self) -> Optional[int | float | Decimal]:
-        f"""The minimum bubble legend range size, in pixels. Defaults to
-        ``{constants.DEFAULT_BUBBLE_LEGEND.get('min_size', 10)}``.
+        """The minimum bubble legend range size, in pixels. Defaults to
+        ``10``.
 
         .. note::
 
@@ -570,9 +570,9 @@ class BubbleLegend(HighchartsMeta):
 
     @property
     def size_by(self) -> Optional[str]:
-        f"""Indicates whether the bubble legend range should be represented by the area
+        """Indicates whether the bubble legend range should be represented by the area
         or the width of the bubble. The default
-        (``'{constants.DEFAULT_BUBBLE_LEGEND.get('size_by')}'``) corresponds best to the
+        (``'area'``) corresponds best to the
         human perception of the size of each bubble.
 
         Accepts one of two possible values:
@@ -618,8 +618,8 @@ class BubbleLegend(HighchartsMeta):
 
     @property
     def z_index(self) -> Optional[int]:
-        f"""The visual z index of the bubble legend. Defaults to
-        ``{constants.DEFAULT_BUBBLE_LEGEND.get('z_index')}``.
+        """The visual z index of the bubble legend. Defaults to
+        ``1``.
 
         :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
         """
@@ -631,8 +631,8 @@ class BubbleLegend(HighchartsMeta):
 
     @property
     def z_threshold(self) -> Optional[int | float | Decimal]:
-        f"""Ranges with a lower z-value are skipped in the legend. Defaults to
-        ``{constants.DEFAULT_BUBBLE_LEGEND.get('z_threshold')}``.
+        """Ranges with a lower z-value are skipped in the legend. Defaults to
+        ``0``.
 
         :rtype: numeric
         """

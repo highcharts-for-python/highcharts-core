@@ -130,8 +130,8 @@ class Legend(HighchartsMeta):
 
     @property
     def align(self) -> Optional[str]:
-        f"""The horizontal alignment of the legend box within the chart area. Defaults to
-        ``'{constants.DEFAULT_LEGEND.get('align')}'``.
+        """The horizontal alignment of the legend box within the chart area. Defaults to
+        ``'center'``.
 
         Valid values are:
 
@@ -181,7 +181,7 @@ class Legend(HighchartsMeta):
 
     @property
     def background_color(self) -> Optional[str | Gradient | Pattern]:
-        f"""The background color or gradient for the legend. Defaults to
+        """The background color or gradient for the legend. Defaults to
         :obj:`None <python:None>`.
 
         :returns: The backgorund color for the legend..
@@ -197,8 +197,8 @@ class Legend(HighchartsMeta):
 
     @property
     def border_color(self) -> Optional[str | Gradient | Pattern]:
-        f"""The border color drawn around the legend. Defaults to
-        ``'{constants.DEFAULT_LEGEND.get('border_color')}'``.
+        """The border color drawn around the legend. Defaults to
+        ``'#999999'``.
 
         :returns: The color of the legend border.
         :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
@@ -214,8 +214,8 @@ class Legend(HighchartsMeta):
 
     @property
     def border_radius(self) -> Optional[int | float | Decimal]:
-        f"""The border radius (in pixels) applied to the legend border. Defaults to
-        ``{constants.DEFAULT_LEGEND.get('border_radius')}``.
+        """The border radius (in pixels) applied to the legend border. Defaults to
+        ``0``.
 
         :returns: The border radius to apply to the legend border.
         :rtype: numeric or :obj:`None <python:None>`
@@ -228,8 +228,8 @@ class Legend(HighchartsMeta):
 
     @property
     def border_width(self) -> Optional[int | float | Decimal]:
-        f"""The border width (in pixels) applied to the legend border. Defaults to
-        ``{constants.DEFAULT_LEGEND.get('border_width')}``.
+        """The border width (in pixels) applied to the legend border. Defaults to
+        ``0``.
 
         :returns: The border width to apply to the legend border.
         :rtype: numeric or :obj:`None <python:None>`
@@ -272,8 +272,8 @@ class Legend(HighchartsMeta):
 
     @property
     def enabled(self) -> Optional[bool]:
-        f"""If ``True``, displays the legend. If ``False``, hides the legend. Defaults to
-        ``{constants.DEFAULT_LEGEND.get('enabled')}``.
+        """If ``True``, displays the legend. If ``False``, hides the legend. Defaults to
+        ``False``.
 
         .. note::
 
@@ -295,9 +295,9 @@ class Legend(HighchartsMeta):
 
     @property
     def floating(self) -> Optional[bool]:
-        f"""If ``True``, the plot area ignores the legend and can be rendered below the
+        """If ``True``, the plot area ignores the legend and can be rendered below the
         legend. If ``False``, the legend is rendered visually distinct (not overlapping)
-        the plot area. Defaults to ``{constants.DEFAULT_LEGEND.get('floating')}``.
+        the plot area. Defaults to ``False``.
 
         :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
@@ -312,9 +312,9 @@ class Legend(HighchartsMeta):
 
     @property
     def item_checkbox_style(self) -> Optional[str]:
-        f"""Default styling for the checkbox next to a legend item when
+        """Default styling for the checkbox next to a legend item when
         :meth:`Legend.show_checkbox` is ``True``. Defaults to:
-        ``'{constants.DEFAULT_LEGEND.get('item_checkbox_style')}'``.
+        ``'{"width": "13px", "height": "13px", "position":"absolute"}'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -326,8 +326,8 @@ class Legend(HighchartsMeta):
 
     @property
     def item_distance(self) -> Optional[int | float | Decimal]:
-        f"""In a legend with horizontal layout, the itemDistance defines the pixel distance
-        between each item. Defaults to ``{constants.DEFAULT_LEGEND.get('item_distance')}.
+        """In a legend with horizontal layout, the itemDistance defines the pixel distance
+        between each item. Defaults to ``20``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -341,9 +341,9 @@ class Legend(HighchartsMeta):
 
     @property
     def item_hidden_style(self) -> Optional[str]:
-        f"""Default styling for the legend item when the corresponding series or data
+        """Default styling for the legend item when the corresponding series or data
         point is hidden. Defaults to:
-        ``'{constants.DEFAULT_LEGEND.get('item_hidden_style')}'``.
+        ``'{"color": "#cccccc"}'``.
 
         .. warning::
 
@@ -363,9 +363,9 @@ class Legend(HighchartsMeta):
 
     @property
     def item_hover_style(self) -> Optional[str]:
-        f"""Default styling for the legend item when the corresponding series or data
+        """Default styling for the legend item when the corresponding series or data
         point is in a hover state. Defaults to:
-        ``'{constants.DEFAULT_LEGEND.get('item_hover_style')}'``.
+        ``'{"color": "#000000"}'``.
 
         .. warning::
 
@@ -385,8 +385,8 @@ class Legend(HighchartsMeta):
 
     @property
     def item_margin_bottom(self) -> Optional[int | float | Decimal]:
-        f"""The bottom margin expressed in pixels for each legend item. Defaults to
-        ``{constants.DEFAULT_LEGEND.get('item_margin_bottom')}.
+        """The bottom margin expressed in pixels for each legend item. Defaults to
+        ``0``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -400,8 +400,8 @@ class Legend(HighchartsMeta):
 
     @property
     def item_margin_top(self) -> Optional[int | float | Decimal]:
-        f"""The top margin expressed in pixels for each legend item. Defaults to
-        ``{constants.DEFAULT_LEGEND.get('item_margin_top')}.
+        """The top margin expressed in pixels for each legend item. Defaults to
+        ``0``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -415,8 +415,8 @@ class Legend(HighchartsMeta):
 
     @property
     def item_style(self) -> Optional[str]:
-        f"""Default styling for each legend item. Defaults to:
-        ``'{constants.DEFAULT_LEGEND.get('item_style')}'``.
+        """Default styling for each legend item. Defaults to:
+        ``'{"color": "#333333", "cursor": "pointer", "fontSize": "12px", "fontWeight": "bold", "textOverflow": "ellipsis"}'``.
 
         .. warning::
 
@@ -438,8 +438,8 @@ class Legend(HighchartsMeta):
 
     @property
     def item_width(self) -> Optional[int | float | Decimal]:
-        f"""The width for each legend item, expressed in pixels. Defaults to
-        ``{constants.DEFAULT_LEGEND.get('item_width')}.
+        """The width for each legend item, expressed in pixels. Defaults to
+        ``None``.
 
         By default, the items are laid out successively. In a horizontal layout, if the
         items are laid out across two rows or more, they will be vertically aligned
@@ -457,8 +457,8 @@ class Legend(HighchartsMeta):
 
     @property
     def label_format(self) -> Optional[str]:
-        f"""A format string for each legend label. Defaults to:
-        ``'{constants.DEFAULT_LEGEND.get('label_format')}'``.
+        """A format string for each legend label. Defaults to:
+        ``'{name}'``.
 
         .. note::
 
@@ -493,8 +493,8 @@ class Legend(HighchartsMeta):
 
     @property
     def layout(self) -> Optional[str]:
-        f"""The layout of the legend items. Defaults to
-        ``'{constants.DEFAULT_LEGEND.get('layout')}'``.
+        """The layout of the legend items. Defaults to
+        ``'horizontal'``.
 
         Accepts:
 
@@ -525,9 +525,9 @@ class Legend(HighchartsMeta):
 
     @property
     def margin(self) -> Optional[int | float | Decimal]:
-        f"""If the plot area sized is calculated automatically and the legend is not
+        """If the plot area sized is calculated automatically and the legend is not
         floating, the legend margin is the space between the legend and the axis labels or
-        plot area. Defaults to ``{constants.DEFAULT_LEGEND.get('margin')}.
+        plot area. Defaults to ``12``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -540,8 +540,8 @@ class Legend(HighchartsMeta):
 
     @property
     def max_height(self) -> Optional[int | float | Decimal]:
-        f"""The maximum height for the legend, expressed in pixels. Defaults to
-        ``{constants.DEFAULT_LEGEND.get('max_height')}.
+        """The maximum height for the legend, expressed in pixels. Defaults to
+        ``None``.
 
         When the maximum height is extended, navigation will show.
 
@@ -576,8 +576,8 @@ class Legend(HighchartsMeta):
 
     @property
     def padding(self) -> Optional[int | float | Decimal]:
-        f"""The inner padding of the legend box. Defaults to
-        ``{constants.DEFAULT_LEGEND.get('padding')}.
+        """The inner padding of the legend box. Defaults to
+        ``8``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -589,9 +589,9 @@ class Legend(HighchartsMeta):
 
     @property
     def reversed(self) -> Optional[bool]:
-        f"""If ``True``, reverses the order of the legend items compared to the order of
+        """If ``True``, reverses the order of the legend items compared to the order of
         series/points as defined in the configuration object.
-        Defaults to ``{constants.DEFAULT_LEGEND.get('reversed')}``.
+        Defaults to ``False``.
 
         :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
@@ -606,9 +606,9 @@ class Legend(HighchartsMeta):
 
     @property
     def rtl(self) -> Optional[bool]:
-        f"""If ``True``, displays the symbol on the right side of the text rather than
+        """If ``True``, displays the symbol on the right side of the text rather than
         the left (this is common in RTL languages like Arabic or Hebrew). Defaults to
-        ``{constants.DEFAULT_LEGEND.get('rtl')}``.
+        ``False``.
 
         :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
@@ -652,9 +652,9 @@ class Legend(HighchartsMeta):
 
     @property
     def square_symbol(self) -> Optional[bool]:
-        f"""If ``True``, the legend symbol width will be the same as the symbol height,
+        """If ``True``, the legend symbol width will be the same as the symbol height,
         which in turn defaults to the font size of the legend items. Defaults to
-        ``{constants.DEFAULT_LEGEND.get('square_symbol')}``.
+        ``True``.
 
         :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
@@ -684,8 +684,8 @@ class Legend(HighchartsMeta):
 
     @property
     def symbol_padding(self) -> Optional[int | float | Decimal]:
-        f"""The pixel padding between the legend item symbol and the item text. Defaults
-        to ``{constants.DEFAULT_LEGEND.get('symbol_padding')}.
+        """The pixel padding between the legend item symbol and the item text. Defaults
+        to ``5``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -758,8 +758,8 @@ class Legend(HighchartsMeta):
 
     @property
     def vertical_align(self) -> Optional[str]:
-        f"""The vertical alignment of the legend box. Defaults to
-        ``'{constants.DEFAULT_LEGEND.get('vertical_align')}'``.
+        """The vertical alignment of the legend box. Defaults to
+        ``'bottom'``.
 
         Accepts:
 
@@ -829,9 +829,9 @@ class Legend(HighchartsMeta):
 
     @property
     def x(self) -> Optional[int]:
-        f"""The x position offset of the legend relative to its horizontal alignment
+        """The x position offset of the legend relative to its horizontal alignment
         (:meth:`Legend.align`) within :meth:`Chart.spacing_left` and
-        :meth:`Chart.spacing_right`. Defaults to ``{constants.DEFAULT_LEGEND.get('x')}``.
+        :meth:`Chart.spacing_right`. Defaults to ``0``.
 
         .. note::
 
@@ -847,9 +847,9 @@ class Legend(HighchartsMeta):
 
     @property
     def y(self) -> Optional[int]:
-        f"""The y position offset of the legend relative to its vertical alignment
+        """The y position offset of the legend relative to its vertical alignment
         (:meth:`Legend.vertical_align`) within :meth:`Chart.spacing_top` and
-        :meth:`Chart.spacing_bottom`. Defaults to ``{constants.DEFAULT_LEGEND.get('y')}``.
+        :meth:`Chart.spacing_bottom`. Defaults to ``0``.
 
         .. note::
 
