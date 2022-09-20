@@ -23,8 +23,8 @@ class ScreenReaderSectionAnnotationLanguage(HighchartsMeta):
 
     @property
     def description_multiple_points(self) -> Optional[str]:
-        f"""Defaults to
-        ``'{constants.DEFAULT_LANG_ACS_SRS_ANNOTATION_DESCRIPTION_MULTIPLE_PTS}'``.
+        """Defaults to
+        ``'{annotationText}. Related to {annotationPoint}{ Also related to, #each(additionalAnnotationPoints)}'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
@@ -36,8 +36,8 @@ class ScreenReaderSectionAnnotationLanguage(HighchartsMeta):
 
     @property
     def description_no_points(self) -> Optional[str]:
-        f"""Defaults to
-        ``'{constants.DEFAULT_LANG_ACS_SRS_ANNOTATION_DESCRIPTION_NO_PTS}'``.
+        """Defaults to
+        ``'{annotationText}'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
@@ -50,8 +50,8 @@ class ScreenReaderSectionAnnotationLanguage(HighchartsMeta):
 
     @property
     def description_single_point(self) -> Optional[str]:
-        f"""Defaults to
-        ``'{constants.DEFAULT_LANG_ACS_SRS_ANNOTATION_DESCRIPTION_SINGLE_PT}'``.
+        """Defaults to
+        ``'{annotationText}. Related to {annotationPoint}'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
@@ -63,8 +63,8 @@ class ScreenReaderSectionAnnotationLanguage(HighchartsMeta):
 
     @property
     def heading(self) -> Optional[str]:
-        f"""Defaults to
-        ``'{constants.DEFAULT_LANG_ACS_SRS_ANNOTATION_HEADING}'``.
+        """Defaults to
+        ``'Chart annotations summary'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """
@@ -113,7 +113,7 @@ class ScreenReaderSectionLanguageOptions(HighchartsMeta):
 
     @property
     def after_region_label(self) -> Optional[str]:
-        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_SRS_AFTER_REGION_LBL}'`` (empty
+        """Defaults to ``''`` (empty
         string).
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>
@@ -140,7 +140,7 @@ class ScreenReaderSectionLanguageOptions(HighchartsMeta):
 
     @property
     def before_region_label(self) -> Optional[str]:
-        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_SRS_BEFORE_REGION_LBL}'`` (empty
+        """Defaults to ``''`` (empty
         string).
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>
@@ -153,7 +153,7 @@ class ScreenReaderSectionLanguageOptions(HighchartsMeta):
 
     @property
     def end_of_chart_marker(self) -> Optional[str]:
-        f"""Defaults to ``'{constants.DEFAULT_LANG_ACS_SRS_END_OF_CHART_MRKR}'``.
+        """Defaults to ``'End of interactive chart.'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>
         """

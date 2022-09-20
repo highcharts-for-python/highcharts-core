@@ -338,8 +338,8 @@ class ChartOptions(HighchartsMeta):
 
     @property
     def background_color(self) -> Optional[str | Gradient | Pattern]:
-        f"""The background color or gradient for the outer chart area. Defaults to
-        ``'{constants.DEFAULT_CHART_BACKGROUND_COLOR}'``.
+        """The background color or gradient for the outer chart area. Defaults to
+        ``'#ffffff'``.
 
         :returns: The background color for the outer chart area.
         :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
@@ -354,8 +354,8 @@ class ChartOptions(HighchartsMeta):
 
     @property
     def border_color(self) -> Optional[str | Gradient | Pattern]:
-        f"""The color of the outer chart border. Defaults to
-        ``'{constants.DEFAULT_CHART_BORDER_COLOR}'``.
+        """The color of the outer chart border. Defaults to
+        ``'#335cad'``.
 
         :returns: The color of the outer chart border.
         :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
@@ -371,8 +371,8 @@ class ChartOptions(HighchartsMeta):
 
     @property
     def border_radius(self) -> Optional[int | float | Decimal]:
-        f"""The border radius (in pixels) applied to the outer chart border. Defaults to
-        ``{constants.DEFAULT_CHART_BORDER_RADIUS}``.
+        """The border radius (in pixels) applied to the outer chart border. Defaults to
+        ``0``.
 
         :returns: The border radius to apply to the outer chart border.
         :rtype: numeric or :obj:`None <python:None>`
@@ -385,8 +385,8 @@ class ChartOptions(HighchartsMeta):
 
     @property
     def border_width(self) -> Optional[int | float | Decimal]:
-        f"""The border width (in pixels) applied to the outer chart border. Defaults to
-        ``{constants.DEFAULT_CHART_BORDER_WIDTH}``.
+        """The border width (in pixels) applied to the outer chart border. Defaults to
+        ``0``.
 
         :returns: The border width to apply to the outer chart border.
         :rtype: numeric or :obj:`None <python:None>`
@@ -412,8 +412,8 @@ class ChartOptions(HighchartsMeta):
 
     @property
     def color_count(self) -> Optional[int]:
-        f"""In styled mode, sets how many colors the class names should rotate between.
-        Defaults to ``{constants.DEFAULT_CHART_COLOR_COUNT}``
+        """In styled mode, sets how many colors the class names should rotate between.
+        Defaults to ``10``
 
         With ten colors, series (or points) are given class names like
         ``highcharts-color-0``, ``highcharts-color-0`` [...] ``highcharts-color-9``. The
@@ -854,8 +854,8 @@ class ChartOptions(HighchartsMeta):
 
     @property
     def plot_background_color(self) -> Optional[str | Gradient | Pattern]:
-        f"""The background color or gradient for the plot area. Defaults to
-        ``'{constants.DEFAULT_CHART_PLOT_BACKGROUND_COLOR}'``.
+        """The background color or gradient for the plot area. Defaults to
+        ``None``.
 
         :returns: The background color for the plot area.
         :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
@@ -906,8 +906,8 @@ class ChartOptions(HighchartsMeta):
 
     @property
     def plot_border_color(self) -> Optional[str | Gradient | Pattern]:
-        f"""The color of the outer chart border. Defaults to
-        ``'{constants.DEFAULT_CHART_PLOT_BORDER_COLOR}'``.
+        """The color of the outer chart border. Defaults to
+        ``'#cccccc'``.
 
         :returns: The color of the outer chart border.
         :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
@@ -923,8 +923,8 @@ class ChartOptions(HighchartsMeta):
 
     @property
     def plot_border_width(self) -> Optional[int | float | Decimal]:
-        f"""The border width (in pixels) applied to the outer chart border. Defaults to
-        ``{constants.DEFAULT_CHART_PLOT_BORDER_WIDTH}``.
+        """The border width (in pixels) applied to the outer chart border. Defaults to
+        ``0``.
 
         :returns: The border width to apply to the outer chart border.
         :rtype: numeric or :obj:`None <python:None>`
@@ -1057,9 +1057,9 @@ class ChartOptions(HighchartsMeta):
 
     @property
     def selection_marker_fill(self) -> Optional[str | Gradient | Pattern]:
-        f"""The background color or the marker square when selecting (zooming in on) an
+        """The background color or the marker square when selecting (zooming in on) an
         area of the chart. Defaults to
-        ``'{constants.DEFAULT_CHART_SELECTION_MARKER_FILL}'``.
+        ``'rgba(51,92,173,0.25)'``.
 
         :returns: The backgorund color of the marker square when selecting an area of the
           chart.
@@ -1123,11 +1123,11 @@ class ChartOptions(HighchartsMeta):
 
     @property
     def spacing(self) -> Optional[List[int | float | Decimal]]:
-        f"""The distance between the outer edge of the chart and the content, like title
+        """The distance between the outer edge of the chart and the content, like title
         or legend, or axis title and labels if present. The numbers in the array designate
         top, right, bottom and left respectively.
 
-        By default, ``{constants.DEFAULT_CHART_SPACING}``.
+        By default, ``[10,10,15,10]``.
 
         .. note::
 
@@ -1175,10 +1175,10 @@ class ChartOptions(HighchartsMeta):
 
     @property
     def spacing_bottom(self) -> Optional[int | float | Decimal]:
-        f"""The spacing between the bottom edge of the chart and the content (plot area,
+        """The spacing between the bottom edge of the chart and the content (plot area,
         axis title and labels, title, subtitle or legend in top position).
 
-        By default, ``{constants.DEFAULT_CHART_SPACING_BOTTOM}``.
+        By default, ``15``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -1190,10 +1190,10 @@ class ChartOptions(HighchartsMeta):
 
     @property
     def spacing_left(self) -> Optional[int | float | Decimal]:
-        f"""The spacing between the left edge of the chart and the content (plot area,
+        """The spacing between the left edge of the chart and the content (plot area,
         axis title and labels, title, subtitle or legend in top position).
 
-        Defaults to ``{constants.DEFAULT_CHART_SPACING_LEFT}``.
+        Defaults to ``10``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -1205,10 +1205,10 @@ class ChartOptions(HighchartsMeta):
 
     @property
     def spacing_right(self) -> Optional[int | float | Decimal]:
-        f"""The spacing between the right edge of the chart and the content (plot area,
+        """The spacing between the right edge of the chart and the content (plot area,
         axis title and labels, title, subtitle or legend in top position).
 
-        Defaults to ``{constants.DEFAULT_CHART_SPACING_RIGHT}``.
+        Defaults to ``10``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -1220,10 +1220,10 @@ class ChartOptions(HighchartsMeta):
 
     @property
     def spacing_top(self) -> Optional[int | float | Decimal]:
-        f"""The spacing between the top edge of the chart and the content (plot area, axis
+        """The spacing between the top edge of the chart and the content (plot area, axis
         title and labels, title, subtitle or legend in top position).
 
-        Defaults to ``{constants.DEFAULT_CHART_SPACING_TOP}``.
+        Defaults to ``10``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -1235,9 +1235,9 @@ class ChartOptions(HighchartsMeta):
 
     @property
     def style(self) -> Optional[str]:
-        f"""Additional CSS styles to apply inline to the container div.
+        """Additional CSS styles to apply inline to the container div.
 
-        Defaults to ``{constants.DEFAULT_CHART_STYLE}``.
+        Defaults to ``'{"fontFamily": "\"Lucida Grande\", \"Lucida Sans Unicode\", Verdana, Arial, Helvetica, sans-serif","fontSize":"12px"}'``.
 
         .. note::
 

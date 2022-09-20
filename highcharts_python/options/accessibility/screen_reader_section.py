@@ -31,8 +31,8 @@ class ScreenReaderSection(HighchartsMeta):
 
     @property
     def after_chart_format(self) -> Optional[str]:
-        f"""Format for the screen reader information region after the chart. Defaults to
-        ``'{constants.DEFAULT_AFTER_CHART_FORMAT}'``.
+        """Format for the screen reader information region after the chart. Defaults to
+        ``'{endOfChartMarker}'``.
 
         Supported HTML tags are:
           * ``<h1-6>``
@@ -97,8 +97,8 @@ class ScreenReaderSection(HighchartsMeta):
 
     @property
     def axis_range_date_format(self) -> Optional[str]:
-        f"""Date format to use to describe range of datetime axes. Defaults to
-        ``{constants.DEFAULT_AXIS_RANGE_DATE_FORMAT}``.
+        """Date format to use to describe range of datetime axes. Defaults to
+        ``%Y-%m-%d %H:%M:%S``.
 
         .. seealso::
 
@@ -116,8 +116,13 @@ class ScreenReaderSection(HighchartsMeta):
 
     @property
     def before_chart_format(self) -> Optional[str]:
-        f"""Format for the screen reader information region before the chart. Defaults to
-        ``'{constants.DEFAULT_BEFORE_CHART_FORMAT}'``.
+        """Format for the screen reader information region before the chart. Defaults to
+        ``'<{headingTagName}>{chartTitle}</{headingTagName}>
+           <div>{typeDescription}</div><div>{chartSubtitle}</div>
+           <div>{chartLongdesc}</div><div>{playAsSoundButton}</div>
+           <div>{viewTableButton}</div><div>{xAxisDescription}</div>
+           <div>{yAxisDescription}</div>
+           <div>{annotationsTitle}{annotationsList}</div>'``.
 
         Supported HTML tags are:
           * ``<h1-6>``

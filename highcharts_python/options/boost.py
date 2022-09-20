@@ -243,15 +243,15 @@ class Boost(HighchartsMeta):
 
     @property
     def pixel_ratio(self) -> Optional[int]:
-        f"""The pixel ratio for the WebGL content. Defaults to
-        ``{constants.DEFAULT_BOOST_PIXEL_RATIO}``.
+        """The pixel ratio for the WebGL content. Defaults to
+        ``1``.
 
         If ``0``, the ``window.devicePixelRatio`` is used. This ensures sharp graphics on
         high DPI displays like Apple's Retina, as well as when a page is zoomed.
 
         .. note::
 
-          The default is left at {constants.DEFAULT_BOOST_PIXEL_RATIO} for now, as this
+          The default is left at ``1`` for now, as this
           is a new feature that has the potential to break existing setups. Over time,
           when it has been battle tested, the intention is to set it to ``0`` by default.
 
@@ -278,8 +278,8 @@ class Boost(HighchartsMeta):
 
     @property
     def series_threshold(self) -> Optional[int]:
-        f"""Set the series threshold for when the boost should kick in globally. Defaults
-        to ``{constants.DEFAULT_BOOST_SERIES_THRESHOLD}``.
+        """Set the series threshold for when the boost should kick in globally. Defaults
+        to ``50``.
 
         Setting to e.g. ``20`` will cause the whole chart to enter boost mode if there are
         20 or more series active. When the chart is in boost mode, every series in it will

@@ -41,8 +41,8 @@ class Caption(HighchartsMeta):
 
     @property
     def align(self) -> Optional[str]:
-        f"""The alignment of the caption. Defaults to
-        ``'{constants.DEFAULT_CAPTION_ALIGN}'``.
+        """The alignment of the caption. Defaults to
+        ``'left'``.
 
         Accepts:
 
@@ -85,8 +85,8 @@ class Caption(HighchartsMeta):
 
     @property
     def margin(self) -> Optional[int | float | Decimal]:
-        f"""The margin between the caption and the plot area. Defaults to
-        ``{constants.DEFAULT_CAPTION_MARGIN}``.
+        """The margin between the caption and the plot area. Defaults to
+        ``15``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -98,8 +98,8 @@ class Caption(HighchartsMeta):
 
     @property
     def style(self) -> Optional[str]:
-        f"""CSS styling to apply to the caption. Defaults to
-        ``{constants.DEFAULT_CAPTION_STYLE}``.
+        """CSS styling to apply to the caption. Defaults to
+        ``'{"color": "#666666"}'``.
 
         :rtype: :class:`str` or :obj:`None <python:None>`
         """
@@ -142,8 +142,8 @@ class Caption(HighchartsMeta):
 
     @property
     def vertical_align(self) -> Optional[str]:
-        f"""The vertical alignment of the caption. Defaults to
-        ``{constants.DEFAULT_CAPTION_VERTICAL_ALIGN}``.
+        """The vertical alignment of the caption. Defaults to
+        ``'bottom'``.
 
         Accepts:
 
@@ -169,9 +169,9 @@ class Caption(HighchartsMeta):
 
     @property
     def x(self) -> Optional[int | float | Decimal]:
-        f"""The x position of the caption relative to the alignment within
+        """The x position of the caption relative to the alignment within
         :meth:`Options.chart.spacing_left` and :meth:`Option.chart.spacing_right`.
-        Defaults to ``{constants.DEFAULT_CAPTION_X}``.
+        Defaults to ``0``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -183,9 +183,9 @@ class Caption(HighchartsMeta):
 
     @property
     def y(self) -> Optional[int]:
-        f"""The y position of the caption relative to the alignment within
+        """The y position of the caption relative to the alignment within
         :meth:`Options.chart.spacing_left` and :meth:`Option.chart.spacing_right`.
-        Defaults to ``{constants.DEFAULT_CAPTION_Y}``.
+        Defaults to ``None``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """

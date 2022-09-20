@@ -80,10 +80,10 @@ class ShapeOptions(HighchartsMeta):
 
     @property
     def fill(self) -> Optional[str | Gradient | Pattern]:
-        f"""The color of the shape's fill. Defaults to {constants.DEFAULT_SHAPES_FILL}.
+        """The color of the shape's fill. Defaults to ``'rgba(0, 0, 0, 0.75)'``.
 
         :rtype: :class:`str <python:str>` (for colors), :class:`Gradient` for gradients,
-          :clsas:`Pattern` for pattern definitions, or :obj:`None <python:None>`
+          :class:`Pattern` for pattern definitions, or :obj:`None <python:None>`
         """
         return self._fill
 
@@ -105,7 +105,7 @@ class ShapeOptions(HighchartsMeta):
 
     @property
     def r(self) -> Optional[int | float | Decimal]:
-        f"""The radius of the shape in pixels. Defaults to {constants.DEFAULT_SHAPES_R}.
+        """The radius of the shape in pixels. Defaults to ``0``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -129,10 +129,10 @@ class ShapeOptions(HighchartsMeta):
 
     @property
     def snap(self) -> Optional[int | float | Decimal]:
-        f"""Defines additional snapping area around an annotation making this annotation
+        """Defines additional snapping area around an annotation making this annotation
         to focus. Defined in pixels.
 
-        Defaults to ``{constants.DEFAULT_SHAPES_SNAP}``
+        Defaults to ``2``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -174,8 +174,8 @@ class ShapeOptions(HighchartsMeta):
 
     @property
     def stroke(self) -> Optional[str]:
-        f"""The color of the shape's stroke. Defaults to
-        ``{constants.DEFAULT_SHAPES_STROKE}``.
+        """The color of the shape's stroke. Defaults to
+        ``'rgba(0, 0, 0, 0.75)'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -187,8 +187,8 @@ class ShapeOptions(HighchartsMeta):
 
     @property
     def stroke_width(self) -> Optional[int | float | Decimal]:
-        f"""The pixel stroke width of the shape. Defaults to
-        ``{constants.DEFAULT_SHAPES_STROKE_WIDTH}``.
+        """The pixel stroke width of the shape. Defaults to
+        ``1``.
 
         :rtype: numeric or :obj:`None <python:None>`
         """
@@ -200,7 +200,7 @@ class ShapeOptions(HighchartsMeta):
 
     @property
     def type(self) -> Optional[str]:
-        f"""The type of the shape. Defaults to ``{constants.DEFAULT_SHAPES_TYPE}``.
+        """The type of the shape. Defaults to ``'rect'``.
 
         Accepts:
 

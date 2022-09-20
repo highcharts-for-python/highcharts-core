@@ -113,8 +113,8 @@ class Marker(HighchartsMeta):
 
     @property
     def line_color(self) -> Optional[str | Gradient | Pattern]:
-        f"""The line color or gradient for the marker's outline. Defaults to
-        ``'{constants.DEFAULT_MARKER.get('line_color')}'``.
+        """The line color or gradient for the marker's outline. Defaults to
+        ``'#ffffff'``.
 
         :returns: The line color for the marker.
         :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
@@ -129,8 +129,8 @@ class Marker(HighchartsMeta):
 
     @property
     def line_width(self) -> Optional[int | float | Decimal]:
-        f"""The line width (in pixels) applied to the marker's border. Defaults to
-        ``{constants.DEFAULT_MARKER.get('line_width')}``.
+        """The line width (in pixels) applied to the marker's border. Defaults to
+        ``0``.
 
         :returns: The line width to apply to the marker's border.
         :rtype: numeric or :obj:`None <python:None>`
@@ -143,8 +143,8 @@ class Marker(HighchartsMeta):
 
     @property
     def radius(self) -> Optional[int | float | Decimal]:
-        f"""The radius applied to the point marker. Defaults to
-        ``{constants.DEFAULT_MARKER.get('radius')}``.
+        """The radius applied to the point marker. Defaults to
+        ``4``.
 
         :returns: The radius to apply to the point marker.
         :rtype: numeric or :obj:`None <python:None>`

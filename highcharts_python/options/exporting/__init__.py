@@ -414,11 +414,11 @@ class Exporting(HighchartsMeta):
 
     @property
     def print_max_width(self) -> Optional[int | float | Decimal]:
-        f"""When printing the chart from the menu item in the burger menu, if the
+        """When printing the chart from the menu item in the burger menu, if the
         on-screen chart exceeds this width, it is resized. After printing or cancelled, it
         is restored.
 
-        By default, set to ``{constants.DEFAULT_EXPORTING_PRINT_MAX_WIDTH}`` which makes
+        By default, set to ``780`` which makes
         the chart fit into typical paper format.
 
         .. note::
@@ -435,11 +435,11 @@ class Exporting(HighchartsMeta):
 
     @property
     def scale(self) -> Optional[int | float | Decimal]:
-        f"""Defines the scale or zoom factor for the exported image compared to the
-        on-screen display. Defaults to ``{constants.DEFAULT_EXPORTING_SCALE}``.
+        """Defines the scale or zoom factor for the exported image compared to the
+        on-screen display. Defaults to ``2``.
 
         While for instance a 600px wide chart may look good on a website, it will look bad
-        in print. The default scale of ``{constants.DEFAULT_EXPORTING_SCALE}`` makes this
+        in print. The default scale of ``2`` makes this
         chart export to a 1200px PNG or JPG.
 
         :rtype: numeric or :obj:`None <python:None>`
@@ -524,7 +524,7 @@ class Exporting(HighchartsMeta):
 
     @property
     def type(self) -> Optional[str]:
-        f"""Default MIME type for exporting if the JavaScript ``chart.exportChart()`` is
+        """Default MIME type for exporting if the JavaScript ``chart.exportChart()`` is
         called without specifying a ``type`` option.
 
         Accepts:
@@ -534,7 +534,7 @@ class Exporting(HighchartsMeta):
           * ``'application/pdf'``
           * ``'image/svg+xml'``
 
-        Defaults to ``'{constants.DEFAULT_EXPORTING_TYPE}'``.
+        Defaults to ``'image/png'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """

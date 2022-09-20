@@ -106,8 +106,8 @@ class Annotation(HighchartsMeta):
 
     @property
     def draggable(self) -> Optional[str]:
-        f"""Setting that allows an annotation to be draggable by a user. Defaults to
-        ``'{constants.DEFAULT_DRAGGABLE}'``
+        """Setting that allows an annotation to be draggable by a user. Defaults to
+        ``'xy'``
 
         Supports values:
 

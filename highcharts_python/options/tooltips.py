@@ -111,8 +111,8 @@ class Tooltip(HighchartsMeta):
 
     @property
     def background_color(self) -> Optional[str | Gradient | Pattern]:
-        f"""The background color or gradient for the tooltip. Defaults to
-        ``'{constants.DEFAULT_TOOLTIP.get('background_color', None)}'``.
+        """The background color or gradient for the tooltip. Defaults to
+        ``None``.
 
         :returns: The backgorund color for the tooltip.
         :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
@@ -143,8 +143,8 @@ class Tooltip(HighchartsMeta):
 
     @property
     def border_radius(self) -> Optional[int | float | Decimal | str]:
-        f"""The border radius (in pixels) applied to
-        the pane. Defaults to ``{constants.DEFAULT_TOOLTIP.get('border_radius')}``.
+        """The border radius (in pixels) applied to
+        the pane. Defaults to ``3``.
 
         :returns: The border radius of the tooltip.
         :rtype: numeric or :obj:`None <python:None>`
@@ -163,8 +163,8 @@ class Tooltip(HighchartsMeta):
 
     @property
     def border_width(self) -> Optional[int | float | Decimal]:
-        f"""The border width (in pixels) applied to the tooltip. Defaults to
-        ``{constants.DEFAULT_TOOLTIP.get('border_width')}``.
+        """The border width (in pixels) applied to the tooltip. Defaults to
+        ``1``.
 
         :returns: The border width to apply to the tooltip.
         :rtype: numeric or :obj:`None <python:None>`
@@ -229,8 +229,8 @@ class Tooltip(HighchartsMeta):
 
     @property
     def distance(self) -> Optional[int | float | Decimal]:
-        f"""The distance (in pixels) from the point to the tooltip. Defaults to
-        ``{constants.DEFAULT_TOOLTIP.get('distance')}``.
+        """The distance (in pixels) from the point to the tooltip. Defaults to
+        ``16``.
 
         :returns: The distance from the point to the tooltip.
         :rtype: numeric or :obj:`None <python:None>`
@@ -312,8 +312,8 @@ class Tooltip(HighchartsMeta):
 
     @property
     def footer_format(self) -> Optional[str]:
-        f"""A string to append to the tooltip format. Defaults to
-        ``'{constants.DEFAULT_TOOLTIP.get('footer_format')}'`` (an empty string).
+        """A string to append to the tooltip format. Defaults to
+        ``''`` (an empty string).
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -406,9 +406,9 @@ class Tooltip(HighchartsMeta):
 
     @property
     def header_shape(self) -> Optional[str]:
-        f"""The name of a symbol to use for the border around the tooltip header.
+        """The name of a symbol to use for the border around the tooltip header.
 
-        Defaults to ``'{constants.DEFAULT_TOOLTIP.get('header_shape')}'``.
+        Defaults to ``'callout'``.
 
         .. note::
 
@@ -515,9 +515,9 @@ class Tooltip(HighchartsMeta):
 
     @property
     def padding(self) -> Optional[int | float | Decimal]:
-        f"""The padding inside the tooltip, expressed in pixels.
+        """The padding inside the tooltip, expressed in pixels.
 
-        Defaults to ``{constants.DEFAULT_TOOLTIP.get('padding')}``.
+        Defaults to ``8``.
 
         :returns: The padding to apply to the tooltip.
         :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
@@ -616,8 +616,8 @@ class Tooltip(HighchartsMeta):
 
     @property
     def shape(self) -> Optional[str]:
-        f"""The name of the symbol to use for the border around the tooltip. Defaults to
-        ``'{constants.DEFAULT_TOOLTIP.get('shape')}'``.
+        """The name of the symbol to use for the border around the tooltip. Defaults to
+        ``'callout'``.
 
         Accepts:
 

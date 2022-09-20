@@ -138,10 +138,10 @@ class AccessibilityPoint(HighchartsMeta):
 
     @property
     def value_description_format(self) -> Optional[str]:
-        f"""Format to use for describing the values of data points to assistive technology
+        """Format to use for describing the values of data points to assistive technology
         - including screen readers. The point context is available as ``{{point}}``.
 
-        Defaults to ``{constants.DEFAULT_ACCESSIBILITY_POINT_VALUE_FORMAT}``
+        Defaults to ``{xDescription}{separator}{value}``
 
         Other available context variables include ``{{index}}``, ``{{value}}``, and
         ``{{xDescription}}``.
