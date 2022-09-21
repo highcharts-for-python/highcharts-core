@@ -244,6 +244,7 @@ Glossary
               aBooleanProperty: true,
               myCallback: function() { return true }
             }
+
         - |
           .. code-block:: JavaScript
 
@@ -252,6 +253,7 @@ Glossary
             "anotherProperty": 123,
             "aBooleanProperty": true
           }
+
 
     As you can see, the two forms are very similar. However, the JavaScript object literal
     notation has its keys directly accessible as properties of the object, while the JSON
@@ -490,3 +492,7 @@ Glossary
 
       * :class:`WordcloudOptions <highcharts_python.options.plot_options.wordcloud.WordcloudOptions>`
       * :class:`WordcloudSeries <highcharts_python.options.series.wordcloud.WordcloudSeries>`
+
+----------
+
+fin
