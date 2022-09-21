@@ -716,7 +716,7 @@ class Chart(HighchartsMeta):
                                      has_header_row = has_header_row,
                                      series_kwargs = series_kwargs,
                                      delimiter = delimiter,
-                                     null_text = nulL_text,
+                                     null_text = null_text,
                                      wrapper_character = wrapper_character,
                                      line_terminator = line_terminator,
                                      wrap_all_strings = wrap_all_strings,
