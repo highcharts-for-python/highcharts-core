@@ -7,3 +7,4 @@ from highcharts_python.headless_export import ExportServer
 from highcharts_python import global_options, options, utility_classes
 
 SharedOptions = global_options.shared_options.SharedOptions
+ChartOptions = options.chart.ChartOptions
