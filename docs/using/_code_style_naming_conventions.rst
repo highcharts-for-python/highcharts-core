@@ -1,8 +1,8 @@
   *There are only two hard things in Computer Science: cache invalidation and naming
   things.* -- Phil Karlton
 
-Highcharts JS is a JavaScript library, and as such it adheres to the code conventions that
-are popular (practically standard) when working in JavaScript. Chief among these
+Highcharts Stock is a JavaScript library, and as such it adheres to the code conventions
+that are popular (practically standard) when working in JavaScript. Chief among these
 conventions is that variables and object properties (keys) are typically written in
 ``camelCase``.
 
@@ -12,14 +12,14 @@ practice it is simply a convention that developers adopt in a particular program
 language. The issue, however, is that while JavaScript has adopted the ``camelCase``
 convention, Python generally skews towards the ``snake_case`` convention.
 
-For most Python developers, using ``snake_case`` is the "default" mindset. Most of their
+For most Python developers, using ``snake_case`` is the "default" mindset. Most of your
 Python code will use ``snake_case``. So having to switch into ``camelcase`` to interact
-with Highcharts JS forces us to context switch, increases cognitive load, and is an easy
-place for us to overlook things and make a mistake that can be quite annoying to
+with Highcharts Stock forces us to context switch, increases cognitive load, and is an
+easy place for us to overlook things and make a mistake that can be quite annoying to
 track down and fix later.
 
-Therefore, when designing **Highcharts for Python**, we made several carefully considered
-design choices when it comes to naming conventions:
+Therefore, when designing the **Highcharts for Python** toolkit, we made several carefully
+considered design choices when it comes to naming conventions:
 
 #. All **Highcharts for Python** classes follow the Pythonic ``PascalCase`` class-naming
    convention.
@@ -27,9 +27,9 @@ design choices when it comes to naming conventions:
    ``snake_case`` property/method/variable/function-naming convention.
 #. All *inputs* to properties and methods support *both* ``snake_case`` and
    ``camelCase`` (aka ``mixedCase``) convention by default. This means that you can take
-   something directly from Highcharts JS' JavaScript code and supply it to
-   **Highcharts for Python** without having to convert case or conventions. But if you
-   are constructing and configuring something directly in Python using explicit
+   something directly from Highcharts JavaScript code and supply it to the
+   **Highcharts for Python** toolkit without having to convert case or conventions. But if
+   you are constructing and configuring something directly in Python using explicit
    :ref:`deserialization methods <deserialization_methods>`, you can use ``snake_case``
    if you prefer (and most Python developers will prefer).
 

@@ -38,41 +38,38 @@ Sub-components
 
   * - Module
     - Classes / Functions
-  * - :mod:`.global_options <highcharts_python.global_options>`
+  * - :mod:`.options.axes <highcharts_python.options.axes>`
     -
-  * - :mod:`.global_options.language <highcharts_python.global_options.language>`
-    - :class:`Language <highcharts_python.global_options.language.Language>`
-  * - :mod:`.global_options.language.accessibility <highcharts_python.global_options.language.accessibility>`
-    - :class:`AccessibilityLanguageOptions <highcharts_python.global_options.language.accessibility.AccessibilityLanguageOptions>`
-  * - :mod:`.global_options.language.accessibility.announce_new_data <highcharts_python.global_options.language.accessibility.announce_new_data>`
-    - :class:`AnnounceNewDataLanguageOptions <highcharts_python.global_options.language.accessibility.announce_new_data.AnnounceNewDataLanguageOptions>`
-  * - :mod:`.global_options.language.accessibility.axis <highcharts_python.global_options.language.accessibility.axis>`
-    - :class:`AxisLanguageOptions <highcharts_python.global_options.language.accessibility.axis.AxisLanguageOptions>`
-  * - :mod:`.chart_types <highcharts_python.global_options.language.accessibility.chart_types>`
-    - :class:`ChartTypesLanguageOptions <highcharts_python.global_options.language.accessibility.chart_types.ChartTypesLanguageOptions>`
-  * - :mod:`.exporting <highcharts_python.global_options.language.accessibility.exporting>`
-    - :class:`ExportingLanguageOptions <highcharts_python.global_options.language.accessibility.exporting.ExportingLanguageOptions>`
-  * - :mod:`.legend <highcharts_python.global_options.language.accessibility.legend>`
-    - :class:`LegendLanguageOptions <highcharts_python.global_options.language.accessibility.legend.LegendLanguageOptions>`
-  * - :mod:`.range_selector <highcharts_python.global_options.language.accessibility.range_selector>`
-    - :class:`RangeSelectorLanguageOptions <highcharts_python.global_options.language.accessibility.range_selector.RangeSelectorLanguageOptions>`
-  * - :mod:`.screen_reader_section <highcharts_python.global_options.language.accessibility.screen_reader_section>`
-    - :class:`ScreenReaderSectionLanguageOptions <highcharts_python.global_options.language.accessibility.screen_reader_section.ScreenReaderSectionLanguageOptions>`
-      :class:`ScreenReaderSectionAnnotationLanguage <highcharts_python.global_options.language.accessibility.screen_reader_section.ScreenReaderSectionAnnotationLanguage>`
-  * - :mod:`.series <highcharts_python.global_options.language.accessibility.series>`
-    - :class:`SeriesLanguageOptions <highcharts_python.global_options.language.accessibility.series.SeriesLanguageOptions>`
-      :class:`SeriesSummaryLanguageOptions <highcharts_python.global_options.language.accessibility.series.SeriesSummaryLanguageOptions>`
-      :class:`SeriesTypeDescriptions <highcharts_python.global_options.language.accessibility.series.SeriesTypeDescriptions>`
-  * - :mod:`.sonification <highcharts_python.global_options.language.accessibility.sonification>`
-    - :class:`SonificationLanguageOptions <highcharts_python.global_options.language.accessibility.sonification.SonificationLanguageOptions>`
-  * - :mod:`.table <highcharts_python.global_options.language.accessibility.table>`
-    - :class:`TableLanguageOptions <highcharts_python.global_options.language.accessibility.table.TableLanguageOptions>`
-  * - :mod:`.zoom <highcharts_python.global_options.language.accessibility.zoom>`
-    - :class:`ZoomLanguageOptions <highcharts_python.global_options.language.accessibility.zoom.ZoomLanguageOptions>`
-  * - :mod:`.global_options.language.export_data <highcharts_python.global_options.language.export_data>`
-    -  :class:`ExportDataLanguageOptions <highcharts_python.global_options.language.export_data.ExportDataLanguageOptions>`
-  * - :mod:`.global_options.language.navigation <highcharts_python.global_options.language.navigation>`
-    - :class:`NavigationLanguageOptions <highcharts_python.global_options.language.navigation.NavigationLanguageOptions>`
-      :class:`PopupLanguageOptions <highcharts_python.global_options.language.navigation.PopupLanguageOptions>`
-  * - :mod:`.global_options.shared_options <highcharts_python.global_options.shared_options>`
-    - :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
+  * - :mod:`.options.axes.accessibility <highcharts_python.options.axes.accessibility>`
+    - :class:`AxisAccessibility <highcharts_python.options.axes.accessibility.AxisAccessibility>`
+  * - :mod:`.options.axes.breaks <highcharts_python.options.axes.breaks>`
+    - :class:`AxisBreak <highcharts_python.options.axes.breaks.AxisBreak>`
+  * - :mod:`.options.axes.color_axis <highcharts_python.options.axes.color_axis>`
+    - :class:`ColorAxis <highcharts_python.options.axes.color_axis.ColorAxis>`
+  * - :mod:`.options.axes.crosshair <highcharts_python.options.axes.crosshair>`
+    - :class:`CrosshairOptions <highcharts_python.options.axes.crosshair.CrosshairOptions>`
+  * - :mod:`.options.axes.data_classes <highcharts_python.options.axes.data_classes>`
+    - :class:`DataClass <highcharts_python.options.axes.data_classes.DataClass>`
+  * - :mod:`.options.axes.generic <highcharts_python.options.axes.generic>`
+    - :class:`GenericAxis <highcharts_python.options.axes.generic.GenericAxis>`
+  * - :mod:`.options.axes.labels <highcharts_python.options.axes.labels>`
+    - :class:`AxisLabelOptions <highcharts_python.options.axes.labels.AxisLabelOptions>`
+      :class:`PlotBandLabel <highcharts_python.options.axes.labels.PlotBandLabel>`
+      :class:`PlotLineLabel <highcharts_python.options.axes.labels.PlotLineLabel>`
+  * - :mod:`.options.axes.markers <highcharts_python.options.axes.markers>`
+    - :class:`AxisMarker <highcharts_python.options.axes.markers.AxisMarker>`
+  * - :mod:`.options.axes.numeric <highcharts_python.options.axes.numeric>`
+    - :class:`NumericAxis <highcharts_python.options.axes.numeric.NumericAxis>`
+  * - :mod:`.options.axes.parallel_axes <highcharts_python.options.axes.parallel_axes>`
+    - :class:`ParallelAxesOptions <highcharts_python.options.axes.parallel_axes.ParallelAxesOptions>`
+  * - :mod:`.options.axes.plot_bands <highcharts_python.options.axes.plot_bands>`
+    - :class:`PlotBand <highcharts_python.options.axes.plot_bands.PlotBand>`
+      :class:`PlotLine <highcharts_python.options.axes.plot_bands.PlotLine>`
+  * - :mod:`.options.axes.title <highcharts_python.options.axes.title>`
+    - :class:`AxisTitle <highcharts_python.options.axes.title.AxisTitle>`
+  * - :mod:`.options.axes.x_axis <highcharts_python.options.axes.x_axis>`
+    - :class:`XAxis <highcharts_python.options.axes.x_axis.XAxis>`
+  * - :mod:`.options.axes.y_axis <highcharts_python.options.axes.y_axis>`
+    - :class:`YAxis <highcharts_python.options.axes.y_axis.YAxis>`
+  * - :mod:`.options.axes.z_axis <highcharts_python.options.axes.z_axis>`
+    - :class:`ZAxis <highcharts_python.options.axes.z_axis.ZAxis>`

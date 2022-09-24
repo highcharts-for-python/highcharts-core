@@ -146,7 +146,8 @@ frontend framework. Whether your Python application is relying on iPython (e.g.
 `Django <https://www.djangoproject.com/>`_,  `FastAPI <https://fastapi.tiangolo.com/>`_,
 `Pyramid <https://trypyramid.com/>`_, `Tornado <https://www.tornadoweb.org/en/stable/>`_,
 or some completely home-grown solution all Highcharts for
-Python needs is a place where `Highcharts JS <https://www.highcharts.com>`__ JavaScript code can be executed.
+Python needs is a place where `Highcharts JS <https://www.highcharts.com>`__ JavaScript
+code can be executed.
 
 All of those frameworks I mentioned have their own best practices for organizing their
 application structures, and those should *always* take priority. Even in a data-centric
@@ -172,17 +173,17 @@ files and code to work with **Highcharts for Python**:
 Use Shared Options
 ========================
 
-One of the most challenging aspects of `Highcharts JS <https://www.highcharts.com>`__ is its sheer breadth of
-functionality and configurability. That's simultaneously the library's greatest strength,
-and its greatest weakness. This is because it can be quite challenging to wrangle
-thousands of properties - especially when one single visualization can use thousands
-of properties!
+One of the most challenging aspects of `Highcharts JS <https://www.highcharts.com>`__ is
+its sheer breadth of functionality and configurability. That's simultaneously the library's
+greatest strength, and its greatest weakness. This is because it can be quite challenging
+to wrangle thousands of properties - especially when even a single visualization can use
+hundreds of those properties!
 
-This is a challenge that the developers of `Highcharts JS <https://www.highcharts.com>`__ are keenly aware of, and one
-which we've given some thought to in the **Highcharts for Python** library. A core
-principle you should use throughout your project is to practice
-:iabbr:`DRY (Do Not Repeat Yourself)` programming. If your application will be generating
-multiple visualizations, they will likely need some consistent configurations.
+This is a challenge that the developers of `Highcharts JS <https://www.highcharts.com>`__
+are keenly aware of, and one which we've given some thought to in the
+**Highcharts for Python** library. A core principle you should use throughout your project
+is to practice :iabbr:`DRY (Do Not Repeat Yourself)` programming. If your application will
+be generating multiple visualizations, they will likely need some consistent configurations.
 
 For example, you will want their title position to be consistent, their color schemes to
 be consistent, their font sizing to be consistent, etc. In your code you want these
@@ -201,164 +202,15 @@ As with all **Highcharts for Python** objects, you can instantiate them in sever
 
   .. tab:: with JS Literal
 
-    .. tip::
-
-      **Best practice!**
-
-      We really like to use JS literals written as separate files in our codebase. It
-      makes it super simple to instantiate a
-      :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
-      instance with one method call.
-
-    Let's say you organize your files like so:
-
-      .. line-block::
-
-        my_repository/
-        | --- docs/
-        | --- my_project/
-        | ------ project_resources/
-        | --------- image_files/
-        | --------- data_files/
-        | ------------ data-file-01.csv
-        | ------------ data-file-02.csv
-        | ------------ data-file-03.csv
-        | --------- **highcharts_config/**
-        | ------------ **shared_options.js**
-        | ------------ bar-template-01.js
-        | ------------ bar-template-02.js
-        | ------------ line-template.js
-        | ------------ packed-bubble-template.js
-        | ------ some_package/
-        | --------- __init__.py
-        | --------- package_module.py
-        | --------- another_module.py
-        | ------ __init__.py
-        | ------ __version__.py
-        | ------ some_module.py
-        | --- tests/
-        | --- .gitignore
-        | --- requirements.txt
-
-    You'll notice that the organization has a ``project_resources`` folder. This is where
-    you would put the various files that your application wlil reference, like your static
-    images, or the files that contain data you might be using in your application. It also
-    contains a **highcharts_config** folder, which contains several files with a ``.js``
-    extension. Of particular note is the file in bold, ``shared_options.js``. This file
-    should contain a
-    :term:`JavaScript object literal <JavaScript object literal notation>`
-    version of the configuration settings you want to apply to *all* of your
-    visualizations. This file might look something like this:
-
-      .. literalinclude:: _static/shared_options.js
-        :language: javascript
-
-    Now with this file, you can easily create a
-    :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
-    instance by executing:
-
-      .. code-block:: python
-
-        from highcharts_python.highcharts import SharedOptions
-
-        my_shared_options = SharedOptions.from_js_literal('../../project_resources/highcharts_config/shared_options.js')
-
-    And that's it! Now you have a
-    :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
-    instance that can be used to apply your configuration standards to all of your charts.
-    You can do that by delivering its JavaScript output to your front-end by calling:
-
-      .. code-block:: python
-
-        js_code_snippet = my_shared_options.to_js_literal()
-
-    which will produce a string as follows:
-
-      .. literalinclude:: _static/shared_options_output.js
-        :language: javascript
-
-    And now you can deliver ``js_code_snippet`` to your HTML template or wherever it will
-    be rendered.
+    .. include:: using/shared_options/_with_js_literal.rst
 
   .. tab:: with JSON
 
-    You can use the same exact pattern as using a JS literal with a JSON file instead.
-    We don't really think there's an advantage to this - but there might be one
-    significant disadvantage: JSON files cannot be used to provide JavaScript functions
-    to your Highcharts configuration. This means that formatters, event handlers, etc.
-    will not be applied through your shared options if you use a JSON file.
-
-    If your shared options don't require JavaScript functions? Then by all means, feel
-    free to use a JSON file and the ``.from_json()`` method instead.
-
-    With a file structure like:
-
-      .. line-block::
-
-        my_repository/
-        | --- docs/
-        | --- my_project/
-        | ------ project_resources/
-        | --------- image_files/
-        | --------- data_files/
-        | ------------ data-file-01.csv
-        | ------------ data-file-02.csv
-        | ------------ data-file-03.csv
-        | --------- **highcharts_config/**
-        | ------------ **shared_options.json**
-        | ------------ bar-template.json
-        | ------------ line-template.json
-        | ------------ packed-bubble-template.json
-        | ------ some_package/
-        | --------- __init__.py
-        | --------- package_module.py
-        | --------- another_module.py
-        | ------ __init__.py
-        | ------ __version__.py
-        | ------ some_module.py
-        | --- tests/
-        | --- .gitignore
-        | --- requirements.txt
-
-    You can leverage shared options that read from
-    ``my_project/project_resources/highcharts_config/shared_options.json`` by executing:
-
-      .. code-block:: python
-
-        from highcharts_python.highcharts import SharedOptions
-
-        my_shared_options = SharedOptions.from_js_literal(
-            '../../project_resources/highcharts_config/shared_options.json'
-        )
-
-        json_code_snippet = my_shared_options.to_js_literal()
+    .. include:: using/shared_options/_with_json.rst
 
   .. tab:: with ``dict``
 
-    If you are hoping to configure a simple set of options, one of the fastest ways to do
-    so in your Python code is to instantiate your
-    :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
-    instance from a simple :class:`dict <python:dict>`:
-
-      .. code-block:: python
-
-        as_dict = {
-            'chart': {
-                'backgroundColor': '#fff',
-                'borderWidth': 2,
-                'plotBackgroundColor': 'rgba(255, 255, 255, 0.9)',
-                'plotBorderWidth': 1
-            }
-        }
-
-        my_shared_options = SharedOptions.from_dict(as_dict)
-
-        js_code_snippet = my_shared_options.to_js_literal()
-
-      .. tip::
-
-        This method is particularly helpful and easy to maintain if you are only using a
-        *very* small subset of the `Highcharts JS <https://www.highcharts.com>`__ configuration options.
+    .. include:: using/shared_options/_with_dict.rst
 
   .. tab:: with ``__init__()``
 
@@ -414,144 +266,19 @@ of your charts.
 
   .. tab:: with JS Literal
 
-    .. tip::
-
-      **Best practice!**
-
-      We really like to use JS literals written as separate files in our codebase. It
-      makes it super simple to instantiate a **Highcharts for Python** instance with one
-      method call.
-
-    Let's say you organize your files like so:
-
-      .. line-block::
-
-        my_repository/
-        | --- docs/
-        | --- my_project/
-        | ------ project_resources/
-        | --------- image_files/
-        | --------- data_files/
-        | ------------ data-file-01.csv
-        | ------------ data-file-02.csv
-        | ------------ data-file-03.csv
-        | --------- **highcharts_config/**
-        | ------------ shared_options.js
-        | ------------ **bar-template-01.js**
-        | ------------ **bar-template-02.js**
-        | ------------ line-template.js
-        | ------------ packed-bubble-template.js
-        | ------ some_package/
-        | --------- __init__.py
-        | --------- package_module.py
-        | --------- another_module.py
-        | ------ __init__.py
-        | ------ __version__.py
-        | ------ some_module.py
-        | --- tests/
-        | --- .gitignore
-        | --- requirements.txt
-
-    As you can see, there are two JS literal files named ``bar-template-01.js`` and
-    ``bar-template-02.js`` respectively. These template files can be used to significantly
-    accelerate the configuration of our bar charts. Each template corresponds to one
-    sub-type of bar chart that we know we will need. These sub-types may have different
-    event functions, or more frequently use different formatting functions to make the
-    data look the way we want it to look.
-
-    Now with these template files, we can easily create a pair of
-    :class:`Chart <highcharts_python.chart.Chart>` instances by executing:
-
-      .. code-block:: python
-
-        from highcharts_python.highcharts import Chart, BarSeries
-
-        type_1_chart = Chart.from_js_literal(
-            '../../project_resources/highcharts_config/bar-template-01.js'
-        )
-        type_2_chart = Chart.from_js_literal(
-            '../../project_resources/highcharts_config/bar-template-02.js'
-        )
-
-    And that's it! Now you have two chart instances which you can further modify. For
-    example, you can add data to them by calling:
-
-      .. code-block:: python
-
-        type_1_chart.container = 'chart1_div'
-        type_2_chart.container = 'chart2_div'
-
-        type_1_chart.add_series(BarSeries.from_csv('../../project_resources/data_files/data-file-01.csv'))
-        type_2_chart.add_series(BarSeries.from_csv('../../project_resources/data_files/data-file-02.csv'))
-
-    And then you can create the relevant JavaScript code to render the chart using:
-
-      .. code-block:: python
-
-        type_1_chart_js = type_1_chart.to_js_literal()
-        type_2_chart_js = type_2_chart.to_js_literal()
-
-    And now you can deliver ``type_1_chart_js`` and ``type_2_chart_js`` to your HTML
-    template or wherever it will be rendered.
+    .. include:: using/templates/_with_js_literal.rst
 
   .. tab:: with JSON
 
-    You can use the same exact pattern as using a JS literal with a JSON file instead.
-    We don't really think there's an advantage to this - but there might be one
-    significant disadvantage: JSON files cannot be used to provide JavaScript functions
-    to your Highcharts configuration. This means that formatters, event handlers, etc.
-    will not be applied through your shared options if you use a JSON file.
-
-    If your chart templates don't require JavaScript functions? Then by all means, feel
-    free to use a JSON file and the ``.from_json()`` method instead of the
-    ``.from_js_literal()`` method.
-
-    .. tip::
-
-      In practice, we find that most chart templates differ in their formatter functions
-      and event handlers. This makes JSON a particularly weak tool for templating those
-      charts. We strongly prefer the JS literal method described above.
+    .. include:: using/templates/_with_json.rst
 
   .. tab:: with ``dict``
 
-    If you are hoping to configure a simple set of template settings, one of the fastest
-    ways to do so in your Python code is to instantiate your
-    :class:`Chart <highcharts_python.chart.Chart>` instance from a simple
-    :class:`dict <python:dict>` using the ``.from_dict()`` method.
-
-      .. tip::
-
-        This method is particularly helpful and easy to maintain if you are only using a
-        *very* small subset of the `Highcharts JS <https://www.highcharts.com>`__ configuration options.
+    .. include:: using/templates/_with_dict.rst
 
   .. tab:: with ``.copy()``
 
-    If you have an existing **Highcharts for Python** instance, you can copy its
-    properties to another object using the ``.copy()`` method. You can therefore set up
-    one chart, and then copy its properties to other chart objects with one method call.
-
-      .. code-block:: python
-
-        type_1_chart = Chart.from_js_literal('../../project_resources/highcharts_config/bar-template-01.js')
-        other_chart = type_1_chart.copy(other_chart, overwrite = True)
-
-      .. tip::
-
-        The :meth:`Chart.copy() <highcharts_python.chart.Chart.copy>` method supports a
-        special keyword argument, ``preverse_data`` which if set to ``True`` will copy
-        properties (unless ``overwrite = True``) but will *not* overwrite any data. This
-        can be very useful to replicating the configuration of your chart across multiple
-        charts that have different series and data.
-
-          .. code-block:: python
-
-            other_chart = Chart()
-            other_chart.add_series(
-              BarSeries.from_csv('../../project_resources/data_files/data-file-02.csv')
-            )
-
-            other_chart = type_1_chart.copy(other_chart,
-                                            preserve_data = True)
+    .. include:: using/templates/_with_copy.rst
 
 -----------------
 
@@ -559,7 +286,8 @@ of your charts.
 Working with Data
 **************************************
 
-Obviously, if you are going to use **Highcharts for Python** and `Highcharts JS <https://www.highcharts.com>`__ you will
+Obviously, if you are going to use **Highcharts for Python** and
+`Highcharts JS <https://www.highcharts.com>`__ you will
 need to have data to visualize. Python is rapidly becoming the *lingua franca* in the
 world of data manipulation, transformation, and analysis and **Highcharts for Python**
 is specifically designed to play well within that ecosystem to make it easy to visualize
@@ -658,501 +386,138 @@ Every single :term:`Series` class in **Highcharts for Python** features several 
 methods to either instantiate data points directly, load data (to an existing series
 instance), or to create a new series instance with data already loaded.
 
-.. _instantiating_data_points_directly:
-
-Instantiating Data Points Directly
---------------------------------------
-
-When working with a :term:`series` instance, you can instantiate data points directly.
-These data points are stored in the
-:meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` setting, which
-always accepts/expects a list of data point instances (descended from
-:class:`DataBase <highcharts_python.options.series.data.base.DataBase>`).
-
-Data points all have the same standard **Highcharts for Python**
-:ref:`deserialization methods <deserialization_methods>`, so those make things very easy.
-However, they also have a special data point-specific deserialization method:
-
-  .. method:: from_array(cls, value)
-    :classmethod:
-
-    Creates a collection of data point instances, parsing the contents of ``value`` as an
-    array (iterable). This method is specifically used to parse data that is input to
-    **Highcharts for Python** without property names, in an array-organized structure as
-    described in the `Highcharts JS <https://www.highcharts.com>`__ documentation.
-
-    .. seealso::
-
-      The specific structure of the expected array is highly dependent on the type of data
-      point that the series needs, which itself is dependent on the series type itself.
-
-      Please review the detailed :ref:`series documentation <series_documentation>` for
-      series type-specific details of relevant array structures.
-
-    .. note::
-
-      An example of how this works for a simple
-      :class:`LineSeries <highcharts_python.options.series.area.LineSeries>` (which uses
-      :class:`CartesianData <highcharts_python.options.series.data.cartesian.CartesianData>`
-      data points) would be:
-
-      .. code-block:: python
-
-        my_series = LineSeries()
-
-        # A simple array of numerical values which correspond to the Y value of the data
-        # point
-        my_series.data = [0, 5, 3, 5]
-
-        # An array containing 2-member arrays (corresponding to the X and Y values of the
-        # data point)
-        my_series.data = [
-            [0, 0],
-            [1, 5],
-            [2, 3],
-            [3, 5]
-        ]
-
-        # An array of dict with named values
-        my_series.data = [
-          {
-              'x': 0,
-              'y': 0,
-              'name': 'Point1',
-              'color': '#00FF00'
-          },
-          {
-              'x': 1,
-              'y': 5,
-              'name': 'Point2',
-              'color': '#CCC'
-          },
-          {
-              'x': 2,
-              'y': 3,
-              'name': 'Point3',
-              'color': '#999'
-          },
-          {
-              'x': 3,
-              'y': 5,
-              'name': 'Point4',
-              'color': '#000'
-          }
-        ]
-
-    :param value: The value that should contain the data which will be converted into data
-      point instances.
-
-      .. note::
-
-        If ``value`` is not an iterable, it will be converted into an iterable to be
-        further de-serialized correctly.
-
-    :type value: iterable
-
-    :returns: Collection of :term:`data point` instances (descended from
-      :class:`DataBase <highcharts_python.options.series.data.base.DataBase>`)
-    :rtype: :class:`list <python:list>` of
-      :class:`DataBase <highcharts_python.options.series.data.base.DataBase>`-descendant
-      instances
-
-.. _loading_data_to_existing_series:
+.. tabs::
+
+  .. tab:: Direct Instantiation
+
+    When working with a :term:`series` instance, you can instantiate data points directly.
+    These data points are stored in the
+    :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` setting, which
+    always accepts/expects a list of data point instances (descended from
+    :class:`DataBase <highcharts_python.options.series.data.base.DataBase>`).
+
+    Data points all have the same standard **Highcharts for Python**
+    :ref:`deserialization methods <deserialization_methods>`, so those make things very easy.
+    However, they also have a special data point-specific deserialization method:
+
+      .. collapse:: Expand Method Signature
 
-Loading to an Existing Series
--------------------------------
+        .. method:: .from_array(cls, value)
+          :classmethod:
+          :noindex:
 
-  .. method:: .load_from_csv(self, as_string_or_file, property_column_map, has_header_row = True, delimiter = ',', null_text = 'None', wrapper_character = "'", line_terminator = '\r\n', wrap_all_strings = False, double_wrapper_character_when_nested = False, escape_character = '\\')
+          Creates a collection of data point instances, parsing the contents of ``value`` as an
+          array (iterable). This method is specifically used to parse data that is input to
+          **Highcharts for Python** without property names, in an array-organized structure as
+          described in the `Highcharts JS <https://www.highcharts.com>`__ documentation.
 
-    Updates the series instance with a collection of data points (descending from
-    :class:`DataBase <highcharts_python.options.series.data.base.DataBase>`) from
-    ``as_string_or_file`` by traversing the rows of data and extracting the values from
-    the columns indicated in ``property_column_map``.
+          .. seealso::
 
-      .. warning::
+            The specific structure of the expected array is highly dependent on the type of data
+            point that the series needs, which itself is dependent on the series type itself.
 
-        This method will overwrite the contents of the series instance's
-        :meth:`data <highcharts_python.options.series.base.SeriesBase>` property.
+            Please review the detailed :ref:`series documentation <series_documentation>` for
+            series type-specific details of relevant array structures.
 
-      .. note::
+          .. note::
 
-        For an example
-        :class:`LineSeries <highcharts_python.options.series.area.LineSeries>`, the
-        minimum code required would be:
+            An example of how this works for a simple
+            :class:`LineSeries <highcharts_python.options.series.area.LineSeries>` (which uses
+            :class:`CartesianData <highcharts_python.options.series.data.cartesian.CartesianData>`
+            data points) would be:
 
-          .. code-block:: python
+            .. code-block:: python
 
-            my_series = LineSeries()
-            my_series.load_from_csv('some-csv-file.csv',
-                                    property_column_map = {
-                                        'x': 0,
-                                        'y': 3,
-                                        'id': 'id'
-                                    })
+              my_series = LineSeries()
 
-        As the example above shows, data is loaded into the ``my_series`` instance from
-        the CSV file with a filename ``some-csv-file.csv``. The
-        :meth:`x <CartesianData.x>`
-        values for each data point will be taken from the first (index 0) column in the
-        CSV file. The :meth:`y <CartesianData.y>` values will be taken from the fourth
-        (index 3) column in the CSV file. And the :meth:`id <CartesianData.id>` values
-        will be taken from a column whose header row is labeled ``'id'`` (regardless of
-        its index).
+              # A simple array of numerical values which correspond to the Y value of the data
+              # point
+              my_series.data = [0, 5, 3, 5]
 
-    :param as_string_or_file: The CSV data to load, either as a :class:`str <python:str>`
-      or as the name of a file in the runtime envirnoment. If a file, data will be read
-      from the file.
+              # An array containing 2-member arrays (corresponding to the X and Y values of the
+              # data point)
+              my_series.data = [
+                  [0, 0],
+                  [1, 5],
+                  [2, 3],
+                  [3, 5]
+              ]
 
-      .. tip::
+              # An array of dict with named values
+              my_series.data = [
+                {
+                    'x': 0,
+                    'y': 0,
+                    'name': 'Point1',
+                    'color': '#00FF00'
+                },
+                {
+                    'x': 1,
+                    'y': 5,
+                    'name': 'Point2',
+                    'color': '#CCC'
+                },
+                {
+                    'x': 2,
+                    'y': 3,
+                    'name': 'Point3',
+                    'color': '#999'
+                },
+                {
+                    'x': 3,
+                    'y': 5,
+                    'name': 'Point4',
+                    'color': '#000'
+                }
+              ]
 
-        Unwrapped empty column values are automatically interpreted as null
-        (:obj:`None <python:None>`).
+          :param value: The value that should contain the data which will be converted into data
+            point instances.
 
-    :type as_string_or_file: :class:`str <python:str>` or Path-like
+            .. note::
 
-    :param property_column_map: A :class:`dict <python:dict>` used to indicate which
-      data point property should be set to which CSV column. The keys in the
-      :class:`dict <python:dict>` should correspond to properties in the data point class,
-      while the value can either be a numerical index (starting with 0) or a
-      :class:`str <python:str>` indicating the label for the CSV column.
+              If ``value`` is not an iterable, it will be converted into an iterable to be
+              further de-serialized correctly.
 
-      .. warning::
+          :type value: iterable
 
-        If the ``property_column_map`` uses :class:`str <python:str>` values, the CSV file
-        *must* have a header row (this is expected, by default). If there is no header row
-        and a :class:`str <python:str>` value is found, a
-        :exc:`HighchartsDeserializationError` will be raised.
+          :returns: Collection of :term:`data point` instances (descended from
+            :class:`DataBase <highcharts_python.options.series.data.base.DataBase>`)
+          :rtype: :class:`list <python:list>` of
+            :class:`DataBase <highcharts_python.options.series.data.base.DataBase>`-descendant
+            instances
 
-    :type property_column_map: :class:`dict <python:dict>`
+  .. tab:: Update an Existing Series
 
-    :param has_header_row: If ``True``, indicates that the first row of
-      ``as_string_or_file`` contains column labels, rather than actual data. Defaults to
-      ``True``.
-    :type has_header_row: :class:`bool <python:bool>`
+    .. tabs::
 
-    :param delimiter: The delimiter used between columns. Defaults to ``,``.
-    :type delimiter: :class:`str <python:str>`
+      .. tab:: Using ``.load_from_csv()``
 
-    :param wrapper_character: The string used to wrap string values when
-      wrapping is applied. Defaults to ``'``.
-    :type wrapper_character: :class:`str <python:str>`
+        .. include:: using/populating_series_data/_load_from_csv.rst
 
-    :param null_text: The string used to indicate an empty value if empty
-      values are wrapped. Defaults to `None`.
-    :type null_text: :class:`str <python:str>`
+      .. tab:: Using ``.load_from_pandas()``
 
-    :param line_terminator: The string used to indicate the end of a line/record in the
-      CSV data. Defaults to ``'\r\n'``.
+        .. include:: using/populating_series_data/_load_from_pandas.rst
 
-      .. warning::
+      .. tab:: Using ``.load_from_pyspark()``
 
-        The Python :mod:`csv <python:csv>` module currently ignores the
-        ``line_terminator`` parameter and always applies ``'\r\n'``, by design. The Python
-        docs say this may change in the future, so for future backwards compatibility we
-        are including it here.
+        .. include:: using/populating_series_data/_load_from_pyspark.rst
 
-    :type line_terminator: :class:`str <python:str>`
+  .. tab:: Create a New Series
 
-    :param wrap_all_strings: If ``True``, indicates that the CSV file has all string data
-      values wrapped in quotation marks. Defaults to ``False``.
+    .. tabs::
 
-      .. warning::
+      .. tab:: Using ``.from_csv()``
 
-        If set to ``True``, the :mod:`csv <python:csv>` module will try to coerce any
-        value that is *not* wrapped in quotation marks to a :class:`float <python:float>`.
-        This can cause unexpected behavior, and typically we recommend leaving this as
-        ``False`` and then re-casting values after they have been parsed.
+        .. include:: using/populating_series_data/_new_from_csv.rst
 
-    :type wrap_all_strings: :class:`bool <python:bool>`
+      .. tab:: Using ``.from_pandas()``
 
-    :param double_wrapper_character_when_nested: If ``True``, quote character is doubled
-      when appearing within a string value. If ``False``, the ``escape_character`` is used
-      to prefix quotation marks. Defaults to ``False``.
-    :type double_wrapper_character_when_nested: :class:`bool <python:bool>`
+        .. include:: using/populating_series_data/_new_from_pandas.rst
 
-    :param escape_character: A one-character string that indicates the character used to
-      escape quotation marks if they appear within a string value that is already wrapped
-      in quotation marks. Defaults to ``\\`` (which is Python for ``'\'``, which is
-      Python's native escape character).
-    :type escape_character: :class:`str <python:str>`
+      .. tab:: Using ``.from_pyspark()``
 
-    :returns: A collection of data points descended from
-      :class:`DataBase <highcharts_python.options.series.data.base.DataBase>` as
-      appropriate for the series class.
-    :rtype: :class:`list <python:list>` of instances descended from
-      :class:`DataBase <highcharts_python.options.series.data.base.DataBase>`
-
-    :raises HighchartsDeserializationError: if unable to parse the CSV data correctly
-
-  .. method:: .load_from_pandas(self, df, property_map)
-
-    Replace the contents of the
-    :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
-    with data points populated from a `pandas`_
-    :class:`DataFrame <pandas:DataFrame>`.
-
-    :param df: The :class:`DataFrame <pandas:DataFrame>` from which data should be
-      loaded.
-    :type df: :class:`DataFrame <pandas:DataFrame>`
-
-    :param property_map: A :class:`dict <python:dict>` used to indicate which
-      data point property should be set to which column in ``df``. The keys in the
-      :class:`dict <python:dict>` should correspond to properties in the data point
-      class, while the value should indicate the label for the
-      :class:`DataFrame <pandas:DataFrame>` column.
-    :type property_map: :class:`dict <python:dict>`
-
-    :raises HighchartsPandasDeserializationError: if ``property_map`` references
-      a column that does not exist in the data frame
-    :raises HighchartsDependencyError: if `pandas`_ is
-      not available in the runtime environment
-
-  .. method:: .load_from_pyspark(self, df, property_map)
-
-    Replaces the contents of the
-    :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
-    with values from a `PySpark <https://spark.apache.org/docs/latest/api/python/>`_
-    :class:`DataFrame <pyspark:pyspark.sql.DataFrame>`.
-
-    :param df: The :class:`DataFrame <pyspark:pyspark.sql.DataFrame>` from which data
-      should be loaded.
-    :type df: :class:`DataFrame <pyspark:pyspark.sql.DataFrame>`
-
-    :param property_map: A :class:`dict <python:dict>` used to indicate which
-      data point property should be set to which column in ``df``. The keys in the
-      :class:`dict <python:dict>` should correspond to properties in the data point
-      class, while the value should indicate the label for the
-      :class:`DataFrame <pyspark:pyspark.sql.DataFrame>` column.
-    :type property_map: :class:`dict <python:dict>`
-
-    :raises HighchartsPySparkDeserializationError: if ``property_map`` references
-      a column that does not exist in the data frame
-    :raises HighchartsDependencyError: if
-      `PySpark <https://spark.apache.org/docs/latest/api/python/>`_ is not available
-      in the runtime environment
-
-.. _creating_a_brand_new_series:
-
-Creating a Brand New Series
-------------------------------
-
-  .. method:: .from_csv(cls, as_string_or_file, property_column_map, series_kwargs = None, has_header_row = True, delimiter = ',', null_text = 'None', wrapper_character = "'", line_terminator = '\r\n', wrap_all_strings = False, double_wrapper_character_when_nested = False, escape_character = '\\')
-    :classmethod:
-
-    Create a new :term:`series` instance with a
-    :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
-    populated from data in a CSV string or file.
-
-      .. note::
-
-        For an example
-        :class:`LineSeries <highcharts_python.options.series.area.LineSeries>`, the
-        minimum code required would be:
-
-          .. code-block:: python
-
-            my_series = LineSeries.from_csv('some-csv-file.csv',
-                                            property_column_map = {
-                                                'x': 0,
-                                                  'y': 3,
-                                                'id': 'id'
-                                            })
-
-        As the example above shows, data is loaded into the ``my_series`` instance
-        from the CSV file with a filename ``some-csv-file.csv``. The
-        :meth:`x <CartesianData.x>`
-        values for each data point will be taken from the first (index 0) column in
-        the CSV file. The :meth:`y <CartesianData.y>` values will be taken from the
-        fourth (index 3) column in the CSV file. And the :meth:`id <CartesianData.id>`
-        values will be taken from a column whose header row is labeled ``'id'``
-        (regardless of its index).
-
-    :param as_string_or_file: The CSV data to use to pouplate data. Accepts either
-      the raw CSV data as a :class:`str <python:str>` or a path to a file in the
-      runtime environment that contains the CSV data.
-
-      .. tip::
-
-        Unwrapped empty column values are automatically interpreted as null
-        (:obj:`None <python:None>`).
-
-    :type as_string_or_file: :class:`str <python:str>` or Path-like
-
-    :param property_column_map: A :class:`dict <python:dict>` used to indicate which
-      data point property should be set to which CSV column. The keys in the
-      :class:`dict <python:dict>` should correspond to properties in the data point
-      class, while the value can either be a numerical index (starting with 0) or a
-      :class:`str <python:str>` indicating the label for the CSV column.
-
-      .. warning::
-
-        If the ``property_column_map`` uses :class:`str <python:str>` values, the CSV
-        file *must* have a header row (this is expected, by default). If there is no
-        header row and a :class:`str <python:str>` value is found, a
-        :exc:`HighchartsCSVDeserializationError` will be raised.
-
-    :type property_column_map: :class:`dict <python:dict>`
-
-    :param has_header_row: If ``True``, indicates that the first row of
-      ``as_string_or_file`` contains column labels, rather than actual data. Defaults
-      to ``True``.
-    :type has_header_row: :class:`bool <python:bool>`
-
-    :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
-      arguments that should be used when instantiating the series instance. Defaults
-      to :obj:`None <python:None>`.
-
-      .. warning::
-
-        If ``series_kwargs`` contains a ``data`` key, its value will be *overwritten*.
-        The ``data`` value will be created from the CSV file instead.
-
-    :type series_kwargs: :class:`dict <python:dict>`
-
-    :param delimiter: The delimiter used between columns. Defaults to ``,``.
-    :type delimiter: :class:`str <python:str>`
-
-    :param wrapper_character: The string used to wrap string values when
-      wrapping is applied. Defaults to ``'``.
-    :type wrapper_character: :class:`str <python:str>`
-
-    :param null_text: The string used to indicate an empty value if empty
-      values are wrapped. Defaults to `None`.
-    :type null_text: :class:`str <python:str>`
-
-    :param line_terminator: The string used to indicate the end of a line/record in
-      the CSV data. Defaults to ``'\r\n'``.
-    :type line_terminator: :class:`str <python:str>`
-
-    :param line_terminator: The string used to indicate the end of a line/record in the
-      CSV data. Defaults to ``'\r\n'``.
-
-      .. note::
-
-        The Python :mod:`csv <python:csv>` currently ignores the ``line_terminator``
-        parameter and always applies ``'\r\n'``, by design. The Python docs say this may
-        change in the future, so for future backwards compatibility we are including it
-        here.
-
-    :type line_terminator: :class:`str <python:str>`
-
-    :param wrap_all_strings: If ``True``, indicates that the CSV file has all string data
-      values wrapped in quotation marks. Defaults to ``False``.
-
-      .. warning::
-
-        If set to ``True``, the :mod:`csv <python:csv>` module will try to coerce any
-        value that is *not* wrapped in quotation marks to a :class:`float <python:float>`.
-        This can cause unexpected behavior, and typically we recommend leaving this as
-        ``False`` and then re-casting values after they have been parsed.
-
-    :type wrap_all_strings: :class:`bool <python:bool>`
-
-    :param double_wrapper_character_when_nested: If ``True``, quote character is doubled
-      when appearing within a string value. If ``False``, the ``escape_character`` is used
-      to prefix quotation marks. Defaults to ``False``.
-    :type double_wrapper_character_when_nested: :class:`bool <python:bool>`
-
-    :param escape_character: A one-character string that indicates the character used to
-      escape quotation marks if they appear within a string value that is already wrapped
-      in quotation marks. Defaults to ``\\`` (which is Python for ``'\'``, which is
-      Python's native escape character).
-    :type escape_character: :class:`str <python:str>`
-
-    :returns: A :term:`series` instance (descended from
-      :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`) with its
-      :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
-      populated from the CSV data in ``as_string_or_file``.
-    :rtype: :class:`list <python:list>` of series instances (descended from
-      :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`)
-
-    :raises HighchartsCSVDeserializationError: if ``property_column_map`` references
-      CSV columns by their label, but the CSV data does not contain a header row
-
-  .. method:: .from_pandas(cls, df, property_map, series_kwargs = None)
-    :classmethod:
-
-    Create a :term:`series` instance whose
-    :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
-    is populated from a `pandas`_
-    :class:`DataFrame <pandas:DataFrame>`.
-
-    :param df: The :class:`DataFrame <pandas:DataFrame>` from which data should be
-      loaded.
-    :type df: :class:`DataFrame <pandas:DataFrame>`
-
-    :param property_map: A :class:`dict <python:dict>` used to indicate which
-      data point property should be set to which column in ``df``. The keys in the
-      :class:`dict <python:dict>` should correspond to properties in the data point
-      class, while the value should indicate the label for the
-      :class:`DataFrame <pandas:DataFrame>` column.
-    :type property_map: :class:`dict <python:dict>`
-
-    :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
-      arguments that should be used when instantiating the series instance. Defaults
-      to :obj:`None <python:None>`.
-
-      .. warning::
-
-        If ``series_kwargs`` contains a ``data`` key, its value will be *overwritten*.
-        The ``data`` value will be created from ``df`` instead.
-
-    :type series_kwargs: :class:`dict <python:dict>`
-
-    :returns: A :term:`series` instance (descended from
-      :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`) with its
-      :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
-      populated from the data in ``df``.
-    :rtype: :class:`list <python:list>` of series instances (descended from
-      :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`)
-
-    :raises HighchartsPandasDeserializationError: if ``property_map`` references
-      a column that does not exist in the data frame
-    :raises HighchartsDependencyError: if `pandas`_ is
-      not available in the runtime environment
-
-  .. method:: .from_pyspark(cls, df, property_map, series_kwargs = None)
-    :classmethod:
-
-    Create a :term:`series` instance whose
-    :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
-    is populated from a `PySpark <https://spark.apache.org/docs/latest/api/python/>`_
-    :class:`DataFrame <pyspark:pyspark.sql.DataFrame>`.
-
-    :param df: The :class:`DataFrame <pyspark:pyspark.sql.DataFrame>` from which data
-      should be loaded.
-    :type df: :class:`DataFrame <pyspark:pyspark.sql.DataFrame>`
-
-    :param property_map: A :class:`dict <python:dict>` used to indicate which
-      data point property should be set to which column in ``df``. The keys in the
-      :class:`dict <python:dict>` should correspond to properties in the data point
-      class, while the value should indicate the label for the
-      :class:`DataFrame <pyspark:pyspark.sql.DataFrame>` column.
-    :type property_map: :class:`dict <python:dict>`
-
-    :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
-      arguments that should be used when instantiating the series instance. Defaults
-      to :obj:`None <python:None>`.
-
-      .. warning::
-
-        If ``series_kwargs`` contains a ``data`` key, its value will be *overwritten*.
-        The ``data`` value will be created from ``df`` instead.
-
-    :type series_kwargs: :class:`dict <python:dict>`
-
-    :returns: A :term:`series` instance (descended from
-      :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`) with its
-      :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
-      populated from the data in ``df``.
-    :rtype: :class:`list <python:list>` of series instances (descended from
-      :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`)
-
-    :raises HighchartsPySparkDeserializationError: if ``property_map`` references
-      a column that does not exist in the data frame
-    :raises HighchartsDependencyError: if
-      `PySpark <https://spark.apache.org/docs/latest/api/python/>`_ is not available
-      in the runtime environment
+        .. include:: using/populating_series_data/_new_from_pyspark.rst
 
 .. _adding_series_to_charts:
 
@@ -1168,7 +533,8 @@ an instance of :class:`HighchartsOptions <highcharts_python.options.HighchartsOp
   .. note::
 
     This structure - where the chart object contains an options object - is a little
-    nested for my tastes, but it is the structure which `Highcharts JS <https://www.highcharts.com>`__ has adopted and
+    nested for my tastes, but it is the structure which
+    `Highcharts JS <https://www.highcharts.com>`__ has adopted and
     so for the sake of consistency **Highcharts for Python** uses it as well.
 
 To be visualized on your chart, you will need to add your series instances to the
@@ -1177,88 +543,17 @@ property. You can do this in several ways:
 
 .. tabs::
 
-  .. tab:: Directly on the Property
+  .. tab:: Using ``.options.series``
 
-    .. code-block:: python
-
-      my_chart = Chart(options = {})
-      my_series1 = LineSeries()
-      my_series2 = BarSeries()
-      my_chart.options.series = [my_series1, my_series2]
-
-      my_series3 = LineSeries()
-      my_chart.options.series.append(my_series3)
+    .. include:: using/assembling_your_chart/_using_series_property.rst
 
   .. tab:: Using ``.add_series()``
 
-    .. note::
-
-      ``.add_series()`` is supported by both the
-      :class:`Chart <highcharts_python.chart.Chart>` and
-      :class:`HighchartsOptions <highcharts_python.options.HighchartsOptions>` classes
-
-    .. code-block:: python
-
-      my_chart = Chart()
-      my_chart.add_series(my_series1, my_series2)
-
-      my_series3 = LineSeries()
-      my_chart.add_series(my_series3)
-
-    .. method:: .add_series(self, *series)
-
-      Adds ``series`` to the
-      :meth:`Chart.options.series <highcharts_python.options.HighchartsOptions.series>`
-      property.
-
-      :param series: One or more :term:`series` instances (descended from
-        :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`) or an
-        instance (e.g. :class:`dict <python:dict>`, :class:`str <python:str>`, etc.)
-        coercable to one
-      :type series: :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`
-        or coercable
+    .. include:: using/assembling_your_chart/_using_add_series.rst
 
   .. tab:: Using ``.from_series()``
 
-    .. note::
-
-      ``.from_series()`` is supported by both the
-      :class:`Chart <highcharts_python.chart.Chart>` and
-      :class:`HighchartsOptions <highcharts_python.options.HighchartsOptions>` classes
-
-    .. code-block:: python
-
-      my_series1 = LineSeries()
-      my_series2 = BarSeries()
-
-      my_chart = Chart.from_series(my_series1, my_series2, options = None)
-
-    .. method:: .from_series(cls, *series, kwargs = None)
-
-      Creates a new :class:`Chart <highcharts_python.chart.Chart>` instance populated
-      with ``series``.
-
-      :param series: One or more :term:`series` instances (descended from
-        :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`) or an
-        instance (e.g. :class:`dict <python:dict>`, :class:`str <python:str>`, etc.)
-        coercable to one
-      :type series: :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`
-        or coercable
-
-      :param kwargs: Other properties to use as keyword arguments for the instance to be
-        created.
-
-        .. warning::
-
-          If ``kwargs`` sets the
-          :meth:`options.series <highcharts_python.options.HighchartsOptions.series>`
-          property, that setting will be *overridden* by the contents of ``series``.
-
-      :type kwargs: :class:`dict <python:dict>`
-
-      :returns: A new :class:`Chart <highcharts_python.chart.Chart>` instance
-      :rtype: :class:`Chart <highcharts_python.chart.Chart>`
-
+    .. include:: using/assembling_your_chart/_using_from_series.rst
 
 --------------------
 
@@ -1293,35 +588,15 @@ will display the chart in full.
 .. warning::
 
   The current version of **Highcharts for Python** assumes that your web content already
-  has all the ``<script/>`` tags which include the `Highcharts JS <https://www.highcharts.com>`__ modules your chart
-  relies on.
+  has all the ``<script/>`` tags which include the
+  `Highcharts JS <https://www.highcharts.com>`__ modules your chart relies on.
 
   This is likely to change in a future version of **Highcharts for Python**, where the
   library will support the production of ``<script/>`` tags (see roadmap :issue:`2`).
 
 For example:
 
-  .. code-block:: python
-
-    my_chart = Chart(container = 'target_div',
-                     options = {
-                         'series': [
-                             LineSeries.from_array([0, 5, 3, 5])
-                         ]
-                     },
-                     variable_name = 'myChart')
-
-    as_js_literal = my_chart.to_js_literal()
-
-    # This will produce a string equivalent to:
-    #
-    # document.addEventListener('DOMContentLoaded', function() {
-    #   const myChart = Highcharts.chart('target_div', {
-    #      series: {
-    #          data: [0, 5, 3, 5]
-    #      }
-    #   });
-    # });
+.. include:: using/rendering_your_visualizations/_as_web_content.rst
 
 Now you can use whatever front-end framework you are using to insert that string into your
 application's HTML output (in an appropriate ``<script/>`` tag, of course).
@@ -1348,21 +623,7 @@ You can also render **Highcharts for Python** visualizations inside your
 :meth:`.display() <highcharts_python.chart.Chart.display>` call on your
 :class:`Chart <highcharts_python.chart.Chart>` instance:
 
-  .. code-block:: python
-
-    my_chart = Chart(container = 'target_div',
-                     options = {
-                         'series': [
-                             LineSeries.from_array([0, 5, 3, 5])
-                         ]
-                     },
-                     variable_name = 'myChart')
-
-    my_chart.display()
-
-    # You can also supply shared options to display to make sure that they are applied:
-    my_shared_options = SharedOptions()
-    my_chart.display(global_options = my_shared_options)
+.. include:: using/rendering_your_visualizations/_as_jupyter.rst
 
 You can call the ``.display()`` method from anywhere within any notebook cell, and it
 will render the resulting chart in your notebook's output. That's it!
@@ -1376,16 +637,12 @@ will render the resulting chart in your notebook's output. That's it!
 
 ---------------------------
 
-********************************************
-Downloading Your Visualizations
-********************************************
-
 .. sidebar:: Highcharts Export Server
 
-  Highsoft - the developers of `Highcharts JS <https://www.highcharts.com>`__ - are kind enough to provide a
-  rate-limited publicly available :term:`Export Server` that can be used by
-  `Highcharts JS <https://www.highcharts.com>`__ license-holders. By default, **Highcharts for Python** is configured to
-  use this server.
+  Highsoft - the developers of `Highcharts JS <https://www.highcharts.com>`__ - are kind
+  enough to provide a rate-limited publicly available :term:`Export Server` that can be
+  used by `Highcharts JS <https://www.highcharts.com>`__ license-holders. By default,
+  **Highcharts for Python** is configured to use this server.
 
   However, there are many use cases where you may be deploying your own
   :term:`Export Server` and wish to use that instead. You can do this by
@@ -1393,6 +650,10 @@ Downloading Your Visualizations
   :class:`ExportServer <highcharts_python.headless_export.ExportServer>` instance and
   supplying it as the ``server_instance`` keyword argument to the ``.download_chart()``
   method.
+
+********************************************
+Downloading Your Visualizations
+********************************************
 
 Sometimes you are not looking to produce an interactive web-based visualization of your
 data, but instead are looking to produce a static image of your visualization that can
@@ -1406,107 +667,19 @@ download a static version of that chart or persist it to a file in your runtime
 environment. The actual file itself is produced using a
 :term:`Highcharts Export Server <Export Server>`.
 
-  .. code-block:: python
+|
 
-    my_chart = Chart(container = 'target_div',
-                     options = {
-                         'series': [
-                             LineSeries.from_array(
-                                 [0, 5, 3, 5]
-                             )
-                         ]
-                     },
-                     variable_name = 'myChart')
+|
 
-    my_png_image = my_chart.download_chart(
-        format = 'png'
-    )
+.. tabs::
 
-    # also saves the file to "/images/my-chart-file.png"
-    my_png_image = my_chart.download_chart(
-        format = 'png',
-        filename = '/images/my-chart-file.png'
-    )
+  .. tab:: Using Highsoft's Export Server
 
-  .. method:: .download_chart(self, filename = None, format = 'png', server_instance = None, scale = 1, width = None, auth_user = None, auth_password = None, timeout = 0.5, global_options = None, **kwargs)
+    .. include:: using/download_visualizations/_using_highsoft.rst
 
-    Export a downloaded form of the chart using a Highcharts :term:`Export Server`.
+  .. tab:: Using a Custom Server
 
-    :param filename: The name of the file where the exported chart should (optionally)
-      be persisted. Defaults to :obj:`None <python:None>`.
-    :type filename: Path-like or :obj:`None <python:None>`
-
-    :param server_instance: Provide an already-configured :class:`ExportServer`
-      instance to use to programmatically produce the exported chart. Defaults to
-      :obj:`None <python:None>`, which causes **Highcharts for Python** to instantiate
-      a new :class:`ExportServer` instance with all applicable defaults.
-    :type server_instance: :class:`ExportServer` or :obj:`None <python:None>`
-
-    :param format: The format in which the exported chart should be returned. Defaults to
-      ``'png'``.
-
-      Accepts:
-
-        * ``'png'``
-        * ``'jpeg'``
-        * ``'pdf'``
-        * ``'svg'``
-
-    :type format: :class:`str <python:str>`
-
-    :param scale: The scale factor by which the exported chart image should be scaled. Defaults
-      to ``1``.
-
-      .. tip::
-
-        Use this setting to improve resolution when exporting PNG or JPEG images. For
-        example, setting ``scale = 2`` on a chart whose width is 600px will produce
-        an image file with a width of 1200px.
-
-      .. warning::
-
-        If ``width`` is explicitly set, this setting will be *overridden*.
-
-    :type scale: numeric
-
-    :param width: The width that the exported chart should have. Defaults to
-      :obj:`None <python:None>`.
-
-      .. warning::
-
-        If explicitly set, this setting will override ``scale``.
-
-    :type width: numeric or :obj:`None <python:None>`
-
-    :param auth_user: The username to use to authenticate against the
-      Export Server, using :term:`basic authentication`. Defaults to
-      :obj:`None <python:None>`.
-    :type auth_user: :class:`str <python:str>` or :obj:`None <python:None>`
-
-    :param auth_password: The password to use to authenticate against the Export
-      Server (using :term:`basic authentication`). Defaults to
-      :obj:`None <python:None>`.
-    :type auth_password: :class:`str <python:str>` or :obj:`None <python:None>`
-
-    :param timeout: The number of seconds to wait before issuing a timeout error.
-      The timeout check is passed if bytes have been received on the socket in less
-      than the ``timeout`` value. Defaults to ``0.5``.
-    :type timeout: numeric or :obj:`None <python:None>`
-
-    :param global_options: The global options which will be passed to the (JavaScript)
-      ``Highcharts.setOptions()`` method, and which will be applied to the exported
-      chart. Defaults to :obj:`None <python:None>`.
-
-    :type global_options: :class:`HighchartsOptions` or :obj:`None <python:None>`
-
-    .. note::
-
-      All other keyword arguments are as per the :class:`ExportServer` constructor.
-
-    :returns: The exported chart image, either as a :class:`bytes <python:bytes>`
-      binary object or as a base-64 encoded string (depending on the ``use_base64``
-      keyword argument).
-    :rtype: :class:`bytes <python:bytes>` or :class:`str <python:str>`
+    .. include:: using/download_visualizations/_using_custom.rst
 
 -----------------------------
 

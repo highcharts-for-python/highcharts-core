@@ -25,7 +25,7 @@ modules.
   definitions for classes that are referenced or used throughout the other class
   definitions.
 
-  And you can find the Highcharts JS options object and all of its
+  And you can find the Highcharts JS ``options`` object and all of its
   properties defined in the :mod:`.options <highcharts_python.options>` module, with
   specific (complicated or extensive) sub-folders providing property-specific classes
   (e.g. the :mod:`.options.plot_options <highcharts_python.options.plot_options>`

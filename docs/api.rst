@@ -21,8 +21,9 @@ Code Style: Python vs JavaScript Naming Conventions
 Standard Methods
 =======================================
 
-Every single object supported by the Highcharts JS API corresponds to a Python class in
-**Highcharts for Python**. These classes generally inherit from the
+Every single object supported by the
+`Highcharts JS API <https://api.highcharts.com/highcharts/>`__ corresponds to a Python
+class in **Highcharts for Python**. These classes generally inherit from the
 :class:`HighchartsMeta <highcharts_python.metaclasses.HighchartsMeta>` metaclass, which
 provides each class with a number of standard methods.
 

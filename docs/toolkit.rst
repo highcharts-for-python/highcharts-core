@@ -30,12 +30,12 @@ The **Highcharts for Python** toolkit includes two categories of tools:
       `Highcharts Stock <https://www.highcharts.com/blog/products/#highcharts-stock>`_
       JavaScript library, which provides extensive visualizations for time series and
       stock price visualizations. For more details, please see the relevant
-      `Highcharts Stock for Python documentation <https://highcharts-stock-python.readthedocs.io>`_
+      `Highcharts Stock for Python documentation <https://highcharts-stock.readthedocs.io>`_
     * **Highcharts Maps for Python**: This is the Python wrapper for the
       `Highcharts Maps <https://www.highcharts.com/blog/products/#highcharts-maps>`_
       JavaScript library, which provides extensive geographic data visualization options
       with rich interactive maps. For more details, please see the relevant
-      `Highcharts Maps for Python documentation <https://highcharts-maps-python.readthedocs.io>`_
+      `Highcharts Maps for Python documentation <https://highcharts-maps.readthedocs.io>`_
 
   .. tab:: Extensions
 
@@ -51,7 +51,7 @@ The **Highcharts for Python** toolkit includes two categories of tools:
       `Highcharts Gantt <https://www.highcharts.com/blog/products/#highcharts>`_
       JavaScript library, which provides rich visualizations for resource allocation over
       time. For more details, please see the relevant
-      `Highcharts Gantt for Python documentation <https://highcharts-gantt-python.readthedocs.io>`_
+      `Highcharts Gantt for Python documentation <https://highcharts-gantt.readthedocs.io>`_
     * **Highcharts for Dash**: This is a set of components for the
       `Dash <https://dash.plotly.com/>`_ data visualization framework which makes it easy
       to use Highcharts visualizations in your Dash dashboards. For more details, please
@@ -68,7 +68,8 @@ The **Highcharts for Python** toolkit includes two categories of tools:
     .. note::
 
       All extensions to **Highcharts for Python** support visualizations produced in any
-      of the core libraries.
+      of the core libraries. For more information, please see
+      :doc:`Supported Visualizations <visualizations>`.
 
 ------------
 
