@@ -713,3 +713,11 @@ class Language(HighchartsMeta):
         }
 
         return untrimmed
+
+
+__all__ = [
+    'Language',
+    'AccessibilityLanguageOptions',
+    'ExportDataLanguageOptions',
+    'NavigationLanguageOptions'
+]
