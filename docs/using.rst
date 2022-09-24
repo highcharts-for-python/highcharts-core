@@ -168,6 +168,13 @@ files and code to work with **Highcharts for Python**:
     **Highcharts for Python**. There's nothing wrong with that! It's just a set of best
     practices that we've found work for us and which we therefore recommend.
 
+.. _importing:
+
+Importing Highcharts for Python
+======================================
+
+.. include:: using/_importing.rst
+
 .. _shared_options:
 
 Use Shared Options

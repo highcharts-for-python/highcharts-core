@@ -174,10 +174,7 @@ Hello World, and Basic Usage
 1. Import Highcharts Stock for Python
 ==========================================
 
-  .. code-block:: python
-
-    from highcharts_python import highcharts
-
+.. include:: using/_importing.rst
 
 2. Create Your Chart
 ================================
