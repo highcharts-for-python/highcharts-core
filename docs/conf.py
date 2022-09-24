@@ -86,6 +86,8 @@ html_context = {
 github_username = 'insightindustry'
 github_repository = 'highcharts-python'
 
+sphinx_tabs_disable_tab_closing = True
+
 # Example configuration for intersphinx: refer to the Python standard library.
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3.10', None),
