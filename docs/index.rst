@@ -129,19 +129,19 @@ Key Highcharts for Python Features
 
 * **Clean and consistent API**. No reliance on "hacky" code, :class:`dict <python:dict>`
   and JSON serialization, or impossible to maintain / copy-pasted "spaghetti code".
-  * **Comprehensive Highcharts Support**. Every single Highcharts chart type and every
-    single configuration option is supported in the **Highcharts for Python** toolkit.
-    This includes the over 70 data visualization types supported by
-    `Highcharts JS <https://www.highcharts.com/product/highcharts/>`__ and the 50+
-    technical indicator visualizations available in
-    `Highcharts Stock <https://www.highcharts.com/product/stock/>`__, with full support for
-    the rich JavaScript formatter (JS :term:`callback functions <callback function>`)
-    capabilities that are often needed to get the most out of Highcharts' visualization and
-    interaction capabilities.
+* **Comprehensive Highcharts Support**. Every single Highcharts chart type and every
+  single configuration option is supported in the **Highcharts for Python** toolkit.
+  This includes the over 70 data visualization types supported by
+  `Highcharts JS <https://www.highcharts.com/product/highcharts/>`__ and the 50+
+  technical indicator visualizations available in
+  `Highcharts Stock <https://www.highcharts.com/product/stock/>`__, with full support for
+  the rich JavaScript formatter (JS :term:`callback functions <callback function>`)
+  capabilities that are often needed to get the most out of Highcharts' visualization and
+  interaction capabilities.
 
-    .. seealso::
+  .. seealso::
 
-      * :doc:`Supported Visualizations <visualizations>`
+    * :doc:`Supported Visualizations <visualizations>`
 
 * **Simple JavaScript Code Generation**. With one method call, produce production-ready
   JavaScript code to render your interactive visualizations using Highcharts' rich
