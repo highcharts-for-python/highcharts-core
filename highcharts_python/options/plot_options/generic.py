@@ -92,6 +92,8 @@ class GenericTypeOptions(HighchartsMeta):
         self.turbo_threshold = kwargs.get('turbo_threshold', None)
         self.visible = kwargs.get('visible', None)
 
+        super().__init__(**kwargs)
+
     @property
     def type(self) -> str:
         """Indicates the type of series that is represented by this instance.

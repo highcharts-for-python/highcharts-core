@@ -28,6 +28,8 @@ class Chart(HighchartsMeta):
         self.options = kwargs.get('options', None)
         self.variable_name = kwargs.get('variable_name', None)
 
+        super().__init__(**kwargs)
+
     def _repr_html_(self):
         """Produce the HTML representation of the chart.
 
