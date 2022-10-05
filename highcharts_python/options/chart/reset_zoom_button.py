@@ -79,7 +79,10 @@ class ResetZoomButtonOptions(HighchartsMeta):
 
     @theme.setter
     def theme(self, value):
-        self._theme = validators.dict(value, allow_empty = True)
+        if not value or isinstance(value, constants.EnforcedNullType):
+            self._theme = None
+        else:
+            self._theme = validators.dict(value, allow_empty = False)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
