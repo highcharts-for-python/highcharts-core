@@ -1,6 +1,5 @@
 from typing import Optional
 from decimal import Decimal
-from abc import abstractmethod
 
 from validator_collection import validators, checkers
 
@@ -200,12 +199,6 @@ class DataBase(HighchartsMeta):
             self._selected = None
         else:
             self._selected = bool(value)
-
-    @classmethod
-    def _get_kwargs_from_dict(cls, as_dict):
-        kwargs = cls._get_kwargs_from_dict(as_dict)
-
-        return kwargs
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

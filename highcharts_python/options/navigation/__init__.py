@@ -32,6 +32,8 @@ class NavigationBase(HighchartsMeta):
         self.events = kwargs.get('events', None)
         self.icons_url = kwargs.get('icons_url', None)
 
+        super().__init__(**kwargs)
+
     @property
     def annotation_options(self) -> Optional[Annotation]:
         """Additional options to be applied to all annotations.

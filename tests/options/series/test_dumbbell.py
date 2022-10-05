@@ -280,7 +280,7 @@ STANDARD_PARAMS = [
           'liveRedraw': True
       },
       'find_nearest_point_by': 'xy',
-      'get_extremes_for_all': True,
+      'get_extremes_from_all': True,
       'group_padding': 12,
       'linecap': 'round',
       'line_color': '#ccc',
@@ -486,7 +486,7 @@ STANDARD_PARAMS = [
           'liveRedraw': True
       },
       'find_nearest_point_by': 'xy',
-      'get_extremes_for_all': True,
+      'get_extremes_from_all': True,
       'group_padding': 12,
       'linecap': 'round',
       'line_color': '#ccc',

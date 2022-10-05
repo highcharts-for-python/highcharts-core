@@ -152,7 +152,7 @@
   crisp: true,
   cropThreshold: 500,
   findNearestPointBy: 'xy',
-  getExtremesForAll: true,
+  getExtremesFromAll: true,
   ignoreHiddenPoint: true,
   interactByLeaf: true,
   layoutAlgorithm: 'sliceAndDice',

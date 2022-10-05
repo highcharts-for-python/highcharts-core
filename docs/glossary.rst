@@ -24,7 +24,7 @@ Glossary
 
       * :term:`Event Handler`
       * :term:`Formatter`
-      * :class:`highcharts_python.utility_classes.javascript_functions.CallbackFunction>`
+      * :class:`CallbackFunction <highcharts_python.utility_classes.javascript_functions.CallbackFunction>`
 
   Cartesian Charts
     Cartesian charts are :term:`charts` that typically feature two or more axes, by common
@@ -70,13 +70,13 @@ Glossary
 
     Represented in **Highcharts for Python** by
     :class:`highcharts_python.utility_classes.data_labels.DataLabel` and also affected
-    heavily by :meth:`highcharts_python.options.HighchartsOptions.tooltip`.
+    heavily by :meth:`highcharts_stock.options.HighchartsOptions.tooltip`.
 
     .. seealso::
 
-      * :class:`highcharts_python.utility_classes.data_labels.DataLabel`
-      * :meth:`highcharts_python.options.HighchartsOptions.tooltip`
-      * :class:`highcharts_python.options.tooltips.Tooltip`
+      * :class:`highcharts_stock.utility_classes.data_labels.DataLabel`
+      * :meth:`highcharts_stock.options.HighchartsOptions.tooltip`
+      * :class:`highcharts_stock.options.tooltips.Tooltip`
 
   Dependency Wheel
     A dependency wheel chart is a type of flow diagram, where all nodes are laid out
@@ -152,7 +152,7 @@ Glossary
     .. seealso::
 
       * :term:`Callback Function`
-      * :class:`highcharts_python.utility_classes.javascript_functions.CallbackFunction`
+      * :class:`highcharts_stock.utility_classes.javascript_functions.CallbackFunction`
 
   Export Server
     A server application which can receive requests to generate :term:`charts`, produces
@@ -184,7 +184,7 @@ Glossary
     .. seealso::
 
       * :term:`Callback Function`
-      * :class:`highcharts_python.utility_classes.javascript_functions.CallbackFunction`
+      * :class:`highcharts_stock.utility_classes.javascript_functions.CallbackFunction`
 
   Gantt Chart
     A type of :term:`chart <charts>` which indicates the start and end of processes along
@@ -244,6 +244,7 @@ Glossary
               aBooleanProperty: true,
               myCallback: function() { return true }
             }
+
         - |
           .. code-block:: JavaScript
 
@@ -252,6 +253,7 @@ Glossary
             "anotherProperty": 123,
             "aBooleanProperty": true
           }
+
 
     As you can see, the two forms are very similar. However, the JavaScript object literal
     notation has its keys directly accessible as properties of the object, while the JSON
@@ -264,6 +266,25 @@ Glossary
 
       Typically, JSON can be converted to JavaScript object literal notation easily...but
       the opposite does not hold true.
+
+  Metaclass
+    A Python class that is used to define properties and methods - including abstract
+    properties or methods which are not implemented in the metaclass itself - which are
+    then inherited by sub-classes that derive from the metaclass.
+
+    Metaclasses are typically used as good :iabbr:`DRY (Don't Repeat Yourself)`
+    programming and to ensure a consistent interface (standard methods) across multiple
+    classes in your code.
+
+    In the **Highcharts for Python** toolkit, metaclasses are defined in the
+    :mod:`.metaclasses <highcharts_python.metaclasses>` module, and most inherit from the
+    :class:`.metaclasses.HighchartsMeta <highcharts_python.metaclasses.HighchartsMeta>`
+    class.
+
+    .. seealso::
+
+      * :mod:`.metaclasses <highcharts_python.metaclasses>`
+      * :class:`HighchartsMeta <highcharts_python.metaclasses.HighchartsMeta>`
 
   Metric
     The value of a measurement. Think of it as a "type" of number. A metric might be
@@ -295,6 +316,23 @@ Glossary
 
       * :class:`NetworkGraphOptions <highcharts_python.options.plot_options.networkgraph.NetworkGraphOptions>`
       * :class:`NetworkGraphSeries <highcharts_python.options.series.networkgraph.NetworkGraphSeries>`
+
+  Oscillator
+
+      .. caution::
+
+        Oscillators are only available in **Highcharts Stock for Python**.
+
+    An oscillator is a type of :term:`technical indicator` that is used to analyze bands
+    and trend evolutions. Oscillators typically are visualized by adding high and low
+    bands around the :term:`series` being analyzed and then adding a trendline calculation
+    that fluctuates between these bands.
+
+    .. seealso::
+
+      * :term:`Technical Indicator`
+      * :doc:`Supported Visualizations <visualizations>` > :ref:`Technical Indicators <technical_indicator_visualizations>`
+      * :doc:`Using Highcharts Stock for Python <using>` > :ref:`Using Technical Indicators <using_technical_indicators>`
 
   Plot Band
     A banded area displayed on a :term:`chart <charts>` bounded by two points on an axis.
@@ -368,6 +406,22 @@ Glossary
 
       Think of a "series" as one line on a line chart.
 
+  Shared Options
+    Shared Options are global configurations that are applied to all Highcharts
+    visualizations that are displayed at the same time (on one web page, typically). They
+    are typically used to practice good :iabbr:`DRY (Don't Repeat Yourself)` programming
+    and to minimize the amount of code rendered in the page itself.
+
+    In the **Highcharts for Python** toolkit, shared options are managed through the
+    :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
+    class.
+
+    .. seealso::
+
+      * :doc:`Using Highcharts for Python <using>` > :ref:`Using Shared Options <shared_options>`
+      * :mod:`.global_options.shared_options` <highcharts_python.global_options.shared_options>
+      * :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
+
   SolidGauge
     A solid gauge is a circular gauge where the value is indicated by a filled arc,
     and the color of the arc may variate with the value.
@@ -423,6 +477,27 @@ Glossary
 
       * :class:`SunburstOptions <highcharts_python.options.plot_options.sunburst.SunburstOptions>`
       * :class:`SunburstSeries <highcharts_python.options.series.sunburst.SunburstSeries>`
+
+  Technical Indicator
+
+      .. caution::
+
+        Technical indicators are only available in **Highcharts Stock for Python**.
+
+    Technical indicators are analyses performed on another :term:`series` that can provide
+    additional insights. For example, by looking at a linear regression of a time series
+    you can gain insight into the overarching trend of the data.
+
+    **Highcharts Stock for Python** supports over 50 different technical indicators.
+    Indicators differ from typical :term:`series` in that they do not accept data of their
+    own. They do not have a ``.data`` property, and do not receive their own data points.
+    Instead, they are automatically calculated by
+    `Highcharts Stock <https://www.highcharts.com/products/stock/>`__ by linking the
+    indicator series to a main series on the chart itself.
+
+    .. seealso::
+
+      * :doc:`Supported Visualizations <visualizations>` > :ref:`Technical Indicators <technical_indicator_visualizations>`
 
   Untrimmed
 
@@ -490,3 +565,7 @@ Glossary
 
       * :class:`WordcloudOptions <highcharts_python.options.plot_options.wordcloud.WordcloudOptions>`
       * :class:`WordcloudSeries <highcharts_python.options.series.wordcloud.WordcloudSeries>`
+
+----------
+
+fin

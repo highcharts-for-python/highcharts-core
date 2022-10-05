@@ -128,19 +128,8 @@
       selected: false
     }
   ],
-  animationLimit: 10,
   colorAxis: 'some-id-goes-here',
-  colorIndex: 3,
-  colorKey: 'some-key-goes-here',
   connectEnds: true,
-  connectNulls: false,
-  crisp: true,
-  cropThreshold: 500,
-  dataSorting: {
-      enabled: true,
-      matchByName: true,
-      sortKey: 'some-key-value'
-  },
   dragDrop: {
       draggableHigh: true,
       draggableLow: true,
@@ -175,14 +164,26 @@
       },
       liveRedraw: true
   },
-  findNearestPointBy: 'xy',
-  getExtremesForAll: true,
-  linecap: 'round',
   negativeColor: '#ee0000',
   pointInterval: 5,
   pointIntervalUnit: 'days',
   pointPlacement: 'on',
   pointStart: 12,
+  stacking: 'normal',
+  animationLimit: 10,
+  colorIndex: 3,
+  colorKey: 'some-key-goes-here',
+  connectNulls: false,
+  crisp: true,
+  cropThreshold: 500,
+  dataSorting: {
+      enabled: true,
+      matchByName: true,
+      sortKey: 'some-key-value'
+  },
+  findNearestPointBy: 'xy',
+  getExtremesFromAll: true,
+  linecap: 'round',
   relativeXValue: true,
   shadow: {
     color: '#cccccc',
@@ -191,7 +192,6 @@
     width: 4
   },
   softThreshold: true,
-  stacking: 'normal',
   step: 'right',
   zoneAxis: 'y',
   zones: [

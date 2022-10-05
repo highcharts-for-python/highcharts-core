@@ -40,7 +40,7 @@ class DumbbellOptions(GenericTypeOptions):
         self._data_sorting = None
         self._drag_drop = None
         self._find_nearest_point_by = None
-        self._get_extremes_for_all = None
+        self._get_extremes_from_all = None
         self._group_padding = None
         self._linecap = None
         self._line_color = None
@@ -73,7 +73,7 @@ class DumbbellOptions(GenericTypeOptions):
         self.data_sorting = kwargs.get('data_sorting', None)
         self.drag_drop = kwargs.get('drag_drop', None)
         self.find_nearest_point_by = kwargs.get('find_nearest_point_by', None)
-        self.get_extremes_for_all = kwargs.get('get_extremes_for_all', None)
+        self.get_extremes_from_all = kwargs.get('get_extremes_from_all', None)
         self.group_padding = kwargs.get('group_padding', None)
         self.linecap = kwargs.get('linecap', None)
         self.line_color = kwargs.get('line_color', None)
@@ -345,7 +345,7 @@ class DumbbellOptions(GenericTypeOptions):
         self._find_nearest_point_by = validators.string(value, allow_empty = True)
 
     @property
-    def get_extremes_for_all(self) -> Optional[bool]:
+    def get_extremes_from_all(self) -> Optional[bool]:
         """If ``True``, uses the Y extremes of the total chart width or only the zoomed
         area when zooming in on parts of the X axis. By default, the Y axis adjusts to the
         min and max of the visible data.
@@ -356,14 +356,14 @@ class DumbbellOptions(GenericTypeOptions):
 
         :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
-        return self._get_extremes_for_all
+        return self._get_extremes_from_all
 
-    @get_extremes_for_all.setter
-    def get_extremes_for_all(self, value):
+    @get_extremes_from_all.setter
+    def get_extremes_from_all(self, value):
         if value is None:
-            self._get_extremes_for_all = None
+            self._get_extremes_from_all = None
         else:
-            self._get_extremes_for_all = bool(value)
+            self._get_extremes_from_all = bool(value)
 
     @property
     def group_padding(self) -> Optional[int | float | Decimal]:
@@ -807,7 +807,7 @@ class DumbbellOptions(GenericTypeOptions):
             'data_sorting': as_dict.get('dataSorting', None),
             'drag_drop': as_dict.get('dragDrop', None),
             'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
-            'get_extremes_for_all': as_dict.get('getExtremesForAll', None),
+            'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
             'group_padding': as_dict.get('groupPadding', None),
             'linecap': as_dict.get('linecap', None),
             'line_color': as_dict.get('lineColor', None),
@@ -845,7 +845,7 @@ class DumbbellOptions(GenericTypeOptions):
             'dataSorting': self.data_sorting,
             'dragDrop': self.drag_drop,
             'findNearestPointBy': self.find_nearest_point_by,
-            'getExtremesForAll': self.get_extremes_for_all,
+            'getExtremesFromAll': self.get_extremes_from_all,
             'groupPadding': self.group_padding,
             'linecap': self.linecap,
             'lineColor': self.line_color,

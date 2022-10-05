@@ -307,12 +307,3 @@ class Annotation(HighchartsMeta):
         }
 
         return untrimmed
-
-
-__all__ = [
-    'Annotation',
-    'AnnotationPoint',
-    'LabelOptions',
-    'AnnotationLabel',
-    'ShapeOptions'
-]

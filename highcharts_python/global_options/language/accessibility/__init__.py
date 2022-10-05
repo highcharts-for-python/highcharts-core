@@ -440,3 +440,20 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         }
 
         return untrimmed
+
+
+__all__ = [
+    'AccessibilityLanguageOptions',
+    'AnnounceNewDataLanguageOptions',
+    'AxisLanguageOptions',
+    'ChartTypesLanguageOptions',
+    'ExportingLanguageOptions',
+    'LegendLanguageOptions',
+    'RangeSelectorLanguageOptions',
+    'ScreenReaderSectionLanguageOptions',
+    'SeriesLanguageOptions',
+    'SeriesTypeDescriptions',
+    'SonificationLanguageOptions',
+    'TableLanguageOptions',
+    'ZoomLanguageOptions'
+]

@@ -322,20 +322,23 @@ class Language(HighchartsMeta):
     @property
     def months(self) -> Optional[List[str]]:
         """An array containing the months names. Defaults to:
-        ``[
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December"
-        ]``
+
+          .. code-block::
+
+            [
+                "January",
+                "February",
+                "March",
+                "April",
+                "May",
+                "June",
+                "July",
+                "August",
+                "September",
+                "October",
+                "November",
+                "December"
+            ]
 
         .. note::
 
@@ -494,20 +497,23 @@ class Language(HighchartsMeta):
     @property
     def short_months(self) -> Optional[List[str]]:
         """A collection containing the months names in abbreviated form. Defaults to:
-        ``[
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec"
-        ]``.
+
+          .. code-block::
+
+            [
+              "Jan",
+              "Feb",
+              "Mar",
+              "Apr",
+              "May",
+              "Jun",
+              "Jul",
+              "Aug",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dec"
+            ]
 
         .. note::
 
@@ -602,7 +608,10 @@ class Language(HighchartsMeta):
     @property
     def weekdays(self) -> Optional[List[str]]:
         """An array containing the days of the week, starting with Sunday. Defaults to:
-        ``[
+
+        .. code-block::
+
+          [
             "Sunday",
             "Monday",
             "Tuesday",
@@ -610,7 +619,7 @@ class Language(HighchartsMeta):
             "Thursday",
             "Friday",
             "Saturday"
-        ]``
+          ]
 
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`, or
           :obj:`None <python:None>`
@@ -704,3 +713,11 @@ class Language(HighchartsMeta):
         }
 
         return untrimmed
+
+
+__all__ = [
+    'Language',
+    'AccessibilityLanguageOptions',
+    'ExportDataLanguageOptions',
+    'NavigationLanguageOptions'
+]

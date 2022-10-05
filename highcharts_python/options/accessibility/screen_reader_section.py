@@ -117,12 +117,15 @@ class ScreenReaderSection(HighchartsMeta):
     @property
     def before_chart_format(self) -> Optional[str]:
         """Format for the screen reader information region before the chart. Defaults to
-        ``'<{headingTagName}>{chartTitle}</{headingTagName}>
+
+        .. code-block::
+
+          '<{headingTagName}>{chartTitle}</{headingTagName}>
            <div>{typeDescription}</div><div>{chartSubtitle}</div>
            <div>{chartLongdesc}</div><div>{playAsSoundButton}</div>
            <div>{viewTableButton}</div><div>{xAxisDescription}</div>
            <div>{yAxisDescription}</div>
-           <div>{annotationsTitle}{annotationsList}</div>'``.
+           <div>{annotationsTitle}{annotationsList}</div>'
 
         Supported HTML tags are:
           * ``<h1-6>``

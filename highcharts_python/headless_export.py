@@ -72,6 +72,8 @@ class ExportServer(HighchartsMeta):
         self.data_options = kwargs.get('data_options', None)
         self.custom_code = kwargs.get('custom_code', None)
 
+        super().__init__(**kwargs)
+
     @property
     def protocol(self) -> Optional[str]:
         """The protocol over which the Highcharts for Python library should communicate

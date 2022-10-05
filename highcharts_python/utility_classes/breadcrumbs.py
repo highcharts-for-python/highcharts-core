@@ -215,7 +215,7 @@ class BreadcrumbOptions(HighchartsMeta):
           * ``'plot'``
           * ``'chart'``
           * ``'plotBox'``
-          * ``'spacingBox'
+          * ``'spacingBox'``
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
