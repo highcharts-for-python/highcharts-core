@@ -44,41 +44,12 @@ Sub-components
 
   * - Module
     - Classes / Functions
-  * - :mod:`.global_options <highcharts_python.global_options>`
-    -
-  * - :mod:`.global_options.language <highcharts_python.global_options.language>`
-    - :class:`Language <highcharts_python.global_options.language.Language>`
-  * - :mod:`.global_options.language.accessibility <highcharts_python.global_options.language.accessibility>`
-    - :class:`AccessibilityLanguageOptions <highcharts_python.global_options.language.accessibility.AccessibilityLanguageOptions>`
-  * - :mod:`.global_options.language.accessibility.announce_new_data <highcharts_python.global_options.language.accessibility.announce_new_data>`
-    - :class:`AnnounceNewDataLanguageOptions <highcharts_python.global_options.language.accessibility.announce_new_data.AnnounceNewDataLanguageOptions>`
-  * - :mod:`.global_options.language.accessibility.axis <highcharts_python.global_options.language.accessibility.axis>`
-    - :class:`AxisLanguageOptions <highcharts_python.global_options.language.accessibility.axis.AxisLanguageOptions>`
-  * - :mod:`.navigation_types <highcharts_python.global_options.language.accessibility.navigation_types>`
-    - :class:`ChartTypesLanguageOptions <highcharts_python.global_options.language.accessibility.navigation_types.ChartTypesLanguageOptions>`
-  * - :mod:`.navigation <highcharts_python.global_options.language.accessibility.navigation>`
-    - :class:`ExportingLanguageOptions <highcharts_python.global_options.language.accessibility.navigation.ExportingLanguageOptions>`
-  * - :mod:`.navigation <highcharts_python.global_options.language.accessibility.navigation>`
-    - :class:`LegendLanguageOptions <highcharts_python.global_options.language.accessibility.navigation.LegendLanguageOptions>`
-  * - :mod:`.range_selector <highcharts_python.global_options.language.accessibility.range_selector>`
-    - :class:`RangeSelectorLanguageOptions <highcharts_python.global_options.language.accessibility.range_selector.RangeSelectorLanguageOptions>`
-  * - :mod:`.screen_reader_section <highcharts_python.global_options.language.accessibility.screen_reader_section>`
-    - :class:`ScreenReaderSectionLanguageOptions <highcharts_python.global_options.language.accessibility.screen_reader_section.ScreenReaderSectionLanguageOptions>`
-      :class:`ScreenReaderSectionAnnotationLanguage <highcharts_python.global_options.language.accessibility.screen_reader_section.ScreenReaderSectionAnnotationLanguage>`
-  * - :mod:`.series <highcharts_python.global_options.language.accessibility.series>`
-    - :class:`SeriesLanguageOptions <highcharts_python.global_options.language.accessibility.series.SeriesLanguageOptions>`
-      :class:`SeriesSummaryLanguageOptions <highcharts_python.global_options.language.accessibility.series.SeriesSummaryLanguageOptions>`
-      :class:`SeriesTypeDescriptions <highcharts_python.global_options.language.accessibility.series.SeriesTypeDescriptions>`
-  * - :mod:`.sonification <highcharts_python.global_options.language.accessibility.sonification>`
-    - :class:`SonificationLanguageOptions <highcharts_python.global_options.language.accessibility.sonification.SonificationLanguageOptions>`
-  * - :mod:`.table <highcharts_python.global_options.language.accessibility.table>`
-    - :class:`TableLanguageOptions <highcharts_python.global_options.language.accessibility.table.TableLanguageOptions>`
-  * - :mod:`.zoom <highcharts_python.global_options.language.accessibility.zoom>`
-    - :class:`ZoomLanguageOptions <highcharts_python.global_options.language.accessibility.zoom.ZoomLanguageOptions>`
-  * - :mod:`.global_options.language.export_data <highcharts_python.global_options.language.export_data>`
-    -  :class:`ExportDataLanguageOptions <highcharts_python.global_options.language.export_data.ExportDataLanguageOptions>`
-  * - :mod:`.global_options.language.navigation <highcharts_python.global_options.language.navigation>`
-    - :class:`NavigationLanguageOptions <highcharts_python.global_options.language.navigation.NavigationLanguageOptions>`
-      :class:`PopupLanguageOptions <highcharts_python.global_options.language.navigation.PopupLanguageOptions>`
-  * - :mod:`.global_options.shared_options <highcharts_python.global_options.shared_options>`
-    - :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
+  * - :mod:`.options.navigation <highcharts_python.options.navigation>`
+    - :class:`Navigation <highcharts_python.options.navigation.Navigation>`
+  * - :mod:`.options.navigation.bindings <highcharts_python.options.navigation.bindings>`
+    - :class:`Bindings <highcharts_python.options.navigation.bindings.Bindings>`
+      :class:`RectangleAnnotationBinding <highcharts_python.options.navigation.bindings.RectangleAnnotationBinding>`
+      :class:`LabelAnnotationBinding <highcharts_python.options.navigation.bindings.LabelAnnotationBinding>`
+      :class:`EllipseAnnotationBinding <highcharts_python.options.navigation.bindings.EllipseAnnotationBinding>`
+      :class:`CircleAnnotationBinding <highcharts_python.options.navigation.bindings.CircleAnnotationBinding>`
+      :class:`Binding <highcharts_python.options.navigation.bindings.Binding>`

@@ -17,66 +17,136 @@ Installation
 ----------------------
 
 *****************************************************
-Organizing Your Python Highcharts Implementation
+Importing Highcharts for Python Objects
 *****************************************************
 
+.. include:: using/_importing.rst
+
+*****************************************************
 Standardizing Your Charts
-==============================
+*****************************************************
 
-.. todo::
+.. tabs::
 
-  Add guidance on the best practice to standardize your charts.
+  .. tab:: Shared Options
 
-Preparing Data for Highcharts
-================================
+    .. tabs::
 
-.. todo::
+      .. tab:: with JS Literal
 
-  Add guidance on how to organize or structure data for Highcharts for Python.
+         .. include:: using/shared_options/_with_js_literal.rst
 
-Using JS Option Templates
-=============================
+      .. tab:: with JSON
 
-.. todo::
+         .. include:: using/shared_options/_with_json.rst
 
-  Add guidance on how to leverage JS option templates to simplify your implementation.
+      .. tab:: with :class:`dict <python:dict>`
+
+         .. include:: using/shared_options/_with_dict.rst
+
+  .. tab:: Templates
+
+    .. tabs::
+
+      .. tab:: via JS Literal
+
+        .. include:: using/templates/_with_js_literal.rst
+
+      .. tab:: via ``.copy()``
+
+        .. include:: using/templates/_with_copy.rst
+
+      .. tab:: via :class:`dict <python:dict>`
+
+        .. include:: using/templates/_with_dict.rst
+
+---------------------
+
+************************************
+Populating Series with Data
+************************************
+
+.. tabs::
+
+  .. tab:: w/ ``.data``
+
+    .. include:: using/populating_series_data/_with_data_property.rst
+
+  .. tab:: w/ ``.from_array()``
+
+    .. include:: using/populating_series_data/_with_from_array.rst
+
+  .. tab:: from CSV
+
+    .. tabs::
+
+      .. tab:: Create a New Series
+
+        .. include:: using/populating_series_data/_new_from_csv.rst
+
+      .. tab:: Update an Existing Series
+
+        .. include:: using/populating_series_data/_load_from_csv.rst
+
+  .. tab:: from Pandas
+
+    .. tabs::
+
+      .. tab:: Create a New Series
+
+        .. include:: using/populating_series_data/_new_from_pandas.rst
+
+      .. tab:: Update an Existing Series
+
+        .. include:: using/populating_series_data/_load_from_pandas.rst
+
+  .. tab:: from PySpark
+
+    .. tabs::
+
+      .. tab:: Create a New Series
+
+        .. include:: using/populating_series_data/_new_from_pyspark.rst
+
+      .. tab:: Update an Existing Series
+
+        .. include:: using/populating_series_data/_load_from_pyspark.rst
 
 ------------------------
 
-******************************
-Designing Your Configuration
-******************************
+************************************
+Assembling Your Chart and Options
+************************************
 
-As Python Objects
-====================
+.. tabs::
 
-.. todo::
+  .. tab:: Using ``.add_series()``
 
-  Add guidance on how to configure chart options using Python objects.
+    .. include:: using/assembling_your_chart/_using_add_series.rst
 
-As :class:`dict <python:dict>`
-=================================
+  .. tab:: Using ``.from_series()``
 
-.. todo::
+    .. include:: using/assembling_your_chart/_using_from_series.rst
 
-  Add guidance on how to configure chart options using :class:`dict <python:dict>`
-  representations
+  .. tab:: Using ``.series``
 
-As JavaScript or JSON Files
-=================================
+    .. include:: using/assembling_your_chart/_using_series_property.rst
 
-.. todo::
+--------------
 
-  Add guidance on how to configure chart options using JavaScript or JSON files.
+**********************************
+Rendering Your Visualizations
+**********************************
 
-**********************************************************
-Delivering Highcharts Visualizations to Your Front-end
-**********************************************************
+.. tabs::
 
-.. todo::
+  .. tab:: As Web Content
 
-  Add guidance on the best practice to deliver Highcharts JavaScript representation to
-  whatever front-end is being used for rendering.
+    .. include:: using/rendering_your_visualizations/_as_web_content.rst
+
+  .. tab:: in Jupyter Labs or Jupyter Notebook
+
+    .. include:: using/rendering_your_visualizations/_as_jupyter.rst
 
 -------------------------
 
@@ -84,16 +154,12 @@ Delivering Highcharts Visualizations to Your Front-end
 Downloading a Rendered Highcharts Visualization
 ***************************************************
 
-Using the Highsoft-provided :term:`Export Server <Export Server>`
-=========================================================================
+.. tabs::
 
-.. todo::
+  .. tab:: Using Highsoft's Export Server
 
-  Add guidance on how to use ``Chart.download_chart()``.
+    .. include:: using/download_visualizations/_using_highsoft.rst
 
-Using a Custom :term:`Export Server <Export Server>`
-=============================================================
+  .. tab:: Using a Custom Export Server
 
-.. todo::
-
-  Add guidance on how to use a custom export server.
+    .. include:: using/download_visualizations/_using_custom.rst

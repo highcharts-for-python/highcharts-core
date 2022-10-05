@@ -21,8 +21,9 @@ Code Style: Python vs JavaScript Naming Conventions
 Standard Methods
 =======================================
 
-Every single object supported by the Highcharts JS API corresponds to a Python class in
-**Highcharts for Python**. These classes generally inherit from the
+Every single object supported by the
+`Highcharts JS API <https://api.highcharts.com/highcharts/>`__ corresponds to a Python
+class in **Highcharts for Python**. These classes generally inherit from the
 :class:`HighchartsMeta <highcharts_python.metaclasses.HighchartsMeta>` metaclass, which
 provides each class with a number of standard methods.
 
@@ -107,26 +108,26 @@ Core Components
     - :class:`AnnounceNewDataLanguageOptions <highcharts_python.global_options.language.accessibility.announce_new_data.AnnounceNewDataLanguageOptions>`
   * - :mod:`.global_options.language.accessibility.axis <highcharts_python.global_options.language.accessibility.axis>`
     - :class:`AxisLanguageOptions <highcharts_python.global_options.language.accessibility.axis.AxisLanguageOptions>`
-  * - :mod:`global_options.language.accessibility.chart_types <highcharts_python.global_options.language.accessibility.chart_types>`
+  * - :mod:`.global_options.language.accessibility.chart_types <highcharts_python.global_options.language.accessibility.chart_types>`
     - :class:`ChartTypesLanguageOptions <highcharts_python.global_options.language.accessibility.chart_types.ChartTypesLanguageOptions>`
-  * - :mod:`global_options.language.accessibility.exporting <highcharts_python.global_options.language.accessibility.exporting>`
+  * - :mod:`.global_options.language.accessibility.exporting <highcharts_python.global_options.language.accessibility.exporting>`
     - :class:`ExportingLanguageOptions <highcharts_python.global_options.language.accessibility.exporting.ExportingLanguageOptions>`
-  * - :mod:`global_options.language.accessibility.legend <highcharts_python.global_options.language.accessibility.legend>`
+  * - :mod:`.global_options.language.accessibility.legend <highcharts_python.global_options.language.accessibility.legend>`
     - :class:`LegendLanguageOptions <highcharts_python.global_options.language.accessibility.legend.LegendLanguageOptions>`
-  * - :mod:`global_options.language.accessibility.range_selector <highcharts_python.global_options.language.accessibility.range_selector>`
+  * - :mod:`.global_options.language.accessibility.range_selector <highcharts_python.global_options.language.accessibility.range_selector>`
     - :class:`RangeSelectorLanguageOptions <highcharts_python.global_options.language.accessibility.range_selector.RangeSelectorLanguageOptions>`
-  * - :mod:`global_options.language.accessibility.screen_reader_section <highcharts_python.global_options.language.accessibility.screen_reader_section>`
+  * - :mod:`.global_options.language.accessibility.screen_reader_section <highcharts_python.global_options.language.accessibility.screen_reader_section>`
     - :class:`ScreenReaderSectionLanguageOptions <highcharts_python.global_options.language.accessibility.screen_reader_section.ScreenReaderSectionLanguageOptions>`
       :class:`ScreenReaderSectionAnnotationLanguage <highcharts_python.global_options.language.accessibility.screen_reader_section.ScreenReaderSectionAnnotationLanguage>`
-  * - :mod:`global_options.language.accessibility.series <highcharts_python.global_options.language.accessibility.series>`
+  * - :mod:`.global_options.language.accessibility.series <highcharts_python.global_options.language.accessibility.series>`
     - :class:`SeriesLanguageOptions <highcharts_python.global_options.language.accessibility.series.SeriesLanguageOptions>`
       :class:`SeriesSummaryLanguageOptions <highcharts_python.global_options.language.accessibility.series.SeriesSummaryLanguageOptions>`
       :class:`SeriesTypeDescriptions <highcharts_python.global_options.language.accessibility.series.SeriesTypeDescriptions>`
-  * - :mod:`global_options.language.accessibility.sonification <highcharts_python.global_options.language.accessibility.sonification>`
+  * - :mod:`.global_options.language.accessibility.sonification <highcharts_python.global_options.language.accessibility.sonification>`
     - :class:`SonificationLanguageOptions <highcharts_python.global_options.language.accessibility.sonification.SonificationLanguageOptions>`
-  * - :mod:`global_options.language.accessibility.table <highcharts_python.global_options.language.accessibility.table>`
+  * - :mod:`.global_options.language.accessibility.table <highcharts_python.global_options.language.accessibility.table>`
     - :class:`TableLanguageOptions <highcharts_python.global_options.language.accessibility.table.TableLanguageOptions>`
-  * - :mod:`global_options.language.accessibility.zoom <highcharts_python.global_options.language.accessibility.zoom>`
+  * - :mod:`.global_options.language.accessibility.zoom <highcharts_python.global_options.language.accessibility.zoom>`
     - :class:`ZoomLanguageOptions <highcharts_python.global_options.language.accessibility.zoom.ZoomLanguageOptions>`
   * - :mod:`.global_options.language.export_data <highcharts_python.global_options.language.export_data>`
     - :class:`ExportDataLanguageOptions <highcharts_python.global_options.language.export_data.ExportDataLanguageOptions>`
@@ -137,6 +138,8 @@ Core Components
     - :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
   * - :mod:`.headless_export <highcharts_python.headless_export>`
     - :class:`ExportServer <highcharts_python.headless_export.ExportServer>`
+  * - :mod:`.highcharts <highcharts_python.highcharts>`
+    - (most classes from across the rest of the API)
   * - :mod:`.options <highcharts_python.options>`
     - :class:`HighchartsOptions <highcharts_python.options.HighchartsOptions>`
       :class:`Options <highcharts_python.options.Options>`
@@ -625,6 +628,7 @@ Core Components
   api/chart
   api/global_options/index
   api/headless_export
+  api/highcharts
   api/options/index
   api/utility_classes/index
 

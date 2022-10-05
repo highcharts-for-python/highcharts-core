@@ -24,7 +24,6 @@
   legend/index
   loading
   navigation/index
-  navigator
   no_data
   pane
   plot_options/index
