@@ -14,8 +14,8 @@ from highcharts_python.utility_classes.shadows import ShadowOptions
 from highcharts_python.utility_classes.events import ChartEvents
 from highcharts_python.options.chart.options_3d import Options3D
 from highcharts_python.options.axes.parallel_axes import ParallelAxesOptions
-from highcharts_python.options.chart.reset_zoom_button import ResetZoomButtonOptions
 from highcharts_python.options.chart.scrollable_plot_area import ScrollablePlotArea
+from highcharts_python.options.chart.zooming import ZoomingOptions
 
 
 class PanningOptions(HighchartsMeta):
@@ -128,7 +128,6 @@ class ChartOptions(HighchartsMeta):
         self._panning = None
         self._parallel_axes = None
         self._parallel_coordinates = None
-        self._pinch_type = None
         self._plot_background_color = None
         self._plot_background_image = None
         self._plot_border_color = None
@@ -137,7 +136,6 @@ class ChartOptions(HighchartsMeta):
         self._polar = None
         self._reflow = None
         self._render_to = None
-        self._reset_zoom_button = None
         self._scrollable_plot_area = None
         self._selection_marker_fill = None
         self._shadow = None
@@ -150,9 +148,7 @@ class ChartOptions(HighchartsMeta):
         self._styled_mode = None
         self._type = None
         self._width = None
-        self._zoom_by_single_touch = None
-        self._zoom_key = None
-        self._zoom_type = None
+        self._zooming = None
 
         self.align_thresholds = kwargs.get('align_thresholds', None)
         self.align_ticks = kwargs.get('align_ticks', None)
@@ -181,7 +177,6 @@ class ChartOptions(HighchartsMeta):
         self.panning = kwargs.get('panning', None)
         self.parallel_axes = kwargs.get('parallel_axes', None)
         self.parallel_coordinates = kwargs.get('parallel_coordinates', None)
-        self.pinch_type = kwargs.get('pinch_type', None)
         self.plot_background_color = kwargs.get('plot_background_color', None)
         self.plot_background_image = kwargs.get('plot_background_image', None)
         self.plot_border_color = kwargs.get('plot_border_color', None)
@@ -190,7 +185,6 @@ class ChartOptions(HighchartsMeta):
         self.polar = kwargs.get('polar', None)
         self.reflow = kwargs.get('reflow', None)
         self.render_to = kwargs.get('render_to', None)
-        self.reset_zoom_button = kwargs.get('reset_zoom_button', None)
         self.scrollable_plot_area = kwargs.get('scrollable_plot_area', None)
         self.selection_marker_fill = kwargs.get('selection_marker_fill', None)
         self.shadow = kwargs.get('shadow', None)
@@ -205,9 +199,7 @@ class ChartOptions(HighchartsMeta):
         self.styled_mode = kwargs.get('styled_mode', None)
         self.type = kwargs.get('type', None)
         self.width = kwargs.get('width', None)
-        self.zoom_by_single_touch = kwargs.get('zoom_by_single_touch', None)
-        self.zoom_key = kwargs.get('zoom_key', None)
-        self.zoom_type = kwargs.get('zoom_type', None)
+        self.zooming = kwargs.get('zooming', None)
 
     @property
     def align_thresholds(self) -> Optional[bool]:
@@ -817,42 +809,6 @@ class ChartOptions(HighchartsMeta):
             self._parallel_coordinates = bool(value)
 
     @property
-    def pinch_type(self) -> Optional[str]:
-        """Equivalent to :meth:`Chart.zoom_type` but for multi-touch gestures only.
-        By default, is not specified.
-
-        Accepts:
-
-          * ``'x'``
-          * ``'y'``
-          * ``'xy'``
-          * :obj:`None <python:None>`
-
-        If not specified explicitly, the pinch type is the same as the
-        :meth:`Chart.zoom_type`. However, pinching can be enabled separately in some
-        cases, for example in stock charts where a mouse drag pans the chart, while
-        pinching is enabled. When :meth:`Tooltip.follow_touch_move` is ``True``,
-        pinch type only applies to two-finger touches.
-
-        :returns: The configuration of the pinch directional support.
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
-        """
-        return self._pinch_type
-
-    @pinch_type.setter
-    def pinch_type(self, value):
-        if not value:
-            self._pinch_type = None
-        else:
-            value = validators.string(value)
-            value = value.lower()
-            if value not in ['x', 'y', 'xy']:
-                raise errors.HighchartsValueError(f'pinch_type is expected to be either '
-                                                  f'"x", "y", "xy", or None. Was: '
-                                                  f'{value}')
-            self._pinch_type = value
-
-    @property
     def plot_background_color(self) -> Optional[str | Gradient | Pattern]:
         """The background color or gradient for the plot area. Defaults to
         ``None``.
@@ -1016,20 +972,6 @@ class ChartOptions(HighchartsMeta):
     @render_to.setter
     def render_to(self, value):
         self._render_to = validators.string(value, allow_empty = True)
-
-    @property
-    def reset_zoom_button(self) -> Optional[ResetZoomButtonOptions]:
-        """Configuration settings for the button that appears after a selection zoom,
-        allowing the user to reset zoom.
-
-        :rtype: :class:`ResetZoomButtonOptions` or :obj:`None <python:None>`
-        """
-        return self._reset_zoom_button
-
-    @reset_zoom_button.setter
-    @class_sensitive(ResetZoomButtonOptions)
-    def reset_zoom_button(self, value):
-        self._reset_zoom_button = value
 
     @property
     def scrollable_plot_area(self) -> Optional[ScrollablePlotArea]:
@@ -1327,96 +1269,18 @@ class ChartOptions(HighchartsMeta):
                                                   'supported data type.')
 
     @property
-    def zoom_by_single_touch(self) -> Optional[bool]:
-        """If ``True``, enables zooming with a single touch (in combination with
-        :meth:`Chart.zoom_type`) while two-finger pinch will still work as per
-        :meth:`Chart.pinch_type`. Defaults to ``False``.
+    def zooming(self) -> Optional[ZoomingOptions]:
+        """Chart zooming configuration.
 
-        .. warning::
-
-          Enabling zoom by single touch will interfere with touch-dragging the chart to
-          read the tooltip, and if vertical zooming is enabled will make it hard to scroll
-          vertically on the page.
-
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        :rtype: :class:`ZoomingOptions <highcharts_maps.options.chart.zooming.ZoomingOptions>`
+          or :obj:`None <python:None>`
         """
-        return self._zoom_by_single_touch
+        return self._zooming
 
-    @zoom_by_single_touch.setter
-    def zoom_by_single_touch(self, value):
-        if value is None:
-            self._zoom_by_single_touch = None
-        else:
-            self._zoom_by_single_touch = bool(value)
-
-    @property
-    def zoom_key(self) -> Optional[str]:
-        """Sets a key to hold when dragging to zoom the chart.
-
-        .. hint::
-
-          This is useful to avoid zooming while moving points.
-
-        .. hint::
-
-          This should be set to a different key than :meth:`Chart.pan_key`.
-
-        Accepts the following values:
-
-          * ``'alt'``
-          * ``'ctrl'``
-          * ``'meta'`` (the command key on Mac and Windows key on Windows)
-          * ``'shift'``.
-
-        The keys are mapped directly to the key properties of the click event argument
-        (``event.altKey``, ``event.ctrlKey``, ``event.metaKey``, and ``event.shiftKey``).
-
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
-        """
-        return self._zoom_key
-
-    @zoom_key.setter
-    def zoom_key(self, value):
-        if not value:
-            self._zoom_key = None
-        else:
-            value = validators.string(value)
-            value = value.lower()
-            if value not in ['alt', 'ctrl', 'meta', 'shift']:
-                raise errors.HighchartsValueError(f'pan_key expects a value of "alt", '
-                                                  f'"ctrl", "meta", or "shift". Was: '
-                                                  f'{value}')
-
-            self._zoom_key = value
-
-    @property
-    def zoom_type(self) -> Optional[str]:
-        """Determines in which dimensions the user can zoom by dragging the mouse. By
-        default, not set.
-
-        Accepts:
-
-          * ``'x'``
-          * ``'y'``
-          * ``'xy'``
-          * :obj:`None <python:None>`
-
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
-        """
-        return self._zoom_type
-
-    @zoom_type.setter
-    def zoom_type(self, value):
-        if not value:
-            self._zoom_type = None
-        else:
-            value = validators.string(value)
-            value = value.lower()
-            if value not in ['x', 'y', 'xy']:
-                raise errors.HighchartsValueError(f'zoom_type is expected to be either '
-                                                  f'"x", "y", "xy", or None. Was: '
-                                                  f'{value}')
-            self._zoom_type = value
+    @zooming.setter
+    @class_sensitive(ZoomingOptions)
+    def zooming(self, value):
+        self._zooming = value
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -1447,7 +1311,6 @@ class ChartOptions(HighchartsMeta):
             'panning': as_dict.get('panning', None),
             'parallel_axes': as_dict.get('parallelAxes', None),
             'parallel_coordinates': as_dict.get('parallelCoordinates', None),
-            'pinch_type': as_dict.get('pinchType', None),
             'plot_background_color': as_dict.get('plotBackgroundColor', None),
             'plot_background_image': as_dict.get('plotBackgroundImage', None),
             'plot_border_color': as_dict.get('plotBorderColor', None),
@@ -1456,7 +1319,6 @@ class ChartOptions(HighchartsMeta):
             'polar': as_dict.get('polar', None),
             'reflow': as_dict.get('reflow', None),
             'render_to': as_dict.get('renderTo', None),
-            'reset_zoom_button': as_dict.get('resetZoomButton', None),
             'scrollable_plot_area': as_dict.get('scrollablePlotArea', None),
             'selection_marker_fill': as_dict.get('selectionMarkerFill', None),
             'shadow': as_dict.get('shadow', None),
@@ -1470,9 +1332,7 @@ class ChartOptions(HighchartsMeta):
             'styled_mode': as_dict.get('styledMode', None),
             'type': as_dict.get('type', None),
             'width': as_dict.get('width', None),
-            'zoom_by_single_touch': as_dict.get('zoomBySingleTouch', None),
-            'zoom_key': as_dict.get('zoomKey', None),
-            'zoom_type': as_dict.get('zoomType', None)
+            'zooming': as_dict.get('zooming', None),
         }
 
         return kwargs
@@ -1505,7 +1365,6 @@ class ChartOptions(HighchartsMeta):
             'panning': self.panning,
             'parallelAxes': self.parallel_axes,
             'parallelCoordinates': self.parallel_coordinates,
-            'pinchType': self.pinch_type,
             'plotBackgroundColor': self.plot_background_color,
             'plotBackgroundImage': self.plot_background_image,
             'plotBorderColor': self.plot_border_color,
@@ -1514,7 +1373,6 @@ class ChartOptions(HighchartsMeta):
             'polar': self.polar,
             'reflow': self.reflow,
             'renderTo': self.render_to,
-            'resetZoomButton': self.reset_zoom_button,
             'scrollablePlotArea': self.scrollable_plot_area,
             'selectionMarkerFill': self.selection_marker_fill,
             'shadow': self.shadow,
@@ -1528,9 +1386,7 @@ class ChartOptions(HighchartsMeta):
             'styledMode': self.styled_mode,
             'type': self.type,
             'width': self.width,
-            'zoomBySingleTouch': self.zoom_by_single_touch,
-            'zoomKey': self.zoom_key,
-            'zoomType': self.zoom_type
+            'zooming': self.zooming,
         }
 
         return untrimmed
