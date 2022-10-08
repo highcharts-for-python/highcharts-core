@@ -300,9 +300,9 @@ class JavaScriptClass(HighchartsMeta):
 
     def __str__(self) -> str:
         if not self.class_name:
-            raise errors.HighchartsMissingClassNameError(f'Unable to serialize. The '
-                                                         f'JavaScriptClass instance has '
-                                                         f'no class_name provided.')
+            raise errors.HighchartsMissingClassNameError('Unable to serialize. The '
+                                                         'JavaScriptClass instance has '
+                                                         'no class_name provided.')
         as_str = f'class {self.class_name} '
         as_str += '{\n'
         for method in self.methods or []:
@@ -361,8 +361,8 @@ class JavaScriptClass(HighchartsMeta):
         :rtype: :class:`list <python:list>` of :class:`CallbackFunction`, or
           :obj:`None <python:None>`
 
-        :raises HighchartsJavaScriptError: if one or more methods lacks a function name OR if there
-          is no ``constructor`` method included in
+        :raises HighchartsJavaScriptError: if one or more methods lacks a function name OR
+          if there is no ``constructor`` method included in
           :meth:`.methods <JavaScriptClass.methods>`.
         """
         return self._methods
@@ -379,13 +379,14 @@ class JavaScriptClass(HighchartsMeta):
             for method in value:
                 if not method.function_name:
                     raise errors.HighchartsJavaScriptError('All JavaScriptClass methods '
-                                                 'require a function name.')
+                                                           'require a function name.')
                 if method.function_name == 'constructor':
                     has_constructor = True
 
             if not has_constructor:
-                raise errors.HighchartsJavaScriptError('A JavaScriptClass requires at least '
-                                             'one "constructor" method. Yours had none.')
+                raise errors.HighchartsJavaScriptError('A JavaScriptClass requires at '
+                                                       'least one "constructor" method. '
+                                                       'Yours had none.')
 
             self._methods = value
 
