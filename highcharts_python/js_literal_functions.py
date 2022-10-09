@@ -169,6 +169,9 @@ def get_js_literal(item) -> str:
             as_str += f"""{item}"""
         elif item in string.whitespace:
             as_str += f"""`{item}`"""
+        elif item.startswith == 'HCP: REPLACE-WITH-':
+            item_str = item.replace('HCP: REPLACE-WITH-', '')
+            as_str += f"""{item_str}"""
         elif not is_js_function_or_class(item):
             as_str += f"""'{item}'"""
         else:

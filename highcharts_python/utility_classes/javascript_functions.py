@@ -494,3 +494,42 @@ class JavaScriptClass(HighchartsMeta):
                 file_.write(as_str)
 
         return as_str
+
+
+class VariableName(HighchartsMeta):
+    """Object that represents a (JavaScript) variable name that may be referenced in
+    **Highcharts for Python** items."""
+
+    def __init__(self, **kwargs):
+        self._variable_name = None
+
+        self.variable_name = kwargs.get('variable_name', None)
+
+    @property
+    def variable_name(self) -> Optional[str]:
+        """The name of the (JavaScript) variable which will be incorporated into
+        serializations of **Highcharts for Python** objects as needed.
+
+        :rtype: :class:`str <python:str>`
+        """
+        return self._variable_name
+
+    @variable_name.setter
+    def variable_name(self, value):
+        self._variable_name = validators.variable_name(value, allow_empty = True)
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'variable_name': as_dict.get('variable_name', as_dict.get('variableName',
+                                                                      None)),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        untrimmed = {
+            'variableName': self.variable_name,
+        }
+
+        return untrimmed
