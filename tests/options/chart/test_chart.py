@@ -41,7 +41,6 @@ STANDARD_PARAMS = [
           'type': 'x'
       },
       'parallel_coordinates': False,
-      'pinch_type': 'x',
       'plot_background_color': '#ccc',
       'plot_background_image': 'http://www.somewhere.com',
       'plot_border_color': '#999',
@@ -50,18 +49,6 @@ STANDARD_PARAMS = [
       'polar': False,
       'reflow': False,
       'render_to': 'some-id',
-      'reset_zoom_button': {
-          'position': {
-            'align': 'center',
-            'verticalAlign': 'top',
-            'x': -10,
-            'y': 10
-          },
-          'relative_to': 'plot',
-          'theme': {
-              'fill': '#ccc'
-          }
-      },
       'scrollable_plot_area': {
           'minHeight': 120,
           'minWidth': 300,
@@ -76,10 +63,7 @@ STANDARD_PARAMS = [
       'style': 'style-string-goes-here',
       'styled_mode': False,
       'type': 'line',
-      'width': 50,
-      'zoom_by_single_touch': False,
-      'zoom_key': 'alt',
-      'zoom_type': 'xy'
+      'width': 50
     }, None),
 ]
 
