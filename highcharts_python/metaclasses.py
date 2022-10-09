@@ -205,7 +205,7 @@ class HighchartsMeta(ABC):
 
             clean_as_dict[clean_key] = as_dict[key]
 
-        kwargs = cls._get_kwargs_from_dict(as_dict)
+        kwargs = cls._get_kwargs_from_dict(clean_as_dict)
 
         return cls(**kwargs)
 

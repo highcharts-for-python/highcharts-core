@@ -36,7 +36,7 @@ class ArcDiagramSeries(SeriesBase, ArcDiagramOptions):
         super().__init__(**kwargs)
 
     @property
-    def data(self) -> Optional[ArcDiagramData]:
+    def data(self) -> Optional[List[ArcDiagramData]]:
         """The collection of data points for the series. Defaults to
         :obj:`None <python:None>`.
 
