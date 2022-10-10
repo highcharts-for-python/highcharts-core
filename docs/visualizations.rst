@@ -26,9 +26,9 @@ to visualize your data.
 
 .. seealso::
 
-  * :doc:`Using Highcharts Stock for Python <using>` > :ref:`Working with Data <working_with_data>`
-  * :doc:`Using Highcharts Stock for Python <using>` > :ref:`Adding Series to Charts <adding_series_to_charts>`
-  * :doc:`Using Highcharts Stock for Python <using>` > :ref:`Populating Series Data <populating_series_data>`
+  * :doc:`Using Highcharts for Python <using>` > :ref:`Working with Data <working_with_data>`
+  * :doc:`Using Highcharts for Python <using>` > :ref:`Adding Series to Charts <adding_series_to_charts>`
+  * :doc:`Using Highcharts for Python <using>` > :ref:`Populating Series Data <populating_series_data>`
 
 .. tabs::
 
@@ -628,11 +628,46 @@ to visualize your data.
 
           :class:`highcharts_stock.options.series.hlc.OHLCSeries`
 
-  .. tab:: Map
+  .. tab:: Maps
 
-    .. todo::
+    .. list-table::
+      :widths: 20 80
+      :header-rows: 1
 
-      Add Map visualiszations
+      * - Series Type
+        - Screenshot + Class Links
+      * - **Map**
+        - .. figure:: _static/map-example.png
+            :alt: Map Example Chart
+            :width: 100%
+
+          :class:`highcharts_maps.options.plot_options.map.MapOptions`
+
+          :class:`highcharts_maps.options.series.map.MapSeries`
+      * - **Map Bubble**
+        - .. figure:: _static/mapbubble-example.png
+            :alt: Map Bubble Example Chart
+            :width: 100%
+
+          :class:`highcharts_maps.options.plot_options.mapbubble.MapBubbleOptions`
+
+          :class:`highcharts_maps.options.series.mapbubble.MapBubbleSeries`
+      * - **Map Line**
+        - .. figure:: _static/mapline-example.png
+            :alt: Map Line Example Chart
+            :width: 100%
+
+          :class:`highcharts_maps.options.plot_options.mapline.MapLineOptions`
+
+          :class:`highcharts_maps.options.series.mapline.MapLineSeries`
+      * - **Map* *
+        - .. figure:: _static/mappoint-example.png
+            :alt: Map Point Example Chart
+            :width: 100%
+
+          :class:`highcharts_maps.options.plot_options.mappoint.MapPointOptions`
+
+          :class:`highcharts_maps.options.series.mappoint.MapPointSeries`
 
   .. tab:: Gantt
 
@@ -1149,9 +1184,16 @@ visualizations.
 
   .. tab:: Maps
 
-    .. todo::
+    .. error::
 
-      Document Map Indicators or equivalent.
+      The core **Highcharts Maps for Python** extension and the related
+      `Highcharts Maps <https://www.highcharts.com/products/maps/>`__ JavaScript
+      library do not support :term:`technical indicators <technical indicator>`.
+
+      Only **Highcharts Stock for Python** and
+      `Highcharts Stock <https://www.highcharts.com/products/stock/>`__ support
+      technical indicators. For more information, please see
+      `here <https://highcharts-stock.readthedocs.io/>`__.
 
   .. tab:: Gantt
 
