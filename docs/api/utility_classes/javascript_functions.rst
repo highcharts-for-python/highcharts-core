@@ -44,3 +44,21 @@ class: :class:`JavaScriptClass <highcharts_python.utility_classes.javascript_fun
       :parts: -1
 
   |
+
+-------------------
+
+********************************************************************************************************************
+class: :class:`VariableName <highcharts_python.utility_classes.javascript_functions.VariableName>`
+********************************************************************************************************************
+
+.. autoclass:: VariableName
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: VariableName
+      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

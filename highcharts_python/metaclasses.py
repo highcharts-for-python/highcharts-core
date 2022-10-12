@@ -211,7 +211,7 @@ class HighchartsMeta(ABC):
 
     @classmethod
     def from_json(cls,
-                  as_json_or_file: str | bytes,
+                  as_json_or_file,
                   allow_snake_case: bool = True):
         """Construct an instance of the class from a JSON string.
 

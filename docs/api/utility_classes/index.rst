@@ -88,6 +88,7 @@ Sub-components
   * - :mod:`.utility_classes.javascript_functions <highcharts_python.utility_classes.javascript_functions>`
     - :class:`CallbackFunction <highcharts_python.utility_classes.javascript_functions.CallbackFunction>`
       :class:`JavaScriptClass <highcharts_python.utility_classes.javascript_functions.JavaScriptClass>`
+      :class:`VariableName <highcharts_python.utility_classes.javascript_functions.VariableName>`
   * - :mod:`.utility_classes.jitter <highcharts_python.utility_classes.jitter>`
     - :class:`Jitter <highcharts_python.utility_classes.jitter.Jitter>`
   * - :mod:`.utility_classes.markers <highcharts_python.utility_classes.markers>`
