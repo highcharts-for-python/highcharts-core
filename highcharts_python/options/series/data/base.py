@@ -139,7 +139,7 @@ class DataCore(HighchartsMeta):
         return untrimmed
 
 
-class DataBase(HighchartsMeta):
+class DataBase(DataCore):
     """Extended base class for describing a data point."""
 
     def __init__(self, **kwargs):
@@ -280,9 +280,14 @@ class DataBase(HighchartsMeta):
         untrimmed = {
             'accessibility': self.accessibility,
             'className': self.class_name,
+            'color': self.color,
             'colorIndex': self.color_index,
             'custom': self.custom,
             'description': self.description,
+            'events': self.events,
+            'id': self.id,
+            'labelrank': self.label_rank,
+            'name': self.name,
             'selected': self.selected,
         }
 

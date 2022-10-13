@@ -112,7 +112,8 @@ class CallbackFunction(HighchartsMeta):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'function_name': as_dict.get('function_name', None),
+            'function_name': as_dict.get('function_name',
+                                         as_dict.get('functionName', None)),
             'arguments': as_dict.get('arguments', None),
             'body': as_dict.get('body', None)
         }
