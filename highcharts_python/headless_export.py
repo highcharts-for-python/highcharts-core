@@ -38,7 +38,7 @@ class ExportServer(HighchartsMeta):
         self._port = None
         self._path = None
         self._options = None
-        self._format = None
+        self._format_ = None
         self._scale = None
         self._width = None
         self._callback = None
@@ -60,7 +60,7 @@ class ExportServer(HighchartsMeta):
         self.path = kwargs.get('path', os.getenv('HIGHCHARTS_EXPORT_SERVER_PATH',
                                                  ''))
         self.options = kwargs.get('options', None)
-        self.format = kwargs.get('format', kwargs.get('type', 'png'))
+        self.format_ = kwargs.get('format_', kwargs.get('type', 'png'))
         self.scale = kwargs.get('scale', 1)
         self.width = kwargs.get('width', None)
         self.callback = kwargs.get('callback', None)
@@ -320,7 +320,7 @@ class ExportServer(HighchartsMeta):
         self._options = value
 
     @property
-    def format(self) -> Optional[str]:
+    def format_(self) -> Optional[str]:
         """The format in which the exported chart should be returned. Defaults to
         ``'png'``.
 
@@ -333,20 +333,22 @@ class ExportServer(HighchartsMeta):
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return self._format
+        return self._format_
 
-    @format.setter
-    def format(self, value):
+    @format_.setter
+    def format_(self, value):
         value = validators.string(value, allow_empty = True)
         if not value:
-            self._format = None
+            self._format_ = None
         else:
             value = value.lower()
             if value not in ['png', 'jpeg', 'pdf', 'svg']:
-                raise errors.HighchartsUnsupportedExportTypeError(f'format expects either '
-                                                             f'"png", "jpeg", "pdf", or '
-                                                             f'"svg". Received: {value}')
-            self._format = value
+                raise errors.HighchartsUnsupportedExportTypeError(
+                    f'format_ expects either '
+                    f'"png", "jpeg", "pdf", or '
+                    f'"svg". Received: {value}'
+                )
+            self._format_ = value
 
     @property
     def scale(self) -> Optional[int | float]:
@@ -548,7 +550,7 @@ class ExportServer(HighchartsMeta):
 
         kwargs = {
             'options': as_dict.get('options', None),
-            'format': as_dict.get('type', as_dict.get('format', 'png')),
+            'format_': as_dict.get('type', as_dict.get('format_', 'png')),
             'scale': as_dict.get('scale', 1),
             'width': as_dict.get('width', None),
             'callback': as_dict.get('callback', None),
@@ -585,7 +587,7 @@ class ExportServer(HighchartsMeta):
         untrimmed = {
             'url': self.url,
             'options': self.options,
-            'type': self.format,
+            'type': self.format_,
             'scale': self.scale,
             'width': self.width,
             'callback': self.callback,
@@ -639,7 +641,7 @@ class ExportServer(HighchartsMeta):
         :rtype: :class:`bytes <python:bytes>` or :class:`str <python:str>`
         """
         self.options = kwargs.get('options', self.options)
-        self.format = kwargs.get('format', kwargs.get('type', self.format))
+        self.format_ = kwargs.get('format_', kwargs.get('type', self.format_))
         self.scale = kwargs.get('scale', self.scale)
         self.width = kwargs.get('width', self.width)
         self.callback = kwargs.get('callback', self.callback)
@@ -654,18 +656,20 @@ class ExportServer(HighchartsMeta):
         missing_details = []
         if not self.options:
             missing_details.append('options')
-        if not self.format:
-            missing_details.append('format')
+        if not self.format_:
+            missing_details.append('format_')
         if not self.constructor:
             missing_details.append('constructor')
         if not self.url:
             missing_details.append('url')
 
         if missing_details:
-            raise errors.HighchartsMissingExportSettingsError(f'Unable to export a chart.'
-                                                              f'ExportServer was missing '
-                                                              f' following settings: '
-                                                              f'{missing_details}')
+            raise errors.HighchartsMissingExportSettingsError(
+                f'Unable to export a chart.'
+                f'ExportServer was missing '
+                f' following settings: '
+                f'{missing_details}'
+            )
 
         basic_auth = None
         if auth_user and auth_password:
@@ -673,7 +677,7 @@ class ExportServer(HighchartsMeta):
 
         payload = {
             'infile': 'HIGHCHARTS FOR PYTHON: REPLACE WITH OPTIONS',
-            'type': self.format,
+            'type': self.format_,
             'scale': self.scale,
             'constr': self.constructor,
             'b64': self.use_base64,
