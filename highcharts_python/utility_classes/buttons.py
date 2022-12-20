@@ -395,3 +395,23 @@ class ExportingButtons(JavaScriptDict):
     """
     _valid_value_types = ButtonConfiguration
     _allow_empty_value = True
+    
+    def __init__(self, **kwargs):
+        context_button = kwargs.get('context_button', 
+                                    None) or kwargs.get('contextButton', 
+                                                        None)
+        if not context_button:
+            context_button = ContextButtonConfiguration()
+        elif isinstance(context_button, constants.EnforcedNullType):
+            context_button = None
+        elif isinstance(context_button, ButtonConfiguration):
+            pass
+        elif isinstance(context_button, dict):
+            context_button = ContextButtonConfiguration.from_dict(context_button)
+        elif isinstance(context_button, str):
+            context_button = ContextButtonConfiguration.from_json(context_button)
+        
+        self['contextButton'] = context_button
+        
+        super().__init__(**kwargs)
+        

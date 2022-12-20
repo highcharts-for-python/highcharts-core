@@ -88,7 +88,7 @@ class Exporting(HighchartsMeta):
 
         self.accessibility = kwargs.get('accessibility', None)
         self.allow_html = kwargs.get('allow_html', None)
-        self.buttons = kwargs.get('buttons', None)
+        self.buttons = kwargs.get('buttons', default_context_button)
         self.chart_options = kwargs.get('chart_options', None)
         self.csv = kwargs.get('csv', None)
         self.enabled = kwargs.get('enabled', None)
@@ -127,9 +127,9 @@ class Exporting(HighchartsMeta):
     @property
     def allow_html(self) -> Optional[bool]:
         """If ``True``, allows HTML inside the chart (added using
-        :meth:`Exporting.use_html`) to be added directly to the exported image. This
-        allows you to preserve complicated HTML structures like tables or bi-directional
-        text in exported charts.
+        ``.use_html`` properties present on various chart components) to be added 
+        directly to the exported image. This allows you to preserve complicated HTML 
+        structures like tables or bi-directional text in exported charts.
 
         Defaults to ``False``.
 
@@ -138,9 +138,9 @@ class Exporting(HighchartsMeta):
           This setting is **EXPERIMENTAL**.
 
           The HTML is rendered in a ``foreignObject`` tag in the generated SVG. The
-          official export server is based on PhantomJS, which supports this, but other SVG
-          clients, like Batik, do not support it. This also applies to downloaded SVG that
-          you want to open in a desktop client.
+          official export server is based on PhantomJS, which supports this, but other 
+          SVG clients, like Batik, do not support it. This also applies to downloaded 
+          SVG that you want to open in a desktop client.
 
         :returns: Flag indicating whether to allow HTML in the exported image.
         :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
@@ -156,11 +156,18 @@ class Exporting(HighchartsMeta):
 
     @property
     def buttons(self) -> Optional[ExportingButtons]:
-        """Options for the export related buttons, print and export.
+        """Options for the export related buttons: print and export.
 
         .. note::
 
-          In addition to the default buttons listed here, custom buttons can be added.
+          In addition to the default buttons listed above, custom buttons can be added.
+          
+        .. warning::
+        
+          The ``.buttons`` property accepts an 
+          :class:`ExportingButtons <highcharts_python.utility_classes.buttons.ExportingButtons>`
+          instance as its value. This object is a descendent of the special :class:`JavaScriptDict <highcharts_python.metaclasses.JavaScriptDict>`
+          which by default initially contains a ``'context
 
         :rtype: :class:`ExportingButtons`
         """
@@ -363,20 +370,29 @@ class Exporting(HighchartsMeta):
         Each key value pair has a key that is referenced in the ``menu_items`` setting,
         and a value, which is an object with the following properties:
 
-          * ``'onclick'``: The click handler for the menu item
-          * ``'text'``: The text for the menu item
-          * ``textKey``: If internationalization is required, the key to a language string
+          * ``onclick``: The click handler for the menu item
+          * ``text``: The text for the menu item
+          * ``textKey``: If internationalization is required, the key to a language 
+            string
 
         .. note::
 
-          Custom text for ``"exitFullScreen"`` can be set only in ``language`` options (it
-          is not a separate button).
+          Custom text for ``"exitFullScreen"`` can be set only in ``language`` options 
+          (it is not a separate button).
 
         Defaults to:
 
         .. code-block:: python
 
-          {constants.DEFAULT_EXPORTING_MENU_ITEM_DEFINITIONS}
+          {
+              "viewFullscreen": {},
+              "printChart": {},
+              "separator": {},
+              "downloadPNG": {},
+              "downloadJPEG": {},
+              "downloadPDF": {},
+              "downloadSVG": {}
+          }
 
         :returns: Definitions for menu items in the Exporting context menu.
         :rtype: :class:`MenuObject` or :obj:`None <python:None>`
