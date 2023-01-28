@@ -521,13 +521,13 @@ class HighchartsMeta(ABC):
                 new_value = [x for x in original_value]
 
                 return new_value
-            else:
-                return other_value
+
+            return other_value
 
         elif other_value and not overwrite:
             return other_value
-        else:
-            return original_value
+
+        return original_value
 
     def copy(self,
              other = None,

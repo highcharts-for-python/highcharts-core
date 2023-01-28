@@ -113,3 +113,9 @@ class HighchartsMissingExportSettingsError(HighchartsExportServerError):
     programmatically export a chart image, but key settings were not supplied to the
     :class:`ExportServer` instance."""
     pass
+
+
+class HighchartsMissingSeriesError(HighchartsValueError):
+    """:exc:`ValueError <python:ValueError>` encountered when trying to reference a
+    series that does not actually exist in the chart."""
+    pass

@@ -46,8 +46,10 @@ class Chart(HighchartsMeta):
             height = self.options.chart.height or 400
         else:
             height = 400
+            
+        container = self.container or 'highcharts_target_div'
 
-        container_str = f"""<div id=\"{self.container}\" style=\"width:100%; height:{height};\"></div>\n"""
+        container_str = f"""<div id=\"{container}\" style=\"width:100%; height:{height};\"></div>\n"""
         as_str = self.to_js_literal()
         script_str = '<script>\n' + as_str + '\n</script>'
 
@@ -348,11 +350,14 @@ class Chart(HighchartsMeta):
 
         if key == 'data' and preserve_data:
             return other_value
-        elif key == 'points' and preserve_data:
+        
+        if key == 'points' and preserve_data:
             return other_value
-        elif key == 'series' and preserve_data:
+        
+        if key == 'series' and preserve_data:
             if not other_value:
                 return [x for x in original_value]
+        
             if len(other_value) != len(original_value):
                 matched_series = []
                 new_series = []
@@ -403,16 +408,16 @@ class Chart(HighchartsMeta):
                 new_value = [x for x in original_value]
 
                 return new_value
-            else:
-                return other_value
+
+            return other_value
 
         elif other_value and not overwrite:
             return other_value
-        else:
-            return original_value
+
+        return original_value
 
     def copy(self,
-             other,
+             other = None,
              overwrite = True,
              **kwargs):
         """Copy the configuration settings from this chart to the ``other`` chart.
@@ -440,7 +445,7 @@ class Chart(HighchartsMeta):
         :returns: A mutated version of ``other`` with new property values
 
         """
-        super().copy(other,
+        super().copy(other = other,
                      overwrite = overwrite,
                      **kwargs)
 
@@ -472,6 +477,58 @@ class Chart(HighchartsMeta):
             self.options = HighchartsOptions()
 
         updated_series = existing_series + new_series
+
+        self.options.series = updated_series
+
+    def update_series(self, *series, add_if_unmatched = False):
+        """Replace existing series with the new versions supplied in ``series``, 
+        matching them based on their 
+        :meth:`.id <highcharts_python.options.series.base.SeriesBase.id>` property.
+
+        :param series: One or more :term:`series` instances (descended from
+          :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`) or an
+          instance (e.g. :class:`dict <python:dict>`, :class:`str <python:str>`, etc.)
+          coercable to one
+        :type series: one or more
+          :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`
+          or coercable
+          
+        :param add_if_unmatched: If ``True``, will add a series that does not have a 
+          match. If ``False``, will raise a 
+          :exc:`HighchartsMissingSeriesError <highcharts_python.errors.HighchartsMissingSeriesError>`
+          if a series does not have a match on the chart. Defaults to ``False``.
+        :type add_if_unmatched: :class:`bool <python:bool>`
+        """
+        new_series = []
+        for item in series:
+            item_series = create_series_obj(item)
+            new_series.append(item_series)
+
+        if self.options and self.options.series:
+            existing_series = [x for x in self.options.series]
+        elif self.options:
+            existing_series = []
+        else:
+            existing_series = []
+            self.options = HighchartsOptions()
+            
+        existing_ids = [x.id for x in existing_series]
+        new_ids = [x.id for x in new_series]
+        overlap_ids = [x for x in new_ids if x in existing_ids]
+        
+        updated_series = []
+        for existing in existing_series:
+            if existing.id not in overlap_ids:
+                updated_series.append(existing)
+        
+        for new in new_series:
+            if new.id not in overlap_ids and not add_if_unmatched:
+                raise errors.HighchartsMissingSeriesError(f'attempted to update series '
+                                                          f'id "{new.id}", but that '
+                                                          f'series is not present in '
+                                                          f'the chart')
+                
+            updated_series.append(new)
 
         self.options.series = updated_series
 
@@ -960,3 +1017,4 @@ class Chart(HighchartsMeta):
         instance.options = options
 
         return instance
+
