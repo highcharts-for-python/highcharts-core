@@ -397,21 +397,65 @@ class ExportingButtons(JavaScriptDict):
     _allow_empty_value = True
     
     def __init__(self, **kwargs):
-        context_button = kwargs.get('context_button', 
-                                    None) or kwargs.get('contextButton', 
+        context_button = kwargs.pop('context_button', 
+                                    None) or kwargs.pop('contextButton', 
                                                         None)
-        if not context_button:
-            context_button = ContextButtonConfiguration()
-        elif isinstance(context_button, constants.EnforcedNullType):
+        if isinstance(context_button, constants.EnforcedNullType):
             context_button = None
+        elif not context_button:
+            context_button = ContextButtonConfiguration()
         elif isinstance(context_button, ButtonConfiguration):
             pass
         elif isinstance(context_button, dict):
             context_button = ContextButtonConfiguration.from_dict(context_button)
         elif isinstance(context_button, str):
             context_button = ContextButtonConfiguration.from_json(context_button)
-        
-        self['contextButton'] = context_button
-        
+
         super().__init__(**kwargs)
-        
+
+        self['contextButton'] = context_button
+
+    def __setitem__(self, key, item):
+        if key == 'context_button':
+            key = 'contextButton'
+
+        validate_key = False
+        try:
+            validate_key = key not in self
+        except AttributeError:
+            validate_key = True
+
+        if validate_key:
+            try:
+                key = validators.variable_name(key, allow_empty = False)
+            except validator_errors.InvalidVariableNameError as error:
+                if '-' in key:
+                    try:
+                        test_key = key.replace('-', '_')
+                        validators.variable_name(test_key, allow_empty = False)
+                    except validator_errors.InvalidVariableNameError:
+                        raise error
+                else:
+                    raise error
+
+        if self._valid_value_types:
+            try:
+                item = validate_types(item,
+                                      types = self._valid_value_types,
+                                      allow_none = self._allow_empty_value)
+            except errors.HighchartsValueError as error:
+                if self._allow_empty_value and not item:
+                    item = None
+                else:
+                    try:
+                        item = self._valid_value_types(item)
+                    except (TypeError, ValueError, AttributeError):
+                        raise error
+
+        super().__setitem__(key, item)
+
+    def __getitem__(self, key):
+        if key == 'context_button':
+            key = 'contextButton'
+            
+        return super().__getitem__(key)

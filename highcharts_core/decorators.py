@@ -4,7 +4,7 @@ from functools import wraps
 
 from validator_collection import checkers
 
-from highcharts_core import errors
+from highcharts_core import errors, constants
 
 
 def validate_types(value,
@@ -89,6 +89,8 @@ def validate_types(value,
 
     if allow_none and force_iterable and checkers.is_iterable(value) and not value:
         value = []
+    elif allow_none and isinstance(value, constants.EnforcedNullType):
+        pass
     elif allow_none and not value:
         value = None
     elif not allow_none and not value:
@@ -130,6 +132,8 @@ def validate_types(value,
                                 allow_js_literal = allow_js_literal,
                                 force_iterable = force_iterable)
                  for x in value]
+    elif allow_none and isinstance(value, constants.EnforcedNullType):
+        pass
     elif allow_none and not value:
         pass
     elif not isinstance(value, primary_type):
