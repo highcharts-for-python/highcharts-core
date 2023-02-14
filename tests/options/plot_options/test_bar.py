@@ -4,17 +4,17 @@ import pytest
 
 from json.decoder import JSONDecodeError
 
-from highcharts_python.options.plot_options.bar import BaseBarOptions as cls
-from highcharts_python.options.plot_options.bar import BarOptions as cls2
-from highcharts_python.options.plot_options.bar import ColumnOptions as cls3
-from highcharts_python.options.plot_options.bar import ColumnPyramidOptions as cls4
-from highcharts_python.options.plot_options.bar import ColumnRangeOptions as cls5
-from highcharts_python.options.plot_options.bar import CylinderOptions as cls6
-from highcharts_python.options.plot_options.bar import VariwideOptions as cls7
-from highcharts_python.options.plot_options.bar import WaterfallOptions as cls8
-from highcharts_python.options.plot_options.bar import WindBarbOptions as cls9
-from highcharts_python.options.plot_options.bar import XRangeOptions as cls10
-from highcharts_python import errors
+from highcharts_core.options.plot_options.bar import BaseBarOptions as cls
+from highcharts_core.options.plot_options.bar import BarOptions as cls2
+from highcharts_core.options.plot_options.bar import ColumnOptions as cls3
+from highcharts_core.options.plot_options.bar import ColumnPyramidOptions as cls4
+from highcharts_core.options.plot_options.bar import ColumnRangeOptions as cls5
+from highcharts_core.options.plot_options.bar import CylinderOptions as cls6
+from highcharts_core.options.plot_options.bar import VariwideOptions as cls7
+from highcharts_core.options.plot_options.bar import WaterfallOptions as cls8
+from highcharts_core.options.plot_options.bar import WindBarbOptions as cls9
+from highcharts_core.options.plot_options.bar import XRangeOptions as cls10
+from highcharts_core import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
     Class_from_js_literal

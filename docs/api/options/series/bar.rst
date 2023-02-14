@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.bar <highcharts_python.options.series.bar>`
+:mod:`.bar <highcharts_core.options.series.bar>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.bar
+.. module:: highcharts_core.options.series.bar
 
 ********************************************************************************************************************
-class: :class:`BarSeries <highcharts_python.options.series.bar.BarSeries>`
+class: :class:`BarSeries <highcharts_core.options.series.bar.BarSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: BarSeries
@@ -22,7 +22,7 @@ class: :class:`BarSeries <highcharts_python.options.series.bar.BarSeries>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: BarSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`BarSeries <highcharts_python.options.series.bar.BarSeries>`
 -----------------
 
 ********************************************************************************************************************
-class: :class:`ColumnSeries <highcharts_python.options.series.bar.ColumnSeries>`
+class: :class:`ColumnSeries <highcharts_core.options.series.bar.ColumnSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: ColumnSeries
@@ -40,7 +40,7 @@ class: :class:`ColumnSeries <highcharts_python.options.series.bar.ColumnSeries>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ColumnSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`ColumnSeries <highcharts_python.options.series.bar.ColumnSeries>`
 -------------------
 
 ********************************************************************************************************************
-class: :class:`ColumnPyramidSeries <highcharts_python.options.series.bar.ColumnPyramidSeries>`
+class: :class:`ColumnPyramidSeries <highcharts_core.options.series.bar.ColumnPyramidSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: ColumnPyramidSeries
@@ -58,7 +58,7 @@ class: :class:`ColumnPyramidSeries <highcharts_python.options.series.bar.ColumnP
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ColumnPyramidSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -66,7 +66,7 @@ class: :class:`ColumnPyramidSeries <highcharts_python.options.series.bar.ColumnP
 --------------
 
 ********************************************************************************************************************
-class: :class:`ColumnRangeSeries <highcharts_python.options.series.bar.ColumnRangeSeries>`
+class: :class:`ColumnRangeSeries <highcharts_core.options.series.bar.ColumnRangeSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: ColumnRangeSeries
@@ -76,7 +76,7 @@ class: :class:`ColumnRangeSeries <highcharts_python.options.series.bar.ColumnRan
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ColumnRangeSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -84,7 +84,7 @@ class: :class:`ColumnRangeSeries <highcharts_python.options.series.bar.ColumnRan
 ---------------
 
 ********************************************************************************************************************
-class: :class:`CylinderSeries <highcharts_python.options.series.bar.CylinderSeries>`
+class: :class:`CylinderSeries <highcharts_core.options.series.bar.CylinderSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: CylinderSeries
@@ -94,7 +94,7 @@ class: :class:`CylinderSeries <highcharts_python.options.series.bar.CylinderSeri
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: CylinderSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -102,7 +102,7 @@ class: :class:`CylinderSeries <highcharts_python.options.series.bar.CylinderSeri
 ------------
 
 ********************************************************************************************************************
-class: :class:`VariwideSeries <highcharts_python.options.series.bar.VariwideSeries>`
+class: :class:`VariwideSeries <highcharts_core.options.series.bar.VariwideSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: VariwideSeries
@@ -112,7 +112,7 @@ class: :class:`VariwideSeries <highcharts_python.options.series.bar.VariwideSeri
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: VariwideSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -120,7 +120,7 @@ class: :class:`VariwideSeries <highcharts_python.options.series.bar.VariwideSeri
 ------------
 
 ********************************************************************************************************************
-class: :class:`WaterfallSeries <highcharts_python.options.series.bar.WaterfallSeries>`
+class: :class:`WaterfallSeries <highcharts_core.options.series.bar.WaterfallSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: WaterfallSeries
@@ -130,7 +130,7 @@ class: :class:`WaterfallSeries <highcharts_python.options.series.bar.WaterfallSe
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: WaterfallSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -138,7 +138,7 @@ class: :class:`WaterfallSeries <highcharts_python.options.series.bar.WaterfallSe
 ------------
 
 ********************************************************************************************************************
-class: :class:`WindBarbSeries <highcharts_python.options.series.bar.WindBarbSeries>`
+class: :class:`WindBarbSeries <highcharts_core.options.series.bar.WindBarbSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: WindBarbSeries
@@ -148,7 +148,7 @@ class: :class:`WindBarbSeries <highcharts_python.options.series.bar.WindBarbSeri
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: WindBarbSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -156,7 +156,7 @@ class: :class:`WindBarbSeries <highcharts_python.options.series.bar.WindBarbSeri
 ----------------
 
 ********************************************************************************************************************
-class: :class:`XRangeSeries <highcharts_python.options.series.bar.XRangeSeries>`
+class: :class:`XRangeSeries <highcharts_core.options.series.bar.XRangeSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: XRangeSeries
@@ -166,7 +166,7 @@ class: :class:`XRangeSeries <highcharts_python.options.series.bar.XRangeSeries>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: XRangeSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -174,7 +174,7 @@ class: :class:`XRangeSeries <highcharts_python.options.series.bar.XRangeSeries>`
 --------------------
 
 ********************************************************************************************************************
-class: :class:`BaseBarSeries <highcharts_python.options.series.bar.BaseBarSeries>`
+class: :class:`BaseBarSeries <highcharts_core.options.series.bar.BaseBarSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: BaseBarSeries
@@ -184,7 +184,7 @@ class: :class:`BaseBarSeries <highcharts_python.options.series.bar.BaseBarSeries
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: BaseBarSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

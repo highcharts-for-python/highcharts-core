@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.range <highcharts_python.options.series.data.range>`
+:mod:`.range <highcharts_core.options.series.data.range>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.data.range
+.. module:: highcharts_core.options.series.data.range
 
 ********************************************************************************************************************
-class: :class:`RangeData <highcharts_python.options.series.data.range.RangeData>`
+class: :class:`RangeData <highcharts_core.options.series.data.range.RangeData>`
 ********************************************************************************************************************
 
 .. autoclass:: RangeData
@@ -22,7 +22,7 @@ class: :class:`RangeData <highcharts_python.options.series.data.range.RangeData>
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: RangeData
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`RangeData <highcharts_python.options.series.data.range.RangeData>
 ---------------
 
 ********************************************************************************************************************
-class: :class:`ConnectedRangeData <highcharts_python.options.series.data.range.ConnectedRangeData>`
+class: :class:`ConnectedRangeData <highcharts_core.options.series.data.range.ConnectedRangeData>`
 ********************************************************************************************************************
 
 .. autoclass:: ConnectedRangeData
@@ -40,7 +40,7 @@ class: :class:`ConnectedRangeData <highcharts_python.options.series.data.range.C
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ConnectedRangeData
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

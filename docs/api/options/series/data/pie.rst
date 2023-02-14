@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.pie <highcharts_python.options.series.data.pie>`
+:mod:`.pie <highcharts_core.options.series.data.pie>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.data.pie
+.. module:: highcharts_core.options.series.data.pie
 
 ********************************************************************************************************************
-class: :class:`PieData <highcharts_python.options.series.data.pie.PieData>`
+class: :class:`PieData <highcharts_core.options.series.data.pie.PieData>`
 ********************************************************************************************************************
 
 .. autoclass:: PieData
@@ -22,7 +22,7 @@ class: :class:`PieData <highcharts_python.options.series.data.pie.PieData>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: PieData
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`PieData <highcharts_python.options.series.data.pie.PieData>`
 -----------------
 
 ********************************************************************************************************************
-class: :class:`VariablePieData <highcharts_python.options.series.data.pie.VariablePieData>`
+class: :class:`VariablePieData <highcharts_core.options.series.data.pie.VariablePieData>`
 ********************************************************************************************************************
 
 .. autoclass:: VariablePieData
@@ -40,7 +40,7 @@ class: :class:`VariablePieData <highcharts_python.options.series.data.pie.Variab
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: VariablePieData
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

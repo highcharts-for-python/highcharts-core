@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.boxplot <highcharts_python.options.series.boxplot>`
+:mod:`.boxplot <highcharts_core.options.series.boxplot>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.boxplot
+.. module:: highcharts_core.options.series.boxplot
 
 ********************************************************************************************************************
-class: :class:`BoxPlotSeries <highcharts_python.options.series.boxplot.BoxPlotSeries>`
+class: :class:`BoxPlotSeries <highcharts_core.options.series.boxplot.BoxPlotSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: BoxPlotSeries
@@ -22,7 +22,7 @@ class: :class:`BoxPlotSeries <highcharts_python.options.series.boxplot.BoxPlotSe
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: BoxPlotSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`BoxPlotSeries <highcharts_python.options.series.boxplot.BoxPlotSe
 ---------------
 
 ********************************************************************************************************************
-class: :class:`ErrorBarSeries <highcharts_python.options.series.boxplot.ErrorBarSeries>`
+class: :class:`ErrorBarSeries <highcharts_core.options.series.boxplot.ErrorBarSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: ErrorBarSeries
@@ -40,7 +40,7 @@ class: :class:`ErrorBarSeries <highcharts_python.options.series.boxplot.ErrorBar
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ErrorBarSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

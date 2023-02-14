@@ -1,5 +1,5 @@
 ############################################################################################################
-:mod:`.series_navigation <highcharts_python.options.accessibility.keyboard_navigation.series_navigation>`
+:mod:`.series_navigation <highcharts_core.options.accessibility.keyboard_navigation.series_navigation>`
 ############################################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.accessibility.keyboard_navigation.series_navigation
+.. module:: highcharts_core.options.accessibility.keyboard_navigation.series_navigation
 
 **********************************************************************************************************************************************
-class: :class:`SeriesNavigation <highcharts_python.options.accessibility.keyboard_navigation.series_navigation.SeriesNavigation>`
+class: :class:`SeriesNavigation <highcharts_core.options.accessibility.keyboard_navigation.series_navigation.SeriesNavigation>`
 **********************************************************************************************************************************************
 
 .. autoclass:: SeriesNavigation
@@ -22,7 +22,7 @@ class: :class:`SeriesNavigation <highcharts_python.options.accessibility.keyboar
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SeriesNavigation
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

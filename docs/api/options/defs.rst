@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.defs <highcharts_python.options.defs>`
+:mod:`.defs <highcharts_core.options.defs>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.defs
+.. module:: highcharts_core.options.defs
 
 ********************************************************************************************************************
-class: :class:`MarkerDefinition <highcharts_python.options.defs.MarkerDefinition>`
+class: :class:`MarkerDefinition <highcharts_core.options.defs.MarkerDefinition>`
 ********************************************************************************************************************
 
 .. autoclass:: MarkerDefinition
@@ -22,7 +22,7 @@ class: :class:`MarkerDefinition <highcharts_python.options.defs.MarkerDefinition
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: MarkerDefinition
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`MarkerDefinition <highcharts_python.options.defs.MarkerDefinition
 ---------------
 
 ********************************************************************************************************************
-class: :class:`MarkerASTNode <highcharts_python.options.defs.MarkerASTNode>`
+class: :class:`MarkerASTNode <highcharts_core.options.defs.MarkerASTNode>`
 ********************************************************************************************************************
 
 .. autoclass:: MarkerASTNode
@@ -40,7 +40,7 @@ class: :class:`MarkerASTNode <highcharts_python.options.defs.MarkerASTNode>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: MarkerASTNode
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -49,7 +49,7 @@ class: :class:`MarkerASTNode <highcharts_python.options.defs.MarkerASTNode>`
 ----------------
 
 ********************************************************************************************************************
-class: :class:`MarkerAttributeObject <highcharts_python.options.defs.MarkerAttributeObject>`
+class: :class:`MarkerAttributeObject <highcharts_core.options.defs.MarkerAttributeObject>`
 ********************************************************************************************************************
 
 .. autoclass:: MarkerAttributeObject
@@ -59,7 +59,7 @@ class: :class:`MarkerAttributeObject <highcharts_python.options.defs.MarkerAttri
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: MarkerAttributeObject
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

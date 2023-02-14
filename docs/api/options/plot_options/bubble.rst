@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.bubble <highcharts_python.options.plot_options.bubble>`
+:mod:`.bubble <highcharts_core.options.plot_options.bubble>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.bubble
+.. module:: highcharts_core.options.plot_options.bubble
 
 ********************************************************************************************************************
-class: :class:`BubbleOptions <highcharts_python.options.plot_options.bubble.BubbleOptions>`
+class: :class:`BubbleOptions <highcharts_core.options.plot_options.bubble.BubbleOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: BubbleOptions
@@ -22,7 +22,7 @@ class: :class:`BubbleOptions <highcharts_python.options.plot_options.bubble.Bubb
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: BubbleOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

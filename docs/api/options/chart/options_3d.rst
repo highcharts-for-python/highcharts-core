@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.options_3d <highcharts_python.options.chart.options_3d>`
+:mod:`.options_3d <highcharts_core.options.chart.options_3d>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.chart.options_3d
+.. module:: highcharts_core.options.chart.options_3d
 
 ********************************************************************************************************************
-class: :class:`Options3D <highcharts_python.options.chart.options_3d.Options3D>`
+class: :class:`Options3D <highcharts_core.options.chart.options_3d.Options3D>`
 ********************************************************************************************************************
 
 .. autoclass:: Options3D
@@ -22,7 +22,7 @@ class: :class:`Options3D <highcharts_python.options.chart.options_3d.Options3D>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Options3D
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`Options3D <highcharts_python.options.chart.options_3d.Options3D>`
 -------------------
 
 ********************************************************************************************************************
-class: :class:`Frame <highcharts_python.options.chart.options_3d.Frame>`
+class: :class:`Frame <highcharts_core.options.chart.options_3d.Frame>`
 ********************************************************************************************************************
 
 .. autoclass:: Frame
@@ -40,7 +40,7 @@ class: :class:`Frame <highcharts_python.options.chart.options_3d.Frame>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Frame
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`Frame <highcharts_python.options.chart.options_3d.Frame>`
 -------------------
 
 ********************************************************************************************************************
-class: :class:`PanelOptions <highcharts_python.options.chart.options_3d.PanelOptions>`
+class: :class:`PanelOptions <highcharts_core.options.chart.options_3d.PanelOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: PanelOptions
@@ -58,7 +58,7 @@ class: :class:`PanelOptions <highcharts_python.options.chart.options_3d.PanelOpt
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: PanelOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.drilldown <highcharts_python.options.drilldown>`
+:mod:`.drilldown <highcharts_core.options.drilldown>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.drilldown
+.. module:: highcharts_core.options.drilldown
 
 ********************************************************************************************************************
-class: :class:`Drilldown <highcharts_python.options.drilldown.Drilldown>`
+class: :class:`Drilldown <highcharts_core.options.drilldown.Drilldown>`
 ********************************************************************************************************************
 
 .. autoclass:: Drilldown
@@ -22,7 +22,7 @@ class: :class:`Drilldown <highcharts_python.options.drilldown.Drilldown>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Drilldown
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

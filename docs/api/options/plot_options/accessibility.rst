@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.accessibility <highcharts_python.options.plot_options.accessibility>`
+:mod:`.accessibility <highcharts_core.options.plot_options.accessibility>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.accessibility
+.. module:: highcharts_core.options.plot_options.accessibility
 
 ***************************************************************************************************************************
-class: :class:`TypeOptionsAccessibility <highcharts_python.options.plot_options.accessibility.TypeOptionsAccessibility>`
+class: :class:`TypeOptionsAccessibility <highcharts_core.options.plot_options.accessibility.TypeOptionsAccessibility>`
 ***************************************************************************************************************************
 
 .. autoclass:: TypeOptionsAccessibility
@@ -22,7 +22,7 @@ class: :class:`TypeOptionsAccessibility <highcharts_python.options.plot_options.
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: TypeOptionsAccessibility
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`TypeOptionsAccessibility <highcharts_python.options.plot_options.
 ------------
 
 ***************************************************************************************************************************
-class: :class:`SeriesKeyboardNavigation <highcharts_python.options.plot_options.accessibility.SeriesKeyboardNavigation>`
+class: :class:`SeriesKeyboardNavigation <highcharts_core.options.plot_options.accessibility.SeriesKeyboardNavigation>`
 ***************************************************************************************************************************
 
 .. autoclass:: SeriesKeyboardNavigation
@@ -40,7 +40,7 @@ class: :class:`SeriesKeyboardNavigation <highcharts_python.options.plot_options.
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SeriesKeyboardNavigation
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

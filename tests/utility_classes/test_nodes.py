@@ -4,11 +4,11 @@ import pytest
 
 from json.decoder import JSONDecodeError
 
-from highcharts_python.utility_classes.nodes import NodeOptions as cls
-from highcharts_python.utility_classes.nodes import OrganizationNodeOptions as cls2
-from highcharts_python.utility_classes.nodes import DependencyWheelNodeOptions as cls3
+from highcharts_core.utility_classes.nodes import NodeOptions as cls
+from highcharts_core.utility_classes.nodes import OrganizationNodeOptions as cls2
+from highcharts_core.utility_classes.nodes import DependencyWheelNodeOptions as cls3
 
-from highcharts_python import errors
+from highcharts_core import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
     Class_from_js_literal

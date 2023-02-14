@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.data <highcharts_python.options.data>`
+:mod:`.data <highcharts_core.options.data>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.data
+.. module:: highcharts_core.options.data
 
 ********************************************************************************************************************
-class: :class:`Data <highcharts_python.options.data.Data>`
+class: :class:`Data <highcharts_core.options.data.Data>`
 ********************************************************************************************************************
 
 .. autoclass:: Data
@@ -22,7 +22,7 @@ class: :class:`Data <highcharts_python.options.data.Data>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Data
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

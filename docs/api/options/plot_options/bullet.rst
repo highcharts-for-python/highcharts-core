@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.bullet <highcharts_python.options.plot_options.bullet>`
+:mod:`.bullet <highcharts_core.options.plot_options.bullet>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.bullet
+.. module:: highcharts_core.options.plot_options.bullet
 
 ********************************************************************************************************************
-class: :class:`BulletOptions <highcharts_python.options.plot_options.bullet.BulletOptions>`
+class: :class:`BulletOptions <highcharts_core.options.plot_options.bullet.BulletOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: BulletOptions
@@ -22,7 +22,7 @@ class: :class:`BulletOptions <highcharts_python.options.plot_options.bullet.Bull
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: BulletOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`BulletOptions <highcharts_python.options.plot_options.bullet.Bull
 ----------------
 
 ********************************************************************************************************************
-class: :class:`TargetOptions <highcharts_python.options.plot_options.bullet.TargetOptions>`
+class: :class:`TargetOptions <highcharts_core.options.plot_options.bullet.TargetOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: TargetOptions
@@ -40,7 +40,7 @@ class: :class:`TargetOptions <highcharts_python.options.plot_options.bullet.Targ
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: TargetOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

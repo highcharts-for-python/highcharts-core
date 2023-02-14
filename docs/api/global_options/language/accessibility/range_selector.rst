@@ -1,5 +1,5 @@
 #########################################################################################################
-:mod:`.range_selector <highcharts_python.global_options.language.accessibility.range_selector>`
+:mod:`.range_selector <highcharts_core.global_options.language.accessibility.range_selector>`
 #########################################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.global_options.language.accessibility.range_selector
+.. module:: highcharts_core.global_options.language.accessibility.range_selector
 
 *************************************************************************************************************************************************************
-class: :class:`RangeSelectorLanguageOptions <highcharts_python.global_options.language.accessibility.range_selector.RangeSelectorLanguageOptions>`
+class: :class:`RangeSelectorLanguageOptions <highcharts_core.global_options.language.accessibility.range_selector.RangeSelectorLanguageOptions>`
 *************************************************************************************************************************************************************
 
 .. autoclass:: RangeSelectorLanguageOptions
@@ -22,7 +22,7 @@ class: :class:`RangeSelectorLanguageOptions <highcharts_python.global_options.la
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: RangeSelectorLanguageOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

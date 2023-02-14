@@ -1,5 +1,5 @@
 #########################################################################################################
-:mod:`.exporting <highcharts_python.global_options.language.accessibility.exporting>`
+:mod:`.exporting <highcharts_core.global_options.language.accessibility.exporting>`
 #########################################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.global_options.language.accessibility.exporting
+.. module:: highcharts_core.global_options.language.accessibility.exporting
 
 *************************************************************************************************************************************************************
-class: :class:`ExportingLanguageOptions <highcharts_python.global_options.language.accessibility.exporting.ExportingLanguageOptions>`
+class: :class:`ExportingLanguageOptions <highcharts_core.global_options.language.accessibility.exporting.ExportingLanguageOptions>`
 *************************************************************************************************************************************************************
 
 .. autoclass:: ExportingLanguageOptions
@@ -22,7 +22,7 @@ class: :class:`ExportingLanguageOptions <highcharts_python.global_options.langua
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ExportingLanguageOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

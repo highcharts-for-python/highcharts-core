@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.single_point <highcharts_python.options.series.data.single_point>`
+:mod:`.single_point <highcharts_core.options.series.data.single_point>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.data.single_point
+.. module:: highcharts_core.options.series.data.single_point
 
 ********************************************************************************************************************
-class: :class:`SinglePointData <highcharts_python.options.series.data.single_point.SinglePointData>`
+class: :class:`SinglePointData <highcharts_core.options.series.data.single_point.SinglePointData>`
 ********************************************************************************************************************
 
 .. autoclass:: SinglePointData
@@ -22,7 +22,7 @@ class: :class:`SinglePointData <highcharts_python.options.series.data.single_poi
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SinglePointData
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`SinglePointData <highcharts_python.options.series.data.single_poi
 -----------------------
 
 ********************************************************************************************************************
-class: :class:`SingleValueData <highcharts_python.options.series.data.single_point.SingleValueData>`
+class: :class:`SingleValueData <highcharts_core.options.series.data.single_point.SingleValueData>`
 ********************************************************************************************************************
 
 .. autoclass:: SingleValueData
@@ -40,7 +40,7 @@ class: :class:`SingleValueData <highcharts_python.options.series.data.single_poi
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SingleValueData
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`SingleValueData <highcharts_python.options.series.data.single_poi
 ---------------------
 
 ********************************************************************************************************************
-class: :class:`SingleXData <highcharts_python.options.series.data.single_point.SingleXData>`
+class: :class:`SingleXData <highcharts_core.options.series.data.single_point.SingleXData>`
 ********************************************************************************************************************
 
 .. autoclass:: SingleXData
@@ -58,7 +58,7 @@ class: :class:`SingleXData <highcharts_python.options.series.data.single_point.S
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SingleXData
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -66,7 +66,7 @@ class: :class:`SingleXData <highcharts_python.options.series.data.single_point.S
 ---------------
 
 ********************************************************************************************************************
-class: :class:`LabeledSingleXData <highcharts_python.options.series.data.single_point.LabeledSingleXData>`
+class: :class:`LabeledSingleXData <highcharts_core.options.series.data.single_point.LabeledSingleXData>`
 ********************************************************************************************************************
 
 .. autoclass:: LabeledSingleXData
@@ -76,7 +76,7 @@ class: :class:`LabeledSingleXData <highcharts_python.options.series.data.single_
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: LabeledSingleXData
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -84,7 +84,7 @@ class: :class:`LabeledSingleXData <highcharts_python.options.series.data.single_
 ---------------------
 
 ********************************************************************************************************************
-class: :class:`ConnectedSingleXData <highcharts_python.options.series.data.single_point.ConnectedSingleXData>`
+class: :class:`ConnectedSingleXData <highcharts_core.options.series.data.single_point.ConnectedSingleXData>`
 ********************************************************************************************************************
 
 .. autoclass:: ConnectedSingleXData
@@ -94,7 +94,7 @@ class: :class:`ConnectedSingleXData <highcharts_python.options.series.data.singl
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ConnectedSingleXData
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -102,7 +102,7 @@ class: :class:`ConnectedSingleXData <highcharts_python.options.series.data.singl
 --------------------
 
 ********************************************************************************************************************
-class: :class:`SinglePointBase <highcharts_python.options.series.data.single_point.SinglePointBase>`
+class: :class:`SinglePointBase <highcharts_core.options.series.data.single_point.SinglePointBase>`
 ********************************************************************************************************************
 
 .. autoclass:: SinglePointBase
@@ -112,7 +112,7 @@ class: :class:`SinglePointBase <highcharts_python.options.series.data.single_poi
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SinglePointBase
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

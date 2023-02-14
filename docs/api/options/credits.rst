@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.scrollable_plot_area <highcharts_python.options.credits>`
+:mod:`.scrollable_plot_area <highcharts_core.options.credits>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.credits
+.. module:: highcharts_core.options.credits
 
 ********************************************************************************************************************
-class: :class:`Credits <highcharts_python.options.credits.Credits>`
+class: :class:`Credits <highcharts_core.options.credits.Credits>`
 ********************************************************************************************************************
 
 .. autoclass:: Credits
@@ -22,7 +22,7 @@ class: :class:`Credits <highcharts_python.options.credits.Credits>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Credits
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`Credits <highcharts_python.options.credits.Credits>`
 -----------------------
 
 ********************************************************************************************************************
-class: :class:`CreditStyleOptions <highcharts_python.options.credits.CreditStyleOptions>`
+class: :class:`CreditStyleOptions <highcharts_core.options.credits.CreditStyleOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: CreditStyleOptions
@@ -40,7 +40,7 @@ class: :class:`CreditStyleOptions <highcharts_python.options.credits.CreditStyle
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: CreditStyleOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.nodes <highcharts_python.utility_classes.nodes>`
+:mod:`.nodes <highcharts_core.utility_classes.nodes>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.utility_classes.nodes
+.. module:: highcharts_core.utility_classes.nodes
 
 ********************************************************************************************************************
-class: :class:`NodeOptions <highcharts_python.utility_classes.nodes.NodeOptions>`
+class: :class:`NodeOptions <highcharts_core.utility_classes.nodes.NodeOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: NodeOptions
@@ -22,7 +22,7 @@ class: :class:`NodeOptions <highcharts_python.utility_classes.nodes.NodeOptions>
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: NodeOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`NodeOptions <highcharts_python.utility_classes.nodes.NodeOptions>
 ----------------
 
 ********************************************************************************************************************
-class: :class:`DependencyWheelNodeOptions <highcharts_python.utility_classes.nodes.DependencyWheelNodeOptions>`
+class: :class:`DependencyWheelNodeOptions <highcharts_core.utility_classes.nodes.DependencyWheelNodeOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: DependencyWheelNodeOptions
@@ -40,7 +40,7 @@ class: :class:`DependencyWheelNodeOptions <highcharts_python.utility_classes.nod
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: DependencyWheelNodeOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`DependencyWheelNodeOptions <highcharts_python.utility_classes.nod
 --------------------
 
 ********************************************************************************************************************
-class: :class:`OrganizationNodeOptions <highcharts_python.utility_classes.nodes.OrganizationNodeOptions>`
+class: :class:`OrganizationNodeOptions <highcharts_core.utility_classes.nodes.OrganizationNodeOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: OrganizationNodeOptions
@@ -58,7 +58,7 @@ class: :class:`OrganizationNodeOptions <highcharts_python.utility_classes.nodes.
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: OrganizationNodeOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

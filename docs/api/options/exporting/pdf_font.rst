@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.pdf_font <highcharts_python.options.exporting.pdf_font>`
+:mod:`.pdf_font <highcharts_core.options.exporting.pdf_font>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.exporting.pdf_font
+.. module:: highcharts_core.options.exporting.pdf_font
 
 ********************************************************************************************************************
-class: :class:`PDFFontOptions <highcharts_python.options.exporting.pdf_font.PDFFontOptions>`
+class: :class:`PDFFontOptions <highcharts_core.options.exporting.pdf_font.PDFFontOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: PDFFontOptions
@@ -22,7 +22,7 @@ class: :class:`PDFFontOptions <highcharts_python.options.exporting.pdf_font.PDFF
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: PDFFontOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

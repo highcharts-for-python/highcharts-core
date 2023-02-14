@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.numeric <highcharts_python.options.axes.numeric>`
+:mod:`.numeric <highcharts_core.options.axes.numeric>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.axes.numeric
+.. module:: highcharts_core.options.axes.numeric
 
 ********************************************************************************************************************
-class: :class:`NumericAxis <highcharts_python.options.axes.numeric.NumericAxis>`
+class: :class:`NumericAxis <highcharts_core.options.axes.numeric.NumericAxis>`
 ********************************************************************************************************************
 
 .. autoclass:: NumericAxis
@@ -22,7 +22,7 @@ class: :class:`NumericAxis <highcharts_python.options.axes.numeric.NumericAxis>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: NumericAxis
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

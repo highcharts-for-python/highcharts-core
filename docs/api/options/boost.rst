@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.boost <highcharts_python.options.boost>`
+:mod:`.boost <highcharts_core.options.boost>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.boost
+.. module:: highcharts_core.options.boost
 
 ********************************************************************************************************************
-class: :class:`Boost <highcharts_python.options.boost.Boost>`
+class: :class:`Boost <highcharts_core.options.boost.Boost>`
 ********************************************************************************************************************
 
 .. autoclass:: Boost
@@ -22,7 +22,7 @@ class: :class:`Boost <highcharts_python.options.boost.Boost>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Boost
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`Boost <highcharts_python.options.boost.Boost>`
 ----------------------------
 
 ********************************************************************************************************************
-class: :class:`BoostDebug <highcharts_python.options.boost.BoostDebug>`
+class: :class:`BoostDebug <highcharts_core.options.boost.BoostDebug>`
 ********************************************************************************************************************
 
 .. autoclass:: BoostDebug
@@ -40,7 +40,7 @@ class: :class:`BoostDebug <highcharts_python.options.boost.BoostDebug>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: BoostDebug
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

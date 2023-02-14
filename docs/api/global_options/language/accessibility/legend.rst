@@ -1,5 +1,5 @@
 #########################################################################################################
-:mod:`.legend <highcharts_python.global_options.language.accessibility.legend>`
+:mod:`.legend <highcharts_core.global_options.language.accessibility.legend>`
 #########################################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.global_options.language.accessibility.legend
+.. module:: highcharts_core.global_options.language.accessibility.legend
 
 *************************************************************************************************************************************************************
-class: :class:`LegendLanguageOptions <highcharts_python.global_options.language.accessibility.legend.LegendLanguageOptions>`
+class: :class:`LegendLanguageOptions <highcharts_core.global_options.language.accessibility.legend.LegendLanguageOptions>`
 *************************************************************************************************************************************************************
 
 .. autoclass:: LegendLanguageOptions
@@ -22,7 +22,7 @@ class: :class:`LegendLanguageOptions <highcharts_python.global_options.language.
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: LegendLanguageOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

@@ -1,5 +1,5 @@
 #########################################################################################################
-:mod:`.axis <highcharts_python.global_options.language.accessibility.axis>`
+:mod:`.axis <highcharts_core.global_options.language.accessibility.axis>`
 #########################################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.global_options.language.accessibility.axis
+.. module:: highcharts_core.global_options.language.accessibility.axis
 
 *************************************************************************************************************************************************************
-class: :class:`AxisLanguageOptions <highcharts_python.global_options.language.accessibility.axis.AxisLanguageOptions>`
+class: :class:`AxisLanguageOptions <highcharts_core.global_options.language.accessibility.axis.AxisLanguageOptions>`
 *************************************************************************************************************************************************************
 
 .. autoclass:: AxisLanguageOptions
@@ -22,7 +22,7 @@ class: :class:`AxisLanguageOptions <highcharts_python.global_options.language.ac
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AxisLanguageOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

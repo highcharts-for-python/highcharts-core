@@ -44,12 +44,12 @@ event functions, or more frequently use different formatting functions to make t
 data look the way we want it to look.
 
 Now with these template files, we can easily create a pair of
-:class:`Chart <highcharts_python.chart.Chart>` instances by executing:
+:class:`Chart <highcharts_core.chart.Chart>` instances by executing:
 
   .. code-block:: python
 
-    from highcharts_python.highcharts import Chart
-    from highcharts_python.options.series.bar import BarSeries
+    from highcharts_core.highcharts import Chart
+    from highcharts_core.options.series.bar import BarSeries
 
     type_1_chart = Chart.from_js_literal(
         '../../project_resources/highcharts_config/bar-template-01.js'

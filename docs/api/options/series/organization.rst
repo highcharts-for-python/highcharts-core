@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.organization <highcharts_python.options.series.organization>`
+:mod:`.organization <highcharts_core.options.series.organization>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.organization
+.. module:: highcharts_core.options.series.organization
 
 ********************************************************************************************************************
-class: :class:`OrganizationSeries <highcharts_python.options.series.organization.OrganizationSeries>`
+class: :class:`OrganizationSeries <highcharts_core.options.series.organization.OrganizationSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: OrganizationSeries
@@ -22,7 +22,7 @@ class: :class:`OrganizationSeries <highcharts_python.options.series.organization
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: OrganizationSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

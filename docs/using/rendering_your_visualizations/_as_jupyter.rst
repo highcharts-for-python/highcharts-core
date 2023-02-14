@@ -1,8 +1,8 @@
 .. code-block:: python
 
-  from highcharts_python.chart import Chart
-  from highcharts_python.options.series.area import LineSeries
-  from highcharts_python.global_options.shared_options import SharedOptions
+  from highcharts_core.chart import Chart
+  from highcharts_core.options.series.area import LineSeries
+  from highcharts_core.global_options.shared_options import SharedOptions
 
   my_chart = Chart(container = 'target_div',
                    options = {
@@ -32,7 +32,7 @@
 
     :param global_options: The :term:`shared options` to use when rendering the chart.
       Defaults to :obj:`None <python:None>`
-    :type global_options: :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
+    :type global_options: :class:`SharedOptions <highcharts_core.global_options.shared_options.SharedOptions>`
       or :obj:`None <python:None>`
 
     :raises HighchartsDependencyError: if

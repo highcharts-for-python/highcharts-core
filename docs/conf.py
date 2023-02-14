@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__name__), '..'))
 version_dict = {}
 with open(os.path.join(os.path.dirname(__file__),
                        '../',
-                       'highcharts_python',
+                       'highcharts_core',
                        '__version__.py')) as version_file:
     exec(version_file.read(), version_dict)                   # pylint: disable=W0122
 
@@ -77,14 +77,14 @@ html_favicon = '_static/highcharts-python-logo-32x32.png'
 
 html_context = {
     "display_github": True,                 # Integrate GitHub
-    "github_user": "insightindustry",       # Username
-    "github_repo": "highcharts-python",     # Repo name
+    "github_user": "highcharts-for-python",       # Username
+    "github_repo": "highcharts-core",     # Repo name
     "github_version": "master",             # Version
     "conf_py_path": "/docs/",               # Path in the checkout to the docs root
 }
 
-github_username = 'insightindustry'
-github_repository = 'highcharts-python'
+github_username = 'highcharts-for-python'
+github_repository = 'highcharts-core'
 
 sphinx_tabs_disable_tab_closing = True
 

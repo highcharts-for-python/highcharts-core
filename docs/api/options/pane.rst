@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.pane <highcharts_python.options.pane>`
+:mod:`.pane <highcharts_core.options.pane>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.pane
+.. module:: highcharts_core.options.pane
 
 ********************************************************************************************************************
-class: :class:`Pane <highcharts_python.options.pane.Pane>`
+class: :class:`Pane <highcharts_core.options.pane.Pane>`
 ********************************************************************************************************************
 
 .. autoclass:: Pane
@@ -22,7 +22,7 @@ class: :class:`Pane <highcharts_python.options.pane.Pane>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Pane
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`Pane <highcharts_python.options.pane.Pane>`
 ------------------
 
 ********************************************************************************************************************
-class: :class:`PaneBackground <highcharts_python.options.pane.PaneBackground>`
+class: :class:`PaneBackground <highcharts_core.options.pane.PaneBackground>`
 ********************************************************************************************************************
 
 .. autoclass:: PaneBackground
@@ -40,7 +40,7 @@ class: :class:`PaneBackground <highcharts_python.options.pane.PaneBackground>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: PaneBackground
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

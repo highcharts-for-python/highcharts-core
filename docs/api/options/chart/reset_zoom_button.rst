@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.reset_zoom_button <highcharts_python.options.chart.reset_zoom_button>`
+:mod:`.reset_zoom_button <highcharts_core.options.chart.reset_zoom_button>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.chart.reset_zoom_button
+.. module:: highcharts_core.options.chart.reset_zoom_button
 
 ********************************************************************************************************************
-class: :class:`ResetZoomButtonOptions <highcharts_python.options.chart.reset_zoom_button.ResetZoomButtonOptions>`
+class: :class:`ResetZoomButtonOptions <highcharts_core.options.chart.reset_zoom_button.ResetZoomButtonOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: ResetZoomButtonOptions
@@ -22,7 +22,7 @@ class: :class:`ResetZoomButtonOptions <highcharts_python.options.chart.reset_zoo
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ResetZoomButtonOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

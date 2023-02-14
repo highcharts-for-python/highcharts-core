@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.events <highcharts_python.utility_classes.events>`
+:mod:`.events <highcharts_core.utility_classes.events>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.utility_classes.events
+.. module:: highcharts_core.utility_classes.events
 
 ********************************************************************************************************************
-class: :class:`ChartEvents <highcharts_python.utility_classes.events.ChartEvents>`
+class: :class:`ChartEvents <highcharts_core.utility_classes.events.ChartEvents>`
 ********************************************************************************************************************
 
 .. autoclass:: ChartEvents
@@ -22,7 +22,7 @@ class: :class:`ChartEvents <highcharts_python.utility_classes.events.ChartEvents
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ChartEvents
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`ChartEvents <highcharts_python.utility_classes.events.ChartEvents
 ----------------------
 
 ********************************************************************************************************************
-class: :class:`BreadcrumbEvents <highcharts_python.utility_classes.events.BreadcrumbEvents>`
+class: :class:`BreadcrumbEvents <highcharts_core.utility_classes.events.BreadcrumbEvents>`
 ********************************************************************************************************************
 
 .. autoclass:: BreadcrumbEvents
@@ -40,7 +40,7 @@ class: :class:`BreadcrumbEvents <highcharts_python.utility_classes.events.Breadc
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: BreadcrumbEvents
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`BreadcrumbEvents <highcharts_python.utility_classes.events.Breadc
 ----------------------
 
 ********************************************************************************************************************
-class: :class:`NavigationEvents <highcharts_python.utility_classes.events.NavigationEvents>`
+class: :class:`NavigationEvents <highcharts_core.utility_classes.events.NavigationEvents>`
 ********************************************************************************************************************
 
 .. autoclass:: NavigationEvents
@@ -58,7 +58,7 @@ class: :class:`NavigationEvents <highcharts_python.utility_classes.events.Naviga
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: NavigationEvents
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -66,7 +66,7 @@ class: :class:`NavigationEvents <highcharts_python.utility_classes.events.Naviga
 -----------------------
 
 ********************************************************************************************************************
-class: :class:`PointEvents <highcharts_python.utility_classes.events.PointEvents>`
+class: :class:`PointEvents <highcharts_core.utility_classes.events.PointEvents>`
 ********************************************************************************************************************
 
 .. autoclass:: PointEvents
@@ -76,7 +76,7 @@ class: :class:`PointEvents <highcharts_python.utility_classes.events.PointEvents
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: PointEvents
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -84,7 +84,7 @@ class: :class:`PointEvents <highcharts_python.utility_classes.events.PointEvents
 ------------------
 
 ********************************************************************************************************************
-class: :class:`SeriesEvents <highcharts_python.utility_classes.events.SeriesEvents>`
+class: :class:`SeriesEvents <highcharts_core.utility_classes.events.SeriesEvents>`
 ********************************************************************************************************************
 
 .. autoclass:: SeriesEvents
@@ -94,7 +94,7 @@ class: :class:`SeriesEvents <highcharts_python.utility_classes.events.SeriesEven
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SeriesEvents
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -102,7 +102,7 @@ class: :class:`SeriesEvents <highcharts_python.utility_classes.events.SeriesEven
 ------------------
 
 ********************************************************************************************************************
-class: :class:`ClusterEvents <highcharts_python.utility_classes.events.ClusterEvents>`
+class: :class:`ClusterEvents <highcharts_core.utility_classes.events.ClusterEvents>`
 ********************************************************************************************************************
 
 .. autoclass:: ClusterEvents
@@ -112,7 +112,7 @@ class: :class:`ClusterEvents <highcharts_python.utility_classes.events.ClusterEv
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ClusterEvents
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -120,7 +120,7 @@ class: :class:`ClusterEvents <highcharts_python.utility_classes.events.ClusterEv
 -----------------
 
 ********************************************************************************************************************
-class: :class:`AxisEvents <highcharts_python.utility_classes.events.AxisEvents>`
+class: :class:`AxisEvents <highcharts_core.utility_classes.events.AxisEvents>`
 ********************************************************************************************************************
 
 .. autoclass:: AxisEvents
@@ -130,7 +130,7 @@ class: :class:`AxisEvents <highcharts_python.utility_classes.events.AxisEvents>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AxisEvents
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -138,7 +138,7 @@ class: :class:`AxisEvents <highcharts_python.utility_classes.events.AxisEvents>`
 ----------------
 
 ********************************************************************************************************************
-class: :class:`MouseEvents <highcharts_python.utility_classes.events.MouseEvents>`
+class: :class:`MouseEvents <highcharts_core.utility_classes.events.MouseEvents>`
 ********************************************************************************************************************
 
 .. autoclass:: MouseEvents
@@ -148,7 +148,7 @@ class: :class:`MouseEvents <highcharts_python.utility_classes.events.MouseEvents
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: MouseEvents
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

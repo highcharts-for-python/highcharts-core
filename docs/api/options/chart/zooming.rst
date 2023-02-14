@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.zooming <highcharts_python.options.chart.zooming>`
+:mod:`.zooming <highcharts_core.options.chart.zooming>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.chart.zooming
+.. module:: highcharts_core.options.chart.zooming
 
 ********************************************************************************************************************
-class: :class:`ZoomingOptions <highcharts_python.options.chart.zooming.ZoomingOptions>`
+class: :class:`ZoomingOptions <highcharts_core.options.chart.zooming.ZoomingOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: ZoomingOptions
@@ -22,7 +22,7 @@ class: :class:`ZoomingOptions <highcharts_python.options.chart.zooming.ZoomingOp
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ZoomingOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta, highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta, highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

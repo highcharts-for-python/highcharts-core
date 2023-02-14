@@ -1,7 +1,7 @@
 .. code-block:: python
 
-  from highcharts_python.options.series.area import LineSeries
-  from highcharts_python.options.series.data import CartesianData
+  from highcharts_core.options.series.area import LineSeries
+  from highcharts_core.options.series.data import CartesianData
 
   # A simple array of numerical values which correspond to the Y value of the data
   # point
@@ -68,8 +68,8 @@
     .. note::
 
       An example of how this works for a simple
-      :class:`LineSeries <highcharts_python.options.series.area.LineSeries>` (which uses
-      :class:`CartesianData <highcharts_python.options.series.data.cartesian.CartesianData>`
+      :class:`LineSeries <highcharts_core.options.series.area.LineSeries>` (which uses
+      :class:`CartesianData <highcharts_core.options.series.data.cartesian.CartesianData>`
       data points) would be:
 
       .. code-block:: python
@@ -128,7 +128,7 @@
     :type value: iterable
 
     :returns: Collection of :term:`data point` instances (descended from
-      :class:`DataBase <highcharts_python.options.series.data.base.DataBase>`)
+      :class:`DataBase <highcharts_core.options.series.data.base.DataBase>`)
     :rtype: :class:`list <python:list>` of
-      :class:`DataBase <highcharts_python.options.series.data.base.DataBase>`-descendant
+      :class:`DataBase <highcharts_core.options.series.data.base.DataBase>`-descendant
       instances

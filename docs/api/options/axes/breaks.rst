@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.breaks <highcharts_python.options.axes.breaks>`
+:mod:`.breaks <highcharts_core.options.axes.breaks>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.axes.breaks
+.. module:: highcharts_core.options.axes.breaks
 
 ********************************************************************************************************************
-class: :class:`AxisBreak <highcharts_python.options.axes.breaks.AxisBreak>`
+class: :class:`AxisBreak <highcharts_core.options.axes.breaks.AxisBreak>`
 ********************************************************************************************************************
 
 .. autoclass:: AxisBreak
@@ -22,7 +22,7 @@ class: :class:`AxisBreak <highcharts_python.options.axes.breaks.AxisBreak>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AxisBreak
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

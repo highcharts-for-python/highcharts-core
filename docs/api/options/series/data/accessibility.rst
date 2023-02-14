@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.accessibility <highcharts_python.options.series.data.accessibility>`
+:mod:`.accessibility <highcharts_core.options.series.data.accessibility>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.data.accessibility
+.. module:: highcharts_core.options.series.data.accessibility
 
 ********************************************************************************************************************
-class: :class:`DataPointAccessibility <highcharts_python.options.series.data.accessibility.DataPointAccessibility>`
+class: :class:`DataPointAccessibility <highcharts_core.options.series.data.accessibility.DataPointAccessibility>`
 ********************************************************************************************************************
 
 .. autoclass:: DataPointAccessibility
@@ -22,7 +22,7 @@ class: :class:`DataPointAccessibility <highcharts_python.options.series.data.acc
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: DataPointAccessibility
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

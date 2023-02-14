@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.bubble <highcharts_python.options.series.bubble>`
+:mod:`.bubble <highcharts_core.options.series.bubble>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.bubble
+.. module:: highcharts_core.options.series.bubble
 
 ********************************************************************************************************************
-class: :class:`BubbleSeries <highcharts_python.options.series.bubble.BubbleSeries>`
+class: :class:`BubbleSeries <highcharts_core.options.series.bubble.BubbleSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: BubbleSeries
@@ -22,7 +22,7 @@ class: :class:`BubbleSeries <highcharts_python.options.series.bubble.BubbleSerie
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: BubbleSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.bullet <highcharts_python.options.series.data.bullet>`
+:mod:`.bullet <highcharts_core.options.series.data.bullet>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.data.bullet
+.. module:: highcharts_core.options.series.data.bullet
 
 ********************************************************************************************************************
-class: :class:`BulletData <highcharts_python.options.series.data.bullet.BulletData>`
+class: :class:`BulletData <highcharts_core.options.series.data.bullet.BulletData>`
 ********************************************************************************************************************
 
 .. autoclass:: BulletData
@@ -22,7 +22,7 @@ class: :class:`BulletData <highcharts_python.options.series.data.bullet.BulletDa
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: BulletData
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

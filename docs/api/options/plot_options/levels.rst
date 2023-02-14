@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.levels <highcharts_python.options.plot_options.levels>`
+:mod:`.levels <highcharts_core.options.plot_options.levels>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.levels
+.. module:: highcharts_core.options.plot_options.levels
 
 ********************************************************************************************************************
-class: :class:`LevelOptions <highcharts_python.options.plot_options.levels.LevelOptions>`
+class: :class:`LevelOptions <highcharts_core.options.plot_options.levels.LevelOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: LevelOptions
@@ -22,7 +22,7 @@ class: :class:`LevelOptions <highcharts_python.options.plot_options.levels.Level
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: LevelOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`LevelOptions <highcharts_python.options.plot_options.levels.Level
 -------------------
 
 ********************************************************************************************************************
-class: :class:`SunburstLevelOptions <highcharts_python.options.plot_options.levels.SunburstLevelOptions>`
+class: :class:`SunburstLevelOptions <highcharts_core.options.plot_options.levels.SunburstLevelOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: SunburstLevelOptions
@@ -40,7 +40,7 @@ class: :class:`SunburstLevelOptions <highcharts_python.options.plot_options.leve
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SunburstLevelOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`SunburstLevelOptions <highcharts_python.options.plot_options.leve
 -------------------
 
 ********************************************************************************************************************
-class: :class:`TreemapLevelOptions <highcharts_python.options.plot_options.levels.TreemapLevelOptions>`
+class: :class:`TreemapLevelOptions <highcharts_core.options.plot_options.levels.TreemapLevelOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: TreemapLevelOptions
@@ -58,7 +58,7 @@ class: :class:`TreemapLevelOptions <highcharts_python.options.plot_options.level
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: TreemapLevelOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -66,7 +66,7 @@ class: :class:`TreemapLevelOptions <highcharts_python.options.plot_options.level
 -----------------
 
 ********************************************************************************************************************
-class: :class:`LevelSize <highcharts_python.options.plot_options.levels.LevelSize>`
+class: :class:`LevelSize <highcharts_core.options.plot_options.levels.LevelSize>`
 ********************************************************************************************************************
 
 .. autoclass:: LevelSize
@@ -76,7 +76,7 @@ class: :class:`LevelSize <highcharts_python.options.plot_options.levels.LevelSiz
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: LevelSize
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -84,7 +84,7 @@ class: :class:`LevelSize <highcharts_python.options.plot_options.levels.LevelSiz
 -------------------
 
 ********************************************************************************************************************
-class: :class:`ColorVariation <highcharts_python.options.plot_options.levels.ColorVariation>`
+class: :class:`ColorVariation <highcharts_core.options.plot_options.levels.ColorVariation>`
 ********************************************************************************************************************
 
 .. autoclass:: ColorVariation
@@ -94,7 +94,7 @@ class: :class:`ColorVariation <highcharts_python.options.plot_options.levels.Col
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ColorVariation
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -102,7 +102,7 @@ class: :class:`ColorVariation <highcharts_python.options.plot_options.levels.Col
 ----------------
 
 ********************************************************************************************************************
-class: :class:`BaseLevelOptions <highcharts_python.options.plot_options.levels.BaseLevelOptions>`
+class: :class:`BaseLevelOptions <highcharts_core.options.plot_options.levels.BaseLevelOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: BaseLevelOptions
@@ -112,7 +112,7 @@ class: :class:`BaseLevelOptions <highcharts_python.options.plot_options.levels.B
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: BaseLevelOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

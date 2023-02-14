@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.arcdiagram <highcharts_python.options.series.data.arcdiagram>`
+:mod:`.arcdiagram <highcharts_core.options.series.data.arcdiagram>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.data.arcdiagram
+.. module:: highcharts_core.options.series.data.arcdiagram
 
 ********************************************************************************************************************
-class: :class:`ArcDiagramData <highcharts_python.options.series.data.arcdiagram.ArcDiagramData>`
+class: :class:`ArcDiagramData <highcharts_core.options.series.data.arcdiagram.ArcDiagramData>`
 ********************************************************************************************************************
 
 .. autoclass:: ArcDiagramData
@@ -22,7 +22,7 @@ class: :class:`ArcDiagramData <highcharts_python.options.series.data.arcdiagram.
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ArcDiagramData
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

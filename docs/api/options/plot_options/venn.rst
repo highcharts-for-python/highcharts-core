@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.venn <highcharts_python.options.plot_options.venn>`
+:mod:`.venn <highcharts_core.options.plot_options.venn>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.venn
+.. module:: highcharts_core.options.plot_options.venn
 
 ********************************************************************************************************************
-class: :class:`VennOptions <highcharts_python.options.plot_options.venn.VennOptions>`
+class: :class:`VennOptions <highcharts_core.options.plot_options.venn.VennOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: VennOptions
@@ -22,7 +22,7 @@ class: :class:`VennOptions <highcharts_python.options.plot_options.venn.VennOpti
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: VennOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

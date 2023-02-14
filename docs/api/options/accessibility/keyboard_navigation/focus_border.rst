@@ -1,5 +1,5 @@
 #################################################################################################
-:mod:`.focus_border <highcharts_python.options.accessibility.keyboard_navigation.focus_border>`
+:mod:`.focus_border <highcharts_core.options.accessibility.keyboard_navigation.focus_border>`
 #################################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.accessibility.keyboard_navigation.focus_border
+.. module:: highcharts_core.options.accessibility.keyboard_navigation.focus_border
 
 **********************************************************************************************************************************************
-class: :class:`FocusBorder <highcharts_python.options.accessibility.keyboard_navigation.focus_border.FocusBorder>`
+class: :class:`FocusBorder <highcharts_core.options.accessibility.keyboard_navigation.focus_border.FocusBorder>`
 **********************************************************************************************************************************************
 
 .. autoclass:: FocusBorder
@@ -22,7 +22,7 @@ class: :class:`FocusBorder <highcharts_python.options.accessibility.keyboard_nav
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: FocusBorder
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`FocusBorder <highcharts_python.options.accessibility.keyboard_nav
 -------------------
 
 **********************************************************************************************************************************************
-class: :class:`FocusBorderStyle <highcharts_python.options.accessibility.keyboard_navigation.focus_border.FocusBorderStyle>`
+class: :class:`FocusBorderStyle <highcharts_core.options.accessibility.keyboard_navigation.focus_border.FocusBorderStyle>`
 **********************************************************************************************************************************************
 
 .. autoclass:: FocusBorderStyle
@@ -40,7 +40,7 @@ class: :class:`FocusBorderStyle <highcharts_python.options.accessibility.keyboar
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: FocusBorderStyle
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

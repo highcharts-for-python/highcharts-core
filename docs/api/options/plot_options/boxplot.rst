@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.boxplot <highcharts_python.options.plot_options.boxplot>`
+:mod:`.boxplot <highcharts_core.options.plot_options.boxplot>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.boxplot
+.. module:: highcharts_core.options.plot_options.boxplot
 
 ********************************************************************************************************************
-class: :class:`BoxPlotOptions <highcharts_python.options.plot_options.boxplot.BoxPlotOptions>`
+class: :class:`BoxPlotOptions <highcharts_core.options.plot_options.boxplot.BoxPlotOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: BoxPlotOptions
@@ -22,7 +22,7 @@ class: :class:`BoxPlotOptions <highcharts_python.options.plot_options.boxplot.Bo
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: BoxPlotOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`BoxPlotOptions <highcharts_python.options.plot_options.boxplot.Bo
 ---------------
 
 ********************************************************************************************************************
-class: :class:`ErrorBarOptions <highcharts_python.options.plot_options.boxplot.ErrorBarOptions>`
+class: :class:`ErrorBarOptions <highcharts_core.options.plot_options.boxplot.ErrorBarOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: ErrorBarOptions
@@ -40,7 +40,7 @@ class: :class:`ErrorBarOptions <highcharts_python.options.plot_options.boxplot.E
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ErrorBarOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

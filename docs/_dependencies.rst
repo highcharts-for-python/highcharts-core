@@ -66,7 +66,7 @@
 
       .. code-block:: bash
 
-        $ pip install highcharts-python[develop]
+        $ pip install highcharts-core[develop]
 
     * `pytest <https://docs.pytest.org/en/7.1.x/>`_ v.7.1 or higher
     * `pytest-cov <https://pytest-cov.readthedocs.io/en/latest/>`_ v.3.0 or higher
@@ -81,7 +81,7 @@
 
       .. code-block:: bash
 
-        $ pip install highcharts-python[docs]
+        $ pip install highcharts-core[docs]
 
     * `Sphinx <https://www.sphinx-doc.org/en/master/>`_ v.5.1 or higher
     * `Sphinx RTD Theme <https://sphinx-themes.org/sample-sites/sphinx-rtd-theme/>`_ v.1.0

@@ -229,7 +229,7 @@ Code Style: Python vs JavaScript Naming Conventions
 
 .. include:: using/_code_style_naming_conventions.rst
 
-Standard Methods: :class:`HighchartsMeta <highcharts_python.metaclasses.HighchartsMeta>`
+Standard Methods: :class:`HighchartsMeta <highcharts_core.metaclasses.HighchartsMeta>`
 ============================================================================================
 
 Every single object supported by the Highcharts JS API corresponds to a Python class in
@@ -294,10 +294,10 @@ inheritance, we can reduce the number of properties from about 15,000 to about 1
 bad!
 
 However, this significant reduction *does* require us to use multiple inheritance in some
-cases, paritcularly in the :mod:`.options.series <highcharts_python.options.series>`
+cases, paritcularly in the :mod:`.options.series <highcharts_core.options.series>`
 classes (which inherit from both the corresponding type-specific options in
-:mod:`.options.plot_options <highcharts_python.options.plot_options>`) *and* from the
-generic :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>` class).
+:mod:`.options.plot_options <highcharts_core.options.plot_options>`) *and* from the
+generic :class:`SeriesBase <highcharts_core.options.series.base.SeriesBase>` class).
 
 To solve the :term:`diamond of death` problem, we implemented a number of private
 helper methods to assist in navigating the MRO:
@@ -308,20 +308,20 @@ helper methods to assist in navigating the MRO:
 
   * - Method / Function
     - Purpose
-  * - :func:`.utility_functions.get_remaining_mro() <highcharts_python.utility_functions.get_remaining_mro>`
+  * - :func:`.utility_functions.get_remaining_mro() <highcharts_core.utility_functions.get_remaining_mro>`
     - Retrieve the class objects that are still to be traversed for a given class' MRO.
-  * - :func:`.utility_functions.mro__to_untrimmed_dict() <highcharts_python.utility_functions.mro__to_untrimmed_dict>`
+  * - :func:`.utility_functions.mro__to_untrimmed_dict() <highcharts_core.utility_functions.mro__to_untrimmed_dict>`
     - Retrieve a consolidated :term:`untrimmed` :class:`dict <python:dict>` representation
       from all ancestors of a given class.
-  * - :meth:`HighchartsMeta._untrimmed_mro_ancestors() <highcharts_python.metaclasses.HighchartsMeta._untrimmed_mro_ancestors>`
+  * - :meth:`HighchartsMeta._untrimmed_mro_ancestors() <highcharts_core.metaclasses.HighchartsMeta._untrimmed_mro_ancestors>`
     - Method which consolidates the results of
-      :meth:`_to_untrimmed_dict() <highcharts_python.metaclasses.HighchartsMeta._to_untrimmed_dict>`
+      :meth:`_to_untrimmed_dict() <highcharts_core.metaclasses.HighchartsMeta._to_untrimmed_dict>`
       from a given instance's parent class into a single :class:`dict <python:dict>`.
-  * - :meth:`HighchartsMeta._to_untrimmed_dict() <highcharts_python.metaclasses.HighchartsMeta._to_untrimmed_dict>`
+  * - :meth:`HighchartsMeta._to_untrimmed_dict() <highcharts_core.metaclasses.HighchartsMeta._to_untrimmed_dict>`
     - Generates an :term:`untrimmed` :class:`dict <python:dict>` representation of the
       instance at its lowest level in the class hierarchy. Think of this as the
       "botom of the ladder", with other methods (notably
-      :meth:`_untrimmed_mro_ancestors() <highcharts_python.metaclasses.HighchartsMeta._untrimmed_mro_ancestors>`)
+      :meth:`_untrimmed_mro_ancestors() <highcharts_core.metaclasses.HighchartsMeta._untrimmed_mro_ancestors>`)
       being used to generate corresponding :class:`dict <python:dict>` from other rungs on
       the ladder.
 
@@ -358,21 +358,21 @@ Preparing Your Development Environment
 
 In order to prepare your local development environment, you should:
 
-#. Fork the `Git repository <https://github.com/hcp-llc/highcharts-python>`_.
+#. Fork the `Git repository <https://github.com/highcharts-for-python/highcharts-core>`_.
 #. Clone your forked repository.
 #. Set up a virtual environment (optional).
 #. Install development dependencies:
 
   .. code-block:: bash
 
-    highcharts-python/ $ pip install -r requirements.dev.txt
+    highcharts-core/ $ pip install -r requirements.dev.txt
 
 And you should be good to go!
 
 Ideas and Feature Requests
 ============================
 
-Check for open `issues <https://github.com/insightindustry/highcharts-python/issues>`_
+Check for open `issues <https://github.com/insightindustry/highcharts-core/issues>`_
 or create a new issue to start a discussion around a bug or feature idea.
 
 Testing
@@ -405,8 +405,8 @@ In order to build documentation locally, you can do so from the command line usi
 
 .. code-block:: bash
 
-  highcharts-python/ $ cd docs
-  highcharts-python/docs $ make html
+  highcharts-core/ $ cd docs
+  highcharts-core/docs $ make html
 
 .. caution::
 
@@ -428,7 +428,7 @@ available at:
 
   .. code-block:: bash
 
-    highcharts-python/docs/_build/html/index.html
+    highcharts-core/docs/_build/html/index.html
 
 .. note::
 

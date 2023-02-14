@@ -1,5 +1,5 @@
 #############################################################################################
-:mod:`.control_point_options <highcharts_python.options.annotations.control_point_options>`
+:mod:`.control_point_options <highcharts_core.options.annotations.control_point_options>`
 #############################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.annotations.control_point_options
+.. module:: highcharts_core.options.annotations.control_point_options
 
 *******************************************************************************************************************************************
-class: :class:`AnnotationControlPointOption <highcharts_python.options.annotations.control_point_options.AnnotationControlPointOption>`
+class: :class:`AnnotationControlPointOption <highcharts_core.options.annotations.control_point_options.AnnotationControlPointOption>`
 *******************************************************************************************************************************************
 
 .. autoclass:: AnnotationControlPointOption
@@ -22,7 +22,7 @@ class: :class:`AnnotationControlPointOption <highcharts_python.options.annotatio
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AnnotationControlPointOption
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

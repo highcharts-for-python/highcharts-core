@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.clusters <highcharts_python.utility_classes.clusters>`
+:mod:`.clusters <highcharts_core.utility_classes.clusters>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.utility_classes.clusters
+.. module:: highcharts_core.utility_classes.clusters
 
 ********************************************************************************************************************
-class: :class:`ClusterOptions <highcharts_python.utility_classes.clusters.ClusterOptions>`
+class: :class:`ClusterOptions <highcharts_core.utility_classes.clusters.ClusterOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: ClusterOptions
@@ -22,7 +22,7 @@ class: :class:`ClusterOptions <highcharts_python.utility_classes.clusters.Cluste
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ClusterOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`ClusterOptions <highcharts_python.utility_classes.clusters.Cluste
 -------------
 
 ********************************************************************************************************************
-class: :class:`VectorLayoutAlgorithm <highcharts_python.utility_classes.clusters.VectorLayoutAlgorithm>`
+class: :class:`VectorLayoutAlgorithm <highcharts_core.utility_classes.clusters.VectorLayoutAlgorithm>`
 ********************************************************************************************************************
 
 .. autoclass:: VectorLayoutAlgorithm
@@ -40,7 +40,7 @@ class: :class:`VectorLayoutAlgorithm <highcharts_python.utility_classes.clusters
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: VectorLayoutAlgorithm
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

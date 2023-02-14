@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.csv <highcharts_python.options.exporting.csv>`
+:mod:`.csv <highcharts_core.options.exporting.csv>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.exporting.csv
+.. module:: highcharts_core.options.exporting.csv
 
 ********************************************************************************************************************
-class: :class:`ExportingCSV <highcharts_python.options.exporting.csv.ExportingCSV>`
+class: :class:`ExportingCSV <highcharts_core.options.exporting.csv.ExportingCSV>`
 ********************************************************************************************************************
 
 .. autoclass:: ExportingCSV
@@ -22,7 +22,7 @@ class: :class:`ExportingCSV <highcharts_python.options.exporting.csv.ExportingCS
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ExportingCSV
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`ExportingCSV <highcharts_python.options.exporting.csv.ExportingCS
 ----------
 
 ********************************************************************************************************************
-class: :class:`CSVAnnotationOptions <highcharts_python.options.exporting.csv.CSVAnnotationOptions>`
+class: :class:`CSVAnnotationOptions <highcharts_core.options.exporting.csv.CSVAnnotationOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: CSVAnnotationOptions
@@ -40,7 +40,7 @@ class: :class:`CSVAnnotationOptions <highcharts_python.options.exporting.csv.CSV
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: CSVAnnotationOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

@@ -1,5 +1,5 @@
 ################################################################
-:mod:`.accessibility <highcharts_python.options.accessibility>`
+:mod:`.accessibility <highcharts_core.options.accessibility>`
 ################################################################
 
 .. contents:: Module Contents
@@ -18,10 +18,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.accessibility
+.. module:: highcharts_core.options.accessibility
 
 ****************************************************************************************
-class: :class:`Accessibility <highcharts_python.options.accessibility.Accessibility`>
+class: :class:`Accessibility <highcharts_core.options.accessibility.Accessibility`>
 ****************************************************************************************
 
 .. autoclass:: Accessibility
@@ -31,7 +31,7 @@ class: :class:`Accessibility <highcharts_python.options.accessibility.Accessibil
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Accessibility
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -39,7 +39,7 @@ class: :class:`Accessibility <highcharts_python.options.accessibility.Accessibil
 -----------------------
 
 ***************************************************************************************************************************
-class: :class:`CustomAccessibilityComponents <highcharts_python.options.accessibility.CustomAccessibilityComponents`>
+class: :class:`CustomAccessibilityComponents <highcharts_core.options.accessibility.CustomAccessibilityComponents`>
 ***************************************************************************************************************************
 
 .. autoclass:: CustomAccessibilityComponents
@@ -49,7 +49,7 @@ class: :class:`CustomAccessibilityComponents <highcharts_python.options.accessib
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: CustomAccessibilityComponents
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -66,21 +66,21 @@ Sub-components
 
   * - Module
     - Classes / Functions
-  * - :mod:`.options.accessibility <highcharts_python.options.accessibility>`
-    - :class:`Accessibility <highcharts_python.options.accessibility.Accessibility>`
-      :class:`CustomAccessibilityComponents <highcharts_python.options.accessibility.CustomAccessibilityComponents>`
-  * - :mod:`.options.accessibility.announce_new_data <highcharts_python.options.accessibility.announce_new_data>`
-    - :class:`AnnounceNewData <highcharts_python.options.accessibility.announce_new_data.AnnounceNewData>`
-  * - :mod:`.options.accessibility.keyboard_navigation <highcharts_python.options.accessibility.keyboard_navigation>`
-    - :class:`KeyboardNavigation <highcharts_python.options.accessibility.keyboard_navigation.KeyboardNavigation>`
-  * - :mod:`.options.accessibility.keyboard_navigation.focus_border <highcharts_python.options.accessibility.keyboard_navigation.focus_border>`
-    - :class:`FocusBorder <highcharts_python.options.accessibility.keyboard_navigation.focus_border.FocusBorder>`
-      :class:`FocusBorderStyle <highcharts_python.options.accessibility.keyboard_navigation.focus_border.FocusBorderStyle>`
-  * - :mod:`.options.accessibility.keyboard_navigation.series_navigation <highcharts_python.options.accessibility.keyboard_navigation.series_navigation>`
-    - :class:`SeriesNavigation <highcharts_python.options.accessibility.keyboard_navigation.series_navigation.SeriesNavigation>`
-  * - :mod:`options.accessibility.point <highcharts_python.options.accessibility.point>`
-    - :class:`AccessibilityPoint <highcharts_python.options.accessibility.point.AccessibilityPoint>`
-  * - :mod:`options.accessibility.screen_reader_section <highcharts_python.options.accessibility.screen_reader_section>`
-    - :class:`ScreenReaderSection <highcharts_python.options.accessibility.screen_reader_section.ScreenReaderSection>`
-  * - :mod:`options.accessibility.series <highcharts_python.options.accessibility.series>`
-    - :class:`SeriesAccessibility <highcharts_python.options.accessibility.series.SeriesAccessibility>`
+  * - :mod:`.options.accessibility <highcharts_core.options.accessibility>`
+    - :class:`Accessibility <highcharts_core.options.accessibility.Accessibility>`
+      :class:`CustomAccessibilityComponents <highcharts_core.options.accessibility.CustomAccessibilityComponents>`
+  * - :mod:`.options.accessibility.announce_new_data <highcharts_core.options.accessibility.announce_new_data>`
+    - :class:`AnnounceNewData <highcharts_core.options.accessibility.announce_new_data.AnnounceNewData>`
+  * - :mod:`.options.accessibility.keyboard_navigation <highcharts_core.options.accessibility.keyboard_navigation>`
+    - :class:`KeyboardNavigation <highcharts_core.options.accessibility.keyboard_navigation.KeyboardNavigation>`
+  * - :mod:`.options.accessibility.keyboard_navigation.focus_border <highcharts_core.options.accessibility.keyboard_navigation.focus_border>`
+    - :class:`FocusBorder <highcharts_core.options.accessibility.keyboard_navigation.focus_border.FocusBorder>`
+      :class:`FocusBorderStyle <highcharts_core.options.accessibility.keyboard_navigation.focus_border.FocusBorderStyle>`
+  * - :mod:`.options.accessibility.keyboard_navigation.series_navigation <highcharts_core.options.accessibility.keyboard_navigation.series_navigation>`
+    - :class:`SeriesNavigation <highcharts_core.options.accessibility.keyboard_navigation.series_navigation.SeriesNavigation>`
+  * - :mod:`options.accessibility.point <highcharts_core.options.accessibility.point>`
+    - :class:`AccessibilityPoint <highcharts_core.options.accessibility.point.AccessibilityPoint>`
+  * - :mod:`options.accessibility.screen_reader_section <highcharts_core.options.accessibility.screen_reader_section>`
+    - :class:`ScreenReaderSection <highcharts_core.options.accessibility.screen_reader_section.ScreenReaderSection>`
+  * - :mod:`options.accessibility.series <highcharts_core.options.accessibility.series>`
+    - :class:`SeriesAccessibility <highcharts_core.options.accessibility.series.SeriesAccessibility>`

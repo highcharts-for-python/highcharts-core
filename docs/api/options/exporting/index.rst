@@ -1,5 +1,5 @@
 ################################################################
-:mod:`.exporting <highcharts_python.options.exporting>`
+:mod:`.exporting <highcharts_core.options.exporting>`
 ################################################################
 
 .. contents:: Module Contents
@@ -15,10 +15,10 @@
 
 -------------------------
 
-.. module:: highcharts_python.options.exporting
+.. module:: highcharts_core.options.exporting
 
 ********************************************************************************************************************
-class: :class:`Exporting <highcharts_python.options.exporting.Exporting>`
+class: :class:`Exporting <highcharts_core.options.exporting.Exporting>`
 ********************************************************************************************************************
 
 .. autoclass:: Exporting
@@ -28,7 +28,7 @@ class: :class:`Exporting <highcharts_python.options.exporting.Exporting>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Exporting
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -36,7 +36,7 @@ class: :class:`Exporting <highcharts_python.options.exporting.Exporting>`
 -------------------------
 
 ********************************************************************************************************************
-class: :class:`ExportingAccessibilityOptions <highcharts_python.options.exporting.ExportingAccessibilityOptions>`
+class: :class:`ExportingAccessibilityOptions <highcharts_core.options.exporting.ExportingAccessibilityOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: ExportingAccessibilityOptions
@@ -46,7 +46,7 @@ class: :class:`ExportingAccessibilityOptions <highcharts_python.options.exportin
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ExportingAccessibilityOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -63,11 +63,11 @@ Sub-components
 
   * - Module
     - Classes / Functions
-  * - :mod:`.options.exporting <highcharts_python.options.exporting>`
-    - :class:`Exporting <highcharts_python.options.exporting.Exporting>`
-      :class:`ExportingAccessibilityOptions <highcharts_python.options.exporting.ExportingAccessibilityOptions>`
-  * - :mod:`.options.exporting.csv <highcharts_python.options.exporting.csv>`
-    - :class:`ExportingCSV <highcharts_python.options.exporting.csv.ExportingCSV>`
-      :class:`CSVAnnotationOptions <highcharts_python.options.exporting.csv.CSVAnnotationOptions>`
-  * - :mod:`.options.exporting.exporting.pdf_font <highcharts_python.options.exporting.pdf_font>`
-    - :class:`PDFFontOptions <highcharts_python.options.exporting.pdf_font.PDFFontOptions>`
+  * - :mod:`.options.exporting <highcharts_core.options.exporting>`
+    - :class:`Exporting <highcharts_core.options.exporting.Exporting>`
+      :class:`ExportingAccessibilityOptions <highcharts_core.options.exporting.ExportingAccessibilityOptions>`
+  * - :mod:`.options.exporting.csv <highcharts_core.options.exporting.csv>`
+    - :class:`ExportingCSV <highcharts_core.options.exporting.csv.ExportingCSV>`
+      :class:`CSVAnnotationOptions <highcharts_core.options.exporting.csv.CSVAnnotationOptions>`
+  * - :mod:`.options.exporting.exporting.pdf_font <highcharts_core.options.exporting.pdf_font>`
+    - :class:`PDFFontOptions <highcharts_core.options.exporting.pdf_font.PDFFontOptions>`

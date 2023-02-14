@@ -2,7 +2,7 @@
 Error Reference
 ##################################
 
-.. module:: highcharts_python.errors
+.. module:: highcharts_core.errors
 
 .. contents::
   :local:

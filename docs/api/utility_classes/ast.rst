@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.ast <highcharts_python.utility_classes.ast>`
+:mod:`.ast <highcharts_core.utility_classes.ast>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.utility_classes.ast
+.. module:: highcharts_core.utility_classes.ast
 
 ********************************************************************************************************************
-class: :class:`ASTMap <highcharts_python.utility_classes.ast.ASTMap>`
+class: :class:`ASTMap <highcharts_core.utility_classes.ast.ASTMap>`
 ********************************************************************************************************************
 
 .. autoclass:: ASTMap
@@ -22,7 +22,7 @@ class: :class:`ASTMap <highcharts_python.utility_classes.ast.ASTMap>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ASTMap
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`ASTMap <highcharts_python.utility_classes.ast.ASTMap>`
 --------------
 
 ********************************************************************************************************************
-class: :class:`ASTNode <highcharts_python.utility_classes.ast.ASTNode>`
+class: :class:`ASTNode <highcharts_core.utility_classes.ast.ASTNode>`
 ********************************************************************************************************************
 
 .. autoclass:: ASTNode
@@ -40,7 +40,7 @@ class: :class:`ASTNode <highcharts_python.utility_classes.ast.ASTNode>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ASTNode
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`ASTNode <highcharts_python.utility_classes.ast.ASTNode>`
 -----------------
 
 ********************************************************************************************************************
-class: :class:`TextPath <highcharts_python.utility_classes.ast.TextPath>`
+class: :class:`TextPath <highcharts_core.utility_classes.ast.TextPath>`
 ********************************************************************************************************************
 
 .. autoclass:: TextPath
@@ -58,7 +58,7 @@ class: :class:`TextPath <highcharts_python.utility_classes.ast.TextPath>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: TextPath
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -66,7 +66,7 @@ class: :class:`TextPath <highcharts_python.utility_classes.ast.TextPath>`
 -------------------
 
 ********************************************************************************************************************
-class: :class:`AttributeObject <highcharts_python.utility_classes.ast.AttributeObject>`
+class: :class:`AttributeObject <highcharts_core.utility_classes.ast.AttributeObject>`
 ********************************************************************************************************************
 
 .. autoclass:: AttributeObject
@@ -76,7 +76,7 @@ class: :class:`AttributeObject <highcharts_python.utility_classes.ast.AttributeO
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AttributeObject
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

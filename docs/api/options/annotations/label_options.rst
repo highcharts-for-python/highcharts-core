@@ -1,5 +1,5 @@
 #############################################################################################
-:mod:`.label_options <highcharts_python.options.annotations.label_options>`
+:mod:`.label_options <highcharts_core.options.annotations.label_options>`
 #############################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.annotations.label_options
+.. module:: highcharts_core.options.annotations.label_options
 
 *******************************************************************************************************************************************
-class: :class:`AnnotationLabel <highcharts_python.options.annotations.label_options.AnnotationLabel>`
+class: :class:`AnnotationLabel <highcharts_core.options.annotations.label_options.AnnotationLabel>`
 *******************************************************************************************************************************************
 
 .. autoclass:: AnnotationLabel
@@ -22,7 +22,7 @@ class: :class:`AnnotationLabel <highcharts_python.options.annotations.label_opti
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AnnotationLabel
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`AnnotationLabel <highcharts_python.options.annotations.label_opti
 -------------------
 
 ********************************************************************************************************************************************
-class: :class:`AnnotationLabelOptionAccessibility <highcharts_python.options.annotations.label_options.AnnotationLabelOptionAccessibility>`
+class: :class:`AnnotationLabelOptionAccessibility <highcharts_core.options.annotations.label_options.AnnotationLabelOptionAccessibility>`
 ********************************************************************************************************************************************
 
 .. autoclass:: AnnotationLabelOptionAccessibility
@@ -40,7 +40,7 @@ class: :class:`AnnotationLabelOptionAccessibility <highcharts_python.options.ann
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AnnotationLabelOptionAccessibility
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`AnnotationLabelOptionAccessibility <highcharts_python.options.ann
 -------------------
 
 ********************************************************************************************************************************************
-class: :class:`LabelOptions <highcharts_python.options.annotations.label_options.LabelOptions>`
+class: :class:`LabelOptions <highcharts_core.options.annotations.label_options.LabelOptions>`
 ********************************************************************************************************************************************
 
 .. autoclass:: LabelOptions
@@ -58,7 +58,7 @@ class: :class:`LabelOptions <highcharts_python.options.annotations.label_options
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: LabelOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

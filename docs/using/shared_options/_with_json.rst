@@ -41,7 +41,7 @@ You can leverage shared options that read from
 
   .. code-block:: python
 
-    from highcharts_python.highcharts import SharedOptions
+    from highcharts_core.highcharts import SharedOptions
 
     my_shared_options = SharedOptions.from_js_literal(
         '../../project_resources/highcharts_config/shared_options.json'

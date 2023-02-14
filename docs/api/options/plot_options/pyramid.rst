@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.pyramid <highcharts_python.options.plot_options.pyramid>`
+:mod:`.pyramid <highcharts_core.options.plot_options.pyramid>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.pyramid
+.. module:: highcharts_core.options.plot_options.pyramid
 
 ********************************************************************************************************************
-class: :class:`PyramidOptions <highcharts_python.options.plot_options.pyramid.PyramidOptions>`
+class: :class:`PyramidOptions <highcharts_core.options.plot_options.pyramid.PyramidOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: PyramidOptions
@@ -22,7 +22,7 @@ class: :class:`PyramidOptions <highcharts_python.options.plot_options.pyramid.Py
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: PyramidOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`PyramidOptions <highcharts_python.options.plot_options.pyramid.Py
 --------------------
 
 ********************************************************************************************************************
-class: :class:`Pyramid3DOptions <highcharts_python.options.plot_options.pyramid.Pyramid3DOptions>`
+class: :class:`Pyramid3DOptions <highcharts_core.options.plot_options.pyramid.Pyramid3DOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: Pyramid3DOptions
@@ -40,7 +40,7 @@ class: :class:`Pyramid3DOptions <highcharts_python.options.plot_options.pyramid.
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Pyramid3DOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

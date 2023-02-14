@@ -5,13 +5,13 @@ import pytest
 import datetime
 from json.decoder import JSONDecodeError
 
-from highcharts_python.options.series.area import AreaSeries as cls
-from highcharts_python.options.series.area import AreaRangeSeries as cls2
-from highcharts_python.options.series.area import AreaSplineSeries as cls3
-from highcharts_python.options.series.area import AreaSplineRangeSeries as cls4
-from highcharts_python.options.series.area import LineSeries as cls5
-from highcharts_python.options.series.area import StreamGraphSeries as cls6
-from highcharts_python import errors
+from highcharts_core.options.series.area import AreaSeries as cls
+from highcharts_core.options.series.area import AreaRangeSeries as cls2
+from highcharts_core.options.series.area import AreaSplineSeries as cls3
+from highcharts_core.options.series.area import AreaSplineRangeSeries as cls4
+from highcharts_core.options.series.area import LineSeries as cls5
+from highcharts_core.options.series.area import StreamGraphSeries as cls6
+from highcharts_core import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
     Class_from_js_literal

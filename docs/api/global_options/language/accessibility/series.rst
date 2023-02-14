@@ -1,5 +1,5 @@
 #########################################################################################################
-:mod:`.series <highcharts_python.global_options.language.accessibility.series>`
+:mod:`.series <highcharts_core.global_options.language.accessibility.series>`
 #########################################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.global_options.language.accessibility.series
+.. module:: highcharts_core.global_options.language.accessibility.series
 
 *************************************************************************************************************************************************************
-class: :class:`SeriesLanguageOptions <highcharts_python.global_options.language.accessibility.series.SeriesLanguageOptions>`
+class: :class:`SeriesLanguageOptions <highcharts_core.global_options.language.accessibility.series.SeriesLanguageOptions>`
 *************************************************************************************************************************************************************
 
 .. autoclass:: SeriesLanguageOptions
@@ -22,7 +22,7 @@ class: :class:`SeriesLanguageOptions <highcharts_python.global_options.language.
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SeriesLanguageOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`SeriesLanguageOptions <highcharts_python.global_options.language.
 -----------------
 
 *************************************************************************************************************************************************************
-class: :class:`SeriesSummaryLanguageOptions <highcharts_python.global_options.language.accessibility.series.SeriesSummaryLanguageOptions>`
+class: :class:`SeriesSummaryLanguageOptions <highcharts_core.global_options.language.accessibility.series.SeriesSummaryLanguageOptions>`
 *************************************************************************************************************************************************************
 
 .. autoclass:: SeriesSummaryLanguageOptions
@@ -40,7 +40,7 @@ class: :class:`SeriesSummaryLanguageOptions <highcharts_python.global_options.la
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SeriesSummaryLanguageOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`SeriesSummaryLanguageOptions <highcharts_python.global_options.la
 ------------------
 
 *************************************************************************************************************************************************************
-class: :class:`SeriesTypeDescriptions <highcharts_python.global_options.language.accessibility.series.SeriesTypeDescriptions>`
+class: :class:`SeriesTypeDescriptions <highcharts_core.global_options.language.accessibility.series.SeriesTypeDescriptions>`
 *************************************************************************************************************************************************************
 
 .. autoclass:: SeriesTypeDescriptions
@@ -58,7 +58,7 @@ class: :class:`SeriesTypeDescriptions <highcharts_python.global_options.language
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SeriesTypeDescriptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

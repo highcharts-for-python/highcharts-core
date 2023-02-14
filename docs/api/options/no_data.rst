@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.no_data <highcharts_python.options.no_data>`
+:mod:`.no_data <highcharts_core.options.no_data>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.no_data
+.. module:: highcharts_core.options.no_data
 
 ********************************************************************************************************************
-class: :class:`NoData <highcharts_python.options.no_data.NoData>`
+class: :class:`NoData <highcharts_core.options.no_data.NoData>`
 ********************************************************************************************************************
 
 .. autoclass:: NoData
@@ -22,7 +22,7 @@ class: :class:`NoData <highcharts_python.options.no_data.NoData>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: NoData
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

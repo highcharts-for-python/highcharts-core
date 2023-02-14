@@ -14,7 +14,7 @@
     :noindex:
 
     Replace the contents of the
-    :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
+    :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` property
     with data points populated from a `pandas <https://pandas.pydata.org/>`__
     :class:`DataFrame <pandas:DataFrame>`.
 

@@ -1,5 +1,5 @@
 #############################################################################################
-:mod:`.shape_options <highcharts_python.options.annotations.shape_options>`
+:mod:`.shape_options <highcharts_core.options.annotations.shape_options>`
 #############################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.annotations.shape_options
+.. module:: highcharts_core.options.annotations.shape_options
 
 *******************************************************************************************************************************************
-class: :class:`AnnotationShape <highcharts_python.options.annotations.shape_options.AnnotationShape>`
+class: :class:`AnnotationShape <highcharts_core.options.annotations.shape_options.AnnotationShape>`
 *******************************************************************************************************************************************
 
 .. autoclass:: AnnotationShape
@@ -22,13 +22,13 @@ class: :class:`AnnotationShape <highcharts_python.options.annotations.shape_opti
   **Class Inheritance:**
 
     .. inheritance-diagram:: AnnotationShape
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
 -----------------------
 
 *******************************************************************************************************************************************
-class: :class:`ShapeOptions <highcharts_python.options.annotations.shape_options.ShapeOptions>`
+class: :class:`ShapeOptions <highcharts_core.options.annotations.shape_options.ShapeOptions>`
 *******************************************************************************************************************************************
 
 .. autoclass:: ShapeOptions
@@ -38,5 +38,5 @@ class: :class:`ShapeOptions <highcharts_python.options.annotations.shape_options
   **Class Inheritance:**
 
     .. inheritance-diagram:: ShapeOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1

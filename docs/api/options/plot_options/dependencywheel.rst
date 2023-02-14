@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.dependencywheel <highcharts_python.options.plot_options.dependencywheel>`
+:mod:`.dependencywheel <highcharts_core.options.plot_options.dependencywheel>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.dependencywheel
+.. module:: highcharts_core.options.plot_options.dependencywheel
 
 ************************************************************************************************************************
-class: :class:`DependencyWheelOptions <highcharts_python.options.plot_options.dependencywheel.DependencyWheelOptions>`
+class: :class:`DependencyWheelOptions <highcharts_core.options.plot_options.dependencywheel.DependencyWheelOptions>`
 ************************************************************************************************************************
 
 .. autoclass:: DependencyWheelOptions
@@ -22,7 +22,7 @@ class: :class:`DependencyWheelOptions <highcharts_python.options.plot_options.de
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: DependencyWheelOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

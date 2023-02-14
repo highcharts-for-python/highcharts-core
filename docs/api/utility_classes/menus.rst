@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.menus <highcharts_python.utility_classes.menus>`
+:mod:`.menus <highcharts_core.utility_classes.menus>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.utility_classes.menus
+.. module:: highcharts_core.utility_classes.menus
 
 ********************************************************************************************************************
-class: :class:`MenuObject <highcharts_python.utility_classes.menus.MenuObject>`
+class: :class:`MenuObject <highcharts_core.utility_classes.menus.MenuObject>`
 ********************************************************************************************************************
 
 .. autoclass:: MenuObject
@@ -22,7 +22,7 @@ class: :class:`MenuObject <highcharts_python.utility_classes.menus.MenuObject>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: MenuObject
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`MenuObject <highcharts_python.utility_classes.menus.MenuObject>`
 -------------------
 
 ********************************************************************************************************************
-class: :class:`MenuItem <highcharts_python.utility_classes.menus.MenuItem>`
+class: :class:`MenuItem <highcharts_core.utility_classes.menus.MenuItem>`
 ********************************************************************************************************************
 
 .. autoclass:: MenuItem
@@ -40,7 +40,7 @@ class: :class:`MenuItem <highcharts_python.utility_classes.menus.MenuItem>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: MenuItem
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

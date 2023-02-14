@@ -26,7 +26,7 @@ features native integration with:
   * **PySpark**. Automatically produce data visualizations from data in a PySpark
     dataframe.
 
-**COMPLETE DOCUMENTATION:** http://highcharts-python.readthedocs.org/en/latest/index.html
+**COMPLETE DOCUMENTATION:** http://highcharts-core.readthedocs.org/en/latest/index.html
 
 --------------------
 
@@ -34,11 +34,11 @@ features native integration with:
 Installation
 ***************
 
-To install **Highcharts for Python**, just execute:
+To install **Highcharts Core for Python**, just execute:
 
 .. code:: bash
 
- $ pip install highcharts-python
+ $ pip install highcharts-core
 
 
 -------------
@@ -125,7 +125,7 @@ Key Highcharts for Python Features
 ==============================================
 
 For a discussion of **Highcharts for Python** in comparison to alternatives, please see
-the **COMPLETE DOCUMENTATION:** http://highcharts-python.readthedocs.org/en/latest/index.html
+the **COMPLETE DOCUMENTATION:** http://highcharts-core.readthedocs.org/en/latest/index.html
 
 ---------------------
 
@@ -192,7 +192,7 @@ Hello World, and Basic Usage
   .. code-block:: python
 
     # Import SharedOptions
-    from highcharts_python.global_options.shared_options import SharedOptions
+    from highcharts_core.global_options.shared_options import SharedOptions
 
     # from a JavaScript file
     my_global_settings = SharedOptions.from_js_literal('my_js_literal.js')
@@ -212,8 +212,8 @@ Hello World, and Basic Usage
 
   .. code-block:: python
 
-    from highcharts_python.options.title import Title
-    from highcharts_python.options.credits import Credits
+    from highcharts_core.options.title import Title
+    from highcharts_core.options.credits import Credits
 
     # Using dicts
     my_chart.title = {
@@ -241,8 +241,8 @@ Hello World, and Basic Usage
     }
 
     # Using direct objects
-    from highcharts_python.options.title import Title
-    from highcharts_python.options.credits import Credits
+    from highcharts_core.options.title import Title
+    from highcharts_core.options.credits import Credits
 
     my_title = Title(text = 'The Title for My Chart', floating = True, align = 'center')
     my_chart.options.title = my_title
@@ -297,7 +297,7 @@ Questions and Issues
 *********************
 
 You can ask questions and report issues on the project's
-`Github Issues Page <https://github.com/hcpllc/highcharts-python/issues>`_
+`Github Issues Page <https://github.com/highcharts-for-python/highcharts-core/issues>`_
 
 -----------------
 

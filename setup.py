@@ -21,7 +21,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 # Get the version number from the VERSION file
 version_dict = {}
-with open(path.join(here, 'highcharts_python', '__version__.py')) as version_file:
+with open(path.join(here, 'highcharts_core', '__version__.py')) as version_file:
     exec(version_file.read(), version_dict)                                     # pylint: disable=W0122
 
 version = version_dict.get('__version__')
@@ -43,7 +43,7 @@ setup(
     # There are some restrictions on what makes a valid project name
     # specification here:
     # https://packaging.python.org/specifications/core-metadata/#name
-    name='highcharts-python',  # Required
+    name='highcharts-core',  # Required
 
     # Versions should comply with PEP 440:
     # https://www.python.org/dev/peps/pep-0440/
@@ -73,7 +73,7 @@ setup(
     #
     # This field corresponds to the "Home-Page" metadata field:
     # https://packaging.python.org/specifications/core-metadata/#home-page-optional
-    url='https://highcharts-python.readthedocs.io/en/latest',  # Optional
+    url='https://www.highchartspython.com',  # Optional
 
     # This should be your name or the name of the organization which owns the
     # project.
@@ -81,9 +81,9 @@ setup(
 
     # This should be a valid email address corresponding to the author listed
     # above.
-    author_email='software@insightindustry.com',  # Optional
+    author_email='support@highchartspython.com',  # Optional
 
-    license='Free for non-commercial use',
+    license='License :: Other/Proprietary License',
 
     # Classifiers help users find your project by categorizing it.
     #
@@ -197,24 +197,24 @@ setup(
     #
     # If using Python 2.6 or earlier, then these have to be included in
     # MANIFEST.in as well.
-    #package_data={
+    # package_data={
     #    '': ['_README.rst', 'README.md'],
     #    '': ['LICENSE', 'VERSION'],
-    #},
+    # },
 
-    #include_package_data = True,
+    # include_package_data = True,
 
     # Although 'package_data' is the preferred approach, in some case you may
     # need to place data files outside of your packages. See:
     # http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files
     #
     # In this case, 'data_file' will be installed into '<sys.prefix>/my_data'
-    #data_files=[('my_data', ['data/data_file'])],  # Optional
-    #data_files = [
-    #    ('highcharts_python', ['LICENSE']),
-    #    ('highcharts_python', ['README.rst']),
-    #    ('highcharts_python', ['VERSION']),
-    #],
+    # data_files=[('my_data', ['data/data_file'])],  # Optional
+    # data_files = [
+    #    ('highcharts_core', ['LICENSE']),
+    #    ('highcharts_core', ['README.rst']),
+    #    ('highcharts_core', ['VERSION']),
+    # ],
 
     # To provide executable scripts, use entry points in preference to the
     # "scripts" keyword. Entry points provide cross-platform support and allow
@@ -223,11 +223,11 @@ setup(
     #
     # For example, the following would provide a command called `sample` which
     # executes the function `main` from this package when invoked:
-    #entry_points={  # Optional
-    #    'console_scripts': [
-    #        'sample=sample:main',
-    #    ],
-    #},
+    # entry_points={  # Optional
+    #     'console_scripts': [
+    #         'sample=sample:main',
+    #     ],
+    # },
 
     # List additional URLs that are relevant to your project as a dict.
     #
@@ -239,9 +239,9 @@ setup(
     # maintainers, and where to support the project financially. The key is
     # what's used to render the link text on PyPI.
     project_urls={  # Optional
-        'Documentation': 'https://highcharts-python.readthedocs.io/en/latest',
-        'Say Thanks!': 'https://saythanks.io/to/highcharts-python',
-        'Bug Reports': 'https://github.com/insightindustry/highcharts-python/issues',
-        'Source': 'https://github.com/insightindustry/highcharts-python/',
+        'Documentation': 'https://highcharts-core.readthedocs.io/en/latest',
+        'Say Thanks!': 'https://saythanks.io/to/highcharts-core',
+        'Bug Reports': 'https://github.com/highcharts-for-python/highcharts-core/issues',
+        'Source': 'https://github.com/highcharts-for-python/highcharts-core/',
     },
 )
