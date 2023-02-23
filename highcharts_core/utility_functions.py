@@ -305,3 +305,50 @@ def parse_csv(csv_data,
             records_as_dicts.append(record_as_dict)
 
     return columns, records_as_dicts
+
+
+def jupyter_add_script(url, is_last = False):
+    """Generates the JavaScript code Promise which adds a <script/> tag to the Jupyter 
+    Lab environment.
+    
+    :param url: The URL to use for the script's source.
+    :type url: :class:`str <python:str>`
+    
+    :param is_last: Whether the URL is the last of the promises.
+    :type is_last: :class:`bool <python:bool>`
+    
+    :returns: The JavaScript code for adding the script.
+    :rtype: :class:`str <python:str>`
+    """
+    url = validators.url(url)
+    js_str = ''
+    js_str += """new Promise(function(resolve, reject) {\n"""
+    js_str += f"""  var existing_tags = document.querySelectorAll("script[src='{url}']");"""
+    js_str += """  if (existing_tags.length == 0) {
+        var script = document.createElement("script");
+        script.onload = resolve;
+        script.onerror = reject;"""
+    js_str += f"""        script.src = '{url}';"""
+    js_str += """        document.head.appendChild(script);
+    };
+})"""
+
+    return js_str
+
+
+def prep_js_for_jupyter(js_str):
+    """Remove the JavaScript event listeners from the code in ``js_str`` and prepare the
+    JavaScript code for rending in an IPython context.
+    
+    :param js_str: The JavaScript code from which the event listeners should be stripped.
+    :type js_str: :class:`str <python:str>`
+    
+    :returns: The JavaScript code having removed the non-Jupyter compliant JS code.
+    :rtype: :class:`str <python:str>`
+    """
+    js_str = js_str.replace(
+        """document.addEventListener('DOMContentLoaded', function() {""", '')
+    js_str = js_str.replace('renderTo = ', '')
+    js_str = js_str[:-3]
+
+    return js_str
