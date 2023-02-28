@@ -1,8 +1,4 @@
 language: python
-sudo: false
-dist: trusty
-cache: pip
-
 job:
   include:
     - python: "3.8"
