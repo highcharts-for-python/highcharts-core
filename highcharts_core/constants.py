@@ -1,9 +1,10 @@
 """Defines a set of constants that are used throughout the library."""
 import os
-
-from dotenv import load_dotenv
-
-load_dotenv()
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
 
 
 class EnforcedNullType:

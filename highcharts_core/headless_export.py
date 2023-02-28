@@ -1,4 +1,9 @@
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 import json
 import os
 from typing import Optional
@@ -12,9 +17,6 @@ from highcharts_core.metaclasses import HighchartsMeta
 from highcharts_core.utility_classes.javascript_functions import CallbackFunction
 from highcharts_core.options import HighchartsOptions
 from highcharts_core.options.data import Data
-
-
-load_dotenv()
 
 
 class ExportServer(HighchartsMeta):
