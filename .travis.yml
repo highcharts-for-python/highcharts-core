@@ -1,0 +1,29 @@
+language: python
+sudo: false
+dist: trusty
+cache: pip
+
+job:
+  include:
+    - python: "3.8"
+      env: TOXENV=py38
+    - python: "3.9"
+      env: TOXENV=py39
+    - python: "3.10"
+      env: TOXENV=py310
+    - python: "3.11"
+      env: TOXENV=py311
+    - python: "3.10"
+      env: TOXENV=coverage
+    - python: "3.10"
+      env: TOXENV=docs
+os:
+  - linux
+git:
+  quiet: true
+install:
+  - pip install -r requirements.dev.txt
+script: tox -- -v
+
+after_success:
+  - if [[ -e .coverage ]]; then codecov -e $TOXENV; fi
