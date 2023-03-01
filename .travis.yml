@@ -22,4 +22,8 @@ install:
 script: tox -- -v
 
 after_success:
-  - if [[ -e .coverage ]]; then codecov -e $TOXENV; fi
+  - if [[ -e .coverage ]]; then 
+    curl -Os https://uploader.codecov.io/latest/linux/codecov; 
+    chmod +x codecov; 
+    codecov -t $CODECOV_TOKEN; 
+    fi
