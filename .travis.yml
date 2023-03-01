@@ -30,4 +30,4 @@ before_script:
 script: tox -- -v -nauto 
 
 after_success:
-  - if [[ -e .coverage ]]; then codecov -t $CODECOV_TOKEN; fi
+  - if [[ -e .coverage ]]; then ./codecov -t $CODECOV_TOKEN; fi
