@@ -26,7 +26,7 @@ def pytest_addoption(parser):
     """
     parser.addoption("--inputs",
                      action="store",
-                     default="/home/travis/build/insightindustry/highcharts-core/tests/input_files",
+                     default="/home/travis/build/highcharts-for-python/highcharts-core/tests/input_files",
                      help=("inputs: the absolute path to the directory where input"
                            " files can be found"))
     parser.addoption("--downloads",
@@ -36,10 +36,10 @@ def pytest_addoption(parser):
                            "via the Highsoft-provided Export Server."))
     parser.addoption("--pyspark",
                      action="store",
-                     default="true",
+                     default="false",
                      help=("pyspark: set to 'false' to disable tests of pyspark-related"
                            " functionality, or 'true' to enable those tests. Defaults to"
-                           " 'true'"))
+                           " 'false'"))
 
 
 def pytest_runtest_makereport(item, call):

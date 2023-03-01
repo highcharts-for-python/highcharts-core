@@ -1,4 +1,5 @@
 language: python
+fast_finish: true
 job:
   include:
     #- python: "3.8"
