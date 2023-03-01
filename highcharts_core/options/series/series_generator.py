@@ -171,5 +171,9 @@ def create_series_obj(value, default_type = None) -> Optional[SeriesBase]:
             instance = cls.from_js_literal(value)
         except errors.HighchartsParseError:
             instance = cls.from_json(value)
+    else:
+        raise errors.HighchartsValueError(f'create_series_obj expects a value whose '
+                                          f'type is a SeriesBase or coercable to it, '
+                                          f'but received: {value.__class__.__name__}')
 
     return instance

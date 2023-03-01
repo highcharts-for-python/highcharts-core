@@ -3,7 +3,7 @@ from collections import UserDict
 
 from validator_collection import validators, checkers
 
-from highcharts_core import constants, errors
+from highcharts_core import constants, errors, utility_functions
 from highcharts_core.decorators import class_sensitive, validate_types
 from highcharts_core.metaclasses import HighchartsMeta
 from highcharts_core.options import HighchartsOptions
@@ -30,6 +30,80 @@ class Chart(HighchartsMeta):
 
         super().__init__(**kwargs)
 
+    def _jupyter_include_scripts(self):
+        """Return the JavaScript code that is used to load the Highcharts JS libraries.
+
+        .. note::
+
+          Currently includes *all* `Highcharts JS <https://www.highcharts.com/>`_ modules
+          in the HTML. This issue will be addressed when roadmap issue :issue:`2` is
+          released.
+
+        :rtype: :class:`str <python:str>`
+        """
+        js_str = ''
+        for item in constants.INCLUDE_LIBS:
+            js_str += utility_functions.jupyter_add_script(item)
+            js_str += """.then(() => {"""
+
+        for item in constants.INCLUDE_LIBS:
+            js_str += """});"""
+
+        return js_str
+
+    def _jupyter_javascript(self, global_options = None, container = None):
+        """Return the JavaScript code which Jupyter Labs will need to render the chart.
+
+        :param global_options: The :term:`shared options` to use when rendering the chart.
+          Defaults to :obj:`None <python:None>`
+        :type global_options: :class:`SharedOptions <highcharts_stock.global_options.shared_options.SharedOptions>`
+          or :obj:`None <python:None>`
+          
+        :param container: The ID to apply to the HTML container when rendered in Jupyter Labs. Defaults to
+          :obj:`None <python:None>`, which applies the :meth:`.container <highcharts_core.chart.Chart.container>` 
+          property if set, and ``'highcharts_target_div'`` if not set.
+        :type container: :class:`str <python:str>` or :obj:`None <python:None>`
+
+        :rtype: :class:`str <python:str>`
+        """
+        original_container = self.container
+        self.container = container or self.container or 'highcharts_target_div'
+        
+        if global_options is not None:
+            global_options = validate_types(global_options,
+                                            types = SharedOptions)
+
+        js_str = ''
+        if global_options:
+            js_str += '\n' + global_options.to_js_literal() + '\n'
+
+        js_str += utility_functions.prep_js_for_jupyter(self.to_js_literal())
+
+        self.container = original_container
+
+        return js_str
+
+    def _jupyter_container_html(self, container = None):
+        """Returns the Jupyter Labs HTML container for rendering the chart in Jupyter Labs context.
+
+        :param container: The ID to apply to the HTML container when rendered in Jupyter Labs. Defaults to
+          :obj:`None <python:None>`, which applies the :meth:`.container <highcharts_core.chart.Chart.container>` 
+          property if set, and ``'highcharts_target_div'`` if not set.
+        :type container: :class:`str <python:str>` or :obj:`None <python:None>`
+
+        :rtype: :class:`str <python:str>`
+        """
+        if self.options.chart:
+            height = self.options.chart.height or 400
+        else:
+            height = 400
+
+        container = container or self.container or 'highcharts_target_div'
+
+        container_str = f"""<div id=\"{container}\" style=\"width:100%; height:{height};\"></div>\n"""
+
+        return container_str
+
     def _repr_html_(self):
         """Produce the HTML representation of the chart.
 
@@ -42,20 +116,7 @@ class Chart(HighchartsMeta):
         :returns: The HTML representation of the chart.
         :rtype: :class:`str <python:str>`
         """
-        if self.options.chart:
-            height = self.options.chart.height or 400
-        else:
-            height = 400
-            
-        container = self.container or 'highcharts_target_div'
-
-        container_str = f"""<div id=\"{container}\" style=\"width:100%; height:{height};\"></div>\n"""
-        as_str = self.to_js_literal()
-        script_str = '<script>\n' + as_str + '\n</script>'
-
-        html_str = container_str + script_str
-
-        return html_str
+        return self.display()
 
     @property
     def callback(self) -> Optional[CallbackFunction]:
@@ -562,9 +623,15 @@ class Chart(HighchartsMeta):
         kwargs = validators.dict(kwargs, allow_empty = True) or {}
         instance = cls(**kwargs)
 
-        instance.add_series(series)
+        if checkers.is_iterable(series) is True:
+            for item in series:
+                instance.add_series(item)
+        else:
+            instance.add_series(series)
+            
+        return instance
 
-    def display(self, global_options = None):
+    def display(self, global_options = None, container = None):
         """Display the chart in `Jupyter Labs <https://jupyter.org/>`_ or
         `Jupyter Notebooks <https://jupyter.org/>`_.
 
@@ -572,29 +639,38 @@ class Chart(HighchartsMeta):
           Defaults to :obj:`None <python:None>`
         :type global_options: :class:`SharedOptions <highcharts_stock.global_options.shared_options.SharedOptions>`
           or :obj:`None <python:None>`
+          
+        :param container: The ID to apply to the HTML container when rendered in Jupyter Labs. Defaults to
+          :obj:`None <python:None>`, which applies the :meth:`.container <highcharts_core.chart.Chart.container>` 
+          property if set, and ``'highcharts_target_div'`` if not set.
+        :type container: :class:`str <python:str>` or :obj:`None <python:None>`
 
         :raises HighchartsDependencyError: if
           `ipython <https://ipython.readthedocs.io/en/stable/>`_ is not available in the
           runtime environment
         """
         try:
-            from IPython import display
+            from IPython import display as display_mod
+            from IPython.core.display_functions import display
         except ImportError:
-            raise errors.HighchartsDependencyError('Unable to import IPython.display. '
+            raise errors.HighchartsDependencyError('Unable to import IPython modules. '
                                                    'Make sure that it is available in '
                                                    'your runtime environment. To install,'
                                                    'use: pip install ipython')
 
-        if global_options is not None:
-            global_options = validate_types(global_options,
-                                            types = SharedOptions)
+        include_js_str = self._jupyter_include_scripts()
+        include_display = display_mod.Javascript(data = include_js_str)
 
-        html_str = constants.INCLUDE_STR + '\n'
-        if global_options:
-            html_str += global_options._repr_html_() + '\n'
-        html_str += self._repr_html_()
+        container = container or self.container or 'highcharts_target_div'
+        html_str = self._jupyter_container_html(container)
+        html_display = display_mod.HTML(data = html_str)
 
-        display.display_html(html_str, raw = True)
+        chart_js_str = self._jupyter_javascript(global_options = global_options, container = container)
+        javascript_display = display_mod.Javascript(data = chart_js_str)
+
+        display(include_display)
+        display(html_display)
+        display(javascript_display)
 
     @classmethod
     def from_csv(cls,

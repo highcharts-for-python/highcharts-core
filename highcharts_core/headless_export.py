@@ -1,4 +1,9 @@
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 import json
 import os
 from typing import Optional
@@ -12,9 +17,6 @@ from highcharts_core.metaclasses import HighchartsMeta
 from highcharts_core.utility_classes.javascript_functions import CallbackFunction
 from highcharts_core.options import HighchartsOptions
 from highcharts_core.options.data import Data
-
-
-load_dotenv()
 
 
 class ExportServer(HighchartsMeta):
@@ -696,21 +698,47 @@ class ExportServer(HighchartsMeta):
             payload['customCode'] = 'HIGHCHARTS FOR PYTHON: REPLACE WITH CUSTOM'
 
         as_json = json.dumps(payload)
+        
+        options_as_json = self.options.to_json()
+        if isinstance(options_as_json, bytes):
+            options_as_str = str(options_as_json, encoding = 'utf-8')
+        else:
+            options_as_str = options_as_json
 
         as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH OPTIONS"',
-                                  self.options.to_json())
+                                  options_as_str)
         if self.callback:
+            callback_as_json = self.callback.to_json()
+            if isinstance(callback_as_json, bytes):
+                callback_as_str = str(callback_as_json, encoding = 'utf-8')
+            else:
+                callback_as_str = callback_as_json
             as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH CALLBACK"',
-                                      self.callback.to_json())
+                                      callback_as_str)
         if self.global_options:
+            global_as_json = self.global_options.to_json()
+            if isinstance(global_as_json, bytes):
+                global_as_str = str(global_as_json, encoding = 'utf-8')
+            else:
+                global_as_str = global_as_json
             as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH GLOBAL"',
-                                      self.global_options.to_json())
+                                      global_as_str)
         if self.data_options:
+            data_as_json = self.data_options.to_json()
+            if isinstance(data_as_json, bytes):
+                data_as_str = str(data_as_json, encoding = 'utf-8')
+            else:
+                data_as_str = data_as_json
             as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH DATA"',
-                                      self.data_options.to_json())
+                                      data_as_str)
         if self.custom_code:
+            code_as_json = self.custom_code.to_json()
+            if isinstance(code_as_json, bytes):
+                code_as_str = str(code_as_json, encoding = 'utf-8')
+            else:
+                code_as_str = code_as_json
             as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH CUSTOM"',
-                                      self.custom_code.to_json())
+                                      code_as_str)
 
         result = requests.post(self.url,
                                data = as_json,
