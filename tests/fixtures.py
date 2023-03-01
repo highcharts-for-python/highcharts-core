@@ -9,6 +9,7 @@ Fixtures used by the SQLAthanor test suite.
 
 """
 import os
+import pathlib
 from copy import deepcopy
 from collections import UserDict
 
@@ -61,11 +62,18 @@ def input_files(request):
     """Return the ``--inputs`` command-line option."""
     return request.config.getoption("--inputs")
 
+@pytest.fixture
+def create_output_directory(request):
+    """Return the ``--create-output-directory`` command-line option."""
+    return request.config.getoption("--create-output-directory")
 
-def check_input_file(input_directory, input_value):
+
+def check_input_file(input_directory, input_value, create_directory = False):
     inputs = os.path.abspath(input_directory)
-    if not os.path.exists(input_directory):
+    if not os.path.exists(input_directory) and not create_directory:
         raise AssertionError('input directory (%s) does not exist' % inputs)
+    elif not os.path.exists(input_directory) and create_directory:
+        pathlib.Path(input_directory).mkdir(parents = True, exists_ok = True)
     elif not os.path.isdir(input_directory):
         raise AssertionError('input directory (%s) is not a directory' % inputs)
 

@@ -34,6 +34,11 @@ def pytest_addoption(parser):
                      default="true",
                      help=("downloads: set to 'false' to disable tests of chart export "
                            "via the Highsoft-provided Export Server."))
+    parser.addoption("--create-output-directory",
+                     action = "store",
+                     default = "true",
+                     help=("create-output-directory: set to 'false' to error if the output "
+                           "directory does not exist, otherwise creates it."))
     parser.addoption("--pyspark",
                      action="store",
                      default="false",
