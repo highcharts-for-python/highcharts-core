@@ -24,7 +24,9 @@ git:
   quiet: true
 install:
   - pip install -r requirements.dev.txt
-script: tox -- -v
+before_script:
+  - mkdir /home/travis/build/highcharts-for-python/highcharts-core/tests/input_files/headless_export/output/
+script: tox -- -v -Nauto 
 
 after_success:
   - if [[ -e .coverage ]]; then 
