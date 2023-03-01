@@ -25,11 +25,9 @@ install:
   - pip install -r requirements.dev.txt
 before_script:
   - mkdir /home/travis/build/highcharts-for-python/highcharts-core/tests/input_files/headless_export/output/
+  - curl -Os --retry 5 https://uploader.codecov.io/latest/linux/codecov
+  - chmod +x codecov
 script: tox -- -v -nauto 
 
 after_success:
-  - if [[ -e .coverage ]]; then 
-    curl -Os https://uploader.codecov.io/latest/linux/codecov; 
-    chmod +x codecov; 
-    codecov -t $CODECOV_TOKEN; 
-    fi
+  - if [[ -e .coverage ]]; then codecov -t $CODECOV_TOKEN; fi
