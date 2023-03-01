@@ -8,7 +8,7 @@ build-backend = "hatchling.build"
 name = "highcharts-core"
 description = "High-end Data Visualization for the Python Ecosystem"
 readme = "README.rst"
-license-files = { path = ["LICENSE.txt"] }
+license-files = { paths = ["LICENSE"] }
 
 dynamic = [
      "version"
