@@ -5,9 +5,9 @@ help using the toolkit. In particular, you can:
   * Use the `Highcharts Forums <https://highcharts.com/forum>`__
   * Use `Stack Overflow <https://stackoverflow.com/questions/tagged/highcharts-for-python>`__ with the 
     ``highcharts-for-python`` tag
-  * Report bugs or feature requests in one of our `Github repositories <https://github.com/highcharts-for-python>`__
-  * File a support ticket with us on our `support page <https://www.highchartspython.com/get-help>`__
-  * Schedule a live chat or video call with us on our `support page <https://www.highchartspython.com/get-help>`__
-  * Just send us an email at `support@highchartspython.com <malito:support@highchartspython.com>`__
+  * `Report bugs or request features <https://github.com/highcharts-for-python/highcharts-core/issues>`__  in the 
+    library's Github repository
+  * `File a support ticket <https://www.highchartspython.com/get-help>`__ with us
+  * `Schedule a live chat or video call <https://www.highchartspython.com/get-help>`__ with us
 
-**FOR MORE INFORMATION:** `https://www.highchartspython.com/get-help <https://www.highchartspython.com/get-help>`__
+**FOR MORE INFORMATION:** https://www.highchartspython.com/get-help

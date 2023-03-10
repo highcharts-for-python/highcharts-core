@@ -12,8 +12,7 @@ toolkit includes support for:
   * **Highcharts JS** - the core Highcharts data visualization library
   * **Highcharts Stock** - the robust time series visualization extension to Highcharts JS
   * **Highcharts Maps** - the rich map visualization extension to Highcharts JS
-  * **Highcharts Gantt** - the :term:`Gantt charting <Gantt Chart>` extension to
-    Highcharts JS
+  * **Highcharts Gantt** - the Gantt charting extension to Highcharts JS
   * The **Highcharts Export Server** - enabling the programmatic creation of static
     (downloadable) data visualizations
 
@@ -70,7 +69,7 @@ capabilities to simplify integration with Javascript frontend frameworks (React,
 VueJS, etc.). But facilitating that with Highcharts has historically been very difficult.
 Part of this difficulty is because the Highcharts JavaScript suite - while supporting JSON as a
 serialization/deserialization format - leverages
-:term:`JavaScript object literals <JavaScript Object Literal Notation>` to expose the
+JavaScript object literals to expose the
 full power and interactivity of its data visualizations. And while it's easy to serialize
 JSON from Python, serializing and deserializing to/from JavaScript object literal notation
 is much more complicated. This means that Python developers looking to integrate with
@@ -96,7 +95,7 @@ Key Highcharts for Python Features
   `Highcharts JS <https://www.highcharts.com/product/highcharts/>`__ and the 50+
   technical indicator visualizations available in
   `Highcharts Stock <https://www.highcharts.com/product/stock/>`__, with full support for
-  the rich JavaScript formatter (JS :term:`callback functions <callback function>`)
+  the rich JavaScript formatter (JS callback functions)
   capabilities that are often needed to get the most out of Highcharts' visualization and
   interaction capabilities.
 
@@ -109,8 +108,7 @@ Key Highcharts for Python Features
   capabilities.
 * **Easy and Robust Chart Download**. With one method call, produce high-end static
   visualizations that can be downloaded or shared as files with your audience. Produce
-  static charts using the Highsoft-provided
-  :term:`Highcharts Export Server <Export Server>`, or using your own private export
+  static charts using the Highsoft-provided **Highcharts Export Server**, or using your own private export
   server as needed.
 * **Integration with Pandas and PySpark**. With two lines of code, produce a high-end
   interactive visualization of your Pandas or PySpark dataframe.
@@ -303,12 +301,12 @@ help using the toolkit. In particular, you can:
   * Use the `Highcharts Forums <https://highcharts.com/forum>`__
   * Use `Stack Overflow <https://stackoverflow.com/questions/tagged/highcharts-for-python>`__ with the 
     ``highcharts-for-python`` tag
-  * Report bugs or feature requests in one of our `Github repositories <https://github.com/highcharts-for-python>`__
-  * File a support ticket with us on our `support page <https://www.highchartspython.com/get-help>`__
-  * Schedule a live chat or video call with us on our `support page <https://www.highchartspython.com/get-help>`__
-  * Just send us an email at `support@highchartspython.com <malito:support@highchartspython.com>`__
+  * `Report bugs or request features <https://github.com/highcharts-for-python/highcharts-core/issues>`__  in the 
+    library's Github repository
+  * `File a support ticket <https://www.highchartspython.com/get-help>`__ with us
+  * `Schedule a live chat or video call <https://www.highchartspython.com/get-help>`__ with us
 
-**FOR MORE INFORMATION:** `https://www.highchartspython.com/get-help <https://www.highchartspython.com/get-help>`__
+**FOR MORE INFORMATION:** https://www.highchartspython.com/get-help
 
 -----------------
 
