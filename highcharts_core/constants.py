@@ -42,6 +42,7 @@ INCLUDE_LIBS = [
     'https://code.highcharts.com/modules/no-data-to-display.js',
     'https://code.highcharts.com/modules/offline-exporting.js',
     'https://code.highcharts.com/modules/solid-gauge.js',
+    'https://code.highcharts.com/modules/series-label.js',
     'https://code.highcharts.com/modules/treemap.js'
 ]
 
@@ -62,6 +63,7 @@ INCLUDE_STR = """<script src="https://code.highcharts.com/highcharts.js"/>
 <script src="https://code.highcharts.com/modules/offline-exporting.js"/>
 <script src="https://code.highcharts.com/modules/solid-gauge.js"/>
 <script src="https://code.highcharts.com/modules/treemap.js"/>
+<script src="https://code.highcharts.com/modules/series-label.js"/>
 """
 
 AXIS_TYPES = [

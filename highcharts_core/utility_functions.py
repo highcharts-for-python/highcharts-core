@@ -349,6 +349,7 @@ def prep_js_for_jupyter(js_str):
     js_str = js_str.replace(
         """document.addEventListener('DOMContentLoaded', function() {""", '')
     js_str = js_str.replace('renderTo = ', '')
+    js_str = js_str.replace(',\noptions = ', ',\n')
     js_str = js_str[:-3]
 
     return js_str
