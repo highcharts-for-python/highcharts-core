@@ -139,8 +139,10 @@ class CartesianData(DataBase):
 
     @y.setter
     def y(self, value):
-        if value is None or isinstance(value, constants.EnforcedNullType):
+        if value is None:
             self._y = None
+        elif isinstance(value, constants.EnforcedNullType):
+            self._y = constants.EnforcedNull
         else:
             self._y = validators.numeric(value)
 
@@ -157,8 +159,9 @@ class CartesianData(DataBase):
                 as_obj = item
             elif checkers.is_dict(item):
                 as_obj = cls.from_dict(item)
-            elif item is None or isinstance(item, constants.EnforcedNullType) or \
-                 checkers.is_numeric(item):
+            elif isinstance(item, constants.EnforcedNullType):
+                as_obj = cls(y = constants.EnforcedNull)
+            elif item is None or checkers.is_numeric(item):
                 as_obj = cls(y = item)
             elif checkers.is_iterable(item):
                 if len(item) != 2:

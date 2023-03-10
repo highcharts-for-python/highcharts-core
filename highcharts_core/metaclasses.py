@@ -139,7 +139,7 @@ class HighchartsMeta(ABC):
                 if trimmed_value:
                     as_dict[key] = trimmed_value
             # Enforced null
-            elif value == constants.EnforcedNull:
+            elif isinstance(value, constants.EnforcedNullType):
                 as_dict[key] = 'null'
             # dict -> object
             elif isinstance(value, dict):
