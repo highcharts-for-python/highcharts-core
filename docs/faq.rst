@@ -71,5 +71,3 @@ provided that you adhere to the terms of our :doc:`license`.
 
 Absolutely! We encourage contributions to the toolkit from the community! For more information, please read our :doc:`Contributor Guide <contributing>`.
 
-------------------------
-
