@@ -18,7 +18,11 @@
       If these hard dependencies are not available in the environment where
       **Highcharts Core for Python** is running, then the library will simply not work. Besides
       Highcharts JS itself, all of the other hard dependencies are automatically installed
-      when installing **Highcharts Core for Python**.
+      when installing **Highcharts Core for Python** using:
+
+      .. code-block:: bash
+
+        $ pip install highcharts-core
 
     * `Highcharts JS <https://www.highcharts.com>`__ v.10.2 or higher
 
@@ -37,7 +41,7 @@
     .. warning::
 
       If these soft dependencies are not available in the environment where
-      **Highcharts for Python** is running, then the library will throw a
+      **Highcharts Core for Python** is running, then the library will throw a
       :exc:`HighchartsDependencyError <errors.HighchartsDependencyError>` exception when
       you try to use functionality that relies on them.
 
@@ -79,6 +83,9 @@
         `python-dotenv <https://github.com/theskumar/python-dotenv>`_ will fail silently if
         not available, as it will only leverage natural environment variables rather than
         a ``.env`` file in the runtime environment.
+
+    * `pytz <https://pythonhosted.org/pytz/>`__ v.2022.1 or higher
+    * `tox <https://tox.wiki/en/latest/>`__ v.4.0.0 or higher
 
   .. tab:: Documentation
 

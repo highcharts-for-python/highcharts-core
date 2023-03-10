@@ -37,7 +37,7 @@ Highcharts for Python Toolkit
 
 .. sidebar:: Version Compatibility
 
-  **Highcharts for Python** is designed to be compatible with:
+  **Highcharts Core for Python** is designed to be compatible with:
 
     * Python 3.10 or higher,
     * Highcharts JS 10.2 or higher,

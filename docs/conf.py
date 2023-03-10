@@ -21,7 +21,7 @@ with open(os.path.join(os.path.dirname(__file__),
 __version__ = version_dict.get('__version__')
 
 
-project = 'Highcharts for Python'
+project = 'Highcharts Core for Python'
 copyright = '2022, HCP LLC'
 author = 'Chris Modzelewski'
 
