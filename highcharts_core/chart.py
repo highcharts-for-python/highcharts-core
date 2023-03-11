@@ -51,7 +51,11 @@ class Chart(HighchartsMeta):
 
         return js_str
 
-    def _jupyter_javascript(self, global_options = None, container = None):
+    def _jupyter_javascript(self, 
+                            global_options = None, 
+                            container = None,
+                            retries = 3,
+                            interval = 1000):
         """Return the JavaScript code which Jupyter Labs will need to render the chart.
 
         :param global_options: The :term:`shared options` to use when rendering the chart.
@@ -63,6 +67,14 @@ class Chart(HighchartsMeta):
           :obj:`None <python:None>`, which applies the :meth:`.container <highcharts_core.chart.Chart.container>` 
           property if set, and ``'highcharts_target_div'`` if not set.
         :type container: :class:`str <python:str>` or :obj:`None <python:None>`
+        
+        :param retries: The number of times to retry rendering the chart. Used to avoid race conditions with the 
+          Highcharts script. Defaults to 3.
+        :type retries: :class:`int <python:int>`
+        
+        :param interval: The number of milliseconds to wait between retrying rendering the chart. Defaults to 1000 (1 
+          seocnd).
+        :type interval: :class:`int <python:int>`
 
         :rtype: :class:`str <python:str>`
         """
@@ -74,10 +86,15 @@ class Chart(HighchartsMeta):
                                             types = SharedOptions)
 
         js_str = ''
-        if global_options:
-            js_str += '\n' + global_options.to_js_literal() + '\n'
+        js_str += utility_functions.get_retryHighcharts()
 
-        js_str += utility_functions.prep_js_for_jupyter(self.to_js_literal())
+        if global_options:
+            js_str += '\n' + utility_functions.prep_js_for_jupyter(global_options.to_js_literal()) + '\n'
+
+        js_str += utility_functions.prep_js_for_jupyter(self.to_js_literal(),
+                                                        container = self.container,
+                                                        retries = retries,
+                                                        interval = interval)
 
         self.container = original_container
 
@@ -633,7 +650,11 @@ class Chart(HighchartsMeta):
             
         return instance
 
-    def display(self, global_options = None, container = None):
+    def display(self, 
+                global_options = None, 
+                container = None,
+                retries = 3,
+                interval = 1000):
         """Display the chart in `Jupyter Labs <https://jupyter.org/>`_ or
         `Jupyter Notebooks <https://jupyter.org/>`_.
 
@@ -646,6 +667,14 @@ class Chart(HighchartsMeta):
           :obj:`None <python:None>`, which applies the :meth:`.container <highcharts_core.chart.Chart.container>` 
           property if set, and ``'highcharts_target_div'`` if not set.
         :type container: :class:`str <python:str>` or :obj:`None <python:None>`
+
+        :param retries: The number of times to retry rendering the chart. Used to avoid race conditions with the 
+          Highcharts script. Defaults to 3.
+        :type retries: :class:`int <python:int>`
+        
+        :param interval: The number of milliseconds to wait between retrying rendering the chart. Defaults to 1000 (1 
+          seocnd).
+        :type interval: :class:`int <python:int>`
 
         :raises HighchartsDependencyError: if
           `ipython <https://ipython.readthedocs.io/en/stable/>`_ is not available in the
@@ -667,7 +696,10 @@ class Chart(HighchartsMeta):
         html_str = self._jupyter_container_html(container)
         html_display = display_mod.HTML(data = html_str)
 
-        chart_js_str = self._jupyter_javascript(global_options = global_options, container = container)
+        chart_js_str = self._jupyter_javascript(global_options = global_options, 
+                                                container = container,
+                                                retries = retries,
+                                                interval = interval)
         javascript_display = display_mod.Javascript(data = chart_js_str)
 
         display(include_display)
