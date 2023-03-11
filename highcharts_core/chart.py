@@ -264,30 +264,32 @@ class Chart(HighchartsMeta):
 
         container_as_str = ''
         if self.container:
-            container_as_str = f"""renderTo = '{self.container}'"""
-            signature_elements += 1
+            container_as_str = f"""'{self.container}'"""
+        else:
+            container_as_str = """null"""
+        signature_elements += 1
 
         options_as_str = ''
         if self.options:
             options_as_str = self.options.to_js_literal(encoding = encoding)
-            options_as_str = f"""options = {options_as_str}"""
-            signature_elements += 1
+            options_as_str = f"""{options_as_str}"""
+        else:
+            options_as_str = """null"""
+        signature_elements += 1
 
         callback_as_str = ''
         if self.callback:
             callback_as_str = self.callback.to_js_literal(encoding = encoding)
-            callback_as_str = f"""callback = {callback_as_str}"""
+            callback_as_str = f"""{callback_as_str}"""
             signature_elements += 1
 
         signature = """new Highcharts.chart("""
-        if container_as_str:
-            signature += container_as_str
-            if signature_elements > 1:
-                signature += ',\n'
-        if options_as_str:
-            signature += options_as_str
-            if signature_elements > 1:
-                signature += ',\n'
+        signature += container_as_str
+        if signature_elements > 1:
+            signature += ',\n'
+        signature += options_as_str
+        if signature_elements > 1:
+            signature += ',\n'
         if callback_as_str:
             signature += callback_as_str
         signature += ');'
