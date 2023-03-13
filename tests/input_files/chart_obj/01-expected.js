@@ -1,5 +1,5 @@
-var someVariableName = new Highcharts.chart(renderTo = 'some-div-id',
-options = {
+var someVariableName = new Highcharts.chart('some-div-id',
+{
   accessibility: {
       announceNewData: {
           announcementFormatter: function() { return true; },
@@ -17887,4 +17887,4 @@ options = {
     }
   ]
 },
-callback = function() { return true; });
+function() { return true; });

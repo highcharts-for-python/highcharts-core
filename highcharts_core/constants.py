@@ -33,7 +33,6 @@ INCLUDE_LIBS = [
     'https://code.highcharts.com/modules/annotations.js',
     'https://code.highcharts.com/modules/boost.js',
     'https://code.highcharts.com/modules/broken-axis.js',
-    'https://code.highcharts.com/modules/canvas-tools.js',
     'https://code.highcharts.com/modules/data.js',
     'https://code.highcharts.com/modules/exporting.js',
     'https://code.highcharts.com/modules/drilldown.js',
@@ -53,7 +52,6 @@ INCLUDE_STR = """<script src="https://code.highcharts.com/highcharts.js"/>
 <script src="https://code.highcharts.com/modules/annotations.js"/>
 <script src="https://code.highcharts.com/modules/boost.js"/>
 <script src="https://code.highcharts.com/modules/broken-axis.js"/>
-<script src="https://code.highcharts.com/modules/canvas-tools.js"/>
 <script src="https://code.highcharts.com/modules/data.js"/>
 <script src="https://code.highcharts.com/modules/exporting.js"/>
 <script src="https://code.highcharts.com/modules/drilldown.js"/>

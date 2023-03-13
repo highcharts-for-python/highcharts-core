@@ -1,9 +1,27 @@
 """Collection of utility functions used across the library."""
 import csv
+import string
+import random
 
 from validator_collection import validators
 
 from highcharts_core import errors
+
+
+def get_random_string(length = 6):
+    """Generate a short random alphanumeric string.
+    
+    :param length: The length of the string to generate. Defaults to ``8``.
+    :type length: :class:`int <python:int>`
+    
+    :returns: A random alphanumeric string of length ``length``.
+    :rtype: :class:`str <python:str>`
+    """
+    length = validators.integer(length, minimum = 1)
+    result = ''.join(random.choices(string.ascii_uppercase + string.digits,
+                                    k = length))
+
+    return str(result)
 
 
 def mro_to_dict(obj):
@@ -321,6 +339,7 @@ def jupyter_add_script(url, is_last = False):
     :rtype: :class:`str <python:str>`
     """
     url = validators.url(url)
+    
     js_str = ''
     js_str += """new Promise(function(resolve, reject) {\n"""
     js_str += f"""  var existing_tags = document.querySelectorAll("script[src='{url}']");"""
@@ -336,12 +355,62 @@ def jupyter_add_script(url, is_last = False):
     return js_str
 
 
-def prep_js_for_jupyter(js_str):
+def get_retryHighcharts():
+    """Retrieve the ``retryHighcharts()`` JavaScript function.
+    
+    :returns: The JavaScript code of the ``retryHighcharts()`` JavaScript function.
+    :rtype: :class:`str <python:str>`
+    """
+    js_str = """function retryHighcharts(fn, container = 'highcharts_target_div', retries = 3, retriesLeft = 3, 
+        interval = 1000) {
+            return new Promise((resolve, reject) => {
+            try {
+                fn()
+                return resolve();
+            } catch (err) {
+                if (err instanceof ReferenceError) {
+                    if (retriesLeft === 0) {
+                        var target_div = document.getElementById(container);
+                        if (target_div) {
+                            var timeElapsed = (retries * interval) / 1000;
+                            var errorMessage = "<p>Something went wrong with the Highcharts.js script. It should have been automatically loaded, but it did not load for over " + timeElapsed + " seconds. Check your internet connection, and then if the problem persists please reach out for support.</p>";
+                            target_div.innerHTML = errorMessage;
+                        }
+                        return reject();
+                    }
+
+                    setTimeout(() => {
+                        retryHighcharts(fn, container, retries, retriesLeft - 1, interval).then(resolve).catch(reject);
+                    }, interval);
+                } else {
+                    throw err;
+                }
+            }
+        });
+    };"""
+    
+    return js_str
+
+
+def prep_js_for_jupyter(js_str,
+                        container = 'highcharts_target_div',
+                        retries = 3,
+                        interval = 1000):
     """Remove the JavaScript event listeners from the code in ``js_str`` and prepare the
     JavaScript code for rending in an IPython context.
     
     :param js_str: The JavaScript code from which the event listeners should be stripped.
     :type js_str: :class:`str <python:str>`
+    
+    :param container: The DIV where the Highcharts visualization is to be rendered. Defaults to
+      ``'highcharts_target_div'``.
+    :type container: :class:`str <python:str>`
+    
+    :param retries: The number of times to retry the rendering. Defaults to 3.
+    :type retries: :class:`int <python:int>`
+    
+    :param interval: The number of milliseconds to wait between retries. Defaults to 1000 (1 second).
+    :type interval: :class:`int <python:int>`
     
     :returns: The JavaScript code having removed the non-Jupyter compliant JS code.
     :rtype: :class:`str <python:str>`
@@ -352,4 +421,11 @@ def prep_js_for_jupyter(js_str):
     js_str = js_str.replace(',\noptions = ', ',\n')
     js_str = js_str[:-3]
 
-    return js_str
+    random_slug = get_random_string()
+    function_str = f"""function insertChart_{random_slug}() """
+    function_str += """{\n"""
+    function_str += js_str
+    function_str += """\n};\n"""
+    function_str += f"""retryHighcharts(insertChart_{random_slug}, {container}, {retries}, {retries}, {interval});"""
+
+    return function_str

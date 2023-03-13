@@ -99,7 +99,9 @@ Key Highcharts for Python Features
   capabilities that are often needed to get the most out of Highcharts' visualization and
   interaction capabilities.
 
-  .. seealso::
+  .. note:: 
+    
+    **See Also**
 
     * `Supported Visualizations <https://highcharts-core.readthedocs.io/en/latest/visualizations.html>`__
 
@@ -315,10 +317,7 @@ Contributing
 *********************
 
 We welcome contributions and pull requests! For more information, please see the
-`Contributor Guide <https://highcharts-core.readthedocs.io/en/latest/contributing.html>`__. And thanks to all those who've already
-contributed:
-
-.. include:: _contributors.rst
+`Contributor Guide <https://highcharts-core.readthedocs.io/en/latest/contributing.html>`__. And thanks to all those who've already contributed!
 
 -------------------
 
