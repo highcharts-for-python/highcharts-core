@@ -105,7 +105,7 @@ objects back-and-forth to JavaScript object literal notation.
 Key Highcharts for Python Features
 ======================================
 
-* **Clean and consistent API**. No reliance on "hacky" code, :class:`dict <python:dict>`
+* **Clean and consistent API**. No reliance on "hacky" code, ``dict``
   and JSON serialization, or impossible to maintain / copy-pasted "spaghetti code".
 * **Comprehensive Highcharts Support**. Every single Highcharts chart type and every
   single configuration option is supported in the **Highcharts for Python** toolkit.
