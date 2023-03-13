@@ -64,14 +64,14 @@ path = "highcharts_core/__version__.py"
 
 [project.urls]
 # TODO: Set Homepage to the Highcharts.com page for the Highcharts for Python toolkit.
-"Homepage" = ""
+"Homepage" = "https://highchartspython.com"
 "Documentation" = "https://highcharts-core.readthedocs.io/en/latest/"
 "Support" = "https://www.highchartspython.com/get-help"
 "Source Code" = "https://github.com/highcharts-for-python/highcharts-core"
 "History" = "https://github.com/highcharts-for-python/highcharts-core/blob/master/CHANGES.rst"
 "Bug Tracker" = "https://github.com/highcharts-for-python/highcharts-core/issues"
 # TODO: Add a Sponsor section
-"Sponsor" = "https://github.com/sponsors/highcharts-for-python"
+# "Sponsor" = "https://github.com/sponsors/highcharts-for-python"
 
 [project.optional-dependencies]
 dev = [
