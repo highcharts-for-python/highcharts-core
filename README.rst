@@ -12,7 +12,7 @@ toolkit includes support for:
   * **Highcharts JS** - the core Highcharts data visualization library
   * **Highcharts Stock** - the robust time series visualization extension to Highcharts JS
   * **Highcharts Maps** - the rich map visualization extension to Highcharts JS
-  * **Highcharts Gantt** - the :term:`Gantt charting <Gantt Chart>` extension to
+  * **Highcharts Gantt** - the Gantt charting extension to
     Highcharts JS
   * The **Highcharts Export Server** - enabling the programmatic creation of static
     (downloadable) data visualizations
@@ -70,7 +70,7 @@ capabilities to simplify integration with Javascript frontend frameworks (React,
 VueJS, etc.). But facilitating that with Highcharts has historically been very difficult.
 Part of this difficulty is because the Highcharts JavaScript suite - while supporting JSON as a
 serialization/deserialization format - leverages
-:term:`JavaScript object literals <JavaScript Object Literal Notation>` to expose the
+JavaScript object literals to expose the
 full power and interactivity of its data visualizations. And while it's easy to serialize
 JSON from Python, serializing and deserializing to/from JavaScript object literal notation
 is much more complicated. This means that Python developers looking to integrate with
@@ -96,13 +96,15 @@ Key Highcharts for Python Features
   `Highcharts JS <https://www.highcharts.com/product/highcharts/>`__ and the 50+
   technical indicator visualizations available in
   `Highcharts Stock <https://www.highcharts.com/product/stock/>`__, with full support for
-  the rich JavaScript formatter (JS :term:`callback functions <callback function>`)
+  the rich JavaScript formatter (JS callback functions)
   capabilities that are often needed to get the most out of Highcharts' visualization and
   interaction capabilities.
 
-  .. seealso::
+  .. note:: 
+    
+    **See Also**
 
-    * :doc:`Supported Visualizations <visualizations>`
+    * `Supported Visualizations <https://highcharts-core.readthedocs.io/en/latest/visualizations.html>`
 
 * **Simple JavaScript Code Generation**. With one method call, produce production-ready
   JavaScript code to render your interactive visualizations using Highcharts' rich
@@ -110,7 +112,7 @@ Key Highcharts for Python Features
 * **Easy and Robust Chart Download**. With one method call, produce high-end static
   visualizations that can be downloaded or shared as files with your audience. Produce
   static charts using the Highsoft-provided
-  :term:`Highcharts Export Server <Export Server>`, or using your own private export
+  **Highcharts Export Server**, or using your own private export
   server as needed.
 * **Integration with Pandas and PySpark**. With two lines of code, produce a high-end
   interactive visualization of your Pandas or PySpark dataframe.
@@ -306,10 +308,7 @@ Contributing
 *********************
 
 We welcome contributions and pull requests! For more information, please see the
-:doc:`Contributor Guide <contributing>`. And thanks to all those who've already
-contributed:
-
-.. include:: _contributors.rst
+`Contributor Guide <https://highcharts-core.readthedocs.io/en/latest/contributing.html>`. And thanks to all those who've already contributed!
 
 -------------------
 
