@@ -36,7 +36,7 @@ to visualize your data.
 
     .. note::
 
-      The visualizations below are provided by **Highcharts for Python** and
+      The visualizations below are provided by **Highcharts Core for Python** and
       `Highcharts JS <https://www.highcharts.com/products/highcharts/>`__. They are also
       available in the other libraries within the toolkit.
 
@@ -660,7 +660,7 @@ to visualize your data.
           :class:`highcharts_maps.options.plot_options.mapline.MapLineOptions`
 
           :class:`highcharts_maps.options.series.mapline.MapLineSeries`
-      * - **Map* *
+      * - **Map**
         - .. figure:: _static/mappoint-example.png
             :alt: Map Point Example Chart
             :width: 100%
@@ -671,9 +671,38 @@ to visualize your data.
 
   .. tab:: Gantt
 
-    .. todo::
+    .. list-table::
+      :widths: 10 90
+      :header-rows: 1
 
-      Add Gantt visualizations
+      * - Series Type
+        - Screenshot + Class Links
+      * - **Gantt Chart**
+        - .. figure:: _static/gantt-example.png
+            :alt: Gantt Chart Example
+            :width: 100%
+
+          :class:`highcharts_gantt.options.plot_options.gantt.GanttOptions`
+
+          :class:`highcharts_gantt.options.series.gantt.GanttSeries`
+      * - **X-Range**
+        - .. tabs::
+
+            .. tab:: Standard
+
+              .. figure:: _static/xrange-example.png
+                :alt: X-Range Example Chart
+                :width: 100%
+
+            .. tab:: Inverted
+
+              .. figure:: _static/xrange-example-inverted.png
+                :alt: Inverted X-Range Example Chart
+                :width: 100%
+
+          :class:`highcharts_gantt.options.plot_options.bar.XRangeOptions`
+
+          :class:`highcharts_gantt.options.series.bar.XRangeSeries`
 
 --------------
 
@@ -694,7 +723,7 @@ visualizations.
 
     .. error::
 
-      The core **Highcharts for Python** library and the related
+      The **Highcharts Core for Python** library and the related
       `Highcharts JS <https://www.highcharts.com/products/highcharts/>`__ JavaScript
       library do not support :term:`technical indicators <technical indicator>`.
 
@@ -1186,7 +1215,7 @@ visualizations.
 
     .. error::
 
-      The core **Highcharts Maps for Python** extension and the related
+      The **Highcharts Maps for Python** extension and the related
       `Highcharts Maps <https://www.highcharts.com/products/maps/>`__ JavaScript
       library do not support :term:`technical indicators <technical indicator>`.
 
@@ -1197,6 +1226,13 @@ visualizations.
 
   .. tab:: Gantt
 
-    .. todo::
+    .. error::
 
-      Document Gantt Indicators or equivalent.
+      The **Highcharts Gantt for Python** extension and the related
+      `Highcharts Gantt <https://www.highcharts.com/products/maps/>`__ JavaScript
+      library do not support :term:`technical indicators <technical indicator>`.
+
+      Only **Highcharts Stock for Python** and
+      `Highcharts Stock <https://www.highcharts.com/products/stock/>`__ support
+      technical indicators. For more information, please see
+      `here <https://highcharts-stock.readthedocs.io/>`__.

@@ -21,7 +21,7 @@ with open(os.path.join(os.path.dirname(__file__),
 __version__ = version_dict.get('__version__')
 
 
-project = 'Highcharts for Python'
+project = 'Highcharts Core for Python'
 copyright = '2022, HCP LLC'
 author = 'Chris Modzelewski'
 
@@ -72,8 +72,8 @@ html_theme_options = {
     'prev_next_buttons_location': 'both'
 }
 
-html_logo = '_static/highcharts-python-logo-100x50.png'
-html_favicon = '_static/highcharts-python-logo-32x32.png'
+html_logo = '_static/highcharts-for-python-light-150x149.png'
+html_favicon = '_static/highcharts-for-python-dark-32x32.png'
 
 html_context = {
     "display_github": True,                 # Integrate GitHub
