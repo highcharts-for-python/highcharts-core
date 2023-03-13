@@ -6,16 +6,32 @@ Highcharts for Python Toolkit
 
 The **Highcharts for Python Toolkit** is a Python library that provides a Python wrapper
 for the fantastic `Highcharts JS <https://www.highcharts.com>`__ suite of JavaScript data
-visualization libraries, with full integration into the robust Python ecosystem. The full
-toolkit includes support for:
+visualization libraries, with full integration into the robust Python ecosystem. 
 
-  * **Highcharts JS** - the core Highcharts data visualization library
-  * **Highcharts Stock** - the robust time series visualization extension to Highcharts JS
-  * **Highcharts Maps** - the rich map visualization extension to Highcharts JS
-  * **Highcharts Gantt** - the Gantt charting extension to
-    Highcharts JS
-  * The **Highcharts Export Server** - enabling the programmatic creation of static
-    (downloadable) data visualizations
+The toolkit is composed of several different libraries, each of which provides comprehensive support for a component of the Highcharts JS suite:
+
+.. list-table::
+  :widths: 30 30 40
+  :header-rows: 1
+
+  * - Python Library
+    - JavaScript Library
+    - Description
+  * - **Highcharts Core for Python** 
+    - `Highcharts Core (JS) <https://www.highcharts.com/products/highcharts/>`__
+    - (this library) the core Highcharts data visualization library
+  * - `Highcharts Stock for Python <https://highcharts-stock.readthedocs.io/>`__ 
+    - `Highcharts Stock (JS) <https://www.highcharts.com/products/stock/>`__
+    - the robust time series visualization extension to Highcharts Core
+  * - `Highcharts Maps <https://highcharts-maps.readthedocs.io/>`__ 
+    - `Highcharts Maps (JS) <https://www.highcharts.com/products/maps/>`__
+    - the rich map visualization extension to Highcharts Core
+  * - `Highcharts Gantt <https://highcharts-gantt.readthedocs.io/>`__
+    - `Highcharts Gantt (JS) <https://www.highcharts.com/products/gantt/>`__
+    - the Gantt charting extension to Highcharts Core
+  * - (all libraries in the Python toolkit)
+    - The **Highcharts Export Server** 
+    - enabling the programmatic creation of static (downloadable) data visualizations
 
 In order to integrate **Highcharts for Python** into the Python ecosystem, the library
 features native integration with:
@@ -25,8 +41,9 @@ features native integration with:
   * **Pandas**. Automatically produce data visualizations from your Pandas dataframes
   * **PySpark**. Automatically produce data visualizations from data in a PySpark
     dataframe.
+  * ...and even more use-case specific integrations in each tool in the toolkit.
 
-**COMPLETE DOCUMENTATION:** http://highcharts-core.readthedocs.org/en/latest/index.html
+**COMPLETE DOCUMENTATION:** https://highcharts-core.readthedocs.org/en/latest/index.html
 
 --------------------
 
@@ -127,7 +144,7 @@ Key Highcharts for Python Features
 ==============================================
 
 For a discussion of **Highcharts for Python** in comparison to alternatives, please see
-the **COMPLETE DOCUMENTATION:** http://highcharts-core.readthedocs.org/en/latest/index.html
+the **COMPLETE DOCUMENTATION:** https://highcharts-core.readthedocs.org/en/latest/index.html
 
 ---------------------
 
@@ -138,7 +155,36 @@ Hello World, and Basic Usage
 1. Import Highcharts Stock for Python
 ==========================================
 
-.. include:: using/_importing.rst
+.. code-block:: python
+  
+  # PRECISE-LOCATION PATTERN: BEST PRACTICE!
+  # This method of importing Highcharts for Python objects yields the fastest
+  # performance for the import statement. However, it is more verbose and requires
+  # you to navigate the extensive Highcharts Core for Python API.
+
+  # Import classes using precise module indications. For example:
+  from highcharts_core.chart import Chart
+  from highcharts_core.global_options.shared_options import SharedOptions
+  from highcharts_core.options import HighchartsOptions
+  from highcharts_core.options.plot_options.bar import BarOptions
+  from highcharts_core.options.series.bar import BarSeries
+
+  # CATCH-ALL PATTERN
+  # This method of importing Highcharts for Python classes has relatively slow
+  # performance because it imports hundreds of different classes from across the entire
+  # library. This performance impact may be acceptable to you in your use-case, but
+  # do use at your own risk.
+
+  # Import objects from the catch-all ".highcharts" module.
+  from highcharts_core import highcharts
+
+  # You can now access specific classes without individual import statements.
+  highcharts.Chart
+  highcharts.SharedOptions
+  highcharts.HighchartsOptions
+  highcharts.BarOptions
+  highcharts.BarSeries
+
 
 2. Create Your Chart
 ================================
@@ -308,7 +354,7 @@ Contributing
 *********************
 
 We welcome contributions and pull requests! For more information, please see the
-`Contributor Guide <https://highcharts-core.readthedocs.io/en/latest/contributing.html>`. And thanks to all those who've already contributed!
+`Contributor Guide <https://highcharts-core.readthedocs.io/en/latest/contributing.html>`__. And thanks to all those who've already contributed!
 
 -------------------
 
@@ -316,7 +362,7 @@ We welcome contributions and pull requests! For more information, please see the
 Testing
 *********************
 
-We use `TravisCI <http://travisci.org>`_ for our build automation and
+We use `TravisCI <https://travisci.org>`_ for our build automation and
 `ReadTheDocs <https://readthedocs.org>`_ for our documentation.
 
 Detailed information about our test suite and how to run tests locally can be
