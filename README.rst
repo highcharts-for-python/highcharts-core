@@ -6,16 +6,32 @@ Highcharts for Python Toolkit
 
 The **Highcharts for Python Toolkit** is a Python library that provides a Python wrapper
 for the fantastic `Highcharts JS <https://www.highcharts.com>`__ suite of JavaScript data
-visualization libraries, with full integration into the robust Python ecosystem. The full
-toolkit includes support for:
+visualization libraries, with full integration into the robust Python ecosystem. 
 
-  * **Highcharts JS** - the core Highcharts data visualization library
-  * **Highcharts Stock** - the robust time series visualization extension to Highcharts JS
-  * **Highcharts Maps** - the rich map visualization extension to Highcharts JS
-  * **Highcharts Gantt** - the :term:`Gantt charting <Gantt Chart>` extension to
-    Highcharts JS
-  * The **Highcharts Export Server** - enabling the programmatic creation of static
-    (downloadable) data visualizations
+The toolkit is composed of several different libraries, each of which provides comprehensive support for a component of the Highcharts JS suite:
+
+.. list-table::
+  :widths: 30 30 40
+  :header-rows: 1
+
+  * - Python Library
+    - JavaScript Library
+    - Description
+  * - **Highcharts Core for Python** 
+    - `Highcharts Core (JS) <https://www.highcharts.com/products/highcharts/>`__
+    - (this library) the core Highcharts data visualization library
+  * - `Highcharts Stock for Python <https://highcharts-stock.readthedocs.io/>`__ 
+    - `Highcharts Stock (JS) <https://www.highcharts.com/products/stock/>`__
+    - the robust time series visualization extension to Highcharts Core
+  * - `Highcharts Maps <https://highcharts-maps.readthedocs.io/>`__ 
+    - `Highcharts Maps (JS) <https://www.highcharts.com/products/maps/>`__
+    - the rich map visualization extension to Highcharts Core
+  * - `Highcharts Gantt <https://highcharts-gantt.readthedocs.io/>`__
+    - `Highcharts Gantt (JS) <https://www.highcharts.com/products/gantt/>`__
+    - the Gantt charting extension to Highcharts Core
+  * - (all libraries in the Python toolkit)
+    - The **Highcharts Export Server** 
+    - enabling the programmatic creation of static (downloadable) data visualizations
 
 In order to integrate **Highcharts for Python** into the Python ecosystem, the library
 features native integration with:
@@ -25,8 +41,9 @@ features native integration with:
   * **Pandas**. Automatically produce data visualizations from your Pandas dataframes
   * **PySpark**. Automatically produce data visualizations from data in a PySpark
     dataframe.
+  * ...and even more use-case specific integrations in each tool in the toolkit.
 
-**COMPLETE DOCUMENTATION:** http://highcharts-core.readthedocs.org/en/latest/index.html
+**COMPLETE DOCUMENTATION:** https://highcharts-core.readthedocs.org/en/latest/index.html
 
 --------------------
 
@@ -70,7 +87,7 @@ capabilities to simplify integration with Javascript frontend frameworks (React,
 VueJS, etc.). But facilitating that with Highcharts has historically been very difficult.
 Part of this difficulty is because the Highcharts JavaScript suite - while supporting JSON as a
 serialization/deserialization format - leverages
-:term:`JavaScript object literals <JavaScript Object Literal Notation>` to expose the
+JavaScript object literals to expose the
 full power and interactivity of its data visualizations. And while it's easy to serialize
 JSON from Python, serializing and deserializing to/from JavaScript object literal notation
 is much more complicated. This means that Python developers looking to integrate with
@@ -96,21 +113,22 @@ Key Highcharts for Python Features
   `Highcharts JS <https://www.highcharts.com/product/highcharts/>`__ and the 50+
   technical indicator visualizations available in
   `Highcharts Stock <https://www.highcharts.com/product/stock/>`__, with full support for
-  the rich JavaScript formatter (JS :term:`callback functions <callback function>`)
+  the rich JavaScript formatter (JS callback functions)
   capabilities that are often needed to get the most out of Highcharts' visualization and
   interaction capabilities.
 
-  .. seealso::
+  .. note:: 
+    
+    **See Also**
 
-    * :doc:`Supported Visualizations <visualizations>`
+    * `Supported Visualizations <https://highcharts-core.readthedocs.io/en/latest/visualizations.html>`__
 
 * **Simple JavaScript Code Generation**. With one method call, produce production-ready
   JavaScript code to render your interactive visualizations using Highcharts' rich
   capabilities.
 * **Easy and Robust Chart Download**. With one method call, produce high-end static
   visualizations that can be downloaded or shared as files with your audience. Produce
-  static charts using the Highsoft-provided
-  :term:`Highcharts Export Server <Export Server>`, or using your own private export
+  static charts using the Highsoft-provided **Highcharts Export Server**, or using your own private export
   server as needed.
 * **Integration with Pandas and PySpark**. With two lines of code, produce a high-end
   interactive visualization of your Pandas or PySpark dataframe.
@@ -125,7 +143,7 @@ Key Highcharts for Python Features
 ==============================================
 
 For a discussion of **Highcharts for Python** in comparison to alternatives, please see
-the **COMPLETE DOCUMENTATION:** http://highcharts-core.readthedocs.org/en/latest/index.html
+the **COMPLETE DOCUMENTATION:** https://highcharts-core.readthedocs.org/en/latest/index.html
 
 ---------------------
 
@@ -133,10 +151,39 @@ the **COMPLETE DOCUMENTATION:** http://highcharts-core.readthedocs.org/en/latest
 Hello World, and Basic Usage
 ********************************
 
-1. Import Highcharts Stock for Python
+1. Import Highcharts Core for Python
 ==========================================
 
-.. include:: using/_importing.rst
+.. code-block:: python
+  
+  # PRECISE-LOCATION PATTERN: BEST PRACTICE!
+  # This method of importing Highcharts for Python objects yields the fastest
+  # performance for the import statement. However, it is more verbose and requires
+  # you to navigate the extensive Highcharts Core for Python API.
+
+  # Import classes using precise module indications. For example:
+  from highcharts_core.chart import Chart
+  from highcharts_core.global_options.shared_options import SharedOptions
+  from highcharts_core.options import HighchartsOptions
+  from highcharts_core.options.plot_options.bar import BarOptions
+  from highcharts_core.options.series.bar import BarSeries
+
+  # CATCH-ALL PATTERN
+  # This method of importing Highcharts for Python classes has relatively slow
+  # performance because it imports hundreds of different classes from across the entire
+  # library. This performance impact may be acceptable to you in your use-case, but
+  # do use at your own risk.
+
+  # Import objects from the catch-all ".highcharts" module.
+  from highcharts_core import highcharts
+
+  # You can now access specific classes without individual import statements.
+  highcharts.Chart
+  highcharts.SharedOptions
+  highcharts.HighchartsOptions
+  highcharts.BarOptions
+  highcharts.BarSeries
+
 
 2. Create Your Chart
 ================================
@@ -292,12 +339,23 @@ that will render the chart wherever it is you want it to go:
 
 --------------
 
-*********************
-Questions and Issues
-*********************
+***********************
+Getting Help/Support
+***********************
 
-You can ask questions and report issues on the project's
-`Github Issues Page <https://github.com/highcharts-for-python/highcharts-core/issues>`_
+The **Highcharts for Python** toolkit comes with all of the great support that you are used to from working with the 
+Highcharts JavaScript libraries. When you license the toolkit, you are welcome to use any of the following tools to get 
+help using the toolkit. In particular, you can:
+
+  * Use the `Highcharts Forums <https://highcharts.com/forum>`__
+  * Use `Stack Overflow <https://stackoverflow.com/questions/tagged/highcharts-for-python>`__ with the 
+    ``highcharts-for-python`` tag
+  * `Report bugs or request features <https://github.com/highcharts-for-python/highcharts-core/issues>`__  in the 
+    library's Github repository
+  * `File a support ticket <https://www.highchartspython.com/get-help>`__ with us
+  * `Schedule a live chat or video call <https://www.highchartspython.com/get-help>`__ with us
+
+**FOR MORE INFORMATION:** https://www.highchartspython.com/get-help
 
 -----------------
 
@@ -306,10 +364,7 @@ Contributing
 *********************
 
 We welcome contributions and pull requests! For more information, please see the
-:doc:`Contributor Guide <contributing>`. And thanks to all those who've already
-contributed:
-
-.. include:: _contributors.rst
+`Contributor Guide <https://highcharts-core.readthedocs.io/en/latest/contributing.html>`__. And thanks to all those who've already contributed!
 
 -------------------
 
@@ -317,7 +372,7 @@ contributed:
 Testing
 *********************
 
-We use `TravisCI <http://travisci.org>`_ for our build automation and
+We use `TravisCI <https://travisci.org>`_ for our build automation and
 `ReadTheDocs <https://readthedocs.org>`_ for our documentation.
 
 Detailed information about our test suite and how to run tests locally can be
