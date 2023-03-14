@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.zones <highcharts_python.utility_classes.zones>`
+:mod:`.zones <highcharts_core.utility_classes.zones>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.utility_classes.zones
+.. module:: highcharts_core.utility_classes.zones
 
 ********************************************************************************************************************
-class: :class:`Zone <highcharts_python.utility_classes.zones.Zone>`
+class: :class:`Zone <highcharts_core.utility_classes.zones.Zone>`
 ********************************************************************************************************************
 
 .. autoclass:: Zone
@@ -22,7 +22,7 @@ class: :class:`Zone <highcharts_python.utility_classes.zones.Zone>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Zone
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`Zone <highcharts_python.utility_classes.zones.Zone>`
 ------------
 
 ********************************************************************************************************************
-class: :class:`ClusterZone <highcharts_python.utility_classes.zones.ClusterZone>`
+class: :class:`ClusterZone <highcharts_core.utility_classes.zones.ClusterZone>`
 ********************************************************************************************************************
 
 .. autoclass:: ClusterZone
@@ -40,7 +40,7 @@ class: :class:`ClusterZone <highcharts_python.utility_classes.zones.ClusterZone>
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ClusterZone
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

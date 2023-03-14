@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.navigation <highcharts_python.options.legend.navigation>`
+:mod:`.navigation <highcharts_core.options.legend.navigation>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.legend.navigation
+.. module:: highcharts_core.options.legend.navigation
 
 ********************************************************************************************************************
-class: :class:`LegendNavigation <highcharts_python.options.legend.navigation.LegendNavigation>`
+class: :class:`LegendNavigation <highcharts_core.options.legend.navigation.LegendNavigation>`
 ********************************************************************************************************************
 
 .. autoclass:: LegendNavigation
@@ -22,7 +22,7 @@ class: :class:`LegendNavigation <highcharts_python.options.legend.navigation.Leg
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: LegendNavigation
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

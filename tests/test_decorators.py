@@ -3,8 +3,8 @@ import json
 
 import pytest
 
-from highcharts_python.decorators import class_sensitive, validate_types
-from highcharts_python import errors
+from highcharts_core.decorators import class_sensitive, validate_types
+from highcharts_core import errors
 
 
 class TestClass:

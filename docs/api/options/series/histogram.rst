@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.histogram <highcharts_python.options.series.histogram>`
+:mod:`.histogram <highcharts_core.options.series.histogram>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.histogram
+.. module:: highcharts_core.options.series.histogram
 
 ********************************************************************************************************************
-class: :class:`HistogramSeries <highcharts_python.options.series.histogram.HistogramSeries>`
+class: :class:`HistogramSeries <highcharts_core.options.series.histogram.HistogramSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: HistogramSeries
@@ -22,7 +22,7 @@ class: :class:`HistogramSeries <highcharts_python.options.series.histogram.Histo
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HistogramSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

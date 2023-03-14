@@ -14,7 +14,7 @@
     :noindex:
 
     Replaces the contents of the
-    :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
+    :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` property
     with values from a `PySpark <https://spark.apache.org/docs/latest/api/python/>`_
     :class:`DataFrame <pyspark:pyspark.sql.DataFrame>`.
 

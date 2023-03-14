@@ -9,7 +9,7 @@ one chart, and then copy its properties to other chart objects with one method c
 
   .. tip::
 
-    The :meth:`Chart.copy() <highcharts_python.chart.Chart.copy>` method supports a
+    The :meth:`Chart.copy() <highcharts_core.chart.Chart.copy>` method supports a
     special keyword argument, ``preverse_data`` which if set to ``True`` will copy
     properties (unless ``overwrite = False``) but will *not* overwrite any data. This
     can be very useful to replicating the configuration of your chart across multiple

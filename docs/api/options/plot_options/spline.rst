@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.spline <highcharts_python.options.plot_options.spline>`
+:mod:`.spline <highcharts_core.options.plot_options.spline>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.spline
+.. module:: highcharts_core.options.plot_options.spline
 
 ********************************************************************************************************************
-class: :class:`SplineOptions <highcharts_python.options.plot_options.spline.SplineOptions>`
+class: :class:`SplineOptions <highcharts_core.options.plot_options.spline.SplineOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: SplineOptions
@@ -22,7 +22,7 @@ class: :class:`SplineOptions <highcharts_python.options.plot_options.spline.Spli
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SplineOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

@@ -1,5 +1,5 @@
-var someVariableName = new Highcharts.chart(renderTo = 'some-div-id',
-options = {
+var someVariableName = new Highcharts.chart('some-div-id',
+{
   accessibility: {
       announceNewData: {
           announcementFormatter: function() { return true; },
@@ -306,7 +306,6 @@ options = {
           type: 'x'
       },
       parallelCoordinates: false,
-      pinchType: 'x',
       plotBackgroundColor: '#ccc',
       plotBackgroundImage: 'http://www.somewhere.com',
       plotBorderColor: '#999',
@@ -315,18 +314,6 @@ options = {
       polar: false,
       reflow: false,
       renderTo: 'some-id',
-      resetZoomButton: {
-          position: {
-            align: 'center',
-            verticalAlign: 'top',
-            x: -10,
-            y: 10
-          },
-          relativeTo: 'plot',
-          theme: {
-              'fill': '#ccc'
-          }
-      },
       scrollablePlotArea: {
           minHeight: 120,
           minWidth: 300,
@@ -346,9 +333,24 @@ options = {
       styledMode: false,
       type: 'line',
       width: 50,
-      zoomBySingleTouch: false,
-      zoomKey: 'alt',
-      zoomType: 'xy'
+      zooming: {
+        key: 'alt',
+        pinchType: 'xy',
+        resetButton: {
+            position: {
+              align: 'center',
+              verticalAlign: 'top',
+              x: -10,
+              y: 10
+            },
+            relativeTo: 'plot',
+            theme: {
+                'fill': '#ccc'
+            }
+        },
+        singleTouch: false,
+        type: 'xy'
+      }
   },
   colorAxis: {
     accessibility: {
@@ -17885,4 +17887,4 @@ options = {
     }
   ]
 },
-callback = function() { return true; });
+function() { return true; });

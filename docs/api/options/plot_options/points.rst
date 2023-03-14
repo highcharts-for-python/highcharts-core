@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.points <highcharts_python.options.plot_options.points>`
+:mod:`.points <highcharts_core.options.plot_options.points>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.points
+.. module:: highcharts_core.options.plot_options.points
 
 ********************************************************************************************************************
-class: :class:`Point <highcharts_python.options.plot_options.points.Point>`
+class: :class:`Point <highcharts_core.options.plot_options.points.Point>`
 ********************************************************************************************************************
 
 .. autoclass:: Point
@@ -22,7 +22,7 @@ class: :class:`Point <highcharts_python.options.plot_options.points.Point>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Point
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`Point <highcharts_python.options.plot_options.points.Point>`
 -------------
 
 ********************************************************************************************************************
-class: :class:`OnPointOptions <highcharts_python.options.plot_options.points.OnPointOptions>`
+class: :class:`OnPointOptions <highcharts_core.options.plot_options.points.OnPointOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: OnPointOptions
@@ -40,7 +40,7 @@ class: :class:`OnPointOptions <highcharts_python.options.plot_options.points.OnP
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: OnPointOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`OnPointOptions <highcharts_python.options.plot_options.points.OnP
 ---------------
 
 ********************************************************************************************************************
-class: :class:`ConnectorOptions <highcharts_python.options.plot_options.points.ConnectorOptions>`
+class: :class:`ConnectorOptions <highcharts_core.options.plot_options.points.ConnectorOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: ConnectorOptions
@@ -58,7 +58,7 @@ class: :class:`ConnectorOptions <highcharts_python.options.plot_options.points.C
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ConnectorOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

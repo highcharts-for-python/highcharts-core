@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.generic <highcharts_python.options.axes.generic>`
+:mod:`.generic <highcharts_core.options.axes.generic>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.axes.generic
+.. module:: highcharts_core.options.axes.generic
 
 ********************************************************************************************************************
-class: :class:`GenericAxis <highcharts_python.options.axes.generic.GenericAxis>`
+class: :class:`GenericAxis <highcharts_core.options.axes.generic.GenericAxis>`
 ********************************************************************************************************************
 
 .. autoclass:: GenericAxis
@@ -22,7 +22,7 @@ class: :class:`GenericAxis <highcharts_python.options.axes.generic.GenericAxis>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: GenericAxis
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

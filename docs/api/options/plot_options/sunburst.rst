@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.sunburst <highcharts_python.options.plot_options.sunburst>`
+:mod:`.sunburst <highcharts_core.options.plot_options.sunburst>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.sunburst
+.. module:: highcharts_core.options.plot_options.sunburst
 
 ********************************************************************************************************************
-class: :class:`SunburstOptions <highcharts_python.options.plot_options.sunburst.SunburstOptions>`
+class: :class:`SunburstOptions <highcharts_core.options.plot_options.sunburst.SunburstOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: SunburstOptions
@@ -22,7 +22,7 @@ class: :class:`SunburstOptions <highcharts_python.options.plot_options.sunburst.
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SunburstOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

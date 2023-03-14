@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.announce_new_data <highcharts_python.options.accessibility.announce_new_data>`
+:mod:`.announce_new_data <highcharts_core.options.accessibility.announce_new_data>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.accessibility.announce_new_data
+.. module:: highcharts_core.options.accessibility.announce_new_data
 
 ****************************************************************************************************************
-class: :class:`AnnounceNewData <highcharts_python.options.accessibility.announce_new_data.AnnounceNewData>`
+class: :class:`AnnounceNewData <highcharts_core.options.accessibility.announce_new_data.AnnounceNewData>`
 ****************************************************************************************************************
 
 .. autoclass:: AnnounceNewData
@@ -22,7 +22,7 @@ class: :class:`AnnounceNewData <highcharts_python.options.accessibility.announce
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AnnounceNewData
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

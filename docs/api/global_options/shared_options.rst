@@ -1,5 +1,5 @@
 #############################################################################
-:mod:`.shared_options <highcharts_python.global_options.shared_options>`
+:mod:`.shared_options <highcharts_core.global_options.shared_options>`
 #############################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.global_options.shared_options
+.. module:: highcharts_core.global_options.shared_options
 
 **********************************************************************************************
-class: :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
+class: :class:`SharedOptions <highcharts_core.global_options.shared_options.SharedOptions>`
 **********************************************************************************************
 
 .. autoclass:: SharedOptions
@@ -22,7 +22,7 @@ class: :class:`SharedOptions <highcharts_python.global_options.shared_options.Sh
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SharedOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

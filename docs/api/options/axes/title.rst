@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.title <highcharts_python.options.axes.title>`
+:mod:`.title <highcharts_core.options.axes.title>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.axes.title
+.. module:: highcharts_core.options.axes.title
 
 ********************************************************************************************************************
-class: :class:`AxisTitle <highcharts_python.options.axes.title.AxisTitle>`
+class: :class:`AxisTitle <highcharts_core.options.axes.title.AxisTitle>`
 ********************************************************************************************************************
 
 .. autoclass:: AxisTitle
@@ -22,7 +22,7 @@ class: :class:`AxisTitle <highcharts_python.options.axes.title.AxisTitle>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AxisTitle
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

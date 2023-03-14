@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.gauge <highcharts_python.options.plot_options.gauge>`
+:mod:`.gauge <highcharts_core.options.plot_options.gauge>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.gauge
+.. module:: highcharts_core.options.plot_options.gauge
 
 ********************************************************************************************************************
-class: :class:`GaugeOptions <highcharts_python.options.plot_options.gauge.GaugeOptions>`
+class: :class:`GaugeOptions <highcharts_core.options.plot_options.gauge.GaugeOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: GaugeOptions
@@ -22,7 +22,7 @@ class: :class:`GaugeOptions <highcharts_python.options.plot_options.gauge.GaugeO
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: GaugeOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`GaugeOptions <highcharts_python.options.plot_options.gauge.GaugeO
 --------------
 
 ********************************************************************************************************************
-class: :class:`SolidGaugeOptions <highcharts_python.options.plot_options.gauge.SolidGaugeOptions>`
+class: :class:`SolidGaugeOptions <highcharts_core.options.plot_options.gauge.SolidGaugeOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: SolidGaugeOptions
@@ -40,7 +40,7 @@ class: :class:`SolidGaugeOptions <highcharts_python.options.plot_options.gauge.S
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SolidGaugeOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`SolidGaugeOptions <highcharts_python.options.plot_options.gauge.S
 ----------------
 
 ********************************************************************************************************************
-class: :class:`PivotOptions <highcharts_python.options.plot_options.gauge.PivotOptions>`
+class: :class:`PivotOptions <highcharts_core.options.plot_options.gauge.PivotOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: PivotOptions
@@ -58,7 +58,7 @@ class: :class:`PivotOptions <highcharts_python.options.plot_options.gauge.PivotO
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: PivotOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -66,7 +66,7 @@ class: :class:`PivotOptions <highcharts_python.options.plot_options.gauge.PivotO
 -----------------
 
 ********************************************************************************************************************
-class: :class:`DialOptions <highcharts_python.options.plot_options.gauge.DialOptions>`
+class: :class:`DialOptions <highcharts_core.options.plot_options.gauge.DialOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: DialOptions
@@ -76,7 +76,7 @@ class: :class:`DialOptions <highcharts_python.options.plot_options.gauge.DialOpt
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: DialOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

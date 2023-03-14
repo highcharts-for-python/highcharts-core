@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.funnel <highcharts_python.options.plot_options.funnel>`
+:mod:`.funnel <highcharts_core.options.plot_options.funnel>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.funnel
+.. module:: highcharts_core.options.plot_options.funnel
 
 ********************************************************************************************************************
-class: :class:`FunnelOptions <highcharts_python.options.plot_options.funnel.FunnelOptions>`
+class: :class:`FunnelOptions <highcharts_core.options.plot_options.funnel.FunnelOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: FunnelOptions
@@ -22,7 +22,7 @@ class: :class:`FunnelOptions <highcharts_python.options.plot_options.funnel.Funn
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: FunnelOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`FunnelOptions <highcharts_python.options.plot_options.funnel.Funn
 ------------------
 
 ********************************************************************************************************************
-class: :class:`Funnel3DOptions <highcharts_python.options.plot_options.funnel.Funnel3DOptions>`
+class: :class:`Funnel3DOptions <highcharts_core.options.plot_options.funnel.Funnel3DOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: Funnel3DOptions
@@ -40,7 +40,7 @@ class: :class:`Funnel3DOptions <highcharts_python.options.plot_options.funnel.Fu
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Funnel3DOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

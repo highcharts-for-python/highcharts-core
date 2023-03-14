@@ -1,5 +1,5 @@
 #############################################################################################
-:mod:`.events <highcharts_python.options.annotations.events>`
+:mod:`.events <highcharts_core.options.annotations.events>`
 #############################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.annotations.events
+.. module:: highcharts_core.options.annotations.events
 
 *******************************************************************************************************************************************
-class: :class:`AnnotationEvent <highcharts_python.options.annotations.events.AnnotationEvent>`
+class: :class:`AnnotationEvent <highcharts_core.options.annotations.events.AnnotationEvent>`
 *******************************************************************************************************************************************
 
 .. autoclass:: AnnotationEvent
@@ -22,7 +22,7 @@ class: :class:`AnnotationEvent <highcharts_python.options.annotations.events.Ann
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AnnotationEvent
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

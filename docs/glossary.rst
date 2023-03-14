@@ -13,7 +13,7 @@ Glossary
   Callback Function
     A JavaScript function which is passed to
     `Highcharts JS <https://www.highcharts.com>`__ in the
-    :class:`HighchartsOptions <highcharts_python.options.HighchartsOptions>` configuration
+    :class:`HighchartsOptions <highcharts_core.options.HighchartsOptions>` configuration
     which performs an action which affects the :term:`chart <charts>`.
 
     Typically, callback functions are used to define
@@ -24,7 +24,7 @@ Glossary
 
       * :term:`Event Handler`
       * :term:`Formatter`
-      * :class:`CallbackFunction <highcharts_python.utility_classes.javascript_functions.CallbackFunction>`
+      * :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>`
 
   Cartesian Charts
     Cartesian charts are :term:`charts` that typically feature two or more axes, by common
@@ -52,12 +52,12 @@ Glossary
     A color axis is an axis on the visualization that represents a value using its color.
     Typically, :term:`data point` :term:`metric` values are communicated using their
     position. However, they can also be communicated using the color in which they are
-    rendered. A :class:`Color Axis <highcharts_python.options.axes.color_axis.ColorAxis>`
+    rendered. A :class:`Color Axis <highcharts_core.options.axes.color_axis.ColorAxis>`
     is used to define the relationship between colors and metric values.
 
     .. seealso::
 
-      * :class:`Color Axis <highcharts_python.options.axes.color_axis.ColorAxis>`
+      * :class:`Color Axis <highcharts_core.options.axes.color_axis.ColorAxis>`
 
   Data Point
     A single value that is represented on a :term:`chart <charts>`.
@@ -69,7 +69,7 @@ Glossary
     :term:`data point` when user hovers their mouse over the data point.
 
     Represented in **Highcharts for Python** by
-    :class:`highcharts_python.utility_classes.data_labels.DataLabel` and also affected
+    :class:`highcharts_core.utility_classes.data_labels.DataLabel` and also affected
     heavily by :meth:`highcharts_stock.options.HighchartsOptions.tooltip`.
 
     .. seealso::
@@ -88,8 +88,8 @@ Glossary
 
     .. seealso::
 
-      * :class:`DependencyWheelOptions <highcharts_python.options.plot_options.dependencywheel.DependencyWheelOptions>`
-      * :class:`DependencyWheelSeries <highcharts_python.options.series.dependencywheel.DependencyWheelSeries>`
+      * :class:`DependencyWheelOptions <highcharts_core.options.plot_options.dependencywheel.DependencyWheelOptions>`
+      * :class:`DependencyWheelSeries <highcharts_core.options.series.dependencywheel.DependencyWheelSeries>`
 
   Diamond of Death
     A multiple inheritance pattern that is considered an anti-pattern by the Python
@@ -135,13 +135,13 @@ Glossary
       of the same :term:`metric` grouped by city (within that state/province).
 
     In **Highcharts for Python**, the drilldown capabilities are configured using the
-    :meth:`HighchartsOptions.drilldown <highcharts_python.options.HighchartsOptions.drilldown>`
+    :meth:`HighchartsOptions.drilldown <highcharts_core.options.HighchartsOptions.drilldown>`
     setting.
 
     .. seealso::
 
-      * :meth:`HighchartsOptions.drilldown <highcharts_python.options.HighchartsOptions.drilldown>`
-      * :class:`Drilldown <highcharts_python.options.drilldown.Drilldown>`
+      * :meth:`HighchartsOptions.drilldown <highcharts_core.options.HighchartsOptions.drilldown>`
+      * :class:`Drilldown <highcharts_core.options.drilldown.Drilldown>`
 
   Event Handler
     A JavaScript function that receives information when an event of some sort has
@@ -205,10 +205,10 @@ Glossary
 
     .. seealso::
 
-      * :class:`GaugeOptions <highcharts_python.options.plot_options.gauge.GaugeOptions>`
-      * :class:`SolidGaugeOptions <highcharts_python.options.plot_options.gauge.SolidGaugeOptions>`
-      * :class:`GaugeSeries <highcharts_python.options.series.gauge.GaugeSeries>`
-      * :class:`SolidGaugeSeries <highcharts_python.options.series.gauge.SolidGaugeSeries>`
+      * :class:`GaugeOptions <highcharts_core.options.plot_options.gauge.GaugeOptions>`
+      * :class:`SolidGaugeOptions <highcharts_core.options.plot_options.gauge.SolidGaugeOptions>`
+      * :class:`GaugeSeries <highcharts_core.options.series.gauge.GaugeSeries>`
+      * :class:`SolidGaugeSeries <highcharts_core.options.series.gauge.SolidGaugeSeries>`
 
   JavaScript Object Literal Notation
     A way of representing data in JavaScript as native JavaScript objects which is
@@ -277,14 +277,14 @@ Glossary
     classes in your code.
 
     In the **Highcharts for Python** toolkit, metaclasses are defined in the
-    :mod:`.metaclasses <highcharts_python.metaclasses>` module, and most inherit from the
-    :class:`.metaclasses.HighchartsMeta <highcharts_python.metaclasses.HighchartsMeta>`
+    :mod:`.metaclasses <highcharts_core.metaclasses>` module, and most inherit from the
+    :class:`.metaclasses.HighchartsMeta <highcharts_core.metaclasses.HighchartsMeta>`
     class.
 
     .. seealso::
 
-      * :mod:`.metaclasses <highcharts_python.metaclasses>`
-      * :class:`HighchartsMeta <highcharts_python.metaclasses.HighchartsMeta>`
+      * :mod:`.metaclasses <highcharts_core.metaclasses>`
+      * :class:`HighchartsMeta <highcharts_core.metaclasses.HighchartsMeta>`
 
   Metric
     The value of a measurement. Think of it as a "type" of number. A metric might be
@@ -302,7 +302,7 @@ Glossary
 
     .. seealso::
 
-      * :meth:`Language.numeric_symbols <highcharts_python.global_options.language.Language.numeric_symbols>`
+      * :meth:`Language.numeric_symbols <highcharts_core.global_options.language.Language.numeric_symbols>`
 
   Network Graph
     A network graph is a type of relationship chart, where connnections (links)
@@ -314,8 +314,8 @@ Glossary
 
     .. seealso::
 
-      * :class:`NetworkGraphOptions <highcharts_python.options.plot_options.networkgraph.NetworkGraphOptions>`
-      * :class:`NetworkGraphSeries <highcharts_python.options.series.networkgraph.NetworkGraphSeries>`
+      * :class:`NetworkGraphOptions <highcharts_core.options.plot_options.networkgraph.NetworkGraphOptions>`
+      * :class:`NetworkGraphSeries <highcharts_core.options.series.networkgraph.NetworkGraphSeries>`
 
   Oscillator
 
@@ -347,8 +347,8 @@ Glossary
 
     .. seealso::
 
-      * :class:`PlotBand <highcharts_python.options.axes.plot_bands.PlotBand>`
-      * :meth:`NumericAxis.plot_bands <highcharts_python.axes.numeric.NumericAxis.plot_bands>`
+      * :class:`PlotBand <highcharts_core.options.axes.plot_bands.PlotBand>`
+      * :meth:`NumericAxis.plot_bands <highcharts_core.axes.numeric.NumericAxis.plot_bands>`
       * :term:`Plot Line`
 
   Plot Line
@@ -358,8 +358,8 @@ Glossary
 
     .. seealso::
 
-      * :class:`PlotLine <highcharts_python.options.axes.plot_bands.PlotLine>`
-      * :meth:`NumericAxis.plot_lines <highcharts_python.axes.numeric.NumericAxis.plot_lines>`
+      * :class:`PlotLine <highcharts_core.options.axes.plot_bands.PlotLine>`
+      * :meth:`NumericAxis.plot_lines <highcharts_core.axes.numeric.NumericAxis.plot_lines>`
       * :term:`Plot Band`
 
   Polar Chart
@@ -394,8 +394,8 @@ Glossary
 
     .. seealso::
 
-      * :class:`SankeyOptions <highcharts_python.options.plot_options.sankey.SankeyOptions>`
-      * :class:`SankeySeries <highcharts_python.options.series.sankey.SankeySeries>`
+      * :class:`SankeyOptions <highcharts_core.options.plot_options.sankey.SankeyOptions>`
+      * :class:`SankeySeries <highcharts_core.options.series.sankey.SankeySeries>`
 
   Series
     A collection of :term:`data points <data point>` that are expressed using a shared
@@ -413,14 +413,14 @@ Glossary
     and to minimize the amount of code rendered in the page itself.
 
     In the **Highcharts for Python** toolkit, shared options are managed through the
-    :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
+    :class:`SharedOptions <highcharts_core.global_options.shared_options.SharedOptions>`
     class.
 
     .. seealso::
 
       * :doc:`Using Highcharts for Python <using>` > :ref:`Using Shared Options <shared_options>`
-      * :mod:`.global_options.shared_options` <highcharts_python.global_options.shared_options>
-      * :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
+      * :mod:`.global_options.shared_options` <highcharts_core.global_options.shared_options>
+      * :class:`SharedOptions <highcharts_core.global_options.shared_options.SharedOptions>`
 
   SolidGauge
     A solid gauge is a circular gauge where the value is indicated by a filled arc,
@@ -432,26 +432,26 @@ Glossary
 
     .. seealso::
 
-      * :class:`SolidGaugeOptions <highcharts_python.options.plot_options.gauge.SolidGaugeOptions>`
-      * :class:`SolidGaugeSeries <highcharts_python.options.series.gauge.SolidGaugeSeries>`
+      * :class:`SolidGaugeOptions <highcharts_core.options.plot_options.gauge.SolidGaugeOptions>`
+      * :class:`SolidGaugeSeries <highcharts_core.options.series.gauge.SolidGaugeSeries>`
 
   Stem
-    In a :class:`BoxPlotSeries <highcharts_python.options.series.boxplot.BoxPlotSeries>`
+    In a :class:`BoxPlotSeries <highcharts_core.options.series.boxplot.BoxPlotSeries>`
     or similar, the vertical line extending from the box to the
     :term:`whiskers <whisker>`.
 
     .. seealso::
 
-      * :class:`BoxPlotSeries <highcharts_python.options.series.boxplot.BoxPlotSeries>`
+      * :class:`BoxPlotSeries <highcharts_core.options.series.boxplot.BoxPlotSeries>`
 
   Styled Mode
     Styled mode is a method of adjusting the look and feel of your Highcharts
     :term:`charts` using CSS styles as opposed to the explicit configuration in
-    :class:`HighchartsOptions <highcharts_python.options.HighchartsOptions>`.
+    :class:`HighchartsOptions <highcharts_core.options.HighchartsOptions>`.
 
     When it is enabled, styling configuration in your options will be ignored in favor of
     CSS styling. To enable it, set
-    :meth:`HighchartsOptions.chart.styled_mode <highcharts_python.options.chart.ChartOptions.styled_mode>`
+    :meth:`HighchartsOptions.chart.styled_mode <highcharts_core.options.chart.ChartOptions.styled_mode>`
     to ``True``.
 
     .. caution::
@@ -462,7 +462,7 @@ Glossary
 
     .. seealso::
 
-      * :meth:`ChartOptions.styled_mode <highcharts_python.options.chart.ChartOptions.styled_mode>`
+      * :meth:`ChartOptions.styled_mode <highcharts_core.options.chart.ChartOptions.styled_mode>`
 
   Sunburst
     A Sunburst displays hierarchical data, where a level in the hierarchy is
@@ -475,8 +475,8 @@ Glossary
 
     .. seealso::
 
-      * :class:`SunburstOptions <highcharts_python.options.plot_options.sunburst.SunburstOptions>`
-      * :class:`SunburstSeries <highcharts_python.options.series.sunburst.SunburstSeries>`
+      * :class:`SunburstOptions <highcharts_core.options.plot_options.sunburst.SunburstOptions>`
+      * :class:`SunburstSeries <highcharts_core.options.series.sunburst.SunburstSeries>`
 
   Technical Indicator
 
@@ -542,16 +542,16 @@ Glossary
 
     .. seealso::
 
-      * :class:`VennOptions <highcharts_python.options.plot_options.venn.VennOptions>`
-      * :class:`VennSeries <highcharts_python.options.series.venn.VennSeries>`
+      * :class:`VennOptions <highcharts_core.options.plot_options.venn.VennOptions>`
+      * :class:`VennSeries <highcharts_core.options.series.venn.VennSeries>`
 
   Whisker
-    In a :class:`BoxPlotSeries <highcharts_python.options.series.boxplot.BoxPlotSeries>`
+    In a :class:`BoxPlotSeries <highcharts_core.options.series.boxplot.BoxPlotSeries>`
     or similar, the horizontal lines marking low and high values
 
     .. seealso::
 
-      * :class:`BoxPlotSeries <highcharts_python.options.series.boxplot.BoxPlotSeries>`
+      * :class:`BoxPlotSeries <highcharts_core.options.series.boxplot.BoxPlotSeries>`
 
   Wordcloud
     A word cloud is a visualization of a set of words, where the size and placement of
@@ -563,8 +563,8 @@ Glossary
 
     .. seealso::
 
-      * :class:`WordcloudOptions <highcharts_python.options.plot_options.wordcloud.WordcloudOptions>`
-      * :class:`WordcloudSeries <highcharts_python.options.series.wordcloud.WordcloudSeries>`
+      * :class:`WordcloudOptions <highcharts_core.options.plot_options.wordcloud.WordcloudOptions>`
+      * :class:`WordcloudSeries <highcharts_core.options.series.wordcloud.WordcloudSeries>`
 
 ----------
 

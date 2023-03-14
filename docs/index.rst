@@ -1,9 +1,10 @@
-.. image:: _static/highcharts-python-logo.png
+.. image:: _static/highcharts-for-python-light-150x149.png
   :alt: Highcharts for Python - High-end Data Visualization for the Python Ecosystem
   :align: right
-  :width: 200
-  :height: 100
+  :width: 150
+  :height: 149
 
+|
 |
 
 ###################################################
@@ -12,21 +13,11 @@ Highcharts for Python Toolkit
 
 **High-end data visualization for the Python ecosystem**
 
-.. sidebar:: Version Compatibility
-
-  **Highcharts for Python** is designed to be compatible with:
-
-    * Python 3.9 or higher,
-    * Highcharts JS 10.2 or higher,
-    * Jupyter Notebook 6.4 or higher,
-    * Pandas 1.3 or higher
-    * PySpark 3.3 or higher
-
 .. include:: _unit_tests_code_coverage.rst
 
 .. toctree::
   :hidden:
-  :maxdepth: 6
+  :maxdepth: 3
   :caption: Contents
 
   Home <self>
@@ -37,11 +28,23 @@ Highcharts for Python Toolkit
   Using Highcharts for Python <using>
   API Reference <api>
   Error Reference <errors>
+  Getting Help <support>
   Contributor Guide <contributing>
   Testing Reference <testing>
   Release History <history>
   Glossary <glossary>
-  Licensing <license>
+  License <license>
+
+.. sidebar:: Version Compatibility
+
+  **Highcharts Core for Python** is designed to be compatible with:
+
+    * Python 3.10 or higher,
+    * Highcharts JS 10.2 or higher,
+    * Jupyter Notebook 6.4 or higher,
+    * IPython 8.10 or higher,
+    * Pandas 1.3 or higher
+    * PySpark 3.3 or higher
 
 The **Highcharts for Python Toolkit** is a Python library that provides a Python wrapper
 for the fantastic `Highcharts JS <https://www.highcharts.com>`__ suite of JavaScript data
@@ -230,7 +233,7 @@ Hello World, and Basic Usage
   .. code-block:: python
 
     # Import SharedOptions
-    from highcharts_python.global_options.shared_options import SharedOptions
+    from highcharts_core.global_options.shared_options import SharedOptions
 
     # from a JavaScript file
     my_global_settings = SharedOptions.from_js_literal('my_js_literal.js')
@@ -250,8 +253,8 @@ Hello World, and Basic Usage
 
   .. code-block:: python
 
-    from highcharts_python.options.title import Title
-    from highcharts_python.options.credits import Credits
+    from highcharts_core.options.title import Title
+    from highcharts_core.options.credits import Credits
 
     # Using dicts
     my_chart.title = {
@@ -279,8 +282,8 @@ Hello World, and Basic Usage
     }
 
     # Using direct objects
-    from highcharts_python.options.title import Title
-    from highcharts_python.options.credits import Credits
+    from highcharts_core.options.title import Title
+    from highcharts_core.options.credits import Credits
 
     my_title = Title(text = 'The Title for My Chart', floating = True, align = 'center')
     my_chart.options.title = my_title
@@ -330,12 +333,11 @@ that will render the chart wherever it is you want it to go:
 
 --------------
 
-*********************
-Questions and Issues
-*********************
+***********************
+Getting Help/Support
+***********************
 
-You can ask questions and report issues on the project's
-`Github Issues Page <https://github.com/hcpllc/highcharts-python/issues>`_
+.. include:: _support.rst
 
 -----------------
 

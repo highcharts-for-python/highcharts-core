@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.jitter <highcharts_python.utility_classes.jitter>`
+:mod:`.jitter <highcharts_core.utility_classes.jitter>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.utility_classes.jitter
+.. module:: highcharts_core.utility_classes.jitter
 
 ********************************************************************************************************************
-class: :class:`Jitter <highcharts_python.utility_classes.jitter.Jitter>`
+class: :class:`Jitter <highcharts_core.utility_classes.jitter.Jitter>`
 ********************************************************************************************************************
 
 .. autoclass:: Jitter
@@ -22,7 +22,7 @@ class: :class:`Jitter <highcharts_python.utility_classes.jitter.Jitter>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Jitter
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

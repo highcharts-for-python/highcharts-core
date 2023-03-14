@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.connections <highcharts_python.options.series.data.connections>`
+:mod:`.connections <highcharts_core.options.series.data.connections>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.data.connections
+.. module:: highcharts_core.options.series.data.connections
 
 ********************************************************************************************************************
-class: :class:`ConnectionData <highcharts_python.options.series.data.connections.ConnectionData>`
+class: :class:`ConnectionData <highcharts_core.options.series.data.connections.ConnectionData>`
 ********************************************************************************************************************
 
 .. autoclass:: ConnectionData
@@ -22,7 +22,7 @@ class: :class:`ConnectionData <highcharts_python.options.series.data.connections
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ConnectionData
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`ConnectionData <highcharts_python.options.series.data.connections
 ---------------
 
 ********************************************************************************************************************
-class: :class:`WeightedConnectionData <highcharts_python.options.series.data.connections.WeightedConnectionData>`
+class: :class:`WeightedConnectionData <highcharts_core.options.series.data.connections.WeightedConnectionData>`
 ********************************************************************************************************************
 
 .. autoclass:: WeightedConnectionData
@@ -40,7 +40,7 @@ class: :class:`WeightedConnectionData <highcharts_python.options.series.data.con
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: WeightedConnectionData
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`WeightedConnectionData <highcharts_python.options.series.data.con
 ----------------------
 
 *************************************************************************************************************************************
-class: :class:`OutgoingWeightedConnectionData <highcharts_python.options.series.data.connections.OutgoingWeightedConnectionData>`
+class: :class:`OutgoingWeightedConnectionData <highcharts_core.options.series.data.connections.OutgoingWeightedConnectionData>`
 *************************************************************************************************************************************
 
 .. autoclass:: OutgoingWeightedConnectionData
@@ -58,7 +58,7 @@ class: :class:`OutgoingWeightedConnectionData <highcharts_python.options.series.
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: OutgoingWeightedConnectionData
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -66,7 +66,7 @@ class: :class:`OutgoingWeightedConnectionData <highcharts_python.options.series.
 ---------------------------
 
 ********************************************************************************************************************
-class: :class:`ConnectionBase <highcharts_python.options.series.data.connections.ConnectionBase>`
+class: :class:`ConnectionBase <highcharts_core.options.series.data.connections.ConnectionBase>`
 ********************************************************************************************************************
 
 .. autoclass:: ConnectionBase
@@ -76,7 +76,7 @@ class: :class:`ConnectionBase <highcharts_python.options.series.data.connections
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ConnectionBase
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

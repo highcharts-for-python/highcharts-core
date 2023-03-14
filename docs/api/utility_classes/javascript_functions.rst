@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.javascript_functions <highcharts_python.utility_classes.javascript_functions>`
+:mod:`.javascript_functions <highcharts_core.utility_classes.javascript_functions>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.utility_classes.javascript_functions
+.. module:: highcharts_core.utility_classes.javascript_functions
 
 ********************************************************************************************************************
-class: :class:`CallbackFunction <highcharts_python.utility_classes.javascript_functions.CallbackFunction>`
+class: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>`
 ********************************************************************************************************************
 
 .. autoclass:: CallbackFunction
@@ -22,7 +22,7 @@ class: :class:`CallbackFunction <highcharts_python.utility_classes.javascript_fu
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: CallbackFunction
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`CallbackFunction <highcharts_python.utility_classes.javascript_fu
 -------------------
 
 ********************************************************************************************************************
-class: :class:`JavaScriptClass <highcharts_python.utility_classes.javascript_functions.JavaScriptClass>`
+class: :class:`JavaScriptClass <highcharts_core.utility_classes.javascript_functions.JavaScriptClass>`
 ********************************************************************************************************************
 
 .. autoclass:: JavaScriptClass
@@ -40,7 +40,25 @@ class: :class:`JavaScriptClass <highcharts_python.utility_classes.javascript_fun
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: JavaScriptClass
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
+-------------------
+
+********************************************************************************************************************
+class: :class:`VariableName <highcharts_core.utility_classes.javascript_functions.VariableName>`
+********************************************************************************************************************
+
+.. autoclass:: VariableName
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: VariableName
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

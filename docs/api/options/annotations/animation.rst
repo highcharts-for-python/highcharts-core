@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.animation <highcharts_python.options.annotations.animation>`
+:mod:`.animation <highcharts_core.options.annotations.animation>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.annotations.animation
+.. module:: highcharts_core.options.annotations.animation
 
 ********************************************************************************************************************
-class: :class:`AnnotationAnimation <highcharts_python.options.annotations.animation.AnnotationAnimation>`
+class: :class:`AnnotationAnimation <highcharts_core.options.annotations.animation.AnnotationAnimation>`
 ********************************************************************************************************************
 
 .. autoclass:: AnnotationAnimation
@@ -22,7 +22,7 @@ class: :class:`AnnotationAnimation <highcharts_python.options.annotations.animat
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AnnotationAnimation
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.color_axis <highcharts_python.options.axes.color_axis>`
+:mod:`.color_axis <highcharts_core.options.axes.color_axis>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.axes.color_axis
+.. module:: highcharts_core.options.axes.color_axis
 
 ********************************************************************************************************************
-class: :class:`ColorAxis <highcharts_python.options.axes.color_axis.ColorAxis>`
+class: :class:`ColorAxis <highcharts_core.options.axes.color_axis.ColorAxis>`
 ********************************************************************************************************************
 
 .. autoclass:: ColorAxis
@@ -22,7 +22,7 @@ class: :class:`ColorAxis <highcharts_python.options.axes.color_axis.ColorAxis>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ColorAxis
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

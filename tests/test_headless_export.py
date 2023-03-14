@@ -5,12 +5,12 @@ import pytest
 from json.decoder import JSONDecodeError
 from validator_collection import checkers
 
-from highcharts_python.headless_export import ExportServer as cls
-from highcharts_python.options import HighchartsOptions
-from highcharts_python import errors
+from highcharts_core.headless_export import ExportServer as cls
+from highcharts_core.options import HighchartsOptions
+from highcharts_core import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
-    Class_from_js_literal, run_download_tests
+    Class_from_js_literal, run_download_tests, create_output_directory
 
 STANDARD_PARAMS = [
     ({}, None),
@@ -167,13 +167,16 @@ def test_url(value, error):
 ])
 def test_get_chart(input_files,
                    run_download_tests,
+                   create_output_directory,
                    input_filename,
                    target_filename,
                    kwargs,
                    error):
     if run_download_tests:
         input_file = check_input_file(input_files, input_filename)
-        target_file = check_input_file(input_files, target_filename)
+        target_file = check_input_file(input_files, 
+                                       target_filename,
+                                       create_directory = create_output_directory)
 
         with open(input_file, 'r') as file_:
             as_str = file_.read()

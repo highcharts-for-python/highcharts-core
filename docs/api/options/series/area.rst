@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.area <highcharts_python.options.series.area>`
+:mod:`.area <highcharts_core.options.series.area>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.area
+.. module:: highcharts_core.options.series.area
 
 ********************************************************************************************************************
-class: :class:`AreaSeries <highcharts_python.options.series.area.AreaSeries>`
+class: :class:`AreaSeries <highcharts_core.options.series.area.AreaSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: AreaSeries
@@ -22,7 +22,7 @@ class: :class:`AreaSeries <highcharts_python.options.series.area.AreaSeries>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AreaSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`AreaSeries <highcharts_python.options.series.area.AreaSeries>`
 -----------------
 
 ********************************************************************************************************************
-class: :class:`AreaRangeSeries <highcharts_python.options.series.area.AreaRangeSeries>`
+class: :class:`AreaRangeSeries <highcharts_core.options.series.area.AreaRangeSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: AreaRangeSeries
@@ -40,7 +40,7 @@ class: :class:`AreaRangeSeries <highcharts_python.options.series.area.AreaRangeS
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AreaRangeSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`AreaRangeSeries <highcharts_python.options.series.area.AreaRangeS
 -------------
 
 ********************************************************************************************************************
-class: :class:`AreaSplineSeries <highcharts_python.options.series.area.AreaSplineSeries>`
+class: :class:`AreaSplineSeries <highcharts_core.options.series.area.AreaSplineSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: AreaSplineSeries
@@ -58,7 +58,7 @@ class: :class:`AreaSplineSeries <highcharts_python.options.series.area.AreaSplin
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AreaSplineSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -66,7 +66,7 @@ class: :class:`AreaSplineSeries <highcharts_python.options.series.area.AreaSplin
 -----------
 
 ********************************************************************************************************************
-class: :class:`AreaSplineRangeSeries <highcharts_python.options.series.area.AreaSplineRangeSeries>`
+class: :class:`AreaSplineRangeSeries <highcharts_core.options.series.area.AreaSplineRangeSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: AreaSplineRangeSeries
@@ -76,7 +76,7 @@ class: :class:`AreaSplineRangeSeries <highcharts_python.options.series.area.Area
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AreaSplineRangeSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -84,7 +84,7 @@ class: :class:`AreaSplineRangeSeries <highcharts_python.options.series.area.Area
 -------------
 
 ********************************************************************************************************************
-class: :class:`LineSeries <highcharts_python.options.series.area.LineSeries>`
+class: :class:`LineSeries <highcharts_core.options.series.area.LineSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: LineSeries
@@ -94,7 +94,7 @@ class: :class:`LineSeries <highcharts_python.options.series.area.LineSeries>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: LineSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -102,7 +102,7 @@ class: :class:`LineSeries <highcharts_python.options.series.area.LineSeries>`
 -------------
 
 ********************************************************************************************************************
-class: :class:`StreamGraphSeries <highcharts_python.options.series.area.StreamGraphSeries>`
+class: :class:`StreamGraphSeries <highcharts_core.options.series.area.StreamGraphSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: StreamGraphSeries
@@ -112,7 +112,7 @@ class: :class:`StreamGraphSeries <highcharts_python.options.series.area.StreamGr
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: StreamGraphSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

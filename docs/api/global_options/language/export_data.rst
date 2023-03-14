@@ -1,5 +1,5 @@
 #############################################################################
-:mod:`.export_data <highcharts_python.global_options.language.export_data>`
+:mod:`.export_data <highcharts_core.global_options.language.export_data>`
 #############################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.global_options.language.export_data
+.. module:: highcharts_core.global_options.language.export_data
 
 *********************************************************************************************************************************
-class: :class:`ExportDataLanguageOptions <highcharts_python.global_options.language.export_data.ExportDataLanguageOptions>`
+class: :class:`ExportDataLanguageOptions <highcharts_core.global_options.language.export_data.ExportDataLanguageOptions>`
 *********************************************************************************************************************************
 
 .. autoclass:: ExportDataLanguageOptions
@@ -22,7 +22,7 @@ class: :class:`ExportDataLanguageOptions <highcharts_python.global_options.langu
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ExportDataLanguageOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

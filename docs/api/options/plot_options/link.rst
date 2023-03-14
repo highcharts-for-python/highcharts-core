@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.link <highcharts_python.options.plot_options.link>`
+:mod:`.link <highcharts_core.options.plot_options.link>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.link
+.. module:: highcharts_core.options.plot_options.link
 
 ********************************************************************************************************************
-class: :class:`LinkOptions <highcharts_python.options.plot_options.link.LinkOptions>`
+class: :class:`LinkOptions <highcharts_core.options.plot_options.link.LinkOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: LinkOptions
@@ -22,7 +22,7 @@ class: :class:`LinkOptions <highcharts_python.options.plot_options.link.LinkOpti
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: LinkOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

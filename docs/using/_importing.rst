@@ -13,11 +13,11 @@
     .. code-block:: python
 
       # Import classes using precise module indications. For example:
-      from highcharts_python.chart import Chart
-      from highcharts_python.global_options.shared_options import SharedOptions
-      from highcharts_python.options import HighchartsOptions
-      from highcharts_python.options.plot_options.bar import BarOptions
-      from highcharts_python.options.series.bar import BarSeries
+      from highcharts_core.chart import Chart
+      from highcharts_core.global_options.shared_options import SharedOptions
+      from highcharts_core.options import HighchartsOptions
+      from highcharts_core.options.plot_options.bar import BarOptions
+      from highcharts_core.options.series.bar import BarSeries
 
   .. tab:: from ``.highcharts``
 
@@ -31,7 +31,7 @@
     .. code-block:: python
 
       # Import objects from the catch-all ".highcharts" module.
-      from highcharts_python import highcharts
+      from highcharts_core import highcharts
 
       # You can now access specific classes without individual import statements.
       highcharts.Chart

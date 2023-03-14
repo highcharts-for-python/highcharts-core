@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.networkgraph <highcharts_python.options.series.networkgraph>`
+:mod:`.networkgraph <highcharts_core.options.series.networkgraph>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.networkgraph
+.. module:: highcharts_core.options.series.networkgraph
 
 ********************************************************************************************************************
-class: :class:`NetworkGraphSeries <highcharts_python.options.series.networkgraph.NetworkGraphSeries>`
+class: :class:`NetworkGraphSeries <highcharts_core.options.series.networkgraph.NetworkGraphSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: NetworkGraphSeries
@@ -22,7 +22,7 @@ class: :class:`NetworkGraphSeries <highcharts_python.options.series.networkgraph
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: NetworkGraphSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

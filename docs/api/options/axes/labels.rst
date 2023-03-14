@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.labels <highcharts_python.options.axes.labels>`
+:mod:`.labels <highcharts_core.options.axes.labels>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.axes.labels
+.. module:: highcharts_core.options.axes.labels
 
 ********************************************************************************************************************
-class: :class:`AxisLabelOptions <highcharts_python.options.axes.labels.AxisLabelOptions>`
+class: :class:`AxisLabelOptions <highcharts_core.options.axes.labels.AxisLabelOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: AxisLabelOptions
@@ -22,7 +22,7 @@ class: :class:`AxisLabelOptions <highcharts_python.options.axes.labels.AxisLabel
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AxisLabelOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`AxisLabelOptions <highcharts_python.options.axes.labels.AxisLabel
 --------------------------
 
 ********************************************************************************************************************
-class: :class:`PlotBandLabel <highcharts_python.options.axes.labels.PlotBandLabel>`
+class: :class:`PlotBandLabel <highcharts_core.options.axes.labels.PlotBandLabel>`
 ********************************************************************************************************************
 
 .. autoclass:: PlotBandLabel
@@ -40,7 +40,7 @@ class: :class:`PlotBandLabel <highcharts_python.options.axes.labels.PlotBandLabe
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: PlotBandLabel
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`PlotBandLabel <highcharts_python.options.axes.labels.PlotBandLabe
 -------------------------
 
 ********************************************************************************************************************
-class: :class:`PlotLineLabel <highcharts_python.options.axes.labels.PlotLineLabel>`
+class: :class:`PlotLineLabel <highcharts_core.options.axes.labels.PlotLineLabel>`
 ********************************************************************************************************************
 
 .. autoclass:: PlotLineLabel
@@ -58,7 +58,7 @@ class: :class:`PlotLineLabel <highcharts_python.options.axes.labels.PlotLineLabe
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: PlotLineLabel
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

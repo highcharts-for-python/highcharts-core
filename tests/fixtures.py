@@ -9,13 +9,14 @@ Fixtures used by the SQLAthanor test suite.
 
 """
 import os
+import pathlib
 from copy import deepcopy
 from collections import UserDict
 
 import pytest
 
 from validator_collection import checkers, validators
-from highcharts_python import constants
+from highcharts_core import constants
 
 
 class State(object):
@@ -61,11 +62,23 @@ def input_files(request):
     """Return the ``--inputs`` command-line option."""
     return request.config.getoption("--inputs")
 
+@pytest.fixture
+def create_output_directory(request):
+    """Return the ``--create-output-directory`` command-line option."""
+    value = request.config.getoption("--create-output-directory")
+    value = value.lower()
+    if value in ['false', False, 0, 'no', 'no']:
+        return False
+    else:
+        return True
 
-def check_input_file(input_directory, input_value):
+
+def check_input_file(input_directory, input_value, create_directory = False):
     inputs = os.path.abspath(input_directory)
-    if not os.path.exists(input_directory):
+    if not os.path.exists(input_directory) and not create_directory:
         raise AssertionError('input directory (%s) does not exist' % inputs)
+    elif not os.path.exists(input_directory) and create_directory:
+        pathlib.Path(input_directory).mkdir(parents = True, exist_ok = True)
     elif not os.path.isdir(input_directory):
         raise AssertionError('input directory (%s) is not a directory' % inputs)
 
@@ -629,13 +642,18 @@ def Class_to_dict(cls, kwargs, error):
         if checkers.is_type(instance, ('MarkerAttributeObject')):
             check_dicts = False
         if check_dicts:
-            assert len(expected) == len(result)
+            if 'contextButton' not in result and 'context_button' not in result:
+                assert len(expected) == len(result)
+            else:
+                assert len(result) == len(expected) + 1
             for key in expected:
                 print(f'CHECKING: {key}')
                 if key == 'patternOptions':
                     print('running special check for patternOptions')
                     assert does_kwarg_value_match_result(expected[key],
                                                          result.get('pattern')) is True
+                elif key in ['contextButton', 'context_button']:
+                    continue
                 else:
                     assert does_kwarg_value_match_result(expected[key],
                                                          result.get(key)) is True

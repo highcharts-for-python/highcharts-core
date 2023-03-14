@@ -1,4 +1,4 @@
-Release 0.1.0
+Release 1.0.0-rc1
 =========================================
 
-* First public release
+* First public release: **Release Candidate 1**

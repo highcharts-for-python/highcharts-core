@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.pareto <highcharts_python.options.series.pareto>`
+:mod:`.pareto <highcharts_core.options.series.pareto>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.pareto
+.. module:: highcharts_core.options.series.pareto
 
 ********************************************************************************************************************
-class: :class:`ParetoSeries <highcharts_python.options.series.pareto.ParetoSeries>`
+class: :class:`ParetoSeries <highcharts_core.options.series.pareto.ParetoSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: ParetoSeries
@@ -22,7 +22,7 @@ class: :class:`ParetoSeries <highcharts_python.options.series.pareto.ParetoSerie
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ParetoSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

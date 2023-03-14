@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.parallel_axes <highcharts_python.options.axes.parallel_axes>`
+:mod:`.parallel_axes <highcharts_core.options.axes.parallel_axes>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.axes.parallel_axes
+.. module:: highcharts_core.options.axes.parallel_axes
 
 ********************************************************************************************************************
-class: :class:`ParallelAxesOptions <highcharts_python.options.axes.parallel_axes.ParallelAxesOptions>`
+class: :class:`ParallelAxesOptions <highcharts_core.options.axes.parallel_axes.ParallelAxesOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: ParallelAxesOptions
@@ -22,7 +22,7 @@ class: :class:`ParallelAxesOptions <highcharts_python.options.axes.parallel_axes
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ParallelAxesOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

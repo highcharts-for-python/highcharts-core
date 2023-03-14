@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.gradients <highcharts_python.utility_classes.gradients>`
+:mod:`.gradients <highcharts_core.utility_classes.gradients>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.utility_classes.gradients
+.. module:: highcharts_core.utility_classes.gradients
 
 ********************************************************************************************************************
-class: :class:`Gradient <highcharts_python.utility_classes.gradients.Gradient>`
+class: :class:`Gradient <highcharts_core.utility_classes.gradients.Gradient>`
 ********************************************************************************************************************
 
 .. autoclass:: Gradient
@@ -22,7 +22,7 @@ class: :class:`Gradient <highcharts_python.utility_classes.gradients.Gradient>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Gradient
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`Gradient <highcharts_python.utility_classes.gradients.Gradient>`
 --------------------
 
 ********************************************************************************************************************
-class: :class:`LinearGradient <highcharts_python.utility_classes.gradients.LinearGradient>`
+class: :class:`LinearGradient <highcharts_core.utility_classes.gradients.LinearGradient>`
 ********************************************************************************************************************
 
 .. autoclass:: LinearGradient
@@ -40,7 +40,7 @@ class: :class:`LinearGradient <highcharts_python.utility_classes.gradients.Linea
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: LinearGradient
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`LinearGradient <highcharts_python.utility_classes.gradients.Linea
 ---------------------
 
 ********************************************************************************************************************
-class: :class:`RadialGradient <highcharts_python.utility_classes.gradients.RadialGradient>`
+class: :class:`RadialGradient <highcharts_core.utility_classes.gradients.RadialGradient>`
 ********************************************************************************************************************
 
 .. autoclass:: RadialGradient
@@ -58,7 +58,7 @@ class: :class:`RadialGradient <highcharts_python.utility_classes.gradients.Radia
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: RadialGradient
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

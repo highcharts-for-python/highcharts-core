@@ -1,5 +1,5 @@
 #########################################################################################################
-:mod:`.zoom <highcharts_python.global_options.language.accessibility.zoom>`
+:mod:`.zoom <highcharts_core.global_options.language.accessibility.zoom>`
 #########################################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.global_options.language.accessibility.zoom
+.. module:: highcharts_core.global_options.language.accessibility.zoom
 
 *************************************************************************************************************************************************************
-class: :class:`ZoomLanguageOptions <highcharts_python.global_options.language.accessibility.zoom.ZoomLanguageOptions>`
+class: :class:`ZoomLanguageOptions <highcharts_core.global_options.language.accessibility.zoom.ZoomLanguageOptions>`
 *************************************************************************************************************************************************************
 
 .. autoclass:: ZoomLanguageOptions
@@ -22,7 +22,7 @@ class: :class:`ZoomLanguageOptions <highcharts_python.global_options.language.ac
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ZoomLanguageOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

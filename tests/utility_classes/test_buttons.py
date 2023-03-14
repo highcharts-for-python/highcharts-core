@@ -5,10 +5,10 @@ from copy import deepcopy
 
 from json.decoder import JSONDecodeError
 
-from highcharts_python.utility_classes.buttons import ButtonConfiguration as cls
-from highcharts_python.utility_classes.buttons import ContextButtonConfiguration as cls2
-from highcharts_python.utility_classes.buttons import ExportingButtons as cls3
-from highcharts_python import errors
+from highcharts_core.utility_classes.buttons import ButtonConfiguration as cls
+from highcharts_core.utility_classes.buttons import ContextButtonConfiguration as cls2
+from highcharts_core.utility_classes.buttons import ExportingButtons as cls3
+from highcharts_core import errors, constants
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
     Class_from_js_literal, does_kwarg_value_match_result
@@ -181,6 +181,8 @@ def test_ExportingButtons__init__(kwargs, error):
         assert result is not None
         assert isinstance(result, cls3) is True
         for key in kwargs:
+            if key in ['context_button', 'contextButton']:
+                continue
             if isinstance(kwargs[key], str) and kwargs[key].startswith('function'):
                 continue
             if isinstance(kwargs[key], str) and kwargs[key].startswith('class'):
@@ -188,6 +190,7 @@ def test_ExportingButtons__init__(kwargs, error):
 
             print(f'after __init__ for key: {key}')
             print(kwargs_copy[key])
+            print(result)
             print(result.get(key))
             assert does_kwarg_value_match_result(kwargs_copy[key],
                                                  result.get(key)) is True

@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.scatter <highcharts_python.options.plot_options.scatter>`
+:mod:`.scatter <highcharts_core.options.plot_options.scatter>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.scatter
+.. module:: highcharts_core.options.plot_options.scatter
 
 ********************************************************************************************************************
-class: :class:`ScatterOptions <highcharts_python.options.plot_options.scatter.ScatterOptions>`
+class: :class:`ScatterOptions <highcharts_core.options.plot_options.scatter.ScatterOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: ScatterOptions
@@ -22,7 +22,7 @@ class: :class:`ScatterOptions <highcharts_python.options.plot_options.scatter.Sc
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ScatterOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`ScatterOptions <highcharts_python.options.plot_options.scatter.Sc
 ---------------
 
 ********************************************************************************************************************
-class: :class:`Scatter3DOptions <highcharts_python.options.plot_options.scatter.Scatter3DOptions>`
+class: :class:`Scatter3DOptions <highcharts_core.options.plot_options.scatter.Scatter3DOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: Scatter3DOptions
@@ -40,7 +40,7 @@ class: :class:`Scatter3DOptions <highcharts_python.options.plot_options.scatter.
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Scatter3DOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

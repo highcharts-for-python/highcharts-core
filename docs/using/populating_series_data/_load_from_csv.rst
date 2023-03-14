@@ -14,19 +14,19 @@
     :noindex:
 
     Updates the series instance with a collection of data points (descending from
-    :class:`DataBase <highcharts_python.options.series.data.base.DataBase>`) from
+    :class:`DataBase <highcharts_core.options.series.data.base.DataBase>`) from
     ``as_string_or_file`` by traversing the rows of data and extracting the values from
     the columns indicated in ``property_column_map``.
 
       .. warning::
 
         This method will overwrite the contents of the series instance's
-        :meth:`data <highcharts_python.options.series.base.SeriesBase>` property.
+        :meth:`data <highcharts_core.options.series.base.SeriesBase>` property.
 
       .. note::
 
         For an example
-        :class:`LineSeries <highcharts_python.options.series.area.LineSeries>`, the
+        :class:`LineSeries <highcharts_core.options.series.area.LineSeries>`, the
         minimum code required would be:
 
           .. code-block:: python
@@ -126,9 +126,9 @@
     :type escape_character: :class:`str <python:str>`
 
     :returns: A collection of data points descended from
-      :class:`DataBase <highcharts_python.options.series.data.base.DataBase>` as
+      :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` as
       appropriate for the series class.
     :rtype: :class:`list <python:list>` of instances descended from
-      :class:`DataBase <highcharts_python.options.series.data.base.DataBase>`
+      :class:`DataBase <highcharts_core.options.series.data.base.DataBase>`
 
     :raises HighchartsDeserializationError: if unable to parse the CSV data correctly

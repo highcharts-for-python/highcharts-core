@@ -2,8 +2,8 @@
 
 import pytest
 
-from highcharts_python import js_literal_functions as js
-from highcharts_python import constants, errors
+from highcharts_core import js_literal_functions as js
+from highcharts_core import constants, errors
 
 from decimal import Decimal
 

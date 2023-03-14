@@ -1,13 +1,13 @@
   .. note::
 
     The ``.from_csv()`` method is available on all :term:`series` classes and on the
-    :class:`Chart <highcharts_python.chart.Chart>` class, allowing you to either assemble
+    :class:`Chart <highcharts_core.chart.Chart>` class, allowing you to either assemble
     a series or an entire chart from a CSV file with only one method call.
 
 .. code-block:: python
 
-  from highcharts_python.chart import Chart
-  from highcharts_python.options.series.area import LineSeries
+  from highcharts_core.chart import Chart
+  from highcharts_core.options.series.area import LineSeries
 
   # Create a new LineSeries instance from the CSV file "some-csv-file.csv".
   my_series = LineSeries.from_csv('some-csv-file.csv',
@@ -30,20 +30,20 @@
 
   .. seealso::
 
-    * :meth:`Chart.from_csv() <highcharts_python.chart.Chart.from_csv>`
+    * :meth:`Chart.from_csv() <highcharts_core.chart.Chart.from_csv>`
 
   .. method:: .from_csv(cls, as_string_or_file, property_column_map, series_kwargs = None, has_header_row = True, delimiter = ',', null_text = 'None', wrapper_character = "'", line_terminator = '\r\n', wrap_all_strings = False, double_wrapper_character_when_nested = False, escape_character = '\\')
     :noindex:
     :classmethod:
 
     Create a new :term:`series` instance with a
-    :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
+    :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` property
     populated from data in a CSV string or file.
 
       .. note::
 
         For an example
-        :class:`LineSeries <highcharts_python.options.series.area.LineSeries>`, the
+        :class:`LineSeries <highcharts_core.options.series.area.LineSeries>`, the
         minimum code required would be:
 
           .. code-block:: python
@@ -157,11 +157,11 @@
     :type escape_character: :class:`str <python:str>`
 
     :returns: A :term:`series` instance (descended from
-      :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`) with its
-      :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
+      :class:`SeriesBase <highcharts_core.options.series.base.SeriesBase>`) with its
+      :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` property
       populated from the CSV data in ``as_string_or_file``.
     :rtype: :class:`list <python:list>` of series instances (descended from
-      :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`)
+      :class:`SeriesBase <highcharts_core.options.series.base.SeriesBase>`)
 
     :raises HighchartsCSVDeserializationError: if ``property_column_map`` references
       CSV columns by their label, but the CSV data does not contain a header row

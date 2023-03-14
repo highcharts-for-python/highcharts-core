@@ -67,7 +67,7 @@ Every single object supported by the Highcharts JS API corresponds to a Python c
 :doc:`Highcharts for Python API Reference <api>`.
 
 These classes generally inherit from the
-:class:`HighchartsMeta <highcharts_python.metaclasses.HighchartsMeta>` metaclass, which
+:class:`HighchartsMeta <highcharts_core.metaclasses.HighchartsMeta>` metaclass, which
 provides each class with a number of standard methods. These methods are the "workhorses"
 of **Highcharts for Python** and you will be relying heavily on them when using the
 library. Thankfully, their signatures and behavior is generally consistent - even if what
@@ -116,7 +116,7 @@ Class Structures and Inheritance
 .. warning::
 
   Certain sections of the **Highcharts for Python** library - in particular the
-  :mod:`options.series <highcharts_python.options.series>` classes - rely heavily on
+  :mod:`options.series <highcharts_core.options.series>` classes - rely heavily on
   multiple inheritance. This is a known anti-pattern in Python development as it runs the
   risk of encountering the :term:`diamond of death` inheritance problem. This complicates
   the process of inheriting methods or properties from parent classes when properties or
@@ -198,7 +198,7 @@ configuration settings to be defined *once* and then applied to all of the visua
 you are producing.
 
 This can be facilitated using the
-:class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
+:class:`SharedOptions <highcharts_core.global_options.shared_options.SharedOptions>`
 class. It generates a single set of global options which - when serialized to JavaScript -
 apply its configuration settings consistently across all data visualizations on the same
 page.
@@ -222,12 +222,12 @@ As with all **Highcharts for Python** objects, you can instantiate them in sever
   .. tab:: with ``__init__()``
 
     You can also instantiate a
-    :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
+    :class:`SharedOptions <highcharts_core.global_options.shared_options.SharedOptions>`
     instance directly using keywords in the constructor:
 
       .. code-block:: python
 
-        from highcharts_python.highcharts import ChartOptions, SharedOptions
+        from highcharts_core.highcharts import ChartOptions, SharedOptions
 
         my_shared_options = SharedOptions(chart = ChartOptions(background_color = '#fff',
                                                                border_width = 2,
@@ -246,7 +246,7 @@ As with all **Highcharts for Python** objects, you can instantiate them in sever
         **Best practice!**
 
         While you can create a
-        :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`
+        :class:`SharedOptions <highcharts_core.global_options.shared_options.SharedOptions>`
         instance and then modify its properties after the fact, that's not exactly the best
         code style. It makes things a bit verbose, and a little harder to reason about.
 
@@ -311,8 +311,8 @@ data dynamically from a CSV file or an HTML table.
 
   .. seealso::
 
-    * :class:`DataBase <highcharts_python.options.series.data.base.DataBase>` class
-    * :class:`options.Data <highcharts_python.options.data.Data>` class
+    * :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` class
+    * :class:`options.Data <highcharts_core.options.data.Data>` class
 
 `Highcharts JS <https://www.highcharts.com>`__ organizes data into :term:`series`. You can think of a series as a single
 line on a graph that shows a set of values. The set of values that make up the series are
@@ -401,9 +401,9 @@ instance), or to create a new series instance with data already loaded.
 
     When working with a :term:`series` instance, you can instantiate data points directly.
     These data points are stored in the
-    :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` setting, which
+    :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` setting, which
     always accepts/expects a list of data point instances (descended from
-    :class:`DataBase <highcharts_python.options.series.data.base.DataBase>`).
+    :class:`DataBase <highcharts_core.options.series.data.base.DataBase>`).
 
     Data points all have the same standard **Highcharts for Python**
     :ref:`deserialization methods <deserialization_methods>`, so those make things very easy.
@@ -431,8 +431,8 @@ instance), or to create a new series instance with data already loaded.
           .. note::
 
             An example of how this works for a simple
-            :class:`LineSeries <highcharts_python.options.series.area.LineSeries>` (which uses
-            :class:`CartesianData <highcharts_python.options.series.data.cartesian.CartesianData>`
+            :class:`LineSeries <highcharts_core.options.series.area.LineSeries>` (which uses
+            :class:`CartesianData <highcharts_core.options.series.data.cartesian.CartesianData>`
             data points) would be:
 
             .. code-block:: python
@@ -491,9 +491,9 @@ instance), or to create a new series instance with data already loaded.
           :type value: iterable
 
           :returns: Collection of :term:`data point` instances (descended from
-            :class:`DataBase <highcharts_python.options.series.data.base.DataBase>`)
+            :class:`DataBase <highcharts_core.options.series.data.base.DataBase>`)
           :rtype: :class:`list <python:list>` of
-            :class:`DataBase <highcharts_python.options.series.data.base.DataBase>`-descendant
+            :class:`DataBase <highcharts_core.options.series.data.base.DataBase>`-descendant
             instances
 
   .. tab:: Update an Existing Series
@@ -535,9 +535,9 @@ Adding Series to Charts
 
 Now that you have constructed your :term:`series` instances, you can add them to
 :term:`charts` very easily. First, **Highcharts for Python** represents visualizations as
-instances of the :class:`Chart <highcharts_python.chart.Chart>` class. This class contains
-an :meth:`options <highcharts_python.chart.Chart.options>` property, which itself contains
-an instance of :class:`HighchartsOptions <highcharts_python.options.HighchartsOptions>`.
+instances of the :class:`Chart <highcharts_core.chart.Chart>` class. This class contains
+an :meth:`options <highcharts_core.chart.Chart.options>` property, which itself contains
+an instance of :class:`HighchartsOptions <highcharts_core.options.HighchartsOptions>`.
 
   .. note::
 
@@ -547,7 +547,7 @@ an instance of :class:`HighchartsOptions <highcharts_python.options.HighchartsOp
     so for the sake of consistency **Highcharts for Python** uses it as well.
 
 To be visualized on your chart, you will need to add your series instances to the
-:meth:`Chart.options.series <highcharts_python.options.HighchartsOptions.series>`
+:meth:`Chart.options.series <highcharts_core.options.HighchartsOptions.series>`
 property. You can do this in several ways:
 
 .. tabs::
@@ -570,7 +570,7 @@ property. You can do this in several ways:
 Rendering Your Visualizations
 **************************************
 
-Once you have created your :class:`Chart <highcharts_python.chart.Chart>` instance or
+Once you have created your :class:`Chart <highcharts_core.chart.Chart>` instance or
 instances, you can render them very easily. There are really only two ways to display
 your visualizations:
 
@@ -589,7 +589,7 @@ capability, and we've enabled it using the *batteries included* principle.
 
 To render a **Highcharts for Python** visualization in a web context, all you need is
 for the browser to execute the output of the chart's
-:meth:`.to_js_literal() <highcharts_python.chart.Chart.to_js_literal>` method.
+:meth:`.to_js_literal() <highcharts_core.chart.Chart.to_js_literal>` method.
 
 That method will return a snippet of JavaScript code which when included in a web page
 will display the chart in full.
@@ -613,7 +613,7 @@ application's HTML output (in an appropriate ``<script/>`` tag, of course).
 .. tip::
 
   The same principle applies to the use of
-  :class:`SharedOptions <highcharts_python.global_options.shared_options.SharedOptions>`.
+  :class:`SharedOptions <highcharts_core.global_options.shared_options.SharedOptions>`.
 
   It is recommended to place the JS literal form of your shared options *before* any of
   the charts that you will be visualizing.
@@ -629,8 +629,8 @@ Rendering Highcharts for Python in Jupyter Labs or Jupyter Notebooks
 
 You can also render **Highcharts for Python** visualizations inside your
 `Jupyter <https://jupyter.org/>`_ notebook. This is as simple as executing a single
-:meth:`.display() <highcharts_python.chart.Chart.display>` call on your
-:class:`Chart <highcharts_python.chart.Chart>` instance:
+:meth:`.display() <highcharts_core.chart.Chart.display>` call on your
+:class:`Chart <highcharts_core.chart.Chart>` instance:
 
 .. include:: using/rendering_your_visualizations/_as_jupyter.rst
 
@@ -641,7 +641,7 @@ will render the resulting chart in your notebook's output. That's it!
 
     If `iPython <https://ipython.readthedocs.io/>`_ is not available in your runtime
     environment, calling
-    :meth:`.display() <highcharts_python.chart.Chart.display>` will raise a
+    :meth:`.display() <highcharts_core.chart.Chart.display>` will raise a
     :exc:`HighchartsDependencyError`.
 
 ---------------------------
@@ -656,7 +656,7 @@ will render the resulting chart in your notebook's output. That's it!
   However, there are many use cases where you may be deploying your own
   :term:`Export Server` and wish to use that instead. You can do this by
   creating your own
-  :class:`ExportServer <highcharts_python.headless_export.ExportServer>` instance and
+  :class:`ExportServer <highcharts_core.headless_export.ExportServer>` instance and
   supplying it as the ``server_instance`` keyword argument to the ``.download_chart()``
   method.
 
@@ -669,9 +669,9 @@ data, but instead are looking to produce a static image of your visualization th
 be downloaded, emailed, or embedded in some other documents.
 
 With **Highcharts for Python**, that's as simple as executing the
-:meth:`Chart.download_chart() <highcharts_python.chart.Chart.download_chart>` method.
+:meth:`Chart.download_chart() <highcharts_core.chart.Chart.download_chart>` method.
 
-When you have defined a :class:`Chart <highcharts_python.chart.Chart>` instance, you can
+When you have defined a :class:`Chart <highcharts_core.chart.Chart>` instance, you can
 download a static version of that chart or persist it to a file in your runtime
 environment. The actual file itself is produced using a
 :term:`Highcharts Export Server <Export Server>`.

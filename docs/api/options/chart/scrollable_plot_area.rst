@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.scrollable_plot_area <highcharts_python.options.chart.scrollable_plot_area>`
+:mod:`.scrollable_plot_area <highcharts_core.options.chart.scrollable_plot_area>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.chart.scrollable_plot_area
+.. module:: highcharts_core.options.chart.scrollable_plot_area
 
 ********************************************************************************************************************
-class: :class:`ScrollablePlotArea <highcharts_python.options.chart.scrollable_plot_area.ScrollablePlotArea>`
+class: :class:`ScrollablePlotArea <highcharts_core.options.chart.scrollable_plot_area.ScrollablePlotArea>`
 ********************************************************************************************************************
 
 .. autoclass:: ScrollablePlotArea
@@ -22,7 +22,7 @@ class: :class:`ScrollablePlotArea <highcharts_python.options.chart.scrollable_pl
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ScrollablePlotArea
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.subtitle <highcharts_python.options.subtitle>`
+:mod:`.subtitle <highcharts_core.options.subtitle>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.subtitle
+.. module:: highcharts_core.options.subtitle
 
 ********************************************************************************************************************
-class: :class:`Subtitle <highcharts_python.options.subtitle.Subtitle>`
+class: :class:`Subtitle <highcharts_core.options.subtitle.Subtitle>`
 ********************************************************************************************************************
 
 .. autoclass:: Subtitle
@@ -22,7 +22,7 @@ class: :class:`Subtitle <highcharts_python.options.subtitle.Subtitle>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Subtitle
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

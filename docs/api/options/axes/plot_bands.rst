@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.plot_bands <highcharts_python.options.axes.plot_bands>`
+:mod:`.plot_bands <highcharts_core.options.axes.plot_bands>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.axes.plot_bands
+.. module:: highcharts_core.options.axes.plot_bands
 
 ********************************************************************************************************************
-class: :class:`PlotBand <highcharts_python.options.axes.plot_bands.PlotBand>`
+class: :class:`PlotBand <highcharts_core.options.axes.plot_bands.PlotBand>`
 ********************************************************************************************************************
 
 .. autoclass:: PlotBand
@@ -22,7 +22,7 @@ class: :class:`PlotBand <highcharts_python.options.axes.plot_bands.PlotBand>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: PlotBand
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`PlotBand <highcharts_python.options.axes.plot_bands.PlotBand>`
 -------------------------
 
 ********************************************************************************************************************
-class: :class:`PlotLine <highcharts_python.options.axes.plot_bands.PlotLine>`
+class: :class:`PlotLine <highcharts_core.options.axes.plot_bands.PlotLine>`
 ********************************************************************************************************************
 
 .. autoclass:: PlotLine
@@ -40,7 +40,7 @@ class: :class:`PlotLine <highcharts_python.options.axes.plot_bands.PlotLine>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: PlotLine
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

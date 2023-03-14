@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.crosshair <highcharts_python.options.axes.crosshair>`
+:mod:`.crosshair <highcharts_core.options.axes.crosshair>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.axes.crosshair
+.. module:: highcharts_core.options.axes.crosshair
 
 ********************************************************************************************************************
-class: :class:`CrosshairOptions <highcharts_python.options.axes.crosshair.CrosshairOptions>`
+class: :class:`CrosshairOptions <highcharts_core.options.axes.crosshair.CrosshairOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: CrosshairOptions
@@ -22,7 +22,7 @@ class: :class:`CrosshairOptions <highcharts_python.options.axes.crosshair.Crossh
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: CrosshairOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

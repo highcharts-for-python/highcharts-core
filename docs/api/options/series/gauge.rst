@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.gauge <highcharts_python.options.series.gauge>`
+:mod:`.gauge <highcharts_core.options.series.gauge>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.gauge
+.. module:: highcharts_core.options.series.gauge
 
 ********************************************************************************************************************
-class: :class:`GaugeSeries <highcharts_python.options.series.gauge.GaugeSeries>`
+class: :class:`GaugeSeries <highcharts_core.options.series.gauge.GaugeSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: GaugeSeries
@@ -22,7 +22,7 @@ class: :class:`GaugeSeries <highcharts_python.options.series.gauge.GaugeSeries>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: GaugeSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`GaugeSeries <highcharts_python.options.series.gauge.GaugeSeries>`
 --------------
 
 ********************************************************************************************************************
-class: :class:`SolidGaugeSeries <highcharts_python.options.series.gauge.SolidGaugeSeries>`
+class: :class:`SolidGaugeSeries <highcharts_core.options.series.gauge.SolidGaugeSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: SolidGaugeSeries
@@ -40,7 +40,7 @@ class: :class:`SolidGaugeSeries <highcharts_python.options.series.gauge.SolidGau
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SolidGaugeSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

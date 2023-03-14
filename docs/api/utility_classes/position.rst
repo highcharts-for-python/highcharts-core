@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.position <highcharts_python.utility_classes.position>`
+:mod:`.position <highcharts_core.utility_classes.position>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.utility_classes.position
+.. module:: highcharts_core.utility_classes.position
 
 ********************************************************************************************************************
-class: :class:`Position <highcharts_python.utility_classes.position.Position>`
+class: :class:`Position <highcharts_core.utility_classes.position.Position>`
 ********************************************************************************************************************
 
 .. autoclass:: Position
@@ -22,7 +22,7 @@ class: :class:`Position <highcharts_python.utility_classes.position.Position>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Position
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

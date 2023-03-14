@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.responsive <highcharts_python.options.responsive>`
+:mod:`.responsive <highcharts_core.options.responsive>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.responsive
+.. module:: highcharts_core.options.responsive
 
 ********************************************************************************************************************
-class: :class:`Responsive <highcharts_python.options.responsive.Responsive>`
+class: :class:`Responsive <highcharts_core.options.responsive.Responsive>`
 ********************************************************************************************************************
 
 .. autoclass:: Responsive
@@ -22,7 +22,7 @@ class: :class:`Responsive <highcharts_python.options.responsive.Responsive>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Responsive
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`Responsive <highcharts_python.options.responsive.Responsive>`
 -----------------
 
 ********************************************************************************************************************
-class: :class:`ResponsiveRules <highcharts_python.options.responsive.ResponsiveRules>`
+class: :class:`ResponsiveRules <highcharts_core.options.responsive.ResponsiveRules>`
 ********************************************************************************************************************
 
 .. autoclass:: ResponsiveRules
@@ -40,7 +40,7 @@ class: :class:`ResponsiveRules <highcharts_python.options.responsive.ResponsiveR
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ResponsiveRules
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`ResponsiveRules <highcharts_python.options.responsive.ResponsiveR
 --------------------
 
 ********************************************************************************************************************
-class: :class:`Condition <highcharts_python.options.responsive.Condition>`
+class: :class:`Condition <highcharts_core.options.responsive.Condition>`
 ********************************************************************************************************************
 
 .. autoclass:: Condition
@@ -58,7 +58,7 @@ class: :class:`Condition <highcharts_python.options.responsive.Condition>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Condition
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

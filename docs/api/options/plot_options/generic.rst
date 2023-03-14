@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.generic <highcharts_python.options.plot_options.generic>`
+:mod:`.generic <highcharts_core.options.plot_options.generic>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.generic
+.. module:: highcharts_core.options.plot_options.generic
 
 ********************************************************************************************************************
-class: :class:`GenericTypeOptions <highcharts_python.options.plot_options.generic.GenericTypeOptions>`
+class: :class:`GenericTypeOptions <highcharts_core.options.plot_options.generic.GenericTypeOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: GenericTypeOptions
@@ -22,7 +22,7 @@ class: :class:`GenericTypeOptions <highcharts_python.options.plot_options.generi
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: GenericTypeOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

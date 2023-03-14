@@ -4,8 +4,8 @@ import pytest
 
 from json.decoder import JSONDecodeError
 
-from highcharts_python.options.exporting import Exporting as cls
-from highcharts_python import errors
+from highcharts_core.options.exporting import Exporting as cls
+from highcharts_core import errors, constants
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
     Class_from_js_literal
@@ -18,6 +18,7 @@ STANDARD_PARAMS = [
       },
       'allow_html': False,
       'buttons': {
+          'context_button': constants.EnforcedNullType(),
           'test_key': {
               'text': 'Test Text',
               'enabled': True
@@ -81,12 +82,12 @@ def test__to_untrimmed_dict(kwargs, error):
     Class__to_untrimmed_dict(cls, kwargs, error)
 
 
-@pytest.mark.parametrize('kwargs, error',  STANDARD_PARAMS)
+@pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
 def test_from_dict(kwargs, error):
     Class_from_dict(cls, kwargs, error)
 
 
-@pytest.mark.parametrize('kwargs, error',  STANDARD_PARAMS)
+@pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
 def test_to_dict(kwargs, error):
     Class_to_dict(cls, kwargs, error)
 

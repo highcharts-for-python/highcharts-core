@@ -1,5 +1,5 @@
 ################################################################
-:mod:`.navigation <highcharts_python.options.navigation>`
+:mod:`.navigation <highcharts_core.options.navigation>`
 ################################################################
 
 .. contents:: Module Contents
@@ -14,10 +14,10 @@
 
 -------------------------
 
-.. module:: highcharts_python.options.navigation
+.. module:: highcharts_core.options.navigation
 
 ********************************************************************************************************************
-class: :class:`Navigation <highcharts_python.options.navigation.Navigation>`
+class: :class:`Navigation <highcharts_core.options.navigation.Navigation>`
 ********************************************************************************************************************
 
 .. autoclass:: Navigation
@@ -27,7 +27,7 @@ class: :class:`Navigation <highcharts_python.options.navigation.Navigation>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Navigation
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -44,12 +44,12 @@ Sub-components
 
   * - Module
     - Classes / Functions
-  * - :mod:`.options.navigation <highcharts_python.options.navigation>`
-    - :class:`Navigation <highcharts_python.options.navigation.Navigation>`
-  * - :mod:`.options.navigation.bindings <highcharts_python.options.navigation.bindings>`
-    - :class:`Bindings <highcharts_python.options.navigation.bindings.Bindings>`
-      :class:`RectangleAnnotationBinding <highcharts_python.options.navigation.bindings.RectangleAnnotationBinding>`
-      :class:`LabelAnnotationBinding <highcharts_python.options.navigation.bindings.LabelAnnotationBinding>`
-      :class:`EllipseAnnotationBinding <highcharts_python.options.navigation.bindings.EllipseAnnotationBinding>`
-      :class:`CircleAnnotationBinding <highcharts_python.options.navigation.bindings.CircleAnnotationBinding>`
-      :class:`Binding <highcharts_python.options.navigation.bindings.Binding>`
+  * - :mod:`.options.navigation <highcharts_core.options.navigation>`
+    - :class:`Navigation <highcharts_core.options.navigation.Navigation>`
+  * - :mod:`.options.navigation.bindings <highcharts_core.options.navigation.bindings>`
+    - :class:`Bindings <highcharts_core.options.navigation.bindings.Bindings>`
+      :class:`RectangleAnnotationBinding <highcharts_core.options.navigation.bindings.RectangleAnnotationBinding>`
+      :class:`LabelAnnotationBinding <highcharts_core.options.navigation.bindings.LabelAnnotationBinding>`
+      :class:`EllipseAnnotationBinding <highcharts_core.options.navigation.bindings.EllipseAnnotationBinding>`
+      :class:`CircleAnnotationBinding <highcharts_core.options.navigation.bindings.CircleAnnotationBinding>`
+      :class:`Binding <highcharts_core.options.navigation.bindings.Binding>`

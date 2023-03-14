@@ -1,8 +1,8 @@
 .. code-block:: python
 
-  from highcharts_python.chart import Chart
-  from highcharts_python.options.series.area import LineSeries
-  from highcharts_python.options.series.bar import BarSeries
+  from highcharts_core.chart import Chart
+  from highcharts_core.options.series.area import LineSeries
+  from highcharts_core.options.series.bar import BarSeries
 
   # Create a Chart instance called "my_chart" with an empty set of options
   my_chart = Chart(options = {})

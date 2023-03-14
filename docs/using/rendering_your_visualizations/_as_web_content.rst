@@ -4,8 +4,8 @@
 
     .. code-block:: python
 
-      from highcharts_python.chart import Chart
-      from highcharts_python.options.series.area import LineSeries
+      from highcharts_core.chart import Chart
+      from highcharts_core.options.series.area import LineSeries
 
       my_chart = Chart(container = 'target_div',
                        options = {

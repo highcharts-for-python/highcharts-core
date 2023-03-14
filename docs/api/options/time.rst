@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.time <highcharts_python.options.time>`
+:mod:`.time <highcharts_core.options.time>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.time
+.. module:: highcharts_core.options.time
 
 ********************************************************************************************************************
-class: :class:`Time <highcharts_python.options.time.Time>`
+class: :class:`Time <highcharts_core.options.time.Time>`
 ********************************************************************************************************************
 
 .. autoclass:: Time
@@ -22,7 +22,7 @@ class: :class:`Time <highcharts_python.options.time.Time>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Time
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.treemap <highcharts_python.options.plot_options.treemap>`
+:mod:`.treemap <highcharts_core.options.plot_options.treemap>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.treemap
+.. module:: highcharts_core.options.plot_options.treemap
 
 ********************************************************************************************************************
-class: :class:`TreemapOptions <highcharts_python.options.plot_options.treemap.TreemapOptions>`
+class: :class:`TreemapOptions <highcharts_core.options.plot_options.treemap.TreemapOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: TreemapOptions
@@ -22,7 +22,7 @@ class: :class:`TreemapOptions <highcharts_python.options.plot_options.treemap.Tr
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: TreemapOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

@@ -1,0 +1,33 @@
+language: python
+job:
+  include:
+    #- python: "3.8"
+    #  env: TOXENV=py38
+    #- python: "3.9"
+    #  env: TOXENV=py39
+    - python: "3.10"
+      dist: focal
+      env: TOXENV=py310
+    - python: "3.11"
+      dist: bionic
+      env: TOXENV=py311
+    - python: "3.10"
+      dist: focal
+      env: TOXENV=coverage
+    - python: "3.10"
+      dist: focal
+      env: TOXENV=docs
+os:
+  - linux
+git:
+  quiet: true
+install:
+  - pip install -r requirements.dev.txt
+before_script:
+  - mkdir /home/travis/build/highcharts-for-python/highcharts-core/tests/input_files/headless_export/output/
+  - curl -Os --retry 5 https://uploader.codecov.io/latest/linux/codecov
+  - chmod +x codecov
+script: tox -- -v -nauto 
+
+after_success:
+  - if [[ -e .coverage ]]; then ./codecov -t $CODECOV_TOKEN; fi

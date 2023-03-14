@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.heatmap <highcharts_python.options.plot_options.heatmap>`
+:mod:`.heatmap <highcharts_core.options.plot_options.heatmap>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.heatmap
+.. module:: highcharts_core.options.plot_options.heatmap
 
 ********************************************************************************************************************
-class: :class:`HeatmapOptions <highcharts_python.options.plot_options.heatmap.HeatmapOptions>`
+class: :class:`HeatmapOptions <highcharts_core.options.plot_options.heatmap.HeatmapOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: HeatmapOptions
@@ -22,7 +22,7 @@ class: :class:`HeatmapOptions <highcharts_python.options.plot_options.heatmap.He
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: HeatmapOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`HeatmapOptions <highcharts_python.options.plot_options.heatmap.He
 --------------------
 
 ********************************************************************************************************************
-class: :class:`TilemapOptions <highcharts_python.options.plot_options.heatmap.TilemapOptions>`
+class: :class:`TilemapOptions <highcharts_core.options.plot_options.heatmap.TilemapOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: TilemapOptions
@@ -40,7 +40,7 @@ class: :class:`TilemapOptions <highcharts_python.options.plot_options.heatmap.Ti
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: TilemapOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

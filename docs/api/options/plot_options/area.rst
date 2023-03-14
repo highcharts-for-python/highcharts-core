@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.area <highcharts_python.options.plot_options.area>`
+:mod:`.area <highcharts_core.options.plot_options.area>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.area
+.. module:: highcharts_core.options.plot_options.area
 
 ********************************************************************************************************************
-class: :class:`AreaOptions <highcharts_python.options.plot_options.area.AreaOptions>`
+class: :class:`AreaOptions <highcharts_core.options.plot_options.area.AreaOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: AreaOptions
@@ -22,7 +22,7 @@ class: :class:`AreaOptions <highcharts_python.options.plot_options.area.AreaOpti
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AreaOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`AreaOptions <highcharts_python.options.plot_options.area.AreaOpti
 -----------------
 
 ********************************************************************************************************************
-class: :class:`AreaRangeOptions <highcharts_python.options.plot_options.area.AreaRangeOptions>`
+class: :class:`AreaRangeOptions <highcharts_core.options.plot_options.area.AreaRangeOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: AreaRangeOptions
@@ -40,7 +40,7 @@ class: :class:`AreaRangeOptions <highcharts_python.options.plot_options.area.Are
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AreaRangeOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -48,7 +48,7 @@ class: :class:`AreaRangeOptions <highcharts_python.options.plot_options.area.Are
 -------------
 
 ********************************************************************************************************************
-class: :class:`AreaSplineOptions <highcharts_python.options.plot_options.area.AreaSplineOptions>`
+class: :class:`AreaSplineOptions <highcharts_core.options.plot_options.area.AreaSplineOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: AreaSplineOptions
@@ -58,7 +58,7 @@ class: :class:`AreaSplineOptions <highcharts_python.options.plot_options.area.Ar
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AreaSplineOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -66,7 +66,7 @@ class: :class:`AreaSplineOptions <highcharts_python.options.plot_options.area.Ar
 -----------
 
 ********************************************************************************************************************
-class: :class:`AreaSplineRangeOptions <highcharts_python.options.plot_options.area.AreaSplineRangeOptions>`
+class: :class:`AreaSplineRangeOptions <highcharts_core.options.plot_options.area.AreaSplineRangeOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: AreaSplineRangeOptions
@@ -76,7 +76,7 @@ class: :class:`AreaSplineRangeOptions <highcharts_python.options.plot_options.ar
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: AreaSplineRangeOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -84,7 +84,7 @@ class: :class:`AreaSplineRangeOptions <highcharts_python.options.plot_options.ar
 -------------
 
 ********************************************************************************************************************
-class: :class:`LineOptions <highcharts_python.options.plot_options.area.LineOptions>`
+class: :class:`LineOptions <highcharts_core.options.plot_options.area.LineOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: LineOptions
@@ -94,7 +94,7 @@ class: :class:`LineOptions <highcharts_python.options.plot_options.area.LineOpti
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: LineOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -102,7 +102,7 @@ class: :class:`LineOptions <highcharts_python.options.plot_options.area.LineOpti
 -------------
 
 ********************************************************************************************************************
-class: :class:`StreamGraphOptions <highcharts_python.options.plot_options.area.StreamGraphOptions>`
+class: :class:`StreamGraphOptions <highcharts_core.options.plot_options.area.StreamGraphOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: StreamGraphOptions
@@ -112,7 +112,7 @@ class: :class:`StreamGraphOptions <highcharts_python.options.plot_options.area.S
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: StreamGraphOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

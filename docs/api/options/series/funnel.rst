@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.funnel <highcharts_python.options.series.funnel>`
+:mod:`.funnel <highcharts_core.options.series.funnel>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.funnel
+.. module:: highcharts_core.options.series.funnel
 
 ********************************************************************************************************************
-class: :class:`FunnelSeries <highcharts_python.options.series.funnel.FunnelSeries>`
+class: :class:`FunnelSeries <highcharts_core.options.series.funnel.FunnelSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: FunnelSeries
@@ -22,7 +22,7 @@ class: :class:`FunnelSeries <highcharts_python.options.series.funnel.FunnelSerie
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: FunnelSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`FunnelSeries <highcharts_python.options.series.funnel.FunnelSerie
 ------------------
 
 ********************************************************************************************************************
-class: :class:`Funnel3DSeries <highcharts_python.options.series.funnel.Funnel3DSeries>`
+class: :class:`Funnel3DSeries <highcharts_core.options.series.funnel.Funnel3DSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: Funnel3DSeries
@@ -40,7 +40,7 @@ class: :class:`Funnel3DSeries <highcharts_python.options.series.funnel.Funnel3DS
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Funnel3DSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

@@ -4,16 +4,16 @@ import pytest
 
 from json.decoder import JSONDecodeError
 
-from highcharts_python.utility_classes.events import ChartEvents as cls
-from highcharts_python.utility_classes.events import BreadcrumbEvents as cls2
-from highcharts_python.utility_classes.events import NavigationEvents as cls3
-from highcharts_python.utility_classes.events import PointEvents as cls4
-from highcharts_python.utility_classes.events import SeriesEvents as cls5
-from highcharts_python.utility_classes.events import ClusterEvents as cls6
-from highcharts_python.utility_classes.events import AxisEvents as cls7
-from highcharts_python.utility_classes.events import MouseEvents as cls8
+from highcharts_core.utility_classes.events import ChartEvents as cls
+from highcharts_core.utility_classes.events import BreadcrumbEvents as cls2
+from highcharts_core.utility_classes.events import NavigationEvents as cls3
+from highcharts_core.utility_classes.events import PointEvents as cls4
+from highcharts_core.utility_classes.events import SeriesEvents as cls5
+from highcharts_core.utility_classes.events import ClusterEvents as cls6
+from highcharts_core.utility_classes.events import AxisEvents as cls7
+from highcharts_core.utility_classes.events import MouseEvents as cls8
 
-from highcharts_python import errors
+from highcharts_core import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
     Class_from_js_literal

@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.sankey <highcharts_python.options.plot_options.sankey>`
+:mod:`.sankey <highcharts_core.options.plot_options.sankey>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.plot_options.sankey
+.. module:: highcharts_core.options.plot_options.sankey
 
 ********************************************************************************************************************
-class: :class:`SankeyOptions <highcharts_python.options.plot_options.sankey.SankeyOptions>`
+class: :class:`SankeyOptions <highcharts_core.options.plot_options.sankey.SankeyOptions>`
 ********************************************************************************************************************
 
 .. autoclass:: SankeyOptions
@@ -22,7 +22,7 @@ class: :class:`SankeyOptions <highcharts_python.options.plot_options.sankey.Sank
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SankeyOptions
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.dumbbell <highcharts_python.options.series.dumbbell>`
+:mod:`.dumbbell <highcharts_core.options.series.dumbbell>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.dumbbell
+.. module:: highcharts_core.options.series.dumbbell
 
 ********************************************************************************************************************
-class: :class:`DumbbellSeries <highcharts_python.options.series.dumbbell.DumbbellSeries>`
+class: :class:`DumbbellSeries <highcharts_core.options.series.dumbbell.DumbbellSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: DumbbellSeries
@@ -22,7 +22,7 @@ class: :class:`DumbbellSeries <highcharts_python.options.series.dumbbell.Dumbbel
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: DumbbellSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`DumbbellSeries <highcharts_python.options.series.dumbbell.Dumbbel
 ------------------
 
 ********************************************************************************************************************
-class: :class:`LollipopSeries <highcharts_python.options.series.dumbbell.LollipopSeries>`
+class: :class:`LollipopSeries <highcharts_core.options.series.dumbbell.LollipopSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: LollipopSeries
@@ -40,7 +40,7 @@ class: :class:`LollipopSeries <highcharts_python.options.series.dumbbell.Lollipo
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: LollipopSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

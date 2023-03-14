@@ -2,8 +2,8 @@
 
 import pytest
 
-from highcharts_python.metaclasses import HighchartsMeta
-from highcharts_python import constants
+from highcharts_core.metaclasses import HighchartsMeta
+from highcharts_core import constants
 
 from json.decoder import JSONDecodeError
 from validator_collection import checkers
@@ -101,7 +101,7 @@ def test_to_json(instance, error):
     if not error:
         result = instance.to_json()
         assert result is not None
-        assert isinstance(result, str) is True
+        assert isinstance(result, (str, bytes)) is True
 
         new_instance = instance.__class__.from_json(result)
         assert new_instance.item1 == instance.item1

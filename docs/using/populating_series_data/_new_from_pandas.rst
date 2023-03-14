@@ -1,15 +1,15 @@
   .. note::
 
     The ``.from_pandas()`` method is available on all :term:`series` classes and on the
-    :class:`Chart <highcharts_python.chart.Chart>` class, allowing you to either assemble
+    :class:`Chart <highcharts_core.chart.Chart>` class, allowing you to either assemble
     a series or an entire chart from Pandas :class:`DataFrame <pandas:DataFrame>`
     with only one method call.
 
 .. code-block:: python
 
   # Given a Pandas DataFrame instance named "df"
-  from highcharts_python.chart import Chart
-  from highcharts_python.options.series.area import LineSeries
+  from highcharts_core.chart import Chart
+  from highcharts_core.options.series.area import LineSeries
 
   # Creating a Series from the DataFrame
   my_series = LineSeries.from_pandas(df,
@@ -33,14 +33,14 @@
 
   .. seealso::
 
-    * :meth:`Chart.from_pandas() <highcharts_python.chart.Chart.from_pandas>`
+    * :meth:`Chart.from_pandas() <highcharts_core.chart.Chart.from_pandas>`
 
   .. method:: .from_pandas(cls, df, property_map, series_kwargs = None)
     :noindex:
     :classmethod:
 
     Create a :term:`series` instance whose
-    :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
+    :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` property
     is populated from a `pandas <https://pandas.pydata.org/>`__
     :class:`DataFrame <pandas:DataFrame>`.
 
@@ -67,11 +67,11 @@
     :type series_kwargs: :class:`dict <python:dict>`
 
     :returns: A :term:`series` instance (descended from
-      :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`) with its
-      :meth:`.data <highcharts_python.options.series.base.SeriesBase.data>` property
+      :class:`SeriesBase <highcharts_core.options.series.base.SeriesBase>`) with its
+      :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` property
       populated from the data in ``df``.
     :rtype: :class:`list <python:list>` of series instances (descended from
-      :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`)
+      :class:`SeriesBase <highcharts_core.options.series.base.SeriesBase>`)
 
     :raises HighchartsPandasDeserializationError: if ``property_map`` references
       a column that does not exist in the data frame

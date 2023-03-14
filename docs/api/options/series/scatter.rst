@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.scatter <highcharts_python.options.series.scatter>`
+:mod:`.scatter <highcharts_core.options.series.scatter>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.scatter
+.. module:: highcharts_core.options.series.scatter
 
 ********************************************************************************************************************
-class: :class:`ScatterSeries <highcharts_python.options.series.scatter.ScatterSeries>`
+class: :class:`ScatterSeries <highcharts_core.options.series.scatter.ScatterSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: ScatterSeries
@@ -22,7 +22,7 @@ class: :class:`ScatterSeries <highcharts_python.options.series.scatter.ScatterSe
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ScatterSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
@@ -30,7 +30,7 @@ class: :class:`ScatterSeries <highcharts_python.options.series.scatter.ScatterSe
 ---------------
 
 ********************************************************************************************************************
-class: :class:`Scatter3DSeries <highcharts_python.options.series.scatter.Scatter3DSeries>`
+class: :class:`Scatter3DSeries <highcharts_core.options.series.scatter.Scatter3DSeries>`
 ********************************************************************************************************************
 
 .. autoclass:: Scatter3DSeries
@@ -40,7 +40,7 @@ class: :class:`Scatter3DSeries <highcharts_python.options.series.scatter.Scatter
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: Scatter3DSeries
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |

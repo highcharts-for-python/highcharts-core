@@ -2,8 +2,8 @@ import pytest
 
 from validator_collection import checkers
 
-from highcharts_python import utility_functions
-from highcharts_python.metaclasses import HighchartsMeta
+from highcharts_core import utility_functions
+from highcharts_core.metaclasses import HighchartsMeta
 
 
 class Grandparent(HighchartsMeta):

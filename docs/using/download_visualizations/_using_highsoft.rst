@@ -1,7 +1,7 @@
 .. code-block:: python
 
-  from highcharts_python.chart import Chart
-  from highcharts_python.options.series.area import LineSeries
+  from highcharts_core.chart import Chart
+  from highcharts_core.options.series.area import LineSeries
 
   my_chart = Chart(container = 'target_div',
                    options = {
@@ -24,8 +24,8 @@
 
   .. seealso::
 
-    * :meth:`Chart.download_chart() <highcharts_python.chart.Chart.download_chart>`
-    * :class:`headless_export.ExportServer <highcharts_python.headless_export.ExportServer>`
+    * :meth:`Chart.download_chart() <highcharts_core.chart.Chart.download_chart>`
+    * :class:`headless_export.ExportServer <highcharts_core.headless_export.ExportServer>`
 
   .. method:: .download_chart(self, filename = None, format = 'png', server_instance = None, scale = 1, width = None, auth_user = None, auth_password = None, timeout = 0.5, global_options = None, **kwargs)
     :noindex:
@@ -36,11 +36,11 @@
       be persisted. Defaults to :obj:`None <python:None>`.
     :type filename: Path-like or :obj:`None <python:None>`
 
-    :param server_instance: Provide an already-configured :class:`ExportServer <highcharts_python.headless_export.ExportServer>`
+    :param server_instance: Provide an already-configured :class:`ExportServer <highcharts_core.headless_export.ExportServer>`
       instance to use to programmatically produce the exported chart. Defaults to
       :obj:`None <python:None>`, which causes **Highcharts for Python** to instantiate
-      a new :class:`ExportServer <highcharts_python.headless_export.ExportServer>` instance with all applicable defaults.
-    :type server_instance: :class:`ExportServer <highcharts_python.headless_export.ExportServer>` or :obj:`None <python:None>`
+      a new :class:`ExportServer <highcharts_core.headless_export.ExportServer>` instance with all applicable defaults.
+    :type server_instance: :class:`ExportServer <highcharts_core.headless_export.ExportServer>` or :obj:`None <python:None>`
 
     :param format: The format in which the exported chart should be returned. Defaults to
       ``'png'``.
@@ -97,13 +97,13 @@
       ``Highcharts.setOptions()`` method, and which will be applied to the exported
       chart. Defaults to :obj:`None <python:None>`.
 
-    :type global_options: :class:`HighchartsStockOptions <highcharts_python.options.HighchartsStockOptions>`,
-      :class:`HighchartsOptions <highcharts_python.options.HighchartsOptions>` or
+    :type global_options: :class:`HighchartsStockOptions <highcharts_core.options.HighchartsStockOptions>`,
+      :class:`HighchartsOptions <highcharts_core.options.HighchartsOptions>` or
       :obj:`None <python:None>`
 
     .. note::
 
-      All other keyword arguments are as per the :class:`ExportServer <highcharts_python.headless_export.ExportServer>` constructor.
+      All other keyword arguments are as per the :class:`ExportServer <highcharts_core.headless_export.ExportServer>` constructor.
 
     :returns: The exported chart image, either as a :class:`bytes <python:bytes>`
       binary object or as a base-64 encoded string (depending on the ``use_base64``

@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.base <highcharts_python.options.series.base>`
+:mod:`.base <highcharts_core.options.series.base>`
 ##########################################################################################
 
 .. contents:: Module Contents
@@ -9,10 +9,10 @@
 
 --------------
 
-.. module:: highcharts_python.options.series.base
+.. module:: highcharts_core.options.series.base
 
 ********************************************************************************************************************
-class: :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`
+class: :class:`SeriesBase <highcharts_core.options.series.base.SeriesBase>`
 ********************************************************************************************************************
 
 .. autoclass:: SeriesBase
@@ -22,7 +22,7 @@ class: :class:`SeriesBase <highcharts_python.options.series.base.SeriesBase>`
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SeriesBase
-      :top-classes: highcharts_python.metaclasses.HighchartsMeta
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
   |
