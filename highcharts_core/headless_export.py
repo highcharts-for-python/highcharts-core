@@ -248,7 +248,6 @@ class ExportServer(HighchartsMeta):
         else:
             original_value = value
             self.protocol = value[:value.index(':')]
-            print(f'Found Protocol: {self.protocol}')
 
             protocol = self.protocol + '://'
             value = value.replace(protocol, '')
@@ -264,8 +263,6 @@ class ExportServer(HighchartsMeta):
                     self.domain = value[:end_of_domain]
                 except ValueError:
                     self.domain = value
-
-            print(f'Found Domain: {self.domain}')
 
             domain = self.domain + '/'
             if domain in value:
@@ -301,9 +298,6 @@ class ExportServer(HighchartsMeta):
                     self.path = value
                 else:
                     self.path = None
-
-            print(f'Found Port: {self.port}')
-            print(f'Found Path: {self.path}')
 
             self._url = original_value
 
