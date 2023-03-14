@@ -121,7 +121,7 @@ Key Highcharts for Python Features
     
     **See Also**
 
-    * `Supported Visualizations <https://highcharts-core.readthedocs.io/en/latest/visualizations.html>`__
+    * `Supported Visualizations <https://core-docs.highchartspython.com/en/latest/visualizations.html>`__
 
 * **Simple JavaScript Code Generation**. With one method call, produce production-ready
   JavaScript code to render your interactive visualizations using Highcharts' rich
@@ -364,7 +364,7 @@ Contributing
 *********************
 
 We welcome contributions and pull requests! For more information, please see the
-`Contributor Guide <https://highcharts-core.readthedocs.io/en/latest/contributing.html>`__. And thanks to all those who've already contributed!
+`Contributor Guide <https://core-docs.highchartspython.com/en/latest/contributing.html>`__. And thanks to all those who've already contributed!
 
 -------------------
 

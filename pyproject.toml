@@ -63,9 +63,8 @@ dependencies = [
 path = "highcharts_core/__version__.py"
 
 [project.urls]
-# TODO: Set Homepage to the Highcharts.com page for the Highcharts for Python toolkit.
 "Homepage" = "https://highchartspython.com"
-"Documentation" = "https://highcharts-core.readthedocs.io/en/latest/"
+"Documentation" = "https://core-docs.highchartspython.com/en/latest/"
 "Support" = "https://www.highchartspython.com/get-help"
 "Source Code" = "https://github.com/highcharts-for-python/highcharts-core"
 "History" = "https://github.com/highcharts-for-python/highcharts-core/blob/master/CHANGES.rst"
