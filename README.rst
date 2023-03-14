@@ -43,7 +43,7 @@ features native integration with:
     dataframe.
   * ...and even more use-case specific integrations in each tool in the toolkit.
 
-**COMPLETE DOCUMENTATION:** https://highcharts-core.readthedocs.org/en/latest/index.html
+**COMPLETE DOCUMENTATION:** https://core-docs.highchartspython.com/en/latest/index.html
 
 --------------------
 
@@ -143,7 +143,7 @@ Key Highcharts for Python Features
 ==============================================
 
 For a discussion of **Highcharts for Python** in comparison to alternatives, please see
-the **COMPLETE DOCUMENTATION:** https://highcharts-core.readthedocs.org/en/latest/index.html
+the **COMPLETE DOCUMENTATION:** https://core-docs.highchartspython.com/en/latest/index.html
 
 ---------------------
 
