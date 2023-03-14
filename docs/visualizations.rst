@@ -1222,7 +1222,7 @@ visualizations.
       Only **Highcharts Stock for Python** and
       `Highcharts Stock <https://www.highcharts.com/products/stock/>`__ support
       technical indicators. For more information, please see
-      `here <https://highcharts-stock.readthedocs.io/>`__.
+      `here <https://stock-docs.highchartspython.com/>`__.
 
   .. tab:: Gantt
 
@@ -1235,4 +1235,4 @@ visualizations.
       Only **Highcharts Stock for Python** and
       `Highcharts Stock <https://www.highcharts.com/products/stock/>`__ support
       technical indicators. For more information, please see
-      `here <https://highcharts-stock.readthedocs.io/>`__.
+      `here <https://stock-docs.highchartspython.com/>`__.

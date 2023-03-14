@@ -20,13 +20,13 @@ The toolkit is composed of several different libraries, each of which provides c
   * - **Highcharts Core for Python** 
     - `Highcharts Core (JS) <https://www.highcharts.com/products/highcharts/>`__
     - (this library) the core Highcharts data visualization library
-  * - `Highcharts Stock for Python <https://highcharts-stock.readthedocs.io/>`__ 
+  * - `Highcharts Stock for Python <https://stock-docs.highchartspython.com/>`__ 
     - `Highcharts Stock (JS) <https://www.highcharts.com/products/stock/>`__
     - the robust time series visualization extension to Highcharts Core
-  * - `Highcharts Maps <https://highcharts-maps.readthedocs.io/>`__ 
+  * - `Highcharts Maps <https://maps-docs.highchartspython.com/>`__ 
     - `Highcharts Maps (JS) <https://www.highcharts.com/products/maps/>`__
     - the rich map visualization extension to Highcharts Core
-  * - `Highcharts Gantt <https://highcharts-gantt.readthedocs.io/>`__
+  * - `Highcharts Gantt <https://gantt-docs.highchartspython.com/>`__
     - `Highcharts Gantt (JS) <https://www.highcharts.com/products/gantt/>`__
     - the Gantt charting extension to Highcharts Core
   * - (all libraries in the Python toolkit)
