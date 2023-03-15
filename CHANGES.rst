@@ -1,3 +1,11 @@
+Release 1.0.0-rc2
+=========================================
+
+* Closed #18. Fixed bug where loading data from a Pandas Dataframe could produce data points with None values.
+* Added ``HighchartsPandasDeserializationError`` and ``HighchartsPySparkDeserializationError``.
+
+---------------
+
 Release 1.0.0-rc1
 =========================================
 

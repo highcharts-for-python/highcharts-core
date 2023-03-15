@@ -2733,6 +2733,37 @@ def test_LineSeries_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls5, input_files, filename, as_file, error)
 
 
+@pytest.mark.parametrize('filename, property_map, error', [
+    ('test-data-files/nst-est2019-01.csv', {}, ValueError),
+    ('test-data-files/nst-est2019-01.csv',
+     {
+         'name': 'Geographic Area',
+         'x': 'Geographic Area',
+         'y': '2010'
+     },
+     None),
+
+])
+def test_LineSeries_from_pandas(input_files, filename, property_map, error):
+    import pandas
+    
+    input_file = check_input_file(input_files, filename)
+    df = pandas.read_csv(input_file, header = 0, thousands = ',')
+    print(df.dtypes)
+    
+    if not error:
+        result = cls5.from_pandas(df, property_map = property_map)
+        assert result is not None
+        assert isinstance(result, cls5)
+        assert result.data is not None
+        assert len(result.data) == len(df)
+        for item in result.data:
+            for key in property_map:
+                assert getattr(item, key, None) is not None
+    else:
+        with pytest.raises(error):
+            result = cls5.from_pandas(df, property_map = property_map)
+
 #### NEXT CLASS
 
 @pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)

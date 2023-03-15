@@ -30,17 +30,17 @@ The **Highcharts for Python** toolkit includes two categories of tools:
       `Highcharts Stock <https://www.highcharts.com/products/stock>`__
       JavaScript library, which provides extensive visualizations for time series and
       stock price visualizations. For more details, please see the relevant
-      `Highcharts Stock for Python documentation <https://highcharts-stock.readthedocs.io>`__
+      `Highcharts Stock for Python documentation <https://stock-docs.highchartspython.com>`__
     * **Highcharts Maps for Python**: This is the Python wrapper for the
       `Highcharts Maps <https://www.highcharts.com/products/maps>`__
       JavaScript library, which provides extensive geographic data visualization options
       with rich interactive maps. For more details, please see the relevant
-      `Highcharts Maps for Python documentation <https://highcharts-maps.readthedocs.io>`__
+      `Highcharts Maps for Python documentation <https://maps-docs.highchartspython.com>`__
     * **Highcharts Gantt for Python**: This is the Python wrapper for the
       `Highcharts Gantt <https://www.highcharts.com/products/gantt>`__
       JavaScript library, which provides rich visualizations for resource allocation over
       time. For more details, please see the relevant
-      `Highcharts Gantt for Python documentation <https://highcharts-gantt.readthedocs.io>`__
+      `Highcharts Gantt for Python documentation <https://gantt-docs.highchartspython.com>`__
 
 
   .. tab:: Extensions

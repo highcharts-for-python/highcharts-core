@@ -134,6 +134,30 @@ HighchartsCSVDeserializationError (from :class:`ValueError <python:ValueError>`)
 
 --------------
 
+HighchartsPandasDeserializationError (from :class:`ValueError <python:ValueError>`)
+==========================================================================================
+
+.. autoexception:: HighchartsPandasDeserializationError
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: HighchartsPandasDeserializationError
+      :parts: -1
+
+--------------
+
+HighchartsPySparkDeserializationError (from :class:`ValueError <python:ValueError>`)
+==========================================================================================
+
+.. autoexception:: HighchartsPySparkDeserializationError
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: HighchartsPySparkDeserializationError
+      :parts: -1
+
+--------------
+
 HighchartsMissingKeyError (from :class:`ValueError <python:ValueError>`)
 ==========================================================================================
 
