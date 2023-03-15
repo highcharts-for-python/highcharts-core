@@ -655,3 +655,32 @@ def test_to_dict(kwargs, error):
 ])
 def test_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
+
+
+@pytest.mark.parametrize('filename, property_map, error', [
+    ('test-data-files/nst-est2019-01.csv', {}, ValueError),
+    ('test-data-files/nst-est2019-01.csv',
+     {
+         'name': 'Geographic Area'
+     },
+     None),
+
+])
+def test_load_from_pandas(input_files, filename, property_map, error):
+    import pandas
+
+    input_file = check_input_file(input_files, filename)
+    df = pandas.read_csv(input_file, header = 0)
+    print(df)
+    instance = cls()
+
+    if not error:
+        instance.load_from_pandas(df, property_map = property_map)
+        assert instance.data is not None
+        assert len(instance.data) == len(df)
+        for item in instance.data:
+            for key in property_map:
+                assert getattr(item, key) is not None
+    else:
+        with pytest.raises(error):
+            instance.load_from_pandas(df, property_map = property_map)
