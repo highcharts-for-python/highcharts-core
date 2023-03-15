@@ -696,6 +696,9 @@ class SeriesBase(SeriesOptions):
             raise errors.HighchartsValueError(f'df is expected to be a pandas DataFrame '
                                               f'or Series. Was: {df.__class__.__name__}')
 
+        if not property_map:
+            raise errors.HighchartsValueError('property_map cannot be None or empty')
+
         property_map = validators.dict(property_map)
         for key in property_map:
             map_value = property_map[key]
@@ -712,9 +715,9 @@ class SeriesBase(SeriesOptions):
             record_as_dict = {}
             for key in property_map:
                 map_value = property_map[key]
-                record_as_dict[key] = record_as_dict.get(map_value, None)
+                record_as_dict[key] = record.get(map_value, None)
             records_as_dicts.append(record_as_dict)
-
+            
         self.data = records_as_dicts
 
     @classmethod
@@ -824,7 +827,7 @@ class SeriesBase(SeriesOptions):
             record_as_dict = {}
             for key in property_map:
                 map_value = property_map[key]
-                record_as_dict[key] = record_as_dict.get(map_value, None)
+                record_as_dict[key] = record.get(map_value, None)
             records_as_dicts.append(record_as_dict)
 
         self.data = records_as_dicts

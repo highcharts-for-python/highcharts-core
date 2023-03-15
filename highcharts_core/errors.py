@@ -56,6 +56,18 @@ class HighchartsCSVDeserializationError(HighchartsError):
     pass
 
 
+class HighchartsPandasDeserializationError(HighchartsError):
+    """:exc:`ValueError <python:ValueError>` encountered when Highcharts for Python is
+    unable to properly deserialize Pandas data."""
+    pass
+
+
+class HighchartsPySparkDeserializationError(HighchartsError):
+    """:exc:`ValueError <python:ValueError>` encountered when Highcharts for Python is
+    unable to properly deserialize PySpark data."""
+    pass
+
+
 class HighchartsMissingKeyError(HighchartsParseError):
     """:exc:`ValueError <python:ValueError>` encountered when Highcharts for Python
     encounters a missing key when parsing a JavaScript object literal."""
