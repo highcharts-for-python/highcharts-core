@@ -8,7 +8,7 @@ Supported Visualizations
 
 --------------
 
-As the tables below make clear, the **Highcharts for Python Toolkit** toolkit and the
+As the tables below make clear, the **Highcharts for Python Toolkit** and the
 `Highcharts <https://www.highcharts.com/>`__ suite of JavaScript libraries are likely the
 single most comprehensive suite of data visualization tools available in the market. With
 over 70 (seventy!) distinct data visualizations and 50 (fifty!)

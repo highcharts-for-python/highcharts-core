@@ -382,8 +382,8 @@ And thanks to all those who've already contributed!
 Testing
 *********************
 
-We use `TravisCI <https://travisci.org>`_ for our build automation and
-`ReadTheDocs <https://readthedocs.org>`_ for our documentation.
+We use `TravisCI <https://travisci.com>`_ for our build automation and
+`ReadTheDocs <https://readthedocs.com>`_ for our documentation.
 
 Detailed information about our test suite and how to run tests locally can be
 found in our Testing Reference.

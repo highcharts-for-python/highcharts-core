@@ -150,9 +150,8 @@ literally - any frontend framework. Whether your Python application is relying o
 `Flask <https://flask.palletsprojects.com/en/2.2.x/>`_,
 `Django <https://www.djangoproject.com/>`_,  `FastAPI <https://fastapi.tiangolo.com/>`_,
 `Pyramid <https://trypyramid.com/>`_, `Tornado <https://www.tornadoweb.org/en/stable/>`_,
-or some completely home-grown solution all Highcharts for
-Python needs is a place where `Highcharts <https://www.highcharts.com>`__ JavaScript
-code can be executed.
+or some completely home-grown solution all, Highcharts for Python needs is a place where 
+`Highcharts <https://www.highcharts.com>`__ JavaScript code can be executed.
 
 All of those frameworks mentioned have their own best practices for organizing their
 application structures, and those best practices should *always* take priority. Even in a 

@@ -20,6 +20,8 @@ This documentation is a great place to start, but we're here to help!
 
 -----------------
 
+.. _faq_licensing:
+
 ***********************
 Licensing
 ***********************
@@ -60,9 +62,11 @@ Open Source
 Yes. The **Highcharts for Python Toolkit** toolkit is open source (but not free - 
 see :ref:`licensing <faq_licensing>` above).
 
-You are welcome to review the source code for any library in the toolkit on `Github <https://github.com/highcharts-for-python>`__, including for `Highcharts Core for Python <https://github.com/highcharts-for-python/highcharts-core>`__.
+You are welcome to review the source code for any library in the toolkit on 
+`Github <https://github.com/highcharts-for-python>`__, including for 
+`Highcharts Core for Python <https://github.com/highcharts-for-python/highcharts-core>`__.
 
-**Can I fork the toolkit?**
+**Can I fork the toolkit or a library in the toolkit?**
 
 .. warning::
 

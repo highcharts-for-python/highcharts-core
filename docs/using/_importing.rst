@@ -8,7 +8,7 @@
 
       This method of importing **Highcharts for Python** objects yields the fastest
       performance for the ``import`` statement. However, it is more verbose and requires
-      you to navigate the extensive :doc:`Highcharts for Python API </api>`.
+      you to navigate the extensive :doc:`Highcharts Core for Python API </api>`.
 
     .. code-block:: python
 

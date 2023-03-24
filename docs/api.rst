@@ -27,7 +27,7 @@ class in **Highcharts Core for Python**. These classes generally inherit from th
 :class:`HighchartsMeta <highcharts_core.metaclasses.HighchartsMeta>` metaclass, which
 provides each class with a number of standard methods.
 
-These methods are the "workhorses" of the **Highcharts for Python Tolkit** and you will be relying
+These methods are the "workhorses" of the **Highcharts for Python Toolkit** and you will be relying
 heavily on them when using the library. Thankfully, their signatures and behavior is
 generally consistent - even if what happens "under the hood" is class-specific at times.
 
