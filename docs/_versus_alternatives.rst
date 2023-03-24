@@ -98,7 +98,7 @@ some commonly-used alternatives:
   .. tab:: panel-highcharts
 
     The `panel-highcharts <https://pypi.org/project/panel-highcharts/>`_ library is -
-    honestly - fantastic. It is a excellent wrapper for the Highcharts Core (JS) library to
+    honestly - fantastic. It is a excellent wrapper for the Highcharts (JS) suite to
     enable exploratory data analysis (EDA) in Jupyter Notebooks or in Holoviz web
     applications.
 
@@ -110,14 +110,17 @@ some commonly-used alternatives:
         to the Highcharts API. In practice, this forces the developer to switch between
         Pythonic ``snake_case`` convention and JavaScript ``camelCase`` conventions
         within the same code. Not a big problem, but annoying.
+      * To really benefit from its capabilities, it requires a fair bit of Holoviz
+        boilerplate and widget configuration, which can be complicated, verbose, and 
+        "fiddly".
 
     .. tip::
 
       **When to use it?**
 
-      If your use case was satisfied with Highcharts Core visualizations only, and involved 
-      highly-interactive exploratory data analysis in a Jupyter Labs/Notebook environment, 
-      it may be worth considering this library.
+      If your use case is limited to highly-interactive exploratory data analysis in a 
+      Jupyter Labs/Notebook environment and you are willing to construct some complicated
+      Holoviz widget configuration code, it may be worth considering this library.
 
       However, those are some pretty specific gating conditions. For integration with
       a non-Jupyter application? That's not what the **Highcharts for Python Toolkit** was 

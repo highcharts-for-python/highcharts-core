@@ -213,16 +213,16 @@ Docstrings
 Design Patterns and Standards
 ***************************************************
 
-`Highcharts JS <https://www.highcharts.com>`__ is a large, robust, and complicated JavaScript library. If in doubt, take
-a look at their extensive `documentation <https://www.highcharts.com/docs/index>`_ and in
-particular their `API reference <https://api.highcharts.com/highcharts>`_. Because
-**Highcharts for Python** wraps the Highcharts JS API, its design is heavily shaped by
+`Highcharts <https://www.highcharts.com>`__ is a large, robust, and complicated suite of 
+JavaScript libraries. If in doubt, take a look at the extensive 
+`documentation <https://www.highcharts.com/docs/index>`_ and in particular the 
+`API reference <https://api.highcharts.com/highcharts>`_.  Because 
+**Highcharts for Python** wraps the Highcharts JS API, its design is heavily shaped by 
 Highcharts JS' own design - as one should expect.
 
 However, one of the main goals of **Highcharts for Python** is to make the Highcharts JS
-library a little more Pythonic in terms of its design to make it easier for Python
-developers to leverage it. Here are the notable design patterns that have been adopted
-that you should be aware of:
+library a little more Pythonic to make it easier for Python developers to leverage it. 
+Here are the notable design patterns that have been adopted that you should be aware of:
 
 Code Style: Python vs JavaScript Naming Conventions
 =======================================================
