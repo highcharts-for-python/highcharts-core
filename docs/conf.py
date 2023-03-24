@@ -69,7 +69,9 @@ html_static_path = ['_static']
 html_theme_options = {
     'navigation_depth': 3,
     'display_version': True,
-    'prev_next_buttons_location': 'both'
+    'prev_next_buttons_location': 'both',
+    'style_external_links': False,
+    'style_nav_header_background': 'rgb(70, 70, 92)'
 }
 
 html_logo = '_static/highcharts-for-python-light-150x149.png'

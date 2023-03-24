@@ -26,7 +26,7 @@
                             },
                             series_type = 'line')
 
-.. collapse:: Signature of the ``.from_csv()`` method.
+.. collapse:: Method Signature
 
   .. seealso::
 

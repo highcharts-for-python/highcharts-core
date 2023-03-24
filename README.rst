@@ -1,14 +1,32 @@
 ###################################################
-Highcharts for Python Toolkit
+Highcharts Core for Python
 ###################################################
 
 **High-end data visualization for the Python ecosystem**
 
-The **Highcharts for Python Toolkit** is a Python library that provides a Python wrapper
-for the fantastic `Highcharts JS <https://www.highcharts.com>`__ suite of JavaScript data
-visualization libraries, with full integration into the robust Python ecosystem. 
+**Highcharts Core for Python** is a Python library that provides a Python wrapper
+for the `Highcharts Core <https://www.highcharts.com/products/highcharts/>`__ JavaScript data
+visualization library, with full integration into the robust Python ecosystem, including: 
 
-The toolkit is composed of several different libraries, each of which provides comprehensive support for a component of the Highcharts JS suite:
+  * **Jupyter Labs/Notebook**. You can now produce high-end and interactive plots and
+    renders using the full suite of Highcharts visualization capabilities.
+  * **Pandas**. Automatically produce data visualizations from your Pandas dataframes
+  * **PySpark**. Automatically produce data visualizations from data in a PySpark
+    dataframe.
+  * ...and even more use-case specific integrations across the broader toolkit.
+
+**COMPLETE DOCUMENTATION:** https://core-docs.highchartspython.com/en/latest/index.html
+
+-------------
+
+***************************************
+The Highcharts for Python Toolkit
+***************************************
+
+The **Highcharts Core for Python** library is - as the name suggests - the core library in 
+the broader `Highcharts for Python Toolkit <https://www.highcharts.com/integrations/python>`__, 
+which together provides comprehensive support across the entire 
+`Highcharts <https://www.highcharts.com>`__ suite of data visualization libraries:
 
 .. list-table::
   :widths: 30 30 40
@@ -22,28 +40,16 @@ The toolkit is composed of several different libraries, each of which provides c
     - (this library) the core Highcharts data visualization library
   * - `Highcharts Stock for Python <https://stock-docs.highchartspython.com/>`__ 
     - `Highcharts Stock (JS) <https://www.highcharts.com/products/stock/>`__
-    - the robust time series visualization extension to Highcharts Core
+    - the time series visualization extension to Highcharts Core
   * - `Highcharts Maps <https://maps-docs.highchartspython.com/>`__ 
     - `Highcharts Maps (JS) <https://www.highcharts.com/products/maps/>`__
-    - the rich map visualization extension to Highcharts Core
+    - the map visualization extension to Highcharts Core
   * - `Highcharts Gantt <https://gantt-docs.highchartspython.com/>`__
     - `Highcharts Gantt (JS) <https://www.highcharts.com/products/gantt/>`__
     - the Gantt charting extension to Highcharts Core
   * - (all libraries in the Python toolkit)
     - The **Highcharts Export Server** 
     - enabling the programmatic creation of static (downloadable) data visualizations
-
-In order to integrate **Highcharts for Python** into the Python ecosystem, the library
-features native integration with:
-
-  * **Jupyter Labs/Notebook**. You can now produce high-end and interactive plots and
-    renders using the full suite of Highcharts visualization capabilities.
-  * **Pandas**. Automatically produce data visualizations from your Pandas dataframes
-  * **PySpark**. Automatically produce data visualizations from data in a PySpark
-    dataframe.
-  * ...and even more use-case specific integrations in each tool in the toolkit.
-
-**COMPLETE DOCUMENTATION:** https://core-docs.highchartspython.com/en/latest/index.html
 
 --------------------
 
@@ -64,58 +70,60 @@ To install **Highcharts Core for Python**, just execute:
 Why Highcharts for Python?
 ************************************
 
-Odds are you are aware of `Highcharts JS <https://www.highcharts.com>`__. If not, why not?
-It is the world's most popular, most powerful, category-defining JavaScript data
-visualization library. If you are building a web or mobile app/dashboard that will be
-visualizing data in some fashion, you should absolutely take a look at the Highcharts
-suite of solutions. Just take a look at some of their fantastic
-`demo visualizations <https://www.highcharts.com/demo>`_.
+`Highcharts <https://www.highcharts.com>`__ is the world's most popular, most powerful, 
+category-defining JavaScript data visualization library. If you are building a web or 
+mobile app/dashboard that will be visualizing data in some fashion, you should 
+absolutely take a look at the Highcharts suite of solutions. Take a peak at some 
+fantastic `demo visualizations <https://www.highcharts.com/demo>`__.
 
-`Highcharts JS <https://www.highcharts.com>`__ is a JavaScript library. It is written in
-JavaScript, and is specifically used to configure and render data visualizations in a
-web browser (or other JavaScript-executing) environment. As a JavaScript
-library, its audience is JavaScript developers. But what about the broader ecosystem of
+As a suite of JavaScript libraries, `Highcharts <https://www.highcharts.com>`__ is 
+written in JavaScript, and is used to configure and render data visualizations in a
+web browser (or other JavaScript-executing) environment. As a set of JavaScript
+libraries, its audience is JavaScript developers. But what about the broader ecosystem of
 Python developers and data scientists?
 
-Python is increasingly used as the technology of choice for data science and for
-the backends of leading enterprise-grade applications. In other words, Python is
-often the backend that delivers data and content to the front-end...which then renders it
-using JavaScript and HTML.
+Given Python's increasing adoption as the technology of choice for data science and for
+the backends of leading enterprise-grade applications, Python is often the backend that 
+delivers data and content to the front-end...which then renders it using JavaScript and 
+HTML.
 
 There are numerous Python frameworks (Django, Flask, Tornado, etc.) with specific
 capabilities to simplify integration with Javascript frontend frameworks (React, Angular,
 VueJS, etc.). But facilitating that with Highcharts has historically been very difficult.
 Part of this difficulty is because the Highcharts JavaScript suite - while supporting JSON as a
-serialization/deserialization format - leverages
-JavaScript object literals to expose the
+serialization/deserialization format - leverages JavaScript object literals to expose the
 full power and interactivity of its data visualizations. And while it's easy to serialize
 JSON from Python, serializing and deserializing to/from JavaScript object literal notation
-is much more complicated. This means that Python developers looking to integrate with
-Highcharts typically had to either invest a lot of effort, or were only able to leverage
-a small portion of Highcharts' rich functionality.
+is much more complicated. 
 
-So I wrote the **Highcharts for Python** toolkit to bridge that gap.
+This means that Python developers looking to integrate with Highcharts typically had to 
+either invest a lot of effort, or were only able to leverage a small portion of Highcharts' 
+rich functionality.
+
+So we wrote the **Highcharts for Python** toolkit to bridge that gap.
 
 **Highcharts for Python** provides Python object representation for *all* of the
 JavaScript objects defined in the
-`Highcharts JS API <https://api.highcharts.com/highcharts/>`__. It provides automatic data
-validation, and exposes simple and standardized methods for serializing those Python
+`Highcharts (JavaScript) API <https://api.highcharts.com/highcharts/>`__. It provides automatic 
+data validation, and exposes simple and standardized methods for serializing those Python
 objects back-and-forth to JavaScript object literal notation.
 
-Key Highcharts for Python Features
-======================================
+
+Key Highcharts Core for Python Features
+===========================================
 
 * **Clean and consistent API**. No reliance on "hacky" code, ``dict``
   and JSON serialization, or impossible to maintain / copy-pasted "spaghetti code".
 * **Comprehensive Highcharts Support**. Every single Highcharts chart type and every
   single configuration option is supported in the **Highcharts for Python** toolkit.
-  This includes the over 70 data visualization types supported by
-  `Highcharts JS <https://www.highcharts.com/product/highcharts/>`__ and the 50+
-  technical indicator visualizations available in
-  `Highcharts Stock <https://www.highcharts.com/product/stock/>`__, with full support for
-  the rich JavaScript formatter (JS callback functions)
-  capabilities that are often needed to get the most out of Highcharts' visualization and
-  interaction capabilities.
+  Highcharts Core for Python includes support for the over 70 data visualization types 
+  supported by `Highcharts Core <https://www.highcharts.com/product/highcharts/>`__ and 
+  while other libraries in the toolkit support the 50+ technical indicator visualizations 
+  available in `Highcharts Stock <https://www.highcharts.com/product/stock/>`__. 
+  
+  Every Highcharts for Python library provides full support for the rich JavaScript 
+  formatter (JS callback functions) capabilities that are often needed to get the most 
+  out of Highcharts' visualization and interaction capabilities.
 
   .. note:: 
     
@@ -128,13 +136,13 @@ Key Highcharts for Python Features
   capabilities.
 * **Easy and Robust Chart Download**. With one method call, produce high-end static
   visualizations that can be downloaded or shared as files with your audience. Produce
-  static charts using the Highsoft-provided **Highcharts Export Server**, or using your own private export
-  server as needed.
+  static charts using the Highsoft-provided **Highcharts Export Server**, or using your 
+  own private export server as needed.
 * **Integration with Pandas and PySpark**. With two lines of code, produce a high-end
   interactive visualization of your Pandas or PySpark dataframe.
 * **Consistent code style**. For Python developers, switching between Pythonic code
   conventions and JavaScript code conventions can be...annoying. So
-  **Highcharts for Python** applies Pythonic syntax with automatic conversion between
+  the Highcharts for Python toolkit applies Pythonic syntax with automatic conversion between
   Pythonic ``snake_case`` notation and JavaScript ``camelCase`` styles.
 
 |
@@ -343,8 +351,9 @@ that will render the chart wherever it is you want it to go:
 Getting Help/Support
 ***********************
 
-The **Highcharts for Python** toolkit comes with all of the great support that you are used to from working with the 
-Highcharts JavaScript libraries. When you license the toolkit, you are welcome to use any of the following tools to get 
+The **Highcharts for Python** toolkit comes with all of the great support that 
+you are used to from working with the Highcharts JavaScript libraries. When you 
+license the toolkit, you are welcome to use any of the following tools to get 
 help using the toolkit. In particular, you can:
 
   * Use the `Highcharts Forums <https://highcharts.com/forum>`__
@@ -364,7 +373,8 @@ Contributing
 *********************
 
 We welcome contributions and pull requests! For more information, please see the
-`Contributor Guide <https://core-docs.highchartspython.com/en/latest/contributing.html>`__. And thanks to all those who've already contributed!
+`Contributor Guide <https://core-docs.highchartspython.com/en/latest/contributing.html>`__. 
+And thanks to all those who've already contributed!
 
 -------------------
 

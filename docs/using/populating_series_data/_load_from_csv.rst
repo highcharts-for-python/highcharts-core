@@ -8,7 +8,7 @@
                               'id': 'id'
                           })
 
-.. collapse:: Signature of the ``.load_from_csv()`` method.
+.. collapse:: Method Signature
 
   .. method:: .load_from_csv(self, as_string_or_file, property_column_map, has_header_row = True, delimiter = ',', null_text = 'None', wrapper_character = "'", line_terminator = '\r\n', wrap_all_strings = False, double_wrapper_character_when_nested = False, escape_character = '\\')
     :noindex:

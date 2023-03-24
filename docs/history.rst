@@ -10,4 +10,6 @@ Release History
   :depth: 3
   :backlinks: entry
 
+-----------
+
 .. include:: ../CHANGES.rst
