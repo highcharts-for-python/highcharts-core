@@ -1,4 +1,4 @@
-To install **Highcharts for Python**, just execute:
+To install **Highcharts Core for Python**, just execute:
 
   .. code-block:: bash
 

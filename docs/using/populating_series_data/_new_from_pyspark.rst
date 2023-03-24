@@ -29,7 +29,7 @@
                                 },
                                 series_type = 'line')
 
-.. collapse:: Signature of the ``.from_pyspark()`` method.
+.. collapse:: Method Signature
 
   .. seealso::
 

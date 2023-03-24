@@ -1,6 +1,6 @@
-########################################
-Highcharts for Python API Reference
-########################################
+###########################################
+Highcharts Core for Python API Reference
+###########################################
 
 .. contents::
   :local:
@@ -22,12 +22,12 @@ Standard Methods
 =======================================
 
 Every single object supported by the
-`Highcharts JS API <https://api.highcharts.com/highcharts/>`__ corresponds to a Python
-class in **Highcharts for Python**. These classes generally inherit from the
+`Highcharts Core JavaScript API <https://api.highcharts.com/highcharts/>`__ corresponds to a Python
+class in **Highcharts Core for Python**. These classes generally inherit from the
 :class:`HighchartsMeta <highcharts_core.metaclasses.HighchartsMeta>` metaclass, which
 provides each class with a number of standard methods.
 
-These methods are the "workhorses" of **Highcharts for Python** and you will be relying
+These methods are the "workhorses" of the **Highcharts for Python Tolkit** and you will be relying
 heavily on them when using the library. Thankfully, their signatures and behavior is
 generally consistent - even if what happens "under the hood" is class-specific at times.
 
@@ -64,18 +64,18 @@ Class Structures and Inheritance
 
 .. warning::
 
-  Certain sections of the **Highcharts for Python** library - in particular the
-  ``options.series`` classes - rely heavily on multiple inheritance. This is a known
-  anti-pattern in Python development as it runs the risk of encountering the
-  :term:`diamond of death` inheritance problem. This complicates the process of inheriting
-  methods or properties from parent classes when properties or methods share names
-  across multiple parents.
+  Certain sections of the **Highcharts for Python Toolkit** - in particular the
+  :mod:`options.series <highcharts_core.options.series>` classes - rely heavily on
+  multiple inheritance. This is a known anti-pattern in Python development as it runs the
+  risk of encountering the :term:`diamond of death` inheritance problem. This complicates
+  the process of inheriting methods or properties from parent classes when properties or
+  methods share names across multiple parents.
 
-  I know this is an anti-pattern, but it was a necessary one to minimize code duplication
-  and maximize consistency. For that reason, I implemented it properly *despite* the
-  anti-pattern, using some advanced Python concepts to navigate the Python MRO
-  (Method Resolution Order) system cleanly. However, an awareness of the pattern used
-  may prove helpful if your code inherits from the Highcharts for Python classes.
+  We know this the diamond of death is an anti-pattern, but it was a necessary one to 
+  minimize code duplication and maximize consistency. For that reason, we implemented it 
+  properly *despite* the anti-pattern, using some advanced Python concepts to navigate the 
+  Python MRO (Method Resolution Order) system cleanly. However, an awareness of the pattern 
+  used may prove helpful if your code inherits from the Highcharts for Python classes.
 
   .. seealso::
 

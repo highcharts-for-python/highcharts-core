@@ -1,6 +1,6 @@
-#############################
-Using Highcharts for Python
-#############################
+###################################
+Using Highcharts Core for Python
+###################################
 
 .. contents::
   :depth: 3
@@ -9,33 +9,35 @@ Using Highcharts for Python
 --------------
 
 ***************************************************************
-Introduction to Highcharts JS and Highcharts for Python
+Introduction to Highcharts and Highcharts for Python
 ***************************************************************
 
-`Highcharts JS <https://www.highcharts.com>`__  is the gold-standard in JavaScript data visualization libraries,
-enabling you to design rich, beautiful, and highly interactive data visualizations of
-(almost) any kind imaginable, and to render those visualizations in your web or mobile
-applications. Take a look at some of their
-`customer showcases <https://www.highcharts.com/blog/posts/use-cases/>`_ and their own
+`Highcharts <https://www.highcharts.com>`__  is the gold-standard in JavaScript data 
+visualization libraries, enabling you to design rich, beautiful, and highly interactive 
+data visualizations of (almost) any kind imaginable, and to render those visualizations 
+in your web or mobile applications. Take a look at some of the
+`customer showcases <https://www.highcharts.com/blog/posts/use-cases/>`_ and the
 `demo gallery <https://www.highcharts.com/demo>`_ to see what you can do with Highcharts.
 
-**Highcharts for Python** is a Python wrapper for the
-`Highcharts JS <https://www.highcharts.com>`__ JavaScript library, which means that it is designed to give developers
-working in Python a simple and Pythonic way of interacting with Highcharts JS. Highcharts
-for Python will *not* render data visualizations itself - that's what Highcharts JS does -
-but it *will* allow you to:
+The **Highcharts for Python Toolkit** is a Python wrapper for the
+`Highcharts <https://www.highcharts.com>`__ suite of JavaScript libraries, which means 
+that it is designed to give developers working in Python a simple and Pythonic way of 
+interacting with Highcharts (JS). 
+
+The **Highcharts for Python Toolkit** will *not* render data visualizations itself - 
+that's what Highcharts (JS) does - but it *will* allow you to:
 
   #. Configure your data visualizations in Python.
   #. Supply data you have in Python to your data visualizations.
-  #. Programmatically produce the Highcharts JS JavaScript code that will actually render
+  #. Programmatically produce the Highcharts JavaScript code that will actually render
      your data visualization.
   #. Programmatically download a static version of your visualization (as needed) within
      Python.
 
 .. tip::
 
-  Think of **Highcharts for Python** as a translator to bridge your data visualization
-  needs between Python and JavaScript.
+  Think of the **Highcharts for Python Toolkit** as a translator to bridge your data 
+  visualization needs between Python and JavaScript.
 
 -------------------
 
@@ -43,16 +45,19 @@ but it *will* allow you to:
 Key Design Patterns in Highcharts for Python
 *************************************************
 
-`Highcharts JS <https://www.highcharts.com>`__ is a large, robust, and complicated JavaScript library. If in doubt, take
-a look at their extensive `documentation <https://www.highcharts.com/docs/index>`_ and in
-particular their `API reference`_. Because
-**Highcharts for Python** wraps the Highcharts JS API, its design is heavily shaped by
-Highcharts JS' own design - as one should expect.
+`Highcharts <https://www.highcharts.com>`__ is a large, robust, and complicated JavaScript 
+library. If in doubt, take a look at its extensive 
+`documentation <https://www.highcharts.com/docs/index>`_ and in particular its 
+`API reference`_. 
 
-However, one of the main goals of **Highcharts for Python** is to make the Highcharts JS
-library a little more Pythonic in terms of its design to make it easier for Python
-developers to leverage it. Here are the notable design patterns that have been adopted
-that you should be aware of:
+Because the **Highcharts for Python Toolkit** wraps the Highcharts (JS) API, its design is 
+heavily shaped by Highcharts JS' own design - as one should expect.
+
+However, one of the main goals of the Python toolkit is to make it easier for Python
+developers to leverage the Highcharts JavaScript libraries - in particular by providing a 
+more Pythonic way of interacting with the framework. 
+
+Here are the notable design patterns that have been adopted that you should be aware of:
 
 Code Style: Python vs JavaScript Naming Conventions
 =======================================================
@@ -62,16 +67,16 @@ Code Style: Python vs JavaScript Naming Conventions
 Standard Methods
 =======================================
 
-Every single object supported by the Highcharts JS API corresponds to a Python class in
-**Highcharts for Python**. You can find the complete list in our comprehensive
-:doc:`Highcharts for Python API Reference <api>`.
+Every single object supported by the Highcharts JavaScript API corresponds to a Python 
+class in the **Highcharts for Python Toolkit**. You can find the complete list in our 
+comprehensive :doc:`Highcharts Core for Python API Reference <api>`.
 
 These classes generally inherit from the
 :class:`HighchartsMeta <highcharts_core.metaclasses.HighchartsMeta>` metaclass, which
 provides each class with a number of standard methods. These methods are the "workhorses"
-of **Highcharts for Python** and you will be relying heavily on them when using the
-library. Thankfully, their signatures and behavior is generally consistent - even if what
-happens "under the hood" is class-specific at times.
+of **Highcharts for Python** and you will be relying heavily on them when using any of the
+libraries in the toolkit. Thankfully, their signatures and behavior is consistent - even 
+if what happens "under the hood" is class-specific at times.
 
 The standard methods exposed by the classes are:
 
@@ -115,18 +120,18 @@ Class Structures and Inheritance
 
 .. warning::
 
-  Certain sections of the **Highcharts for Python** library - in particular the
+  Certain sections of the **Highcharts for Python Toolkit** - in particular the
   :mod:`options.series <highcharts_core.options.series>` classes - rely heavily on
   multiple inheritance. This is a known anti-pattern in Python development as it runs the
   risk of encountering the :term:`diamond of death` inheritance problem. This complicates
   the process of inheriting methods or properties from parent classes when properties or
   methods share names across multiple parents.
 
-  I know this is an anti-pattern, but it was a necessary one to minimize code duplication
-  and maximize consistency. For that reason, I implemented it properly *despite* the
-  anti-pattern, using some advanced Python concepts to navigate the Python MRO
-  (Method Resolution Order) system cleanly. However, an awareness of the pattern used
-  may prove helpful if your code inherits from the Highcharts for Python classes.
+  We know this the diamond of death is an anti-pattern, but it was a necessary one to 
+  minimize code duplication and maximize consistency. For that reason, we implemented it 
+  properly *despite* the anti-pattern, using some advanced Python concepts to navigate the 
+  Python MRO (Method Resolution Order) system cleanly. However, an awareness of the pattern 
+  used may prove helpful if your code inherits from the Highcharts for Python classes.
 
   .. seealso::
 
@@ -139,24 +144,24 @@ Class Structures and Inheritance
 Organizing Your Highcharts for Python Project
 *************************************************
 
-**Highcharts for Python** is a utility that can integrate with - quite literally - any
-frontend framework. Whether your Python application is relying on iPython (e.g.
-`Jupyter Notebook`_ or `Jupyter Labs`_),
+The **Highcharts for Python Toolkit** is a utility that can integrate with - quite 
+literally - any frontend framework. Whether your Python application is relying on IPython 
+(e.g. `Jupyter Notebook`_ or `Jupyter Labs`_),
 `Flask <https://flask.palletsprojects.com/en/2.2.x/>`_,
 `Django <https://www.djangoproject.com/>`_,  `FastAPI <https://fastapi.tiangolo.com/>`_,
 `Pyramid <https://trypyramid.com/>`_, `Tornado <https://www.tornadoweb.org/en/stable/>`_,
 or some completely home-grown solution all Highcharts for
-Python needs is a place where `Highcharts JS <https://www.highcharts.com>`__ JavaScript
+Python needs is a place where `Highcharts <https://www.highcharts.com>`__ JavaScript
 code can be executed.
 
-All of those frameworks I mentioned have their own best practices for organizing their
-application structures, and those should *always* take priority. Even in a data-centric
-application that will be relying heavily on **Highcharts for Python**, your application's
-core business logic will be doing most of the heavy lifting and so your project's
-organization should reflect that.
+All of those frameworks mentioned have their own best practices for organizing their
+application structures, and those best practices should *always* take priority. Even in a 
+data-centric application that will be relying heavily on **Highcharts for Python**, your 
+application's core business logic will be doing most of the heavy lifting and so your 
+project's organization should reflect that.
 
 However, there are a number of best practices that we recommend for organizing your
-files and code to work with **Highcharts for Python**:
+files and code to work with the **Highcharts for Python Toolkit**:
 
   .. warning::
 
@@ -180,19 +185,20 @@ Importing Highcharts for Python
 Use Shared Options
 ========================
 
-One of the most challenging aspects of `Highcharts JS <https://www.highcharts.com>`__ is
-its sheer breadth of functionality and configurability. That's simultaneously the library's
-greatest strength, and its greatest weakness. This is because it can be quite challenging
+One of the most challenging aspects of the `Highcharts <https://www.highcharts.com>`__ (JS) 
+suite is its sheer breadth of functionality and configurability. That's simultaneously the 
+suite's greatest strength and its greatest weakness. This is because it can be quite challenging
 to wrangle thousands of properties - especially when even a single visualization can use
 hundreds of those properties!
 
-This is a challenge that the developers of `Highcharts JS <https://www.highcharts.com>`__
-are keenly aware of, and one which we've given some thought to in the
-**Highcharts for Python** library. A core principle you should use throughout your project
-is to practice :iabbr:`DRY (Do Not Repeat Yourself)` programming. If your application will
-be generating multiple visualizations, they will likely need some consistent configurations.
+This is a challenge that we are keenly aware of, and one which we've given some thought to in 
+the design of the **Highcharts for Python Toolkit**. A core principle you should use throughout 
+your project is to practice :iabbr:`DRY (Do Not Repeat Yourself)` programming. 
 
-For example, you will want their title position to be consistent, their color schemes to
+If your application will be generating multiple visualizations, they will likely need some 
+consistent configurations.
+
+For example, you will want each chart's title position to be consistent, their color schemes to
 be consistent, their font sizing to be consistent, etc. In your code you want these
 configuration settings to be defined *once* and then applied to all of the visualizations
 you are producing.
@@ -203,7 +209,7 @@ class. It generates a single set of global options which - when serialized to Ja
 apply its configuration settings consistently across all data visualizations on the same
 page.
 
-As with all **Highcharts for Python** objects, you can instantiate them in several ways:
+As with all **Highcharts for Python** objects, you can instantiate it in several ways:
 
 .. tabs::
 
@@ -295,29 +301,33 @@ of your charts.
 Working with Data
 **************************************
 
-Obviously, if you are going to use **Highcharts for Python** and
-`Highcharts JS <https://www.highcharts.com>`__ you will
+Obviously, if you are going to use the **Highcharts for Python Toolkit** and
+`Highcharts <https://www.highcharts.com>`__ you will
 need to have data to visualize. Python is rapidly becoming the *lingua franca* in the
-world of data manipulation, transformation, and analysis and **Highcharts for Python**
-is specifically designed to play well within that ecosystem to make it easy to visualize
-data from CSV files, from `pandas`_ dataframes, or `PySpark`_ dataframes.
+world of data manipulation, transformation, and analysis and the 
+**Highcharts for Python Toolkit** is designed to play well within that ecosystem, 
+making it easy to visualize data from CSV files, from `pandas`_ dataframes, 
+or `PySpark`_ dataframes.
 
 How Data is Represented
 ==================================
 
-`Highcharts JS <https://www.highcharts.com>`__ supports two different ways of representing data: as an individual
-:term:`series` comprised of individual data points, and as a set of instructions to read
-data dynamically from a CSV file or an HTML table.
+`Highcharts <https://www.highcharts.com>`__ (JS) supports two different ways of 
+representing data: as an individual :term:`series` comprised of individual data 
+points, and as a set of instructions to read data dynamically from a CSV file or 
+an HTML table.
 
   .. seealso::
 
     * :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` class
     * :class:`options.Data <highcharts_core.options.data.Data>` class
 
-`Highcharts JS <https://www.highcharts.com>`__ organizes data into :term:`series`. You can think of a series as a single
-line on a graph that shows a set of values. The set of values that make up the series are
-:term:`data points <data point>`, which are defined by a set of properties that indicate the data
-point's position on one or more axes. As a result, `Highcharts JS <https://www.highcharts.com>`__ and
+`Highcharts <https://www.highcharts.com>`__ organizes data into :term:`series`. You 
+can think of a series as a single line on a graph that shows a set of values. The set 
+of values that make up the series are :term:`data points <data point>`, which are defined 
+by a set of properties that indicate the data point's position on one or more axes. 
+
+As a result, `Highcharts (JS) <https://www.highcharts.com>`__ and
 **Highcharts for Python** both represent the data points in series as a list of data point
 objects in the ``data`` property within the series:
 
@@ -325,7 +335,7 @@ objects in the ``data`` property within the series:
   :widths: 50 50
   :header-rows: 1
 
-  * - Highcharts JS
+  * - Highcharts (JS)
     - Highcharts for Python
   * - .. code-block:: javascript
 
@@ -381,9 +391,10 @@ objects in the ``data`` property within the series:
         ])
 
 As you can see, **Highcharts for Python** represents its data the same way that
-`Highcharts JS <https://www.highcharts.com>`__ does. That should be expected. However, constructing tens, hundreds, or
-possibly thousands of data points individually in your code would be a nightmare. For that
-reason, **Highcharts for Python** provides a number of convenience methods to make it
+`Highcharts (JS) <https://www.highcharts.com>`__ does. That should be expected. 
+However, constructing tens, hundreds, or possibly thousands of data points 
+individually in your code would be a nightmare. For that reason, the 
+**Highcharts for Python Toolkit** provides a number of convenience methods to make it
 easier to populate your series.
 
 .. _populating_series_data:
@@ -418,7 +429,7 @@ instance), or to create a new series instance with data already loaded.
           Creates a collection of data point instances, parsing the contents of ``value`` as an
           array (iterable). This method is specifically used to parse data that is input to
           **Highcharts for Python** without property names, in an array-organized structure as
-          described in the `Highcharts JS <https://www.highcharts.com>`__ documentation.
+          described in the `Highcharts (JS) <https://www.highcharts.com>`__ documentation.
 
           .. seealso::
 
@@ -542,9 +553,9 @@ an instance of :class:`HighchartsOptions <highcharts_core.options.HighchartsOpti
   .. note::
 
     This structure - where the chart object contains an options object - is a little
-    nested for my tastes, but it is the structure which
-    `Highcharts JS <https://www.highcharts.com>`__ has adopted and
-    so for the sake of consistency **Highcharts for Python** uses it as well.
+    nested for some tastes, but it is the structure which
+    `Highcharts (JS) <https://www.highcharts.com>`__ has adopted and
+    so for the sake of consistency the **Highcharts for Python Toolkit** uses it as well.
 
 To be visualized on your chart, you will need to add your series instances to the
 :meth:`Chart.options.series <highcharts_core.options.HighchartsOptions.series>`
@@ -582,10 +593,11 @@ your visualizations:
 Rendering Highcharts Visualizations in Web Content
 ========================================================
 
-`Highcharts JS <https://www.highcharts.com>`__ is a JavaScript library specifically designed to enable rendering
-high-end data visualizations in a web context. The library is designed and optimized to
-operate within a web browser. **Highcharts for Python** therefore fully supports this
-capability, and we've enabled it using the *batteries included* principle.
+`Highcharts <https://www.highcharts.com>`__ is a suite of JavaScript libraries 
+designed to enable rendering high-end data visualizations in a web context. They are 
+designed and optimized to operate within a web browser. The 
+**Highcharts for Python Toolkit** therefore fully supports this capability, and we've 
+enabled it using the *batteries included* principle.
 
 To render a **Highcharts for Python** visualization in a web context, all you need is
 for the browser to execute the output of the chart's
@@ -598,10 +610,10 @@ will display the chart in full.
 
   The current version of **Highcharts for Python** assumes that your web content already
   has all the ``<script/>`` tags which include the
-  `Highcharts JS <https://www.highcharts.com>`__ modules your chart relies on.
+  `Highcharts (JS) <https://www.highcharts.com>`__ modules your chart relies on.
 
   This is likely to change in a future version of **Highcharts for Python**, where the
-  library will support the production of ``<script/>`` tags (see roadmap :issue:`2`).
+  library will support the production of ``<script/>`` tags (see roadmap issue :issue:`12`).
 
 For example:
 
@@ -639,7 +651,7 @@ will render the resulting chart in your notebook's output. That's it!
 
   .. caution::
 
-    If `iPython <https://ipython.readthedocs.io/>`_ is not available in your runtime
+    If `IPython <https://ipython.readthedocs.io/>`_ is not available in your runtime
     environment, calling
     :meth:`.display() <highcharts_core.chart.Chart.display>` will raise a
     :exc:`HighchartsDependencyError`.
@@ -648,10 +660,10 @@ will render the resulting chart in your notebook's output. That's it!
 
 .. sidebar:: Highcharts Export Server
 
-  Highsoft - the developers of `Highcharts JS <https://www.highcharts.com>`__ - are kind
-  enough to provide a rate-limited publicly available :term:`Export Server` that can be
-  used by `Highcharts JS <https://www.highcharts.com>`__ license-holders. By default,
-  **Highcharts for Python** is configured to use this server.
+  Highsoft - the developers of `Highcharts (JS) <https://www.highcharts.com>`__ - 
+  provide a rate-limited publicly available :term:`Export Server` that can be
+  used by `Highcharts <https://www.highcharts.com>`__ license-holders. By default,
+  the **Highcharts for Python Toolkit** is configured to use this server.
 
   However, there are many use cases where you may be deploying your own
   :term:`Export Server` and wish to use that instead. You can do this by
@@ -668,7 +680,7 @@ Sometimes you are not looking to produce an interactive web-based visualization 
 data, but instead are looking to produce a static image of your visualization that can
 be downloaded, emailed, or embedded in some other documents.
 
-With **Highcharts for Python**, that's as simple as executing the
+With the **Highcharts for Python Toolkit**, that's as simple as executing the
 :meth:`Chart.download_chart() <highcharts_core.chart.Chart.download_chart>` method.
 
 When you have defined a :class:`Chart <highcharts_core.chart.Chart>` instance, you can

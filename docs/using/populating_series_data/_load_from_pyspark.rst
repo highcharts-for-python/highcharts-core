@@ -8,7 +8,7 @@
                                   'id': 'id'
                               })
 
-.. collapse:: Signature of the ``.load_from_pyspark()`` method.
+.. collapse:: Method Signature
 
   .. method:: .load_from_pyspark(self, df, property_map)
     :noindex:

@@ -8,7 +8,7 @@
                                  'id': 'id'
                              })
 
-.. collapse:: Signature of the ``.load_from_pandas()`` method.
+.. collapse:: Method Signature
 
   .. method:: .load_from_pandas(self, df, property_map)
     :noindex:
