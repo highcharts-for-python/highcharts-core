@@ -29,7 +29,7 @@
                                series_type = 'line')
 
 
-.. collapse:: Signature of the ``.from_pandas()`` method.
+.. collapse:: Method Signature
 
   .. seealso::
 

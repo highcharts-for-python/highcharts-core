@@ -8,7 +8,7 @@ Supported Visualizations
 
 --------------
 
-As the tables below make clear, the **Highcharts for Python** toolkit and the
+As the tables below make clear, the **Highcharts for Python Toolkit** toolkit and the
 `Highcharts <https://www.highcharts.com/>`__ suite of JavaScript libraries are likely the
 single most comprehensive suite of data visualization tools available in the market. With
 over 70 (seventy!) distinct data visualizations and 50 (fifty!)
@@ -37,7 +37,7 @@ to visualize your data.
     .. note::
 
       The visualizations below are provided by **Highcharts Core for Python** and
-      `Highcharts JS <https://www.highcharts.com/products/highcharts/>`__. They are also
+      `Highcharts Core (JS) <https://www.highcharts.com/products/highcharts/>`__. They are also
       available in the other libraries within the toolkit.
 
     .. list-table::
@@ -724,7 +724,7 @@ visualizations.
     .. error::
 
       The **Highcharts Core for Python** library and the related
-      `Highcharts JS <https://www.highcharts.com/products/highcharts/>`__ JavaScript
+      `Highcharts Core <https://www.highcharts.com/products/highcharts/>`__ JavaScript
       library do not support :term:`technical indicators <technical indicator>`.
 
       Only **Highcharts Stock for Python** and
@@ -1226,13 +1226,11 @@ visualizations.
 
   .. tab:: Gantt
 
-    .. error::
+    .. seealso::
 
-      The **Highcharts Gantt for Python** extension and the related
-      `Highcharts Gantt <https://www.highcharts.com/products/maps/>`__ JavaScript
-      library do not support :term:`technical indicators <technical indicator>`.
+      As an extension of the **Highcharts Stock for Python** library, for reasons of
+      convenience the **Highcharts Gantt for Python** extension provides full support
+      for all :term:`technical indicators <technical indicator>` supported by the
+      **Highcharts Stock for Python** library.
 
-      Only **Highcharts Stock for Python** and
-      `Highcharts Stock <https://www.highcharts.com/products/stock/>`__ support
-      technical indicators. For more information, please see
-      `here <https://stock-docs.highchartspython.com/>`__.
+      For more information, please see `here <https://stock-docs.highchartspython.com/>`__.

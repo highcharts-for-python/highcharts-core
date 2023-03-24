@@ -4,7 +4,7 @@ Terms and Conditions for the Highcharts for Python Toolkit License
 
 .. warning::
 
-  The **Highcharts for Python** toolkit as a whole, and the **Highcharts Core for Python** library specifically, 
+  The **Highcharts for Python Toolkit** as a whole, and the **Highcharts Core for Python** library specifically, 
   are made available subject to a *paid* commercial license. This means that while the code is open-source, in order
   to use it you **must** purchase a license from `Highsoft A/S <https://www.highcharts.com>`__, the 
   creators of the Highcharts JavaScript library.

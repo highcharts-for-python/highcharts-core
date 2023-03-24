@@ -4,14 +4,14 @@ Contributing to Highcharts for Python
 
 .. note::
 
-  As a general rule of thumb, **Highcharts for Python** applies :pep:`PEP 8 <8>` styling,
-  with some important differences.
+  As a general rule of thumb, the **Highcharts for Python Toolkit** applies 
+  :pep:`PEP 8 <8>` styling, with some important differences.
 
 .. include:: _unit_tests_code_coverage.rst
 
 .. sidebar:: What makes an API idiomatic?
 
-  One of my favorite ways of thinking about idiomatic design comes from a `talk
+  One of our favorite ways of thinking about idiomatic design comes from a `talk
   given by Luciano Ramalho at Pycon 2016`_ where he listed traits of a Pythonic
   API as being:
 
@@ -47,7 +47,7 @@ In other words:
 
   Users should simply be able to drive the car without looking at the engine.
 
-The good news is that `Highcharts JS <https://www.highcharts.com>`__ applies a very similar philosophy, and so that
+The good news is that `Highcharts (JS) <https://www.highcharts.com>`__ applies a very similar philosophy, and so that
 makes the job for **Highcharts for Python** that much simpler.
 
 *************************
@@ -277,7 +277,7 @@ Multiple Inheritance, DRY and the Diamond of Death
   *Everything in moderation, including moderation.*
   -- Oscar Wilde
 
-When contributing code to the **Highcharts for Python** toolkit, it is important to
+When contributing code to the **Highcharts for Python Toolkit**, it is important to
 understand how we handle multiple inheritance and the :term:`diamond of death` problem.
 
 First, obviously, multiple inheritance is generally considered an anti-pattern. That's
@@ -285,13 +285,13 @@ because it makes debugging code much, much harder - particuarly in Python, which
 bit of a "magic" secret sauce called the MRO (Method Resolution Order) to determine which
 parent class' methods to execute and when.
 
-However, `Highcharts JS <https://www.highcharts.com>`__ - and by consequence, **Highcharts for Python** - is a very
-verbose library. I estimate that the full set of objects in the library has about 15,000
-properties in total. A great many of these properties are identical in terms of their
-syntax, and their meaning (in context). So this is a classic example of where we can apply
-the principle of :iabbr:`DRY (Don't Repeat Yourself)` to good effect. By using class
-inheritance, we can reduce the number of properties from about 15,000 to about 1,900. Not
-bad!
+However, `Highcharts <https://www.highcharts.com>`__ - and by consequence, 
+**Highcharts for Python** - is very verbose. We estimate that the full set of 
+objects across the full Python toolkit has about 15,000 properties in total. A great many 
+of these properties are identical in terms of their syntax, and their meaning (in context). 
+So this is a classic example of where we can apply the principle of 
+:iabbr:`DRY (Don't Repeat Yourself)` to good effect. By using class inheritance, we can 
+reduce the number of properties from about 15,000 to about 1,900. Not bad!
 
 However, this significant reduction *does* require us to use multiple inheritance in some
 cases, paritcularly in the :mod:`.options.series <highcharts_core.options.series>`
@@ -320,7 +320,7 @@ helper methods to assist in navigating the MRO:
   * - :meth:`HighchartsMeta._to_untrimmed_dict() <highcharts_core.metaclasses.HighchartsMeta._to_untrimmed_dict>`
     - Generates an :term:`untrimmed` :class:`dict <python:dict>` representation of the
       instance at its lowest level in the class hierarchy. Think of this as the
-      "botom of the ladder", with other methods (notably
+      "bottom of the ladder", with other methods (notably
       :meth:`_untrimmed_mro_ancestors() <highcharts_core.metaclasses.HighchartsMeta._untrimmed_mro_ancestors>`)
       being used to generate corresponding :class:`dict <python:dict>` from other rungs on
       the ladder.
@@ -329,7 +329,7 @@ When working on classes in the library:
 
   #. First, check whether the class has multiple inheritance. The easiest way to do this
      is to check the class inheritance diagram in the
-     :doc:`Highcharts for Python API Reference <api>`.
+     :doc:`Highcharts Core for Python API Reference <api>`.
   #. Second, if a class you're working on has mulitple inheritance, be sure to use the
      special functions and methods above as appropriate.
 
@@ -372,7 +372,7 @@ And you should be good to go!
 Ideas and Feature Requests
 ============================
 
-Check for open `issues <https://github.com/insightindustry/highcharts-core/issues>`_
+Check for open `issues <https://github.com/highcharts-for-python/highcharts-core/issues>`_
 or create a new issue to start a discussion around a bug or feature idea.
 
 Testing

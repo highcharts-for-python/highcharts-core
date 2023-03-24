@@ -17,7 +17,7 @@
 
       If these hard dependencies are not available in the environment where
       **Highcharts Core for Python** is running, then the library will simply not work. Besides
-      Highcharts JS itself, all of the other hard dependencies are automatically installed
+      Highcharts Core (JS) itself, all of the other hard dependencies are automatically installed
       when installing **Highcharts Core for Python** using:
 
       .. code-block:: bash
@@ -29,7 +29,7 @@
       .. note::
 
         Not technically a Python dependency, but obviously **Highcharts Core for Python** will
-        not work properly if your rendering layer does not leverage Highcharts JS.
+        not work properly if your rendering layer does not leverage Highcharts Core (JS).
 
     * `esprima-python <https://github.com/Kronuz/esprima-python>`_ v.4.0 or higher
     * `requests <https://requests.readthedocs.io/en/latest/>`_ v.2.28 or higher
