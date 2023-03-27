@@ -24,7 +24,7 @@
 
         $ pip install highcharts-core
 
-    * `Highcharts JS <https://www.highcharts.com>`__ v.10.2 or higher
+    * `Highcharts Core <https://www.highcharts.com/products/highcharts/>`__ v.10.2 or higher
 
       .. note::
 
