@@ -217,7 +217,7 @@ Design Patterns and Standards
 JavaScript libraries. If in doubt, take a look at the extensive 
 `documentation <https://www.highcharts.com/docs/index>`_ and in particular the 
 `API reference <https://api.highcharts.com/highcharts>`_.  Because 
-**Highcharts for Python** wraps the Highcharts JS API, its design is heavily shaped by 
+**Highcharts for Python** wraps the Highcharts Core API, its design is heavily shaped by 
 Highcharts JS' own design - as one should expect.
 
 However, one of the main goals of **Highcharts for Python** is to make the Highcharts JS

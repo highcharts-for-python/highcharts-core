@@ -25,7 +25,7 @@ Highcharts Core for Python
   Supported Visualizations <visualizations>
   FAQ <faq>
   Toolkit Components and Roadmap <toolkit>
-  Using Highcharts for Python <using>
+  Using Highcharts Core for Python <using>
   API Reference <api>
   Error Reference <errors>
   Getting Help <support>
@@ -40,7 +40,7 @@ Highcharts Core for Python
   **Highcharts Core for Python** is designed to be compatible with:
 
     * Python 3.10 or higher,
-    * Highcharts JS 10.2 or higher,
+    * Highcharts Core (JS) 10.2 or higher,
     * Jupyter Notebook 6.4 or higher,
     * IPython 8.10 or higher,
     * Pandas 1.3 or higher
@@ -85,10 +85,10 @@ which together provides comprehensive support across the entire
   * - `Highcharts Stock for Python <https://stock-docs.highchartspython.com/>`__ 
     - `Highcharts Stock (JS) <https://www.highcharts.com/products/stock/>`__
     - the time series visualization extension to Highcharts Core
-  * - `Highcharts Maps <https://maps-docs.highchartspython.com/>`__ 
+  * - `Highcharts Maps for Python <https://maps-docs.highchartspython.com/>`__ 
     - `Highcharts Maps (JS) <https://www.highcharts.com/products/maps/>`__
     - the map visualization extension to Highcharts Core
-  * - `Highcharts Gantt <https://gantt-docs.highchartspython.com/>`__
+  * - `Highcharts Gantt for Python <https://gantt-docs.highchartspython.com/>`__
     - `Highcharts Gantt (JS) <https://www.highcharts.com/products/gantt/>`__
     - the Gantt charting extension to Highcharts Core
   * - (all libraries in the Python toolkit)

@@ -5,7 +5,7 @@
 default values are generally applied if a JavaScript property is ``undefined`` (missing or
 otherwise not specified), which is different from the JavaScript value of ``null``.
 
-While my Pythonic instinct is to:
+While our Pythonic instinct is to:
 
   * indicate those default values explicitly in the **Highcharts for Python** code as
     keyword argument defaults, and
