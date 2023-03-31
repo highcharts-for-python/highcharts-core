@@ -59,6 +59,41 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
     return None
 
 
+def is_js_object(as_str):
+    """Determine whether ``as_str`` is a JavaScript object.
+    
+    :param as_str: The string to evaluate.
+    :type as_str: :class:`str <python:str>`
+    
+    :returns: ``True`` if ``as_str`` is a JavaScript function. ``False`` if not.
+    :rtype: :class:`bool <python:bool>`
+    """
+    expression_item = f'const testName = {as_str}'
+    try:
+        parsed = esprima.parseScript(expression_item)
+    except ParseError:
+        try:
+            parsed = esprima.parseModule(expression_item)
+        except ParseError:
+            return False
+
+    body = parsed.body
+    if not body:
+        return False
+
+    first_item = body[0]
+    if first_item.type != 'VariableDeclaration':
+        return False
+
+    init = first_item.declarations[0].init
+    if not init:
+        return False
+    if init.type in ('ObjectExpression'):
+        return True
+
+    return False
+
+
 def attempt_variable_declaration(as_str):
     """Attempt to coerce ``as_str`` to a JavaScript variable declaration form.
 
@@ -167,8 +202,13 @@ def get_js_literal(item) -> str:
                 as_str += ',\n'
         as_str += ']'
     elif checkers.is_string(item):
-        if item.startswith('{') or item.startswith('[') or item.startswith('Date'):
+        if item.startswith('[') or item.startswith('Date'):
             as_str += f"""{item}"""
+        elif item.startswith('{') and item.endswith('}'):
+            if is_js_object(item):
+                as_str += f"""{item}"""
+            else:
+                as_str += f"""'{item}'"""
         elif item in string.whitespace:
             as_str += f"""`{item}`"""
         elif item.startswith == 'HCP: REPLACE-WITH-':
