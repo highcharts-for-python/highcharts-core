@@ -541,7 +541,7 @@ class NumericAxis(GenericAxis):
             'opposite': self.opposite,
             'pane': self.pane,
             'panningEnabled': self.panning_enabled,
-            'plotPands': self.plot_bands,
+            'plotBands': self.plot_bands,
             'plotLines': self.plot_lines,
             'reversed': self.reversed,
             'reversedStacks': self.reversed_stacks,
