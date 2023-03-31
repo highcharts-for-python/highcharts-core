@@ -426,6 +426,6 @@ def prep_js_for_jupyter(js_str,
     function_str += """{\n"""
     function_str += js_str
     function_str += """\n};\n"""
-    function_str += f"""retryHighcharts(insertChart_{random_slug}, {container}, {retries}, {retries}, {interval});"""
+    function_str += f"""retryHighcharts(insertChart_{random_slug}, '{container}', {retries}, {retries}, {interval});"""
 
     return function_str
