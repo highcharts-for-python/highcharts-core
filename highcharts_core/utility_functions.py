@@ -136,6 +136,8 @@ def validate_color(value):
 
     if not value:
         return None
+    elif value.__class__.__name__ == 'EnforcedNullType':
+        return value
     elif isinstance(value, (Gradient, Pattern)):
         return value
     elif isinstance(value, (dict, str)) and ('linearGradient' in value or
