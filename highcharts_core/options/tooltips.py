@@ -759,7 +759,7 @@ class Tooltip(HighchartsMeta):
 
     @style.setter
     def style(self, value):
-        self._style = validators.string(value, allow_empty = True)
+        self._style = validators.string(value, allow_empty = True, coerce_value = True)
 
     @property
     def use_html(self) -> Optional[bool]:

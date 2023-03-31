@@ -1,3 +1,4 @@
+import datetime
 from typing import Optional, List
 from decimal import Decimal
 
@@ -763,7 +764,17 @@ class SeriesOptions(SeriesBaseOptions):
 
     @point_start.setter
     def point_start(self, value):
-        self._point_start = validators.numeric(value, allow_empty = True)
+        try:
+            self._point_start = validators.numeric(value, allow_empty = True)
+        except (TypeError, ValueError) as error:
+            if hasattr(value, 'timestamp') and value.tzinfo is not None:
+                self._point_start = value.timestamp()
+            elif hasattr(value, 'timestamp'):
+                value = value.replace(tzinfo = datetime.timezone.utc)
+                self._point_start = value.timestamp()
+            else:
+                raise error
+                
 
     @property
     def stacking(self) -> Optional[str]:
