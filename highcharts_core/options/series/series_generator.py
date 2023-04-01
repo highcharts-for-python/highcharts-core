@@ -62,7 +62,7 @@ from highcharts_core.options.series.wordcloud import WordcloudSeries
 
 SERIES_CLASSES = {
     'arcdiagram': ArcDiagramSeries,
-    'areaseries': AreaSeries,
+    'area': AreaSeries,
     'arearange': AreaRangeSeries,
     'areaspline': AreaSplineSeries,
     'areasplinerange': AreaSplineRangeSeries,
