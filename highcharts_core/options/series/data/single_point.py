@@ -160,6 +160,11 @@ class SinglePointData(SinglePointBase):
     def from_array(cls, value):
         if not value:
             return []
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
         elif not checkers.is_iterable(value):
             value = [value]
 
@@ -274,6 +279,11 @@ class SingleValueData(SinglePointBase):
     def from_array(cls, value):
         if not value:
             return []
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
         elif not checkers.is_iterable(value):
             value = [value]
 
@@ -387,6 +397,11 @@ class SingleXData(SinglePointBase):
     def from_array(cls, value):
         if not value:
             return []
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
         elif not checkers.is_iterable(value):
             value = [value]
 
@@ -497,6 +512,11 @@ class LabeledSingleXData(SingleXData):
     def from_array(cls, value):
         if not value:
             return []
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
         elif not checkers.is_iterable(value):
             value = [value]
 
@@ -627,6 +647,11 @@ class ConnectedSingleXData(SingleXData):
     def from_array(cls, value):
         if not value:
             return []
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
         elif not checkers.is_iterable(value):
             value = [value]
 

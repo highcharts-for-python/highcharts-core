@@ -167,6 +167,11 @@ class RangeData(DataBase):
                 value = validators.json(value)
             except (ValueError, TypeError):
                 pass
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
 
         if not checkers.is_iterable(value):
             value = [value]

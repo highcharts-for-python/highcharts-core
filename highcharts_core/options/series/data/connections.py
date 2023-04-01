@@ -50,6 +50,11 @@ class ConnectionBase(DataBase):
     def from_array(cls, value):
         if not value:
             return []
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
         elif not checkers.is_iterable(value):
             value = [value]
 
@@ -181,6 +186,11 @@ class ConnectionData(ConnectionBase):
         """
         if not value:
             return []
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
         elif not checkers.is_iterable(value):
             value = [value]
 
@@ -283,6 +293,11 @@ class WeightedConnectionData(ConnectionData):
         """
         if not value:
             return []
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
         elif not checkers.is_iterable(value):
             value = [value]
 
@@ -404,6 +419,11 @@ class OutgoingWeightedConnectionData(WeightedConnectionData):
         """
         if not value:
             return []
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
         elif not checkers.is_iterable(value):
             value = [value]
 
