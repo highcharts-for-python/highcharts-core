@@ -759,8 +759,16 @@ class ChartOptions(HighchartsMeta):
         return self._panning
 
     @panning.setter
-    @class_sensitive(PanningOptions)
     def panning(self, value):
+        if value is None:
+            self._panning = None
+        else:
+            if isinstance(value, bool):
+                value = {
+                    'enabled': value
+                }
+            value = validate_types(value, types = PanningOptions)
+            
         self._panning = value
 
     @property
