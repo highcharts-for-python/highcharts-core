@@ -370,7 +370,7 @@ def get_retryHighcharts():
                 fn()
                 return resolve();
             } catch (err) {
-                if (err instanceof ReferenceError) {
+                if ((err instanceof ReferenceError) || ((err instanceof Error) && (err.message.includes('#13')))) {
                     if (retriesLeft === 0) {
                         var target_div = document.getElementById(container);
                         if (target_div) {
