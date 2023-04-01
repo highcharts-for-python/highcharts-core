@@ -2,7 +2,7 @@ import datetime
 from typing import Optional, List
 from decimal import Decimal
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
 from highcharts_core import errors
 from highcharts_core.decorators import class_sensitive, validate_types
@@ -765,15 +765,19 @@ class SeriesOptions(SeriesBaseOptions):
     @point_start.setter
     def point_start(self, value):
         try:
-            self._point_start = validators.numeric(value, allow_empty = True)
+            value = validators.numeric(value, allow_empty = True)
         except (TypeError, ValueError) as error:
+            value = validators.datetime(value)
+
             if hasattr(value, 'timestamp') and value.tzinfo is not None:
                 self._point_start = value.timestamp()
             elif hasattr(value, 'timestamp'):
                 value = value.replace(tzinfo = datetime.timezone.utc)
-                self._point_start = value.timestamp()
+                value = value.timestamp()
             else:
                 raise error
+            
+        self._point_start = value
                 
 
     @property
