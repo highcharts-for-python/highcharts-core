@@ -31,37 +31,109 @@ INCLUDE_LIBS = [
     'https://code.highcharts.com/highcharts-3d.js',
     'https://code.highcharts.com/modules/accessibility.js',
     'https://code.highcharts.com/modules/annotations.js',
+    'https://code.highcharts.com/modules/annotations-advanced.js',
+    'https://code.highcharts.com/modules/arc-diagram.js',
+    'https://code.highcharts.com/modules/bellcurve.js',
     'https://code.highcharts.com/modules/boost.js',
     'https://code.highcharts.com/modules/broken-axis.js',
+    'https://code.highcharts.com/modules/bullet.js',
+    'https://code.highcharts.com/modules/cylinder.js',
     'https://code.highcharts.com/modules/data.js',
-    'https://code.highcharts.com/modules/exporting.js',
+    'https://code.highcharts.com/modules/datagrouping.js',
+    'https://code.highcharts.com/modules/debugger.js',
+    'https://code.highcharts.com/modules/dependency-wheel.js',
+    'https://code.highcharts.com/modules/drag-panes'
+    'https://code.highcharts.com/modules/draggable-points.js',
     'https://code.highcharts.com/modules/drilldown.js',
+    'https://code.highcharts.com/modules/dumbbell.js',
+    'https://code.highcharts.com/modules/export-data.js',
+    'https://code.highcharts.com/modules/exporting.js',
     'https://code.highcharts.com/modules/funnel.js',
-    'https://code.highcharts.com/modules/heatmap.js',
+    'https://code.highcharts.com/modules/funnel3d.js',
+    'https://code.highcharts.com/modules/histogram.js',
+    'https://code.highcharts.com/modules/item-series.js',
+    'https://code.highcharts.com/modules/lollipop.js',
+    'https://code.highcharts.com/modules/networkgraph.js',
     'https://code.highcharts.com/modules/no-data-to-display.js',
     'https://code.highcharts.com/modules/offline-exporting.js',
-    'https://code.highcharts.com/modules/solid-gauge.js',
+    'https://code.highcharts.com/modules/oldie.js',
+    'https://code.highcharts.com/modules/organization.js',
+    'https://code.highcharts.com/modules/parallel-coordinates.js',
+    'https://code.highcharts.com/modules/pareto.js',
+    'https://code.highcharts.com/modules/pyramid3d.js',
+    'https://code.highcharts.com/modules/sankey.js',
     'https://code.highcharts.com/modules/series-label.js',
-    'https://code.highcharts.com/modules/treemap.js'
+    'https://code.highcharts.com/modules/series-on-point.js',
+    'https://code.highcharts.com/modules/solid-gauge.js',
+    'https://code.highcharts.com/modules/streamgraph.js',
+    'https://code.highcharts.com/modules/sunburst.js',
+    'https://code.highcharts.com/modules/tilemap.js',
+    'https://code.highcharts.com/modules/timeline.js',
+    'https://code.highcharts.com/modules/treegraph.js',
+    'https://code.highcharts.com/modules/treemap.js',
+    'https://code.highcharts.com/modules/variable-pie.js',
+    'https://code.highcharts.com/modules/variwide.js',
+    'https://code.highcharts.com/modules/vector.js',
+    'https://code.highcharts.com/modules/venn.js',
+    'https://code.highcharts.com/modules/windbarb.js',
+    'https://code.highcharts.com/modules/wordcloud.js',
+    'https://code.highcharts.com/modules/xrange.js',
 ]
 
-INCLUDE_STR = """<script src="https://code.highcharts.com/highcharts.js"/>
-<script src="https://code.highcharts.com/highcharts-more.js"/>
-<script src="https://code.highcharts.com/highcharts-3d.js"/>
-<script src="https://code.highcharts.com/modules/accessibility.js"/>
-<script src="https://code.highcharts.com/modules/annotations.js"/>
-<script src="https://code.highcharts.com/modules/boost.js"/>
-<script src="https://code.highcharts.com/modules/broken-axis.js"/>
-<script src="https://code.highcharts.com/modules/data.js"/>
-<script src="https://code.highcharts.com/modules/exporting.js"/>
-<script src="https://code.highcharts.com/modules/drilldown.js"/>
-<script src="https://code.highcharts.com/modules/funnel.js"/>
-<script src="https://code.highcharts.com/modules/heatmap.js"/>
-<script src="https://code.highcharts.com/modules/no-data-to-display.js"/>
-<script src="https://code.highcharts.com/modules/offline-exporting.js"/>
-<script src="https://code.highcharts.com/modules/solid-gauge.js"/>
-<script src="https://code.highcharts.com/modules/treemap.js"/>
-<script src="https://code.highcharts.com/modules/series-label.js"/>
+INCLUDE_STR = """
+    <script src="https://code.highcharts.com/highcharts.js"/>
+    <script src="https://code.highcharts.com/highcharts-more.js"/>
+    <script src="https://code.highcharts.com/highcharts-3d.js"/>
+    <script src="https://code.highcharts.com/modules/accessibility.js"/>
+    <script src="https://code.highcharts.com/modules/annotations.js"/>
+    <script src="https://code.highcharts.com/modules/annotations-advanced.js"/>
+    <script src="https://code.highcharts.com/modules/arc-diagram.js"/>
+    <script src="https://code.highcharts.com/modules/bellcurve.js"/>
+    <script src="https://code.highcharts.com/modules/boost.js"/>
+    <script src="https://code.highcharts.com/modules/broken-axis.js"/>
+    <script src="https://code.highcharts.com/modules/bullet.js"/>
+    <script src="https://code.highcharts.com/modules/cylinder.js"/>
+    <script src="https://code.highcharts.com/modules/data.js"/>
+    <script src="https://code.highcharts.com/modules/datagrouping.js"/>
+    <script src="https://code.highcharts.com/modules/debugger.js"/>
+    <script src="https://code.highcharts.com/modules/dependency-wheel.js"/>
+    <script src="https://code.highcharts.com/modules/drag-panes'
+    <script src="https://code.highcharts.com/modules/draggable-points.js"/>
+    <script src="https://code.highcharts.com/modules/drilldown.js"/>
+    <script src="https://code.highcharts.com/modules/dumbbell.js"/>
+    <script src="https://code.highcharts.com/modules/export-data.js"/>
+    <script src="https://code.highcharts.com/modules/exporting.js"/>
+    <script src="https://code.highcharts.com/modules/full-screen.js"/>
+    <script src="https://code.highcharts.com/modules/funnel.js"/>
+    <script src="https://code.highcharts.com/modules/funnel3d.js"/>
+    <script src="https://code.highcharts.com/modules/histogram.js"/>
+    <script src="https://code.highcharts.com/modules/item-series.js"/>
+    <script src="https://code.highcharts.com/modules/lollipop.js"/>
+    <script src="https://code.highcharts.com/modules/networkgraph.js"/>
+    <script src="https://code.highcharts.com/modules/no-data-to-display.js"/>
+    <script src="https://code.highcharts.com/modules/offline-exporting.js"/>
+    <script src="https://code.highcharts.com/modules/oldie.js"/>
+    <script src="https://code.highcharts.com/modules/organization.js"/>
+    <script src="https://code.highcharts.com/modules/parallel-coordinates.js"/>
+    <script src="https://code.highcharts.com/modules/pareto.js"/>
+    <script src="https://code.highcharts.com/modules/pyramid3d.js"/>
+    <script src="https://code.highcharts.com/modules/sankey.js"/>
+    <script src="https://code.highcharts.com/modules/series-label.js"/>
+    <script src="https://code.highcharts.com/modules/series-on-point.js"/>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"/>
+    <script src="https://code.highcharts.com/modules/streamgraph.js"/>
+    <script src="https://code.highcharts.com/modules/sunburst.js"/>
+    <script src="https://code.highcharts.com/modules/tilemap.js"/>
+    <script src="https://code.highcharts.com/modules/timeline.js"/>
+    <script src="https://code.highcharts.com/modules/treegraph.js"/>
+    <script src="https://code.highcharts.com/modules/treemap.js"/>
+    <script src="https://code.highcharts.com/modules/variable-pie.js"/>
+    <script src="https://code.highcharts.com/modules/variwide.js"/>
+    <script src="https://code.highcharts.com/modules/vector.js"/>
+    <script src="https://code.highcharts.com/modules/venn.js"/>
+    <script src="https://code.highcharts.com/modules/windbarb.js"/>
+    <script src="https://code.highcharts.com/modules/wordcloud.js"/>
+    <script src="https://code.highcharts.com/modules/xrange.js"/>
 """
 
 AXIS_TYPES = [
