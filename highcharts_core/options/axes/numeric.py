@@ -171,7 +171,7 @@ class NumericAxis(GenericAxis):
         if not value:
             self._categories = None
         else:
-            self._categories = [validators.string(x) for x in validators.iterable(value)]
+            self._categories = [validators.string(x, allow_empty = True) or '' for x in validators.iterable(value)]
 
     @property
     def date_time_label_formats(self) -> Optional[DateTimeLabelFormats]:

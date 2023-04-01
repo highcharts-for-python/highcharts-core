@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from validator_collection import validators
 
-from highcharts_core import errors
+from highcharts_core import errors, constants
 from highcharts_core.metaclasses import HighchartsMeta
 
 
@@ -211,7 +211,7 @@ class AxisTitle(HighchartsMeta):
         self._style = validators.string(value, allow_empty = True, coerce_value = True)
 
     @property
-    def text(self) -> Optional[str]:
+    def text(self) -> Optional[str | constants.EnforcedNullType]:
         """The actual text of the title.
 
         .. note::
@@ -225,7 +225,10 @@ class AxisTitle(HighchartsMeta):
 
     @text.setter
     def text(self, value):
-        self._text = validators.string(value, allow_empty = True)
+        if isinstance(value, constants.EnforcedNullType):
+            self._text = constants.EnforcedNull
+        else:
+            self._text = validators.string(value, allow_empty = True)
 
     @property
     def text_align(self) -> Optional[str]:

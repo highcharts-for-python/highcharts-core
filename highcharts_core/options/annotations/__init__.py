@@ -128,9 +128,9 @@ class Annotation(HighchartsMeta):
         if value is None:
             self._draggable = None
         else:
-            value = validators.string(value, allow_empty = True)
+            value = validators.string(value, allow_empty = True) or ''
             value = value.lower()
-            if value not in ['x', 'xy', 'y']:
+            if value not in ['x', 'xy', 'y', '']:
                 raise errors.HighchartsValueError(f'draggable must be "x", "xy", "y", '
                                                   f'or "". Was: {value}')
             self._draggable = value
