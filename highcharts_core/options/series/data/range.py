@@ -162,12 +162,18 @@ class RangeData(DataBase):
     def from_array(cls, value):
         if not value:
             return []
-        elif not checkers.is_iterable(value):
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
+
+        if not checkers.is_iterable(value):
             value = [value]
 
         collection = []
         for item in value:
-            if checkers.is_type(item, 'AreaRangeData'):
+            if checkers.is_type(item, 'RangeData'):
                 as_obj = item
             elif checkers.is_dict(item):
                 as_obj = cls.from_dict(item)
