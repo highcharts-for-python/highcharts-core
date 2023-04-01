@@ -341,6 +341,8 @@ def jupyter_add_script(url, is_last = False):
     :rtype: :class:`str <python:str>`
     """
     url = validators.url(url)
+    if url.endswith('.css'):
+        return jupyter_add_link(url, is_last = is_last)
     
     js_str = ''
     js_str += """new Promise(function(resolve, reject) {\n"""
@@ -351,6 +353,38 @@ def jupyter_add_script(url, is_last = False):
         script.onerror = reject;"""
     js_str += f"""        script.src = '{url}';"""
     js_str += """        document.head.appendChild(script);
+    };
+})"""
+
+    return js_str
+
+
+def jupyter_add_link(url, is_last = False):
+    """Generates the JavaScript code Promise which adds a <link/> tag to the Jupyter 
+    Lab environment.
+    
+    :param url: The URL to use for the link's source.
+    :type url: :class:`str <python:str>`
+    
+    :param is_last: Whether the URL is the last of the promises.
+    :type is_last: :class:`bool <python:bool>`
+    
+    :returns: The JavaScript code for adding the link.
+    :rtype: :class:`str <python:str>`
+    """
+    url = validators.url(url)
+    
+    js_str = ''
+    js_str += """new Promise(function(resolve, reject) {\n"""
+    js_str += f"""  var existing_tags = document.querySelectorAll("link[href='{url}']");"""
+    js_str += """  if (existing_tags.length == 0) {
+        var link = document.createElement("link");
+        link.onload = resolve;
+        link.onerror = reject;"""
+    js_str += f"""        link.href = '{url}';"""
+    js_str += f"""        link.rel = 'stylesheet';"""
+    js_str += f"""        link.type = 'text/css';"""
+    js_str += """        document.head.appendChild(link);
     };
 })"""
 
@@ -370,7 +404,7 @@ def get_retryHighcharts():
                 fn()
                 return resolve();
             } catch (err) {
-                if ((err instanceof ReferenceError) || ((err instanceof Error) && (err.message.includes('#13')))) {
+                if ((err instanceof ReferenceError) || (err instanceof TypeError) || ((err instanceof Error) && (err.message.includes('#13')))) {
                     if (retriesLeft === 0) {
                         var target_div = document.getElementById(container);
                         if (target_div) {
