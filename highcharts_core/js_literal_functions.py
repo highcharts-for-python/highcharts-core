@@ -33,7 +33,8 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
     elif isinstance(item, bool):
         return item
     elif checkers.is_string(item):
-        return item
+        return_value = item.replace("'", "\\'")
+        return return_value
     elif checkers.is_numeric(item) and not isinstance(item, Decimal):
         return item
     elif isinstance(item, Decimal):
@@ -197,6 +198,8 @@ def get_js_literal(item) -> str:
         subitem_counter = 0
         for subitem in subitems:
             subitem_counter += 1
+            if subitem == 'None':
+                subitem = 'null'
             as_str += f"""{subitem}"""
             if subitem_counter < len(subitems):
                 as_str += ',\n'
@@ -207,8 +210,9 @@ def get_js_literal(item) -> str:
         elif item.startswith('{') and item.endswith('}'):
             if is_js_object(item):
                 as_str += f"""{item}"""
-            else:
-                as_str += f"""'{item}'"""
+            elif "'" in item:
+                item = item.replace("'", "\\'")
+                as_str += f'"{item}"'
         elif item in string.whitespace:
             as_str += f"""`{item}`"""
         elif item.startswith == 'HCP: REPLACE-WITH-':
