@@ -759,8 +759,16 @@ class ChartOptions(HighchartsMeta):
         return self._panning
 
     @panning.setter
-    @class_sensitive(PanningOptions)
     def panning(self, value):
+        if value is None:
+            self._panning = None
+        else:
+            if isinstance(value, bool):
+                value = {
+                    'enabled': value
+                }
+            value = validate_types(value, types = PanningOptions)
+            
         self._panning = value
 
     @property
@@ -1192,7 +1200,7 @@ class ChartOptions(HighchartsMeta):
 
     @style.setter
     def style(self, value):
-        self._style = validators.string(value, allow_empty = True)
+        self._style = validators.string(value, allow_empty = True, coerce_value = True)
 
     @property
     def styled_mode(self) -> Optional[bool]:

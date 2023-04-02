@@ -14,7 +14,7 @@ except ImportError:
 
 from validator_collection import validators, checkers
 
-from highcharts_core import errors, utility_functions
+from highcharts_core import errors, utility_functions, constants
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.options.plot_options.series import SeriesOptions
 from highcharts_core.options.series.data.base import DataBase
@@ -686,7 +686,7 @@ class SeriesBase(SeriesOptions):
           not available in the runtime environment
         """
         try:
-            from pandas import DataFrame
+            from pandas import DataFrame, isna
         except ImportError:
             raise errors.HighchartsDependencyError('pandas is not available in the '
                                                    'runtime environment. Please install '
@@ -716,6 +716,8 @@ class SeriesBase(SeriesOptions):
             for key in property_map:
                 map_value = property_map[key]
                 record_as_dict[key] = record.get(map_value, None)
+                if isna(record_as_dict[key]):
+                    record_as_dict[key] = constants.EnforcedNull
             records_as_dicts.append(record_as_dict)
             
         self.data = records_as_dicts

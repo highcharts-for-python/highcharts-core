@@ -154,8 +154,8 @@ class ResponsiveRules(HighchartsMeta):
 
     @property
     def chart_options(self) -> Optional[HighchartsMeta]:
-        """A full set of chart :class:`Options` to apply as overrides to the general chart
-        :class:`Options`. The chart options are applied when the given rule is active, as
+        """A full set of chart :class:`HighchartsOptions` to apply as overrides to the general chart
+        :class:`HighchartsOptions`. The chart options are applied when the given rule is active, as
         per :meth:`ResponsiveRules.condition`.
 
         .. note::
@@ -168,15 +168,15 @@ class ResponsiveRules(HighchartsMeta):
           with two series without an ``id``, will cause the existing chart's two series to
           be updated with respective options.
 
-        :rtype: :class:`Options` or :obj:`None <python:None>`
+        :rtype: :class:`HighchartsOptions` or :obj:`None <python:None>`
         """
         return self._chart_options
 
     @chart_options.setter
     def chart_options(self, value):
-        from highcharts_core.options import Options
+        from highcharts_core.options import HighchartsOptions
 
-        self._chart_options = validate_types(value, types = Options)
+        self._chart_options = validate_types(value, types = HighchartsOptions)
 
     @property
     def condition(self) -> Optional[Condition]:

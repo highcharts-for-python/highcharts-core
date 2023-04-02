@@ -105,7 +105,7 @@ class Title(HighchartsMeta):
 
     @style.setter
     def style(self, value):
-        self._style = validators.string(value, allow_empty = True)
+        self._style = validators.string(value, allow_empty = True, coerce_value = True)
 
     @property
     def text(self) -> Optional[str]:

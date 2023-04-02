@@ -33,7 +33,8 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
     elif isinstance(item, bool):
         return item
     elif checkers.is_string(item):
-        return item
+        return_value = item.replace("'", "\\'")
+        return return_value
     elif checkers.is_numeric(item) and not isinstance(item, Decimal):
         return item
     elif isinstance(item, Decimal):
@@ -46,6 +47,8 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
             as_dict[key] = serialize_to_js_literal(item[key], encoding = encoding)
         return str(as_dict)
     elif checkers.is_datetime(item):
+        if not item.tzinfo:
+            item = item.replace(tzinfo = datetime.timezone.utc)
         return item.timestamp()
     elif checkers.is_date(item):
         return f'Date.UTC({item.year}, {item.month - 1}, {item.day})'
@@ -55,6 +58,41 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
         return None
 
     return None
+
+
+def is_js_object(as_str):
+    """Determine whether ``as_str`` is a JavaScript object.
+    
+    :param as_str: The string to evaluate.
+    :type as_str: :class:`str <python:str>`
+    
+    :returns: ``True`` if ``as_str`` is a JavaScript function. ``False`` if not.
+    :rtype: :class:`bool <python:bool>`
+    """
+    expression_item = f'const testName = {as_str}'
+    try:
+        parsed = esprima.parseScript(expression_item)
+    except ParseError:
+        try:
+            parsed = esprima.parseModule(expression_item)
+        except ParseError:
+            return False
+
+    body = parsed.body
+    if not body:
+        return False
+
+    first_item = body[0]
+    if first_item.type != 'VariableDeclaration':
+        return False
+
+    init = first_item.declarations[0].init
+    if not init:
+        return False
+    if init.type in ('ObjectExpression'):
+        return True
+
+    return False
 
 
 def attempt_variable_declaration(as_str):
@@ -160,13 +198,21 @@ def get_js_literal(item) -> str:
         subitem_counter = 0
         for subitem in subitems:
             subitem_counter += 1
+            if subitem == 'None':
+                subitem = 'null'
             as_str += f"""{subitem}"""
             if subitem_counter < len(subitems):
                 as_str += ',\n'
         as_str += ']'
     elif checkers.is_string(item):
-        if item.startswith('{') or item.startswith('[') or item.startswith('Date'):
+        if item.startswith('[') or item.startswith('Date'):
             as_str += f"""{item}"""
+        elif item.startswith('{') and item.endswith('}'):
+            if is_js_object(item):
+                as_str += f"""{item}"""
+            elif "'" in item:
+                item = item.replace("'", "\\'")
+                as_str += f'"{item}"'
         elif item in string.whitespace:
             as_str += f"""`{item}`"""
         elif item.startswith == 'HCP: REPLACE-WITH-':

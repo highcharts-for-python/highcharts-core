@@ -171,7 +171,7 @@ class NumericAxis(GenericAxis):
         if not value:
             self._categories = None
         else:
-            self._categories = [validators.string(x) for x in validators.iterable(value)]
+            self._categories = [validators.string(x, allow_empty = True) or '' for x in validators.iterable(value)]
 
     @property
     def date_time_label_formats(self) -> Optional[DateTimeLabelFormats]:
@@ -541,7 +541,7 @@ class NumericAxis(GenericAxis):
             'opposite': self.opposite,
             'pane': self.pane,
             'panningEnabled': self.panning_enabled,
-            'plotPands': self.plot_bands,
+            'plotBands': self.plot_bands,
             'plotLines': self.plot_lines,
             'reversed': self.reversed,
             'reversedStacks': self.reversed_stacks,

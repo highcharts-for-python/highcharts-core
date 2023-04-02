@@ -4,7 +4,7 @@ from decimal import Decimal
 from validator_collection import validators
 
 from highcharts_core import errors
-from highcharts_core.decorators import class_sensitive
+from highcharts_core.decorators import class_sensitive, validate_types
 from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
 
@@ -49,9 +49,13 @@ class XAxis(NumericAxis):
         return self._crosshair
 
     @crosshair.setter
-    @class_sensitive(CrosshairOptions)
     def crosshair(self, value):
-        self._crosshair = value
+        if isinstance(value, bool):
+            value = {
+                'enabled': value
+            }
+
+        self._crosshair = validate_types(value, CrosshairOptions)
 
     @property
     def height(self) -> Optional[str | int | float | Decimal]:

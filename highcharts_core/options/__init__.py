@@ -84,7 +84,6 @@ class Options(HighchartsMeta):
         self.navigation = kwargs.get('navigation', None)
         self.plot_options = kwargs.get('plot_options', None)
         self.responsive = kwargs.get('responsive', None)
-        self.series = kwargs.get('series', None)
         self.subtitle = kwargs.get('subtitle', None)
         self.time = kwargs.get('time', None)
         self.title = kwargs.get('title', None)
@@ -92,6 +91,7 @@ class Options(HighchartsMeta):
         self.x_axis = kwargs.get('x_axis', None)
         self.y_axis = kwargs.get('y_axis', None)
 
+        self.series = kwargs.get('series', None)
     @property
     def accessibility(self) -> Optional[Accessibility]:
         """Options for configuring accessibility for the chart.

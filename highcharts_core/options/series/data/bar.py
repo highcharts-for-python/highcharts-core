@@ -324,6 +324,11 @@ class WindBarbData(CartesianData):
     def from_array(cls, value):
         if not value:
             return []
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
         elif not checkers.is_iterable(value):
             value = [value]
 
@@ -518,6 +523,11 @@ class XRangeData(CartesianData):
     def from_array(cls, value):
         if not value:
             return []
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
         elif not checkers.is_iterable(value):
             value = [value]
 

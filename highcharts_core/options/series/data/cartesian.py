@@ -150,6 +150,11 @@ class CartesianData(DataBase):
     def from_array(cls, value):
         if not value:
             return []
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
         elif not checkers.is_iterable(value):
             value = [value]
 
@@ -164,15 +169,14 @@ class CartesianData(DataBase):
             elif item is None or checkers.is_numeric(item):
                 as_obj = cls(y = item)
             elif checkers.is_iterable(item):
-                if len(item) != 2:
+                if len(item) == 2:
+                    as_obj = cls(x = item[0], y = item[1])
+                elif len(item) == 1:
+                    as_obj = cls(y = item[0])
+                else:
                     raise errors.HighchartsValueError(f'data expects either a 1D or 2D '
                                                       f'collection. Collection received '
                                                       f'had {len(item)} dimensions.')
-                as_dict = {
-                    'x': item[0],
-                    'y': item[1]
-                }
-                as_obj = cls.from_dict(as_dict)
             else:
                 raise errors.HighchartsValueError(f'each data point supplied must either '
                                                   f'be a Cartesian Data Point or be '
@@ -276,6 +280,11 @@ class Cartesian3DData(CartesianData):
     def from_array(cls, value):
         if not value:
             return []
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
         elif not checkers.is_iterable(value):
             value = [value]
 
@@ -428,6 +437,11 @@ class CartesianValueData(CartesianData):
     def from_array(cls, value):
         if not value:
             return []
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
         elif not checkers.is_iterable(value):
             value = [value]
 
