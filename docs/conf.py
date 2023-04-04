@@ -74,6 +74,14 @@ html_theme_options = {
     'style_nav_header_background': 'rgb(70, 70, 92)'
 }
 
+html_css_files = [
+    'sphinx_rtd_theme_ext_color_contrast.css'
+]
+
+html_js_files = [
+    'https://code.jquery.com/jquery-3.6.4.min.js'
+]
+
 html_logo = '_static/highcharts-for-python-light-150x149.png'
 html_favicon = '_static/highcharts-for-python-dark-32x32.png'
 

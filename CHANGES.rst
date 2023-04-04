@@ -1,3 +1,11 @@
+Release 1.0.0-rc6
+=========================================
+
+* Added CSS overrides to documentation for better accessibility.
+* Added jQuery to documentation to address issue in Sphinx 6.0 and Sphinx RTD Theme.
+
+---------------
+
 Release 1.0.0-rc5
 =========================================
 
