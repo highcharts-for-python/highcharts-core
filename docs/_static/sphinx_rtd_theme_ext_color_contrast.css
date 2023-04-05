@@ -4,8 +4,10 @@
  * https://github.com/readthedocs/sphinx_rtd_theme/issues/971
  */
 /* background: #fcfcfc, note boxes #E7F2FA */
-a { color: #2573A7; }  /* original #2980B9, #1F5C84; */
-a { color: #8F4BAA; } /* original ##9b59b6; */
+a { color: #2573A7; text-decoration: underline;}  /* original #2980B9, #1F5C84; */
+a { color: #8F4BAA; text-decoration: underline; } /* original ##9b59b6; */
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { text-decoration: none;}
+
 body { color: #242424; } /* original #404040, #383838 */
 .wy-side-nav-search>a, .wy-side-nav-search .wy-dropdown>a {
     color: #ffffff;
@@ -53,3 +55,12 @@ footer span.commit code, footer span.commit .rst-content tt, .rst-content footer
     color: #ffffff;
 }
 
+/* Side Nav > Menu */
+.wy-menu a { text-decoration: none;}
+
+/* Table of Contents */
+.contents a { text-decoration: none;}
+
+/* Links in Code Snippets */
+a:has(> code) { text-decoration: none; color: #8F4BAA;}
+.rst-content a code.literal, a code.literal { color: #8F4BAA; }
