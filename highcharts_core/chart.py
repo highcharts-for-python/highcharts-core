@@ -23,6 +23,8 @@ class Chart(HighchartsMeta):
         self._options = None
         self._variable_name = None
 
+        self._random_slug = {}
+
         self.callback = kwargs.get('callback', None)
         self.container = kwargs.get('container', None)
         self.options = kwargs.get('options', None)
@@ -54,6 +56,7 @@ class Chart(HighchartsMeta):
     def _jupyter_javascript(self, 
                             global_options = None, 
                             container = None,
+                            random_slug = None,
                             retries = 3,
                             interval = 1000):
         """Return the JavaScript code which Jupyter Labs will need to render the chart.
@@ -68,6 +71,10 @@ class Chart(HighchartsMeta):
           property if set, and ``'highcharts_target_div'`` if not set.
         :type container: :class:`str <python:str>` or :obj:`None <python:None>`
         
+        :param random_slug: The random sequence of characters to append to the container name to ensure uniqueness.
+          Defaults to :obj:`None <python:None>`
+        :type random_slug: :class:`str <python:str>` or :obj:`None <python:None>`
+        
         :param retries: The number of times to retry rendering the chart. Used to avoid race conditions with the 
           Highcharts script. Defaults to 3.
         :type retries: :class:`int <python:int>`
@@ -79,7 +86,11 @@ class Chart(HighchartsMeta):
         :rtype: :class:`str <python:str>`
         """
         original_container = self.container
-        self.container = container or self.container or 'highcharts_target_div'
+        new_container = container or self.container or 'highcharts_target_div'
+        if not random_slug:
+            self.container = new_container
+        else:
+            self.container = f'{new_container}_{random_slug}'
         
         if global_options is not None:
             global_options = validate_types(global_options,
@@ -87,12 +98,13 @@ class Chart(HighchartsMeta):
 
         js_str = ''
         js_str += utility_functions.get_retryHighcharts()
-
+        
         if global_options:
             js_str += '\n' + utility_functions.prep_js_for_jupyter(global_options.to_js_literal()) + '\n'
 
         js_str += utility_functions.prep_js_for_jupyter(self.to_js_literal(),
                                                         container = self.container,
+                                                        random_slug = random_slug,
                                                         retries = retries,
                                                         interval = interval)
 
@@ -100,13 +112,19 @@ class Chart(HighchartsMeta):
 
         return js_str
 
-    def _jupyter_container_html(self, container = None):
+    def _jupyter_container_html(self,
+                                container = None,
+                                random_slug = None):
         """Returns the Jupyter Labs HTML container for rendering the chart in Jupyter Labs context.
 
         :param container: The ID to apply to the HTML container when rendered in Jupyter Labs. Defaults to
           :obj:`None <python:None>`, which applies the :meth:`.container <highcharts_core.chart.Chart.container>` 
           property if set, and ``'highcharts_target_div'`` if not set.
         :type container: :class:`str <python:str>` or :obj:`None <python:None>`
+
+        :param random_slug: The random sequence of characters to append to the container/function name to ensure 
+          uniqueness. Defaults to :obj:`None <python:None>`
+        :type random_slug: :class:`str <python:str>` or :obj:`None <python:None>`
 
         :rtype: :class:`str <python:str>`
         """
@@ -116,6 +134,8 @@ class Chart(HighchartsMeta):
             height = 400
 
         container = container or self.container or 'highcharts_target_div'
+        if random_slug:
+            container = f'{container}_{random_slug}'
 
         container_str = f"""<div id=\"{container}\" style=\"width:100%; height:{height};\"></div>\n"""
 
@@ -666,6 +686,18 @@ class Chart(HighchartsMeta):
         :param container: The ID to apply to the HTML container when rendered in Jupyter Labs. Defaults to
           :obj:`None <python:None>`, which applies the :meth:`.container <highcharts_core.chart.Chart.container>` 
           property if set, and ``'highcharts_target_div'`` if not set.
+          
+          .. note::
+          
+            Highcharts for Python will append a 6-character random string to the value of ``container``
+            to ensure uniqueness of the chart's container when rendering in a Jupyter Notebook/Labs context. The
+            :class:`Chart <highcharts_core.chart.Chart>` instance will retain the mapping between container and the 
+            random string so long as the instance exists, thus allowing you to easily update the rendered chart by
+            calling the :meth:`.display() <highcharts_core.chart.Chart.display>` method again.
+            
+            If you wish to create a new chart from the instance that does not update the existing chart, then you can do
+            so by specifying a new ``container`` value.
+            
         :type container: :class:`str <python:str>` or :obj:`None <python:None>`
 
         :param retries: The number of times to retry rendering the chart. Used to avoid race conditions with the 
@@ -693,11 +725,21 @@ class Chart(HighchartsMeta):
         include_display = display_mod.Javascript(data = include_js_str)
 
         container = container or self.container or 'highcharts_target_div'
-        html_str = self._jupyter_container_html(container)
+        if not self._random_slug:
+            self._random_slug = {}
+        
+        random_slug = self._random_slug.get(container, None)
+            
+        if not random_slug:
+            random_slug = utility_functions.get_random_string()
+            self._random_slug[container] = random_slug
+
+        html_str = self._jupyter_container_html(container, random_slug)
         html_display = display_mod.HTML(data = html_str)
 
         chart_js_str = self._jupyter_javascript(global_options = global_options, 
                                                 container = container,
+                                                random_slug = random_slug,
                                                 retries = retries,
                                                 interval = interval)
         javascript_display = display_mod.Javascript(data = chart_js_str)

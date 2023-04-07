@@ -430,6 +430,7 @@ def get_retryHighcharts():
 
 def prep_js_for_jupyter(js_str,
                         container = 'highcharts_target_div',
+                        random_slug = None,
                         retries = 3,
                         interval = 1000):
     """Remove the JavaScript event listeners from the code in ``js_str`` and prepare the
@@ -442,6 +443,10 @@ def prep_js_for_jupyter(js_str,
       ``'highcharts_target_div'``.
     :type container: :class:`str <python:str>`
     
+    :param random_slug: The random sequence of characters to append to the container/function name to ensure uniqueness.
+        Defaults to :obj:`None <python:None>`
+    :type random_slug: :class:`str <python:str>` or :obj:`None <python:None>`
+
     :param retries: The number of times to retry the rendering. Defaults to 3.
     :type retries: :class:`int <python:int>`
     
@@ -457,11 +462,16 @@ def prep_js_for_jupyter(js_str,
     js_str = js_str.replace(',\noptions = ', ',\n')
     js_str = js_str[:-3]
 
-    random_slug = get_random_string()
-    function_str = f"""function insertChart_{random_slug}() """
+    if random_slug:
+        function_str = f"""function insertChart_{random_slug}() """
+    else:
+        function_str = """function insertChart() """
     function_str += """{\n"""
     function_str += js_str
     function_str += """\n};\n"""
-    function_str += f"""retryHighcharts(insertChart_{random_slug}, '{container}', {retries}, {retries}, {interval});"""
+    if random_slug:
+        function_str += f"""retryHighcharts(insertChart_{random_slug}, '{container}', {retries}, {retries}, {interval});"""
+    else:
+        function_str += f"""retryHighcharts(insertChart, '{container}', {retries}, {retries}, {interval});"""
 
     return function_str
