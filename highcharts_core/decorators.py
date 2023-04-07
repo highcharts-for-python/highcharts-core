@@ -1,6 +1,7 @@
 """Implements decorators used throughout the library."""
 import json
 from functools import wraps
+from collections import UserDict
 
 from validator_collection import checkers
 
@@ -113,7 +114,13 @@ def validate_types(value,
         except ValueError:
             pass
 
-    if allow_json and isinstance(value, (str, bytes)):
+    if (
+        force_iterable and
+        checkers.is_iterable(value, forbid_literals = (str, dict, bytes, UserDict)) and
+        hasattr(primary_type, 'from_array')
+    ):
+        value = primary_type.from_array(value)
+    elif allow_json and isinstance(value, (str, bytes)):
         try:
             value = primary_type.from_json(value)
         except AttributeError:
