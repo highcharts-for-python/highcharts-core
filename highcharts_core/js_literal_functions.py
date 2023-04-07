@@ -205,7 +205,7 @@ def get_js_literal(item) -> str:
                 as_str += ',\n'
         as_str += ']'
     elif checkers.is_string(item):
-        if item.startswith('[') or item.startswith('Date'):
+        if (item.startswith('[') or item.startswith('Date')) and item != 'Date':
             as_str += f"""{item}"""
         elif item.startswith('{') and item.endswith('}'):
             if is_js_object(item):
