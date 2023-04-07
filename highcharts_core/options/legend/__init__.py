@@ -645,9 +645,12 @@ class Legend(HighchartsMeta):
         elif value is False:
             self._shadow = False
         else:
-            value = validate_types(value,
-                                   types = ShadowOptions,
-                                   allow_none = False)
+            if value is True:
+                value = ShadowOptions(enabled = True)
+            else:
+                value = validate_types(value,
+                                       types = ShadowOptions,
+                                       allow_none = False)
             self._shadow = value
 
     @property
