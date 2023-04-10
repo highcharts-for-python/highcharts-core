@@ -213,6 +213,8 @@ def get_js_literal(item) -> str:
             elif "'" in item:
                 item = item.replace("'", "\\'")
                 as_str += f'"{item}"'
+            else:
+                as_str += f"'{item}'"
         elif item in string.whitespace:
             as_str += f"""`{item}`"""
         elif item.startswith == 'HCP: REPLACE-WITH-':

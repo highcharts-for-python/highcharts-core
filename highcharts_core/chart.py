@@ -446,6 +446,9 @@ class Chart(HighchartsMeta):
         preserve_data = kwargs.get('preserve_data', True)
 
         original_value = original[key]
+        if other is None:
+            other = {}
+
         other_value = other.get(key, None)
 
         if key == 'data' and preserve_data:
@@ -545,9 +548,9 @@ class Chart(HighchartsMeta):
         :returns: A mutated version of ``other`` with new property values
 
         """
-        super().copy(other = other,
-                     overwrite = overwrite,
-                     **kwargs)
+        return super().copy(other = other,
+                            overwrite = overwrite,
+                            **kwargs)
 
     def add_series(self, *series):
         """Adds ``series`` to the
