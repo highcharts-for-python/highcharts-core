@@ -7,6 +7,8 @@ Release 1.0.0-rc8
 * **BUG:** Fixed boolean handling in ``options.legend.LegendOptions.shadow``.
 * **Enhancement:** Added ``.from_array()`` support to the ``decorators.validate_types()`` function.
 * **BUG:** Fixed data valization in ``options.plot_options.pie.PieOptions.end_angle`` and ``.start_angle``.
+* Added ``date`` and ``datetime`` support to axis min and max.
+* Added iterable support to ``.from_dict()`` method.
 
 ---------------
 
