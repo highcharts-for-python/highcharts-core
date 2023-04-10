@@ -1,5 +1,6 @@
 from typing import Optional
 from decimal import Decimal
+from collections import UserDict
 
 from validator_collection import validators, checkers
 
@@ -70,7 +71,10 @@ class SinglePointBase(DataBase):
 
     @drilldown.setter
     def drilldown(self, value):
-        self._drilldown = validators.string(value, allow_empty = True)
+        if isinstance(value, constants.EnforcedNullType):
+            self._drilldown = value
+        else:
+            self._drilldown = validators.string(value, allow_empty = True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -178,6 +182,12 @@ class SinglePointData(SinglePointBase):
                 as_obj = cls(y = None)
             elif checkers.is_numeric(item):
                 as_obj = cls(y = item)
+            elif checkers.is_iterable(item, forbid_literals = (str, bytes, dict, UserDict)):
+                if len(item) == 2:
+                    as_obj = cls(name = item[0],
+                                 y = item[1])
+                elif len(item) == 1:
+                    as_obj = cls(y = item[0])
             else:
                 raise errors.HighchartsValueError(f'each data point supplied must either '
                                                   f'be a Single Point Data Point or be '

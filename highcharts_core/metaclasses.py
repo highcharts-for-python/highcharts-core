@@ -235,6 +235,10 @@ class HighchartsMeta(ABC):
 
         as_dict = json.loads(as_str)
 
+        if checkers.is_iterable(as_dict, forbid_literals = (str, bytes, dict, UserDict)):
+            return [cls.from_dict(x, allow_snake_case = allow_snake_case)
+                    for x in as_dict]
+
         return cls.from_dict(as_dict,
                              allow_snake_case = allow_snake_case)
 

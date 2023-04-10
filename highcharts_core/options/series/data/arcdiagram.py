@@ -1,9 +1,10 @@
 from typing import Optional
 from decimal import Decimal
+from collections import UserDict
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
-from highcharts_core import utility_functions
+from highcharts_core import utility_functions, constants
 from highcharts_core.options.series.data.base import DataBase
 from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
@@ -83,6 +84,47 @@ class ArcDiagramData(DataBase):
     @weight.setter
     def weight(self, value):
         self._weight = validators.numeric(value, allow_empty = True)
+
+    @classmethod
+    def from_array(cls, value):
+        if not value:
+            return []
+        elif checkers.is_string(value):
+            try:
+                value = validators.json(value)
+            except (ValueError, TypeError):
+                pass
+        elif not checkers.is_iterable(value):
+            value = [value]
+
+        collection = []
+        for item in value:
+            if checkers.is_type(item, 'SinglePointData'):
+                as_obj = item
+            elif checkers.is_dict(item):
+                as_obj = cls.from_dict(item)
+            elif item is None or isinstance(item, constants.EnforcedNullType):
+                as_obj = cls(y = None)
+            elif checkers.is_numeric(item):
+                as_obj = cls(y = item)
+            elif checkers.is_iterable(item, forbid_literals = (str, bytes, dict, UserDict)):
+                if len(item) == 3:
+                    as_obj = cls(from_ = item[0],
+                                 to = item[1],
+                                 weight = item[2])
+                else:
+                    raise errors.HighchartsValueError(f'each data point supplied must either '
+                                                    f'be an Arc Diagram Data Point or be '
+                                                    f'coercable to one. Could not coerce: '
+                                                    f'{item}')
+            else:
+                raise errors.HighchartsValueError(f'each data point supplied must either '
+                                                  f'be an Arc Diagram Data Point or be '
+                                                  f'coercable to one. Could not coerce: '
+                                                  f'{item}')
+            collection.append(as_obj)
+
+        return collection
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

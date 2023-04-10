@@ -202,6 +202,9 @@ class ConnectionData(ConnectionBase):
                 as_obj = cls.from_dict(item)
             elif item is None or isinstance(item, constants.EnforcedNullType):
                 as_obj = cls()
+            elif len(item) == 2:
+                as_obj = cls(from_ = item[0],
+                             to = item[1])
             else:
                 raise errors.HighchartsValueError(f'each data point supplied must either '
                                                   f'be a Connection Data Point or be '
