@@ -257,7 +257,8 @@ class PieOptions(GenericTypeOptions):
     def end_angle(self, value):
         self._end_angle = validators.numeric(value,
                                              allow_empty = True,
-                                             minimum = 0)
+                                             minimum = -360,
+                                             maximum = 360)
 
     @property
     def fill_color(self) -> Optional[str | Gradient | Pattern]:
@@ -441,7 +442,7 @@ class PieOptions(GenericTypeOptions):
     def start_angle(self, value):
         self._start_angle = validators.numeric(value,
                                                allow_empty = True,
-                                               minimum = 0,
+                                               minimum = -360,
                                                maximum = 360)
 
     @property
