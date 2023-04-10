@@ -1,5 +1,5 @@
 ##########################################################################################
-:mod:`.Heatmap <highcharts_core.options.series.heatmap>`
+:mod:`.heatmap <highcharts_core.options.series.heatmap>`
 ##########################################################################################
 
 .. contents:: Module Contents
