@@ -8,7 +8,7 @@ from highcharts_core.metaclasses import HighchartsMeta
 from highcharts_core.utility_classes.animation import AnimationOptions
 from highcharts_core.utility_classes.breadcrumbs import BreadcrumbOptions
 from highcharts_core.options.series.base import SeriesBase
-
+from highcharts_core.options.series.series_generator import create_series_obj
 
 class Drilldown(HighchartsMeta):
     """Options to configure :term:`drilldown` functionality in the chart, which
@@ -169,9 +169,14 @@ class Drilldown(HighchartsMeta):
         return self._series
 
     @series.setter
-    @class_sensitive(SeriesBase, force_iterable = True)
     def series(self, value):
-        self._series = value
+        value = validators.iterable(value, allow_empty = True)
+        if not value:
+            self._series = None
+        else:
+            self._series = [create_series_obj(x,
+                                              default_type = None)
+                            for x in value]
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
