@@ -1,7 +1,8 @@
 from typing import Optional, List
 from decimal import Decimal
+import datetime
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
 from highcharts_core import constants, errors
 from highcharts_core.decorators import class_sensitive
@@ -395,7 +396,7 @@ class GenericAxis(HighchartsMeta):
         self._margin = validators.numeric(value, allow_empty = True)
 
     @property
-    def max(self) -> Optional[int | float | Decimal]:
+    def max(self) -> Optional[int | float | Decimal | datetime.date | datetime.datetime]:
         """The maximum value of the axis. If :obj:`None <python:None>`, the ``max`` value
         is automatically calculated. Defaults to :obj:`None <python:None>`.
 
@@ -417,7 +418,14 @@ class GenericAxis(HighchartsMeta):
 
     @max.setter
     def max(self, value):
-        self._max = validators.numeric(value, allow_empty = True)
+        if value is None:
+            self._max = None
+        elif checkers.is_date(value):
+            self._max = validators.date(value)
+        elif checkers.is_datetime(value):
+            self._max = validators.datetime(value)
+        else:
+            self._max = validators.numeric(value, allow_empty = True)
 
     @property
     def max_padding(self) -> Optional[int | float | Decimal]:
@@ -447,7 +455,7 @@ class GenericAxis(HighchartsMeta):
                                                minimum = 0)
 
     @property
-    def min(self) -> Optional[int | float | Decimal]:
+    def min(self) -> Optional[int | float | Decimal | datetime.date | datetime.datetime]:
         """The minimum value of the axis. If :obj:`None <python:None>`, the ``min`` value
         is automatically calculated. Defaults to :obj:`None <python:None>`.
 
@@ -473,7 +481,14 @@ class GenericAxis(HighchartsMeta):
 
     @min.setter
     def min(self, value):
-        self._min = validators.numeric(value, allow_empty = True)
+        if value is None:
+            self._min = None
+        elif checkers.is_date(value):
+            self._min = validators.date(value)
+        elif checkers.is_datetime(value):
+            self._min = validators.datetime(value)
+        else:
+            self._min = validators.numeric(value, allow_empty = True)
 
     @property
     def minor_grid_line_color(self) -> Optional[str | Gradient | Pattern]:
