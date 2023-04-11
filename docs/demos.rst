@@ -119,7 +119,7 @@ by running all the cells in sequence.
 Running Demos Locally
 *******************************
 
-.. info::
+.. note::
   
   You can run the demos locally by following instructions in the 
   `Highcharts for Python Demos <https://github.com/highcharts-for-python-demos>`__ Github repo's README.
