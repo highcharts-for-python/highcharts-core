@@ -132,6 +132,13 @@ class SeriesBaseOptions(GenericTypeOptions):
         series, so that its graphic representations are given the class name
         ``highcharts-color-{n}``.
 
+        .. tip::
+        
+          .. versionadded:: Highcharts (JS) v.11
+
+          With Highcharts (JS) v.11, using CSS variables of the form ``--highcharts-color-{n}`` make
+          changing the color scheme very simple.
+
         Defaults to :obj:`None <python:None>`.
 
         :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
