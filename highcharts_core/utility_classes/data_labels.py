@@ -905,6 +905,112 @@ class DataLabel(HighchartsMeta):
         return untrimmed
 
 
+class SunburstDataLabel(DataLabel):
+    """Variant of :class:`DataLabel` used for :term:`sunburst` series."""
+    
+    def __init__(self, **kwargs):
+        self._rotation_mode = None
+        
+        self.rotation_mode = kwargs.get('rotation_mode', None)
+        
+        super().__init__(**kwargs)
+        
+    @property
+    def rotation_mode(self) -> Optional[str]:
+        """Determines how the data label will be rotated relative to the perimeter of the sunburst. 
+        
+        Valid values are:
+        
+          * ``'circular'``
+          * ``'auto'``
+          * ``'parallel'`` 
+          * ``'perpendicular'``. 
+          
+        Defaults to ``'circular'``.
+        
+        .. note::
+
+          When ``'circular'``, the best fit will be computed for the point, so that the label is curved around the 
+          center when there is room for it, otherwise perpendicular. 
+        
+          The legacy ``'auto'`` option works similiarly to ``'circular'``, but instead of curving the labels, they are 
+          tangented to the perimiter.
+        
+        .. warning::
+        
+          The :meth:`.rotation <highcharts_core.utility_classes.data_labels.SunburstDataLabel.rotation>` property 
+          takes precedence over ``.rotation_mode``.
+          
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._rotation_mode
+    
+    @rotation_mode.setter
+    def rotation_mode(self, value):
+        if not value:
+            self._rotation_mode = None
+        else:
+            value = validators.string(value, allow_empty = False)
+            value = value.lower()
+            if value not in ['circular', 'auto', 'parallel', 'perpendicular']:
+                raise errors.HighchartsValueError(f'if not empty, rotation_mode expects a value of either '
+                                                  f'"circular", "auto", "parallel", or "perpendicular", '
+                                                  f' but received "{str}".')
+
+            self._rotation_mode = value
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'align': as_dict.get('align', None),
+            'allow_overlap': as_dict.get('allowOverlap', None),
+            'animation': as_dict.get('animation', None),
+            'background_color': as_dict.get('backgroundColor', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'crop': as_dict.get('crop', None),
+            'defer': as_dict.get('defer', None),
+            'enabled': as_dict.get('enabled', None),
+            'filter': as_dict.get('filter', None),
+            'format': as_dict.get('format', None),
+            'formatter': as_dict.get('formatter', None),
+            'inside': as_dict.get('inside', None),
+            'null_format': as_dict.get('nullFormat', None),
+            'null_formatter': as_dict.get('nullFormatter', None),
+            'overflow': as_dict.get('overflow', None),
+            'padding': as_dict.get('padding', None),
+            'position': as_dict.get('position', None),
+            'rotation': as_dict.get('rotation', None),
+            'shadow': as_dict.get('shadow', None),
+            'shape': as_dict.get('shape', None),
+            'style': as_dict.get('style', None),
+            'text_path': as_dict.get('textPath', None),
+            'use_html': as_dict.get('useHTML', None),
+            'vertical_align': as_dict.get('verticalAlign', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
+            'z': as_dict.get('z', None),
+            
+            'rotation_mode': as_dict.get('rotationMode', None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        untrimmed = {
+            'rotationMode': self.rotation_mode,
+        }
+
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
+
+        return untrimmed
+
+
 class NodeDataLabel(DataLabel):
     """Variant of :class:`DataLabel` used for node-based charts/diagrams."""
 

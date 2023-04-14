@@ -1,7 +1,7 @@
 from typing import Optional, List
 from decimal import Decimal
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
 from highcharts_core import constants, errors
 from highcharts_core.decorators import class_sensitive, validate_types
@@ -11,6 +11,7 @@ from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
 from highcharts_core.utility_classes.breadcrumbs import BreadcrumbOptions
 from highcharts_core.utility_classes.shadows import ShadowOptions
+from highcharts_core.utility_classes.data_labels import SunburstDataLabel
 
 
 class SunburstOptions(GenericTypeOptions):
@@ -231,6 +232,37 @@ class SunburstOptions(GenericTypeOptions):
             self._crisp = None
         else:
             self._crisp = bool(value)
+
+    @property
+    def data_labels(self) -> Optional[SunburstDataLabel | List[SunburstDataLabel]]:
+        """Options for the series data labels, appearing next to each data point.
+
+        .. note::
+
+          To have multiple data labels per data point, you can also supply a collection of
+          :class:`DataLabel` configuration settings.
+
+        :rtype: :class:`SunburstDataLabel <highcharts_core.utility_classes.data_labels.SunburstDataLabel>`, 
+          :class:`list <python:list>` of 
+            :class:`SunburstDataLabel <highcharts_core.utility_classes.data_labels.SunburstDataLabel>` or
+            :obj:`None <python:None>`
+        """
+        return self._data_labels
+
+    @data_labels.setter
+    def data_labels(self, value):
+        if not value:
+            self._data_labels = None
+        else:
+            if checkers.is_iterable(value):
+                self._data_labels = validate_types(value,
+                                                   types = SunburstDataLabel,
+                                                   allow_none = False,
+                                                   force_iterable = True)
+            else:
+                self._data_labels = validate_types(value,
+                                                   types = SunburstDataLabel,
+                                                   allow_none = False)
 
     @property
     def fill_color(self) -> Optional[str | Gradient | Pattern]:
