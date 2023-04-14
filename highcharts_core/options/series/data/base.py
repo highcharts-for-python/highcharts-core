@@ -190,6 +190,13 @@ class DataBase(DataCore):
         point, so its graphic representations are given the class name
         ``highcharts-color-{n}``. Defaults to :obj:`None <python:None>`.
 
+        .. tip::
+        
+          .. versionadded:: Highcharts (JS) v.11
+
+          With Highcharts (JS) v.11, using CSS variables of the form ``--highcharts-color-{n}`` make
+          changing the color scheme very simple.
+
         :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
         """
         return self._color_index
