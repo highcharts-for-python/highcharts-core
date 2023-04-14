@@ -440,7 +440,7 @@ class SeriesBase(SeriesOptions):
         except AttributeError:
             pass
 
-        if checkers.is_file_on_filesystem(as_string_or_file):
+        if checkers.is_on_filesystem(as_string_or_file):
             with open(as_string_or_file, 'r') as file_:
                 as_str = file_.read()
         else:
