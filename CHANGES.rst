@@ -1,3 +1,10 @@
+Release 1.0.1
+=========================================
+
+* **BUGFIX**: Fixed a bug encountered when parsing CSV data (issue #32).
+
+---------------
+
 Release 1.0.0
 =========================================
 
