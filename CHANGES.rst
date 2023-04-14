@@ -1,3 +1,23 @@
+Release 2.0.0
+=========================================
+
+* Align the API to **Highcharts (JS) v.11**. In particular, this includes:
+
+  * Updating documentation for ``options.chart.ChartOptions.styled_mode`` to align
+    to new v11 design changes.
+  * Updated documentation for ``options.series.data.base.DataBase.color_index`` to align to
+    new v11 design changes.
+  * Added new ``utility_classes.data_labels.SunburstDataLabel`` class to patch missing
+    data label ``.rotation_mode`` property.
+  * Updated ``options.plot_options.SunburstOptions.data_labels`` to accept ``SunburstDataLabel``
+    values.
+  * Updated documentation of ``options.axes.labels.AxisLabelOptions.distance`` to reflect new (or 
+    newly-documented) behavior.
+
+* **FIXED:** Broken heatmap and tilemap documentation links.
+
+-------------------------------
+
 Release 1.0.0
 =========================================
 
