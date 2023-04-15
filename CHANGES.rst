@@ -2,6 +2,8 @@ Release 1.0.1
 =========================================
 
 * **BUGFIX**: Fixed a bug encountered when parsing CSV data (issue #32).
+* **ENHANCEMENT**: Added a catch for when trying to set ``Chart.options`` to a ``SharedOptions`` instance (issue #34).
+* Fixed a broken link in the documentation.
 
 ---------------
 
