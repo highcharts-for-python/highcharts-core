@@ -185,8 +185,18 @@ class Chart(HighchartsMeta):
         return self._options
 
     @options.setter
-    @class_sensitive(HighchartsOptions)
     def options(self, value):
+        if not value:
+            self._options = None
+        elif isinstance(value, SharedOptions):
+            raise errors.HighchartsValueError('Chart.options expects a HighchartsOptions instance '
+                                              'or a valid descendent. However, the value you supplied '
+                                              'is a SharedOptions instance, which wil a descendent is not '
+                                              'valid for this parameter.')
+        else:
+            value = validate_types(value,
+                                   types = HighchartsOptions)
+
         self._options = value
 
     @property

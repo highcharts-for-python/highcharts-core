@@ -279,12 +279,14 @@ def parse_csv(csv_data,
     :rtype: :class:`tuple <python:tuple>` of a :class:`list <python:list>` of column names
       and :class:`list <python:list>` of :class:`dict <python:dict>`
     """
-    csv_data = validators.string(csv_data, allow_empty = True)
     if not csv_data:
         return [], []
 
+    if isinstance(csv_data, str):
+        csv_data = csv_data.split(line_terminator)
+
     if not wrapper_character:
-        wrapper_character = '\''
+        wrapper_character = "'"
 
     if wrap_all_strings:
         quoting = csv.QUOTE_NONNUMERIC
