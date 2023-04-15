@@ -337,9 +337,9 @@ Core Components
       :class:`SolidGaugeOptions <highcharts_core.options.plot_options.gauge.SolidGaugeOptions>`
   * - :mod:`.options.plot_options.generic <highcharts_core.options.plot_options.generic>`
     - :class:`GenericTypeOptions <highcharts_core.options.plot_options.generic.GenericTypeOptions>`
-  * - :mod:`.options.plot_options.Heatmap <highcharts_core.options.plot_options.Heatmap>`
-    - :class:`HeatmapOptions <highcharts_core.options.plot_options.Heatmap.HeatmapOptions>`
-      :class:`TilemapOptions <highcharts_core.options.plot_options.Tilemap.TilemapOptions>`
+  * - :mod:`.options.plot_options.heatmap <highcharts_core.options.plot_options.heatmap>`
+    - :class:`HeatmapOptions <highcharts_core.options.plot_options.heatmap.HeatmapOptions>`
+      :class:`TilemapOptions <highcharts_core.options.plot_options.heatmap.TilemapOptions>`
   * - :mod:`.options.plot_options.histogram <highcharts_core.options.plot_options.histogram>`
     - :class:`HistogramOptions <highcharts_core.options.plot_options.histogram.HistogramOptions>`
   * - :mod:`.options.plot_options.item <highcharts_core.options.plot_options.item>`

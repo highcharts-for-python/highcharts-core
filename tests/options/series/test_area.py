@@ -2789,6 +2789,41 @@ def test_bugfix32_LineSeries_from_csv(kwargs, error):
             assert item.x is not None
             assert item.y is not None
 
+
+@pytest.mark.parametrize('filename, property_map, kwargs, error', [
+    ('test-data-files/nst-est2019-01.csv', {}, {}, ValueError),
+    ('test-data-files/nst-est2019-01.csv',
+     {
+         'name': 'Geographic Area',
+         'x': 'Geographic Area',
+         'y': '2010'
+     },
+     {
+         'wrapper_character': '"'
+     },
+     None),
+
+])
+def test_LineSeries_from_csv(input_files, filename, property_map, kwargs, error):
+    input_file = check_input_file(input_files, filename)
+    
+    if not error:
+        result = cls5.from_csv(input_file,
+                               property_column_map = property_map,
+                               **kwargs)
+        assert result is not None
+        assert isinstance(result, cls5)
+        assert result.data is not None
+        for item in result.data:
+            for key in property_map:
+                assert getattr(item, key, None) is not None
+    else:
+        with pytest.raises(error):
+            result = cls5.from_csv(input_file, 
+                                   property_column_map = property_map,
+                                   **kwargs)
+
+
 #### NEXT CLASS
 
 @pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
