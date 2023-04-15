@@ -5,6 +5,7 @@ import pytest
 from json.decoder import JSONDecodeError
 
 from highcharts_core.chart import Chart as cls
+from highcharts_core.global_options.shared_options import SharedOptions
 from highcharts_core import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
@@ -18,6 +19,19 @@ STANDARD_PARAMS = [
 @pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
 def test__init__(kwargs, error):
     Class__init__(cls, kwargs, error)
+
+
+@pytest.mark.parametrize('kwargs, error', [
+    ({}, errors.HighchartsValueError),
+])
+def test_bugfix34_SharedOptions_error(kwargs, error):
+    shared_options = SharedOptions()
+    instance = cls(**kwargs)
+    if not error:
+        instance.options = shared_options
+    else:
+        with pytest.raises(error):
+            instance.options = shared_options
 
 
 @pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
