@@ -5,6 +5,8 @@ import pytest
 import datetime
 from json.decoder import JSONDecodeError
 
+from validator_collection import checkers
+
 from highcharts_core.options.series.area import AreaSeries as cls
 from highcharts_core.options.series.area import AreaRangeSeries as cls2
 from highcharts_core.options.series.area import AreaSplineSeries as cls3
@@ -2763,6 +2765,29 @@ def test_LineSeries_from_pandas(input_files, filename, property_map, error):
     else:
         with pytest.raises(error):
             result = cls5.from_pandas(df, property_map = property_map)
+
+
+@pytest.mark.parametrize('kwargs, error', [
+    ({
+        'as_string_or_file': "'Date','HeadCount'\r\n'01/01/2023','2'\r\n'01/02/2023','4'\r\n'01/03/2023','8'",
+        'property_column_map': {'x': 'Date', 'y': 'HeadCount', 'id': 'Date'}
+     }, None),
+    ({
+        'as_string_or_file': "Date,HeadCount\r\n01/01/2023,2\r\n01/02/2023,4\r\n01/03/2023,8",
+        'property_column_map': {'x': 'Date', 'y': 'HeadCount', 'id': 'Date'}
+     }, None),
+
+])
+def test_bugfix32_LineSeries_from_csv(kwargs, error):
+    if not error:
+        result = cls5.from_csv(**kwargs)
+        assert result is not None
+        assert isinstance(result, cls5) is True
+        assert result.data is not None
+        assert isinstance(result.data, list) is True
+        for item in result.data:
+            assert item.x is not None
+            assert item.y is not None
 
 #### NEXT CLASS
 

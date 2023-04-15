@@ -283,8 +283,10 @@ def parse_csv(csv_data,
     if not csv_data:
         return [], []
 
+    csv_data = csv_data.split(line_terminator)
+
     if not wrapper_character:
-        wrapper_character = '\''
+        wrapper_character = "'"
 
     if wrap_all_strings:
         quoting = csv.QUOTE_NONNUMERIC
