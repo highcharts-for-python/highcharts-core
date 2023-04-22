@@ -1,12 +1,13 @@
 from typing import Optional, List
 from decimal import Decimal
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
 from highcharts_core import errors
-from highcharts_core.decorators import class_sensitive
+from highcharts_core.decorators import class_sensitive, validate_types
 from highcharts_core.options.plot_options.bar import BarOptions
 from highcharts_core.options.plot_options.levels import LevelOptions
+from highcharts_core.utility_classes.data_labels import OrganizationDataLabel
 
 
 class OrganizationOptions(BarOptions):
@@ -57,6 +58,37 @@ class OrganizationOptions(BarOptions):
         self.node_width = kwargs.get('node_width', None)
 
         super().__init__(**kwargs)
+
+    @property
+    def data_labels(self) -> Optional[OrganizationDataLabel | List[OrganizationDataLabel]]:
+        """Options for the series data labels, appearing next to each data point.
+
+        .. note::
+
+          To have multiple data labels per data point, you can also supply a collection of
+          :class:`DataLabel` configuration settings.
+
+        :rtype: :class:`OrganizationDataLabel <highcharts_core.utility_classes.data_labels.OrganizationDataLabel>`, 
+          :class:`list <python:list>` of 
+            :class:`OrganizationDataLabel <highcharts_core.utility_classes.data_labels.OrganizationDataLabel>` or
+            :obj:`None <python:None>`
+        """
+        return self._data_labels
+
+    @data_labels.setter
+    def data_labels(self, value):
+        if not value:
+            self._data_labels = None
+        else:
+            if checkers.is_iterable(value):
+                self._data_labels = validate_types(value,
+                                                   types = OrganizationDataLabel,
+                                                   allow_none = False,
+                                                   force_iterable = True)
+            else:
+                self._data_labels = validate_types(value,
+                                                   types = OrganizationDataLabel,
+                                                   allow_none = False)
 
     @property
     def hanging_indent(self) -> Optional[int | float | Decimal]:

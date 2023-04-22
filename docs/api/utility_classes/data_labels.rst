@@ -30,6 +30,42 @@ class: :class:`DataLabel <highcharts_core.utility_classes.data_labels.DataLabel>
 -----------------
 
 ********************************************************************************************************************
+class: :class:`OrganizationDataLabel <highcharts_core.utility_classes.data_labels.OrganizationDataLabel>`
+********************************************************************************************************************
+
+.. autoclass:: OrganizationDataLabel
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: OrganizationDataLabel
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
+-----------------
+
+********************************************************************************************************************
+class: :class:`SunburstDataLabel <highcharts_core.utility_classes.data_labels.SunburstDataLabel>`
+********************************************************************************************************************
+
+.. autoclass:: SunburstDataLabel
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: SunburstDataLabel
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
+-----------------
+
+********************************************************************************************************************
 class: :class:`NodeDataLabel <highcharts_core.utility_classes.data_labels.NodeDataLabel>`
 ********************************************************************************************************************
 

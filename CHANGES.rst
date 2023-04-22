@@ -13,6 +13,10 @@ Release 2.0.0
     values.
   * Updated documentation of ``options.axes.labels.AxisLabelOptions.distance`` to reflect new (or 
     newly-documented) behavior.
+  * Added new ``utility_classes.data_labels.OrganizationDataLabel`` class to patch misisng data label ``.
+    link_text_path`` property.
+  * Updated ``options.plot_options.organization.OrganizationOptions.data_labels`` to accept ``OrganizationDataLabel``
+    values.
 
 * **FIXED:** Broken heatmap and tilemap documentation links.
 
