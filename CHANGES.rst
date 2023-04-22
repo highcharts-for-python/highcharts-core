@@ -17,6 +17,7 @@ Release 2.0.0
     link_text_path`` property.
   * Updated ``options.plot_options.organization.OrganizationOptions.data_labels`` to accept ``OrganizationDataLabel``
     values.
+  * Added ``.description_format`` property to ``options.plot_options.accessibility.TypeOptionsAccessibility``.
 
 * **FIXED:** Broken heatmap and tilemap documentation links.
 

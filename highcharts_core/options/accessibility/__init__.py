@@ -32,7 +32,6 @@ class CustomAccessibilityComponents(JavaScriptDict):
     _allow_empty_value = True
 
 
-
 class Accessibility(HighchartsMeta):
     """Options for configuring accessibility for the chart."""
 
