@@ -1016,9 +1016,11 @@ class OrganizationDataLabel(DataLabel):
     
     def __init__(self, **kwargs):
         self._link_format = None
+        self._link_formatter = None
         self._link_text_path = None
         
         self.link_format = kwargs.get('link_format', None)
+        self.link_formatter = kwargs.get('link_formatter', None)
         self.link_text_path = kwargs.get('link_text_path', None)
         
         super().__init__(**kwargs)
@@ -1076,7 +1078,6 @@ class OrganizationDataLabel(DataLabel):
     @class_sensitive(TextPath)
     def link_text_path(self, value):
         self._link_text_path = value
-
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
