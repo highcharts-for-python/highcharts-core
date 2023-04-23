@@ -34,6 +34,7 @@
   organization
   packedbubble
   pareto
+  pictorial
   pie
   points
   polygon
@@ -166,6 +167,8 @@ Sub-components
       :class:`ParentNodeOptions <highcharts_core.options.plot_options.packedbubble.ParentNodeOptions>`
   * - :mod:`.options.plot_options.pareto <highcharts_core.options.plot_options.pareto>`
     - :class:`ParetoOptions <highcharts_core.options.plot_options.pareto.ParetoOptions>`
+  * - :mod:`.options.plot_options.pictorial <highcharts_core.options.plot_options.pictorial>`
+    - :class:`PictorialOptions <highcharts_core.options.plot_options.pictorial.PictorialOptions>`
   * - :mod:`.options.plot_options.pie <highcharts_core.options.plot_options.pie>`
     - :class:`PieOptions <highcharts_core.options.plot_options.pie.PieOptions>`
       :class:`VariablePieOptions <highcharts_core.options.plot_options.pie.VariablePieOptions>`

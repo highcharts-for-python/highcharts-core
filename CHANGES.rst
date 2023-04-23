@@ -18,6 +18,7 @@ Release 2.0.0
   * Updated ``options.plot_options.organization.OrganizationOptions.data_labels`` to accept ``OrganizationDataLabel``
     values.
   * Added ``.description_format`` property to ``options.plot_options.accessibility.TypeOptionsAccessibility``.
+  * Added ``PictorialOptions`` / ``PictorialSeries`` series type with related classes.
 
 * **FIXED:** Broken heatmap and tilemap documentation links.
 * **FIXED:** Fixed missing ``TreegraphOptions`` / ``TreegraphSeries`` series type.

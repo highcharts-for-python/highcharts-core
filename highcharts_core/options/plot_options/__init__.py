@@ -31,6 +31,7 @@ from highcharts_core.options.plot_options.networkgraph import NetworkGraphOption
 from highcharts_core.options.plot_options.organization import OrganizationOptions
 from highcharts_core.options.plot_options.packedbubble import PackedBubbleOptions
 from highcharts_core.options.plot_options.pareto import ParetoOptions
+from highcharts_core.options.plot_options.pictorial import PictorialOptions
 from highcharts_core.options.plot_options.pie import PieOptions
 from highcharts_core.options.plot_options.polygon import PolygonOptions
 from highcharts_core.options.plot_options.pyramid import PyramidOptions
@@ -105,6 +106,7 @@ class PlotOptions(HighchartsMeta):
         self._organization = None
         self._packedbubble = None
         self._pareto = None
+        self._pictorial = None
         self._pie = None
         self._polygon = None
         self._pyramid = None
@@ -816,6 +818,27 @@ class PlotOptions(HighchartsMeta):
         self._pareto = value
 
     @property
+    def pictorial(self) -> Optional[PictorialOptions]:
+        """General options to apply to all Pictorial series types.
+
+        A pictorial series uses vector images to represent the data, with the data's shape
+        determined by the ``path`` parameter.
+
+        .. figure:: ../../../_static/pictorial-example.png
+          :alt: Pictorial Example Chart
+          :align: center
+
+
+        :rtype: :class:`ParetoOptions` or :obj:`None <python:None>`
+        """
+        return self._pictorial
+
+    @pictorial.setter
+    @class_sensitive(PictorialOptions)
+    def pictorial(self, value):
+        self._pictorial = value
+
+    @property
     def pie(self) -> Optional[PieOptions]:
         """General options to apply to all Pie series types.
 
@@ -1437,6 +1460,7 @@ class PlotOptions(HighchartsMeta):
             'organization': as_dict.get('organization', None),
             'packedbubble': as_dict.get('packedbubble', None),
             'pareto': as_dict.get('pareto', None),
+            'pictorial': as_dict.get('pictorial', None),
             'pie': as_dict.get('pie', None),
             'polygon': as_dict.get('polygon', None),
             'pyramid': as_dict.get('pyramid', None),
@@ -1496,6 +1520,7 @@ class PlotOptions(HighchartsMeta):
             'organization': self.organization,
             'packedbubble': self.packedbubble,
             'pareto': self.pareto,
+            'pictorial': self.pictorial,
             'pie': self.pie,
             'polygon': self.polygon,
             'pyramid': self.pyramid,
