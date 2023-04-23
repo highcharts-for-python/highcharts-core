@@ -1,66 +1,149 @@
 import datetime
-from typing import Optional, List
+from typing import Optional
 from decimal import Decimal
 
-from validator_collection import validators, checkers
+from validator_collection import validators
 
 from highcharts_core import errors
-from highcharts_core.decorators import class_sensitive, validate_types
+from highcharts_core.decorators import class_sensitive
 from highcharts_core.options.plot_options.generic import GenericTypeOptions
-from highcharts_core.utility_classes.gradients import Gradient
-from highcharts_core.utility_classes.patterns import Pattern
-from highcharts_core.utility_classes.shadows import ShadowOptions
-from highcharts_core.utility_classes.zones import Zone
-from highcharts_core.options.plot_options.data_sorting import DataSorting
-from highcharts_core.options.plot_options.drag_drop import DragDropOptions
+from highcharts_core.utility_classes.buttons import CollapseButtonConfiguration
+from highcharts_core.utility_classes.events import SeriesEvents
+from highcharts_core.utility_classes.javascript_functions import CallbackFunction
+from highcharts_core.options.plot_options.link import LinkOptions
 
 
-class SeriesBaseOptions(GenericTypeOptions):
-    """General options to apply to all series types."""
+class TreegraphEvents(SeriesEvents):
+    """General event handlers for the series items. 
+    
+    .. tip::
+    
+      These event hooks can also be attached to the series at run time using the ``Highcharts.addEvent()`` (JavaScript) 
+      function.
+      
+    """
+    
+    def __init__(self, **kwargs):
+        self._set_root_node = None
+        
+        self.set_root_node = kwargs.get('set_root_node', None)
+        
+        super().__init__(**kwargs)
+        
+    @property
+    def set_root_node(self) -> Optional[CallbackFunction]:
+        """Event handler that fires on a request to change the tree's root node, *before* the update is made. 
+        
+        An event object is passed to the function, containing additional properties ``newRootId``, ``previousRootId``, 
+        ``redraw``, and ``trigger``.
+        
+        Defaults to :obj:`None <python:None>`
+        
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
+          :obj:`None <python:None>`
+        """
+        return self._set_root_node
+    
+    @set_root_node.setter
+    @class_sensitive(CallbackFunction)
+    def set_root_node(self, value):
+        self._set_root_node = value
+        
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'after_animate': as_dict.get('afterAnimate', None),
+            'checkbox_click': as_dict.get('checkboxClick', None),
+            'click': as_dict.get('click', None),
+            'hide': as_dict.get('hide', None),
+            'legend_item_click': as_dict.get('legendItemClick', None),
+            'mouse_out': as_dict.get('mouseOut', None),
+            'mouse_over': as_dict.get('mouseOver', None),
+            'show': as_dict.get('show', None),
+            
+            'set_root_node': as_dict.get('setRootNode', None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        untrimmed = {
+            'afterAnimate': self.after_animate,
+            'checkboxClick': self.checkbox_click,
+            'click': self.click,
+            'hide': self.hide,
+            'legendItemClick': self.legend_item_click,
+            'mouseOut': self.mouse_out,
+            'mouseOver': self.mouse_over,
+            'setRootNode': self.set_root_node,
+            'show': self.show
+        }
+
+        return untrimmed
+
+
+class TreegraphOptions(GenericTypeOptions):
+    """General options to apply to all :term:`Treegraph` series types.
+    
+    A treegraph visualizes a relationship between ancestors and descendants with a clear parent-child relationship,
+    e.g. a family tree or a directory structure.
+    
+    .. figure:: ../../../_static/treegraph-example.png
+      :alt: Treegraph Example Chart
+      :align: center
+    
+    """
 
     def __init__(self, **kwargs):
         self._animation_limit = None
         self._boost_blending = None
         self._boost_threshold = None
         self._color_index = None
-        self._color_key = None
-        self._connect_nulls = None
         self._crisp = None
         self._crop_threshold = None
-        self._data_sorting = None
         self._find_nearest_point_by = None
         self._get_extremes_from_all = None
-        self._linecap = None
-        self._line_width = None
         self._relative_x_value = None
-        self._shadow = None
         self._soft_threshold = None
         self._step = None
-        self._zone_axis = None
-        self._zones = None
 
+        self._point_interval = None
+        self._point_interval_unit = None
+        self._point_start = None
+        self._stacking = None
+
+        self._allow_traversing_tree = None
+        self._collapse_button = None
+        self._color_by_point = None
+        self._link = None
+        self._reversed = None        
+        self._traverse_up_button = None
+        
         self.animation_limit = kwargs.get('animation_limit', None)
         self.boost_blending = kwargs.get('boost_blending', None)
         self.boost_threshold = kwargs.get('boost_threshold', None)
         self.color_index = kwargs.get('color_index', None)
-        self.color_key = kwargs.get('color_key', None)
-        self.connect_nulls = kwargs.get('connect_nulls', None)
         self.crisp = kwargs.get('crisp', None)
         self.crop_threshold = kwargs.get('crop_threshold', None)
-        self.data_sorting = kwargs.get('data_sorting', None)
         self.find_nearest_point_by = kwargs.get('find_nearest_point_by', None)
         self.get_extremes_from_all = kwargs.get('get_extremes_from_all', None)
-        self.linecap = kwargs.get('linecap', None)
-        self.line_width = kwargs.get('line_width', None)
         self.relative_x_value = kwargs.get('relative_x_value', None)
-        self.shadow = kwargs.get('shadow', None)
         self.soft_threshold = kwargs.get('soft_threshold',  None)
         self.step = kwargs.get('step', None)
-        self.zone_axis = kwargs.get('zone_axis', None)
-        self.zones = kwargs.get('zones', None)
 
+        self.point_interval = kwargs.get('point_interval', None)
+        self.point_interval_unit = kwargs.get('point_interval_unit', None)
+        self.point_start = kwargs.get('point_start', None)
+        self.stacking = kwargs.get('stacking', None)
+
+        self.allow_traversing_tree = kwargs.get('allow_traversing_tree', None)
+        self.collapse_button = kwargs.get('collapse_button', None)
+        self.color_by_point = kwargs.get('color_by_point', None)
+        self.link = kwargs.get('link', None)
+        self.reversed = kwargs.get('reversed', None)
+        
         super().__init__(**kwargs)
-
+        
     @property
     def animation_limit(self) -> Optional[int | float | Decimal]:
         """For some series, there is a limit that shuts down initial animation by default
@@ -152,40 +235,6 @@ class SeriesBaseOptions(GenericTypeOptions):
                                                minimum = 0)
 
     @property
-    def color_key(self) -> Optional[str]:
-        """Determines what data value should be used to calculate point color if
-        :meth:`AreaOptions.color_axis` is used.
-
-        .. note::
-
-          Requires to set ``min`` and ``max`` if some custom point property is used or if
-          approximation for data grouping is set to ``'sum'``.
-
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
-        """
-        return self._color_key
-
-    @color_key.setter
-    def color_key(self, value):
-        self._color_key = validators.string(value, allow_empty = True)
-
-    @property
-    def connect_nulls(self) -> Optional[bool]:
-        """If ``True``, connect a graph line across null points. If ``False``, renders
-        a gap between the points on either side of the null point. Defaults to ``False``.
-
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
-        """
-        return self._connect_nulls
-
-    @connect_nulls.setter
-    def connect_nulls(self, value):
-        if value is None:
-            self._connect_nulls = None
-        else:
-            self._connect_nulls = bool(value)
-
-    @property
     def crisp(self) -> Optional[bool]:
         """If ``True``, each point or column edge is rounded to its nearest pixel in order
         to render sharp on screen. Defaults to ``True``.
@@ -231,17 +280,22 @@ class SeriesBaseOptions(GenericTypeOptions):
                                                    minimum = 0)
 
     @property
-    def data_sorting(self) -> Optional[DataSorting]:
-        """Options for the series data sorting.
+    def events(self) -> Optional[TreegraphEvents]:
+        """General event handlers for the series items.
 
-        :rtype: :class:`DataSorting` or :obj:`None <python:None>`
+        .. note::
+
+          These event hooks can also be attached to the series at run time using the
+          (JavaScript) ``Highcharts.addEvent()`` function.
+
+        :rtype: :class:`TreegraphEvents` or :obj:`None <python:None>`
         """
-        return self._data_sorting
+        return self._events
 
-    @data_sorting.setter
-    @class_sensitive(DataSorting)
-    def data_sorting(self, value):
-        self._data_sorting = value
+    @events.setter
+    @class_sensitive(TreegraphEvents)
+    def events(self, value):
+        self._events = value
 
     @property
     def find_nearest_point_by(self) -> Optional[str]:
@@ -285,34 +339,6 @@ class SeriesBaseOptions(GenericTypeOptions):
             self._get_extremes_from_all = bool(value)
 
     @property
-    def linecap(self) -> Optional[str]:
-        """The SVG value used for the ``stroke-linecap`` and ``stroke-linejoin`` of a line
-        graph. Defaults to ``'round'``, which means that lines are rounded in the ends and
-        bends.
-
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
-        """
-        return self._linecap
-
-    @linecap.setter
-    def linecap(self, value):
-        self._linecap = validators.string(value, allow_empty = True)
-
-    @property
-    def line_width(self) -> Optional[int | float | Decimal]:
-        """Pixel width of the graph line. Defaults to ``2``.
-
-        :rtype: numeric or :obj:`None <python:None>`
-        """
-        return self._line_width
-
-    @line_width.setter
-    def line_width(self, value):
-        self._line_width = validators.numeric(value,
-                                              allow_empty = True,
-                                              minimum = 0)
-
-    @property
     def relative_x_value(self) -> Optional[bool]:
         """When ``True``, X values in the data set are relative to the current
         :meth:`point_start <AreaOptions.point_start>`,
@@ -336,30 +362,6 @@ class SeriesBaseOptions(GenericTypeOptions):
             self._relative_x_value = None
         else:
             self._relative_x_value = bool(value)
-
-    @property
-    def shadow(self) -> Optional[bool | ShadowOptions]:
-        """Configuration for the shadow to apply to the tooltip. Defaults to
-        ``False``.
-
-        If ``False``, no shadow is applied.
-
-        :returns: The shadow configuration to apply or a boolean setting which hides the
-          shadow or displays the default shadow.
-        :rtype: :class:`bool <python:bool>` or :class:`ShadowOptions`
-        """
-        return self._shadow
-
-    @shadow.setter
-    def shadow(self, value):
-        if isinstance(value, bool):
-            self._shadow = value
-        elif not value:
-            self._shadow = None
-        else:
-            value = validate_types(value,
-                                   types = ShadowOptions)
-            self._shadow = value
 
     @property
     def soft_threshold(self) -> Optional[bool]:
@@ -400,244 +402,6 @@ class SeriesBaseOptions(GenericTypeOptions):
     @step.setter
     def step(self, value):
         self._step = validators.string(value, allow_empty = True)
-
-    @property
-    def zone_axis(self) -> Optional[str]:
-        """Defines the Axis on which the zones are applied. Defaults to ``'y'``.
-
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
-        """
-        return self._zone_axis
-
-    @zone_axis.setter
-    def zone_axis(self, value):
-        self._zone_axis = validators.string(value, allow_empty = True)
-
-    @property
-    def zones(self) -> Optional[List[Zone]]:
-        """An array defining zones within a series. Defaults to :obj:`None <python:None>`.
-
-        Zones can be applied to the X axis, Y axis or Z axis for bubbles, according to the
-        :meth:`zone_axis <AreaOptions.zone_axis>` setting.
-
-        .. warning::
-
-          The zone definitions have to be in ascending order regarding to the value.
-
-        :rtype: :obj:`None <python:None>` or :class:`list <python:list>` of
-          :class:`Zone` instances
-        """
-        return self._zones
-
-    @zones.setter
-    @class_sensitive(Zone,
-                     force_iterable = True)
-    def zones(self, value):
-        self._zones = value
-
-    @classmethod
-    def _get_kwargs_from_dict(cls, as_dict):
-        kwargs = {
-            'accessibility': as_dict.get('accessibility', None),
-            'allow_point_select': as_dict.get('allowPointSelect', None),
-            'animation': as_dict.get('animation', None),
-            'class_name': as_dict.get('className', None),
-            'clip': as_dict.get('clip', None),
-            'color': as_dict.get('color', None),
-            'cursor': as_dict.get('cursor', None),
-            'custom': as_dict.get('custom', None),
-            'dash_style': as_dict.get('dashStyle', None),
-            'data_labels': as_dict.get('dataLabels', None),
-            'description': as_dict.get('description', None),
-            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
-            'events': as_dict.get('events', None),
-            'include_in_data_export': as_dict.get('includeInDataExport', None),
-            'keys': as_dict.get('keys', None),
-            'label': as_dict.get('label', None),
-            'linked_to': as_dict.get('linkedTo', None),
-            'marker': as_dict.get('marker', None),
-            'on_point': as_dict.get('onPoint', None),
-            'opacity': as_dict.get('opacity', None),
-            'point': as_dict.get('point', None),
-            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
-            'selected': as_dict.get('selected', None),
-            'show_checkbox': as_dict.get('showCheckbox', None),
-            'show_in_legend': as_dict.get('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
-            'states': as_dict.get('states', None),
-            'sticky_tracking': as_dict.get('stickyTracking', None),
-            'threshold': as_dict.get('threshold', None),
-            'tooltip': as_dict.get('tooltip', None),
-            'turbo_threshold': as_dict.get('turboThreshold', None),
-            'visible': as_dict.get('visible', None),
-
-            'animation_limit': as_dict.get('animationLimit', None),
-            'boost_blending': as_dict.get('boostBlending', None),
-            'boost_threshold': as_dict.get('boostThreshold', None),
-            'color_index': as_dict.get('colorIndex', None),
-            'color_key': as_dict.get('colorKey', None),
-            'connect_nulls': as_dict.get('connectNulls', None),
-            'crisp': as_dict.get('crisp', None),
-            'crop_threshold': as_dict.get('cropThreshold', None),
-            'data_sorting': as_dict.get('dataSorting', None),
-            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
-            'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
-            'linecap': as_dict.get('linecap', None),
-            'line_width': as_dict.get('lineWidth', None),
-            'relative_x_value': as_dict.get('relativeXValue', None),
-            'shadow': as_dict.get('shadow', None),
-            'soft_threshold': as_dict.get('softThreshold', None),
-            'step': as_dict.get('step', None),
-            'zone_axis': as_dict.get('zoneAxis', None),
-            'zones': as_dict.get('zones', None),
-        }
-
-        return kwargs
-
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
-        untrimmed = {
-            'animationLimit': self.animation_limit,
-            'boostBlending': self.boost_blending,
-            'boostThreshold': self.boost_threshold,
-            'colorIndex': self.color_index,
-            'colorKey': self.color_key,
-            'connectNulls': self.connect_nulls,
-            'crisp': self.crisp,
-            'cropThreshold': self.crop_threshold,
-            'dataSorting': self.data_sorting,
-            'findNearestPointBy': self.find_nearest_point_by,
-            'getExtremesFromAll': self.get_extremes_from_all,
-            'linecap': self.linecap,
-            'lineWidth': self.line_width,
-            'relativeXValue': self.relative_x_value,
-            'shadow': self.shadow,
-            'softThreshold': self.soft_threshold,
-            'step': self.step,
-            'zoneAxis': self.zone_axis,
-            'zones': self.zones
-        }
-        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
-
-        for key in parent_as_dict:
-            untrimmed[key] = parent_as_dict[key]
-
-        return untrimmed
-
-
-class SeriesOptions(SeriesBaseOptions):
-    """General options to apply to all (core) series types."""
-
-    def __init__(self, **kwargs):
-        self._color_axis = None
-        self._connect_ends = None
-        self._drag_drop = None
-        self._negative_color = None
-        self._point_interval = None
-        self._point_interval_unit = None
-        self._point_placement = None
-        self._point_start = None
-        self._stacking = None
-
-        self.color_axis = kwargs.get('color_axis', None)
-        self.connect_ends = kwargs.get('connect_ends', None)
-        self.drag_drop = kwargs.get('drag_drop', None)
-        self.negative_color = kwargs.get('negative_color', None)
-        self.point_interval = kwargs.get('point_interval', None)
-        self.point_interval_unit = kwargs.get('point_interval_unit', None)
-        self.point_placement = kwargs.get('point_placement', None)
-        self.point_start = kwargs.get('point_start', None)
-        self.stacking = kwargs.get('stacking', None)
-
-        super().__init__(**kwargs)
-
-    @property
-    def color_axis(self) -> Optional[str | int | bool]:
-        """When using dual or multiple color axes, this setting defines which
-        :term:`color axis` the particular series is connected to. It refers to either the
-        :meth:`ColorAxis.id` or the index of the axis in the :class:`ColorAxis` array,
-        with ``0`` being the first. Set this option to ``False`` to prevent a series from
-        connecting to the default color axis.
-
-        Defaults to ``0``.
-
-        :rtype: :obj:`None <python:None>` or :class:`str <python:str>` or
-          :class:`int <python:int>` or :class:`bool <python:bool>`
-        """
-        return self._color_axis
-
-    @color_axis.setter
-    def color_axis(self, value):
-        if value is None:
-            self._color_axis = None
-        elif value is False:
-            self._color_axis = False
-        else:
-            try:
-                self._color_axis = validators.string(value)
-            except TypeError:
-                self._color_axis = validators.integer(value,
-                                                      minimum = 0)
-
-    @property
-    def connect_ends(self) -> Optional[bool]:
-        """If ``True``, connect the ends of a line series plot across the extremes.
-        Defaults to :obj:`None <python:None>`.
-
-        .. warning::
-
-          Applies to :term:`polar charts <polar chart>` only.
-
-        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
-        """
-        return self._connect_ends
-
-    @connect_ends.setter
-    def connect_ends(self, value):
-        if value is None:
-            self._connect_ends = None
-        else:
-            self._connect_ends = bool(value)
-
-    @property
-    def drag_drop(self) -> Optional[DragDropOptions]:
-        """The draggable-points module allows points to be moved around or modified in the
-        chart.
-
-        In addition to the options mentioned under the dragDrop API structure, the module
-        fires three (JavaScript) events:
-
-          * ``point.dragStart``
-          * ``point.drag``
-          * ``point.drop``
-
-        :rtype: :class:`DragDropOptions` or :obj:`None <python:None>`
-        """
-        return self._drag_drop
-
-    @drag_drop.setter
-    @class_sensitive(DragDropOptions)
-    def drag_drop(self, value):
-        self._drag_drop = value
-
-    @property
-    def negative_color(self) -> Optional[str | Gradient | Pattern]:
-        """The color for the parts of the graph or points that are below the
-        :meth:`AreaOptions.threshold`.
-
-        .. note::
-
-          :meth:`Zones <AreaOptions.zones>` take precedence over the negative color.
-          Using ``negative_color`` is equivalent to applying a zone with value of 0.
-
-        :rtype: :obj:`None <python:None>`, :class:`Gradient`, :class:`Pattern`, or
-          :class:`str <python:str>`
-        """
-        return self._negative_color
-
-    @negative_color.setter
-    def negative_color(self, value):
-        from highcharts_core import utility_functions
-        self._negative_color = utility_functions.validate_color(value)
 
     @property
     def point_interval(self) -> Optional[int | float | Decimal]:
@@ -701,58 +465,6 @@ class SeriesOptions(SeriesBaseOptions):
         self._point_interval_unit = validators.string(value, allow_empty = True)
 
     @property
-    def point_placement(self) -> Optional[str | int | float | Decimal]:
-        """Used to determine the placement of the point in relation to tick marks on the
-        X axis. Defaults to :obj:`None <python:None>`, which behaves as undefined in
-        :term:`cartesian charts`, and ``"between"`` in polar charts.
-
-        Accepts possible values:
-
-          * ``'on'`` - where the point will not create any padding of the X axis. In a
-            polar column chart this means that the first column points directly
-            north.
-          * ``"between"`` - where the columns will be laid out between ticks. This is
-            useful for example for visualising an amount between two points in time or in
-            a certain sector of a polar chart.
-          * a numeric value - where ``0`` is on the axis value, ``-0.5`` is between this
-            value and the previous, and ``0.5`` is between this value and the next. Unlike
-            the textual options, numeric point placement options won't affect axis
-            padding.
-
-        .. warning::
-
-          Requires :meth:`point_range <AreaOptions.point_range>` to work. For
-          column series this is computed, but for line-type series it needs to be set.
-
-        .. note::
-
-          For the xrange series type and gantt charts, if the Y axis is a category axis,
-          the ``point_placement`` applies to the Y axis rather than the (typically
-          datetime) X axis.
-
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
-        """
-        return self._point_placement
-
-    @point_placement.setter
-    def point_placement(self, value):
-        if value is None:
-            self._point_placement = None
-        else:
-            try:
-                self._point_placement = validators.numeric(value,
-                                                           minimum = -0.5,
-                                                           maximum = 0.5)
-            except (TypeError, ValueError):
-                value = validators.string(value)
-                value = value.lower()
-                if value not in ['on', 'between']:
-                    raise errors.HighchartsValueError(f'point_placement must be a number,'
-                                                      f' "on", or "between". Was: '
-                                                      f'{value}')
-                self._point_placement = value
-
-    @property
     def point_start(self) -> Optional[int | float | Decimal]:
         """If no x values are given for the points in a series, ``point_start`` defines
         on what value to start. For example, if a series contains one yearly value
@@ -785,7 +497,7 @@ class SeriesOptions(SeriesBaseOptions):
                 raise error
             
         self._point_start = value
-                
+
     @property
     def stacking(self) -> Optional[str]:
         """Whether to stack the values of each series on top of each other. Defaults to
@@ -819,8 +531,97 @@ class SeriesOptions(SeriesBaseOptions):
                                                   f'value. However, received: {value}')
             self._stacking = value
 
+    @property
+    def allow_traversing_tree(self) -> Optional[bool]:
+        """If ``True``, the user can click on a point which is a parent and zoom in on its
+        children. Defaults to ``False``.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._allow_traversing_tree
+
+    @allow_traversing_tree.setter
+    def allow_traversing_tree(self, value):
+        if value is None:
+            self._allow_traversing_tree = None
+        else:
+            self._allow_traversing_tree = bool(value)
+
+    @property
+    def collapse_button(self) -> Optional[CollapseButtonConfiguration]:
+        """Options applied to the Collapse Button, which is the small button that indicates the node is collapsible.
+        
+        :rtype: :class:`CollapseButtonConfiguration <highcharts_core.utility_classes.buttons.CollapseButtonConfiguration>` 
+          or :obj:`None <python:None>`
+        """
+        return self._collapse_button
+    
+    @collapse_button.setter
+    @class_sensitive(CollapseButtonConfiguration)
+    def collapse_button(self, value):
+        self._collapse_button = value
+        
+    @property
+    def color_by_point(self) -> Optional[bool]:
+        """When using automatic point colors pulled from the global colors or
+        series-specific collections, this option determines whether the chart should
+        receive one color per series (``False``) or one color per point (``True``).
+
+        Defaults to ``True``.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._color_by_point
+
+    @color_by_point.setter
+    def color_by_point(self, value):
+        if value is None:
+            self._color_by_point = None
+        else:
+            self._color_by_point = bool(value)
+
+    @property
+    def link(self) -> Optional[LinkOptions]:
+        """Link style options.
+
+        :rtype: :class:`LinkOptions` or :obj:`None <python:None>`
+        """
+        return self._link
+
+    @link.setter
+    @class_sensitive(LinkOptions)
+    def link(self, value):
+        self._link = value
+
+    @property
+    def reversed(self) -> Optional[bool]:
+        """If ``True``, places the series on the other side of the plot area. Defaults to
+        ``False``.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._reversed
+
+    @reversed.setter
+    def reversed(self, value):
+        if value is None:
+            self._reversed = None
+        else:
+            self._reversed = bool(value)
+            
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
+        """Convenience method which returns the keyword arguments used to initialize the
+        class from a Highcharts Javascript-compatible :class:`dict <python:dict>` object.
+
+        :param as_dict: The HighCharts JS compatible :class:`dict <python:dict>`
+          representation of the object.
+        :type as_dict: :class:`dict <python:dict>`
+
+        :returns: The keyword arguments that would be used to initialize an instance.
+        :rtype: :class:`dict <python:dict>`
+
+        """
         kwargs = {
             'accessibility': as_dict.get('accessibility', None),
             'allow_point_select': as_dict.get('allowPointSelect', None),
@@ -850,7 +651,6 @@ class SeriesOptions(SeriesBaseOptions):
             'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
             'states': as_dict.get('states', None),
             'sticky_tracking': as_dict.get('stickyTracking', None),
-            'threshold': as_dict.get('threshold', None),
             'tooltip': as_dict.get('tooltip', None),
             'turbo_threshold': as_dict.get('turboThreshold', None),
             'visible': as_dict.get('visible', None),
@@ -859,50 +659,86 @@ class SeriesOptions(SeriesBaseOptions):
             'boost_blending': as_dict.get('boostBlending', None),
             'boost_threshold': as_dict.get('boostThreshold', None),
             'color_index': as_dict.get('colorIndex', None),
-            'color_key': as_dict.get('colorKey', None),
-            'connect_nulls': as_dict.get('connectNulls', None),
             'crisp': as_dict.get('crisp', None),
             'crop_threshold': as_dict.get('cropThreshold', None),
-            'data_sorting': as_dict.get('dataSorting', None),
             'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
             'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
-            'linecap': as_dict.get('linecap', None),
-            'line_width': as_dict.get('lineWidth', None),
             'relative_x_value': as_dict.get('relativeXValue', None),
-            'shadow': as_dict.get('shadow', None),
             'soft_threshold': as_dict.get('softThreshold', None),
             'step': as_dict.get('step', None),
-            'zone_axis': as_dict.get('zoneAxis', None),
-            'zones': as_dict.get('zones', None),
 
-            'color_axis': as_dict.get('colorAxis', None),
-            'connect_ends': as_dict.get('connectEnds', None),
-            'drag_drop': as_dict.get('dragDrop', None),
-            'negative_color': as_dict.get('negativeColor', None),
             'point_interval': as_dict.get('pointInterval', None),
             'point_interval_unit': as_dict.get('pointIntervalUnit', None),
-            'point_placement': as_dict.get('pointPlacement', None),
             'point_start': as_dict.get('pointStart', None),
             'stacking': as_dict.get('stacking', None),
+
+            'allow_traversing_tree': as_dict.get('allowTraversingTree', None),
+            'collapse_button': as_dict.get('collapseButton', None),
+            'color_by_point': as_dict.get('colorByPoint', None),
+            'link': as_dict.get('link', None),
+            'reversed': as_dict.get('reversed', None),
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
-            'colorAxis': self.color_axis,
-            'connectEnds': self.connect_ends,
-            'dragDrop': self.drag_drop,
-            'negativeColor': self.negative_color,
+            'accessibility': self.accessibility,
+            'allowPointSelect': self.allow_point_select,
+            'animation': self.animation,
+            'className': self.class_name,
+            'clip': self.clip,
+            'color': self.color,
+            'cursor': self.cursor,
+            'custom': self.custom,
+            'dashStyle': self.dash_style,
+            'dataLabels': self.data_labels,
+            'description': self.description,
+            'enableMouseTracking': self.enable_mouse_tracking,
+            'events': self.events,
+            'includeInDataExport': self.include_in_data_export,
+            'keys': self.keys,
+            'label': self.label,
+            'linkedTo': self.linked_to,
+            'marker': self.marker,
+            'onPoint': self.on_point,
+            'opacity': self.opacity,
+            'point': self.point,
+            'pointDescriptionFormatter': self.point_description_formatter,
+            'selected': self.selected,
+            'showCheckbox': self.show_checkbox,
+            'showInLegend': self.show_in_legend,
+            'skipKeyboardNavigation': self.skip_keyboard_navigation,
+            'states': self.states,
+            'stickyTracking': self.sticky_tracking,
+            'threshold': self.threshold,
+            'tooltip': self.tooltip,
+            'turboThreshold': self.turbo_threshold,
+            'visible': self.visible,
+            'type': self.type,
+
+            'animationLimit': self.animation_limit,
+            'boostBlending': self.boost_blending,
+            'boostThreshold': self.boost_threshold,
+            'colorIndex': self.color_index,
+            'crisp': self.crisp,
+            'cropThreshold': self.crop_threshold,
+            'findNearestPointBy': self.find_nearest_point_by,
+            'getExtremesFromAll': self.get_extremes_from_all,
+            'relativeXValue': self.relative_x_value,
+            'softThreshold': self.soft_threshold,
+            'step': self.step,
+
             'pointInterval': self.point_interval,
             'pointIntervalUnit': self.point_interval_unit,
-            'pointPlacement': self.point_placement,
             'pointStart': self.point_start,
             'stacking': self.stacking,
-        }
-        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
 
-        for key in parent_as_dict:
-            untrimmed[key] = parent_as_dict[key]
+            'allowTraversingTree': self.allow_traversing_tree,
+            'collapseButton': self.collapse_button,
+            'colorByPoint': self.color_by_point,
+            'link': self.link,
+            'reversed': self.reversed,
+        }
 
         return untrimmed

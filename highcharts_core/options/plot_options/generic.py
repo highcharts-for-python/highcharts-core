@@ -810,7 +810,7 @@ class GenericTypeOptions(HighchartsMeta):
             'threshold': as_dict.get('threshold', None),
             'tooltip': as_dict.get('tooltip', None),
             'turbo_threshold': as_dict.get('turboThreshold', None),
-            'visible': as_dict.get('visible', True)
+            'visible': as_dict.get('visible', None)
         }
 
         return kwargs

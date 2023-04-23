@@ -20,6 +20,7 @@ Release 2.0.0
   * Added ``.description_format`` property to ``options.plot_options.accessibility.TypeOptionsAccessibility``.
 
 * **FIXED:** Broken heatmap and tilemap documentation links.
+* **FIXED:** Fixed missing ``TreegraphOptions`` / ``TreegraphSeries`` series type.
 
 -------------------------------
 

@@ -45,6 +45,7 @@ from highcharts_core.options.plot_options.area import StreamGraphOptions
 from highcharts_core.options.plot_options.sunburst import SunburstOptions
 from highcharts_core.options.plot_options.heatmap import TilemapOptions
 from highcharts_core.options.plot_options.timeline import TimelineOptions
+from highcharts_core.options.plot_options.treegraph import TreegraphOptions
 from highcharts_core.options.plot_options.treemap import TreemapOptions
 from highcharts_core.options.plot_options.pie import VariablePieOptions
 from highcharts_core.options.plot_options.bar import VariwideOptions
@@ -118,6 +119,7 @@ class PlotOptions(HighchartsMeta):
         self._sunburst = None
         self._tilemap = None
         self._timeline = None
+        self._treegraph = None
         self._treemap = None
         self._variablepie = None
         self._variwide = None
@@ -1146,6 +1148,27 @@ class PlotOptions(HighchartsMeta):
         self._timeline = value
 
     @property
+    def treegraph(self) -> Optional[TreegraphOptions]:
+        """General options to apply to all :term:`Treegraph` series types.
+        
+        A treegraph visualizes a relationship between ancestors and descendants with a clear parent-child relationship,
+        e.g. a family tree or a directory structure.
+        
+        .. figure:: ../../../_static/treegraph-example.png
+          :alt: Treegraph Example Chart
+          :align: center
+        
+        :rtype: :class:`TreegraphOptions <highcharts_core.options.plot_options.treegraph.TreegraphOptions>` or 
+          :obj:`None <python:None>`
+        """
+        return self._treegraph
+    
+    @treegraph.setter
+    @class_sensitive(TreegraphOptions)
+    def treegraph(self, value):
+        self._treegraph = value
+
+    @property
     def treemap(self) -> Optional[TreemapOptions]:
         """General options to apply to all Treemap series types.
 
@@ -1428,6 +1451,7 @@ class PlotOptions(HighchartsMeta):
             'sunburst': as_dict.get('sunburst', None),
             'tilemap': as_dict.get('tilemap', None),
             'timeline': as_dict.get('timeline', None),
+            'treegraph': as_dict.get('treegraph', None),
             'treemap': as_dict.get('treemap', None),
             'variablepie': as_dict.get('variablepie', None),
             'variwide': as_dict.get('variwide', None),
@@ -1486,6 +1510,7 @@ class PlotOptions(HighchartsMeta):
             'sunburst': self.sunburst,
             'tilemap': self.tilemap,
             'timeline': self.timeline,
+            'treegraph': self.treegraph,
             'treemap': self.treemap,
             'variablepie': self.variablepie,
             'variwide': self.variwide,

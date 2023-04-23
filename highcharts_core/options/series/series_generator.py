@@ -2,8 +2,6 @@ from typing import Optional
 
 import json
 
-from validator_collection import validators, checkers
-
 from highcharts_core import errors
 
 from highcharts_core.options.series.base import SeriesBase
@@ -54,6 +52,7 @@ from highcharts_core.options.series.scatter import Scatter3DSeries
 from highcharts_core.options.series.spline import SplineSeries
 from highcharts_core.options.series.sunburst import SunburstSeries
 from highcharts_core.options.series.timeline import TimelineSeries
+from highcharts_core.options.series.treegraph import TreegraphSeries
 from highcharts_core.options.series.treemap import TreemapSeries
 from highcharts_core.options.series.vector import VectorSeries
 from highcharts_core.options.series.venn import VennSeries
@@ -108,6 +107,7 @@ SERIES_CLASSES = {
     'spline': SplineSeries,
     'sunburst': SunburstSeries,
     'timeline': TimelineSeries,
+    'treegraph': TreegraphSeries,
     'treemap': TreemapSeries,
     'vector': VectorSeries,
     'venn': VennSeries,

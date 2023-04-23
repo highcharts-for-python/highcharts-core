@@ -44,6 +44,7 @@
   spline
   sunburst
   timeline
+  treegraph
   treemap
   vector
   venn
@@ -190,6 +191,8 @@ Sub-components
     - :class:`SunburstOptions <highcharts_core.options.plot_options.sunburst.SunburstOptions>`
   * - :mod:`.options.plot_options.timeline <highcharts_core.options.plot_options.timeline>`
     - :class:`TimelineOptions <highcharts_core.options.plot_options.timeline.TimelineOptions>`
+  * - :mod:`.options.series.treegraph <highcharts_core.options.series.treegraph>`
+    - :class:`TreegraphSeries <highcharts_core.options.series.treegraph.TreegraphSeries>`
   * - :mod:`.options.plot_options.treemap <highcharts_core.options.plot_options.treemap>`
     - :class:`TreemapOptions <highcharts_core.options.plot_options.treemap.TreemapOptions>`
   * - :mod:`.options.plot_options.vector <highcharts_core.options.plot_options.vector>`

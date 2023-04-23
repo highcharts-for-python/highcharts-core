@@ -189,7 +189,7 @@ class AxisLabelOptions(HighchartsMeta):
     def distance(self, value):
         if value is None:
             self._distance = None
-        elif checkers.is_string(value, allow_empty = False):
+        elif checkers.is_string(value) or not value:
             self._distance = validators.string(value)
         else:
             self._distance = validators.numeric(value,
