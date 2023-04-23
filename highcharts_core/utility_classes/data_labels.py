@@ -1015,11 +1015,50 @@ class OrganizationDataLabel(DataLabel):
     """Variant of :class:`DataLabel` used for :term:`organization` series."""
     
     def __init__(self, **kwargs):
+        self._link_format = None
         self._link_text_path = None
         
+        self.link_format = kwargs.get('link_format', None)
         self.link_text_path = kwargs.get('link_text_path', None)
         
         super().__init__(**kwargs)
+
+    @property
+    def link_format(self) -> Optional[str]:
+        """The format string specifying what to show for links in the\rorganization chart.
+        
+        .. tip::
+        
+          Best to use with 
+          :meth:`.link_text_path <highcharts_core.utility_classes.data_labels.OrganizationDataLabel.link_text_path>`
+          enabled.
+          
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._link_format
+    
+    @link_format.setter
+    def link_format(self, value):
+        self._link_format = validators.string(value, allow_empty = True)
+
+    @property
+    def link_formatter(self) -> Optional[CallbackFunction]:
+        """JavaScript callback function to format data labels for links in the organization chart. 
+
+        .. note::
+
+          The :meth:`.link_format <highcharts_core.utility_classes.data_labels.OrganizationDataLabel.link_format>`
+          property takes precedence over the ``link_formatter``.
+
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
+          :obj:`None <python:None>`
+        """
+        return self._link_formatter
+
+    @link_formatter.setter
+    @class_sensitive(CallbackFunction)
+    def link_formatter(self, value):
+        self._link_formatter = value
 
     @property
     def link_text_path(self) -> Optional[TextPath]:
@@ -1074,6 +1113,8 @@ class OrganizationDataLabel(DataLabel):
             'y': as_dict.get('y', None),
             'z': as_dict.get('z', None),
             
+            'link_format': as_dict.get('linkFormat', None),
+            'link_formatter': as_dict.get('linkFormatter', None),
             'link_text_path': as_dict.get('linkTextPath', None),
         }
 
@@ -1081,6 +1122,8 @@ class OrganizationDataLabel(DataLabel):
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
+            'linkFormat': self.link_format,
+            'linkFormatter': self.link_formatter,
             'linkTextPath': self.link_text_path,
         }
 
