@@ -143,6 +143,7 @@ class PieSeries(SeriesBase, PieOptions):
             'z_index': as_dict.get('zIndex', None),
 
             'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
             'border_width': as_dict.get('borderWidth', None),
             'center': as_dict.get('center', None),
             'colors': as_dict.get('colors', None),
@@ -282,6 +283,7 @@ class VariablePieSeries(PieSeries):
             'z_index': as_dict.get('zIndex', None),
 
             'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
             'border_width': as_dict.get('borderWidth', None),
             'center': as_dict.get('center', None),
             'color_axis': as_dict.get('colorAxis', None),
