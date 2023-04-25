@@ -86,7 +86,7 @@ class SunburstOptions(GenericTypeOptions):
     def border_color(self) -> Optional[str | Gradient | Pattern]:
         """The color of the border surrounding each slice. When :obj:`None <python:None>`,
         the border takes the same color as the slice fill. This can be used together with
-        a :meth:`border_width <PieOptions.border_width>` to fill drawing gaps created by
+        a :meth:`border_width <SunburstOptions.border_width>` to fill drawing gaps created by
         antialiazing artefacts in borderless pies. Defaults to ``'#ffffff'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
@@ -104,7 +104,7 @@ class SunburstOptions(GenericTypeOptions):
 
         When setting the border width to ``0``, there may be small gaps between the slices
         due to SVG antialiasing artefacts. To work around this, keep the border width at
-        ``0.5`` or ``1``, but set the :meth:`border_color <PieOptions.border_color>` to
+        ``0.5`` or ``1``, but set the :meth:`border_color <SunburstOptions.border_color>` to
         :obj:`None <python:None>` instead.
 
         :rtype: numeric or :obj:`None <python:None>`
@@ -268,7 +268,7 @@ class SunburstOptions(GenericTypeOptions):
     def fill_color(self) -> Optional[str | Gradient | Pattern]:
         """If the total sum of the pie's values is ``0``, the series is represented as an
         empty circle . The ``fill_color`` setting defines the color of that circle.
-        Use :meth:`PieOptions.border_width` to set the border thickness.
+        Use :meth:`SunburstOptions.border_width` to set the border thickness.
 
         Defaults to :obj:`None <python:None>`.
 
@@ -373,7 +373,7 @@ class SunburstOptions(GenericTypeOptions):
 
         .. note::
 
-          :meth:`PieOptions.sliced_offset` is also included in the default size
+          :meth:`SunburstOptions.sliced_offset` is also included in the default size
           calculation. As a consequence, the size of the pie may vary when points are
           updated and data labels more around. In that case it is best to set a fixed
           value, for example ``"75%"``.
