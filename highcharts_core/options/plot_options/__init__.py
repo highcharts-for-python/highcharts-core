@@ -829,7 +829,8 @@ class PlotOptions(HighchartsMeta):
           :align: center
 
 
-        :rtype: :class:`ParetoOptions` or :obj:`None <python:None>`
+        :rtype: :class:`PictorialOptions <highcharts_core.options.plot_options.pictorial.PictorialOptions>` or
+          :obj:`None <python:None>`
         """
         return self._pictorial
 

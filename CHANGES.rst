@@ -20,6 +20,7 @@ Release 2.0.0
   * Added ``.description_format`` property to ``options.plot_options.accessibility.TypeOptionsAccessibility``.
   * Added ``PictorialOptions`` / ``PictorialSeries`` series type with related classes.
   * Added ``.minor_ticks_per_major`` to ``options.axes.x_axis.XAxisOptions``.
+  * Added ``.stack_shadow`` to ``options.axes.y_axis.YAxisOptions``.
 
 * **FIXED:** Broken heatmap and tilemap documentation links.
 * **FIXED:** Fixed missing ``TreegraphOptions`` / ``TreegraphSeries`` series type.
