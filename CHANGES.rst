@@ -21,6 +21,11 @@ Release 2.0.0
   * Added ``PictorialOptions`` / ``PictorialSeries`` series type with related classes.
   * Added ``.minor_ticks_per_major`` to ``options.axes.x_axis.XAxisOptions``.
   * Added ``.stack_shadow`` to ``options.axes.y_axis.YAxisOptions``.
+  * Added ``.border_radius`` to ``ColumnRangeOptions`` / ``ColumnRangeSeries``.
+  * Added ``.play_as_sand`` and ``.download_midi`` to ``global_options.language.Language``.
+  * Added ``.border_radius`` to ``PieOptions`` / ``PieSeries``.
+  * Added ``.style`` to ``utility_classes.buttons.CollapseButtonConfiguration``.
+  * Added ``utility_classes.events.SimulationEvents`` and modified ``NetworkGraphOptions`` to support.
 
 * **FIXED:** Broken heatmap and tilemap documentation links.
 * **FIXED:** Fixed missing ``TreegraphOptions`` / ``TreegraphSeries`` series type.
