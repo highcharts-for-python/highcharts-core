@@ -877,6 +877,57 @@ class SeriesEvents(HighchartsMeta):
         return untrimmed
 
 
+class SimulationEvents(SeriesEvents):
+    """Event listeners for series that involve simulation / layout.
+    
+    .. versionadded:: Highcharts Core for Python v.1.1.0 / Highcharts Core (JS) v.11.0.0
+    
+    """
+    
+    def __init__(self, **kwargs):
+        self._after_simulation = None
+        
+        self.after_simulation = kwargs.get('after_simulation', None)
+        
+        super().__init__(**kwargs)
+        
+    @property
+    def after_simulation(self) -> Optional[CallbackFunction]:
+        """Event which fires after the simulation is ended and the layout is stable.
+        
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
+          :obj:`None <python:None>`
+        """
+        return self._after_simulation
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'after_animate': as_dict.get('afterAnimate', None),
+            'checkbox_click': as_dict.get('checkboxClick', None),
+            'click': as_dict.get('click', None),
+            'hide': as_dict.get('hide', None),
+            'legend_item_click': as_dict.get('legendItemClick', None),
+            'mouse_out': as_dict.get('mouseOut', None),
+            'mouse_over': as_dict.get('mouseOver', None),
+            'show': as_dict.get('show', None),
+            
+            'after_simulation': as_dict.get('afterSimulation', None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        untrimmed = {
+            'afterSimulation': self.after_simulation,
+        }
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
+
+        return untrimmed
+    
+
 class ClusterEvents(HighchartsMeta):
     """General event handlers for marker clusters."""
 

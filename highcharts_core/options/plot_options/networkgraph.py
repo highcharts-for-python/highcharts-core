@@ -11,6 +11,7 @@ from highcharts_core.options.plot_options.link import LinkOptions
 from highcharts_core.utility_classes.zones import Zone
 from highcharts_core.utility_classes.shadows import ShadowOptions
 from highcharts_core.utility_classes.javascript_functions import CallbackFunction
+from highcharts_core.utility_classes.events import SimulationEvents
 
 
 class LayoutAlgorithm(HighchartsMeta):
@@ -480,6 +481,25 @@ class NetworkGraphOptions(GenericTypeOptions):
             self._draggable = None
         else:
             self._draggable = bool(value)
+
+    @property
+    def events(self) -> Optional[SimulationEvents]:
+        """Event handlers for a network graph series.
+
+        .. note::
+
+          These event hooks can also be attached to the series at run time using the
+          (JavaScript) ``Highcharts.addEvent()`` function.
+
+        :rtype: :class:`SimulationEvents <highcharts_core.utility_classes.events.SimulationEvents>` or 
+          :obj:`None <python:None>`
+        """
+        return self._events
+
+    @events.setter
+    @class_sensitive(SimulationEvents)
+    def events(self, value):
+        self._events = value
 
     @property
     def find_nearest_point_by(self) -> Optional[str]:

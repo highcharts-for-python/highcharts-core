@@ -80,6 +80,7 @@ Sub-components
       :class:`NavigationEvents <highcharts_core.utility_classes.events.NavigationEvents>`
       :class:`PointEvents <highcharts_core.utility_classes.events.PointEvents>`
       :class:`SeriesEvents <highcharts_core.utility_classes.events.SeriesEvents>`
+      :class:`SimulationEvents <highcharts_core.utility_classes.events.SimulationEvents>`
       :class:`ClusterEvents <highcharts_core.utility_classes.events.ClusterEvents>`
       :class:`AxisEvents <highcharts_core.utility_classes.events.AxisEvents>`
       :class:`MouseEvents <highcharts_core.utility_classes.events.MouseEvents>`

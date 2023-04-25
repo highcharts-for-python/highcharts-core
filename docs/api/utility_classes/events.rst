@@ -102,6 +102,24 @@ class: :class:`SeriesEvents <highcharts_core.utility_classes.events.SeriesEvents
 ------------------
 
 ********************************************************************************************************************
+class: :class:`SimulationEvents <highcharts_core.utility_classes.events.SimulationEvents>`
+********************************************************************************************************************
+
+.. autoclass:: SimulationEvents
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: SimulationEvents
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
+------------------
+
+********************************************************************************************************************
 class: :class:`ClusterEvents <highcharts_core.utility_classes.events.ClusterEvents>`
 ********************************************************************************************************************
 
