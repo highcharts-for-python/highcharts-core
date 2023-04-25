@@ -554,6 +554,22 @@ Core Components
     - :class:`VennSeries <highcharts_core.options.series.venn.VennSeries>`
   * - :mod:`.options.series.wordcloud <highcharts_core.options.series.wordcloud>`
     - :class:`WordcloudSeries <highcharts_core.options.series.wordcloud.WordcloudSeries>`
+  * - :mod:`.options.sonification <highcharts_core.options.sonification>`
+    - :class:`SonificationOptions <highcharts_core.options.sonification.SonificationOptions>`
+  * - :mod:`.options.sonification.grouping <highcharts_core.options.sonification.grouping>`
+    - :class:`PointGrouping <highcharts_core.options.sonification.grouping.SonificationGrouping>`
+  * - :mod:`.options.sonification.mapping <highcharts_core.options.sonification.mapping>`
+    - :class:`SonificationMapping <highcharts_core.options.sonification.mapping.SonificationMapping>`
+      :class:`AudioParameter <highcahrts_core.options.sonification.mapping.AudioParameter>`
+      :class:`AudioFilter <highcharts_core.options.sonification.mapping.AudioFilter>`
+      :class:`PitchParameter <highcharts_core.options.sonification.mapping.PitchParameter>`
+      :class:`TremoloEffect <highcahrts_core.options.sonification.mapping.TremoloEffect>`
+  * - :mod:`.options.sonification.track_configurations <highcharts_core.options.sonification.track_configurations>`
+    - :class:`InstrumentTrackConfiguration <highcharts_core.options.sonification.track_configurations.InstrumentTrackConfiguration>`
+      :class:`SpeechTrackConfiguration <highcharts_core.options.sonification.track_configurations.SpeechTrackConfiguration>`
+      :class:`ContextTrackConfiguration <highcharts_core.options.sonification.track_configurations.ContextTrackConfiguration>`
+      :class:`TrackConfigurationBase <highcharts_core.options.sonification.track_configurations.TrackConfigurationBase>`
+      :class:`ActiveWhen <highcharts_core.options.sonification.track_configurations.ActiveWhen>`
   * - :mod:`.options.subtitle <highcharts_core.options.subtitle>`
     - :class:`Subtitle <highcharts_core.options.subtitle.Subtitle>`
   * - :mod:`.options.time <highcharts_core.options.time>`

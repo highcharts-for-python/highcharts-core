@@ -897,3 +897,23 @@ DAYS_OF_WEEK = {
     'friday': 5,
     'saturday': 6
 }
+
+## SONIFICATION INSTRUMENTS
+INSTRUMENT_PRESETS = [
+    'piano',
+    'flute',
+    'saxophone',
+    'trumpet',
+    'sawsynth',
+    'wobble',
+    'basic1',
+    'basic2',
+    'sine',
+    'sineGlide',
+    'triangle',
+    'square',
+    'sawtooth',
+    'noise',
+    'filteredNoise',
+    'wind',
+]

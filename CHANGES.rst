@@ -1,4 +1,4 @@
-Release 2.0.0
+Release 1.1.0
 =========================================
 
 * Align the API to **Highcharts (JS) v.11**. In particular, this includes:
@@ -26,6 +26,7 @@ Release 2.0.0
   * Added ``.border_radius`` to ``PieOptions`` / ``PieSeries``.
   * Added ``.style`` to ``utility_classes.buttons.CollapseButtonConfiguration``.
   * Added ``utility_classes.events.SimulationEvents`` and modified ``NetworkGraphOptions`` to support.
+  * Added ``options.sonification`` and all related classes.
 
 * **FIXED:** Broken heatmap and tilemap documentation links.
 * **FIXED:** Fixed missing ``TreegraphOptions`` / ``TreegraphSeries`` series type.

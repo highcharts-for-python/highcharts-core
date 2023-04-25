@@ -210,6 +210,9 @@ Glossary
       * :class:`GaugeSeries <highcharts_core.options.series.gauge.GaugeSeries>`
       * :class:`SolidGaugeSeries <highcharts_core.options.series.gauge.SolidGaugeSeries>`
 
+  Highpass
+    A highpass audio filter lets high frequencies through, but stops low frequencies, making the sound thinner.
+
   JavaScript Object Literal Notation
     A way of representing data in JavaScript as native JavaScript objects which is
     necessary to maximize value from `Highcharts JS <http://www.highcharts.com/>`__.
@@ -266,6 +269,9 @@ Glossary
 
       Typically, JSON can be converted to JavaScript object literal notation easily...but
       the opposite does not hold true.
+
+  Lowpass
+    A lowpass audio filter lets low frequencies through, but stops high frequencies, making the sound more dull.
 
   Metaclass
     A Python class that is used to define properties and methods - including abstract
@@ -499,6 +505,9 @@ Glossary
 
       * :doc:`Supported Visualizations <visualizations>` > :ref:`Technical Indicators <technical_indicator_visualizations>`
 
+  Tremolo
+    An audio effect with repeated changes in volume over time.
+    
   Untrimmed
 
     .. note::
