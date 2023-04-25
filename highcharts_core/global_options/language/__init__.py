@@ -28,6 +28,7 @@ class Language(HighchartsMeta):
         self._decimal_point = None
         self._download_csv = None
         self._download_jpeg = None
+        self._download_midi = None
         self._download_pdf = None
         self._download_png = None
         self._download_svg = None
@@ -44,6 +45,7 @@ class Language(HighchartsMeta):
         self._no_data = None
         self._numeric_symbol_magnitude = None
         self._numeric_symbols = None
+        self._play_as_sound = None
         self._print_chart = None
         self._reset_zoom = None
         self._reset_zoom_title = None
@@ -59,6 +61,7 @@ class Language(HighchartsMeta):
         self.decimal_point = kwargs.get('decimal_point', None)
         self.download_csv = kwargs.get('download_csv', None)
         self.download_jpeg = kwargs.get('download_jpeg', None)
+        self.download_midi = kwargs.get('download_midi', None)
         self.download_pdf = kwargs.get('download_pdf', None)
         self.download_png = kwargs.get('download_png', None)
         self.download_svg = kwargs.get('download_svg', None)
@@ -75,6 +78,7 @@ class Language(HighchartsMeta):
         self.no_data = kwargs.get('no_data', None)
         self.numeric_symbol_magnitude = kwargs.get('numeric_symbol_magnitude', None)
         self.numeric_symbols = kwargs.get('numeric_symbols', None)
+        self.play_as_sound = kwargs.get('play_as_sound', None)
         self.print_chart = kwargs.get('print_chart', None)
         self.reset_zoom = kwargs.get('reset_zoom', None)
         self.reset_zoom_title = kwargs.get('reset_zoom_title', None)
@@ -167,6 +171,22 @@ class Language(HighchartsMeta):
     @download_jpeg.setter
     def download_jpeg(self, value):
         self._download_jpeg = validators.string(value, allow_empty = True)
+
+    @property
+    def download_midi(self) -> Optional[str]:
+        """
+        .. versionadded:: Highcharts Core for Python v.1.1.0 / Highcharts Core (JS) v.11.0.0
+        
+          Text for the context menu item that allows the user to download a MIDI of the
+          chart/data. Defaults to ``'Download MIDI'``.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._download_midi
+
+    @download_midi.setter
+    def download_midi(self, value):
+        self._download_midi = validators.string(value, allow_empty = True)
 
     @property
     def download_pdf(self) -> Optional[str]:
@@ -456,6 +476,22 @@ class Language(HighchartsMeta):
             self._numeric_symbols = validated
 
     @property
+    def play_as_sound(self) -> Optional[str]:
+        """
+        .. versionadded:: Highcharts Core for Python v.1.1.0 / Highcharts Core (JS) v.11.0.0
+
+          Text for the context menu item that allows the user to play the chart/data as a sound. 
+          Defaults to ``'Play as sound'``.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._play_as_sound
+
+    @play_as_sound.setter
+    def play_as_sound(self, value):
+        self._play_as_sound = validators.string(value, allow_empty = True)
+
+    @property
     def print_chart(self) -> Optional[str]:
         """The text for the menu item to print the chart. Defaults to
         ``'Print chart'``.
@@ -649,6 +685,7 @@ class Language(HighchartsMeta):
             'decimal_point': as_dict.get('decimalPoint', None),
             'download_csv': as_dict.get('downloadCSV', None),
             'download_jpeg': as_dict.get('downloadJPEG', None),
+            'download_midi': as_dict.get('downloadMIDI', None),
             'download_pdf': as_dict.get('downloadPDF', None),
             'download_png': as_dict.get('downloadPNG', None),
             'download_svg': as_dict.get('downloadSVG', None),
@@ -665,6 +702,7 @@ class Language(HighchartsMeta):
             'no_data': as_dict.get('noData', None),
             'numeric_symbol_magnitude': as_dict.get('numericSymbolMagnitude', None),
             'numeric_symbols': as_dict.get('numericSymbols', None),
+            'play_as_sound': as_dict.get('playAsSound', None),
             'print_chart': as_dict.get('printChart', None),
             'reset_zoom': as_dict.get('resetZoom', None),
             'reset_zoom_title': as_dict.get('resetZoomTitle', None),
@@ -685,6 +723,7 @@ class Language(HighchartsMeta):
             'decimalPoint': self.decimal_point,
             'downloadCSV': self.download_csv,
             'downloadJPEG': self.download_jpeg,
+            'downloadMIDI': self.download_midi,
             'downloadPDF': self.download_pdf,
             'downloadPNG': self.download_png,
             'downloadSVG': self.download_svg,
@@ -701,6 +740,7 @@ class Language(HighchartsMeta):
             'noData': self.no_data,
             'numericSymbolMagnitude': self.numeric_symbol_magnitude,
             'numericSymbols': self.numeric_symbols,
+            'playAsSound': self.play_as_sound,
             'printChart': self.print_chart,
             'resetZoom': self.reset_zoom,
             'resetZoomTitle': self.reset_zoom_title,
