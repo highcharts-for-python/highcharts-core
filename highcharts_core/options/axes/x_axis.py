@@ -24,6 +24,7 @@ class XAxis(NumericAxis):
         self._left = None
         self._line_color = None
         self._line_width = None
+        self._minor_ticks_per_major = None
         self._show_empty = None
         self._top = None
         self._width = None
@@ -33,6 +34,7 @@ class XAxis(NumericAxis):
         self.left = kwargs.get('left', None)
         self.line_color = kwargs.get('line_color', None)
         self.line_width = kwargs.get('line_width', None)
+        self.minor_ticks_per_major = kwargs.get('minor_ticks_per_major', None)
         self.show_empty = kwargs.get('show_empty', None)
         self.top = kwargs.get('top', None)
         self.width = kwargs.get('width', None)
@@ -134,6 +136,23 @@ class XAxis(NumericAxis):
                                               allow_empty = True,
                                               minimum = 0)
 
+    @property
+    def minor_ticks_per_major(self) -> Optional[int | float | Decimal]:
+        """The number of minor ticks per major tick. Defaults to ``5``.
+        
+        .. note::
+        
+          Works for ``linear``, ``logarithmic`` and ``datetime`` axes.
+        
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._minor_ticks_per_major
+        
+    @minor_ticks_per_major.setter
+    def minor_ticks_per_major(self, value):
+        self._minor_ticks_per_major = validators.numeric(value,
+                                                         allow_empty = True,
+                                                         minimum = 0)
     @property
     def show_empty(self) -> Optional[bool]:
         """If ``True``, render the axis title and axis line even if the axis has no data.
@@ -277,6 +296,7 @@ class XAxis(NumericAxis):
             'left': as_dict.get('left', None),
             'line_color': as_dict.get('lineColor', None),
             'line_width': as_dict.get('lineWidth', None),
+            'minor_ticks_per_major': as_dict.get('minorTicksPerMajor', None),
             'show_empty': as_dict.get('showEmpty', None),
             'top': as_dict.get('top', None),
             'width': as_dict.get('width', None)
@@ -291,6 +311,7 @@ class XAxis(NumericAxis):
             'left': self.left,
             'lineColor': self.line_color,
             'lineWidth': self.line_width,
+            'minorTicksPerMajor': self.minor_ticks_per_major,
             'showEmpty': self.show_empty,
             'top': self.top,
             'width': self.width
