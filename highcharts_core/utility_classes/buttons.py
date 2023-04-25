@@ -175,16 +175,20 @@ class CollapseButtonConfiguration(HighchartsMeta):
     def __init__(self, **kwargs):
         self._enabled = None
         self._height = None
+        self._line_width = None
         self._only_on_hover = None
         self._shape = None
+        self._style = None
         self._width = None
         self._x = None
         self._y = None
         
         self.enabled = kwargs.get('enabled', None)
         self.height = kwargs.get('height', None)
+        self.line_width = kwargs.get('line_width', None)
         self.only_on_hover = kwargs.get('only_on_hover', None)
         self.shape = kwargs.get('shape', None)
+        self.style = kwargs.get('style', None)
         self.width = kwargs.get('width', None)
         self.x = kwargs.get('x', None)
         self.y = kwargs.get('y', None)
@@ -225,6 +229,23 @@ class CollapseButtonConfiguration(HighchartsMeta):
                                               minimum = 0)
 
     @property
+    def line_width(self) -> Optional[int | float | Decimal]:
+        """The line_width of the button, expressed in pixels. Defaults to ``1``.
+        
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._line_width
+    
+    @line_width.setter
+    def line_width(self, value):
+        if value is None:
+            self._line_width = None
+        else:
+            self._line_width = validators.numeric(value, 
+                                                  allow_empty = False,
+                                                  minimum = 0)
+
+    @property
     def only_on_hover(self) -> Optional[bool]:
         """Whether the button should be visible only when the node is hovered. Defaults to ``True``.
         
@@ -254,6 +275,22 @@ class CollapseButtonConfiguration(HighchartsMeta):
     @shape.setter
     def shape(self, value):
         self._shape = validators.string(value, allow_empty = True)
+
+    @property
+    def style(self) -> Optional[dict]:
+        """CSS styles for the collapse button.
+        
+        .. note::
+        
+          In styled mode, the collapse button style is given in the ``.highcharts-collapse-button`` CSS class.
+          
+        :rtype: :class:`dict <python:dict>` or :obj:`None <python:None>`
+        """
+        return self._style
+
+    @style.setter
+    def style(self, value):
+        self._value = validators.dict(value, allow_empty = True)
         
     @property
     def width(self) -> Optional[int | float | Decimal]:
@@ -298,8 +335,10 @@ class CollapseButtonConfiguration(HighchartsMeta):
         kwargs = {
             'enabled': as_dict.get('enabled', None),
             'height': as_dict.get('height', None),
+            'line_width': as_dict.get('lineWidth', None),
             'only_on_hover': as_dict.get('onlyOnHover', None),
             'shape': as_dict.get('shape', None),
+            'style': as_dict.get('style', None),
             'width': as_dict.get('width', None),
             'x': as_dict.get('x', None),
             'y': as_dict.get('y', None),
@@ -311,8 +350,10 @@ class CollapseButtonConfiguration(HighchartsMeta):
         untrimmed = {
             'enabled': self.enabled,
             'height': self.height,
+            'lineWidth': self.line_width,
             'onlyOnHover': self.only_on_hover,
             'shape': self.shape,
+            'style': self.style,
             'width': self.width,
             'x': self.x,
             'y': self.y
