@@ -441,12 +441,6 @@ class SeriesBase(SeriesOptions):
         except AttributeError:
             pass
 
-        if checkers.is_file_on_filesystem(as_string_or_file):
-            with open(as_string_or_file, 'r') as file_:
-                as_str = file_.read()
-        else:
-            as_str = as_string_or_file
-
         property_column_map = validators.dict(property_column_map, allow_empty = False)
         cleaned_column_map = {}
         for key in property_column_map:
@@ -465,17 +459,32 @@ class SeriesBase(SeriesOptions):
                                                                f'instead.')
             cleaned_column_map[key] = map_value
 
-        columns, csv_records = utility_functions.parse_csv(
-            as_str,
-            has_header_row = has_header_row,
-            delimiter = delimiter,
-            null_text = null_text,
-            wrapper_character = wrapper_character,
-            line_terminator = line_terminator,
-            wrap_all_strings = False,
-            double_wrapper_character_when_nested = False,
-            escape_character = "\\"
-        )
+        if not checkers.is_on_filesystem(as_string_or_file):
+            as_str = as_string_or_file
+            columns, csv_records = utility_functions.parse_csv(
+                as_str,
+                has_header_row = has_header_row,
+                delimiter = delimiter,
+                null_text = null_text,
+                wrapper_character = wrapper_character,
+                line_terminator = line_terminator,
+                wrap_all_strings = False,
+                double_wrapper_character_when_nested = False,
+                escape_character = "\\"
+            )
+        else:
+            with open(as_string_or_file, 'r', newline = '') as file_:
+                columns, csv_records = utility_functions.parse_csv(
+                    file_,
+                    has_header_row = has_header_row,
+                    delimiter = delimiter,
+                    null_text = null_text,
+                    wrapper_character = wrapper_character,
+                    line_terminator = line_terminator,
+                    wrap_all_strings = False,
+                    double_wrapper_character_when_nested = False,
+                    escape_character = "\\"
+                )
 
         for key in cleaned_column_map:
             map_value = cleaned_column_map[key]
@@ -496,7 +505,14 @@ class SeriesBase(SeriesOptions):
             data_point_dict = {}
             for key in cleaned_column_map:
                 map_value = cleaned_column_map[key]
-                data_point_dict[key] = record.get(map_value, None)
+                value = record.get(map_value, None)
+                if value and isinstance(value, str) and ',' in value:
+                    test_value = value.replace(delimiter, '')
+                    if checkers.is_numeric(test_value):
+                        value = test_value
+
+                data_point_dict[key] = value
+                
             data_point_dicts.append(data_point_dict)
 
         self.data = data_point_dicts
@@ -651,14 +667,14 @@ class SeriesBase(SeriesOptions):
         instance = cls(**series_kwargs)
         instance.load_from_csv(as_string_or_file,
                                property_column_map,
-                               has_header_row = True,
-                               delimiter = ',',
-                               null_text = 'None',
-                               wrapper_character = "'",
-                               line_terminator = '\r\n',
-                               wrap_all_strings = False,
-                               double_wrapper_character_when_nested = False,
-                               escape_character = "\\")
+                               has_header_row = has_header_row,
+                               delimiter = delimiter,
+                               null_text = null_text,
+                               wrapper_character = wrapper_character,
+                               line_terminator = line_terminator,
+                               wrap_all_strings = wrap_all_strings,
+                               double_wrapper_character_when_nested = double_wrapper_character_when_nested,
+                               escape_character = escape_character)
 
         return instance
 

@@ -34,6 +34,22 @@ Release 1.1.0
 
 -------------------------------
 
+Release 1.0.2
+=========================================
+
+* **DOCUMENTATION:** Added documentation of hard dependencies to the README (issue #37).
+
+-----------------------
+
+Release 1.0.1
+=========================================
+
+* **BUGFIX**: Fixed a bug encountered when parsing CSV data (issue #32).
+* **ENHANCEMENT**: Added a catch for when trying to set ``Chart.options`` to a ``SharedOptions`` instance (issue #34).
+* Fixed a broken link in the documentation.
+
+---------------
+
 Release 1.0.0
 =========================================
 
