@@ -230,6 +230,18 @@ HighchartsUnsupportedProtocolError (from :class:`ValueError <python:ValueError>`
 
 --------------
 
+HighchartsUnsupportedExportError (from :class:`ValueError <python:ValueError>`)
+==========================================================================================
+
+.. autoexception:: HighchartsUnsupportedExportError
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: HighchartsUnsupportedExportError
+      :parts: -1
+
+--------------
+
 HighchartsUnsupportedExportTypeError (from :class:`ValueError <python:ValueError>`)
 ==========================================================================================
 

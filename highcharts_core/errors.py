@@ -108,6 +108,12 @@ class HighchartsUnsupportedProtocolError(HighchartsExportServerError):
     pass
 
 
+class HighchartsUnsupportedExportError(HighchartsExportServerError):
+    """:exc:`ValueError <python:ValueError>` encountered when trying to export a series type that 
+    is not yet supported by the :term:`Export Server`.
+    """
+    pass
+
 class HighchartsUnsupportedExportTypeError(HighchartsExportServerError):
     """:exc:`ValueError <python:ValueError>` encountered when requesting an unsupported
     image type from a :term:`Export Server`."""
