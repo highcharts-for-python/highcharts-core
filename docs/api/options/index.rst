@@ -28,7 +28,8 @@
   pane
   plot_options/index
   responsive
-  series/index
+  series/color_index
+  sonification/index
   subtitle
   time
   title

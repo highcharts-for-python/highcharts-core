@@ -12,10 +12,10 @@
 .. module:: highcharts_core.options.sonification.grouping
 
 ********************************************************************************************************************
-class: :class:`PointGrouping <highcharts_core.options.sonification.grouping.SonificationGrouping>`
+class: :class:`SonificationGrouping <highcharts_core.options.sonification.grouping.SonificationGrouping>`
 ********************************************************************************************************************
 
-.. autoclass:: PointGrouping
+.. autoclass:: SonificationGrouping
   :members:
   :inherited-members:
 

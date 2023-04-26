@@ -1,6 +1,6 @@
-##############################################################
+#######################################################################
 :mod:`.options.sonification <highcharts_core.options.sonification>`
-##############################################################
+#######################################################################
 
 .. contents:: Module Contents
   :local:
@@ -18,9 +18,9 @@
 
 .. module:: highcharts_core.options.sonification
 
-****************************************************************************************
+*******************************************************************************************************
 class: :class:`SonificationOptions <highcharts_core.options.sonification.SonificationOptions>`
-****************************************************************************************
+*******************************************************************************************************
 
 .. autoclass:: SonificationOptions
   :members:
@@ -39,7 +39,7 @@ Sub-components
   * - Module
     - Classes / Functions
   * - :mod:`.options.sonification.grouping <highcharts_core.options.sonification.grouping>`
-    - :class:`PointGrouping <highcharts_core.options.sonification.grouping.SonificationGrouping>`
+    - :class:`SonificationGrouping <highcharts_core.options.sonification.grouping.SonificationGrouping>`
   * - :mod:`.options.sonification.mapping <highcharts_core.options.sonification.mapping>`
     - :class:`SonificationMapping <highcharts_core.options.sonification.mapping.SonificationMapping>`
       :class:`AudioParameter <highcahrts_core.options.sonification.mapping.AudioParameter>`
