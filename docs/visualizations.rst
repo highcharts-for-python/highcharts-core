@@ -332,6 +332,14 @@ to visualize your data.
           :class:`highcharts_core.options.plot_options.pareto.ParetoOptions`
 
           :class:`highcharts_core.options.series.pareto.ParetoSeries`
+      * - **Pictorial**
+        - .. figure:: _static/pictorial-example.png
+            :alt: Pictorial Example Chart
+            :width: 100%
+
+          :class:`highcharts_core.options.plot_options.pareto.PictorialOptions`
+
+          :class:`highcharts_core.options.series.pareto.PictorialSeries`
       * - **Pie**
         - .. tabs::
 
@@ -478,6 +486,14 @@ to visualize your data.
           :class:`highcharts_core.options.plot_options.timeline.TimelineOptions`
 
           :class:`highcharts_core.options.series.timeline.TimelineSeries`
+      * - **Treegraph**
+        - .. figure:: _static/treegraph-example.png
+            :alt: Treegraph Example Chart
+            :width: 100%
+
+          :class:`highcharts_core.options.plot_options.pareto.TreegraphOptions`
+
+          :class:`highcharts_core.options.series.pareto.TreegraphSeries`
       * - **Treemap**
         - .. figure:: _static/treemap-example.png
             :alt: Treemap Example Chart
@@ -636,6 +652,22 @@ to visualize your data.
 
       * - Series Type
         - Screenshot + Class Links
+      * - **Flowmap**
+        - .. figure:: _static/flowmap-example.png
+            :alt: Flowmap Example Chart
+            :width: 100%
+
+          :class:`highcharts_maps.options.plot_options.pareto.FlowmapOptions`
+
+          :class:`highcharts_maps.options.series.pareto.FlowmapSeries`
+      * - **GeoHeatmap**
+        - .. figure:: _static/geoheatmap-example.png
+            :alt: GeoHeatmap Example Chart
+            :width: 100%
+
+          :class:`highcharts_maps.options.plot_options.pareto.GeoHeatmapOptions`
+
+          :class:`highcharts_maps.options.series.pareto.GeoHeatmapSeries`
       * - **Map**
         - .. figure:: _static/map-example.png
             :alt: Map Example Chart
