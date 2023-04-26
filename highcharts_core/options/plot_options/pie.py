@@ -33,6 +33,7 @@ class PieOptions(GenericTypeOptions):
 
     def __init__(self, **kwargs):
         self._border_color = None
+        self._border_radius = None
         self._border_width = None
         self._center = None
         self._color_axis = None
@@ -52,6 +53,7 @@ class PieOptions(GenericTypeOptions):
         self._thickness = None
 
         self.border_color = kwargs.get('border_color', None)
+        self.border_radius = kwargs.get('border_radius', None)
         self.border_width = kwargs.get('border_width', None)
         self.center = kwargs.get('center', None)
         self.color_axis = kwargs.get('color_axis', None)
@@ -87,6 +89,36 @@ class PieOptions(GenericTypeOptions):
     def border_color(self, value):
         from highcharts_core import utility_functions
         self._border_color = utility_functions.validate_color(value)
+
+    @property
+    def border_radius(self) -> Optional[str | int | float | Decimal]:
+        """
+        .. versionadded:: Highcharts Core for Python v.1.1.0 / Highcharts Core (JS) v.11.0.0
+        
+          The corner radius of the border surrounding each slice. Defaults to ``3``.
+          
+          .. note::
+          
+            A numerical value signifies the value is expressed in pixels. A percentage string like `50%`
+            signifies a size relative to the radius and the inner radius.
+            
+        :rtype: numeric, :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._border_radius
+
+    @border_radius.setter
+    def border_radius(self, value):
+        if value is None:
+            self._border_radius = None
+        else:
+            try:
+                value = validators.string(value)
+                if '%' not in value:
+                    raise ValueError
+            except (TypeError, ValueError):
+                value = validators.numeric(value, minimum = 0)
+
+            self._border_radius = value
 
     @property
     def border_width(self) -> Optional[int | float | Decimal]:
@@ -489,6 +521,7 @@ class PieOptions(GenericTypeOptions):
             'show_checkbox': as_dict.get('showCheckbox', None),
             'show_in_legend': as_dict.get('showInLegend', None),
             'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'sonification': as_dict.get('sonification', None),
             'states': as_dict.get('states', None),
             'sticky_tracking': as_dict.get('stickyTracking', None),
             'threshold': as_dict.get('threshold', None),
@@ -497,6 +530,7 @@ class PieOptions(GenericTypeOptions):
             'visible': as_dict.get('visible', None),
 
             'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
             'border_width': as_dict.get('borderWidth', None),
             'center': as_dict.get('center', None),
             'color_axis': as_dict.get('colorAxis', None),
@@ -521,6 +555,7 @@ class PieOptions(GenericTypeOptions):
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'borderColor': self.border_color,
+            'borderRadius': self.border_radius,
             'borderWidth': self.border_width,
             'center': self.center,
             'colorAxis': self.color_axis,
@@ -715,6 +750,7 @@ class VariablePieOptions(PieOptions):
             'show_checkbox': as_dict.get('showCheckbox', None),
             'show_in_legend': as_dict.get('showInLegend', None),
             'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'sonification': as_dict.get('sonification', None),
             'states': as_dict.get('states', None),
             'sticky_tracking': as_dict.get('stickyTracking', None),
             'threshold': as_dict.get('threshold', None),
@@ -723,6 +759,7 @@ class VariablePieOptions(PieOptions):
             'visible': as_dict.get('visible', None),
 
             'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
             'border_width': as_dict.get('borderWidth', None),
             'center': as_dict.get('center', None),
             'color_axis': as_dict.get('colorAxis', None),

@@ -51,12 +51,14 @@ class TypeOptionsAccessibility(HighchartsMeta):
 
     def __init__(self, **kwargs):
         self._description = None
+        self._description_format = None
         self._enabled = None
         self._expose_as_group_only = None
         self._keyboard_navigation = None
         self._point = None
 
         self.description = kwargs.get('description', None)
+        self.description_format = kwargs.get('description_format', None)
         self.enabled = kwargs.get('enabled', None)
         self.expose_as_group_only = kwargs.get('expose_as_group_only', None)
         self.keyboard_navigation = kwargs.get('keyboard_navigation', None)
@@ -73,6 +75,40 @@ class TypeOptionsAccessibility(HighchartsMeta):
     @description.setter
     def description(self, value):
         self._description = validators.string(value, allow_empty = True)
+
+    @property
+    def description_format(self) -> Optional[str]:
+        """Format to use for describing the data series group to assistive technology -
+        including screen readers.
+
+        Defaults to ``'{seriesDescription}{authorDescription}{axisDescription}'``.
+
+        The series context and its subproperties are available under the variable
+        ``{{series}}``, for example ``{{series.name}}`` for the series name, and
+        ``{{series.points.length}}`` for the number of data points.
+
+        The chart context and its subproperties are available under the variable
+        ``{{chart}}``, for example ``{{chart.series.length}}`` for the number of series in
+        the chart.
+
+        ``{{seriesDescription}}`` refers to the automatic description of the series type
+        and number of points added by Highcharts by default.
+
+        ``{{authorDescription}}`` refers to the description added in
+        ``series.description`` if one is present.
+
+        ``{{axisDescription}}`` refers to the description added if the chart has multiple
+        X or Y axes.
+
+        :returns: Format string that applies to the description produced for the data
+          series.
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._description_format
+
+    @description_format.setter
+    def description_format(self, value):
+        self._description_format = validators.string(value, allow_empty = True)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -134,6 +170,7 @@ class TypeOptionsAccessibility(HighchartsMeta):
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'description': as_dict.get('description', None),
+            'description_format': as_dict.get('description_format', None),
             'enabled': as_dict.get('enabled', None),
             'expose_as_group_only': as_dict.get('exposeAsGroupOnly', None),
             'keyboard_navigation': as_dict.get('keyboardNavigation', None),
@@ -145,6 +182,7 @@ class TypeOptionsAccessibility(HighchartsMeta):
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'description': self.description,
+            'descriptionFormat': self.description_format,
             'enabled': self.enabled,
             'exposeAsGroupOnly': self.expose_as_group_only,
             'keyboardNavigation': self.keyboard_navigation,

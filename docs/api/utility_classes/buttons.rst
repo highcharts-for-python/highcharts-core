@@ -30,6 +30,24 @@ class: :class:`ExportingButtons <highcharts_core.utility_classes.buttons.Exporti
 --------------
 
 ********************************************************************************************************************
+class: :class:`CollapseButtonConfiguration <highcharts_core.utility_classes.buttons.CollapseButtonConfiguration>`
+********************************************************************************************************************
+
+.. autoclass:: CollapseButtonConfiguration
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: CollapseButtonConfiguration
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
+--------------
+
+********************************************************************************************************************
 class: :class:`ContextButtonConfiguration <highcharts_core.utility_classes.buttons.ContextButtonConfiguration>`
 ********************************************************************************************************************
 

@@ -71,5 +71,6 @@ Sub-components
     - :class:`XAxis <highcharts_core.options.axes.x_axis.XAxis>`
   * - :mod:`.options.axes.y_axis <highcharts_core.options.axes.y_axis>`
     - :class:`YAxis <highcharts_core.options.axes.y_axis.YAxis>`
+      :class:`StackShadow <highcharts_core.options.axes.y_axis.StackShadow>`
   * - :mod:`.options.axes.z_axis <highcharts_core.options.axes.z_axis>`
     - :class:`ZAxis <highcharts_core.options.axes.z_axis.ZAxis>`

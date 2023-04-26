@@ -30,6 +30,7 @@ from highcharts_core.options.pane import Pane
 from highcharts_core.options.plot_options import PlotOptions
 from highcharts_core.options.plot_options.generic import GenericTypeOptions
 from highcharts_core.options.responsive import Responsive
+from highcharts_core.options.sonification import SonificationOptions
 from highcharts_core.options.subtitle import Subtitle
 from highcharts_core.options.time import Time
 from highcharts_core.options.title import Title
@@ -61,6 +62,7 @@ class Options(HighchartsMeta):
         self._plot_options = None
         self._responsive = None
         self._series = None
+        self._sonification = None
         self._subtitle = None
         self._time = None
         self._title = None
@@ -84,6 +86,7 @@ class Options(HighchartsMeta):
         self.navigation = kwargs.get('navigation', None)
         self.plot_options = kwargs.get('plot_options', None)
         self.responsive = kwargs.get('responsive', None)
+        self.sonification = kwargs.get('sonification', None)
         self.subtitle = kwargs.get('subtitle', None)
         self.time = kwargs.get('time', None)
         self.title = kwargs.get('title', None)
@@ -92,6 +95,7 @@ class Options(HighchartsMeta):
         self.y_axis = kwargs.get('y_axis', None)
 
         self.series = kwargs.get('series', None)
+
     @property
     def accessibility(self) -> Optional[Accessibility]:
         """Options for configuring accessibility for the chart.
@@ -483,6 +487,20 @@ class Options(HighchartsMeta):
                             for x in value]
 
     @property
+    def sonification(self) -> Optional[SonificationOptions]:
+        """Configuration of global sonification settings for the entire chart.
+        
+        :rtype: :class:`SonificationOptions <highcharts_core.options.sonification.SonificationOptions>` or
+          :obj:`None <python:None>`
+        """
+        return self._sonification
+    
+    @sonification.setter
+    @class_sensitive(SonificationOptions)
+    def sonification(self, value):
+        self._sonification = value
+
+    @property
     def subtitle(self) -> Optional[Subtitle]:
         """The chart's subtitle.
 
@@ -798,6 +816,7 @@ class HighchartsOptions(Options):
             'plot_options': as_dict.get('plotOptions', None),
             'responsive': as_dict.get('responsive', None),
             'series': as_dict.get('series', None),
+            'sonification': as_dict.get('sonification', None),
             'subtitle': as_dict.get('subtitle', None),
             'time': as_dict.get('time', None),
             'title': as_dict.get('title', None),
@@ -832,6 +851,7 @@ class HighchartsOptions(Options):
             'plotOptions': self.plot_options,
             'responsive': self.responsive,
             'series': self.series,
+            'sonification': self.sonification,
             'subtitle': self.subtitle,
             'time': self.time,
             'title': self.title,

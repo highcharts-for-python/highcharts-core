@@ -2,8 +2,6 @@ from typing import Optional
 
 import json
 
-from validator_collection import validators, checkers
-
 from highcharts_core import errors
 
 from highcharts_core.options.series.base import SeriesBase
@@ -43,6 +41,7 @@ from highcharts_core.options.series.networkgraph import NetworkGraphSeries
 from highcharts_core.options.series.organization import OrganizationSeries
 from highcharts_core.options.series.packedbubble import PackedBubbleSeries
 from highcharts_core.options.series.pareto import ParetoSeries
+from highcharts_core.options.series.pictorial import PictorialSeries
 from highcharts_core.options.series.pie import PieSeries
 from highcharts_core.options.series.pie import VariablePieSeries
 from highcharts_core.options.series.polygon import PolygonSeries
@@ -54,6 +53,7 @@ from highcharts_core.options.series.scatter import Scatter3DSeries
 from highcharts_core.options.series.spline import SplineSeries
 from highcharts_core.options.series.sunburst import SunburstSeries
 from highcharts_core.options.series.timeline import TimelineSeries
+from highcharts_core.options.series.treegraph import TreegraphSeries
 from highcharts_core.options.series.treemap import TreemapSeries
 from highcharts_core.options.series.vector import VectorSeries
 from highcharts_core.options.series.venn import VennSeries
@@ -97,6 +97,7 @@ SERIES_CLASSES = {
     'organization': OrganizationSeries,
     'packedbubble': PackedBubbleSeries,
     'pareto': ParetoSeries,
+    'pictorial': PictorialSeries,
     'pie': PieSeries,
     'variablepie': VariablePieSeries,
     'polygon': PolygonSeries,
@@ -108,6 +109,7 @@ SERIES_CLASSES = {
     'spline': SplineSeries,
     'sunburst': SunburstSeries,
     'timeline': TimelineSeries,
+    'treegraph': TreegraphSeries,
     'treemap': TreemapSeries,
     'vector': VectorSeries,
     'venn': VennSeries,

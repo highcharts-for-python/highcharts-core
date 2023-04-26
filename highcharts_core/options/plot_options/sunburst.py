@@ -1,7 +1,7 @@
 from typing import Optional, List
 from decimal import Decimal
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
 from highcharts_core import constants, errors
 from highcharts_core.decorators import class_sensitive, validate_types
@@ -11,6 +11,7 @@ from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
 from highcharts_core.utility_classes.breadcrumbs import BreadcrumbOptions
 from highcharts_core.utility_classes.shadows import ShadowOptions
+from highcharts_core.utility_classes.data_labels import SunburstDataLabel
 
 
 class SunburstOptions(GenericTypeOptions):
@@ -85,7 +86,7 @@ class SunburstOptions(GenericTypeOptions):
     def border_color(self) -> Optional[str | Gradient | Pattern]:
         """The color of the border surrounding each slice. When :obj:`None <python:None>`,
         the border takes the same color as the slice fill. This can be used together with
-        a :meth:`border_width <PieOptions.border_width>` to fill drawing gaps created by
+        a :meth:`border_width <SunburstOptions.border_width>` to fill drawing gaps created by
         antialiazing artefacts in borderless pies. Defaults to ``'#ffffff'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
@@ -103,7 +104,7 @@ class SunburstOptions(GenericTypeOptions):
 
         When setting the border width to ``0``, there may be small gaps between the slices
         due to SVG antialiasing artefacts. To work around this, keep the border width at
-        ``0.5`` or ``1``, but set the :meth:`border_color <PieOptions.border_color>` to
+        ``0.5`` or ``1``, but set the :meth:`border_color <SunburstOptions.border_color>` to
         :obj:`None <python:None>` instead.
 
         :rtype: numeric or :obj:`None <python:None>`
@@ -233,10 +234,41 @@ class SunburstOptions(GenericTypeOptions):
             self._crisp = bool(value)
 
     @property
+    def data_labels(self) -> Optional[SunburstDataLabel | List[SunburstDataLabel]]:
+        """Options for the series data labels, appearing next to each data point.
+
+        .. note::
+
+          To have multiple data labels per data point, you can also supply a collection of
+          :class:`DataLabel` configuration settings.
+
+        :rtype: :class:`SunburstDataLabel <highcharts_core.utility_classes.data_labels.SunburstDataLabel>`, 
+          :class:`list <python:list>` of 
+            :class:`SunburstDataLabel <highcharts_core.utility_classes.data_labels.SunburstDataLabel>` or
+            :obj:`None <python:None>`
+        """
+        return self._data_labels
+
+    @data_labels.setter
+    def data_labels(self, value):
+        if not value:
+            self._data_labels = None
+        else:
+            if checkers.is_iterable(value):
+                self._data_labels = validate_types(value,
+                                                   types = SunburstDataLabel,
+                                                   allow_none = False,
+                                                   force_iterable = True)
+            else:
+                self._data_labels = validate_types(value,
+                                                   types = SunburstDataLabel,
+                                                   allow_none = False)
+
+    @property
     def fill_color(self) -> Optional[str | Gradient | Pattern]:
         """If the total sum of the pie's values is ``0``, the series is represented as an
         empty circle . The ``fill_color`` setting defines the color of that circle.
-        Use :meth:`PieOptions.border_width` to set the border thickness.
+        Use :meth:`SunburstOptions.border_width` to set the border thickness.
 
         Defaults to :obj:`None <python:None>`.
 
@@ -341,7 +373,7 @@ class SunburstOptions(GenericTypeOptions):
 
         .. note::
 
-          :meth:`PieOptions.sliced_offset` is also included in the default size
+          :meth:`SunburstOptions.sliced_offset` is also included in the default size
           calculation. As a consequence, the size of the pie may vary when points are
           updated and data labels more around. In that case it is best to set a fixed
           value, for example ``"75%"``.
@@ -424,6 +456,7 @@ class SunburstOptions(GenericTypeOptions):
             'show_checkbox': as_dict.get('showCheckbox', None),
             'show_in_legend': as_dict.get('showInLegend', None),
             'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'sonification': as_dict.get('sonification', None),
             'states': as_dict.get('states', None),
             'sticky_tracking': as_dict.get('stickyTracking', None),
             'threshold': as_dict.get('threshold', None),

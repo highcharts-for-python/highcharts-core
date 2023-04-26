@@ -1210,6 +1210,7 @@ class ChartOptions(HighchartsMeta):
 
         .. seealso::
 
+          * `Available CSS Styles and Variables <https://www.highcharts.com/docs/chart-design-and-style/style-by-css>`__.
           * The Default Style Sheet:
             `https://code.highcharts.com/css/highcharts.css <https://code.highcharts.com/css/highcharts.css>`_.
 
