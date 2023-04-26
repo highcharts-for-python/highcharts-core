@@ -96,6 +96,7 @@ class PieSeries(SeriesBase, PieOptions):
             'show_checkbox': as_dict.get('showCheckbox', None),
             'show_in_legend': as_dict.get('showInLegend', None),
             'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'sonification': as_dict.get('sonification', None),
             'states': as_dict.get('states', None),
             'sticky_tracking': as_dict.get('stickyTracking', None),
             'threshold': as_dict.get('threshold', None),
@@ -143,6 +144,7 @@ class PieSeries(SeriesBase, PieOptions):
             'z_index': as_dict.get('zIndex', None),
 
             'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
             'border_width': as_dict.get('borderWidth', None),
             'center': as_dict.get('center', None),
             'colors': as_dict.get('colors', None),
@@ -264,6 +266,7 @@ class VariablePieSeries(PieSeries):
             'show_checkbox': as_dict.get('showCheckbox', None),
             'show_in_legend': as_dict.get('showInLegend', None),
             'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'sonification': as_dict.get('sonification', None),
             'states': as_dict.get('states', None),
             'sticky_tracking': as_dict.get('stickyTracking', None),
             'threshold': as_dict.get('threshold', None),
@@ -282,6 +285,7 @@ class VariablePieSeries(PieSeries):
             'z_index': as_dict.get('zIndex', None),
 
             'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
             'border_width': as_dict.get('borderWidth', None),
             'center': as_dict.get('center', None),
             'color_axis': as_dict.get('colorAxis', None),

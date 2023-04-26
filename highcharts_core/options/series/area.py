@@ -123,6 +123,7 @@ class AreaSeries(SeriesBase, AreaOptions):
             'show_checkbox': as_dict.get('showCheckbox', None),
             'show_in_legend': as_dict.get('showInLegend', None),
             'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'sonification': as_dict.get('sonification', None),
             'states': as_dict.get('states', None),
             'sticky_tracking': as_dict.get('stickyTracking', None),
             'threshold': as_dict.get('threshold', None),

@@ -12,6 +12,14 @@ from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_di
 
 STANDARD_PARAMS = [
     ({}, None),
+    ({
+        'stack_shadow': {
+            'enabled': True,
+            'borderColor': '#ccc',
+            'borderWidth': 1,
+            'color': '#000'
+        }
+    }, None),
     # Y-Axis propeties only
     ({
       'max_color': '#ccc',

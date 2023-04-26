@@ -1,7 +1,7 @@
-from typing import Optional, List
+from typing import Optional, List, Type
 from decimal import Decimal
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
 from highcharts_core import errors
 from highcharts_core.decorators import class_sensitive
@@ -105,7 +105,7 @@ class AxisLabelOptions(HighchartsMeta):
             self._allow_overlap = bool(value)
 
     @property
-    def auto_rotation(self) -> Optional[List[int | float | Decimal | type(None)]]:
+    def auto_rotation(self) -> Optional[List[int | float | Decimal | Type[None]]]:
         """For horizontal axes, provides the allowed degrees of label rotation to prevent
         overlapping labels.
 
@@ -165,22 +165,36 @@ class AxisLabelOptions(HighchartsMeta):
         self._auto_rotation_limit = validators.integer(value, allow_empty = True)
 
     @property
-    def distance(self) -> Optional[int | float | Decimal]:
+    def distance(self) -> Optional[int | float | Decimal | str]:
         """The label's pixel distance from the perimeter of the plot area.
 
-        .. warning::
+        .. versionchanged:: Highcharts for Python v.2.0.0 + Highcharts Core (JS) v.11
 
-          Applies to polar charts only.
+          If not specified, defaults to ``8``.
 
-        :rtype: numeric or :obj:`None <python:None>`
+          .. warning::
+
+            On cartesian charts, this is overridden if the :meth:`.x <highcharts_core.options.axes.labels.x>` property 
+            is set.
+            
+            On polar charts, if it's a percentage string, it is interpreted the same as 
+            :meth:`SolidGaugeOptions.radius <plot_options.gauge.SolidGaugeOptions.radius>`, so that the label can be 
+            aligned under the gauge's shape.
+
+        :rtype: numeric, :class:`str <python:str>`, or :obj:`None <python:None>`
         """
         return self._distance
 
     @distance.setter
     def distance(self, value):
-        self._distance = validators.numeric(value,
-                                            allow_empty = True,
-                                            minimum = 0)
+        if value is None:
+            self._distance = None
+        elif checkers.is_string(value) or not value:
+            self._distance = validators.string(value)
+        else:
+            self._distance = validators.numeric(value,
+                                                allow_empty = True,
+                                                minimum = 0)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -467,7 +481,13 @@ class AxisLabelOptions(HighchartsMeta):
     @property
     def x(self) -> Optional[int | float | Decimal]:
         """The x position offset of all labels relative to the tick positions on the axis.
-        Defaults to ``0``.
+
+        .. versionchanged:: Highcharts Core for Python v.2.0.0 / Highcharts Core (JS) v.11.
+
+          .. note::
+        
+            If set, overrides the :meth:`.distance <highcharts_core.options.axes.labels.AxisLabelOptions.distance>`
+            property.
 
         :rtype: numeric or :obj:`None <python:None>`
         """

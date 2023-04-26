@@ -11,7 +11,7 @@ from typing import Optional
 import requests
 from validator_collection import validators
 
-from highcharts_core import errors
+from highcharts_core import errors, constants
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.metaclasses import HighchartsMeta
 from highcharts_core.utility_classes.javascript_functions import CallbackFunction
@@ -532,6 +532,25 @@ class ExportServer(HighchartsMeta):
         self._custom_code = value
 
     @classmethod
+    def is_export_supported(cls, options) -> bool:
+        """Evaluates whether the Highcharts Export Server supports exporting the series types in ``options``.
+        
+        :rtype: :class:`bool <python:bool>`
+        """
+        if not isinstance(options, HighchartsOptions):
+            return False
+
+        if not options.series:
+            return True
+
+        series_types = [x.type for x in options.series]
+        for item in series_types:
+            if item in constants.EXPORT_SERVER_UNSUPPORTED_SERIES_TYPES:
+                return False
+            
+        return True
+
+    @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         url = as_dict.get('url', None)
         protocol = None
@@ -692,6 +711,12 @@ class ExportServer(HighchartsMeta):
             payload['customCode'] = 'HIGHCHARTS FOR PYTHON: REPLACE WITH CUSTOM'
 
         as_json = json.dumps(payload)
+        
+        if not self.is_export_supported(self.options):
+            raise errors.HighchartsUnsupportedExportError('The Highcharts Export Server currently only supports '
+                                                          'exports from Highcharts (Javascript) v.10. You are '
+                                                          'using a series type introduced in v.11. Sorry, but '
+                                                          'that functionality is still forthcoming.')
         
         options_as_json = self.options.to_json()
         if isinstance(options_as_json, bytes):

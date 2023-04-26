@@ -3,7 +3,7 @@ from decimal import Decimal
 
 from validator_collection import validators
 
-from highcharts_core import constants, errors
+from highcharts_core import errors
 from highcharts_core.decorators import class_sensitive, validate_types
 from highcharts_core.metaclasses import HighchartsMeta
 from highcharts_core.utility_classes.animation import AnimationOptions
@@ -901,6 +901,236 @@ class DataLabel(HighchartsMeta):
             'y': self.y,
             'z': self.z
         }
+
+        return untrimmed
+
+
+class SunburstDataLabel(DataLabel):
+    """Variant of :class:`DataLabel` used for :term:`sunburst` series."""
+    
+    def __init__(self, **kwargs):
+        self._rotation_mode = None
+        
+        self.rotation_mode = kwargs.get('rotation_mode', None)
+        
+        super().__init__(**kwargs)
+        
+    @property
+    def rotation_mode(self) -> Optional[str]:
+        """Determines how the data label will be rotated relative to the perimeter of the sunburst. 
+        
+        Valid values are:
+        
+          * ``'circular'``
+          * ``'auto'``
+          * ``'parallel'`` 
+          * ``'perpendicular'``. 
+          
+        Defaults to ``'circular'``.
+        
+        .. note::
+
+          When ``'circular'``, the best fit will be computed for the point, so that the label is curved around the 
+          center when there is room for it, otherwise perpendicular. 
+        
+          The legacy ``'auto'`` option works similiarly to ``'circular'``, but instead of curving the labels, they are 
+          tangented to the perimiter.
+        
+        .. warning::
+        
+          The :meth:`.rotation <highcharts_core.utility_classes.data_labels.SunburstDataLabel.rotation>` property 
+          takes precedence over ``.rotation_mode``.
+          
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._rotation_mode
+    
+    @rotation_mode.setter
+    def rotation_mode(self, value):
+        if not value:
+            self._rotation_mode = None
+        else:
+            value = validators.string(value, allow_empty = False)
+            value = value.lower()
+            if value not in ['circular', 'auto', 'parallel', 'perpendicular']:
+                raise errors.HighchartsValueError(f'if not empty, rotation_mode expects a value of either '
+                                                  f'"circular", "auto", "parallel", or "perpendicular", '
+                                                  f' but received "{str}".')
+
+            self._rotation_mode = value
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'align': as_dict.get('align', None),
+            'allow_overlap': as_dict.get('allowOverlap', None),
+            'animation': as_dict.get('animation', None),
+            'background_color': as_dict.get('backgroundColor', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'crop': as_dict.get('crop', None),
+            'defer': as_dict.get('defer', None),
+            'enabled': as_dict.get('enabled', None),
+            'filter': as_dict.get('filter', None),
+            'format': as_dict.get('format', None),
+            'formatter': as_dict.get('formatter', None),
+            'inside': as_dict.get('inside', None),
+            'null_format': as_dict.get('nullFormat', None),
+            'null_formatter': as_dict.get('nullFormatter', None),
+            'overflow': as_dict.get('overflow', None),
+            'padding': as_dict.get('padding', None),
+            'position': as_dict.get('position', None),
+            'rotation': as_dict.get('rotation', None),
+            'shadow': as_dict.get('shadow', None),
+            'shape': as_dict.get('shape', None),
+            'style': as_dict.get('style', None),
+            'text_path': as_dict.get('textPath', None),
+            'use_html': as_dict.get('useHTML', None),
+            'vertical_align': as_dict.get('verticalAlign', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
+            'z': as_dict.get('z', None),
+            
+            'rotation_mode': as_dict.get('rotationMode', None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        untrimmed = {
+            'rotationMode': self.rotation_mode,
+        }
+
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
+
+        return untrimmed
+
+
+class OrganizationDataLabel(DataLabel):
+    """Variant of :class:`DataLabel` used for :term:`organization` series."""
+    
+    def __init__(self, **kwargs):
+        self._link_format = None
+        self._link_formatter = None
+        self._link_text_path = None
+        
+        self.link_format = kwargs.get('link_format', None)
+        self.link_formatter = kwargs.get('link_formatter', None)
+        self.link_text_path = kwargs.get('link_text_path', None)
+        
+        super().__init__(**kwargs)
+
+    @property
+    def link_format(self) -> Optional[str]:
+        """The format string specifying what to show for links in the\rorganization chart.
+        
+        .. tip::
+        
+          Best to use with 
+          :meth:`.link_text_path <highcharts_core.utility_classes.data_labels.OrganizationDataLabel.link_text_path>`
+          enabled.
+          
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._link_format
+    
+    @link_format.setter
+    def link_format(self, value):
+        self._link_format = validators.string(value, allow_empty = True)
+
+    @property
+    def link_formatter(self) -> Optional[CallbackFunction]:
+        """JavaScript callback function to format data labels for links in the organization chart. 
+
+        .. note::
+
+          The :meth:`.link_format <highcharts_core.utility_classes.data_labels.OrganizationDataLabel.link_format>`
+          property takes precedence over the ``link_formatter``.
+
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
+          :obj:`None <python:None>`
+        """
+        return self._link_formatter
+
+    @link_formatter.setter
+    @class_sensitive(CallbackFunction)
+    def link_formatter(self, value):
+        self._link_formatter = value
+
+    @property
+    def link_text_path(self) -> Optional[TextPath]:
+        """Options for a label text which should follow the link's shape.
+
+        .. note::
+
+          Border and background are disabled for a label that follows a path.
+
+        :rtype: :class:`TextPath <highcharts_core.utility_classes.ast.TextPath>` or :obj:`None <python:None>`
+        """
+        return self._link_text_path
+
+    @link_text_path.setter
+    @class_sensitive(TextPath)
+    def link_text_path(self, value):
+        self._link_text_path = value
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'align': as_dict.get('align', None),
+            'allow_overlap': as_dict.get('allowOverlap', None),
+            'animation': as_dict.get('animation', None),
+            'background_color': as_dict.get('backgroundColor', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'crop': as_dict.get('crop', None),
+            'defer': as_dict.get('defer', None),
+            'enabled': as_dict.get('enabled', None),
+            'filter': as_dict.get('filter', None),
+            'format': as_dict.get('format', None),
+            'formatter': as_dict.get('formatter', None),
+            'inside': as_dict.get('inside', None),
+            'null_format': as_dict.get('nullFormat', None),
+            'null_formatter': as_dict.get('nullFormatter', None),
+            'overflow': as_dict.get('overflow', None),
+            'padding': as_dict.get('padding', None),
+            'position': as_dict.get('position', None),
+            'rotation': as_dict.get('rotation', None),
+            'shadow': as_dict.get('shadow', None),
+            'shape': as_dict.get('shape', None),
+            'style': as_dict.get('style', None),
+            'text_path': as_dict.get('textPath', None),
+            'use_html': as_dict.get('useHTML', None),
+            'vertical_align': as_dict.get('verticalAlign', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
+            'z': as_dict.get('z', None),
+            
+            'link_format': as_dict.get('linkFormat', None),
+            'link_formatter': as_dict.get('linkFormatter', None),
+            'link_text_path': as_dict.get('linkTextPath', None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        untrimmed = {
+            'linkFormat': self.link_format,
+            'linkFormatter': self.link_formatter,
+            'linkTextPath': self.link_text_path,
+        }
+
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
 
         return untrimmed
 

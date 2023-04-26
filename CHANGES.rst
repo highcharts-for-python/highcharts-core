@@ -1,4 +1,40 @@
-Release 1.0.1
+Release 1.1.0
+=========================================
+
+* Align the API to **Highcharts (JS) v.11**. In particular, this includes:
+
+  * Updating documentation for ``options.chart.ChartOptions.styled_mode`` to align
+    to new v11 design changes.
+  * Updated documentation for ``options.series.data.base.DataBase.color_index`` to align to
+    new v11 design changes.
+  * Added new ``utility_classes.data_labels.SunburstDataLabel`` class to patch missing
+    data label ``.rotation_mode`` property.
+  * Updated ``options.plot_options.SunburstOptions.data_labels`` to accept ``SunburstDataLabel``
+    values.
+  * Updated documentation of ``options.axes.labels.AxisLabelOptions.distance`` to reflect new (or 
+    newly-documented) behavior.
+  * Added new ``utility_classes.data_labels.OrganizationDataLabel`` class to patch misisng data label ``.
+    link_text_path`` property.
+  * Updated ``options.plot_options.organization.OrganizationOptions.data_labels`` to accept ``OrganizationDataLabel``
+    values.
+  * Added ``.description_format`` property to ``options.plot_options.accessibility.TypeOptionsAccessibility``.
+  * Added ``PictorialOptions`` / ``PictorialSeries`` series type with related classes.
+  * Added ``.minor_ticks_per_major`` to ``options.axes.x_axis.XAxisOptions``.
+  * Added ``.stack_shadow`` to ``options.axes.y_axis.YAxisOptions``.
+  * Added ``.border_radius`` to ``ColumnRangeOptions`` / ``ColumnRangeSeries``.
+  * Added ``.play_as_sand`` and ``.download_midi`` to ``global_options.language.Language``.
+  * Added ``.border_radius`` to ``PieOptions`` / ``PieSeries``.
+  * Added ``.style`` to ``utility_classes.buttons.CollapseButtonConfiguration``.
+  * Added ``utility_classes.events.SimulationEvents`` and modified ``NetworkGraphOptions`` to support.
+  * Added ``options.sonification`` and all related classes.
+  * Added series-level ``SeriesSonification`` to all series.
+
+* **FIXED:** Broken heatmap and tilemap documentation links.
+* **FIXED:** Fixed missing ``TreegraphOptions`` / ``TreegraphSeries`` series type.
+
+-------------------------------
+
+Release 1.0.2
 =========================================
 
 * **DOCUMENTATION:** Added documentation of hard dependencies to the README (issue #37).

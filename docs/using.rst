@@ -701,6 +701,14 @@ environment. The actual file itself is produced using a
 
     .. include:: using/download_visualizations/_using_custom.rst
 
+
+.. warning::
+
+  As of Highcharts for Python v.1.1.0, the Highcharts :term:`Export Server` does not yet fully 
+  support all of the series types added in Highcharts (JS) v.11. Attempting to programmatically download
+  one of those new as-yet-unsupported visualizations will generate a 
+  :exc:`HighchartsUnsupportedExportError <highcharts_core.errors.HighchartsUnsupportedExportError>`.
+
 -----------------------------
 
 .. target-notes::

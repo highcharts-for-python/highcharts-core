@@ -877,6 +877,62 @@ class SeriesEvents(HighchartsMeta):
         return untrimmed
 
 
+class SimulationEvents(SeriesEvents):
+    """Event listeners for series that involve simulation / layout.
+    
+    .. versionadded:: Highcharts Core for Python v.1.1.0 / Highcharts Core (JS) v.11.0.0
+    
+    """
+    
+    def __init__(self, **kwargs):
+        self._after_simulation = None
+        
+        self.after_simulation = kwargs.get('after_simulation', None)
+        
+        super().__init__(**kwargs)
+        
+    @property
+    def after_simulation(self) -> Optional[CallbackFunction]:
+        """Event which fires after the simulation is ended and the layout is stable.
+        
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
+          :obj:`None <python:None>`
+        """
+        return self._after_simulation
+
+    @after_simulation.setter
+    @class_sensitive(CallbackFunction)
+    def after_simulation(self, value):
+        self._after_simulation = value
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'after_animate': as_dict.get('afterAnimate', None),
+            'checkbox_click': as_dict.get('checkboxClick', None),
+            'click': as_dict.get('click', None),
+            'hide': as_dict.get('hide', None),
+            'legend_item_click': as_dict.get('legendItemClick', None),
+            'mouse_out': as_dict.get('mouseOut', None),
+            'mouse_over': as_dict.get('mouseOver', None),
+            'show': as_dict.get('show', None),
+            
+            'after_simulation': as_dict.get('afterSimulation', None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        untrimmed = {
+            'afterSimulation': self.after_simulation,
+        }
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
+
+        return untrimmed
+    
+
 class ClusterEvents(HighchartsMeta):
     """General event handlers for marker clusters."""
 
@@ -1137,6 +1193,214 @@ class MouseEvents(HighchartsMeta):
             'mousemove': self.mousemove,
             'mouseout': self.mouseout,
             'mouseover': self.mouseover
+        }
+
+        return untrimmed
+
+
+class SonificationEvents(HighchartsMeta):
+    """Event handlers for sonification."""
+    
+    def __init__(self, **kwargs):
+        self._after_update = None
+        self._before_play = None
+        self._before_update = None
+        self._on_boundary_hit = None
+        self._on_end = None
+        self._on_play = None
+        self._on_series_end = None
+        self._on_series_start = None
+        self._on_stop = None
+        
+        self.after_update = kwargs.get('after_update', None)
+        self.before_play = kwargs.get('before_play', None)
+        self.before_update = kwargs.get('before_update', None)
+        self.on_boundary_hit = kwargs.get('on_boundary_hit', None)
+        self.on_end = kwargs.get('on_end', None)
+        self.on_play = kwargs.get('on_play', None)
+        self.on_series_end = kwargs.get('on_series_end', None)
+        self.on_series_start = kwargs.get('on_series_start', None)
+        self.on_stop = kwargs.get('on_stop', None)
+
+    @property
+    def after_update(self) -> Optional[CallbackFunction]:
+        """Event (Javascript) :term:`callback function` that is called *after* updating the
+        sonification.
+        
+        A context object is passed to the function, with properties ``chart`` and ``timeline``.
+        
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
+          :obj:`None <python:None>`
+        """
+        return self._after_update
+    
+    @after_update.setter
+    @class_sensitive(CallbackFunction)
+    def after_update(self, value):
+        self._after_update = value
+
+    @property
+    def before_play(self) -> Optional[CallbackFunction]:
+        """Event (Javascript) :term:`callback function` that is called immediately when playback is requested.
+        
+        A context object is passed to the function, with properties ``chart`` and ``timeline``.
+        
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
+          :obj:`None <python:None>`
+        """
+        return self._before_play
+    
+    @before_play.setter
+    @class_sensitive(CallbackFunction)
+    def before_play(self, value):
+        self._before_play = value
+
+    @property
+    def before_update(self) -> Optional[CallbackFunction]:
+        """Event (Javascript) :term:`callback function` that is called *before* updating the
+        sonification.
+        
+        A context object is passed to the function, with properties ``chart`` and ``timeline``.
+        
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
+          :obj:`None <python:None>`
+        """
+        return self._before_update
+    
+    @before_update.setter
+    @class_sensitive(CallbackFunction)
+    def before_update(self, value):
+        self._before_update = value
+
+    @property
+    def on_boundary_hit(self) -> Optional[CallbackFunction]:
+        """Event (Javascript) :term:`callback function` that is called when attempting to play an adjacent point
+        or series, and there is none found. By defualt, a percussive sound is played.
+        
+        A context object is passed to the function, with properties ``chart``, ``timeline``, and ``attemptedNext``. The
+        ``attemptedNext`` property is a boolean value that is ``true`` if the boundary hit was from trying to play the 
+        next series/point, and ``false`` if it was from trying to play the previous.
+        
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
+          :obj:`None <python:None>`
+        """
+        return self._on_boundary_hit
+    
+    @on_boundary_hit.setter
+    @class_sensitive(CallbackFunction)
+    def on_boundary_hit(self, value):
+        self._on_boundary_hit = value
+
+    @property
+    def on_end(self) -> Optional[CallbackFunction]:
+        """Event (Javascript) :term:`callback function` that is called when playback is completed.
+        
+        A context object is passed to the function, with properties ``chart``, ``timeline``, and ``pointsPlayed`` where
+        ``pointsPlayed`` is an array of ``Point`` objects referencing data points related to the audio events played.
+        
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
+          :obj:`None <python:None>`
+        """
+        return self._on_end
+    
+    @on_end.setter
+    @class_sensitive(CallbackFunction)
+    def on_end(self, value):
+        self._on_end = value
+
+    @property
+    def on_play(self) -> Optional[CallbackFunction]:
+        """Event (Javascript) :term:`callback function` that is called on play.
+        
+        A context object is passed to the function, with properties ``chart`` and ``timeline``.
+        
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
+          :obj:`None <python:None>`
+        """
+        return self._on_play
+    
+    @on_play.setter
+    @class_sensitive(CallbackFunction)
+    def on_play(self, value):
+        self._on_play = value
+
+    @property
+    def on_series_end(self) -> Optional[CallbackFunction]:
+        """Event (Javascript) :term:`callback function` that is called when finished playing a series.
+        
+        A context object is passed to the function, with properties ``series`` and ``timeline``.
+        
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
+          :obj:`None <python:None>`
+        """
+        return self._on_series_end
+    
+    @on_series_end.setter
+    @class_sensitive(CallbackFunction)
+    def on_series_end(self, value):
+        self._on_series_end = value
+
+    @property
+    def on_series_start(self) -> Optional[CallbackFunction]:
+        """Event (Javascript) :term:`callback function` that is called when starting to play a series.
+        
+        A context object is passed to the function, with properties ``series`` and ``timeline``.
+        
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
+          :obj:`None <python:None>`
+        """
+        return self._on_series_start
+    
+    @on_series_start.setter
+    @class_sensitive(CallbackFunction)
+    def on_series_start(self, value):
+        self._on_series_start = value
+
+    @property
+    def on_stop(self) -> Optional[CallbackFunction]:
+        """Event (Javascript) :term:`callback function` that is called on pause, cancel, or if playback is
+        completed.
+        
+        A context object is passed to the function, with properties ``chart``, ``timeline``, and ``pointsPlayed`` where
+        ``pointsPlayed`` is an array of ``Point`` objects referencing data points related to the audio events played.
+        
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
+          :obj:`None <python:None>`
+        """
+        return self._on_stop
+    
+    @on_stop.setter
+    @class_sensitive(CallbackFunction)
+    def on_stop(self, value):
+        self._on_stop = value
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'after_update': as_dict.get('afterUpdate', None),
+            'before_play': as_dict.get('beforePlay', None),
+            'before_update': as_dict.get('beforeUpdate', None),
+            'on_boundary_hit': as_dict.get('onBoundaryHit', None),
+            'on_end': as_dict.get('onEnd', None),
+            'on_play': as_dict.get('onPlay', None),
+            'on_series_end': as_dict.get('onSeriesEnd', None),
+            'on_series_start': as_dict.get('onSeriesStart', None),
+            'on_stop': as_dict.get('onStop', None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        untrimmed = {
+            'afterUpdate': self.after_update,
+            'beforePlay': self.before_play,
+            'beforeUpdate': self.before_update,
+            'onBoundaryHit': self.on_boundary_hit,
+            'onEnd': self.on_end,
+            'onPlay': self.on_play,
+            'onSeriesEnd': self.on_series_end,
+            'onSeriesStart': self.on_series_start,
+            'onStop': self.on_stop,
         }
 
         return untrimmed

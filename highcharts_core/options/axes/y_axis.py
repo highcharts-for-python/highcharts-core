@@ -4,13 +4,116 @@ from decimal import Decimal
 from validator_collection import validators
 
 from highcharts_core import errors
+from highcharts_core.metaclasses import HighchartsMeta
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
 from highcharts_core.utility_classes.data_labels import DataLabel
+from highcharts_core.utility_functions import validate_color
 
 from highcharts_core.options.axes.x_axis import XAxis
 
+
+class StackShadow(HighchartsMeta):
+    """Configures the background of stacked points.
+    
+    .. versionadded:: Highcharts Core (JS) v.11.0.0
+    
+    .. note::
+        
+      Only applies to the :class:`PictorialSeries <highcharts_core.options.series.pictorial.PictorialSeries>`.
+        
+    """
+    
+    def __init__(self, **kwargs):
+        self._border_color = None
+        self._border_width = None
+        self._color = None
+        self._enabled = None
+        
+        self.border_color = kwargs.get('border_color', None)
+        self.border_width = kwargs.get('border_width', None)
+        self.color = kwargs.get('color', None)
+        self.enabled = kwargs.get('enabled', None)
+        
+    @property
+    def border_color(self) -> Optional[str | Gradient | Pattern]:
+        """The color of the stack shadow border. Defaults to ``'transparent'``.
+
+        :rtype: :class:`str <python:str>` or
+          :class:`Gradient <highcharts_maps.utility_classes.gradients.Gradient>` or
+          :class:`Pattern <highcharts_maps.utility_classes.patterns.Pattern>` or
+          :obj:`None <python:None>`
+        """
+        return self._border_color
+
+    @border_color.setter
+    def border_color(self, value):
+        self._border_color = validate_color(value)
+
+    @property
+    def border_width(self) -> Optional[int | float | Decimal]:
+        """The width of the border surrounding the stack shadow. Defaults to ``0``.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._border_width
+
+    @border_width.setter
+    def border_width(self, value):
+        self._border_width = validators.numeric(value,
+                                                allow_empty = True,
+                                                minimum = 0)
+
+    @property
+    def color(self) -> Optional[str | Gradient | Pattern]:
+        """The color of the stack shadow. Defaults to ``#dedede``.
+
+        :rtype: :class:`str <python:str>`, :class:`Gradient`, :class:`Pattern``, or
+          :obj:`None <python:None>`
+
+        """
+        return self._color
+
+    @color.setter
+    def color(self, value):
+        self._color = validate_color(value)
+
+    @property
+    def enabled(self) -> Optional[bool]:
+        """If ``True``, enable the stack shadow. Defaults to :obj:`None <python:None>`.
+        
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._enabled
+    
+    @enabled.setter
+    def enabled(self, value):
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'border_color': as_dict.get('borderColor', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'color': as_dict.get('color', None),
+            'enabled': as_dict.get('enabled', None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        untrimmed = {
+            'borderColor': self.border_color,
+            'borderWidth': self.border_width,
+            'color': self.color,
+            'enabled': self.enabled,
+        }
+
+        return untrimmed
 
 class YAxis(XAxis):
     """Configuration settings for the Y axis or value axis.
@@ -22,12 +125,14 @@ class YAxis(XAxis):
         self._max_color = None
         self._min_color = None
         self._stack_labels = None
+        self._stack_shadow = None
         self._stops = None
         self._tooltip_value_format = None
 
         self.max_color = kwargs.get('max_color', None)
         self.min_color = kwargs.get('min_color', None)
         self.stack_labels = kwargs.get('stack_labels', None)
+        self.stack_shadow = kwargs.get('stack_shadow', None)
         self.stops = kwargs.get('stops', None)
         self.tooltip_value_format = kwargs.get('tooltip_value_format', None)
 
@@ -96,6 +201,29 @@ class YAxis(XAxis):
     @class_sensitive(DataLabel)
     def stack_labels(self, value):
         self._stack_labels = value
+
+    @property
+    def stack_shadow(self) -> Optional[StackShadow]:
+        """Configures the background of stacked points. 
+        
+        .. versionadded:: Highcharts Core (JS) v.11.0.0
+        
+        .. note::
+          
+          Only applies to the :class:`PictorialSeries <highcharts_core.options.series.pictorial.PictorialSeries>`
+          
+        .. warning::
+        
+          Requires ``series.stacking`` to be defined.
+          
+        :rtype: :class:`StackShadow <highcharts_core.options.axes.y_axis.StackShadow>` or :obj:`None <python:None>`
+        """
+        return self._stack_shadow
+    
+    @stack_shadow.setter
+    @class_sensitive(StackShadow)
+    def stack_shadow(self, value):
+        self._stack_shadow = value
 
     @property
     def stops(self) -> Optional[List[List[int | float | Decimal | str]]]:
@@ -251,6 +379,7 @@ class YAxis(XAxis):
             'max_color': as_dict.get('maxColor', None),
             'min_color': as_dict.get('minColor', None),
             'stack_labels': as_dict.get('stackLabels', None),
+            'stack_shadow': as_dict.get('stackShadow', None),
             'stops': as_dict.get('stops', None),
             'tooltip_value_format': as_dict.get('tooltipValueFormat', None)
         }
@@ -262,6 +391,7 @@ class YAxis(XAxis):
             'maxColor': self.max_color,
             'minColor': self.min_color,
             'stackLabels': self.stack_labels,
+            'stackShadow': self.stack_shadow,
             'stops': self.stops,
             'tooltipValueFormat': self.tooltip_value_format
         }

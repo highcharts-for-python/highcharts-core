@@ -132,6 +132,13 @@ class SeriesBaseOptions(GenericTypeOptions):
         series, so that its graphic representations are given the class name
         ``highcharts-color-{n}``.
 
+        .. tip::
+        
+          .. versionadded:: Highcharts (JS) v.11
+
+          With Highcharts (JS) v.11, using CSS variables of the form ``--highcharts-color-{n}`` make
+          changing the color scheme very simple.
+
         Defaults to :obj:`None <python:None>`.
 
         :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
@@ -457,6 +464,7 @@ class SeriesBaseOptions(GenericTypeOptions):
             'show_checkbox': as_dict.get('showCheckbox', None),
             'show_in_legend': as_dict.get('showInLegend', None),
             'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'sonification': as_dict.get('sonification', None),
             'states': as_dict.get('states', None),
             'sticky_tracking': as_dict.get('stickyTracking', None),
             'threshold': as_dict.get('threshold', None),
@@ -779,7 +787,6 @@ class SeriesOptions(SeriesBaseOptions):
             
         self._point_start = value
                 
-
     @property
     def stacking(self) -> Optional[str]:
         """Whether to stack the values of each series on top of each other. Defaults to
@@ -842,6 +849,7 @@ class SeriesOptions(SeriesBaseOptions):
             'show_checkbox': as_dict.get('showCheckbox', None),
             'show_in_legend': as_dict.get('showInLegend', None),
             'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'sonification': as_dict.get('sonification', None),
             'states': as_dict.get('states', None),
             'sticky_tracking': as_dict.get('stickyTracking', None),
             'threshold': as_dict.get('threshold', None),

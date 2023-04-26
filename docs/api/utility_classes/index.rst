@@ -68,6 +68,8 @@ Sub-components
     - :class:`DataGroupingOptions <highcharts_core.utility_classes.data_grouping.DataGroupingOptions>`
   * - :mod:`.utility_classes.data_labels <highcharts_core.utility_classes.data_labels>`
     - :class:`DataLabel <highcharts_core.utility_classes.data_labels.DataLabel>`
+      :class:`SunburstDataLabel <highcharts_core.utility_classes.data_labels.SunburstDataLabel>`
+      :class:`OrganizationDataLabel <highcharts_core.utility_classes.data_labels.OrganizationDataLabel>`
       :class:`NodeDataLabel <highcharts_core.utility_classes.data_labels.NodeDataLabel>`
       :class:`Filter <highcharts_core.utility_classes.data_labels.Filter>`
   * - :mod:`.utility_classes.date_time_label_formats <highcharts_core.utility_classes.date_time_label_formats>`
@@ -78,6 +80,7 @@ Sub-components
       :class:`NavigationEvents <highcharts_core.utility_classes.events.NavigationEvents>`
       :class:`PointEvents <highcharts_core.utility_classes.events.PointEvents>`
       :class:`SeriesEvents <highcharts_core.utility_classes.events.SeriesEvents>`
+      :class:`SimulationEvents <highcharts_core.utility_classes.events.SimulationEvents>`
       :class:`ClusterEvents <highcharts_core.utility_classes.events.ClusterEvents>`
       :class:`AxisEvents <highcharts_core.utility_classes.events.AxisEvents>`
       :class:`MouseEvents <highcharts_core.utility_classes.events.MouseEvents>`

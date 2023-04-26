@@ -204,6 +204,7 @@ STANDARD_PARAMS = [
         'padding': 12,
         'position': 'center',
         'rotation': 0,
+        'rotationMode': 'circular',
         'shadow': False,
         'shape': 'rect',
         'style': 'style goes here',

@@ -31,6 +31,7 @@
   organization
   packedbubble
   pareto
+  pictorial
   pie
   points
   polygon
@@ -41,6 +42,7 @@
   spline
   sunburst
   timeline
+  treegraph
   treemap
   vector
   venn
@@ -132,6 +134,8 @@ Sub-components
       :class:`SinglePointBase <highcharts_core.options.series.data.single_point.SinglePointBase>`
   * - :mod:`.options.series.data.sunburst <highcharts_core.options.series.data.sunburst>`
     - :class:`SunburstData <highcharts_core.options.series.data.sunburst.SunburstData>`
+  * - :mod:`.options.series.data.treegraph <highcharts_core.options.series.data.treegraph>`
+    - :class:`TreegraphData <highcharts_core.options.series.data.treegraph.TreegraphData>`
   * - :mod:`.options.series.data.treemap <highcharts_core.options.series.data.treemap>`
     - :class:`TreemapData <highcharts_core.options.series.data.treemap.TreemapData>`
   * - :mod:`.options.series.data.vector <highcharts_core.options.series.data.vector>`
@@ -169,6 +173,9 @@ Sub-components
     - :class:`PackedBubbleSeries <highcharts_core.options.series.packedbubble.PackedBubbleSeries>`
   * - :mod:`.options.series.pareto <highcharts_core.options.series.pareto>`
     - :class:`ParetoSeries <highcharts_core.options.series.pareto.ParetoSeries>`
+  * - :mod:`.options.series.pictorial <highcharts_core.options.series.pictorial>`
+    - :class:`PictorialSeries <highcharts_core.options.series.pictorial.PictorialSeries>`
+      :class:`PictorialPaths <highcharts_core.options.series.pictorial.PictorialPaths>`
   * - :mod:`.options.series.pie <highcharts_core.options.series.pie>`
     - :class:`PieSeries <highcharts_core.options.series.pie.PieSeries>`
       :class:`VariablePieSeries <highcharts_core.options.series.pie.VariablePieSeries>`
@@ -190,6 +197,8 @@ Sub-components
     - :class:`SunburstSeries <highcharts_core.options.series.sunburst.SunburstSeries>`
   * - :mod:`.options.series.timeline <highcharts_core.options.series.timeline>`
     - :class:`TimelineSeries <highcharts_core.options.series.timeline.TimelineSeries>`
+  * - :mod:`.options.series.treegraph <highcharts_core.options.series.treegraph>`
+    - :class:`TreegraphSeries <highcharts_core.options.series.treegraph.TreegraphSeries>`
   * - :mod:`.options.series.treemap <highcharts_core.options.series.treemap>`
     - :class:`TreemapSeries <highcharts_core.options.series.treemap.TreemapSeries>`
   * - :mod:`.options.series.vector <highcharts_core.options.series.vector>`
