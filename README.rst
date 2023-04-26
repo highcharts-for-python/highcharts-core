@@ -15,6 +15,8 @@ visualization library, with full integration into the robust Python ecosystem, i
     dataframe.
   * ...and even more use-case specific integrations across the broader toolkit.
 
+The library supports Highcharts (JS) v.10.2 and higher, including Highcharts (JS) v.11.0.0.
+
 **COMPLETE DOCUMENTATION:** https://core-docs.highchartspython.com/en/latest/index.html
 
 -------------
