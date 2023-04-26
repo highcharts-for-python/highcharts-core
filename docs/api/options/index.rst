@@ -313,6 +313,8 @@ Sub-components
       :class:`Scatter3DOptions <highcharts_core.options.plot_options.scatter.Scatter3DOptions>`
   * - :mod:`.options.plot_options.series <highcharts_core.options.plot_options.series>`
     - :class:`SeriesOptions <highcharts_core.options.plot_options.series.SeriesOptions>`
+  * - :mod:`.options.plot_options.sonification <highcharts_core.options.plot_options.sonification>`
+    - :class:`SeriesSonification <highcharts_core.options.plot_options.sonification.SeriesSonification>`
   * - :mod:`.options.plot_options.spline <highcharts_core.options.plot_options.spline>`
     - :class:`SplineOptions <highcharts_core.options.plot_options.spline.SplineOptions>`
   * - :mod:`.options.plot_options.sunburst <highcharts_core.options.plot_options.sunburst>`

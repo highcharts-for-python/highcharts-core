@@ -10,6 +10,7 @@ from highcharts_core.options.plot_options.accessibility import TypeOptionsAccess
 from highcharts_core.options.series.labels import SeriesLabel
 from highcharts_core.options.plot_options.points import OnPointOptions
 from highcharts_core.options.plot_options.points import Point
+from highcharts_core.options.plot_options.sonification import SeriesSonification
 from highcharts_core.options.tooltips import Tooltip
 from highcharts_core.utility_classes.animation import AnimationOptions
 from highcharts_core.utility_classes.gradients import Gradient
@@ -52,6 +53,7 @@ class GenericTypeOptions(HighchartsMeta):
         self._show_checkbox = None
         self._show_in_legend = None
         self._skip_keyboard_navigation = None
+        self._sonification = None
         self._states = None
         self._sticky_tracking = None
         self._threshold = None
@@ -85,6 +87,7 @@ class GenericTypeOptions(HighchartsMeta):
         self.show_checkbox = kwargs.get('show_checkbox', None)
         self.show_in_legend = kwargs.get('show_in_legend', None)
         self.skip_keyboard_navigation = kwargs.get('skip_keyboard_navigation', None)
+        self.sonification = kwargs.get('sonification', None)
         self.states = kwargs.get('states', None)
         self.sticky_tracking = kwargs.get('sticky_tracking', None)
         self.threshold = kwargs.get('threshold', None)
@@ -647,6 +650,20 @@ class GenericTypeOptions(HighchartsMeta):
             self._skip_keyboard_navigation = bool(value)
 
     @property
+    def sonification(self) -> Optional[SeriesSonification]:
+        """Sonification configuration for the series type/series.
+        
+        :rtype: :class:`SeriesSonification <highcharts_core.options.plot_options.sonification.SeriesSonification>` or
+          :obj:`None <python:None>`
+        """
+        return self._sonification
+    
+    @sonification.setter
+    @class_sensitive(SeriesSonification)
+    def sonification(self, value):
+        self._sonification = value
+
+    @property
     def states(self) -> Optional[States]:
         """Configuration for state-specific configuration to apply to the data series.
 
@@ -805,6 +822,7 @@ class GenericTypeOptions(HighchartsMeta):
             'show_checkbox': as_dict.get('showCheckbox', None),
             'show_in_legend': as_dict.get('showInLegend', None),
             'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'sonification': as_dict.get('sonification', None),
             'states': as_dict.get('states', None),
             'sticky_tracking': as_dict.get('stickyTracking', None),
             'threshold': as_dict.get('threshold', None),
@@ -843,6 +861,7 @@ class GenericTypeOptions(HighchartsMeta):
             'showCheckbox': self.show_checkbox,
             'showInLegend': self.show_in_legend,
             'skipKeyboardNavigation': self.skip_keyboard_navigation,
+            'sonification': self.sonification,
             'states': self.states,
             'stickyTracking': self.sticky_tracking,
             'threshold': self.threshold,

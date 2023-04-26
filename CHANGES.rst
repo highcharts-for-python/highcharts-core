@@ -27,6 +27,7 @@ Release 1.1.0
   * Added ``.style`` to ``utility_classes.buttons.CollapseButtonConfiguration``.
   * Added ``utility_classes.events.SimulationEvents`` and modified ``NetworkGraphOptions`` to support.
   * Added ``options.sonification`` and all related classes.
+  * Added series-level ``SeriesSonification`` to all series.
 
 * **FIXED:** Broken heatmap and tilemap documentation links.
 * **FIXED:** Fixed missing ``TreegraphOptions`` / ``TreegraphSeries`` series type.

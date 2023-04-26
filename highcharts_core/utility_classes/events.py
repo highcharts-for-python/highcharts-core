@@ -900,6 +900,11 @@ class SimulationEvents(SeriesEvents):
         """
         return self._after_simulation
 
+    @after_simulation.setter
+    @class_sensitive(CallbackFunction)
+    def after_simulation(self, value):
+        self._after_simulation = value
+
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
