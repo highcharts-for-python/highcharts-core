@@ -29,6 +29,7 @@ INCLUDE_LIBS = [
     'https://code.highcharts.com/highcharts.js',
     'https://code.highcharts.com/highcharts-more.js',
     'https://code.highcharts.com/highcharts-3d.js',
+    'https://code.highcharts.com/modules/sonification.js',
     'https://code.highcharts.com/modules/accessibility.js',
     'https://code.highcharts.com/modules/annotations.js',
     'https://code.highcharts.com/modules/annotations-advanced.js',
@@ -60,6 +61,7 @@ INCLUDE_LIBS = [
     'https://code.highcharts.com/modules/organization.js',
     'https://code.highcharts.com/modules/parallel-coordinates.js',
     'https://code.highcharts.com/modules/pareto.js',
+    'https://code.highcharts.com/modules/pictorial.js',
     'https://code.highcharts.com/modules/pyramid3d.js',
     'https://code.highcharts.com/modules/series-label.js',
     'https://code.highcharts.com/modules/series-on-point.js',
@@ -83,6 +85,7 @@ INCLUDE_STR = """
     <script src="https://code.highcharts.com/highcharts.js"/>
     <script src="https://code.highcharts.com/highcharts-more.js"/>
     <script src="https://code.highcharts.com/highcharts-3d.js"/>
+    <script src="https://code.highcharts.com/modules/sonification.js"/>
     <script src="https://code.highcharts.com/modules/accessibility.js"/>
     <script src="https://code.highcharts.com/modules/annotations.js"/>
     <script src="https://code.highcharts.com/modules/annotations-advanced.js"/>
@@ -115,6 +118,7 @@ INCLUDE_STR = """
     <script src="https://code.highcharts.com/modules/organization.js"/>
     <script src="https://code.highcharts.com/modules/parallel-coordinates.js"/>
     <script src="https://code.highcharts.com/modules/pareto.js"/>
+    <script src="https://code.highcharts.com/modules/pictorial.js"/>
     <script src="https://code.highcharts.com/modules/pyramid3d.js"/>
     <script src="https://code.highcharts.com/modules/sankey.js"/>
     <script src="https://code.highcharts.com/modules/series-label.js"/>
