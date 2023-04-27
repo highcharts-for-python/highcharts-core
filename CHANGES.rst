@@ -1,3 +1,8 @@
+Release 1.1.1
+=========================================
+
+* **FIXED:** Problem when producing a JS literal, with the JS code inserting an unnecessary ``new`` (#42 and #43).
+
 Release 1.1.0
 =========================================
 
