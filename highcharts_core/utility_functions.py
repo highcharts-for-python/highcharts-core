@@ -406,13 +406,16 @@ def get_retryHighcharts():
                 fn()
                 return resolve();
             } catch (err) {
-                if ((err instanceof ReferenceError) || (err instanceof TypeError) || ((err instanceof Error) && (err.message.includes('#13')))) {
+                if ((err instanceof ReferenceError) || (err instanceof TypeError)) {
                     if (retriesLeft === 0) {
                         var target_div = document.getElementById(container);
                         if (target_div) {
                             var timeElapsed = (retries * interval) / 1000;
-                            var errorMessage = "<p>Something went wrong with the Highcharts.js script. It should have been automatically loaded, but it did not load for over " + timeElapsed + " seconds. Check your internet connection, and then if the problem persists please reach out for support.</p>";
+                            var errorMessage = "Something went wrong with the Highcharts.js script. It should have been automatically loaded, but it did not load for over " + timeElapsed + " seconds. Check your internet connection, and then if the problem persists please reach out for support. (You can also check your browser's console log for more details.)";
+                            var errorHTML = "<p>" + errorMessage + "</p>";
                             target_div.innerHTML = errorMessage;
+                            console.log(errorMessage);
+                            console.error(err);
                         }
                         return reject();
                     }
@@ -420,6 +423,12 @@ def get_retryHighcharts():
                     setTimeout(() => {
                         retryHighcharts(fn, container, retries, retriesLeft - 1, interval).then(resolve).catch(reject);
                     }, interval);
+                } else if ((err instanceof Error) && (err.message.includes('#13'))) {
+                    var errorMessage = "It looks like the container specified \'" + container + "\' was not created successfully. Please check your browser\'s console log for more details.";
+                    console.error(errorMessage);
+                    console.error(err);
+                    
+                    return reject();
                 } else {
                     throw err;
                 }
