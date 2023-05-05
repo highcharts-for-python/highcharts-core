@@ -3,6 +3,8 @@ from typing import Optional
 import esprima
 from esprima.error_handler import Error as ParseError
 
+from validator_collection import validators, checkers
+
 from highcharts_core import errors
 from highcharts_core.decorators import validate_types
 from highcharts_core.options import HighchartsOptions
@@ -42,7 +44,7 @@ class SharedOptions(HighchartsOptions):
 
         as_str = prefix + options_body + ');'
 
-        if filename:
+        if filename and validate.path(filename):
             with open(filename, 'w', encoding = encoding) as file_:
                 file_.write(as_str)
 
