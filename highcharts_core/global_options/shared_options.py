@@ -44,7 +44,7 @@ class SharedOptions(HighchartsOptions):
 
         as_str = prefix + options_body + ');'
 
-        if filename and validate.path(filename):
+        if validators.path(filename, allow_empty = True):
             with open(filename, 'w', encoding = encoding) as file_:
                 file_.write(as_str)
 
