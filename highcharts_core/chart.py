@@ -340,7 +340,7 @@ class Chart(HighchartsMeta):
         suffix = """});"""
         as_str = prefix + as_str + '\n' + suffix
 
-        if filename and validators.path(filename):
+        if validators.path(filename, allow_empty = True):
             with open(filename, 'w', encoding = encoding) as file_:
                 file_.write(as_str)
 
