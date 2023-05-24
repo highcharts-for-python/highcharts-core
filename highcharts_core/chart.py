@@ -727,7 +727,7 @@ class Chart(HighchartsMeta):
         """
         try:
             from IPython import display as display_mod
-            from IPython.core.display_functions import display
+            from IPython.display import display
         except ImportError:
             raise errors.HighchartsDependencyError('Unable to import IPython modules. '
                                                    'Make sure that it is available in '
