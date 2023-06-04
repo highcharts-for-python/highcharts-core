@@ -1,7 +1,7 @@
 """Set of metaclasses used throughout the library."""
 from abc import ABC, abstractmethod
 from collections import UserDict
-from typing import Optional
+from typing import Optional, List
 try:
     import orjson as json
 except ImportError:
@@ -39,6 +39,46 @@ class HighchartsMeta(ABC):
         other_js_literal = other.to_js_literal()
 
         return self_js_literal == other_js_literal
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return None
+
+    @property
+    def get_required_modules(self, include_extension = False) -> List[str]:
+        """Return the list of URLs from which the Highcharts JavaScript modules
+        needed to render the chart can be retrieved.
+        
+        :param include_extension: if ``True``, will return script names with the 
+          ``'.js'`` extension included. Defaults to ``False``.
+        :type include_extension: :class:`bool <python:bool>`
+
+        :rtype: :class:`list <python:list>`
+        """
+        scripts = constants.MODULE_REQUIREMENTS.get(self._dot_path, [])
+        properties = [x for x in self.__dict__ if x.__class__.__name__ == 'property']
+        for property_name in properties:
+            property_value = getattr(self, property_name, None)
+            if not property_value:
+                continue
+            if isinstance(property_value, HighchartsMeta):
+                scripts.extend([x for x in property_value.get_required_modules()
+                                if x not in scripts])
+                continue
+            property_name_as_camelCase = utility_functions.to_camelCase(property_name)
+            dot_path = f'{self._dot_path}.' or ''
+            dot_path += {property_name_as_camelCase}
+            scripts.extend([x for x in constants.MODULE_REQUIREMENTS.get(dot_path, [])
+                            if x not in scripts])
+
+        if include_extension:
+            scripts = [f'{x}.js' for x in scripts]
+
+        return scripts
 
     def _untrimmed_mro_ancestors(self, in_cls = None) -> dict:
         """Walk through the parent classes and consolidate the results of their

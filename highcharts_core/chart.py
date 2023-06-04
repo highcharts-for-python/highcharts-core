@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from collections import UserDict
 
 from validator_collection import validators, checkers
@@ -22,6 +22,7 @@ class Chart(HighchartsMeta):
         self._container = None
         self._options = None
         self._variable_name = None
+        self._module_url = None
 
         self._random_slug = {}
 
@@ -29,26 +30,23 @@ class Chart(HighchartsMeta):
         self.container = kwargs.get('container', None)
         self.options = kwargs.get('options', None)
         self.variable_name = kwargs.get('variable_name', None)
+        self.module_url = kwargs.get('custom_module_url', 'https://code.highcharts.com/')
 
         super().__init__(**kwargs)
 
     def _jupyter_include_scripts(self):
         """Return the JavaScript code that is used to load the Highcharts JS libraries.
 
-        .. note::
-
-          Currently includes *all* `Highcharts JS <https://www.highcharts.com/>`_ modules
-          in the HTML. This issue will be addressed when roadmap issue :issue:`2` is
-          released.
-
         :rtype: :class:`str <python:str>`
         """
+        required_modules = [f'{self.module_url}{x}' 
+                            for x in self.get_required_modules(include_extension = True)]
         js_str = ''
-        for item in constants.INCLUDE_LIBS:
+        for item in constants.required_modules:
             js_str += utility_functions.jupyter_add_script(item)
             js_str += """.then(() => {"""
 
-        for item in constants.INCLUDE_LIBS:
+        for item in required_modules:
             js_str += """});"""
 
         return js_str
@@ -156,6 +154,38 @@ class Chart(HighchartsMeta):
         return self.display()
 
     @property
+    def get_required_modules(self, include_extension = False) -> List[str]:
+        """Return the list of URLs from which the Highcharts JavaScript modules
+        needed to render the chart can be retrieved.
+        
+        :param include_extension: if ``True``, will return script names with the 
+          ``'.js'`` extension included. Defaults to ``False``.
+        :type include_extension: :class:`bool <python:bool>`
+
+        :rtype: :class:`list <python:list>`
+        """
+        scripts = ['highcharts']
+        properties = [x for x in self.__dict__ if x.__class__.__name__ == 'property']
+        for property_name in properties:
+            property_value = getattr(self, property_name, None)
+            if not property_value:
+                continue
+            if isinstance(property_value, HighchartsMeta):
+                scripts.extend([x for x in property_value.get_required_modules()
+                                if x not in scripts])
+                continue
+            property_name_as_camelCase = utility_functions.to_camelCase(property_name)
+            dot_path = f'{self._dot_path}.' or ''
+            dot_path += {property_name_as_camelCase}
+            scripts.extend([x for x in constants.MODULE_REQUIREMENTS.get(dot_path, [])
+                            if x not in scripts])
+        
+        if include_extension:
+            scripts = [f'{x}.js' for x in scripts]
+
+        return scripts
+
+    @property
     def callback(self) -> Optional[CallbackFunction]:
         """A (JavaScript) function that is run when the chart has loaded and all external
         images have been loaded. Defaults to :obj:`None <python:None>`.
@@ -173,6 +203,47 @@ class Chart(HighchartsMeta):
     @class_sensitive(CallbackFunction)
     def callback(self, value):
         self._callback = value
+
+    @property
+    def module_url(self) -> str:
+        """The URL from which Highcharts modules should be downloaded when 
+        generating the ``<script/>`` tags. Defaults to 
+        ``'https://code.highcharts.com/'``.
+        
+        .. tip::
+        
+          If you need to lock the version of Highharts used to render your
+          charts, we recommend supplying one of the Highcharts CDN version
+          paths, e.g.:
+          
+            * ``'https://code.highcharts.com/11.0.1/'``
+            * ``'https://code.highcharts.com/11.0.0/'``
+            * etc.
+        
+        .. warning::
+        
+          Module paths wlil be appended to this value without checking that
+          they resolve to an actual file, e.g. the module 
+          ``module/accessibility.js`` will get appended as 
+          ``'https://code.highcharts.com/module/accessibility.js'``. Be sure
+          to modify this default value carefully.
+          
+          As a general rule of thumb, we *strongly* recommend that your URL 
+          always end in a slash (``'/'``), unless your custom URL is loading
+          modules dynamically (e.g. requires a ``'?module='`` or similar).
+          
+        :returns: The url from which Highcharts modules should be loaded.
+        :rtype: :class:`str <python:str>`
+        
+        """
+        return self._module_url
+    
+    @module_url.setter
+    def module_url(self, value):
+        try:
+            value = validators.url(value, allow_empty = True)
+        except (ValueError, TypeError):
+            value = validators.path(value, allow_empty = True)
 
     @property
     def options(self) -> Optional[HighchartsOptions]:
