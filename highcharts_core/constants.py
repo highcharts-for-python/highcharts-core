@@ -16,7 +16,9 @@ except ImportError:
         except ImportError:
             import json
 
-with open('module_requirements.json', 'r') as module_requirements:
+with open(os.path.join(os.path.dirname(__file__), 
+                       './module_requirements.json'), 
+          'r') as module_requirements:
     MODULE_REQUIREMENTS = json.load(module_requirements)
 
 

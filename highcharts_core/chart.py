@@ -30,7 +30,7 @@ class Chart(HighchartsMeta):
         self.container = kwargs.get('container', None)
         self.options = kwargs.get('options', None)
         self.variable_name = kwargs.get('variable_name', None)
-        self.module_url = kwargs.get('custom_module_url', 'https://code.highcharts.com/')
+        self.module_url = kwargs.get('module_url', 'https://code.highcharts.com/')
 
         super().__init__(**kwargs)
 
@@ -42,7 +42,7 @@ class Chart(HighchartsMeta):
         required_modules = [f'{self.module_url}{x}' 
                             for x in self.get_required_modules(include_extension = True)]
         js_str = ''
-        for item in constants.required_modules:
+        for item in required_modules:
             js_str += utility_functions.jupyter_add_script(item)
             js_str += """.then(() => {"""
 
@@ -153,7 +153,6 @@ class Chart(HighchartsMeta):
         """
         return self.display()
 
-    @property
     def get_required_modules(self, include_extension = False) -> List[str]:
         """Return the list of URLs from which the Highcharts JavaScript modules
         needed to render the chart can be retrieved.
@@ -168,12 +167,14 @@ class Chart(HighchartsMeta):
         properties = [x for x in self.__dict__ if x.__class__.__name__ == 'property']
         for property_name in properties:
             property_value = getattr(self, property_name, None)
-            if not property_value:
+            if property_value is None:
                 continue
             if isinstance(property_value, HighchartsMeta):
-                scripts.extend([x for x in property_value.get_required_modules()
-                                if x not in scripts])
-                continue
+                additional_scripts = [x for x in property_value.get_required_modules()
+                                      if x not in scripts]
+                if additional_scripts:
+                    scripts.extend(additional_scripts)
+                    continue
             property_name_as_camelCase = utility_functions.to_camelCase(property_name)
             dot_path = f'{self._dot_path}.' or ''
             dot_path += {property_name_as_camelCase}
@@ -244,6 +245,8 @@ class Chart(HighchartsMeta):
             value = validators.url(value, allow_empty = True)
         except (ValueError, TypeError):
             value = validators.path(value, allow_empty = True)
+            
+        self._module_url = value
 
     @property
     def options(self) -> Optional[HighchartsOptions]:

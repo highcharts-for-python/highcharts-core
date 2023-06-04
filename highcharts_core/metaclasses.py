@@ -63,12 +63,14 @@ class HighchartsMeta(ABC):
         properties = [x for x in self.__dict__ if x.__class__.__name__ == 'property']
         for property_name in properties:
             property_value = getattr(self, property_name, None)
-            if not property_value:
+            if property_value is None:
                 continue
             if isinstance(property_value, HighchartsMeta):
-                scripts.extend([x for x in property_value.get_required_modules()
-                                if x not in scripts])
-                continue
+                additional_scripts = [x for x in property_value.get_required_modules()
+                                      if x not in scripts]
+                if additional_scripts:
+                    scripts.extend(additional_scripts)
+                    continue
             property_name_as_camelCase = utility_functions.to_camelCase(property_name)
             dot_path = f'{self._dot_path}.' or ''
             dot_path += {property_name_as_camelCase}
