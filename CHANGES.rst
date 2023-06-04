@@ -1,6 +1,13 @@
 Release 1.1.1
 =========================================
 
+* **ENHANCEMENT:** Added support for the inclusion of scripts based on features used in the chart (#12).
+
+------------------
+
+Release 1.1.1
+=========================================
+
 * **FIXED:** Problem when producing a JS literal, with the JS code inserting an unnecessary ``new`` (#42 and #43).
 * **ENHANCEMENT:** Added more elegant error handling when something goes wrong displaying a chart in Jupyter (#43).
 
