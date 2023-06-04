@@ -1115,6 +1115,14 @@ class XRangeOptions(BaseBarOptions):
         super().__init__(**kwargs)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'plotOptions.xrange'
+
+    @property
     def group_z_padding(self) -> Optional[int | float | Decimal]:
         """Spacing between columns along the Z axis in a 3D chart. Defaults to ``1``.
 

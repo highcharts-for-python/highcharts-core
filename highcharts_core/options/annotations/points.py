@@ -22,6 +22,14 @@ class AnnotationPoint(HighchartsMeta):
         self.y_axis = kwargs.get('y_axis', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'annotations.shapes.point'
+
+    @property
     def x(self) -> Optional[int | float | Decimal]:
         """The x position of the point.
 

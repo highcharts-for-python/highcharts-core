@@ -126,6 +126,14 @@ class SeriesLabel(HighchartsMeta):
         self.style = kwargs.get('style', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'plotOptions.boxplot.dragDrop'
+
+    @property
     def boxes_to_avoid(self) -> Optional[List[Box]]:
         """An array of boxes to avoid when laying out the labels.
         Each item has a :meth:`left <Box.left>`, :meth:`right <Box.right>`,

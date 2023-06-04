@@ -40,6 +40,14 @@ class Caption(HighchartsMeta):
         self.y = kwargs.get('y', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'caption'
+
+    @property
     def align(self) -> Optional[str]:
         """The alignment of the caption. Defaults to
         ``'left'``.

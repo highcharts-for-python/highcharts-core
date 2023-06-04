@@ -22,6 +22,14 @@ class AnnotationLabelOptionAccessibility(HighchartsMeta):
         self.description = kwargs.get('description', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'annotations.labelOptions.accessibility'
+
+    @property
     def description(self) -> Optional[str]:
         """Description of an annotation label for screen readers and other assistive
         technology.
@@ -101,6 +109,14 @@ class LabelOptions(HighchartsMeta):
         self.vertical_align = kwargs.get('vertical_align', None)
         self.x = kwargs.get('x', None)
         self.y = kwargs.get('y', None)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'annotations.labelOptions'
 
     @property
     def accessibility(self) -> Optional[AnnotationLabelOptionAccessibility]:

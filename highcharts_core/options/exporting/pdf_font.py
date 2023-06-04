@@ -32,6 +32,14 @@ class PDFFontOptions(HighchartsMeta):
         self.normal = kwargs.get('normal', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'exporting.pdfFont'
+
+    @property
     def bold(self) -> Optional[str]:
         """The TTF font file for bold text. Defaults to :obj:`None <python:None>`.
 

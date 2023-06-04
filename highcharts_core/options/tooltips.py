@@ -93,6 +93,14 @@ class Tooltip(HighchartsMeta):
         self.x_date_format = kwargs.get('x_date_format', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'tooltip'
+
+    @property
     def animation(self) -> Optional[bool]:
         """Flag which indicates whether animation is enabled on the toltip (``True``).
 

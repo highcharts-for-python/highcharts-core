@@ -39,6 +39,14 @@ class Subtitle(HighchartsMeta):
         self.y = kwargs.get('y', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'subtitle'
+
+    @property
     def align(self) -> Optional[str]:
         """The horizontal alignment of the subtitle. Defaults to
         ``'center'``.

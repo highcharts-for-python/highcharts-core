@@ -19,6 +19,14 @@ class CSVAnnotationOptions(HighchartsMeta):
         self.join = kwargs.get('join', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'exporting.csv.annotations'
+
+    @property
     def item_delimiter(self) -> Optional[str]:
         """The way to mark the separator for annotations combined in one export-data table
         cell. Defaults to ``'; '``.
@@ -95,6 +103,14 @@ class ExportingCSV(HighchartsMeta):
         self.decimal_point = kwargs.get('decimal_point', None)
         self.item_delimiter = kwargs.get('item_delimiter', None)
         self.line_delimiter = kwargs.get('line_delimiter', None)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'exporting.csv'
 
     @property
     def annotations(self) -> Optional[CSVAnnotationOptions]:

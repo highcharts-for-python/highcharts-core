@@ -23,6 +23,14 @@ class PanelOptions(HighchartsMeta):
         self.visible = kwargs.get('visible', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'chart.options3d.side'
+
+    @property
     def color(self) -> Optional[str | Gradient | Pattern]:
         """The background color or gradient for the 3D panel. Defaults to
         ``'transparent'``.
@@ -125,6 +133,14 @@ class Frame(HighchartsMeta):
         self.size = kwargs.get('size', None)
         self.top = kwargs.get('top', None)
         self.visible = kwargs.get('visible', None)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'chart.options3d.frame'
 
     @property
     def back(self) -> Optional[PanelOptions]:
@@ -308,6 +324,14 @@ class Options3D(HighchartsMeta):
         self.fit_to_plot = kwargs.get('fit_to_plot', None)
         self.frame = kwargs.get('frame', None)
         self.view_distance = kwargs.get('view_distance', None)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'chart.options3d'
 
     @property
     def alpha(self) -> Optional[int | float | Decimal]:

@@ -58,6 +58,14 @@ class AxisLabelOptions(HighchartsMeta):
         self.z_index = kwargs.get('z_index', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'xAxis.labels'
+
+    @property
     def align(self) -> Optional[str]:
         """The part of the string the given position is anchored to. If ``'left'``, the
         left side of the string is at the axis position. Defaults to

@@ -216,6 +216,14 @@ class Bindings(HighchartsMeta):
         self.rectangle_annotation = kwargs.get('rectangle_annotation', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'navigation.bindings'
+
+    @property
     def circle_annotation(self) -> Optional[CircleAnnotationBinding]:
         """A circle annotation bindings. Includes ``start`` and one event in ``steps``
         array.
