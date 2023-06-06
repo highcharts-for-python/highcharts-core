@@ -489,7 +489,7 @@
   ],
   "plotOptions.pivotpoints": [
     "stock/indicators/indicators",
-    "stock/indicators/pivotpoints"
+    "stock/indicators/pivot-points"
   ],
   "plotOptions.polygon": [
     "highcharts-more"
@@ -845,6 +845,9 @@
   "series.histogram": [
     "modules/histogram"
   ],
+  "series.hollowcandlestick": [
+    "modules/hollowcandlestick"
+  ],
   "series.ikh": [
     "stock/indicators/indicators",
     "stock/indicators/ichimoku-kinko-hyo"
@@ -933,7 +936,7 @@
   ],
   "series.pivotpoints": [
     "stock/indicators/indicators",
-    "stock/indicators/pivotpoints"
+    "stock/indicators/pivot-points"
   ],
   "series.polygon": [
     "highcharts-more"
@@ -1141,5 +1144,10 @@
   ],
   "yAxis.tooltipValueFormat": [
     "modules/parallel-coordinates"
+  ],
+  "stockTools": [
+    "css/stocktools/gui.css",
+    "css/annotations/popup.css",
+    "modules/stock-tools"
   ]
 }
