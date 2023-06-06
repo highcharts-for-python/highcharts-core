@@ -49,7 +49,7 @@ class SeriesBase(SeriesOptions):
     @property
     def _dot_path(self) -> Optional[str]:
         """The dot-notation path to the options key for the current class.
-        
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return f'series.{self.type}'
