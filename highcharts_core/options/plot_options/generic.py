@@ -98,6 +98,14 @@ class GenericTypeOptions(HighchartsMeta):
         super().__init__(**kwargs)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return f'plotOptions.{self.type}'
+
+    @property
     def type(self) -> str:
         """Indicates the type of series that is represented by this instance.
 
