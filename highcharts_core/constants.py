@@ -19,7 +19,10 @@ except ImportError:
 with open(os.path.join(os.path.dirname(__file__), 
                        './module_requirements.json'), 
           'r') as module_requirements:
-    MODULE_REQUIREMENTS = json.load(module_requirements)
+    try:
+        MODULE_REQUIREMENTS = json.load(module_requirements)
+    except AttributeError:
+        MODULE_REQUIRES = json.loads(module_requirements.read())
 
 
 class EnforcedNullType:
