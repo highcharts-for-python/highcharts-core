@@ -379,7 +379,7 @@
     "modules/funnel3d"
   ],
   "plotOptions.gantt": [
-    "highcharts-gantt"
+    "gantt/modules/gantt"
   ],
   "plotOptions.gantt.dragDrop.draggableEnd": [
     "modules/draggable-points"
@@ -834,7 +834,7 @@
     "modules/funnel3d"
   ],
   "series.gantt": [
-    "highcharts-gantt"
+    "gantt/modules/gantt"
   ],
   "series.gauge": [
     "highcharts-more"
@@ -1064,7 +1064,7 @@
     "modules/xrange"
   ],
   "series.xrange.data.connect": [
-    "highcharts-gantt"
+    "gantt/modules/gantt"
   ],
   "series.zigzag": [
     "stock/indicators/indicators",
