@@ -5,7 +5,7 @@ from validator_collection import validators
 
 from highcharts_core import errors
 from highcharts_core.decorators import class_sensitive, validate_types
-from highcharts_core.metaclasses import HighchartsMeta
+from highcharts_core.metaclasses import HighchartsMeta, JavaScriptDict
 from highcharts_core.utility_classes.animation import AnimationOptions
 from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
@@ -686,7 +686,7 @@ class DataLabel(HighchartsMeta):
             self._shape = value
 
     @property
-    def style(self) -> Optional[str]:
+    def style(self) -> Optional[dict | str]:
         """CSS styling to apply to the annotation's label.
 
         The default color setting is ``"contrast"``, which is a pseudo color that
@@ -708,13 +708,16 @@ class DataLabel(HighchartsMeta):
         to set ``textOverflow`` to ellipsis, which will keep the text on one line plus it
         will break inside long words.
 
-        :rtype: :class:`str` or :obj:`None <python:None>`
+        :rtype: :class:`dict <python:dict>` or :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._style
 
     @style.setter
     def style(self, value):
-        self._style = validators.string(value, allow_empty = True, coerce_value = True)
+        try:
+            self._style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._style = validators.string(value, allow_empty = True)
 
     @property
     def text_path(self) -> Optional[TextPath]:

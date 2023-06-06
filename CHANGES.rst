@@ -1,7 +1,8 @@
-Release 1.1.1
+Release 1.2.0
 =========================================
 
 * **ENHANCEMENT:** Added support for the inclusion of scripts based on features used in the chart (#12).
+* **ENHANCEMENT:** Added ``dict`` support to ``options.series.labels.SeriesLabel.style`` and ``utility_classes.data_labels.DataLabel.style``.
 
 ------------------
 
