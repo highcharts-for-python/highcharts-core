@@ -22,7 +22,7 @@ with open(os.path.join(os.path.dirname(__file__),
     try:
         MODULE_REQUIREMENTS = json.load(module_requirements)
     except AttributeError:
-        MODULE_REQUIRES = json.loads(module_requirements.read())
+        MODULE_REQUIRE = json.loads(module_requirements.read())
 
 
 class EnforcedNullType:

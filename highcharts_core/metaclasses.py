@@ -48,7 +48,63 @@ class HighchartsMeta(ABC):
         """
         return None
 
-    @property
+    def _process_required_modules(self, scripts = None, include_extension = False) -> List[str]:
+        """Return the list of URLs from which the Highcharts JavaScript modules
+        needed to render the chart can be retrieved.
+        
+        :param scripts: Initial set of scripts that are context-dependent.
+        :type scripts: :class:`list <python:list>` of :class:`str <python:str>`
+        
+        :param include_extension: if ``True``, will return script names with the 
+          ``'.js'`` extension included. Defaults to ``False``.
+        :type include_extension: :class:`bool <python:bool>`
+
+        :rtype: :class:`list <python:list>`
+        """
+        if not scripts:
+            scripts = []
+
+        properties = [x for x in self.__class__.__dict__ 
+                      if self.__class__.__dict__[x].__class__.__name__ == 'property']
+        for property_name in properties:
+            property_value = getattr(self, property_name, None)
+            if property_value is None:
+                continue
+            if checkers.is_iterable(property_value, forbid_literals = (str, bytes, dict)):
+                additional_scripts = []
+                for item in property_value:
+                    if hasattr(item, 'get_required_modules'):
+                        item_scripts = [x for x in item.get_required_modules()
+                                        if x not in scripts]
+                        additional_scripts.extend(item_scripts)
+                if additional_scripts:
+                    scripts.extend(additional_scripts)
+                    continue
+            if isinstance(property_value, HighchartsMeta):
+                additional_scripts = [x for x in property_value.get_required_modules()
+                                      if x not in scripts]
+                if additional_scripts:
+                    scripts.extend(additional_scripts)
+                    continue
+            property_name_as_camelCase = utility_functions.to_camelCase(property_name)
+            dot_path = f'{self._dot_path}.' or ''
+            dot_path += property_name_as_camelCase
+            scripts.extend([x for x in constants.MODULE_REQUIREMENTS.get(dot_path, [])
+                            if x not in scripts])
+
+        if include_extension:
+            final_scripts = []
+            for script in scripts:
+                if script.endswith('.css') or script.endswith('.js'):
+                    final_scripts.append(script)
+                elif script.startswith('css/'):
+                    final_scripts.append(f'{script}.css')
+                else:
+                    final_scripts.append(f'{script}.js')
+            return final_scripts
+            
+        return scripts
+
     def get_required_modules(self, include_extension = False) -> List[str]:
         """Return the list of URLs from which the Highcharts JavaScript modules
         needed to render the chart can be retrieved.
@@ -59,27 +115,20 @@ class HighchartsMeta(ABC):
 
         :rtype: :class:`list <python:list>`
         """
-        scripts = constants.MODULE_REQUIREMENTS.get(self._dot_path, [])
-        properties = [x for x in self.__dict__ if x.__class__.__name__ == 'property']
-        for property_name in properties:
-            property_value = getattr(self, property_name, None)
-            if property_value is None:
+        initial_scripts = constants.MODULE_REQUIREMENTS.get(self._dot_path, [])
+        prelim_scripts = self._process_required_modules(initial_scripts, include_extension = include_extension)
+        scripts = []
+        
+        has_all_indicators = False
+        for script in prelim_scripts:
+            if script.endswith('indicators-all.js'):
+                has_all_indicators = True
+        
+        for script in prelim_scripts:
+            if '/indicators/' in script and has_all_indicators:
                 continue
-            if isinstance(property_value, HighchartsMeta):
-                additional_scripts = [x for x in property_value.get_required_modules()
-                                      if x not in scripts]
-                if additional_scripts:
-                    scripts.extend(additional_scripts)
-                    continue
-            property_name_as_camelCase = utility_functions.to_camelCase(property_name)
-            dot_path = f'{self._dot_path}.' or ''
-            dot_path += {property_name_as_camelCase}
-            scripts.extend([x for x in constants.MODULE_REQUIREMENTS.get(dot_path, [])
-                            if x not in scripts])
-
-        if include_extension:
-            scripts = [f'{x}.js' for x in scripts]
-
+            scripts.append(script)
+            
         return scripts
 
     def _untrimmed_mro_ancestors(self, in_cls = None) -> dict:

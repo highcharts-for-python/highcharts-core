@@ -55,7 +55,7 @@ class Chart(HighchartsMeta):
                             global_options = None, 
                             container = None,
                             random_slug = None,
-                            retries = 3,
+                            retries = 5,
                             interval = 1000):
         """Return the JavaScript code which Jupyter Labs will need to render the chart.
 
@@ -163,26 +163,8 @@ class Chart(HighchartsMeta):
 
         :rtype: :class:`list <python:list>`
         """
-        scripts = ['highcharts']
-        properties = [x for x in self.__dict__ if x.__class__.__name__ == 'property']
-        for property_name in properties:
-            property_value = getattr(self, property_name, None)
-            if property_value is None:
-                continue
-            if isinstance(property_value, HighchartsMeta):
-                additional_scripts = [x for x in property_value.get_required_modules()
-                                      if x not in scripts]
-                if additional_scripts:
-                    scripts.extend(additional_scripts)
-                    continue
-            property_name_as_camelCase = utility_functions.to_camelCase(property_name)
-            dot_path = f'{self._dot_path}.' or ''
-            dot_path += {property_name_as_camelCase}
-            scripts.extend([x for x in constants.MODULE_REQUIREMENTS.get(dot_path, [])
-                            if x not in scripts])
-        
-        if include_extension:
-            scripts = [f'{x}.js' for x in scripts]
+        initial_scripts = ['highcharts']
+        scripts = self._process_required_modules(initial_scripts, include_extension)
 
         return scripts
 
@@ -760,7 +742,7 @@ class Chart(HighchartsMeta):
     def display(self, 
                 global_options = None, 
                 container = None,
-                retries = 3,
+                retries = 5,
                 interval = 1000):
         """Display the chart in `Jupyter Labs <https://jupyter.org/>`_ or
         `Jupyter Notebooks <https://jupyter.org/>`_.
@@ -788,7 +770,7 @@ class Chart(HighchartsMeta):
         :type container: :class:`str <python:str>` or :obj:`None <python:None>`
 
         :param retries: The number of times to retry rendering the chart. Used to avoid race conditions with the 
-          Highcharts script. Defaults to 3.
+          Highcharts script. Defaults to 5.
         :type retries: :class:`int <python:int>`
         
         :param interval: The number of milliseconds to wait between retrying rendering the chart. Defaults to 1000 (1 
