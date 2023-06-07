@@ -71,7 +71,7 @@ Before you install, please be aware of the following "hard" dependencies:
   * Highcharts Core (JS) v.10.2 or higher (not technically a Python dependency, but 
     it won't work with earlier versions of Highcharts)
   * `esprima-python <https://github.com/Kronuz/esprima-python>`__ v.4.0 or higher
-  * `requests <https://requests.readthedocs.io/en/latest/>`__ v.2.28 or higher
+  * `requests <https://requests.readthedocs.io/en/latest/>`__ v.2.31 or higher
   * `validator-collection <https://validator-collection.readthedocs.io/en/latest/>`__
     v.1.5 or higher
 
