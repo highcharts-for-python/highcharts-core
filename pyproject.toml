@@ -70,7 +70,7 @@ path = "highcharts_core/__version__.py"
 "History" = "https://github.com/highcharts-for-python/highcharts-core/blob/master/CHANGES.rst"
 "Bug Tracker" = "https://github.com/highcharts-for-python/highcharts-core/issues"
 "Demo" = "https://github.com/highcharts-for-python/highcharts-for-python-demos"
-#"Sponsor" = "https://github.com/sponsors/highcharts-for-python"
+"Sponsor" = "https://github.com/sponsors/highcharts-for-python"
 
 [project.optional-dependencies]
 dev = [
