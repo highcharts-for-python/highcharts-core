@@ -176,7 +176,7 @@ class AxisLabelOptions(HighchartsMeta):
     def distance(self) -> Optional[int | float | Decimal | str]:
         """The label's pixel distance from the perimeter of the plot area.
 
-        .. versionchanged:: Highcharts for Python v.2.0.0 + Highcharts Core (JS) v.11
+        .. versionchanged:: Highcharts for Python v.1.2.0 + Highcharts Core (JS) v.11.1
 
           If not specified, defaults to ``8``.
 
