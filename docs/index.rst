@@ -38,7 +38,7 @@ Highcharts Core for Python
 
 .. sidebar:: Version Compatibility
 
-  **Latest Highcharts (JS) version supported:** v.11.0.0
+  **Latest Highcharts (JS) version supported:** v.11.1.0
 
   **Highcharts Core for Python** is designed to be compatible with:
 
