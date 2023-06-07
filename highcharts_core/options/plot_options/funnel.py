@@ -26,12 +26,14 @@ class FunnelOptions(PieOptions):
     """
 
     def __init__(self, **kwargs):
+        self._border_radius = None
         self._height = None
         self._neck_height = None
         self._neck_width = None
         self._reversed = None
         self._width = None
 
+        self.border_radius = kwargs.get('border_radius', None)
         self.height = kwargs.get('height', None)
         self.neck_height = kwargs.get('neck_height', None)
         self.neck_width = kwargs.get('neck_width', None)
@@ -39,6 +41,35 @@ class FunnelOptions(PieOptions):
         self.width = kwargs.get('width', None)
 
         super().__init__(**kwargs)
+
+    @property
+    def border_radius(self) -> Optional[str | int | float | Decimal]:
+        """The corner radius of the border surrounding all points or series. Defaults to ``0``.
+        
+        .. note::
+        
+          A number signifies pixels. A percentage string (e.g.``'50%'``) signifies a size 
+          relative to the series width.
+          
+        :rtype: :class:`str <python:str>`, numeric, or :obj:`None <python:None>`
+        """
+        return self._border_radius
+        
+    @border_radius.setter
+    def border_radius(self, value):
+        if value is None:
+            self._border_radius = None
+        else:
+            try:
+                value = validators.string(value)
+                if '%' not in value:
+                    raise errors.HighchartsValueError('border_radius expects a number or a "%" '
+                                                      'string. No "%" character found.')
+            except TypeError:
+                value = validators.numeric(value, minimum = 0)
+
+            self._border_radius = value
+        
 
     @property
     def height(self) -> Optional[str | int | float | Decimal]:
@@ -222,6 +253,7 @@ class FunnelOptions(PieOptions):
             'start_angle': as_dict.get('startAngle', None),
             'thickness': as_dict.get('thickness', None),
 
+            'border_radius': as_dict.get('borderRadius', None),
             'height': as_dict.get('height', None),
             'neck_height': as_dict.get('neckHeight', None),
             'neck_width': as_dict.get('neckWidth', None),
@@ -233,6 +265,7 @@ class FunnelOptions(PieOptions):
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
+            'borderRadius': self.border_radius,
             'height': self.height,
             'neckHeight': self.neck_height,
             'neckWidth': self.neck_width,

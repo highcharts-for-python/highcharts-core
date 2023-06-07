@@ -153,6 +153,7 @@ class FunnelSeries(PieSeries, FunnelOptions):
             'start_angle': as_dict.get('startAngle', None),
             'thickness': as_dict.get('thickness', None),
 
+            'border_radius': as_dict.get('border_radius', None),
             'height': as_dict.get('height', None),
             'neck_height': as_dict.get('neckHeight', None),
             'neck_width': as_dict.get('neckWidth', None),
@@ -308,6 +309,7 @@ class Funnel3DSeries(PieSeries, FunnelOptions):
             'start_angle': as_dict.get('startAngle', None),
             'thickness': as_dict.get('thickness', None),
 
+            'border_radius': as_dict.get('borderRadius', None),
             'height': as_dict.get('height', None),
             'neck_height': as_dict.get('neckHeight', None),
             'neck_width': as_dict.get('neckWidth', None),
