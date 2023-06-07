@@ -28,12 +28,14 @@ class HeatmapOptions(SeriesOptions):
     def __init__(self, **kwargs):
         self._border_radius = None
         self._colsize = None
+        self._interpolation = None
         self._null_color = None
         self._point_padding = None
         self._rowsize = None
 
         self.border_radius = kwargs.get('border_radius', None)
         self.colsize = kwargs.get('colsize', None)
+        self.interpolation = kwargs.get('interpolation', None)
         self.null_color = kwargs.get('null_color', None)
         self.point_padding = kwargs.get('point_padding', None)
         self.rowsize = kwargs.get('rowsize', None)
@@ -68,6 +70,22 @@ class HeatmapOptions(SeriesOptions):
         self._colsize = validators.integer(value,
                                            allow_empty = True,
                                            minimum = 1)
+
+    @property
+    def interpolation(self) -> Optional[bool]:
+        """If ``True``, renders data points as an interpolated image.
+        Defaults to ``False``.
+        
+        :rtype: :class:`bool <python:bool>`
+        """
+        return self._interpolation
+    
+    @interpolation.setter
+    def interpolation(self, value):
+        if value is None:
+            self._interpolation = None
+        else:
+            self._interpolation = bool(value)
 
     @property
     def null_color(self) -> Optional[str | Gradient | Pattern]:
@@ -179,6 +197,7 @@ class HeatmapOptions(SeriesOptions):
 
             'border_radius': as_dict.get('borderRadius', None),
             'colsize': as_dict.get('colsize', None),
+            'interpolation': as_dict.get('interpolation', None),
             'null_color': as_dict.get('nullColor', None),
             'point_padding': as_dict.get('pointPadding', None),
             'rowsize': as_dict.get('rowsize', None)
@@ -190,6 +209,7 @@ class HeatmapOptions(SeriesOptions):
         untrimmed = {
             'borderRadius': self.border_radius,
             'colsize': self.colsize,
+            'interpolation': self.interpolation,
             'nullColor': self.null_color,
             'pointPadding': self.point_padding,
             'rowsize': self.rowsize
@@ -333,6 +353,7 @@ class TilemapOptions(HeatmapOptions):
 
             'border_radius': as_dict.get('borderRadius', None),
             'colsize': as_dict.get('colsize', None),
+            'interpolation': as_dict.get('interpolation', None),
             'null_color': as_dict.get('nullColor', None),
             'point_padding': as_dict.get('pointPadding', None),
             'rowsize': as_dict.get('rowsize', None),
