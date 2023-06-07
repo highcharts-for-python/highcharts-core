@@ -40,6 +40,14 @@ class Caption(HighchartsMeta):
         self.y = kwargs.get('y', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'caption'
+
+    @property
     def align(self) -> Optional[str]:
         """The alignment of the caption. Defaults to
         ``'left'``.
@@ -97,19 +105,22 @@ class Caption(HighchartsMeta):
         self._margin = validators.numeric(value, allow_empty = True)
 
     @property
-    def style(self) -> Optional[str]:
+    def style(self) -> Optional[str | dict]:
         """CSS styling to apply to the caption. Defaults to
-        ``'{"color": "#666666"}'``.
+        ``{"color": "#666666", "fontSize": "0.8em"}``.
 
-        :rtype: :class:`str` or :obj:`None <python:None>`
+        :rtype: :class:`dict <python:dict>` or :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._style
 
     @style.setter
     def style(self, value):
-        self._style = validators.string(value, 
-                                        allow_empty = True,
-                                        coerce_value = True)
+        try:
+            self._style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._style = validators.string(value, 
+                                            allow_empty = True,
+                                            coerce_value = True)
 
     @property
     def text(self) -> Optional[str]:

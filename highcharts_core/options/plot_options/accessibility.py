@@ -16,6 +16,14 @@ class SeriesKeyboardNavigation(HighchartsMeta):
         self.enabled = kwargs.get('enabled', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'plotOptions.series.accessibility.keyboardNavigation'
+
+    @property
     def enabled(self) -> Optional[bool]:
         """If ``True``, enable accessibility functionality for the series.
 
@@ -63,6 +71,14 @@ class TypeOptionsAccessibility(HighchartsMeta):
         self.expose_as_group_only = kwargs.get('expose_as_group_only', None)
         self.keyboard_navigation = kwargs.get('keyboard_navigation', None)
         self.point = kwargs.get('point', None)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'plotOptions.series.accessibility'
 
     @property
     def description(self) -> Optional[str]:

@@ -346,7 +346,7 @@ def jupyter_add_script(url, is_last = False):
     if url.endswith('.css'):
         return jupyter_add_link(url, is_last = is_last)
     
-    js_str = ''
+    js_str = """"""
     js_str += """new Promise(function(resolve, reject) {\n"""
     js_str += f"""  var existing_tags = document.querySelectorAll("script[src='{url}']");"""
     js_str += """  if (existing_tags.length == 0) {
@@ -399,19 +399,19 @@ def get_retryHighcharts():
     :returns: The JavaScript code of the ``retryHighcharts()`` JavaScript function.
     :rtype: :class:`str <python:str>`
     """
-    js_str = """function retryHighcharts(fn, container = 'highcharts_target_div', retries = 3, retriesLeft = 3, 
+    js_str = """function retryHighcharts(fn, container = 'highcharts_target_div', retries = 5, retriesLeft = 5, 
         interval = 1000) {
             return new Promise((resolve, reject) => {
             try {
                 fn()
                 return resolve();
             } catch (err) {
-                if ((err instanceof ReferenceError) || (err instanceof TypeError)) {
+                if ((err instanceof ReferenceError) || (err instanceof TypeError) || (err.message.includes('#17'))) {
                     if (retriesLeft === 0) {
                         var target_div = document.getElementById(container);
                         if (target_div) {
                             var timeElapsed = (retries * interval) / 1000;
-                            var errorMessage = "Something went wrong with the Highcharts.js script. It should have been automatically loaded, but it did not load for over " + timeElapsed + " seconds. Check your internet connection, and then if the problem persists please reach out for support. (You can also check your browser's console log for more details.)";
+                            var errorMessage = "Something went wrong with the Highcharts.js script. It should have been automatically loaded, but it did not load for over " + timeElapsed + " seconds. Check your internet connection, and then if the problem persists please reach out for support. (You can also check your browser's console log for more details.)<br/><br/>Detailed Error Message:<br/>" + err.message;
                             var errorHTML = "<p>" + errorMessage + "</p>";
                             target_div.innerHTML = errorMessage;
                             console.log(errorMessage);
@@ -442,7 +442,7 @@ def get_retryHighcharts():
 def prep_js_for_jupyter(js_str,
                         container = 'highcharts_target_div',
                         random_slug = None,
-                        retries = 3,
+                        retries = 5,
                         interval = 1000):
     """Remove the JavaScript event listeners from the code in ``js_str`` and prepare the
     JavaScript code for rending in an IPython context.

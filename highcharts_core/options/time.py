@@ -30,6 +30,14 @@ class Time(HighchartsMeta):
         self.use_utc = kwargs.get('use_utc', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'time'
+
+    @property
     def Date(self) -> Optional[JavaScriptClass]:
         """A custom JavaScript ``Date`` class for more sophisticated date handling. For
         example, `JDate <https://github.com/tahajahangir/jdate>`_ can be used to handle

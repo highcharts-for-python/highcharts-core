@@ -138,6 +138,14 @@ class PlotOptions(HighchartsMeta):
                 setattr(self, non_private_name, kwargs.get(non_private_name, None))
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'plotOptions'
+
+    @property
     def arcdiagram(self) -> Optional[ArcDiagramOptions]:
         """Arc diagram series is a chart drawing style in which the vertices of the chart
         are positioned along a line on the Euclidean plane and the edges are drawn as a

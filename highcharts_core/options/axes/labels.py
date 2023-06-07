@@ -58,6 +58,14 @@ class AxisLabelOptions(HighchartsMeta):
         self.z_index = kwargs.get('z_index', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'xAxis.labels'
+
+    @property
     def align(self) -> Optional[str]:
         """The part of the string the given position is anchored to. If ``'left'``, the
         left side of the string is at the axis position. Defaults to
@@ -168,7 +176,7 @@ class AxisLabelOptions(HighchartsMeta):
     def distance(self) -> Optional[int | float | Decimal | str]:
         """The label's pixel distance from the perimeter of the plot area.
 
-        .. versionchanged:: Highcharts for Python v.2.0.0 + Highcharts Core (JS) v.11
+        .. versionchanged:: Highcharts for Python v.1.2.0 + Highcharts Core (JS) v.11.1
 
           If not specified, defaults to ``8``.
 

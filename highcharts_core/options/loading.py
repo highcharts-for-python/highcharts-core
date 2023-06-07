@@ -34,6 +34,14 @@ class Loading(HighchartsMeta):
         self.style = kwargs.get('style', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'loading'
+
+    @property
     def hide_duration(self) -> Optional[int]:
         """The duration in milliseconds of the fade out effect. Defaults to
         ``100``.

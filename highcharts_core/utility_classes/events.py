@@ -32,6 +32,14 @@ class ChartEvents(HighchartsMeta):
                 setattr(self, non_private_name, kwargs.get(non_private_name, None))
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'chart.events'
+
+    @property
     def add_series(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when a series is added to the chart
         after load time, using the JavaScript ``.addSeries()`` method.
@@ -329,6 +337,14 @@ class BreadcrumbEvents(HighchartsMeta):
                 setattr(self, non_private_name, kwargs.get(non_private_name, None))
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'breadcrumb.events'
+
+    @property
     def click(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when the user clicks on the plot
         background. One parameter, ``event``, is passed to the JavaScript function,
@@ -382,6 +398,14 @@ class NavigationEvents(HighchartsMeta):
             if attribute.startswith('_') and not attribute.startswith('__'):
                 non_private_name = attribute[1:]
                 setattr(self, non_private_name, kwargs.get(non_private_name, None))
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'navigation.events'
 
     @property
     def close_popup(self) -> Optional[CallbackFunction]:
@@ -484,6 +508,14 @@ class PointEvents(HighchartsMeta):
         self.select = kwargs.get('select', None)
         self.unselect = kwargs.get('unselect', None)
         self.update = kwargs.get('update', None)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'plotOptions.series.point.events'
 
     @property
     def click(self) -> Optional[CallbackFunction]:

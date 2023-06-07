@@ -23,6 +23,14 @@ class ConnectorOptions(HighchartsMeta):
         self.width = kwargs.get('width', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'plotOptions.series.onPoint.connectorOptions'
+
+    @property
     def dashstyle(self) -> Optional[str]:
         """Name of the dash style to use for the connector.
 
@@ -113,6 +121,14 @@ class OnPointOptions(HighchartsMeta):
         self.position = kwargs.get('position', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'plotOptions.series.onPoint'
+
+    @property
     def connector_options(self) -> Optional[ConnectorOptions]:
         """Options for the connector in the Series on point feature.
 
@@ -183,6 +199,14 @@ class Point(HighchartsMeta):
         self._events = None
 
         self.events = kwargs.get('events', None)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'plotOptions.series.point'
 
     @property
     def events(self) -> Optional[PointEvents]:

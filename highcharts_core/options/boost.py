@@ -194,6 +194,14 @@ class Boost(HighchartsMeta):
         self.use_preallocated = kwargs.get('use_preallocated', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'boost'
+
+    @property
     def allow_force(self) -> Optional[bool]:
         """If ``True``, the whole chart will be boosted if one of the series crosses its
         threshold and all the series can be boosted. Defaults to ``True``.

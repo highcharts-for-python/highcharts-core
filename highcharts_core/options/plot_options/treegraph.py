@@ -115,6 +115,7 @@ class TreegraphOptions(GenericTypeOptions):
         self._allow_traversing_tree = None
         self._collapse_button = None
         self._color_by_point = None
+        self._fill_space = None
         self._link = None
         self._reversed = None        
         self._traverse_up_button = None
@@ -139,6 +140,7 @@ class TreegraphOptions(GenericTypeOptions):
         self.allow_traversing_tree = kwargs.get('allow_traversing_tree', None)
         self.collapse_button = kwargs.get('collapse_button', None)
         self.color_by_point = kwargs.get('color_by_point', None)
+        self.fill_space = kwargs.get('fill_space', None)
         self.link = kwargs.get('link', None)
         self.reversed = kwargs.get('reversed', None)
         
@@ -581,6 +583,22 @@ class TreegraphOptions(GenericTypeOptions):
             self._color_by_point = bool(value)
 
     @property
+    def fill_space(self) -> Optional[bool]:
+        """If ``True``, the treegraph series should fill the entire plot area in the 
+        X-axis direction, even when there are collapsed points. Defaults to ``False``.
+        
+        :rtype: :class:`bool <python:bool>`
+        """
+        return self._fill_space
+    
+    @fill_space.setter
+    def fill_space(self, value):
+        if value is None:
+            self._fill_space = None
+        else:
+            self._fill_space = bool(value)
+            
+    @property
     def link(self) -> Optional[LinkOptions]:
         """Link style options.
 
@@ -639,6 +657,7 @@ class TreegraphOptions(GenericTypeOptions):
             'include_in_data_export': as_dict.get('includeInDataExport', None),
             'keys': as_dict.get('keys', None),
             'label': as_dict.get('label', None),
+            'legend_symbol': as_dict.get('legendSymbol', None),
             'linked_to': as_dict.get('linkedTo', None),
             'marker': as_dict.get('marker', None),
             'on_point': as_dict.get('onPoint', None),
@@ -676,6 +695,7 @@ class TreegraphOptions(GenericTypeOptions):
             'allow_traversing_tree': as_dict.get('allowTraversingTree', None),
             'collapse_button': as_dict.get('collapseButton', None),
             'color_by_point': as_dict.get('colorByPoint', None),
+            'fill_space': as_dict.get('fillSpace', None),
             'link': as_dict.get('link', None),
             'reversed': as_dict.get('reversed', None),
         }
@@ -738,6 +758,7 @@ class TreegraphOptions(GenericTypeOptions):
             'allowTraversingTree': self.allow_traversing_tree,
             'collapseButton': self.collapse_button,
             'colorByPoint': self.color_by_point,
+            'fillSpace': self.fill_space,
             'link': self.link,
             'reversed': self.reversed,
         }

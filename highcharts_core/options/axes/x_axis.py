@@ -42,6 +42,14 @@ class XAxis(NumericAxis):
         super().__init__(**kwargs)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'xAxis'
+
+    @property
     def crosshair(self) -> Optional[CrosshairOptions]:
         """Configure a crosshair that follows either the mouse pointer or the hovered
         point. Defaults to :obj:`None <python:None>`.
@@ -231,6 +239,7 @@ class XAxis(NumericAxis):
             'categories': as_dict.get('categories', None),
             'ceiling': as_dict.get('ceiling', None),
             'class_name': as_dict.get('className', None),
+            'crossing': as_dict.get('crossing', None),
             'date_time_label_formats': as_dict.get('dateTimeLabelFormats', None),
             'end_on_tick': as_dict.get('endOnTick', None),
             'events': as_dict.get('events', None),

@@ -2,7 +2,6 @@ from typing import Optional
 
 from validator_collection import validators
 
-from highcharts_core import constants
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.metaclasses import HighchartsMeta
 from highcharts_core.options.annotations import Annotation
@@ -156,6 +155,14 @@ class Navigation(NavigationBase):
         self.breadcrumbs = kwargs.get('breadcrumbs', None)
 
         super().__init__(**kwargs)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'navigation'
 
     @property
     def breadcrumbs(self) -> Optional[BreadcrumbOptions]:

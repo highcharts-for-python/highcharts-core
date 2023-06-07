@@ -26,6 +26,14 @@ class KeyboardNavigation(HighchartsMeta):
         self.wrap_around = kwargs.get('wrap_around', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'accessibility.keyboardNavigation'
+
+    @property
     def enabled(self) -> Optional[bool]:
         """Enable keyboard navigation for the chart. Defaults to ``True``.
 

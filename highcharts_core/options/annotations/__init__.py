@@ -47,6 +47,14 @@ class Annotation(HighchartsMeta):
         self.z_index = kwargs.get('z_index', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'annotations'
+
+    @property
     def animation(self) -> Optional[AnnotationAnimation]:
         """Enable or disable the initial animation when a series is displayed for the
         annotation. If not :obj:`None <python:None>`, is enabled. Otherwise, disabled.

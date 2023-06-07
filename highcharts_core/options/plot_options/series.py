@@ -454,6 +454,7 @@ class SeriesBaseOptions(GenericTypeOptions):
             'include_in_data_export': as_dict.get('includeInDataExport', None),
             'keys': as_dict.get('keys', None),
             'label': as_dict.get('label', None),
+            'legend_symbol': as_dict.get('legendSymbol', None),
             'linked_to': as_dict.get('linkedTo', None),
             'marker': as_dict.get('marker', None),
             'on_point': as_dict.get('onPoint', None),
@@ -543,6 +544,7 @@ class SeriesOptions(SeriesBaseOptions):
         self.connect_ends = kwargs.get('connect_ends', None)
         self.drag_drop = kwargs.get('drag_drop', None)
         self.negative_color = kwargs.get('negative_color', None)
+        self.point_description_format = kwargs.get('point_description_format', None)
         self.point_interval = kwargs.get('point_interval', None)
         self.point_interval_unit = kwargs.get('point_interval_unit', None)
         self.point_placement = kwargs.get('point_placement', None)
@@ -639,6 +641,23 @@ class SeriesOptions(SeriesBaseOptions):
     def negative_color(self, value):
         from highcharts_core import utility_functions
         self._negative_color = utility_functions.validate_color(value)
+
+    @property
+    def point_description_format(self) -> Optional[str]:
+        """A :term:`format string` to use instead of the default for 
+        point descriptions on the series. Defaults to :obj:`None <python:None>`.
+        
+        .. note::
+        
+          Overrides the chart-wide configuration, as applicable.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._point_description_format
+    
+    @point_description_format.setter
+    def point_description_format(self, value):
+        self._point_description_format = validators.string(value, allow_empty = True)
 
     @property
     def point_interval(self) -> Optional[int | float | Decimal]:
@@ -839,6 +858,7 @@ class SeriesOptions(SeriesBaseOptions):
             'include_in_data_export': as_dict.get('includeInDataExport', None),
             'keys': as_dict.get('keys', None),
             'label': as_dict.get('label', None),
+            'legend_symbol': as_dict.get('legendSymbol', None),
             'linked_to': as_dict.get('linkedTo', None),
             'marker': as_dict.get('marker', None),
             'on_point': as_dict.get('onPoint', None),
@@ -881,6 +901,7 @@ class SeriesOptions(SeriesBaseOptions):
             'connect_ends': as_dict.get('connectEnds', None),
             'drag_drop': as_dict.get('dragDrop', None),
             'negative_color': as_dict.get('negativeColor', None),
+            'point_description_format': as_dict.get('pointDescriptionFormat', None),
             'point_interval': as_dict.get('pointInterval', None),
             'point_interval_unit': as_dict.get('pointIntervalUnit', None),
             'point_placement': as_dict.get('pointPlacement', None),
@@ -896,6 +917,7 @@ class SeriesOptions(SeriesBaseOptions):
             'connectEnds': self.connect_ends,
             'dragDrop': self.drag_drop,
             'negativeColor': self.negative_color,
+            'pointDescriptionFormat': self.point_description_format,
             'pointInterval': self.point_interval,
             'pointIntervalUnit': self.point_interval_unit,
             'pointPlacement': self.point_placement,

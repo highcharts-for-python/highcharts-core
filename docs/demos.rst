@@ -74,10 +74,10 @@ we recommend that you click the following badge:
     :target: https://mybinder.org/v2/gh/highcharts-for-python/highcharts-for-python-demos/HEAD
     :alt: Binder: Highcharts for Python Demos
 
-This will clone the `Highcharts for Python Demos <https://github.com/highcharts-for-python-demos>`__
+This will clone the `Highcharts for Python Demos <https://github.com/highcharts-for-python/highcharts-for-python-demos>`__
 source repository within a Docker image, and launch `Jupyter Lab <https://jupyter.org>`__ within that
 Docker container. This will then let you browse, edit, and run any of the Jupyter Notebooks contained
-within the `Highcharts for Python Demos <https://github.com/highcharts-for-python-demos>`__ repo.
+within the `Highcharts for Python Demos <https://github.com/highcharts-for-python/highcharts-for-python-demos>`__ repo.
 
 How the Demos are Organized
 ==============================
@@ -122,4 +122,4 @@ Running Demos Locally
 .. note::
   
   You can run the demos locally by following instructions in the 
-  `Highcharts for Python Demos <https://github.com/highcharts-for-python-demos>`__ Github repo's README.
+  `Highcharts for Python Demos <https://github.com/highcharts-for-python/highcharts-for-python-demos>`__ Github repo's README.

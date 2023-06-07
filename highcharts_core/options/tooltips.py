@@ -31,6 +31,7 @@ class Tooltip(HighchartsMeta):
         self._follow_pointer = None
         self._follow_touch_move = None
         self._footer_format = None
+        self._format = None
         self._formatter = None
         self._header_format = None
         self._header_shape = None
@@ -68,6 +69,7 @@ class Tooltip(HighchartsMeta):
         self.follow_pointer = kwargs.get('follow_pointer', None)
         self.follow_touch_move = kwargs.get('follow_touch_move', None)
         self.footer_format = kwargs.get('footer_format', None)
+        self.format = kwargs.get('format', None)
         self.formatter = kwargs.get('formatter', None)
         self.header_format = kwargs.get('header_format', None)
         self.header_shape = kwargs.get('header_shape', None)
@@ -91,6 +93,14 @@ class Tooltip(HighchartsMeta):
         self.value_prefix = kwargs.get('value_prefix', None)
         self.value_suffix = kwargs.get('value_suffix', None)
         self.x_date_format = kwargs.get('x_date_format', None)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'tooltip'
 
     @property
     def animation(self) -> Optional[bool]:
@@ -325,6 +335,32 @@ class Tooltip(HighchartsMeta):
             self._footer_format = value
         else:
             self._footer_format = validators.string(value, allow_empty = True)
+
+    @property
+    def format(self) -> Optional[str]:
+        """A :term:`format string` for the entire tooltip. Defaults to :obj:`None <python:None>`.
+
+        .. tip::
+
+          When format strings are required, it is usually more convenient to use
+          :meth:`.header_format <highcharts_core.options.tooltips.Tooltip.header_format>`,
+          :meth:`.point_format <highcharts_core.options.tooltips.Tooltip.point_format>`, and
+          :meth:`.footer_format <highcharts_core.options.tooltips.Tooltip.footer_format>`.
+          
+          However, the ``.format`` option allows combining them into one setting.
+          
+        .. note::
+        
+          The context of the format string is the same as that of the
+          :meth:`.formatter <highcharts_core.options.tooltips.Tooltip.formatter>` callback.
+        
+        :rtype: :class:`str <python:str>`  
+        """
+        return self._format
+    
+    @format.setter
+    def format(self, value):
+        self._format = validators.string(value, allow_empty = True)
 
     @property
     def formatter(self) -> Optional[CallbackFunction]:
@@ -859,6 +895,7 @@ class Tooltip(HighchartsMeta):
             'follow_pointer': as_dict.get('followPointer', None),
             'follow_touch_move': as_dict.get('followTouchMove', None),
             'footer_format': as_dict.get('footerFormat', None),
+            'format': as_dict.get('format', None),
             'formatter': as_dict.get('formatter', None),
             'header_format': as_dict.get('headerFormat', None),
             'header_shape': as_dict.get('headerShape', None),
@@ -901,6 +938,7 @@ class Tooltip(HighchartsMeta):
             'followPointer': self.follow_pointer,
             'followTouchMove': self.follow_touch_move,
             'footerFormat': self.footer_format,
+            'format': self.format,
             'formatter': self.formatter,
             'headerFormat': self.header_format,
             'headerShape': self.header_shape,

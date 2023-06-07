@@ -21,6 +21,14 @@ class AnnotationEvent(HighchartsMeta):
         self.remove = kwargs.get('remove', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'annotations.events'
+
+    @property
     def add(self) -> Optional[CallbackFunction]:
         """JavaScript callback function called when an annotation is added to a chart.
 

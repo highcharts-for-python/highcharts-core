@@ -81,6 +81,7 @@ class TreegraphSeries(SeriesBase, TreegraphOptions):
             'include_in_data_export': as_dict.get('includeInDataExport', None),
             'keys': as_dict.get('keys', None),
             'label': as_dict.get('label', None),
+            'legend_symbol': as_dict.get('legendSymbol', None),
             'linked_to': as_dict.get('linkedTo', None),
             'marker': as_dict.get('marker', None),
             'on_point': as_dict.get('onPoint', None),
@@ -118,6 +119,7 @@ class TreegraphSeries(SeriesBase, TreegraphOptions):
             'allow_traversing_tree': as_dict.get('allowTraversingTree', None),
             'collapse_button': as_dict.get('collapseButton', None),
             'color_by_point': as_dict.get('colorByPoint', None),
+            'fill_space': as_dict.get('fillSpace', None),
             'link': as_dict.get('link', None),
             'reversed': as_dict.get('reversed', None),
 

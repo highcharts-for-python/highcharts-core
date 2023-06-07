@@ -35,6 +35,14 @@ class NoData(HighchartsMeta):
         self.use_html = kwargs.get('use_html', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'noData'
+
+    @property
     def attr(self) -> Optional[AttributeObject]:
         """An object of additional SVG attributes for the no-data label.
 

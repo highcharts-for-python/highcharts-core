@@ -15,6 +15,7 @@ class AccessibilityPoint(HighchartsMeta):
         self._date_format = None
         self._date_formatter = None
         self._describe_null = None
+        self._description_format = None
         self._description_formatter = None
         self._value_decimals = None
         self._value_description_format = None
@@ -24,6 +25,7 @@ class AccessibilityPoint(HighchartsMeta):
         self.date_format = kwargs.get('date_format', None)
         self.date_formatter = kwargs.get('date_formatter', None)
         self.describe_null = kwargs.get('describe_null', None)
+        self.description_format = kwargs.get('description_format', None)
         self.description_formatter = kwargs.get('description_formatter', None)
         self.value_decimals = kwargs.get('value_decimals', None)
         self.value_description_format = kwargs.get('value_description_format', None)
@@ -90,6 +92,24 @@ class AccessibilityPoint(HighchartsMeta):
             self._describe_null = None
         else:
             self._describe_null = bool(value)
+
+    @property
+    def description_format(self) -> Optional[str]:
+        """A :term:`format string` to use instead of the default for 
+        point descriptions.
+        
+        The context of the format string is the point instance, but as opposed to 
+        :meth:`.value_description_format <highcharts_core.options.accessibility.point.AccessibilityPoint.value_description_format>`, this option replaces the entire description.
+        
+        Defaults to :obj:`None <python:None>`.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._description_format
+    
+    @description_format.setter
+    def description_format(self, value):
+        self._description_format = validators.string(value, allow_empty = True)
 
     @property
     def description_formatter(self) -> Optional[CallbackFunction]:
@@ -203,6 +223,7 @@ class AccessibilityPoint(HighchartsMeta):
             'date_format': as_dict.get('dateFormat', None),
             'date_formatter': as_dict.get('dateFormatter', None),
             'describe_null': as_dict.get('describeNull', None),
+            'description_format': as_dict.get('descriptionFormat', None),
             'description_formatter': as_dict.get('descriptionFormatter', None),
             'value_decimals': as_dict.get('valueDecimals', None),
             'value_description_format': as_dict.get('valueDescriptionFormat', None),
@@ -216,6 +237,7 @@ class AccessibilityPoint(HighchartsMeta):
             'dateFormat': self.date_format,
             'dateFormatter': self.date_formatter,
             'describeNull': self.describe_null,
+            'descriptionFormat': self.description_format,
             'descriptionFormatter': self.description_formatter,
             'valueDecimals': self.value_decimals,
             'valueDescriptionFormat': self.value_description_format,

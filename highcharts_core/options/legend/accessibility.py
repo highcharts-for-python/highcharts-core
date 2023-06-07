@@ -13,6 +13,14 @@ class LegendKeyboardNavigation(HighchartsMeta):
         self.enabled = kwargs.get('enabled', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'legend.accessibility.keyboardNavigation'
+
+    @property
     def enabled(self) -> Optional[bool]:
         """If ``True``, enables keyboard navigation for the legend. Defaults to ``True``.
 
@@ -55,6 +63,14 @@ class LegendAccessibilityOptions(HighchartsMeta):
 
         self.enabled = kwargs.get('enabled', None)
         self.keyboard_navigation = kwargs.get('keyboard_navigation', None)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'legend.accessibility'
 
     @property
     def enabled(self) -> Optional[bool]:

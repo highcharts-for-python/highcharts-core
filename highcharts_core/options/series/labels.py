@@ -5,7 +5,7 @@ from validator_collection import validators
 
 from highcharts_core import constants
 from highcharts_core.decorators import class_sensitive
-from highcharts_core.metaclasses import HighchartsMeta
+from highcharts_core.metaclasses import HighchartsMeta, JavaScriptDict
 from highcharts_core.utility_classes.javascript_functions import CallbackFunction
 
 
@@ -124,6 +124,14 @@ class SeriesLabel(HighchartsMeta):
         self.min_font_size = kwargs.get('min_font_size', None)
         self.on_area = kwargs.get('on_area', None)
         self.style = kwargs.get('style', None)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'plotOptions.boxplot.dragDrop'
 
     @property
     def boxes_to_avoid(self) -> Optional[List[Box]]:
@@ -285,17 +293,20 @@ class SeriesLabel(HighchartsMeta):
             self._on_area = bool(value)
 
     @property
-    def style(self) -> Optional[str]:
+    def style(self) -> Optional[dict | str]:
         """Styles for the series label. The color defaults to the series color, or a
         contrast color if ``on_area``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`dict <python:dict>` or :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._style
 
     @style.setter
     def style(self, value):
-        self._style = validators.string(value, allow_empty = True, coerce_value = True)
+        try:
+            self._style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._style = validators.string(value, allow_empty = True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

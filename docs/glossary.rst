@@ -172,6 +172,24 @@ Glossary
 
       * `Highcharts Node Export Server Documentation <https://github.com/highcharts/node-export-server>`__
 
+  Format String
+    .. versionadded: v.1.2.0
+
+    Format strings are templates for labels introduced in Highcharts for Python v.1.2. 
+    Since Highcharts (JS) v.11.1, format strings support logic. 
+    
+    We recommend using format strings if you:
+
+      * Need to save the chart configuration to JSON.
+      * Need to provide a GUI for end users so that callbacks are not practical, or XSS is a concern.
+      * Need to send the charts over to our export server to execute (all callbacks are stripped out).
+      * Are creating a wrapper for another programming language than JavaScript.
+    
+    .. seealso::
+
+      For a full overview over templating in format strings, please see the Highcharts (JS) 
+      `Templating <https://www.highcharts.com/docs/chart-concepts/templating>`__ article.
+
   Formatter
     A particular type of :term:`callback function` used extensively in Highcharts. In
     general terms, a formatter receives a context (for example a data point) and returns

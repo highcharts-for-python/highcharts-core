@@ -63,6 +63,14 @@ class Accessibility(HighchartsMeta):
         self.type_description = kwargs.get('type_description', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'accessibility'
+
+    @property
     def announce_new_data(self) -> Optional[AnnounceNewData]:
         """Options for announcing new data to screen reader users.
 

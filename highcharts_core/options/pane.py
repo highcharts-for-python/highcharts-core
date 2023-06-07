@@ -211,6 +211,14 @@ class Pane(HighchartsMeta):
         self.start_angle = kwargs.get('start_angle', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'pane'
+
+    @property
     def background(self) -> Optional[List[PaneBackground]]:
         """An array of background items for the pane.
 
