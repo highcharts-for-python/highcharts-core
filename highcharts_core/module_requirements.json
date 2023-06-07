@@ -3,7 +3,8 @@
     "modules/accessibility"
   ],
   "annotations": [
-    "modules/annotations"
+    "modules/annotations",
+    "modules/annotations-advanced"
   ],
   "annotations.controlPointOptions": [
     "modules/annotations"
