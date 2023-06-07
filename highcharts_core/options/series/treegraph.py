@@ -119,6 +119,7 @@ class TreegraphSeries(SeriesBase, TreegraphOptions):
             'allow_traversing_tree': as_dict.get('allowTraversingTree', None),
             'collapse_button': as_dict.get('collapseButton', None),
             'color_by_point': as_dict.get('colorByPoint', None),
+            'fill_space': as_dict.get('fillSpace', None),
             'link': as_dict.get('link', None),
             'reversed': as_dict.get('reversed', None),
 
