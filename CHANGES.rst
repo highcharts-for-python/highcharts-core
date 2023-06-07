@@ -1,8 +1,20 @@
 Release 1.2.0
 =========================================
 
+* **ENHANCEMENT:** Align the API to **Highcharts (JS) v.11.1** (#52). In particular, this includes:
+
+  * Added ``AccessibilityPoint.description_format`` property.
+  * Added support for ``.legend_symbol`` to plot options and series options.
+  * Added ``.border_radius`` support to ``FunnelOptions`` and ``FunnelSeries``.
+  * Added ``.interpolation`` support to ``HeatmapOptions`` and descendents.
+  * Added ``.point_description_format`` support to ``SeriesOptions`` and descendents.
+  * Added ``.fill_space`` support to ``TreegraphOptions`` and descendents.
+  * Added ``.crossing`` support to axes.
+  * Added ``.format`` support to ``Tooltip``.
+
 * **ENHANCEMENT:** Added support for the inclusion of scripts based on features used in the chart (#12).
-* **ENHANCEMENT:** Added ``dict`` support to ``options.series.labels.SeriesLabel.style`` and ``utility_classes.data_labels.DataLabel.style``.
+* **ENHANCEMENT:** Added ``dict`` support to ``.style`` property on labels and titles.
+* **DOCS:** Various documentation updates and fixes.
 
 ------------------
 
