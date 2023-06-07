@@ -15,6 +15,7 @@ Release 1.2.0
 * **ENHANCEMENT:** Added support for the inclusion of scripts based on features used in the chart (#12).
 * **ENHANCEMENT:** Added ``dict`` support to ``.style`` property on labels and titles.
 * **DOCS:** Various documentation updates and fixes.
+* **DEPENDENCY:** Bumped ``requests`` version for security patch.
 
 ------------------
 
