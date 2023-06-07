@@ -98,22 +98,27 @@ class Title(HighchartsMeta):
         self._margin = validators.numeric(value, allow_empty = True)
 
     @property
-    def style(self) -> Optional[str]:
+    def style(self) -> Optional[str | dict]:
         """CSS styling to apply to the title. Defaults to
-        ``'{ "color": "#333333", "fontSize": "18px" }'``.
+        ``{ "color": "#333333", "fontSize": "18px", "fontWeight": "bold" }``.
 
          .. note::
 
            Use this for font styling, but use :meth:`Title.align`, :meth:`Title.x`, and
            :meth:`Title.y` for text alignment.
 
-        :rtype: :class:`str` or :obj:`None <python:None>`
+        :rtype: :class:`dict <python:dict>` or :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._style
 
     @style.setter
     def style(self, value):
-        self._style = validators.string(value, allow_empty = True, coerce_value = True)
+        try:
+            self._style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._style = validators.string(value, 
+                                            allow_empty = True,
+                                            coerce_value = True)
 
     @property
     def text(self) -> Optional[str]:
