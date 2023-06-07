@@ -1,12 +1,113 @@
 from typing import Optional
+from decimal import Decimal
 
 from validator_collection import validators
 
-from highcharts_core.decorators import class_sensitive
+from highcharts_core.decorators import class_sensitive, validate_types
 from highcharts_core.metaclasses import HighchartsMeta
 from highcharts_core.options.chart.reset_zoom_button import ResetZoomButtonOptions
 
 from highcharts_core import errors
+
+
+class MouseWheelOptions(HighchartsMeta):
+    """Configuration of zooming via the mouse wheel."""
+    
+    def __init__(self, **kwargs):
+        self._enabled = None
+        self._sensitivity = None
+        self._type = None
+        
+        self.enabled = kwargs.get('enabled', None)
+        self.sensitivity = kwargs.get('sensitivity', None)
+        self.type = kwargs.get('type', None)
+        
+    @property
+    def enabled(self) -> Optional[bool]:
+        """Enables or disables zooming via the mouse wheel. Defaults to ``True``.
+        
+        :rtype: :class:`bool <python:bool>`
+        """
+        return self._enabled
+    
+    @enabled.setter
+    def enabled(self, value):
+        if value is None:
+            self._enabled = None
+        else:
+            self._enabled = bool(value)
+            
+    @property
+    def sensitivity(self) -> Optional[int | float | Decimal]:
+        """Adjust the sensitivity of mouse wheel when controlling zoom. 
+        
+        A value of ``1`` is no sensitivity, while a value of ``2``, one mouse wheel 
+        rotation will in ``50%``.
+        
+        Defaults to ``1.1``.
+        
+        :rtype: numeric
+        """
+        return self._sensitivity
+    
+    @sensitivity.setter
+    def sensitivity(self, value):
+        self._sensitivity = validators.numeric(value, allow_empty = True)
+        
+    @property
+    def type(self) -> Optional[str]:
+        """Decides in what dimensions the user can zoom scrolling the mouse wheel.
+        Accepts one of ``'x'``, ``'y'`` or ``'xy'``. 
+        
+        If :obj:`None <python:None>`, it will inherit from
+        :meth:`ZoomingOptions.type <highcharts_core.options.chart.zooming.ZoomingOptions.type>`.
+        
+        .. warning::
+        
+          Note that particularly when zooming via the mouse wheel in the ``'y'`` direction, 
+          the zoom is affected by the default 
+          :meth:`YAxisOptions.start_on_tick <highcharts_core.options.axes.YAxisOptions.start_on_tick>`
+          and
+          :meth:`YAxisOptions.end_on_tick <highcharts_core.options.axes.YAxisOptions.end_on_tick>`
+          settings. 
+          
+          In order to respect these settings, the zoom level will adjust after the user has stopped 
+          zooming. To prevent this, consider setting both those properties to ``False``.
+          
+        :rtype: :class:`str <python:str>`
+        '"""
+        return self._type
+
+    @type.setter
+    def type(self, value):
+        if not value:
+            self._type = None
+        else:
+            value = validators.string(value, allow_empty = False)
+            value = value.lower()
+            if value not in ['x', 'y', 'xy']:
+                raise errors.HighchartsValueError(f'MouseWheelOptions.type expects a value '
+                                                  f'of "x", "y", or "xy". Received: "{value}".')
+            self._type = value
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'enabled': as_dict.get('enabled', None),
+            'sensitivity': as_dict.get('sensitivity', None),
+            'type': as_dict.get('type', None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        untrimmed = {
+            'enabled': self.enabled,
+            'sensitivity': self.sensitivity,
+            'type': self.type,
+        }
+
+        return untrimmed
 
 
 class ZoomingOptions(HighchartsMeta):
@@ -14,12 +115,14 @@ class ZoomingOptions(HighchartsMeta):
 
     def __init__(self, **kwargs):
         self._key = None
+        self._mouse_wheel = None
         self._pinch_type = None
         self._reset_button = None
         self._single_touch = None
         self._type = None
 
         self.key = kwargs.get('key', None)
+        self.mouse_wheel = kwargs.get('mouse_wheel', None)
         self.pinch_type = kwargs.get('pinch_type', None)
         self.reset_button = kwargs.get('reset_button', None)
         self.single_touch = kwargs.get('single_touch', None)
@@ -73,6 +176,40 @@ class ZoomingOptions(HighchartsMeta):
                                                   f'{value}')
 
             self._key = value
+
+    @property
+    def mouse_wheel(self) -> Optional[bool | MouseWheelOptions]:
+        """Configuration of how users can use the mouse wheel to control zooming within the chart.
+        
+        .. note::
+        
+          Zooming via the mouse wheel is enabled by default. To disable, set this option to ``False``.
+        
+        .. note::
+        
+          Zooming via the mouse wheel is a feature included in 
+          `Highcharts Stock <https://highcharts.com/products/stock>`__, but is also available 
+          in `Highcharts Core <https://highcharts.com/products/highcharts>`__ by loading
+          ``modules/mouse-wheel-zoom.js``.
+          
+        :rtype: :class:`bool <python:bool>`
+        """
+        return self._mouse_wheel
+    
+    @mouse_wheel.setter
+    def mouse_wheel(self, value):
+        if value is None:
+            self._mouse_wheel = None
+        else:
+            try:
+                value = validate_types(value, MouseWheelOptions)
+            except (ValueError, TypeError):
+                value = bool(value)
+                
+            if value is True:
+                value = MouseWheelOptions(enabled = True)
+                
+            self._mouse_wheel = value
 
     @property
     def pinch_type(self) -> Optional[str]:
@@ -180,6 +317,7 @@ class ZoomingOptions(HighchartsMeta):
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'key': as_dict.get('key', None),
+            'mouse_wheel': as_dict.get('mouseWheel', None),
             'pinch_type': as_dict.get('pinchType', None),
             'reset_button': as_dict.get('resetButton', None),
             'single_touch': as_dict.get('singleTouch', None),
@@ -191,6 +329,7 @@ class ZoomingOptions(HighchartsMeta):
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'key': self.key,
+            'mouseWheel': self.mouse_wheel,
             'pinchType': self.pinch_type,
             'resetButton': self.reset_button,
             'singleTouch': self.single_touch,
