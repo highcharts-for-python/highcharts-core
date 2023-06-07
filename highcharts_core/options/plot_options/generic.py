@@ -43,6 +43,7 @@ class GenericTypeOptions(HighchartsMeta):
         self._include_in_data_export = None
         self._keys = None
         self._label = None
+        self._legned_symbol = None
         self._linked_to = None
         self._marker = None
         self._on_point = None
@@ -77,6 +78,7 @@ class GenericTypeOptions(HighchartsMeta):
         self.include_in_data_export = kwargs.get('include_in_data_export', None)
         self.keys = kwargs.get('keys', None)
         self.label = kwargs.get('label', None)
+        self.legend_symbol = kwargs.get('legend_symbol', None)
         self.linked_to = kwargs.get('linked_to', None)
         self.marker = kwargs.get('marker', None)
         self.on_point = kwargs.get('on_point', None)
@@ -487,6 +489,30 @@ class GenericTypeOptions(HighchartsMeta):
         self._label = value
 
     @property
+    def legend_symbol(self) -> Optional[str]:
+        """The type of legend symbol to render for the series. Accepts either 
+        ``'lineMarker'`` or ``'rectangle'``. Defaults to ``'rectangle'``.
+        
+        :rtype: :class:`str <python:str>`
+        """
+        return self._legend_symbol
+    
+    @legend_symbol.setter
+    def legend_symbol(self, value):
+        if not value:
+            self._legend_symbol = None
+        else:
+            value = validators.string(value)
+            value = value.lower()
+            if value == 'linemarker':
+                value = 'lineMarker'
+            if value not in ['lineMarker', 'rectangle']:
+                raise errors.HighchartsValueError(f'legend_symbol expects either '
+                                                  f'"lineMarker" or "rectangle". '
+                                                  f'Received: "{value}".')
+            self._legend_symbol = value
+
+    @property
     def linked_to(self) -> Optional[str]:
         """The id of another series to link to.
 
@@ -820,6 +846,7 @@ class GenericTypeOptions(HighchartsMeta):
             'include_in_data_export': as_dict.get('includeInDataExport', None),
             'keys': as_dict.get('keys', None),
             'label': as_dict.get('label', None),
+            'legend_symbol': as_dict.get('legendSymbol', None),
             'linked_to': as_dict.get('linkedTo', None),
             'marker': as_dict.get('marker', None),
             'on_point': as_dict.get('onPoint', None),
@@ -859,6 +886,7 @@ class GenericTypeOptions(HighchartsMeta):
             'includeInDataExport': self.include_in_data_export,
             'keys': self.keys,
             'label': self.label,
+            'legendSymbol': self.legend_symbol,
             'linkedTo': self.linked_to,
             'marker': self.marker,
             'onPoint': self.on_point,

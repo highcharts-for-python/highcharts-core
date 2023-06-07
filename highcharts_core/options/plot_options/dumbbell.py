@@ -777,6 +777,7 @@ class DumbbellOptions(GenericTypeOptions):
             'include_in_data_export': as_dict.get('includeInDataExport', None),
             'keys': as_dict.get('keys', None),
             'label': as_dict.get('label', None),
+            'legend_symbol': as_dict.get('legendSymbol', None),
             'linked_to': as_dict.get('linkedTo', None),
             'marker': as_dict.get('marker', None),
             'on_point': as_dict.get('onPoint', None),

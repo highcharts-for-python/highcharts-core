@@ -40,16 +40,17 @@ class PieOptions(GenericTypeOptions):
         self._color_index = None
         self._color_key = None
         self._colors = None
-        self._depth = 0
+        self._depth = None
         self._end_angle = None
         self._fill_color = None
-        self._ignore_hidden_point = True
-        self._inner_size = 0
+        self._ignore_hidden_point = None
+        self._inner_size = None
+        self._legend_symbol = None
         self._linecap = None
-        self._min_size = 80
+        self._min_size = None
         self._size = None
         self._sliced_offset = None
-        self._start_angle = 0
+        self._start_angle = None
         self._thickness = None
 
         self.border_color = kwargs.get('border_color', None)
@@ -65,6 +66,7 @@ class PieOptions(GenericTypeOptions):
         self.fill_color = kwargs.get('fill_color', None)
         self.ignore_hidden_point = kwargs.get('ignore_hidden_point', None)
         self.inner_size = kwargs.get('inner_size', None)
+        self.legend_symbol = kwargs.get('legend_symbol', None)
         self.linecap = kwargs.get('linecap', None)
         self.min_size = kwargs.get('min_size', None)
         self.size = kwargs.get('size', None)
@@ -511,6 +513,7 @@ class PieOptions(GenericTypeOptions):
             'include_in_data_export': as_dict.get('includeInDataExport', None),
             'keys': as_dict.get('keys', None),
             'label': as_dict.get('label', None),
+            'legend_symbol': as_dict.get('legendSymbol', None),
             'linked_to': as_dict.get('linkedTo', None),
             'marker': as_dict.get('marker', None),
             'on_point': as_dict.get('onPoint', None),
@@ -740,6 +743,7 @@ class VariablePieOptions(PieOptions):
             'include_in_data_export': as_dict.get('includeInDataExport', None),
             'keys': as_dict.get('keys', None),
             'label': as_dict.get('label', None),
+            'legend_symbol': as_dict.get('legendSymbol', None),
             'linked_to': as_dict.get('linkedTo', None),
             'marker': as_dict.get('marker', None),
             'on_point': as_dict.get('onPoint', None),
