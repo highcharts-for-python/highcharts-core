@@ -239,6 +239,7 @@ class XAxis(NumericAxis):
             'categories': as_dict.get('categories', None),
             'ceiling': as_dict.get('ceiling', None),
             'class_name': as_dict.get('className', None),
+            'crossing': as_dict.get('crossing', None),
             'date_time_label_formats': as_dict.get('dateTimeLabelFormats', None),
             'end_on_tick': as_dict.get('endOnTick', None),
             'events': as_dict.get('events', None),
