@@ -51,8 +51,8 @@ class Chart(HighchartsMeta):
 
         return js_str
 
-    def _jupyter_javascript(self, 
-                            global_options = None, 
+    def _jupyter_javascript(self,
+                            global_options = None,
                             container = None,
                             random_slug = None,
                             retries = 5,
@@ -63,21 +63,21 @@ class Chart(HighchartsMeta):
           Defaults to :obj:`None <python:None>`
         :type global_options: :class:`SharedOptions <highcharts_stock.global_options.shared_options.SharedOptions>`
           or :obj:`None <python:None>`
-          
+
         :param container: The ID to apply to the HTML container when rendered in Jupyter Labs. Defaults to
-          :obj:`None <python:None>`, which applies the :meth:`.container <highcharts_core.chart.Chart.container>` 
+          :obj:`None <python:None>`, which applies the :meth:`.container <highcharts_core.chart.Chart.container>`
           property if set, and ``'highcharts_target_div'`` if not set.
         :type container: :class:`str <python:str>` or :obj:`None <python:None>`
-        
+
         :param random_slug: The random sequence of characters to append to the container name to ensure uniqueness.
           Defaults to :obj:`None <python:None>`
         :type random_slug: :class:`str <python:str>` or :obj:`None <python:None>`
-        
-        :param retries: The number of times to retry rendering the chart. Used to avoid race conditions with the 
+
+        :param retries: The number of times to retry rendering the chart. Used to avoid race conditions with the
           Highcharts script. Defaults to 3.
         :type retries: :class:`int <python:int>`
-        
-        :param interval: The number of milliseconds to wait between retrying rendering the chart. Defaults to 1000 (1 
+
+        :param interval: The number of milliseconds to wait between retrying rendering the chart. Defaults to 1000 (1
           seocnd).
         :type interval: :class:`int <python:int>`
 
@@ -89,14 +89,13 @@ class Chart(HighchartsMeta):
             self.container = new_container
         else:
             self.container = f'{new_container}_{random_slug}'
-        
+
         if global_options is not None:
             global_options = validate_types(global_options,
                                             types = SharedOptions)
 
-        js_str = ''
-        js_str += utility_functions.get_retryHighcharts()
-        
+        js_str = utility_functions.get_retryHighcharts()
+
         if global_options:
             js_str += '\n' + utility_functions.prep_js_for_jupyter(global_options.to_js_literal()) + '\n'
 
@@ -116,11 +115,11 @@ class Chart(HighchartsMeta):
         """Returns the Jupyter Labs HTML container for rendering the chart in Jupyter Labs context.
 
         :param container: The ID to apply to the HTML container when rendered in Jupyter Labs. Defaults to
-          :obj:`None <python:None>`, which applies the :meth:`.container <highcharts_core.chart.Chart.container>` 
+          :obj:`None <python:None>`, which applies the :meth:`.container <highcharts_core.chart.Chart.container>`
           property if set, and ``'highcharts_target_div'`` if not set.
         :type container: :class:`str <python:str>` or :obj:`None <python:None>`
 
-        :param random_slug: The random sequence of characters to append to the container/function name to ensure 
+        :param random_slug: The random sequence of characters to append to the container/function name to ensure
           uniqueness. Defaults to :obj:`None <python:None>`
         :type random_slug: :class:`str <python:str>` or :obj:`None <python:None>`
 
@@ -352,8 +351,6 @@ class Chart(HighchartsMeta):
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        if filename:
-            filename = validators.path(filename)
 
         untrimmed = self._to_untrimmed_dict()
         as_dict = {}
@@ -363,27 +360,21 @@ class Chart(HighchartsMeta):
             if serialized is not None:
                 as_dict[key] = serialized
 
-        signature_elements = 0
+        signature_elements = 2
 
-        container_as_str = ''
         if self.container:
             container_as_str = f"""'{self.container}'"""
         else:
             container_as_str = """null"""
-        signature_elements += 1
 
-        options_as_str = ''
         if self.options:
-            options_as_str = self.options.to_js_literal(encoding = encoding)
-            options_as_str = f"""{options_as_str}"""
+            options_as_str = "{}".format(self.options.to_js_literal(encoding = encoding))
         else:
             options_as_str = """null"""
-        signature_elements += 1
 
         callback_as_str = ''
         if self.callback:
-            callback_as_str = self.callback.to_js_literal(encoding = encoding)
-            callback_as_str = f"""{callback_as_str}"""
+            callback_as_str = "{}".format(self.callback.to_js_literal(encoding = encoding))
             signature_elements += 1
 
         signature = """Highcharts.chart("""
@@ -407,7 +398,7 @@ class Chart(HighchartsMeta):
         suffix = """});"""
         as_str = prefix + as_str + '\n' + suffix
 
-        if filename:
+        if validators.path(filename, allow_empty = True):
             with open(filename, 'w', encoding = encoding) as file_:
                 file_.write(as_str)
 
@@ -519,14 +510,14 @@ class Chart(HighchartsMeta):
 
         if key == 'data' and preserve_data:
             return other_value
-        
+
         if key == 'points' and preserve_data:
             return other_value
-        
+
         if key == 'series' and preserve_data:
             if not other_value:
                 return [x for x in original_value]
-        
+
             if len(other_value) != len(original_value):
                 matched_series = []
                 new_series = []
@@ -557,14 +548,12 @@ class Chart(HighchartsMeta):
                 return updated_series
 
         elif isinstance(original_value, (dict, UserDict)):
-            new_value = {}
-            for subkey in original_value:
-                new_key_value = cls._copy_dict_key(subkey,
+            new_value = {subkey: cls._copy_dict_key(subkey,
                                                    original_value,
                                                    other_value,
                                                    overwrite = overwrite,
                                                    **kwargs)
-                new_value[subkey] = new_key_value
+                         for subkey in original_value}
 
             return new_value
 
@@ -632,10 +621,8 @@ class Chart(HighchartsMeta):
           or coercable
 
         """
-        new_series = []
-        for item in series:
-            item_series = create_series_obj(item)
-            new_series.append(item_series)
+        new_series = [create_series_obj(item)
+                      for item in series]
 
         if self.options and self.options.series:
             existing_series = [x for x in self.options.series]
@@ -650,8 +637,8 @@ class Chart(HighchartsMeta):
         self.options.series = updated_series
 
     def update_series(self, *series, add_if_unmatched = False):
-        """Replace existing series with the new versions supplied in ``series``, 
-        matching them based on their 
+        """Replace existing series with the new versions supplied in ``series``,
+        matching them based on their
         :meth:`.id <highcharts_core.options.series.base.SeriesBase.id>` property.
 
         :param series: One or more :term:`series` instances (descended from
@@ -661,17 +648,15 @@ class Chart(HighchartsMeta):
         :type series: one or more
           :class:`SeriesBase <highcharts_core.options.series.base.SeriesBase>`
           or coercable
-          
-        :param add_if_unmatched: If ``True``, will add a series that does not have a 
-          match. If ``False``, will raise a 
+
+        :param add_if_unmatched: If ``True``, will add a series that does not have a
+          match. If ``False``, will raise a
           :exc:`HighchartsMissingSeriesError <highcharts_core.errors.HighchartsMissingSeriesError>`
           if a series does not have a match on the chart. Defaults to ``False``.
         :type add_if_unmatched: :class:`bool <python:bool>`
         """
-        new_series = []
-        for item in series:
-            item_series = create_series_obj(item)
-            new_series.append(item_series)
+        new_series = [create_series_obj(item)
+                      for item in series]
 
         if self.options and self.options.series:
             existing_series = [x for x in self.options.series]
@@ -680,23 +665,22 @@ class Chart(HighchartsMeta):
         else:
             existing_series = []
             self.options = HighchartsOptions()
-            
+
         existing_ids = [x.id for x in existing_series]
         new_ids = [x.id for x in new_series]
         overlap_ids = [x for x in new_ids if x in existing_ids]
-        
-        updated_series = []
-        for existing in existing_series:
-            if existing.id not in overlap_ids:
-                updated_series.append(existing)
-        
+
+        updated_series = [existing
+                          for existing in existing_series
+                          if existing.id not in overlap_ids]
+
         for new in new_series:
             if new.id not in overlap_ids and not add_if_unmatched:
                 raise errors.HighchartsMissingSeriesError(f'attempted to update series '
                                                           f'id "{new.id}", but that '
                                                           f'series is not present in '
                                                           f'the chart')
-                
+
             updated_series.append(new)
 
         self.options.series = updated_series
@@ -736,11 +720,11 @@ class Chart(HighchartsMeta):
                 instance.add_series(item)
         else:
             instance.add_series(series)
-            
+
         return instance
 
-    def display(self, 
-                global_options = None, 
+    def display(self,
+                global_options = None,
                 container = None,
                 retries = 5,
                 interval = 1000):
@@ -751,29 +735,29 @@ class Chart(HighchartsMeta):
           Defaults to :obj:`None <python:None>`
         :type global_options: :class:`SharedOptions <highcharts_stock.global_options.shared_options.SharedOptions>`
           or :obj:`None <python:None>`
-          
+
         :param container: The ID to apply to the HTML container when rendered in Jupyter Labs. Defaults to
-          :obj:`None <python:None>`, which applies the :meth:`.container <highcharts_core.chart.Chart.container>` 
+          :obj:`None <python:None>`, which applies the :meth:`.container <highcharts_core.chart.Chart.container>`
           property if set, and ``'highcharts_target_div'`` if not set.
-          
+
           .. note::
-          
+
             Highcharts for Python will append a 6-character random string to the value of ``container``
             to ensure uniqueness of the chart's container when rendering in a Jupyter Notebook/Labs context. The
-            :class:`Chart <highcharts_core.chart.Chart>` instance will retain the mapping between container and the 
+            :class:`Chart <highcharts_core.chart.Chart>` instance will retain the mapping between container and the
             random string so long as the instance exists, thus allowing you to easily update the rendered chart by
             calling the :meth:`.display() <highcharts_core.chart.Chart.display>` method again.
-            
+
             If you wish to create a new chart from the instance that does not update the existing chart, then you can do
             so by specifying a new ``container`` value.
-            
+
         :type container: :class:`str <python:str>` or :obj:`None <python:None>`
 
         :param retries: The number of times to retry rendering the chart. Used to avoid race conditions with the 
           Highcharts script. Defaults to 5.
         :type retries: :class:`int <python:int>`
-        
-        :param interval: The number of milliseconds to wait between retrying rendering the chart. Defaults to 1000 (1 
+
+        :param interval: The number of milliseconds to wait between retrying rendering the chart. Defaults to 1000 (1
           seocnd).
         :type interval: :class:`int <python:int>`
 
@@ -796,9 +780,9 @@ class Chart(HighchartsMeta):
         container = container or self.container or 'highcharts_target_div'
         if not self._random_slug:
             self._random_slug = {}
-        
+
         random_slug = self._random_slug.get(container, None)
-            
+
         if not random_slug:
             random_slug = utility_functions.get_random_string()
             self._random_slug[container] = random_slug
@@ -806,7 +790,7 @@ class Chart(HighchartsMeta):
         html_str = self._jupyter_container_html(container, random_slug)
         html_display = display_mod.HTML(data = html_str)
 
-        chart_js_str = self._jupyter_javascript(global_options = global_options, 
+        chart_js_str = self._jupyter_javascript(global_options = global_options,
                                                 container = container,
                                                 random_slug = random_slug,
                                                 retries = retries,

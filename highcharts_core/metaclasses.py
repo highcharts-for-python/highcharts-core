@@ -288,13 +288,12 @@ class HighchartsMeta(ABC):
         """
         as_dict = validators.dict(as_dict, allow_empty = True) or {}
         clean_as_dict = {}
-        for key in as_dict:
-            if allow_snake_case:
-                clean_key = utility_functions.to_camelCase(key)
-            else:
-                clean_key = key
-
-            clean_as_dict[clean_key] = as_dict[key]
+        if allow_snake_case:
+            clean_as_dict = {utility_functions.to_camelCase(key): as_dict[key]
+                             for key in as_dict}
+        else:
+            clean_as_dict = {key: as_dict[key]
+                             for key in as_dict}
 
         kwargs = cls._get_kwargs_from_dict(clean_as_dict)
 
