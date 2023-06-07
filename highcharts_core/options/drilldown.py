@@ -10,6 +10,7 @@ from highcharts_core.utility_classes.breadcrumbs import BreadcrumbOptions
 from highcharts_core.options.series.base import SeriesBase
 from highcharts_core.options.series.series_generator import create_series_obj
 
+
 class Drilldown(HighchartsMeta):
     """Options to configure :term:`drilldown` functionality in the chart, which
     enables users to inspect increasingly high resolution data by clicking on chart
@@ -40,6 +41,14 @@ class Drilldown(HighchartsMeta):
         self.breadcrumbs = kwargs.get('breadcrumbs', None)
         self.drillup_button = kwargs.get('drillup_button', None)
         self.series = kwargs.get('series', None)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'drilldown'
 
     @property
     def active_axis_label_style(self) -> Optional[dict]:

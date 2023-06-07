@@ -14,6 +14,14 @@ class AnnotationControlPointOption(HighchartsMeta):
         self.positioner = kwargs.get('positioner', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'annotations.controlPointOptions'
+
+    @property
     def positioner(self) -> Optional[CallbackFunction]:
         """A JavaScript callback function to modify annotation's positioner controls.
 

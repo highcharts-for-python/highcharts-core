@@ -232,6 +232,7 @@ Core Components
     - :class:`ScrollablePlotArea <highcharts_core.options.chart.scrollable_plot_area.ScrollablePlotArea>`
   * - :mod:`.options.chart.zooming <highcharts_core.options.chart.zooming>`
     - :class:`ZoomingOptions <highcharts_core.options.chart.zooming.ZoomingOptions>`
+      :class:`MouseWheelOptions <highcharts_core.options.chart.zooming.MouseWheelOptions>`
   * - :mod:`.options.credits <highcharts_core.options.credits>`
     - :class:`Credits <highcharts_core.options.credits.Credits>`
       :class:`CreditStyleOptions <highcharts_core.options.credits.CreditStyleOptions>`

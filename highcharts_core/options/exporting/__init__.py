@@ -26,6 +26,14 @@ class ExportingAccessibilityOptions(HighchartsMeta):
         self.enabled = kwargs.get('enabled', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'exporting.accessibility'
+
+    @property
     def enabled(self) -> Optional[bool]:
         """If ``True``, enables accessibility support for the export menu. Defaults to
         ``True``.
@@ -110,6 +118,14 @@ class Exporting(HighchartsMeta):
         self.use_multi_level_headers = kwargs.get('use_multi_level_headers', None)
         self.use_rowspan_headers = kwargs.get('use_rowspan_headers', None)
         self.width = kwargs.get('width', None)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'exporting'
 
     @property
     def accessibility(self) -> Optional[ExportingAccessibilityOptions]:

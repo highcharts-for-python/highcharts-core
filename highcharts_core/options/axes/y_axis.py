@@ -37,6 +37,14 @@ class StackShadow(HighchartsMeta):
         self.enabled = kwargs.get('enabled', None)
         
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'yAxis.stackShadow'
+
+    @property
     def border_color(self) -> Optional[str | Gradient | Pattern]:
         """The color of the stack shadow border. Defaults to ``'transparent'``.
 
@@ -115,6 +123,7 @@ class StackShadow(HighchartsMeta):
 
         return untrimmed
 
+
 class YAxis(XAxis):
     """Configuration settings for the Y axis or value axis.
 
@@ -137,6 +146,14 @@ class YAxis(XAxis):
         self.tooltip_value_format = kwargs.get('tooltip_value_format', None)
 
         super().__init__(**kwargs)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'yAxis'
 
     @property
     def max_color(self) -> Optional[str | Gradient | Pattern]:
@@ -307,6 +324,7 @@ class YAxis(XAxis):
             'categories': as_dict.get('categories', None),
             'ceiling': as_dict.get('ceiling', None),
             'class_name': as_dict.get('className', None),
+            'crossing': as_dict.get('crossing', None),
             'date_time_label_formats': as_dict.get('dateTimeLabelFormats', None),
             'end_on_tick': as_dict.get('endOnTick', None),
             'events': as_dict.get('events', None),

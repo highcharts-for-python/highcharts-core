@@ -26,3 +26,21 @@ class: :class:`ZoomingOptions <highcharts_core.options.chart.zooming.ZoomingOpti
       :parts: -1
 
   |
+
+---------------------------
+
+********************************************************************************************************************
+class: :class:`MouseWheelOptions <highcharts_core.options.chart.zooming.MouseWheelOptions>`
+********************************************************************************************************************
+
+.. autoclass:: MouseWheelOptions
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: MouseWheelOptions
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta, highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

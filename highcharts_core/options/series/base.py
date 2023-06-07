@@ -47,6 +47,14 @@ class SeriesBase(SeriesOptions):
         super().__init__(**kwargs)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return f'series.{self.type}'
+
+    @property
     def data(self) -> Optional[List[DataBase]]:
         """The collection of data points for the series. Defaults to
         :obj:`None <python:None>`.
@@ -231,6 +239,7 @@ class SeriesBase(SeriesOptions):
             'include_in_data_export': as_dict.get('includeInDataExport', None),
             'keys': as_dict.get('keys', None),
             'label': as_dict.get('label', None),
+            'legend_symbol': as_dict.get('legendSymbol', None),
             'linked_to': as_dict.get('linkedTo', None),
             'marker': as_dict.get('marker', None),
             'on_point': as_dict.get('onPoint', None),
@@ -266,6 +275,7 @@ class SeriesBase(SeriesOptions):
             'linecap': as_dict.get('linecap', None),
             'line_width': as_dict.get('lineWidth', None),
             'negative_color': as_dict.get('negativeColor', None),
+            'point_description_format': as_dict.get('pointDescriptionFormat', None),
             'point_interval': as_dict.get('pointInterval', None),
             'point_interval_unit': as_dict.get('pointIntervalUnit', None),
             'point_placement': as_dict.get('pointPlacement', None),

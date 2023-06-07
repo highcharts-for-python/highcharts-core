@@ -451,6 +451,14 @@ class DragDropOptions(HighchartsMeta):
         self.live_redraw = kwargs.get('live_redraw', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'plotOptions.series.dragDrop'
+
+    @property
     def draggable_x(self) -> Optional[bool]:
         """If ``True``, enables dragging along the X dimension. Defaults to
         :obj:`None <python:None>`, which is equivalent to ``False``.
@@ -704,6 +712,14 @@ class HighLowDragDropOptions(DragDropOptions):
         super().__init__(**kwargs)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'plotOptions.boxplot.dragDrop'
+
+    @property
     def draggable_high(self) -> Optional[bool]:
         """If ``True``, enables high value to be dragged individually. Defaults to
         :obj:`None <python:None>`, which is equivalent to ``True``.
@@ -798,6 +814,14 @@ class BoxPlotDragDropOptions(HighLowDragDropOptions):
         super().__init__(**kwargs)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'plotOptions.boxplot.dragDrop'
+
+    @property
     def draggable_q1(self) -> Optional[bool]:
         """If ``True``, enables the Q1 value to be dragged individually. Defaults to
         :obj:`None <python:None>`, which is equivalent to ``True``.
@@ -889,6 +913,14 @@ class BulletDragDropOptions(DragDropOptions):
         self.draggable_target = kwargs.get('draggable_target', None)
 
         super().__init__(**kwargs)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'plotOptions.bullet.dragDrop'
 
     @property
     def draggable_target(self) -> Optional[bool]:

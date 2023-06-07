@@ -85,6 +85,14 @@ class Data(HighchartsMeta):
         self.table = kwargs.get('table', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'data'
+
+    @property
     def before_parse(self) -> Optional[CallbackFunction]:
         """A JavaScript callback function that is used to modify the CSV data before it is
         parsed. The function should return a modified version of the CSV string. Defaults

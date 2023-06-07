@@ -325,6 +325,14 @@ class ShapeOptions(ShapeOptionsBase):
         super().__init__(**kwargs)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'annotations.shapeOptions'
+
+    @property
     def r(self) -> Optional[int | float | Decimal]:
         f"""The radius of the shape in pixels. Defaults to {constants.DEFAULT_SHAPES_R}.
 
@@ -436,6 +444,14 @@ class AnnotationShape(ShapeOptions):
         self.points = kwargs.get('points', None)
 
         super().__init__(**kwargs)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'annotations.shapes'
 
     @property
     def marker_end(self) -> Optional[str]:

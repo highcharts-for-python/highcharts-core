@@ -94,6 +94,14 @@ class Credits(HighchartsMeta):
         self.text = kwargs.get('text', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'credits'
+
+    @property
     def enabled(self) -> Optional[bool]:
         """If ``True``, renders the credits text. Defaults to ``True``.
 

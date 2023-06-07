@@ -26,6 +26,7 @@ class GenericAxis(HighchartsMeta):
         self._angle = None
         self._ceiling = None
         self._class_name = None
+        self._crossing = None
         self._end_on_tick = None
         self._events = None
         self._floor = None
@@ -78,6 +79,7 @@ class GenericAxis(HighchartsMeta):
         self.angle = kwargs.get('angle', None)
         self.ceiling = kwargs.get('ceiling', None)
         self.class_name = kwargs.get('class_name', None)
+        self.crossing = kwargs.get('crossing', None)
         self.end_on_tick = kwargs.get('end_on_tick', None)
         self.events = kwargs.get('events', None)
         self.floor = kwargs.get('floor', None)
@@ -189,6 +191,28 @@ class GenericAxis(HighchartsMeta):
     @class_name.setter
     def class_name(self, value):
         self._class_name = validators.string(value, allow_empty = True)
+
+    @property
+    def crossing(self) -> Optional[int | float | Decimal]:
+        """The value on a perpendicular axis where this axis should cross. Defaults to :obj:`None <python:None>`.
+
+        .. tip::
+
+          This\ris typically used on mathematical plots where the axes cross at ``0``.
+          
+        .. warning::
+        
+          When ``.crossing`` is set, space will *not* be reserved at the sides of the chart for 
+          axis labels and title, so those may be clipped. In this case, it is better to place the
+          axes without the ``.crossing`` option.
+        
+        :rtype: numeric
+        """
+        return self._crossing
+    
+    @crossing.setter
+    def crossing(self, value):
+        self._crossing = validators.numeric(value, allow_empty = True)
 
     @property
     def end_on_tick(self) -> Optional[bool]:

@@ -29,6 +29,14 @@ class SeriesSonification(HighchartsMeta):
         self.tracks = kwargs.get('tracks', None)
         
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'plotOptions.series.sonification'
+
+    @property
     def context_tracks(self) -> Optional[ContextTrackConfiguration | List[ContextTrackConfiguration]]:
         """Context tracks for the series. Context tracks are not tied to data points.
         

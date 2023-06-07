@@ -90,6 +90,14 @@ class Language(HighchartsMeta):
         self.weekdays = kwargs.get('weekdays', None)
 
     @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return 'lang'
+
+    @property
     def accessibility(self) -> Optional[AccessibilityLanguageOptions]:
         """Configuration of accessibility strings in the chart.
 

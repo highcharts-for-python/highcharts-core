@@ -15,7 +15,7 @@ visualization library, with full integration into the robust Python ecosystem, i
     dataframe.
   * ...and even more use-case specific integrations across the broader toolkit.
 
-The library supports Highcharts (JS) v.10.2 and higher, including Highcharts (JS) v.11.0.0.
+The library supports Highcharts (JS) v.10.2 and higher, including Highcharts (JS) v.11.1.0.
 
 **COMPLETE DOCUMENTATION:** https://core-docs.highchartspython.com/en/latest/index.html
 
@@ -71,7 +71,7 @@ Before you install, please be aware of the following "hard" dependencies:
   * Highcharts Core (JS) v.10.2 or higher (not technically a Python dependency, but 
     it won't work with earlier versions of Highcharts)
   * `esprima-python <https://github.com/Kronuz/esprima-python>`__ v.4.0 or higher
-  * `requests <https://requests.readthedocs.io/en/latest/>`__ v.2.28 or higher
+  * `requests <https://requests.readthedocs.io/en/latest/>`__ v.2.31 or higher
   * `validator-collection <https://validator-collection.readthedocs.io/en/latest/>`__
     v.1.5 or higher
 

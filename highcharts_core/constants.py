@@ -5,6 +5,24 @@ try:
     load_dotenv()
 except ImportError:
     pass
+try:
+    import orjson as json
+except ImportError:
+    try:
+        import rapidjson as json
+    except ImportError:
+        try:
+            import simplejson as json
+        except ImportError:
+            import json
+
+with open(os.path.join(os.path.dirname(__file__), 
+                       './module_requirements.json'), 
+          'r') as module_requirements:
+    try:
+        MODULE_REQUIREMENTS = json.load(module_requirements)
+    except AttributeError:
+        MODULE_REQUIRE = json.loads(module_requirements.read())
 
 
 class EnforcedNullType:

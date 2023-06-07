@@ -32,7 +32,7 @@
         not work properly if your rendering layer does not leverage Highcharts Core (JS).
 
     * `esprima-python <https://github.com/Kronuz/esprima-python>`_ v.4.0 or higher
-    * `requests <https://requests.readthedocs.io/en/latest/>`_ v.2.28 or higher
+    * `requests <https://requests.readthedocs.io/en/latest/>`_ v.2.31 or higher
     * `validator-collection <https://validator-collection.readthedocs.io/en/latest/>`_
       v.1.5 or higher
 
