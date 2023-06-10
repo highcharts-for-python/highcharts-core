@@ -349,6 +349,9 @@ class PlotLine(HighchartsMeta):
 
     @value.setter
     def value(self, value):
+        if hasattr(value, 'timestamp'):
+            value = value.timestamp() * 1000
+
         self._value = validators.numeric(value, allow_empty = True)
 
     @property
