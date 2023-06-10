@@ -797,10 +797,10 @@ class SeriesOptions(SeriesBaseOptions):
             value = validators.datetime(value)
 
             if hasattr(value, 'timestamp') and value.tzinfo is not None:
-                self._point_start = value.timestamp()
+                self._point_start = value.timestamp()*1000
             elif hasattr(value, 'timestamp'):
                 value = value.replace(tzinfo = datetime.timezone.utc)
-                value = value.timestamp()
+                value = value.timestamp()*1000
             else:
                 raise error
             

@@ -49,7 +49,7 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
     elif checkers.is_datetime(item):
         if not item.tzinfo:
             item = item.replace(tzinfo = datetime.timezone.utc)
-        return item.timestamp()
+        return item.timestamp()*1000
     elif checkers.is_date(item):
         return f'Date.UTC({item.year}, {item.month - 1}, {item.day})'
     elif checkers.is_time(item):
