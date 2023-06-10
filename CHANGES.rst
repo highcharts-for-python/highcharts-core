@@ -1,3 +1,11 @@
+Release 1.2.1
+=========================================
+
+* **ENHANCEMENT:** Added autoconversion of ``plotLine.value`` from ``datetime.datetime`` to POSIX timestamp (#58).
+* **BUGFIX:** Fixed incorrect ``datetime`` serialization to SECONDS from Unix epoch. Now serializing to JS-compatible MILLISECONDS from Unix epoch (#61).
+
+------------------
+
 Release 1.2.0
 =========================================
 
@@ -24,6 +32,8 @@ Release 1.1.1
 
 * **FIXED:** Problem when producing a JS literal, with the JS code inserting an unnecessary ``new`` (#42 and #43).
 * **ENHANCEMENT:** Added more elegant error handling when something goes wrong displaying a chart in Jupyter (#43).
+
+-------------
 
 Release 1.1.0
 =========================================
