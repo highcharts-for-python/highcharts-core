@@ -1,3 +1,10 @@
+Release 1.2.2
+=========================================
+
+* **BUGFIX:** Fixed behavior where ``Chart.download_chart(format = 'svg')`` was incorrectly returning a PNG rather than an SVG ( #63 ).
+
+------------------
+
 Release 1.2.1
 =========================================
 

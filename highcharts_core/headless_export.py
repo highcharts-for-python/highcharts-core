@@ -767,9 +767,13 @@ class ExportServer(HighchartsMeta):
 
         result.raise_for_status()
 
-        if filename:
+        if filename and self.format_ != 'svg':
             with open(filename, 'wb') as file_:
                 file_.write(result.content)
+        elif filename and self.format_ == 'svg':
+            content = str(result.content, encoding = 'utf-8')
+            with open(filename, 'wt') as file_:
+                file_.write(content)
 
         return result.content
 
