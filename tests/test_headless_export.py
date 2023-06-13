@@ -144,7 +144,7 @@ def test_url(value, error):
      'headless_export/output/test-basic.png',
      {
       'timeout': 5,
-      'format': 'png',
+      'format_': 'png',
       'constructor': 'Chart'
      },
      None),
@@ -152,7 +152,7 @@ def test_url(value, error):
      'headless_export/output/test-with-series-types.png',
      {
       'timeout': 5,
-      'format': 'png',
+      'format_': 'png',
       'constructor': 'Chart'
      },
      None),
@@ -160,7 +160,15 @@ def test_url(value, error):
      'headless_export/output/test-with-chart-type.png',
      {
       'timeout': 5,
-      'format': 'png',
+      'format_': 'png',
+      'constructor': 'Chart'
+     },
+     None),
+    ('headless_export/with-chart-type.js',
+     'headless_export/output/test-with-chart-type.svg',
+     {
+      'timeout': 5,
+      'format_': 'svg',
       'constructor': 'Chart'
      },
      None),
@@ -177,7 +185,7 @@ def test_get_chart(input_files,
         target_file = check_input_file(input_files, 
                                        target_filename,
                                        create_directory = create_output_directory)
-
+        
         with open(input_file, 'r') as file_:
             as_str = file_.read()
 
@@ -190,6 +198,17 @@ def test_get_chart(input_files,
 
         if not error:
             result = cls.get_chart(**kwargs)
+    
+            format = kwargs.get('format_', None)
+            print(f'TESTING FORMAT: {format}')
+    
             assert result is not None
             if target_filename:
                 assert checkers.is_on_filesystem(target_file) is True
+                if format == 'svg':
+                    with open(target_file, 'r', encoding = 'utf-8') as file_:
+                        file_contents = file_.read()
+                    contents = str(file_contents)
+                    assert contents.startswith(
+                        '<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"'
+                    ) is True

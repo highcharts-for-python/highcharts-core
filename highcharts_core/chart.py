@@ -464,6 +464,7 @@ class Chart(HighchartsMeta):
                                           constructor = constructor,
                                           scale = scale,
                                           width = width,
+                                          format_ = format,
                                           **kwargs)
 
         if not isinstance(server_instance, ExportServer):
@@ -477,6 +478,7 @@ class Chart(HighchartsMeta):
                                              timeout = timeout,
                                              options = self.options,
                                              constructor = constructor,
+                                             format_ = format,
                                              **kwargs)
 
     @classmethod
