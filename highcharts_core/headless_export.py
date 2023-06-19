@@ -621,7 +621,7 @@ class ExportServer(HighchartsMeta):
                       filename = None,
                       auth_user = None,
                       auth_password = None,
-                      timeout = 0.5,
+                      timeout = 3,
                       **kwargs):
         """Execute a request against the export server based on the configuration in the
         instance.
@@ -642,7 +642,7 @@ class ExportServer(HighchartsMeta):
 
         :param timeout: The number of seconds to wait before issuing a timeout error.
           The timeout check is passed if bytes have been received on the socket in less
-          than the ``timeout`` value. Defaults to ``0.5``.
+          than the ``timeout`` value. Defaults to ``3``.
         :type timeout: numeric or :obj:`None <python:None>`
 
         .. note::
@@ -782,7 +782,7 @@ class ExportServer(HighchartsMeta):
                   filename = None,
                   auth_user = None,
                   auth_password = None,
-                  timeout = 0.5,
+                  timeout = 3,
                   **kwargs):
         """Produce an exported chart image.
 
@@ -802,7 +802,7 @@ class ExportServer(HighchartsMeta):
 
         :param timeout: The number of seconds to wait before issuing a timeout error.
           The timeout check is passed if bytes have been received on the socket in less
-          than the ``timeout`` value. Defaults to ``0.5``.
+          than the ``timeout`` value. Defaults to ``3``.
         :type timeout: numeric or :obj:`None <python:None>`
 
         .. note::
