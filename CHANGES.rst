@@ -1,3 +1,11 @@
+Release 1.2.3
+=========================================
+
+* **BUGFIX:** Fixed error when loading certain Highcharts (JS) scripts in Jupyter context.
+* **ENHANCEMENT:** Increased the default timeout for ``Chart.download_chart()`` and related.
+
+------------------
+
 Release 1.2.2
 =========================================
 
