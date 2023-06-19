@@ -92,19 +92,19 @@ def test_from_js_literal(input_files, input_filename, expected_filename, as_file
         "zIndex": 10
     }, {
         "color": "#7cb5ec",
-        "data": [81, 74, 67, 64, 46, 42, 28, 27, 26, 25, 18, 15, 14, 11, 11, 11, 7, 6, 6, 6, 6, 4, 3, 3, 3, 2, 2, 2, 1],
-        "name": "complications",
+        "data": [1, 23, 45, 54, 84, 13, 8, 7, 23, 1, 34, 6, 8, 99, 85, 23, 3, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1],
+        "name": "random-name",
         "type": "column",
         "zIndex": 2
     }],
     "title": {
-        "text": "Complication Pareto"
+        "text": "Random Name Pareto"
     },
     "tooltip": {
         "shared": true
     },
     "xAxis": {
-        "categories": ["Arrhythmia", "Sepsis", "AKI", "Eletrolyte imbalance", "Delirium", "Ileus/Paralytic Ileus", "Hypovolemia", "UTI", "Resp Distress", "HTN", "Hypotension", "Pneumonia", "Perforation", "Atelectasis", "Diarrhea", "Heart Failure", "N/V", "NSTEMI", "Post-op Comp", "Cardiac Complication", "Post-op Fever", "Shock", "Hypoglycemia", "Hypervolemia", "Cardiac Arrest", "PE", "Embolism", "Impaction", "DVT"],
+        "categories": ["Something", "Something", "Something", "Something", "Something", "Something", "Hypovolemia", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something"],
         "crosshair": true,
         "labels": {
             "rotation": 90
