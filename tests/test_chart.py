@@ -66,3 +66,81 @@ def test_from_js_literal(input_files, input_filename, expected_filename, as_file
                                         expected_filename,
                                         as_file,
                                         error)
+
+
+
+@pytest.mark.parametrize('json_str, expected_modules, error', [
+    ("""{
+    "chart": {
+        "type": "column"
+    },
+    "colors": null,
+    "credits": false,
+    "exporting": {
+        "scale": 1
+    },
+    "series": [{
+        "baseSeries": 1,
+        "color": "#434343",
+        "name": "Pareto",
+        "tooltip": {
+            "valueDecimals": 2,
+            "valueSuffix": "%"
+        },
+        "type": "pareto",
+        "yAxis": 1,
+        "zIndex": 10
+    }, {
+        "color": "#7cb5ec",
+        "data": [81, 74, 67, 64, 46, 42, 28, 27, 26, 25, 18, 15, 14, 11, 11, 11, 7, 6, 6, 6, 6, 4, 3, 3, 3, 2, 2, 2, 1],
+        "name": "complications",
+        "type": "column",
+        "zIndex": 2
+    }],
+    "title": {
+        "text": "Complication Pareto"
+    },
+    "tooltip": {
+        "shared": true
+    },
+    "xAxis": {
+        "categories": ["Arrhythmia", "Sepsis", "AKI", "Eletrolyte imbalance", "Delirium", "Ileus/Paralytic Ileus", "Hypovolemia", "UTI", "Resp Distress", "HTN", "Hypotension", "Pneumonia", "Perforation", "Atelectasis", "Diarrhea", "Heart Failure", "N/V", "NSTEMI", "Post-op Comp", "Cardiac Complication", "Post-op Fever", "Shock", "Hypoglycemia", "Hypervolemia", "Cardiac Arrest", "PE", "Embolism", "Impaction", "DVT"],
+        "crosshair": true,
+        "labels": {
+            "rotation": 90
+        }
+    },
+    "yAxis": [{
+        "title": {
+            "text": "count"
+        }
+    }, {
+        "labels": {
+            "format": "{value}%"
+        },
+        "max": 100,
+        "maxPadding": 0,
+        "min": 0,
+        "minPadding": 0,
+        "opposite": true,
+        "title": {
+            "text": "accum percent"
+        }
+    }]
+}""", ['highcharts', 'modules/exporting', 'modules/pareto'], None),
+])
+def test_get_required_modules(json_str, expected_modules, error):
+    from highcharts_core.options import HighchartsOptions
+    options = HighchartsOptions.from_json(json_str)
+    chart = cls.from_options(options)
+    if not error:
+        result = chart.get_required_modules()
+        if expected_modules:
+            assert len(result) == len(expected_modules)
+            for item in expected_modules:
+                assert item in result
+        else:
+            assert result is None or len(result) == 0
+    else:
+        with pytest.raises(error):
+            result = chart.get_required_modules()
