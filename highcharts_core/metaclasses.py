@@ -63,9 +63,10 @@ class HighchartsMeta(ABC):
         """
         if not scripts:
             scripts = []
+            
+        properties = [x[1:] for x in self.__dict__
+                      if x.startswith('_') and hasattr(self, x[1:])]
 
-        properties = [x for x in self.__class__.__dict__ 
-                      if self.__class__.__dict__[x].__class__.__name__ == 'property']
         for property_name in properties:
             property_value = getattr(self, property_name, None)
             if property_value is None:

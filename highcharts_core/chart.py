@@ -411,7 +411,7 @@ class Chart(HighchartsMeta):
                        filename = None,
                        auth_user = None,
                        auth_password = None,
-                       timeout = 0.5,
+                       timeout = 3,
                        server_instance = None,
                        **kwargs):
         """Export a downloaded form of the chart using a Highcharts :term:`Export Server`.
@@ -432,7 +432,7 @@ class Chart(HighchartsMeta):
 
         :param timeout: The number of seconds to wait before issuing a timeout error.
           The timeout check is passed if bytes have been received on the socket in less
-          than the ``timeout`` value. Defaults to ``0.5``.
+          than the ``timeout`` value. Defaults to ``3``.
         :type timeout: numeric or :obj:`None <python:None>`
 
         :param server_instance: Provide an already-configured :class:`ExportServer`
