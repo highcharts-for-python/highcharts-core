@@ -307,6 +307,24 @@ def test_BarData_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
 
 
+@pytest.mark.parametrize('array, expected, error', [
+    ([['A', 123]], {'name': 'A', 'x': 'A', 'y': 123}, None),
+    ([{'x': 'A', 'y': 123, 'name': 'A'}], {'name': 'A', 'x': 'A', 'y': 123}, None)
+])
+def test_BarData_from_array(array, expected, error):
+    if not expected:
+        expected = {}
+    if not error:
+        result = cls.from_array(array)
+        assert result is not None
+        for item in result:
+            assert isinstance(item, cls) is True
+            for key in expected:
+                assert getattr(item, key) == expected.get(key, None)
+    else:
+        with pytest.raises(error):
+            result = cls.from_array(array)
+
 ## NEXT CLASS
 
 STANDARD_PARAMS_2 = [

@@ -1,3 +1,10 @@
+Release 1.2.4
+=========================================
+
+* **BUGFIX:** Fixed ``.from_array()`` de-serialization to support propagation of string-type ``x`` values to ``name``(#67).
+
+------------------
+
 Release 1.2.3
 =========================================
 
