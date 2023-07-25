@@ -204,6 +204,8 @@ class RangeData(DataBase):
                                                       f'had {len(item)} dimensions.')
 
                 as_obj = cls.from_dict(as_dict)
+                if checkers.is_string(as_obj.x):
+                    as_obj.name = as_obj.x
             else:
                 raise errors.HighchartsValueError(f'each data point supplied must either '
                                                   f'be an AreaRangeData Point or be '

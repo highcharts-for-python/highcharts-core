@@ -171,6 +171,8 @@ class CartesianData(DataBase):
             elif checkers.is_iterable(item):
                 if len(item) == 2:
                     as_obj = cls(x = item[0], y = item[1])
+                    if checkers.is_string(as_obj.x):
+                        as_obj.name = as_obj.x
                 elif len(item) == 1:
                     as_obj = cls(y = item[0])
                 else:
@@ -473,6 +475,8 @@ class CartesianValueData(CartesianData):
                                                       f'collection. Collection received '
                                                       f'had {len(item)} dimensions.')
                 as_obj = cls.from_dict(as_dict)
+                if checkers.is_string(as_obj.x):
+                    as_obj.name = as_obj.x
             else:
                 raise errors.HighchartsValueError(f'each data point supplied must either '
                                                   f'be a Cartesian Value Data Point or be'
