@@ -1,3 +1,10 @@
+Release 1.2.5
+=========================================
+
+* **BUGFIX:** Fixed ``ExportServer`` handling of data relying on Pandas ``Timestamp`` instances.
+
+------------------
+
 Release 1.2.4
 =========================================
 
