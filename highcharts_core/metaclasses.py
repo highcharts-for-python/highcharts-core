@@ -1,4 +1,5 @@
 """Set of metaclasses used throughout the library."""
+import datetime
 from abc import ABC, abstractmethod
 from collections import UserDict
 from typing import Optional, List
@@ -244,6 +245,9 @@ class HighchartsMeta(ABC):
                 trimmed_value = HighchartsMeta.trim_iterable(value, to_json = to_json)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
+            # Pandas Timestamp
+            elif checkers.is_type(value, 'Timestamp'):
+                as_dict[key] = value.timestamp()
             # other truthy -> str / number
             elif value:
                 trimmed_value = HighchartsMeta.trim_iterable(value, to_json = to_json)
