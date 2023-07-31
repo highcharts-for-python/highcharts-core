@@ -13,6 +13,9 @@ from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_di
 STANDARD_PARAMS = [
     ({}, None),
     ({
+        'draggable': ''
+    }, None),
+    ({
       'animation': {
           'defer': 5
       },
@@ -216,6 +219,7 @@ def test_to_dict(kwargs, error):
 
 @pytest.mark.parametrize('filename, as_file, error', [
     ('annotations/annotation/01.js', False, None),
+    ('annotations/annotation/02.js', False, None),
 
     ('annotations/annotation/error-01.js',
      False,
@@ -226,6 +230,7 @@ def test_to_dict(kwargs, error):
       ValueError)),
 
     ('annotations/annotation/01.js', True, None),
+    ('annotations/annotation/02.js', True, None),
 
     ('annotations/annotation/error-01.js',
      True,
@@ -238,3 +243,22 @@ def test_to_dict(kwargs, error):
 ])
 def test_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
+
+
+@pytest.mark.parametrize('draggable, error', [
+    ('xy', None),
+    ('x', None),
+    ('y', None),
+    ('', None),
+    ('unrecognized', ValueError),
+])
+def test_71_draggable_empty_string(draggable, error):
+    if not error:
+        result = cls(draggable = draggable)
+        assert result is not None
+        assert isinstance(result, cls) is True
+        assert hasattr(result, 'draggable') is True
+        assert result.draggable == draggable
+    else:
+        with pytest.raises(error):
+            result = cls(draggable = draggable)
