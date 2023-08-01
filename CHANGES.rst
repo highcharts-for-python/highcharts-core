@@ -1,3 +1,10 @@
+Release 1.2.6
+=========================================
+
+* **BUGFIX:** Fixed incorrect handling of an empty string in ``Annotation.draggable`` property (#71).
+
+------------------
+
 Release 1.2.5
 =========================================
 
