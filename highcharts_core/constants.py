@@ -946,3 +946,8 @@ EXPORT_SERVER_UNSUPPORTED_SERIES_TYPES = [
     'geoheatmap',
     'treegraph',
 ]
+
+
+EMPTY_STRING_CONTEXTS = [
+    'Annotation.draggable',
+]
