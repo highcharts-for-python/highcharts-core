@@ -333,3 +333,42 @@ def test_from_js_literal(cls, as_str, error):
     else:
         with pytest.raises(error):
             result = cls.from_js_literal(as_str)
+
+@pytest.mark.parametrize('error', [
+    (None),
+])
+def test_to_json_with_timestamp(error):
+    from datetime import datetime
+    import json
+    
+    try:
+        from pandas import Timestamp
+        import_successful = True
+    except ImportError:
+        import_successful = False
+        
+    if import_successful:
+        class ClassWithTimestamp(HighchartsMeta):
+            @property
+            def timestamp_value(self):
+                return Timestamp(datetime.utcnow())
+            
+            def _to_untrimmed_dict(self, in_cls=None) -> dict:
+                return {
+                    'timestamp_value': self.timestamp_value
+                }
+                
+            @classmethod
+            def _get_kwargs_from_dict(cls, as_dict):
+                return {}
+
+        if not error:
+            obj = ClassWithTimestamp()
+            result = obj.to_json()
+            assert 'timestamp_value' in result
+            as_dict = json.loads(result)
+            assert 'timestamp_value' in as_dict
+            assert checkers.is_numeric(as_dict['timestamp_value']) is True
+        else:
+            with pytest.raises(error):
+                obj = ClassWithTimestamp()

@@ -275,7 +275,7 @@ class HighchartsMeta(ABC):
                 as_dict[key] = value.timestamp()
             # other truthy -> str / number
             elif value:
-                trimmed_value = HighchartsMeta.trim_iterable(value, 
+                trimmed_value = HighchartsMeta.trim_iterable(value,
                                                              to_json = to_json,
                                                              context = context)
                 if trimmed_value:
