@@ -1,3 +1,10 @@
+Release 1.2.7
+=========================================
+
+* **ENHANCEMENT:** Custom ``__repr__()`` method for Highcharts Core for Python classes.
+
+------------------
+
 Release 1.2.6
 =========================================
 
