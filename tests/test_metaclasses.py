@@ -36,7 +36,7 @@ class TestClass(HighchartsMeta):
 
 test_class_instance = TestClass(item1 = 123, item2 = 456)
 test_class_trimmed_instance = TestClass(item1 = 123)
-test_class_iterable = TestClass(item1 = [1, 2, constants.EnforcedNullType], item2 = 456)
+test_class_iterable = TestClass(item1 = [1, 2, constants.EnforcedNull], item2 = 456)
 test_class_none_iterable = TestClass(item1 = [1, None, 3], item2 = 456)
 
 @pytest.mark.parametrize('kwargs, error', [
@@ -372,3 +372,13 @@ def test_to_json_with_timestamp(error):
         else:
             with pytest.raises(error):
                 obj = ClassWithTimestamp()
+
+
+@pytest.mark.parametrize('instance, expected', [
+    (test_class_instance, "TestClass.from_dict({'item1': 123, 'item2': 456})"),
+    (constants.EnforcedNull, "EnforcedNullType()"),
+    (test_class_iterable, "TestClass.from_dict({'item1': [1, 2, 'null'], 'item2': 456})"),
+])
+def test__repr(instance, expected):
+    result = repr(instance)
+    assert result == expected

@@ -41,6 +41,9 @@ class HighchartsMeta(ABC):
 
         return self_js_literal == other_js_literal
 
+    def __repr__(self):
+        return f'{self.__class__.__name__}.from_dict({self.to_dict()})'
+
     @property
     def _dot_path(self) -> Optional[str]:
         """The dot-notation path to the options key for the current class.
