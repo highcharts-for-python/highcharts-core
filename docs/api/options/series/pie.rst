@@ -18,6 +18,7 @@ class: :class:`PieSeries <highcharts_core.options.series.pie.PieSeries>`
 .. autoclass:: PieSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -37,6 +38,7 @@ class: :class:`VariablePieSeries <highcharts_core.options.series.pie.VariablePie
 .. autoclass:: VariablePieSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

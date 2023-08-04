@@ -17,7 +17,8 @@ class: :class:`ArcDiagramSeries <highcharts_core.options.series.arcdiagram.ArcDi
 
 .. autoclass:: ArcDiagramSeries
   :members:
-  :inherited-members:
+    :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

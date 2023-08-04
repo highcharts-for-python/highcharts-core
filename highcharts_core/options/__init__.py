@@ -96,6 +96,36 @@ class Options(HighchartsMeta):
 
         self.series = kwargs.get('series', None)
 
+    def __str__(self):
+        """Return a human-readable :class:`str <python:str>` representation of the chart
+        configuration.
+
+        .. warning::
+        
+          To ensure that the result is human-readable, the result will be rendered
+          *without* its ``plot_options`` and ``series`` sub-properties. 
+        
+          .. tip::
+        
+            If you would like a *complete* and *unambiguous* :class:`str <python:str>` 
+            representation, then you can:
+            
+            * use the :meth:`__repr__() <highcharts_core.options.Options.__repr__>` method,
+            * call ``repr(my_options)``, or
+            * serialize the chart to JSON using ``my_options.to_json()``.
+            
+        :returns: A :class:`str <python:str>` representation of the chart configuration.
+        :rtype: :class:`str <python:str>`
+        """
+        as_dict = self.to_dict()
+
+        kwargs = {utility_functions.to_snake_case(key): as_dict[key]
+                  for key in as_dict if key not in ['series', 'plotOptions']}
+        kwargs_as_str = ', '.join([f'{key} = {repr(kwargs[key])}'
+                                   for key in kwargs])
+
+        return f'{self.__class__.__name__}({kwargs_as_str})'
+
     @property
     def accessibility(self) -> Optional[Accessibility]:
         """Options for configuring accessibility for the chart.

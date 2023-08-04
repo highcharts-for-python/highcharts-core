@@ -18,6 +18,7 @@ class: :class:`SankeySeries <highcharts_core.options.series.sankey.SankeySeries>
 .. autoclass:: SankeySeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

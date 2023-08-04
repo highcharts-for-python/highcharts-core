@@ -18,6 +18,7 @@ class: :class:`GaugeSeries <highcharts_core.options.series.gauge.GaugeSeries>`
 .. autoclass:: GaugeSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -36,6 +37,7 @@ class: :class:`SolidGaugeSeries <highcharts_core.options.series.gauge.SolidGauge
 .. autoclass:: SolidGaugeSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

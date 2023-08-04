@@ -42,6 +42,13 @@ class HighchartsMeta(ABC):
         return self_js_literal == other_js_literal
 
     def __repr__(self):
+        """Generate an unambiguous and complete :class:`str <python:str>` representation
+        of the object.
+        
+        :returns: An unambiguous and complete :class:`str <python:str>` representation
+          of the object (which may have varying degrees of readability).
+        :rtype: :class:`str <python:str>`
+        """
         as_dict = self.to_dict()
 
         kwargs = {utility_functions.to_snake_case(key): as_dict[key]

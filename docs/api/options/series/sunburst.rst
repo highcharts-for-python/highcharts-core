@@ -18,6 +18,7 @@ class: :class:`SunburstSeries <highcharts_core.options.series.sunburst.SunburstS
 .. autoclass:: SunburstSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

@@ -18,6 +18,7 @@ class: :class:`PackedBubbleSeries <highcharts_core.options.series.packedbubble.P
 .. autoclass:: PackedBubbleSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

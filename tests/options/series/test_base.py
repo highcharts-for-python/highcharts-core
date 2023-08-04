@@ -684,3 +684,27 @@ def test_load_from_pandas(input_files, filename, property_map, error):
     else:
         with pytest.raises(error):
             instance.load_from_pandas(df, property_map = property_map)
+            
+
+@pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
+def test__repr__(kwargs, error):
+    obj = cls(**kwargs)
+    if not error:
+        result = repr(obj)
+        if 'data' in kwargs:
+            assert 'data = ' in result
+    else:
+        with pytest.raises(error):
+            result = repr(obj)
+
+
+@pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
+def test__str__(kwargs, error):
+    obj = cls(**kwargs)
+    if not error:
+        result = str(obj)
+        print(result)
+        assert 'data = ' not in result
+    else:
+        with pytest.raises(error):
+            result = str(obj)

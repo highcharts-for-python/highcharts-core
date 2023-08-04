@@ -18,6 +18,7 @@ class: :class:`BoxPlotSeries <highcharts_core.options.series.boxplot.BoxPlotSeri
 .. autoclass:: BoxPlotSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -36,6 +37,7 @@ class: :class:`ErrorBarSeries <highcharts_core.options.series.boxplot.ErrorBarSe
 .. autoclass:: ErrorBarSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

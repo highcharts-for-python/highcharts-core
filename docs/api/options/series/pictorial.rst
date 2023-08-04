@@ -18,6 +18,7 @@ class: :class:`PictorialSeries <highcharts_core.options.series.pictorial.Pictori
 .. autoclass:: PictorialSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -38,6 +39,7 @@ class: :class:`PictorialPaths <highcharts_core.options.series.pictorial.Pictoria
 .. autoclass:: PictorialPaths
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

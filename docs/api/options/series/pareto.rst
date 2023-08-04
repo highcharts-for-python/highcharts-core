@@ -18,6 +18,7 @@ class: :class:`ParetoSeries <highcharts_core.options.series.pareto.ParetoSeries>
 .. autoclass:: ParetoSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

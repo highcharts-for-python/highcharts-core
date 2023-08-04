@@ -18,6 +18,7 @@ class: :class:`BubbleSeries <highcharts_core.options.series.bubble.BubbleSeries>
 .. autoclass:: BubbleSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

@@ -291,3 +291,50 @@ def test_get_script_tags(options_str, as_str, expected, error):
     else:
         with pytest.raises(error):
             result = chart.get_script_tags(as_str = as_str)
+            
+
+@pytest.mark.parametrize('kwargs, error', [
+    ({}, None),
+    ({
+        'container': 'my-container-name', 
+        'module_url': 'https://mycustomurl.com/', 
+        'options': {
+            'title': {
+                'text': 'My Chart'
+            }
+        }
+    }, None),
+])
+def test__repr__(kwargs, error):
+    obj = cls(**kwargs)
+    if not error:
+        result = repr(obj)
+        if 'options' in kwargs:
+            assert 'options = ' in result
+    else:
+        with pytest.raises(error):
+            result = repr(obj)
+
+
+@pytest.mark.parametrize('kwargs, error', [
+    ({}, None),
+    ({
+        'container': 'my-container-name', 
+        'module_url': 'https://mycustomurl.com/', 
+        'options': {
+            'title': {
+                'text': 'My Chart'
+            }
+        }
+    }, None),
+])
+def test__str__(kwargs, error):
+    obj = cls(**kwargs)
+    if not error:
+        result = str(obj)
+        print(result)
+        if 'options' in kwargs:
+            assert 'options = ' in result
+    else:
+        with pytest.raises(error):
+            result = str(obj)

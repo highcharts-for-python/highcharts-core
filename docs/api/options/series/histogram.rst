@@ -18,6 +18,7 @@ class: :class:`HistogramSeries <highcharts_core.options.series.histogram.Histogr
 .. autoclass:: HistogramSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

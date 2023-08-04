@@ -18,6 +18,7 @@ class: :class:`VectorSeries <highcharts_core.options.series.vector.VectorSeries>
 .. autoclass:: VectorSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

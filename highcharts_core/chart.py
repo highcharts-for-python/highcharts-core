@@ -37,6 +37,47 @@ class Chart(HighchartsMeta):
 
         super().__init__(**kwargs)
 
+    def __str__(self):
+        """Return a human-readable :class:`str <python:str>` representation of the chart.
+
+        .. warning::
+        
+          To ensure that the result is human-readable, the chart's ``options`` property will 
+          be rendered *without* its ``plot_options`` and ``series`` sub-properties. 
+        
+          .. tip::
+        
+            If you would like a *complete* and *unambiguous* :class:`str <python:str>` 
+            representation, then you can:
+            
+            * use the :meth:`__repr__() <highcharts_core.chart.Chart.__repr__>` method,
+            * call ``repr(my_chart)``, or
+            * serialize the chart to JSON using ``my_chart.to_json()``.
+            
+        :returns: A :class:`str <python:str>` representation of the chart.
+        :rtype: :class:`str <python:str>`
+        """
+        as_dict = self.to_dict()
+
+        kwargs = {utility_functions.to_snake_case(key): as_dict[key]
+                  for key in as_dict if key not in ['options', 'userOptions']}
+
+        if 'options' in as_dict:
+            kwargs['options'] = str(as_dict['options'])
+        elif 'userOptions' in as_dict:
+            kwargs['options'] = str(as_dict['userOptions'])
+
+        kwargs_as_str = ''
+        for index, key in enumerate(kwargs):
+            if index > 0:
+                kwargs_as_str += ', '
+            if key == 'options':
+                kwargs_as_str += f'options = {kwargs[key]}'
+            else:
+                kwargs_as_str += f'{key} = {repr(kwargs[key])}'
+            
+        return f'{self.__class__.__name__}({kwargs_as_str})'
+
     def _jupyter_include_scripts(self):
         """Return the JavaScript code that is used to load the Highcharts JS libraries.
 

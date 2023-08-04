@@ -18,6 +18,7 @@ class: :class:`PyramidSeries <highcharts_core.options.series.pyramid.PyramidSeri
 .. autoclass:: PyramidSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -36,6 +37,7 @@ class: :class:`Pyramid3DSeries <highcharts_core.options.series.pyramid.Pyramid3D
 .. autoclass:: Pyramid3DSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
