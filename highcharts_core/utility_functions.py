@@ -248,6 +248,35 @@ def to_camelCase(snake_case):
     return camel_case
 
 
+def to_snake_case(camel_case) -> str:
+    """Convert ``camelCase`` to ``snake_case``.
+
+    :param camel_case: A :class:`str <python:str>` which is likely to contain
+      ``camelCase``.
+    :type camel_case: :class:`str <python:str>`
+
+    :returns: A ``snake_case`` representation of ``camel_case``.
+    :rtype: :class:`str <python:str>`
+    """
+    camel_case = validators.string(camel_case)
+
+    snake_case = ''
+    previous_character = ''
+    for character in camel_case:
+        if character.isupper() and not previous_character.isupper():
+            snake_case += f'_{character.lower()}'
+        elif character.isupper() and previous_character.isupper():
+            snake_case += character.lower()
+        elif character.isupper() and not previous_character:
+            snake_case += character.lower()
+        else:
+            snake_case += character
+
+        previous_character = character
+
+    return snake_case
+
+
 def parse_csv(csv_data,
               has_header_row = True,
               delimiter = ',',

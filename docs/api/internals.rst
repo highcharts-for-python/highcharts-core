@@ -165,6 +165,11 @@ function:: :func:`to_camelCase() <highcharts_core.utility_functions.to_camelCase
 
 .. autofunction:: to_camelCase
 
+function:: :func:`to_snake_case() <highcharts_core.utility_functions.to_snake_case>`
+=====================================================================================================
+
+.. autofunction:: to_snake_case
+
 function:: :func:`parse_csv() <highcharts_core.utility_functions.parse_csv>`
 =====================================================================================================
 

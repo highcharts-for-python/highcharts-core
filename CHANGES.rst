@@ -3,6 +3,7 @@ Release 1.3.0
 
 * **ENHANCEMENT:** Added a complete ``__repr__()`` method for Highcharts Core for Python classes.
 * **ENHANCEMENT:** Added ``Chart.get_script_tags()`` to retrieve Javascript ``<script>`` tags (#78).
+* **ENHANCEMENT:** Added ``utility_functions.to_snake_case()`` function.
 
 ------------------
 
