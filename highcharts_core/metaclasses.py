@@ -42,7 +42,14 @@ class HighchartsMeta(ABC):
         return self_js_literal == other_js_literal
 
     def __repr__(self):
-        return f'{self.__class__.__name__}.from_dict({self.to_dict()})'
+        as_dict = self.to_dict()
+
+        kwargs = {utility_functions.to_snake_case(key): as_dict[key]
+                  for key in as_dict}
+        kwargs_as_str = ', '.join([f'{key} = {repr(kwargs[key])}'
+                                   for key in kwargs])
+
+        return f'{self.__class__.__name__}({kwargs_as_str})'
 
     @property
     def _dot_path(self) -> Optional[str]:

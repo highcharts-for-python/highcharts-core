@@ -39,6 +39,37 @@ test_class_trimmed_instance = TestClass(item1 = 123)
 test_class_iterable = TestClass(item1 = [1, 2, constants.EnforcedNull], item2 = 456)
 test_class_none_iterable = TestClass(item1 = [1, None, 3], item2 = 456)
 
+
+class TestClassCamelCase(TestClass):
+    def __init__(self, **kwargs):
+        self.camel_case_item = kwargs.get('camel_case_item', None)
+
+        super().__init__(**kwargs)
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'item1': as_dict.get('item1', None),
+            'item2': as_dict.get('item2', None),
+            'camel_case_item': as_dict.get('camelCaseItem', None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        return {
+            'item1': self.item1,
+            'item2': self.item2,
+            'camelCaseItem': self.camel_case_item
+        }
+
+test_class_camel_case_instance = TestClassCamelCase(item1 = 123, item2 = 456, camel_case_item = 'test')
+test_class_camel_case_trimmed_instance = TestClassCamelCase(item1 = 123, camel_case_item = 'test')
+test_class_camel_case_iterable = TestClassCamelCase(item1 = [1, 2, constants.EnforcedNull], item2 = 456, camel_case_item = 'test')
+test_class_camel_case__none_iterable = TestClassCamelCase(item1 = [1, None, 3], item2 = 456, camel_case_item = 'test')
+
+
+
 @pytest.mark.parametrize('kwargs, error', [
     ({'item1': 123,
       'item2': 456},
@@ -375,10 +406,10 @@ def test_to_json_with_timestamp(error):
 
 
 @pytest.mark.parametrize('instance, expected', [
-    (test_class_instance, "TestClass.from_dict({'item1': 123, 'item2': 456})"),
+    (test_class_camel_case_instance, "TestClassCamelCase(item1 = 123, item2 = 456, camel_case_item = 'test')"),
     (constants.EnforcedNull, "EnforcedNullType()"),
-    (test_class_iterable, "TestClass.from_dict({'item1': [1, 2, 'null'], 'item2': 456})"),
+    (test_class_camel_case_iterable, "TestClassCamelCase(item1 = [1, 2, 'null'], item2 = 456, camel_case_item = 'test')"),
 ])
-def test__repr(instance, expected):
+def test__repr__(instance, expected):
     result = repr(instance)
     assert result == expected
