@@ -1,6 +1,6 @@
 from typing import Optional
 
-from validator_collection import checkers
+from validator_collection import checkers, validators
 
 from highcharts_core import constants, errors
 from highcharts_core.decorators import class_sensitive
