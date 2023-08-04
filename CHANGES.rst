@@ -1,7 +1,8 @@
-Release 1.2.7
+Release 1.3.0
 =========================================
 
-* **ENHANCEMENT:** Custom ``__repr__()`` method for Highcharts Core for Python classes.
+* **ENHANCEMENT:** Added a complete ``__repr__()`` method for Highcharts Core for Python classes.
+* **ENHANCEMENT:** Added ``Chart.get_script_tags()`` to retrieve Javascript ``<script>`` tags (#78).
 
 ------------------
 
