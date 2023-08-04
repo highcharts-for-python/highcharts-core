@@ -118,15 +118,16 @@ class HighchartsMeta(ABC):
           ``'.js'`` extension included. Defaults to ``False``.
         :type include_extension: :class:`bool <python:bool>`
 
-        :rtype: :class:`list <python:list>`
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
         initial_scripts = constants.MODULE_REQUIREMENTS.get(self._dot_path, [])
-        prelim_scripts = self._process_required_modules(initial_scripts, include_extension = include_extension)
+        prelim_scripts = self._process_required_modules(initial_scripts, 
+                                                        include_extension = include_extension)
         scripts = []
         
         has_all_indicators = False
         for script in prelim_scripts:
-            if script.endswith('indicators-all.js'):
+            if script.endswith('indicators-all.js') or script.endswith('indicators-all'):
                 has_all_indicators = True
         
         for script in prelim_scripts:

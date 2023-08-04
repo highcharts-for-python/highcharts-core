@@ -144,3 +144,150 @@ def test_get_required_modules(json_str, expected_modules, error):
     else:
         with pytest.raises(error):
             result = chart.get_required_modules()
+
+
+@pytest.mark.parametrize('options_str, as_str, expected, error', [
+    ("""{
+        "chart": {
+            "type": "column"
+        },
+        "colors": null,
+        "credits": false,
+        "exporting": {
+            "scale": 1
+        },
+        "series": [{
+            "baseSeries": 1,
+            "color": "#434343",
+            "name": "Pareto",
+            "tooltip": {
+                "valueDecimals": 2,
+                "valueSuffix": "%"
+            },
+            "type": "pareto",
+            "yAxis": 1,
+            "zIndex": 10
+        }, {
+            "color": "#7cb5ec",
+            "data": [1, 23, 45, 54, 84, 13, 8, 7, 23, 1, 34, 6, 8, 99, 85, 23, 3, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1],
+            "name": "random-name",
+            "type": "column",
+            "zIndex": 2
+        }],
+        "title": {
+            "text": "Random Name Pareto"
+        },
+        "tooltip": {
+            "shared": true
+        },
+        "xAxis": {
+            "categories": ["Something", "Something", "Something", "Something", "Something", "Something", "Hypovolemia", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something"],
+            "crosshair": true,
+            "labels": {
+                "rotation": 90
+            }
+        },
+        "yAxis": [{
+            "title": {
+                "text": "count"
+            }
+        }, {
+            "labels": {
+                "format": "{value}%"
+            },
+            "max": 100,
+            "maxPadding": 0,
+            "min": 0,
+            "minPadding": 0,
+            "opposite": true,
+            "title": {
+                "text": "accum percent"
+            }
+        }]
+    }""",
+    False,
+    [
+        '<script src="https://code.highcharts.com/highcharts.js"></script>',
+        '<script src="https://code.highcharts.com/modules/exporting.js"></script>',
+        '<script src="https://code.highcharts.com/modules/pareto.js"></script>'
+    ], None),
+    ("""{
+        "chart": {
+            "type": "column"
+        },
+        "colors": null,
+        "credits": false,
+        "exporting": {
+            "scale": 1
+        },
+        "series": [{
+            "baseSeries": 1,
+            "color": "#434343",
+            "name": "Pareto",
+            "tooltip": {
+                "valueDecimals": 2,
+                "valueSuffix": "%"
+            },
+            "type": "pareto",
+            "yAxis": 1,
+            "zIndex": 10
+        }, {
+            "color": "#7cb5ec",
+            "data": [1, 23, 45, 54, 84, 13, 8, 7, 23, 1, 34, 6, 8, 99, 85, 23, 3, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1],
+            "name": "random-name",
+            "type": "column",
+            "zIndex": 2
+        }],
+        "title": {
+            "text": "Random Name Pareto"
+        },
+        "tooltip": {
+            "shared": true
+        },
+        "xAxis": {
+            "categories": ["Something", "Something", "Something", "Something", "Something", "Something", "Hypovolemia", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something", "Something"],
+            "crosshair": true,
+            "labels": {
+                "rotation": 90
+            }
+        },
+        "yAxis": [{
+            "title": {
+                "text": "count"
+            }
+        }, {
+            "labels": {
+                "format": "{value}%"
+            },
+            "max": 100,
+            "maxPadding": 0,
+            "min": 0,
+            "minPadding": 0,
+            "opposite": true,
+            "title": {
+                "text": "accum percent"
+            }
+        }]
+    }""",
+    True,
+    """<script src="https://code.highcharts.com/highcharts.js"></script>\n<script src="https://code.highcharts.com/modules/exporting.js"></script>\n<script src="https://code.highcharts.com/modules/pareto.js"></script>""", None),
+])
+def test_get_script_tags(options_str, as_str, expected, error):
+    from highcharts_core.options import HighchartsOptions
+    options = HighchartsOptions.from_json(options_str)
+    chart = cls.from_options(options)
+
+    if not error:
+        result = chart.get_script_tags(as_str = as_str)
+        if isinstance(expected, list):
+            assert isinstance(result, list) is True
+            assert len(result) == len(expected)
+            for item in expected:
+                assert item in result
+        elif result:
+            assert result == expected
+        else:
+            assert result is None or len(result) == 0
+    else:
+        with pytest.raises(error):
+            result = chart.get_script_tags(as_str = as_str)
