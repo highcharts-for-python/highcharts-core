@@ -112,7 +112,7 @@ STANDARD_PARAMS = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category'
+      'name': 'some category'
     }, None),
     # + DataBase Options
     ({
@@ -401,8 +401,8 @@ STANDARD_PARAMS_2 = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
-      'y': 123
+      'y': 123,
+      'name': 'some category'
     }, None),
     # + DataBase Options
     ({

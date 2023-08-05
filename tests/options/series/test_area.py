@@ -119,8 +119,8 @@ STANDARD_PARAMS = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           },
           {
             'dataLabels': {
@@ -432,8 +432,8 @@ STANDARD_PARAMS = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           },
           {
             'dataLabels': {
@@ -762,8 +762,8 @@ STANDARD_PARAMS = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           },
           {
             'dataLabels': {
@@ -1501,7 +1501,7 @@ STANDARD_PARAMS_2 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category'
+            'name': 'some category'
           },
           {
             'dataLabels': {
@@ -1602,7 +1602,6 @@ STANDARD_PARAMS_2 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
 
             'accessibility': {
                 'description': 'Some description goes here',
@@ -1840,7 +1839,6 @@ STANDARD_PARAMS_2 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
 
             'accessibility': {
                 'description': 'Some description goes here',
@@ -1994,7 +1992,7 @@ STANDARD_PARAMS_2 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category'
+            'name': 'some category'
           },
           {
             'dataLabels': {
@@ -2095,7 +2093,6 @@ STANDARD_PARAMS_2 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
 
             'accessibility': {
                 'description': 'Some description goes here',
@@ -2786,7 +2783,7 @@ def test_bugfix32_LineSeries_from_csv(kwargs, error):
         assert result.data is not None
         assert isinstance(result.data, list) is True
         for item in result.data:
-            assert item.x is not None
+            assert item.name is not None
             assert item.y is not None
 
 

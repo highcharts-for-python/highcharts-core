@@ -113,7 +113,7 @@ STANDARD_PARAMS = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
+      'name': 'some category',
       'y': 123
     }, None),
     # Datetime X Value
@@ -853,8 +853,8 @@ STANDARD_PARAMS_2 = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
-      'y': 123
+      'y': 123,
+      'name': 'some category'
     }, None),
     # + DataBase options
     # Categorical X Value
@@ -1142,8 +1142,8 @@ STANDARD_PARAMS_3 = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
-      'y': 123
+      'y': 123,
+      'name': 'some category'
     }, None),
     # + DataBase options
     # Categorical X Value
