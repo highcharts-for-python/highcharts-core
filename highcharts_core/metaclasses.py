@@ -273,7 +273,10 @@ class HighchartsMeta(ABC):
                     as_dict[key] = trimmed_value
             # Enforced null
             elif isinstance(value, constants.EnforcedNullType):
-                as_dict[key] = 'null'
+                if to_json:
+                    as_dict[key] = None
+                else:
+                    as_dict[key] = value
             # dict -> object
             elif isinstance(value, dict):
                 trimmed_value = HighchartsMeta.trim_dict(value,
@@ -288,9 +291,23 @@ class HighchartsMeta(ABC):
                                                              context = context)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
-            # Pandas Timestamp
-            elif checkers.is_type(value, 'Timestamp'):
-                as_dict[key] = value.timestamp()
+            # Datetime or Datetime-like
+            elif checkers.is_datetime(value):
+                trimmed_value = value
+                if to_json:
+                    if not value.tzinfo:
+                        trimmed_value = value.replace(tzinfo = datetime.timezone.utc)
+                    as_dict[key] = trimmed_value.timestamp() * 1000
+                elif hasattr(trimmed_value, 'to_pydatetime'):
+                    as_dict[key] = trimmed_value.to_pydatetime()
+                else:
+                    as_dict[key] = trimmed_value
+            # Date or Time
+            elif checkers.is_date(value) or checkers.is_time(value):
+                if to_json:
+                    as_dict[key] = value.isoformat()
+                else:
+                    as_dict[key] = value
             # other truthy -> str / number
             elif value:
                 trimmed_value = HighchartsMeta.trim_iterable(value,
@@ -440,7 +457,7 @@ class HighchartsMeta(ABC):
                                  context = self.__class__.__name__)
 
         for key in as_dict:
-            if as_dict[key] == constants.EnforcedNull or as_dict[key] == 'null':
+            if as_dict[key] == constants.EnforcedNull or as_dict[key] is None:
                 as_dict[key] = None
         try:
             as_json = json.dumps(as_dict, encoding = encoding)

@@ -1,6 +1,8 @@
 Release 1.3.0
 =========================================
 
+* **BUGFIX:** Fixed incorrect serialization of datetime and Pandas ``Timestamp`` objects in ``.to_dict()`` and ``.to_json()`` (#74).
+* **BUGFIX:** Fixed incorrect serialization of ``EnforcedNull`` in ``.to_dict()`` and ``.to_json()`` (#75).
 * **ENHANCEMENT:** Added ``__repr__()`` method for Highcharts Core for Python classes (#76).
 * **ENHANCEMENT:** Added ``__str__()`` method with special handling for difficult-to-read classes (#76).
 * **ENHANCEMENT:** Added ``Chart.get_script_tags()`` to retrieve Javascript ``<script>`` tags (#78).

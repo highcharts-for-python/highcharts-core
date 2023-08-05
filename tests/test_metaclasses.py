@@ -8,6 +8,19 @@ from highcharts_core import constants
 from json.decoder import JSONDecodeError
 from validator_collection import checkers
 
+try:
+    import orjson as json
+    json_as_bytes = True
+except ImportError:
+    json_as_bytes = False
+    try:
+        import rapidjson as json
+    except ImportError:
+        try:
+            import simplejson as json
+        except ImportError:
+            import json
+
 
 class TestClass(HighchartsMeta):
     """Class used to test the :class:`HighchartsMeta` functionality."""
@@ -396,13 +409,52 @@ def test_to_json_with_timestamp(error):
         if not error:
             obj = ClassWithTimestamp()
             result = obj.to_json()
-            assert 'timestamp_value' in result
+            if json_as_bytes:
+                assert b'timestamp_value' in result
+            else:
+                assert 'timestamp_value' in result
             as_dict = json.loads(result)
             assert 'timestamp_value' in as_dict
             assert checkers.is_numeric(as_dict['timestamp_value']) is True
         else:
             with pytest.raises(error):
                 obj = ClassWithTimestamp()
+
+
+@pytest.mark.parametrize('error', [
+    (None),
+])
+def test_to_json_with_date(error):
+    from datetime import datetime, date
+    import json
+    
+    class ClassWithDate(HighchartsMeta):
+        @property
+        def date_value(self):
+            return date.today()
+        
+        def _to_untrimmed_dict(self, in_cls=None) -> dict:
+            return {
+                'date_value': self.date_value
+            }
+            
+        @classmethod
+        def _get_kwargs_from_dict(cls, as_dict):
+            return {}
+
+    if not error:
+        obj = ClassWithDate()
+        result = obj.to_json()
+        if json_as_bytes:
+            assert b'date_value' in result
+        else:
+            assert 'date_value' in result
+        as_dict = json.loads(result)
+        assert 'date_value' in as_dict
+        assert checkers.is_string(as_dict['date_value']) is True
+    else:
+        with pytest.raises(error):
+            obj = ClassWithDate()
 
 
 @pytest.mark.parametrize('instance, expected', [
@@ -413,3 +465,34 @@ def test_to_json_with_timestamp(error):
 def test__repr__(instance, expected):
     result = repr(instance)
     assert result == expected
+
+
+class ClassWithEnforcedNull(HighchartsMeta):
+    @property
+    def enforced_null_value(self):
+        return constants.EnforcedNull
+    
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
+        return {
+            'enforced_null_value': self.enforced_null_value
+        }
+        
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        return {}
+    
+    
+def test_enforced_null_to_dict():
+    obj = ClassWithEnforcedNull()
+    result = obj.to_dict()
+    assert 'enforced_null_value' in result
+    assert isinstance(result['enforced_null_value'], constants.EnforcedNullType) is True
+
+
+def test_enforced_null_to_json():
+    obj = ClassWithEnforcedNull()
+    result = obj.to_json()
+    if json_as_bytes:
+        assert result == b'{"enforced_null_value":null}'
+    else:
+        assert result == '{"enforced_null_value": null}'
