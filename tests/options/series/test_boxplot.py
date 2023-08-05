@@ -653,7 +653,7 @@ STANDARD_PARAMS_2 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category'
+            'name': 'some category'
           },
       ],
       'id': 'some-id-goes-here',
@@ -767,7 +767,7 @@ STANDARD_PARAMS_2 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category'
+            'name': 'some category'
           },
       ],
       'id': 'some-id-goes-here',
@@ -926,7 +926,7 @@ STANDARD_PARAMS_2 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category'
+            'name': 'some category'
           },
       ],
       'id': 'some-id-goes-here',

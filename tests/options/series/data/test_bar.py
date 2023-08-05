@@ -125,8 +125,8 @@ STANDARD_PARAMS = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
-      'y': 123
+      'y': 123,
+      'name': 'some category'
     }, None),
     # + DataBase options
     # Categorical X Value
@@ -232,7 +232,6 @@ STANDARD_PARAMS = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
       'y': 123,
 
       'accessibility': {
@@ -308,8 +307,8 @@ def test_BarData_from_js_literal(input_files, filename, as_file, error):
 
 
 @pytest.mark.parametrize('array, expected, error', [
-    ([['A', 123]], {'name': 'A', 'x': 'A', 'y': 123}, None),
-    ([{'x': 'A', 'y': 123, 'name': 'A'}], {'name': 'A', 'x': 'A', 'y': 123}, None)
+    ([['A', 123]], {'name': 'A', 'y': 123}, None),
+    ([{'x': 'A', 'y': 123, 'name': 'A'}], {'name': 'A', 'y': 123}, None)
 ])
 def test_BarData_from_array(array, expected, error):
     if not expected:
@@ -434,8 +433,8 @@ STANDARD_PARAMS_2 = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
-      'y': 123
+      'y': 123,
+      'name': 'some category'
     }, None),
     # + DataBase options
     # Categorical X Value
@@ -539,7 +538,6 @@ STANDARD_PARAMS_2 = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
       'y': 123,
 
       'accessibility': {
@@ -706,8 +704,8 @@ STANDARD_PARAMS_3 = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
-      'y': 123
+      'y': 123,
+      'name': 'some category'
     }, None),
     # + DataBase options
     # Categorical X Value
@@ -811,7 +809,6 @@ STANDARD_PARAMS_3 = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
       'y': 123,
 
       'accessibility': {

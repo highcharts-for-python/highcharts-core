@@ -115,7 +115,6 @@ STANDARD_PARAMS = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
             'y': 123,
 
             'accessibility': {
@@ -246,7 +245,6 @@ STANDARD_PARAMS = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
             'y': 123,
 
             'accessibility': {
@@ -383,7 +381,6 @@ STANDARD_PARAMS = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
             'y': 123,
 
             'accessibility': {
@@ -895,7 +892,6 @@ STANDARD_PARAMS_2 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
             'y': 123,
 
             'accessibility': {
@@ -1026,7 +1022,6 @@ STANDARD_PARAMS_2 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
             'y': 123,
 
             'accessibility': {
@@ -1159,7 +1154,6 @@ STANDARD_PARAMS_2 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
             'y': 123,
 
             'accessibility': {
@@ -1298,7 +1292,6 @@ STANDARD_PARAMS_2 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
             'y': 123,
 
             'accessibility': {
