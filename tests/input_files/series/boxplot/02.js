@@ -99,7 +99,7 @@
         symbol: 'circle',
         width: 48
       },
-      x: 'some category'
+      name: 'some category'
     }
   ],
   id: 'some-id-goes-here',

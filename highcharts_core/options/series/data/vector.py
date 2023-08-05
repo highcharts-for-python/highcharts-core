@@ -86,6 +86,9 @@ class VectorData(CartesianData):
                                                   f'coercable to one. Could not coerce: '
                                                   f'{item}')
 
+            if checkers.is_string(as_obj.x) and not as_obj.name:
+                as_obj.name = as_obj.x
+                as_obj.x = None
             collection.append(as_obj)
 
         return collection

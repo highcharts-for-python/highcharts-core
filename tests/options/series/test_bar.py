@@ -132,8 +132,8 @@ STANDARD_PARAMS = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           }
       ],
       'id': 'some-id-goes-here',
@@ -256,8 +256,8 @@ STANDARD_PARAMS = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           }
       ],
       'id': 'some-id-goes-here',
@@ -425,8 +425,8 @@ STANDARD_PARAMS = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           }
       ],
       'id': 'some-id-goes-here',
@@ -1055,8 +1055,8 @@ STANDARD_PARAMS_4 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           },
           {
             'dataLabels': {
@@ -1155,8 +1155,8 @@ STANDARD_PARAMS_4 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           }
       ],
       'id': 'some-id-goes-here',
@@ -1268,8 +1268,8 @@ STANDARD_PARAMS_4 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           },
           {
             'dataLabels': {
@@ -1368,8 +1368,8 @@ STANDARD_PARAMS_4 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           }
       ],
       'id': 'some-id-goes-here',
@@ -1486,8 +1486,8 @@ STANDARD_PARAMS_4 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           },
           {
             'dataLabels': {
@@ -1586,8 +1586,8 @@ STANDARD_PARAMS_4 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           }
       ],
       'id': 'some-id-goes-here',
@@ -1749,8 +1749,8 @@ STANDARD_PARAMS_4 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           },
           {
             'data_labels': {
@@ -1849,8 +1849,8 @@ STANDARD_PARAMS_4 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           }
       ],
       'id': 'some-id-goes-here',
@@ -2374,7 +2374,7 @@ STANDARD_PARAMS_5 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category'
+            'name': 'some category'
           },
           {
             'dataLabels': {
@@ -2475,7 +2475,6 @@ STANDARD_PARAMS_5 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
 
             'accessibility': {
                 'description': 'Some description goes here',
@@ -2617,7 +2616,7 @@ STANDARD_PARAMS_5 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category'
+            'name': 'some category'
           },
           {
             'dataLabels': {
@@ -2718,7 +2717,6 @@ STANDARD_PARAMS_5 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
 
             'accessibility': {
                 'description': 'Some description goes here',
@@ -2905,7 +2903,7 @@ STANDARD_PARAMS_5 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category'
+            'name': 'some category'
           },
           {
             'dataLabels': {
@@ -3006,7 +3004,6 @@ STANDARD_PARAMS_5 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
 
             'accessibility': {
                 'description': 'Some description goes here',
@@ -3601,8 +3598,8 @@ STANDARD_PARAMS_7 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           },
           {
             'z': 456,
@@ -3703,8 +3700,8 @@ STANDARD_PARAMS_7 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           }
       ],
       'id': 'some-id-goes-here',
@@ -3818,8 +3815,8 @@ STANDARD_PARAMS_7 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           },
           {
             'z': 456,
@@ -3920,8 +3917,8 @@ STANDARD_PARAMS_7 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           }
       ],
       'id': 'some-id-goes-here',
@@ -4080,8 +4077,8 @@ STANDARD_PARAMS_7 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           },
           {
             'z': 456,
@@ -4182,8 +4179,8 @@ STANDARD_PARAMS_7 = [
               'symbol': 'circle',
               'width': 48
             },
-            'x': 'some category',
-            'y': 123
+            'y': 123,
+            'name': 'some category'
           }
       ],
       'id': 'some-id-goes-here',
