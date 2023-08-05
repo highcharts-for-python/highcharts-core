@@ -20,6 +20,11 @@ class NonAbstractDataBase(DataBase):
 cls = NonAbstractDataBase
 
 
+class RequiringJSObject(NonAbstractDataBase):
+    def _to_untrimmed_dict(self):
+        return {'someKey': 123}
+
+
 STANDARD_PARAMS = [
     ({}, None),
     ({
@@ -93,3 +98,13 @@ def test_to_dict(kwargs, error):
 ])
 def test_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
+
+
+@pytest.mark.parametrize('cls, expected', [
+    (NonAbstractDataBase, False),
+    (RequiringJSObject, True),
+    
+])
+def test_requires_js_object(cls, expected):
+    obj = cls()
+    assert obj.requires_js_object is expected
