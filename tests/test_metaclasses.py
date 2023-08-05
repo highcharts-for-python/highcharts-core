@@ -8,6 +8,19 @@ from highcharts_core import constants
 from json.decoder import JSONDecodeError
 from validator_collection import checkers
 
+try:
+    import orjson as json
+    json_as_bytes = True
+except ImportError:
+    json_as_bytes = False
+    try:
+        import rapidjson as json
+    except ImportError:
+        try:
+            import simplejson as json
+        except ImportError:
+            import json
+
 
 class TestClass(HighchartsMeta):
     """Class used to test the :class:`HighchartsMeta` functionality."""
@@ -396,7 +409,10 @@ def test_to_json_with_timestamp(error):
         if not error:
             obj = ClassWithTimestamp()
             result = obj.to_json()
-            assert 'timestamp_value' in result
+            if json_as_bytes:
+                assert b'timestamp_value' in result
+            else:
+                assert 'timestamp_value' in result
             as_dict = json.loads(result)
             assert 'timestamp_value' in as_dict
             assert checkers.is_numeric(as_dict['timestamp_value']) is True
@@ -429,7 +445,10 @@ def test_to_json_with_date(error):
     if not error:
         obj = ClassWithDate()
         result = obj.to_json()
-        assert 'date_value' in result
+        if json_as_bytes:
+            assert b'date_value' in result
+        else:
+            assert 'date_value' in result
         as_dict = json.loads(result)
         assert 'date_value' in as_dict
         assert checkers.is_string(as_dict['date_value']) is True
@@ -473,4 +492,7 @@ def test_enforced_null_to_dict():
 def test_enforced_null_to_json():
     obj = ClassWithEnforcedNull()
     result = obj.to_json()
-    assert result == '{"enforced_null_value": null}'
+    if json_as_bytes:
+        assert result == b'{"enforced_null_value":null}'
+    else:
+        assert result == '{"enforced_null_value": null}'
