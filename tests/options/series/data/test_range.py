@@ -1,6 +1,7 @@
 """Tests for ``highcharts.no_data``."""
 
 import pytest
+import datetime
 
 from json.decoder import JSONDecodeError
 
@@ -288,6 +289,36 @@ def test_RangeData_to_dict(kwargs, error):
 ])
 def test_RangeData_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
+
+
+utc_now = datetime.datetime.utcnow()
+today = datetime.date.today()
+
+
+@pytest.mark.parametrize('input_array, set_props, expected_type, expected', [
+    ([], {}, list, []),
+    ([[321, 123, 456], [123, 789, 123]], {}, list, [[321, 123, 456], [123, 789, 123]]),
+    ([[123, 456], [789, 123]], {}, list, [[123, 456], [789, 123]]),
+    ([['A', 123, 456], ['B', 321, 123]], {}, list, [['A', 123, 456], ['B', 321, 123]]),
+    ([[utc_now, 123, 456], [utc_now, 321, 123]], {}, list, [[utc_now, 123, 456], [utc_now, 321, 123]]),
+    ([[today, 123, 456], [today, 321, 123]], {}, list, [[today, 123, 456], [today, 321, 123]]),
+    
+    ([[123, 456], [789, 123]], {'id': 'some_id'}, dict, None),
+])
+def test_RangeData_to_array(input_array, set_props, expected_type, expected):
+    iterable = cls.from_array(input_array)
+    for data_point in iterable:
+        for key in set_props:
+            setattr(data_point, key, set_props[key])
+    
+    results = []
+    for data_point in iterable:
+        result = data_point.to_array()
+        assert isinstance(result, expected_type) is True
+        results.append(result)
+        
+    if expected_type == list:
+        assert results == expected
 
 
 ## NEXT CLASS

@@ -757,3 +757,35 @@ def test_VectorData_to_dict(kwargs, error):
 ])
 def test_VectorData_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
+
+
+utc_now = datetime.datetime.utcnow()
+today = datetime.date.today()
+
+
+@pytest.mark.parametrize('input_array, set_props, expected_type, expected', [
+    ([], {}, list, []),
+    ([[123, 456, 789, 987], [789, 123, 456, 789]], {}, list, [[123, 456, 789, 987], [789, 123, 456, 789]]),
+    ([['A', 456, 789, 987], ['B', 123, 456, 789]], {}, list, [['A', 456, 789, 987], ['B', 123, 456, 789]]),
+    ([[utc_now, 456, 789, 987], [utc_now, 123, 456, 789]], {}, list, [[utc_now, 456, 789, 987], [utc_now, 123, 456, 789]]),
+    ([[today, 456, 789, 987], [today, 123, 456, 789]], {}, list, [[today, 456, 789, 987], [today, 123, 456, 789]]),
+
+    ([[123, 456, 789], [789, 123, 456]], {}, list, [[123, 456, 789], [789, 123, 456]]),
+
+    ([[123, 456, 789, 987], [789, 123, 456, 789]], {'id': 'some_id'}, dict, None),
+    ([[123, 456, 789], [789, 123, 456]], {'id': 'some_id'}, dict, None),
+])
+def test_VectorData_to_array(input_array, set_props, expected_type, expected):
+    iterable = cls.from_array(input_array)
+    for data_point in iterable:
+        for key in set_props:
+            setattr(data_point, key, set_props[key])
+    
+    results = []
+    for data_point in iterable:
+        result = data_point.to_array()
+        assert isinstance(result, expected_type) is True
+        results.append(result)
+        
+    if expected_type == list:
+        assert results == expected
