@@ -18,6 +18,7 @@ class: :class:`ScatterSeries <highcharts_core.options.series.scatter.ScatterSeri
 .. autoclass:: ScatterSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -36,6 +37,7 @@ class: :class:`Scatter3DSeries <highcharts_core.options.series.scatter.Scatter3D
 .. autoclass:: Scatter3DSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

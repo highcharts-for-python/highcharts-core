@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 from decimal import Decimal
 
 from validator_collection import validators, checkers
@@ -214,6 +214,16 @@ class ConnectionData(ConnectionBase):
 
         return collection
 
+    def _get_props_from_array(self) -> List[str]:
+        """Returns a list of the property names that can be set using the
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
+        method.
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        """
+        return ['from_',
+                'to']
+
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         """Convenience method which returns the keyword arguments used to initialize the
@@ -320,6 +330,15 @@ class WeightedConnectionData(ConnectionData):
             collection.append(as_obj)
 
         return collection
+
+    def _get_props_from_array(self) -> List[str]:
+        """Returns a list of the property names that can be set using the
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
+        method.
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        """
+        return []
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

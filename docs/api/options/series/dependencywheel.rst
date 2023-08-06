@@ -18,6 +18,7 @@ class: :class:`DependencyWheelSeries <highcharts_core.options.series.dependencyw
 .. autoclass:: DependencyWheelSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

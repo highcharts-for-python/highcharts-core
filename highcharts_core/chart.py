@@ -1,3 +1,4 @@
+import os
 from typing import Optional, List
 from collections import UserDict
 
@@ -30,9 +31,52 @@ class Chart(HighchartsMeta):
         self.container = kwargs.get('container', None)
         self.options = kwargs.get('options', None)
         self.variable_name = kwargs.get('variable_name', None)
-        self.module_url = kwargs.get('module_url', 'https://code.highcharts.com/')
+        self.module_url = kwargs.get('module_url',
+                                     None) or os.environ.get('HIGHCHARTS_MODULE_URL',
+                                                             'https://code.highcharts.com/')
 
         super().__init__(**kwargs)
+
+    def __str__(self):
+        """Return a human-readable :class:`str <python:str>` representation of the chart.
+
+        .. warning::
+        
+          To ensure that the result is human-readable, the chart's ``options`` property will 
+          be rendered *without* its ``plot_options`` and ``series`` sub-properties. 
+        
+          .. tip::
+        
+            If you would like a *complete* and *unambiguous* :class:`str <python:str>` 
+            representation, then you can:
+            
+            * use the :meth:`__repr__() <highcharts_core.chart.Chart.__repr__>` method,
+            * call ``repr(my_chart)``, or
+            * serialize the chart to JSON using ``my_chart.to_json()``.
+            
+        :returns: A :class:`str <python:str>` representation of the chart.
+        :rtype: :class:`str <python:str>`
+        """
+        as_dict = self.to_dict()
+
+        kwargs = {utility_functions.to_snake_case(key): as_dict[key]
+                  for key in as_dict if key not in ['options', 'userOptions']}
+
+        if 'options' in as_dict:
+            kwargs['options'] = str(as_dict['options'])
+        elif 'userOptions' in as_dict:
+            kwargs['options'] = str(as_dict['userOptions'])
+
+        kwargs_as_str = ''
+        for index, key in enumerate(kwargs):
+            if index > 0:
+                kwargs_as_str += ', '
+            if key == 'options':
+                kwargs_as_str += f'options = {kwargs[key]}'
+            else:
+                kwargs_as_str += f'{key} = {repr(kwargs[key])}'
+            
+        return f'{self.__class__.__name__}({kwargs_as_str})'
 
     def _jupyter_include_scripts(self):
         """Return the JavaScript code that is used to load the Highcharts JS libraries.
@@ -152,15 +196,36 @@ class Chart(HighchartsMeta):
         """
         return self.display()
 
-    def get_required_modules(self, include_extension = False) -> List[str]:
+    def get_script_tags(self, as_str = False) -> List[str] | str:
+        """Return the collection of ``<script/>`` tags needed to load the modules
+        for the chart to render.
+        
+        :param as_str: if ``True``, will return the result as a 
+          :class:`str <python:str>` instance, rather than a :class:`list <python:list>`
+          of :class:`str <python:str>`. Defaults to ``False``.
+        :type as_str: :class:`bool <python:bool>`
+
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>` or 
+          :class:`str <python:str>`
+        """
+        scripts = [f'<script src="{self.module_url}{x}"></script>' 
+                   for x in self.get_required_modules(include_extension = True)]
+
+        if as_str:
+            return '\n'.join(scripts)
+            
+        return scripts
+
+    def get_required_modules(self, 
+                             include_extension = False) -> List[str]:
         """Return the list of URLs from which the Highcharts JavaScript modules
         needed to render the chart can be retrieved.
         
         :param include_extension: if ``True``, will return script names with the 
           ``'.js'`` extension included. Defaults to ``False``.
         :type include_extension: :class:`bool <python:bool>`
-
-        :rtype: :class:`list <python:list>`
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
         initial_scripts = ['highcharts']
         scripts = self._process_required_modules(initial_scripts, include_extension)
@@ -189,8 +254,9 @@ class Chart(HighchartsMeta):
     @property
     def module_url(self) -> str:
         """The URL from which Highcharts modules should be downloaded when 
-        generating the ``<script/>`` tags. Defaults to 
-        ``'https://code.highcharts.com/'``.
+        generating the ``<script/>`` tags. Will default to the
+        ``HIGHCHARTS_MODULE_URL`` environment variable if available, and 
+        otherwise defaults to ``'https://code.highcharts.com/'``.
         
         .. tip::
         

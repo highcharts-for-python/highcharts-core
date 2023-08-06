@@ -713,6 +713,7 @@ familiarize yourself with these internals.
       :func:`mro__to_untrimmed_dict() <highcharts_core.utility_functions.mro__to_untrimmed_dict>`
       :func:`validate_color() <highcharts_core.utility_functions.validate_color>`
       :func:`to_camelCase() <highcharts_core.utility_functions.to_camelCase>`
+      :func:`to_snake_case() <highcharts_core.utility_functions.to_snake_case>`
       :func:`parse_csv() <highcharts_core.utility_functions.parse_csv>`
 
 .. target-notes::

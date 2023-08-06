@@ -46,6 +46,37 @@ class SeriesBase(SeriesOptions):
 
         super().__init__(**kwargs)
 
+    def __str__(self):
+        """Return a human-readable :class:`str <python:str>` representation of the series.
+
+        .. warning::
+        
+          To ensure that the result is human-readable, the string representation
+          will be generated *without* its 
+          :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` 
+          property.
+        
+          .. tip::
+        
+            If you would like a *complete* and *unambiguous* :class:`str <python:str>` 
+            representation, then you can:
+            
+            * use the :meth:`__repr__() <highcharts_core.options.series.base.SeriesBase.__repr__>` method,
+            * call ``repr(my_series)``, or
+            * serialize the series to JSON using ``my_series.to_json()``.
+            
+        :returns: A :class:`str <python:str>` representation of the chart.
+        :rtype: :class:`str <python:str>`
+        """
+        as_dict = self.to_dict()
+
+        kwargs = {utility_functions.to_snake_case(key): as_dict[key]
+                  for key in as_dict if key != 'data'}
+        kwargs_as_str = ', '.join([f'{key} = {repr(kwargs[key])}'
+                                   for key in kwargs])
+
+        return f'{self.__class__.__name__}({kwargs_as_str})'
+
     @property
     def _dot_path(self) -> Optional[str]:
         """The dot-notation path to the options key for the current class.

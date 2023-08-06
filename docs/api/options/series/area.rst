@@ -18,6 +18,7 @@ class: :class:`AreaSeries <highcharts_core.options.series.area.AreaSeries>`
 .. autoclass:: AreaSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -36,6 +37,7 @@ class: :class:`AreaRangeSeries <highcharts_core.options.series.area.AreaRangeSer
 .. autoclass:: AreaRangeSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -54,6 +56,7 @@ class: :class:`AreaSplineSeries <highcharts_core.options.series.area.AreaSplineS
 .. autoclass:: AreaSplineSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -72,6 +75,7 @@ class: :class:`AreaSplineRangeSeries <highcharts_core.options.series.area.AreaSp
 .. autoclass:: AreaSplineRangeSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -90,6 +94,7 @@ class: :class:`LineSeries <highcharts_core.options.series.area.LineSeries>`
 .. autoclass:: LineSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -108,6 +113,7 @@ class: :class:`StreamGraphSeries <highcharts_core.options.series.area.StreamGrap
 .. autoclass:: StreamGraphSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

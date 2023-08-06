@@ -46,6 +46,7 @@ class: :class:`HighchartsOptions <highcharts_core.options.HighchartsOptions>`
 .. autoclass:: HighchartsOptions
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
 -----------------------
 
@@ -56,6 +57,7 @@ class: :class:`Options <highcharts_core.options.Options>`
 .. autoclass:: Options
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
 -----------------------
 

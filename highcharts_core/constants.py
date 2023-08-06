@@ -28,6 +28,9 @@ with open(os.path.join(os.path.dirname(__file__),
 class EnforcedNullType:
     def __eq__(self, other):
         return isinstance(other, self.__class__)
+    
+    def __repr__(self):
+        return "EnforcedNullType()"
 
 
 EnforcedNull = EnforcedNullType()

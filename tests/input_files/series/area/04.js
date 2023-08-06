@@ -99,7 +99,7 @@
         symbol: 'circle',
         width: 48
       },
-      x: 'some category'
+      name: 'some category'
     },
     {
       dataLabels: {
@@ -200,8 +200,6 @@
         symbol: 'circle',
         width: 48
       },
-      x: 'some category',
-
       accessibility: {
           description: 'Some description goes here',
           enabled: true

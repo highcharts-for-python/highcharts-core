@@ -18,6 +18,7 @@ class: :class:`TimelineSeries <highcharts_core.options.series.timeline.TimelineS
 .. autoclass:: TimelineSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

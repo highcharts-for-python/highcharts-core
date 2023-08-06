@@ -25,7 +25,14 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
     :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
     """
     if checkers.is_iterable(item, forbid_literals = (str, bytes, dict, UserDict)):
-        return [serialize_to_js_literal(x, encoding = encoding) for x in item]
+        requires_js_objects = all([getattr(x, 'requires_js_object', True) 
+                                   for x in item])
+        if requires_js_objects:
+            return [serialize_to_js_literal(x, encoding = encoding) 
+                    for x in item]
+        else:
+            return [serialize_to_js_literal(x.to_array(), encoding = encoding)
+                    for x in item]
     elif hasattr(item, 'to_js_literal'):
         return item.to_js_literal(encoding = encoding)
     elif isinstance(item, constants.EnforcedNullType) or item == 'null':

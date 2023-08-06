@@ -8,6 +8,19 @@ from highcharts_core import constants
 from json.decoder import JSONDecodeError
 from validator_collection import checkers
 
+try:
+    import orjson as json
+    json_as_bytes = True
+except ImportError:
+    json_as_bytes = False
+    try:
+        import rapidjson as json
+    except ImportError:
+        try:
+            import simplejson as json
+        except ImportError:
+            import json
+
 
 class TestClass(HighchartsMeta):
     """Class used to test the :class:`HighchartsMeta` functionality."""
@@ -36,8 +49,39 @@ class TestClass(HighchartsMeta):
 
 test_class_instance = TestClass(item1 = 123, item2 = 456)
 test_class_trimmed_instance = TestClass(item1 = 123)
-test_class_iterable = TestClass(item1 = [1, 2, constants.EnforcedNullType], item2 = 456)
+test_class_iterable = TestClass(item1 = [1, 2, constants.EnforcedNull], item2 = 456)
 test_class_none_iterable = TestClass(item1 = [1, None, 3], item2 = 456)
+
+
+class TestClassCamelCase(TestClass):
+    def __init__(self, **kwargs):
+        self.camel_case_item = kwargs.get('camel_case_item', None)
+
+        super().__init__(**kwargs)
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'item1': as_dict.get('item1', None),
+            'item2': as_dict.get('item2', None),
+            'camel_case_item': as_dict.get('camelCaseItem', None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        return {
+            'item1': self.item1,
+            'item2': self.item2,
+            'camelCaseItem': self.camel_case_item
+        }
+
+test_class_camel_case_instance = TestClassCamelCase(item1 = 123, item2 = 456, camel_case_item = 'test')
+test_class_camel_case_trimmed_instance = TestClassCamelCase(item1 = 123, camel_case_item = 'test')
+test_class_camel_case_iterable = TestClassCamelCase(item1 = [1, 2, constants.EnforcedNull], item2 = 456, camel_case_item = 'test')
+test_class_camel_case__none_iterable = TestClassCamelCase(item1 = [1, None, 3], item2 = 456, camel_case_item = 'test')
+
+
 
 @pytest.mark.parametrize('kwargs, error', [
     ({'item1': 123,
@@ -333,3 +377,122 @@ def test_from_js_literal(cls, as_str, error):
     else:
         with pytest.raises(error):
             result = cls.from_js_literal(as_str)
+
+@pytest.mark.parametrize('error', [
+    (None),
+])
+def test_to_json_with_timestamp(error):
+    from datetime import datetime
+    import json
+    
+    try:
+        from pandas import Timestamp
+        import_successful = True
+    except ImportError:
+        import_successful = False
+        
+    if import_successful:
+        class ClassWithTimestamp(HighchartsMeta):
+            @property
+            def timestamp_value(self):
+                return Timestamp(datetime.utcnow())
+            
+            def _to_untrimmed_dict(self, in_cls=None) -> dict:
+                return {
+                    'timestamp_value': self.timestamp_value
+                }
+                
+            @classmethod
+            def _get_kwargs_from_dict(cls, as_dict):
+                return {}
+
+        if not error:
+            obj = ClassWithTimestamp()
+            result = obj.to_json()
+            if json_as_bytes:
+                assert b'timestamp_value' in result
+            else:
+                assert 'timestamp_value' in result
+            as_dict = json.loads(result)
+            assert 'timestamp_value' in as_dict
+            assert checkers.is_numeric(as_dict['timestamp_value']) is True
+        else:
+            with pytest.raises(error):
+                obj = ClassWithTimestamp()
+
+
+@pytest.mark.parametrize('error', [
+    (None),
+])
+def test_to_json_with_date(error):
+    from datetime import datetime, date
+    import json
+    
+    class ClassWithDate(HighchartsMeta):
+        @property
+        def date_value(self):
+            return date.today()
+        
+        def _to_untrimmed_dict(self, in_cls=None) -> dict:
+            return {
+                'date_value': self.date_value
+            }
+            
+        @classmethod
+        def _get_kwargs_from_dict(cls, as_dict):
+            return {}
+
+    if not error:
+        obj = ClassWithDate()
+        result = obj.to_json()
+        if json_as_bytes:
+            assert b'date_value' in result
+        else:
+            assert 'date_value' in result
+        as_dict = json.loads(result)
+        assert 'date_value' in as_dict
+        assert checkers.is_string(as_dict['date_value']) is True
+    else:
+        with pytest.raises(error):
+            obj = ClassWithDate()
+
+
+@pytest.mark.parametrize('instance, expected', [
+    (test_class_camel_case_instance, "TestClassCamelCase(item1 = 123, item2 = 456, camel_case_item = 'test')"),
+    (constants.EnforcedNull, "EnforcedNullType()"),
+    (test_class_camel_case_iterable, "TestClassCamelCase(item1 = [1, 2, 'null'], item2 = 456, camel_case_item = 'test')"),
+])
+def test__repr__(instance, expected):
+    result = repr(instance)
+    assert result == expected
+
+
+class ClassWithEnforcedNull(HighchartsMeta):
+    @property
+    def enforced_null_value(self):
+        return constants.EnforcedNull
+    
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
+        return {
+            'enforced_null_value': self.enforced_null_value
+        }
+        
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        return {}
+    
+    
+def test_enforced_null_to_dict():
+    obj = ClassWithEnforcedNull()
+    result = obj.to_dict()
+    assert 'enforced_null_value' in result
+    assert isinstance(result['enforced_null_value'], constants.EnforcedNullType) is True
+
+
+def test_enforced_null_to_json():
+    obj = ClassWithEnforcedNull()
+    result = obj.to_json()
+    if json_as_bytes:
+        assert result == b'{"enforced_null_value":null}'
+    else:
+        assert result == '{"enforced_null_value": null}'

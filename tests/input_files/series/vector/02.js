@@ -1,9 +1,6 @@
 {
   data: [
-    {
-      direction: 45,
-      length: 12
-    }
+    [0, 45, 12]
   ],
   cluster: {
     allowOverlap: true,

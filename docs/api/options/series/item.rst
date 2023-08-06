@@ -18,6 +18,7 @@ class: :class:`ItemSeries <highcharts_core.options.series.item.ItemSeries>`
 .. autoclass:: ItemSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

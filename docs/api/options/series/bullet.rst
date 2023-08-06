@@ -18,6 +18,7 @@ class: :class:`BulletSeries <highcharts_core.options.series.bullet.BulletSeries>
 .. autoclass:: BulletSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

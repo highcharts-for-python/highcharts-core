@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List, Dict
 from decimal import Decimal
 
 import datetime
@@ -204,8 +204,9 @@ class RangeData(DataBase):
                                                       f'had {len(item)} dimensions.')
 
                 as_obj = cls.from_dict(as_dict)
-                if checkers.is_string(as_obj.x):
+                if checkers.is_string(as_obj.x) and not as_obj.name:
                     as_obj.name = as_obj.x
+                    as_obj.x = None
             else:
                 raise errors.HighchartsValueError(f'each data point supplied must either '
                                                   f'be an AreaRangeData Point or be '
@@ -214,6 +215,58 @@ class RangeData(DataBase):
             collection.append(as_obj)
 
         return collection
+
+    def _get_props_from_array(self) -> List[str]:
+        """Returns a list of the property names that can be set using the
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
+        method.
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        """
+        return ['x', 'low', 'high', 'name']
+
+    def to_array(self, force_object = False) -> List | Dict:
+        """Generate the array representation of the data point (the inversion 
+        of 
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`).
+        
+        .. warning::
+        
+          If the data point *cannot* be serialized to a JavaScript array,
+          this method will instead return the untrimmed :class:`dict <python:dict>`
+          representation of the data point as a fallback.
+
+        :param force_object: if ``True``, forces the return of the instance's
+          untrimmed :class:`dict <python:dict>` representation. Defaults to ``False``.
+        :type force_object: :class:`bool <python:bool>`
+
+        :returns: The array representation of the data point.
+        :rtype: :class:`list <python:list>` of values or :class:`dict <python:dict>`
+        """
+        if self.requires_js_object or force_object:
+            return self._to_untrimmed_dict()
+        
+        if self.x is not None:
+            x = self.x
+        elif self.name is not None:
+            x = self.name
+        else:
+            x = constants.EnforcedNull
+            
+        if self.low is not None:
+            low = self.low
+        else:
+            low = constants.EnforcedNull
+            
+        if self.high is not None:
+            high = self.high
+        else:
+            high = constants.EnforcedNull
+
+        if self.x is None and self.name is None:
+            return [low, high]
+            
+        return [x, low, high]
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

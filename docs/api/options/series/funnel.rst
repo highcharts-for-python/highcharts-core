@@ -18,6 +18,7 @@ class: :class:`FunnelSeries <highcharts_core.options.series.funnel.FunnelSeries>
 .. autoclass:: FunnelSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -36,6 +37,7 @@ class: :class:`Funnel3DSeries <highcharts_core.options.series.funnel.Funnel3DSer
 .. autoclass:: Funnel3DSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

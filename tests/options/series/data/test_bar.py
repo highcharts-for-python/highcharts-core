@@ -125,8 +125,8 @@ STANDARD_PARAMS = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
-      'y': 123
+      'y': 123,
+      'name': 'some category'
     }, None),
     # + DataBase options
     # Categorical X Value
@@ -232,7 +232,6 @@ STANDARD_PARAMS = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
       'y': 123,
 
       'accessibility': {
@@ -308,8 +307,8 @@ def test_BarData_from_js_literal(input_files, filename, as_file, error):
 
 
 @pytest.mark.parametrize('array, expected, error', [
-    ([['A', 123]], {'name': 'A', 'x': 'A', 'y': 123}, None),
-    ([{'x': 'A', 'y': 123, 'name': 'A'}], {'name': 'A', 'x': 'A', 'y': 123}, None)
+    ([['A', 123]], {'name': 'A', 'y': 123}, None),
+    ([{'x': 'A', 'y': 123, 'name': 'A'}], {'name': 'A', 'y': 123}, None)
 ])
 def test_BarData_from_array(array, expected, error):
     if not expected:
@@ -324,6 +323,36 @@ def test_BarData_from_array(array, expected, error):
     else:
         with pytest.raises(error):
             result = cls.from_array(array)
+
+
+utc_now = datetime.datetime.utcnow()
+today = datetime.date.today()
+
+
+@pytest.mark.parametrize('input_array, set_props, expected_type, expected', [
+    ([], {}, list, []),
+    ([[123, 456], [789, 123]], {}, list, [[123, 456], [789, 123]]),
+    ([['A', 456], ['B', 123]], {}, list, [['A', 456], ['B', 123]]),
+    ([[utc_now, 456], [utc_now, 123]], {}, list, [[utc_now, 456], [utc_now, 123]]),
+    ([[today, 456], [today, 123]], {}, list, [[today, 456], [today, 123]]),
+    
+    ([[123, 456], [789, 123]], {'id': 'some_id'}, dict, None),
+])
+def test_BarData_to_array(input_array, set_props, expected_type, expected):
+    iterable = cls.from_array(input_array)
+    for data_point in iterable:
+        for key in set_props:
+            setattr(data_point, key, set_props[key])
+    
+    results = []
+    for data_point in iterable:
+        result = data_point.to_array()
+        assert isinstance(result, expected_type) is True
+        results.append(result)
+        
+    if expected_type == list:
+        assert results == expected
+
 
 ## NEXT CLASS
 
@@ -434,8 +463,8 @@ STANDARD_PARAMS_2 = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
-      'y': 123
+      'y': 123,
+      'name': 'some category'
     }, None),
     # + DataBase options
     # Categorical X Value
@@ -539,7 +568,6 @@ STANDARD_PARAMS_2 = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
       'y': 123,
 
       'accessibility': {
@@ -596,6 +624,31 @@ def test_WaterfallData_to_dict(kwargs, error):
 ])
 def test_WaterfallData_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls2, input_files, filename, as_file, error)
+
+
+@pytest.mark.parametrize('input_array, set_props, expected_type, expected', [
+    ([], {}, list, []),
+    ([[123, 456], [789, 123]], {}, list, [[123, 456], [789, 123]]),
+    ([['A', 456], ['B', 123]], {}, list, [['A', 456], ['B', 123]]),
+    ([[utc_now, 456], [utc_now, 123]], {}, list, [[utc_now, 456], [utc_now, 123]]),
+    ([[today, 456], [today, 123]], {}, list, [[today, 456], [today, 123]]),
+    
+    ([[123, 456], [789, 123]], {'id': 'some_id'}, dict, None),
+])
+def test_WaterfallData_to_array(input_array, set_props, expected_type, expected):
+    iterable = cls.from_array(input_array)
+    for data_point in iterable:
+        for key in set_props:
+            setattr(data_point, key, set_props[key])
+    
+    results = []
+    for data_point in iterable:
+        result = data_point.to_array()
+        assert isinstance(result, expected_type) is True
+        results.append(result)
+        
+    if expected_type == list:
+        assert results == expected
 
 ## NEXT CLASS
 
@@ -706,8 +759,8 @@ STANDARD_PARAMS_3 = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
-      'y': 123
+      'y': 123,
+      'name': 'some category'
     }, None),
     # + DataBase options
     # Categorical X Value
@@ -811,7 +864,6 @@ STANDARD_PARAMS_3 = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
       'y': 123,
 
       'accessibility': {
@@ -884,6 +936,37 @@ def test_WindBarbData_to_dict(kwargs, error):
 ])
 def test_WindBarbData_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls3, input_files, filename, as_file, error)
+
+
+@pytest.mark.parametrize('input_array, set_props, expected_type, expected', [
+    ([], {}, list, []),
+    ([[123, 456, 789, 987], [789, 123, 456, 789]], {}, list, [[123, 456, 789, 987], [789, 123, 456, 789]]),
+    ([['A', 456, 789, 987], ['B', 123, 456, 789]], {}, list, [['A', 456, 789, 987], ['B', 123, 456, 789]]),
+    ([[utc_now, 456, 789, 987], [utc_now, 123, 456, 789]], {}, list, [[utc_now, 456, 789, 987], [utc_now, 123, 456, 789]]),
+    ([[today, 456, 789, 987], [today, 123, 456, 789]], {}, list, [[today, 456, 789, 987], [today, 123, 456, 789]]),
+
+    ([[123, 456, 789], [789, 123, 456]], {}, list, [[123, 456, 789], [789, 123, 456]]),
+    ([['A', 456, 789], ['B', 123, 456]], {}, list, [['A', 456, 789], ['B', 123, 456]]),
+    ([[utc_now, 456, 789], [utc_now, 123, 456]], {}, list, [[utc_now, 456, 789], [utc_now, 123, 456]]),
+    ([[today, 456, 789], [today, 123, 456]], {}, list, [[today, 456, 789], [today, 123, 456]]),
+
+    ([[123, 456, 789, 987], [789, 123, 456, 789]], {'id': 'some_id'}, dict, None),
+    ([[123, 456, 789], [789, 123, 456]], {'id': 'some_id'}, dict, None),
+])
+def test_WindBarbData_to_array(input_array, set_props, expected_type, expected):
+    iterable = cls3.from_array(input_array)
+    for data_point in iterable:
+        for key in set_props:
+            setattr(data_point, key, set_props[key])
+    
+    results = []
+    for data_point in iterable:
+        result = data_point.to_array()
+        assert isinstance(result, expected_type) is True
+        results.append(result)
+        
+    if expected_type == list:
+        assert results == expected
 
 
 ## NEXT CLASS

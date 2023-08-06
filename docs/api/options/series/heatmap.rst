@@ -18,6 +18,7 @@ class: :class:`HeatmapSeries <highcharts_core.options.series.heatmap.HeatmapSeri
 .. autoclass:: HeatmapSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -36,6 +37,7 @@ class: :class:`TilemapSeries <highcharts_core.options.series.heatmap.TilemapSeri
 .. autoclass:: TilemapSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

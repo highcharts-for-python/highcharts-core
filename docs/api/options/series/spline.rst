@@ -18,6 +18,7 @@ class: :class:`SplineSeries <highcharts_core.options.series.spline.SplineSeries>
 .. autoclass:: SplineSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

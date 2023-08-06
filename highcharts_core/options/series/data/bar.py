@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List, Dict
 from decimal import Decimal
 
 import datetime
@@ -365,6 +365,7 @@ class WindBarbData(CartesianData):
                 as_obj = cls.from_dict(as_dict)
                 if checkers.is_string(as_obj.x):
                     as_obj.name = as_obj.x
+                    as_obj.x = None
             else:
                 raise errors.HighchartsValueError(f'each data point supplied must either '
                                                   f'be a WindBarb Data Point or be '
@@ -374,6 +375,63 @@ class WindBarbData(CartesianData):
             collection.append(as_obj)
 
         return collection
+
+    def _get_props_from_array(self) -> List[str]:
+        """Returns a list of the property names that can be set using the
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
+        method.
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        """
+        return ['x', 'value', 'direction', 'y', 'name']
+
+    def to_array(self, force_object = False) -> List | Dict:
+        """Generate the array representation of the data point (the inversion 
+        of 
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`).
+        
+        .. warning::
+        
+          If the data point *cannot* be serialized to a JavaScript array,
+          this method will instead return the untrimmed :class:`dict <python:dict>`
+          representation of the data point as a fallback.
+
+        :param force_object: if ``True``, forces the return of the instance's
+          untrimmed :class:`dict <python:dict>` representation. Defaults to ``False``.
+        :type force_object: :class:`bool <python:bool>`
+
+        :returns: The array representation of the data point.
+        :rtype: :class:`list <python:list>` of values or :class:`dict <python:dict>`
+        """
+        if self.requires_js_object or force_object:
+            return self._to_untrimmed_dict()
+        
+        if self.x is None and self.name is not None:
+            x = self.name
+        elif self.x is not None:
+            x = self.x
+        else:
+            x = constants.EnforcedNull
+            
+        if self.y is not None:
+            y = self.y
+        else:
+            y = constants.EnforcedNull
+        
+        if self.value is not None:
+            value = self.value
+        else:
+            value = constants.EnforcedNull
+            
+        if self.direction is not None:
+            direction = self.direction
+        else:
+            direction = constants.EnforcedNull
+        
+        if self.y is None:
+            return [x, value, direction]
+
+        return [x, value, direction, y]
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

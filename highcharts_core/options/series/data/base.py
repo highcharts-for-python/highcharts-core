@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List, Dict
 from decimal import Decimal
 
 from validator_collection import validators, checkers
@@ -304,6 +304,38 @@ class DataBase(DataCore):
 
         return untrimmed
 
+    def _get_props_from_array(self) -> List[str]:
+        """Returns a list of the property names that can be set using the
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
+        method.
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        """
+        return []
+
+    @property
+    def requires_js_object(self) -> bool:
+        """Indicates whether or not the data point *must* be serialized to a JS literal 
+        object or whether it can be serialized to a primitive array.
+        
+        :returns: ``True`` if the data point *must* be serialized to a JS literal object.
+          ``False`` if it can be serialized to an array.
+        :rtype: :class:`bool <python:bool>`
+        """
+        from_array_props = [utility_functions.to_camelCase(x)
+                            for x in self._get_props_from_array()]
+        
+        as_dict = self.to_dict()
+        trimmed_dict = self.trim_dict(as_dict)
+        for prop in from_array_props:
+            if prop in trimmed_dict:
+                del trimmed_dict[prop]
+
+        if trimmed_dict:
+            return True
+        
+        return False
+
     @classmethod
     def from_array(cls, value):
         """Creates a collection of data point instances, parsing the contents of ``value``
@@ -416,3 +448,27 @@ class DataBase(DataCore):
             collection.append(as_obj)
 
         return collection
+
+    def to_array(self, force_object = False) -> List | Dict:
+        """Generate the array representation of the data point (the inversion 
+        of 
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`).
+        
+        .. warning::
+        
+          If the data point *cannot* be serialized to a JavaScript array,
+          this method will instead return the untrimmed :class:`dict <python:dict>`
+          representation of the data point as a fallback.
+
+        :param force_object: if ``True``, forces the return of the instance's
+          untrimmed :class:`dict <python:dict>` representation. Defaults to ``False``.
+        :type force_object: :class:`bool <python:bool>`
+
+        :returns: The array representation of the data point.
+        :rtype: :class:`list <python:list>` of values or :class:`dict <python:dict>`
+        """
+        if self.requires_js_object or force_object:
+            return self._to_untrimmed_dict()
+
+        return [getattr(self, x, constants.EnforcedNull)
+                for x in self._get_props_from_array()]

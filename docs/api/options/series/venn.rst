@@ -18,6 +18,7 @@ class: :class:`VennSeries <highcharts_core.options.series.venn.VennSeries>`
 .. autoclass:: VennSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

@@ -18,6 +18,7 @@ class: :class:`SeriesBase <highcharts_core.options.series.base.SeriesBase>`
 .. autoclass:: SeriesBase
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

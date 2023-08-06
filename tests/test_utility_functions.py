@@ -23,3 +23,17 @@ def test_parse_csv(kwargs, expected_column_names, expected_records, error):
     else:
         with pytest.raises(error):
             result = utility_functions.parse_csv(**kwargs)
+            
+
+@pytest.mark.parametrize('camelCase, expected, error', [
+    ('camelCase', 'camel_case', None),
+    ('camelCaseURL', 'camel_case_url', None),
+    ('camel123Case', 'camel123_case', None),
+])
+def test_to_snake_case(camelCase, expected, error):
+    if not error:
+        result = utility_functions.to_snake_case(camelCase)
+        assert result == expected
+    else:
+        with pytest.raises(error):
+            result = utility_functions.to_snake_case(camelCase)

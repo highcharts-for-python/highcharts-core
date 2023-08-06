@@ -41,6 +41,23 @@ class HighchartsMeta(ABC):
 
         return self_js_literal == other_js_literal
 
+    def __repr__(self):
+        """Generate an unambiguous and complete :class:`str <python:str>` representation
+        of the object.
+        
+        :returns: An unambiguous and complete :class:`str <python:str>` representation
+          of the object (which may have varying degrees of readability).
+        :rtype: :class:`str <python:str>`
+        """
+        as_dict = self.to_dict()
+
+        kwargs = {utility_functions.to_snake_case(key): as_dict[key]
+                  for key in as_dict}
+        kwargs_as_str = ', '.join([f'{key} = {repr(kwargs[key])}'
+                                   for key in kwargs])
+
+        return f'{self.__class__.__name__}({kwargs_as_str})'
+
     @property
     def _dot_path(self) -> Optional[str]:
         """The dot-notation path to the options key for the current class.
@@ -115,15 +132,16 @@ class HighchartsMeta(ABC):
           ``'.js'`` extension included. Defaults to ``False``.
         :type include_extension: :class:`bool <python:bool>`
 
-        :rtype: :class:`list <python:list>`
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
         initial_scripts = constants.MODULE_REQUIREMENTS.get(self._dot_path, [])
-        prelim_scripts = self._process_required_modules(initial_scripts, include_extension = include_extension)
+        prelim_scripts = self._process_required_modules(initial_scripts, 
+                                                        include_extension = include_extension)
         scripts = []
         
         has_all_indicators = False
         for script in prelim_scripts:
-            if script.endswith('indicators-all.js'):
+            if script.endswith('indicators-all.js') or script.endswith('indicators-all'):
                 has_all_indicators = True
         
         for script in prelim_scripts:
@@ -255,7 +273,10 @@ class HighchartsMeta(ABC):
                     as_dict[key] = trimmed_value
             # Enforced null
             elif isinstance(value, constants.EnforcedNullType):
-                as_dict[key] = 'null'
+                if to_json:
+                    as_dict[key] = None
+                else:
+                    as_dict[key] = value
             # dict -> object
             elif isinstance(value, dict):
                 trimmed_value = HighchartsMeta.trim_dict(value,
@@ -270,12 +291,26 @@ class HighchartsMeta(ABC):
                                                              context = context)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
-            # Pandas Timestamp
-            elif checkers.is_type(value, 'Timestamp'):
-                as_dict[key] = value.timestamp()
+            # Datetime or Datetime-like
+            elif checkers.is_datetime(value):
+                trimmed_value = value
+                if to_json:
+                    if not value.tzinfo:
+                        trimmed_value = value.replace(tzinfo = datetime.timezone.utc)
+                    as_dict[key] = trimmed_value.timestamp() * 1000
+                elif hasattr(trimmed_value, 'to_pydatetime'):
+                    as_dict[key] = trimmed_value.to_pydatetime()
+                else:
+                    as_dict[key] = trimmed_value
+            # Date or Time
+            elif checkers.is_date(value) or checkers.is_time(value):
+                if to_json:
+                    as_dict[key] = value.isoformat()
+                else:
+                    as_dict[key] = value
             # other truthy -> str / number
             elif value:
-                trimmed_value = HighchartsMeta.trim_iterable(value, 
+                trimmed_value = HighchartsMeta.trim_iterable(value,
                                                              to_json = to_json,
                                                              context = context)
                 if trimmed_value:
@@ -422,7 +457,7 @@ class HighchartsMeta(ABC):
                                  context = self.__class__.__name__)
 
         for key in as_dict:
-            if as_dict[key] == constants.EnforcedNull or as_dict[key] == 'null':
+            if as_dict[key] == constants.EnforcedNull or as_dict[key] is None:
                 as_dict[key] = None
         try:
             as_json = json.dumps(as_dict, encoding = encoding)

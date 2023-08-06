@@ -132,8 +132,8 @@ STANDARD_PARAMS = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
-      'y': 123
+      'y': 123,
+      'name': 'some category'
     }, None),
     # Datetime X Value
     ({
@@ -466,7 +466,6 @@ STANDARD_PARAMS = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
       'y': 123,
 
       'accessibility': {
@@ -807,3 +806,37 @@ def test_BoxPlotData_to_dict(kwargs, error):
 ])
 def test_BoxPlotData_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
+
+
+utc_now = datetime.datetime.utcnow()
+today = datetime.date.today()
+
+
+@pytest.mark.parametrize('input_array, set_props, expected_type, expected', [
+    ([], {}, list, []),
+    ([[123, 456, 789, 987, 654, 321]], {}, list, [[123, 456, 789, 987, 654, 321]]),
+    ([['A', 456, 789, 987, 654, 321], ['B', 123, 456, 789, 987, 654]], {}, list, [['A', 456, 789, 987, 654, 321], ['B', 123, 456, 789, 987, 654]]),
+    ([[utc_now, 456, 789, 987, 654, 321]], {}, list, [[utc_now, 456, 789, 987, 654, 321]]),
+    ([[today, 456, 789, 987, 654, 321]], {}, list, [[today, 456, 789, 987, 654, 321]]),
+
+    ([[456, 789, 987, 654, 321]], {}, list, [[456, 789, 987, 654, 321]]),
+    ([[456, 789, 987, 654, 321], [123, 456, 789, 987, 654]], {}, list, [[456, 789, 987, 654, 321], [123, 456, 789, 987, 654]]),
+    ([[456, 789, 987, 654, 321]], {}, list, [[456, 789, 987, 654, 321]]),
+
+    ([[123, 456, 789, 987, 654, 321]], {'id': 'some_id'}, dict, None),
+
+])
+def test_BoxPlotData_to_array(input_array, set_props, expected_type, expected):
+    iterable = cls.from_array(input_array)
+    for data_point in iterable:
+        for key in set_props:
+            setattr(data_point, key, set_props[key])
+    
+    results = []
+    for data_point in iterable:
+        result = data_point.to_array()
+        assert isinstance(result, expected_type) is True
+        results.append(result)
+        
+    if expected_type == list:
+        assert results == expected

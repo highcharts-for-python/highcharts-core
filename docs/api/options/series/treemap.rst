@@ -18,6 +18,7 @@ class: :class:`TreemapSeries <highcharts_core.options.series.treemap.TreemapSeri
 .. autoclass:: TreemapSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
