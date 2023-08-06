@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List, Dict
 from decimal import Decimal
 from collections import UserDict
 
@@ -197,6 +197,51 @@ class SinglePointData(SinglePointBase):
 
         return collection
 
+    def _get_props_from_array(self) -> List[str]:
+        """Returns a list of the property names that can be set using the
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
+        method.
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        """
+        return ['y', 'name']
+
+    def to_array(self, force_object = False) -> List | Dict:
+        """Generate the array representation of the data point (the inversion 
+        of 
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`).
+        
+        .. warning::
+        
+          If the data point *cannot* be serialized to a JavaScript array,
+          this method will instead return the untrimmed :class:`dict <python:dict>`
+          representation of the data point as a fallback.
+          
+        :param force_object: if ``True``, forces the return of the instance's
+          untrimmed :class:`dict <python:dict>` representation. Defaults to ``False``.
+        :type force_object: :class:`bool <python:bool>`
+
+        :returns: The array representation of the data point.
+        :rtype: :class:`list <python:list>` of values or :class:`dict <python:dict>`
+        """
+        if self.requires_js_object or force_object:
+            return self._to_untrimmed_dict()
+        
+        if self.y is not None:
+            y = self.y
+        else:
+            y = constants.EnforcedNull
+            
+        if self.name is not None:
+            name = self.name
+        else:
+            name = constants.EnforcedNull
+        
+        if not self.name:
+            return [y]
+
+        return [name, y]
+
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         """Convenience method which returns the keyword arguments used to initialize the
@@ -316,6 +361,43 @@ class SingleValueData(SinglePointBase):
 
         return collection
 
+    def _get_props_from_array(self) -> List[str]:
+        """Returns a list of the property names that can be set using the
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
+        method.
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        """
+        return ['value']
+
+    def to_array(self, force_object = False) -> List | Dict:
+        """Generate the array representation of the data point (the inversion 
+        of 
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`).
+        
+        .. warning::
+        
+          If the data point *cannot* be serialized to a JavaScript array,
+          this method will instead return the untrimmed :class:`dict <python:dict>`
+          representation of the data point as a fallback.
+          
+        :param force_object: if ``True``, forces the return of the instance's
+          untrimmed :class:`dict <python:dict>` representation. Defaults to ``False``.
+        :type force_object: :class:`bool <python:bool>`
+
+        :returns: The array representation of the data point.
+        :rtype: :class:`list <python:list>` of values or :class:`dict <python:dict>`
+        """
+        if self.requires_js_object or force_object:
+            return self._to_untrimmed_dict()
+        
+        if self.value is not None:
+            value = self.value
+        else:
+            value = constants.EnforcedNull
+        
+        return [value]
+
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         """Convenience method which returns the keyword arguments used to initialize the
@@ -433,6 +515,43 @@ class SingleXData(SinglePointBase):
             collection.append(as_obj)
 
         return collection
+
+    def _get_props_from_array(self) -> List[str]:
+        """Returns a list of the property names that can be set using the
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
+        method.
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        """
+        return ['x']
+
+    def to_array(self, force_object = False) -> List | Dict:
+        """Generate the array representation of the data point (the inversion 
+        of 
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`).
+        
+        .. warning::
+        
+          If the data point *cannot* be serialized to a JavaScript array,
+          this method will instead return the untrimmed :class:`dict <python:dict>`
+          representation of the data point as a fallback.
+          
+        :param force_object: if ``True``, forces the return of the instance's
+          untrimmed :class:`dict <python:dict>` representation. Defaults to ``False``.
+        :type force_object: :class:`bool <python:bool>`
+
+        :returns: The array representation of the data point.
+        :rtype: :class:`list <python:list>` of values or :class:`dict <python:dict>`
+        """
+        if self.requires_js_object or force_object:
+            return self._to_untrimmed_dict()
+        
+        if self.x is not None:
+            x = self.x
+        else:
+            x = constants.EnforcedNull
+        
+        return [x]
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
