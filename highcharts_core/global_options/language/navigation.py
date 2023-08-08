@@ -1236,16 +1236,22 @@ class PopupLanguageOptions(HighchartsMeta):
         self._stroke_width = validators.string(value, allow_empty = True)
 
     @property
-    def style(self) -> Optional[str]:
+    def style(self) -> Optional[str | dict]:
         """Defaults to ``'Style``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`str <python:str>` or :class:`dict <python:dict>` or 
+          :obj:`None <python:None>`
         """
         return self._style
 
     @style.setter
     def style(self, value):
-        self._style = validators.string(value, allow_empty = True, coerce_value = True)
+        try:
+            self._style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._style = validators.string(value, 
+                                            allow_empty = True,
+                                            coerce_value = True)
 
     @property
     def time_cycles(self) -> Optional[str]:

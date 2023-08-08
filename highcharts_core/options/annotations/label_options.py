@@ -456,7 +456,7 @@ class LabelOptions(HighchartsMeta):
             self._shape = value
 
     @property
-    def style(self) -> Optional[str]:
+    def style(self) -> Optional[str | dict]:
         """CSS styling to apply to the annotation's label.
 
         :rtype: :class:`str` or :obj:`None <python:None>`
@@ -465,7 +465,12 @@ class LabelOptions(HighchartsMeta):
 
     @style.setter
     def style(self, value):
-        self._style = validators.string(value, allow_empty = True, coerce_value = True)
+        try:
+            self._style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._style = validators.string(value, 
+                                            allow_empty = True,
+                                            coerce_value = True)
 
     @property
     def text(self) -> Optional[str]:

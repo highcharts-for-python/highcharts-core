@@ -138,16 +138,22 @@ class BubbleLegendLabelOptions(HighchartsMeta):
         self._formatter = value
 
     @property
-    def style(self) -> Optional[str]:
+    def style(self) -> Optional[str | dict]:
         """CSS styling to apply to the data labels.
 
-        :rtype: :class:`str` or :obj:`None <python:None>`
+        :rtype: :class:`str <python:str>` or :class:`dict <python:dict>` or 
+          :obj:`None <python:None>`
         """
         return self._style
 
     @style.setter
     def style(self, value):
-        self._style = validators.string(value, allow_empty = True, coerce_value = True)
+        try:
+            self._style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._style = validators.string(value, 
+                                            allow_empty = True,
+                                            coerce_value = True)
 
     @property
     def x(self) -> Optional[int]:
