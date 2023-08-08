@@ -777,7 +777,7 @@ class Tooltip(HighchartsMeta):
             self._stick_on_contact = bool(value)
 
     @property
-    def style(self) -> Optional[str]:
+    def style(self) -> Optional[str | dict]:
         """CSS styling to apply to the tooltip.
 
         .. note::
@@ -795,7 +795,12 @@ class Tooltip(HighchartsMeta):
 
     @style.setter
     def style(self, value):
-        self._style = validators.string(value, allow_empty = True, coerce_value = True)
+        try:
+            self._style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._style = validators.string(value, 
+                                            allow_empty = True,
+                                            coerce_value = True)
 
     @property
     def use_html(self) -> Optional[bool]:

@@ -57,7 +57,7 @@ class Loading(HighchartsMeta):
                                                  minimum = 0)
 
     @property
-    def label_style(self) -> Optional[str]:
+    def label_style(self) -> Optional[str | dict]:
         """CSS styles applied to the loading label's ``<span>``. Defaults to
         ``'{"fontWeight": "bold", "position": "relative", "top": "45%"}'``.
 
@@ -67,7 +67,12 @@ class Loading(HighchartsMeta):
 
     @label_style.setter
     def label_style(self, value):
-        self._label_style = validators.string(value, allow_empty = True)
+        try:
+            self._style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._style = validators.string(value, 
+                                            allow_empty = True,
+                                            coerce_value = True)
 
     @property
     def show_duration(self) -> Optional[int]:
@@ -85,7 +90,7 @@ class Loading(HighchartsMeta):
                                                  minimum = 0)
 
     @property
-    def style(self) -> Optional[str]:
+    def style(self) -> Optional[str | dict]:
         """CSS styles for the loading screen that covers the plot area. Defaults to
         ``'{"position": "absolute", "backgroundColor": "#ffffff", "opacity": 0.5, "textAlign": "center"}'``.
 
@@ -95,7 +100,12 @@ class Loading(HighchartsMeta):
 
     @style.setter
     def style(self, value):
-        self._style = validators.string(value, allow_empty = True, coerce_value = True)
+        try:
+            self._style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._style = validators.string(value, 
+                                            allow_empty = True,
+                                            coerce_value = True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

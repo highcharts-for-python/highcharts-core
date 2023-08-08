@@ -1192,7 +1192,7 @@ class ChartOptions(HighchartsMeta):
         self._spacing_top = validators.numeric(value, allow_empty = True)
 
     @property
-    def style(self) -> Optional[str]:
+    def style(self) -> Optional[str | dict]:
         """Additional CSS styles to apply inline to the container div.
 
         Defaults to ``'{"fontFamily": "\"Lucida Grande\", \"Lucida Sans Unicode\", Verdana, Arial, Helvetica, sans-serif","fontSize":"12px"}'``.
@@ -1202,13 +1202,19 @@ class ChartOptions(HighchartsMeta):
           Since the default font styles are applied in the renderer, it is ignorant of the
           individual chart options and must be set globally.
 
-        :rtype: :class:`str` or :obj:`None <python:None>`
+        :rtype: :class:`str <python:str>` or :class:`dict <python:dict>` or 
+          :obj:`None <python:None>`
         """
         return self._style
 
     @style.setter
     def style(self, value):
-        self._style = validators.string(value, allow_empty = True, coerce_value = True)
+        try:
+            self._style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._style = validators.string(value, 
+                                            allow_empty = True,
+                                            coerce_value = True)
 
     @property
     def styled_mode(self) -> Optional[bool]:

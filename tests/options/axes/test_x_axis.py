@@ -30,7 +30,16 @@ STANDARD_PARAMS = [
       'top': 340,
       'width': 300,
     }, None),
+    # BUG: #82 - dict converted to string
+    ({
+        'labels': {
+            'style': {
+                'color': 'red'
+            }
+        }
+    }, None),
     # with GenericAxis and NumericAxis properties
+    
     ({
       'crosshair': {
           'className': 'some-class-name',
