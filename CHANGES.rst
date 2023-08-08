@@ -1,3 +1,11 @@
+
+Release 1.3.1
+=========================================
+
+* **BUGFIX:** Fixed incorrect ``style`` property deserialization in certain places (#82).
+
+---------------------
+
 Release 1.3.0
 =========================================
 
