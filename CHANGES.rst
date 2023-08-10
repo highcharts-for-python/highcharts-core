@@ -1,4 +1,11 @@
 
+Release 1.3.2
+=========================================
+
+* **BUGFIX:** Fixed incorrect handling when defining a new ``Exporting.buttons`` context button under a different key name than ``contextButton``. (#84).
+
+---------------------
+
 Release 1.3.1
 =========================================
 
