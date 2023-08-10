@@ -586,7 +586,7 @@ class ExportingButtons(JavaScriptDict):
     :class:`ButtonConfiguration`.
 
     """
-    _valid_value_types = ButtonConfiguration
+    _valid_value_types = ContextButtonConfiguration
     _allow_empty_value = True
     
     def __init__(self, **kwargs):

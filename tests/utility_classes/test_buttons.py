@@ -223,3 +223,22 @@ def test_ExportingButtons_from_dict(kwargs, error):
 @pytest.mark.parametrize('kwargs, error',  STANDARD_PARAMS_3)
 def test_ExportingButtons_to_dict(kwargs, error):
     Class_to_dict(cls3, kwargs, error)
+
+
+def test_issue84_ExportingButtons_as_ContextButtonConfiguration():
+    as_dict = {
+        'contextButton': {
+            'enabled': False
+        },
+        'exportButton': {
+            'text': "Download",
+            'menuItems': ['downloadPNG']
+        }
+    }
+    instance = cls3.from_dict(as_dict)
+    for key in as_dict:
+        print({f'Instance: {instance.to_json()}'})
+        print({f'Instance: {instance.to_js_literal()}'})
+        assert key in instance
+        assert does_kwarg_value_match_result(as_dict[key],
+                                             instance.get(key)) is True
