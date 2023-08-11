@@ -119,7 +119,10 @@ class ButtonConfiguration(HighchartsMeta):
 
     @text.setter
     def text(self, value):
-        self._text = validators.string(value, allow_empty = True)
+        if isinstance(value, constants.EnforcedNullType):
+            self._text = None
+        else:
+            self._text = validators.string(value, allow_empty = True)
 
     @property
     def theme(self) -> Optional[ButtonTheme]:
@@ -652,3 +655,263 @@ class ExportingButtons(JavaScriptDict):
             key = 'contextButton'
             
         return super().__getitem__(key)
+
+
+class NavigationButtonConfiguration(ButtonConfiguration):
+    """Configuration options that apply to the Navigation buttons."""
+
+    def __init__(self, **kwargs):
+        self._align = None
+        self._button_spacing = None
+        self._height = None
+        self._symbol_fill = None
+        self._symbol_size = None
+        self._symbol_stroke = None
+        self._symbol_stroke_width = None
+        self._symbol_x = None
+        self._symbol_y = None
+        self._use_html = None
+        self._vertical_align = None
+        self._width = None
+
+        self.align = kwargs.get('align', None)
+        self.button_spacing = kwargs.get('button_spacing', None)
+        self.height = kwargs.get('height', None)
+        self.symbol_fill = kwargs.get('symbol_fill', None)
+        self.symbol_size = kwargs.get('symbol_size', None)
+        self.symbol_stroke = kwargs.get('symbol_stroke', None)
+        self.symbol_stroke_width = kwargs.get('symbol_stroke_width', None)
+        self.symbol_x = kwargs.get('symbol_x', None)
+        self.symbol_y = kwargs.get('symbol_y', None)
+        self.use_html = kwargs.get('use_html', None)
+        self.vertical_align = kwargs.get('vertical_align', None)
+        self.width = kwargs.get('width', None)
+
+        super().__init__(**kwargs)
+
+    @property
+    def align(self) -> Optional[str]:
+        """The alignment for the button. Defaults to ``'right'``.
+
+        Accepts:
+
+          * ``'left'``
+          * ``'center'``
+          * ``'right'``
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._align
+
+    @align.setter
+    def align(self, value):
+        if not value:
+            self._align = None
+        else:
+            value = validators.string(value, allow_empty = False)
+            value = value.lower()
+            if value not in ['left', 'center', 'right']:
+                raise errors.HighchartsValueError(f'align must be either "left", '
+                                                  f'"center", or "right". Was: {value}')
+
+        self._align = value
+
+    @property
+    def button_spacing(self) -> Optional[int | float | Decimal]:
+        """The pixel spacing between buttons. Defaults to ``3``.
+        
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._button_spacing
+    
+    @button_spacing.setter
+    def button_spacing(self, value):
+        self._button_spacing = validators.numeric(value, allow_empty = True)
+        
+    @property
+    def height(self) -> Optional[int | float | Decimal]:
+        """The height of the buttons in pixels. Defaults to ``28``.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        self._height = validators.numeric(value, allow_empty = True)
+
+    @property
+    def symbol_fill(self) -> Optional[str]:
+        """The fill color of the symbol within the buttons. Defaults to ``'#666666'``.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._symbol_fill
+
+    @symbol_fill.setter
+    def symbol_fill(self, value):
+        self._symbol_fill = validators.string(value, allow_empty = True)
+
+    @property
+    def symbol_size(self) -> Optional[int | float | Decimal]:
+        """The pixel size of the symbol on the buttons. Defaults to ``14``.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._symbol_size
+    
+    @symbol_size.setter
+    def symbol_size(self, value):
+        self._symbol_size = validators.numeric(value, allow_empty = True)
+        
+    @property
+    def symbol_stroke(self) -> Optional[str]:
+        """The stroke color of the symbol's line within the buttons. Defaults to 
+        ``'#666666'``.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._symbol_stroke
+    
+    @symbol_stroke.setter
+    def symbol_stroke(self, value):
+        self._symbol_stroke = validators.string(value, allow_empty = True)
+        
+    @property
+    def symbol_stroke_width(self) -> Optional[int | float | Decimal]:
+        """The stroke width of the symbol on the buttons, expressed in pixels. Defaults 
+        to ``1``.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._symbol_stroke_width
+    
+    @symbol_stroke_width.setter
+    def symbol_stroke_width(self, value):
+        self._symbol_stroke_width = validators.numeric(value, allow_empty = True)
+        
+    @property
+    def symbol_x(self) -> Optional[int | float | Decimal]:
+        """The x position of the center of the symbol inside the button. Defaults to 
+        ``14.5``.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._symbol_x
+    
+    @symbol_x.setter
+    def symbol_x(self, value):
+        self._symbol_x = validators.numeric(value, allow_empty = True)
+        
+    @property
+    def symbol_y(self) -> Optional[int | float | Decimal]:
+        """The y position of the center of the symbol inside the button. Defaults to 
+        ``13.5``.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._symbol_y
+    
+    @symbol_y.setter
+    def symbol_y(self, value):
+        self._symbol_y = validators.numeric(value, allow_empty = True)
+        
+    @property
+    def use_html(self) -> Optional[bool]:
+        """Whether to use HTML to render the buttons. Defaults to ``False``.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._use_html
+    
+    @use_html.setter
+    def use_html(self, value):
+        if value is None:
+            self._use_html = None
+        else:
+            self._use_html = bool(value)
+
+    @property
+    def vertical_align(self) -> Optional[str]:
+        """The vertical alignment of the buttons. Defaults to ``'top'``.
+
+        Accepts:
+
+          * ``'top'``
+          * ``'middle'``
+          * ``'bottom'``
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._vertical_align
+    
+    @vertical_align.setter
+    def vertical_align(self, value):
+        if not value:
+            self._vertical_align = None
+        else:
+            value = validators.string(value, allow_empty = False)
+            value = value.lower()
+            if value not in ['top', 'middle', 'bottom']:
+                raise errors.HighchartsValueError(f'vertical_align must be either "top", '
+                                                  f'"middle", or "bottom". Was: {value}')
+
+        self._vertical_align = value
+
+    @property
+    def width(self) -> Optional[int | float | Decimal]:
+        """The width of the button, in pixels. Defaults to ``28``.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._width
+    
+    @width.setter
+    def width(self, value):
+        self._width = validators.numeric(value, allow_empty = True)
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'enabled': as_dict.get('enabled', None),
+            'text': as_dict.get('text', None),
+            'theme': as_dict.get('theme', None),
+            'y': as_dict.get('y', None),
+
+            'align': as_dict.get('align', None),
+            'button_spacing': as_dict.get('buttonSpacing', None),
+            'height': as_dict.get('height', None),
+            'symbol_fill': as_dict.get('symbolFill', None),
+            'symbol_size': as_dict.get('symbolSize', None),
+            'symbol_stroke': as_dict.get('symbolStroke', None),
+            'symbol_stroke_width': as_dict.get('symbolStrokeWidth', None),
+            'symbol_x': as_dict.get('symbolX', None),
+            'symbol_y': as_dict.get('symbolY', None),
+            'use_html': as_dict.get('useHTML', None),
+            'vertical_align': as_dict.get('verticalAlign', None),
+            'width': as_dict.get('width', None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        untrimmed = {
+            'align': self.align,
+            'buttonSpacing': self.button_spacing,
+            'height': self.height,
+            'symbolFill': self.symbol_fill,
+            'symbolSize': self.symbol_size,
+            'symbolStroke': self.symbol_stroke,
+            'symbolStrokeWidth': self.symbol_stroke_width,
+            'symbolX': self.symbol_x,
+            'symbolY': self.symbol_y,
+            'useHTML': self.use_html,
+            'verticalAlign': self.vertical_align,
+            'width': self.width,
+        }
+
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
+
+        return untrimmed

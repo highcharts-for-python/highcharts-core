@@ -1,0 +1,3 @@
+{
+    useHTML: true
+}

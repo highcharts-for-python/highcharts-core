@@ -8,6 +8,7 @@ from json.decoder import JSONDecodeError
 from highcharts_core.utility_classes.buttons import ButtonConfiguration as cls
 from highcharts_core.utility_classes.buttons import ContextButtonConfiguration as cls2
 from highcharts_core.utility_classes.buttons import ExportingButtons as cls3
+from highcharts_core.utility_classes.buttons import NavigationButtonConfiguration as cls4
 from highcharts_core import errors, constants
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
@@ -242,3 +243,54 @@ def test_issue84_ExportingButtons_as_ContextButtonConfiguration():
         assert key in instance
         assert does_kwarg_value_match_result(as_dict[key],
                                              instance.get(key)) is True
+
+
+STANDARD_PARAMS_4 = [
+    ({}, None),
+    ({
+        'use_html': True
+    }, None),
+]
+
+@pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
+def test_NavigationButtonConfiguration__init__(kwargs, error):
+    Class__init__(cls4, kwargs, error)
+
+
+@pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
+def test_NavigationButtonConfiguration__to_untrimmed_dict(kwargs, error):
+    Class__to_untrimmed_dict(cls4, kwargs, error)
+
+
+@pytest.mark.parametrize('kwargs, error',  STANDARD_PARAMS)
+def test_NavigationButtonConfiguration_from_dict(kwargs, error):
+    Class_from_dict(cls4, kwargs, error)
+
+
+@pytest.mark.parametrize('kwargs, error',  STANDARD_PARAMS)
+def test_NavigationButtonConfiguration_to_dict(kwargs, error):
+    Class_to_dict(cls4, kwargs, error)
+
+
+@pytest.mark.parametrize('filename, as_file, error', [
+    ('utility_classes/buttons/03.js', False, None),
+    ('utility_classes/buttons/04.js', False, None),
+
+    ('utility_classes/buttons/error-01.js', False, (errors.HighchartsValueError,
+                                                    errors.HighchartsParseError,
+                                                    JSONDecodeError,
+                                                    TypeError,
+                                                    ValueError)),
+
+    ('utility_classes/buttons/03.js', True, None),
+    ('utility_classes/buttons/04.js', True, None),
+
+    ('utility_classes/buttons/error-01.js', True, (errors.HighchartsValueError,
+                                                   errors.HighchartsParseError,
+                                                   JSONDecodeError,
+                                                   TypeError,
+                                                   ValueError)),
+])
+def test_NavigationButtonConfiguration_from_js_literal(input_files, filename, as_file, error):
+    Class_from_js_literal(cls4, input_files, filename, as_file, error)
+
