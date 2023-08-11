@@ -53,6 +53,48 @@ STANDARD_PARAMS = [
       },
       'icons_url': 'https://www.somewhere.com/'
     }, None),
+    ({
+      'bindings_class_name': 'some-class-name',
+      'breadcrumbs': {
+        'buttonSpacing': 6,
+        'buttonTheme': {
+            'fill': '#fff'
+        },
+        'events': {
+          'click': """function(event) { return true; }"""
+        },
+        'floating': True,
+        'format': 'some format string',
+        'formatter': """function () { return true; }""",
+        'position': None,
+        'relativeTo': 'plot',
+        'rtl': False,
+        'separator': {
+            'text': '>',
+            'style': {
+                'some-key': 'some-value'
+            }
+        },
+        'useHTML': False,
+        'zIndex': 3
+      },
+      'button_options': {
+        'enabled': True,
+        'text': 'Button Label',
+        'theme': {
+            'fill': '#fff',
+            'stroke': '#ccc'
+        },
+        'useHTML': True,
+        'y': 0
+      },
+      'events': {
+        'closePopup': """function (event) { return true; }""",
+        'selectButton': """function (event) {return true;}""",
+        'showPopup': """function(event) {return true;}"""
+      },
+      'icons_url': 'https://www.somewhere.com/'
+    }, None),
 ]
 
 
