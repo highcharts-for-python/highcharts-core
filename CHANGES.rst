@@ -1,4 +1,11 @@
 
+Release 1.3.3
+=========================================
+
+* **BUGFIX:** Added in a missing class extension for ``NavigationButtonConfiguration`` (#86).
+
+---------------------
+
 Release 1.3.2
 =========================================
 
