@@ -370,5 +370,5 @@ def test_issue86_ButtonTheme_to_json():
     assert instance['states'] is not None
     assert instance['states'].hover is not None
     
-    result = instance.to_json()
+    result = str(instance.to_json())
     assert result == str(kwargs).replace("'", '"')
