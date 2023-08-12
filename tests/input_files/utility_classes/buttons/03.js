@@ -14,8 +14,8 @@
     enabled: true,
     text: 'Test button',
     theme: {
-        fill: '#fff',
-        stroke: '#ccc'
+        'fill': '#fff',
+        'stroke': '#ccc'
     },
     y: 0
 }

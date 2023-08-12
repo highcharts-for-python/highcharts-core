@@ -255,7 +255,7 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
     return True
 
 
-def trim_expected(expected):
+def trim_expected_dict(expected):
     """Remove keys from ``expected`` or its children that should not be evaluated."""
     new_dict = {}
     if not isinstance(expected, dict):
@@ -264,13 +264,13 @@ def trim_expected(expected):
         if expected[key] is None:
             continue
         elif isinstance(expected[key], dict):
-            trimmed_value = trim_expected(expected[key])
+            trimmed_value = trim_expected_dict(expected[key])
             if trimmed_value:
                 new_dict[key] = trimmed_value
         elif checkers.is_iterable(expected[key]):
             trimmed_value = []
             for item in expected[key]:
-                trimmed_item = trim_expected(item)
+                trimmed_item = trim_expected_dict(item)
                 if trimmed_item:
                     trimmed_value.append(trimmed_item)
 
@@ -314,7 +314,7 @@ def compare_js_literals(original, new):
     return True
 
 
-def Class__init__(cls, kwargs, error):
+def Class__init__(cls, kwargs, error, check_as_dict = False):
     kwargs_copy = deepcopy(kwargs)
     if not error:
         result = cls(**kwargs)
@@ -365,11 +365,14 @@ def Class__init__(cls, kwargs, error):
             else:
                 print('not margin')
                 kwarg_value = kwargs_copy[key]
-                result_value = getattr(result, key)
+                if check_as_dict:
+                    result_value = result.get(key, None)
+                else:
+                    result_value = getattr(result, key)
                 print(f'KWARG VALUE:\n{kwarg_value}')
                 print(f'RESULT VALUE:\n{result_value}')
                 assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                     getattr(result, key)) is True
+                                                     result_value) is True
     else:
         with pytest.raises(error):
             result = cls(**kwargs)
@@ -569,7 +572,7 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
             result = instance._to_untrimmed_dict()
 
 
-def Class_from_dict(cls, kwargs, error):
+def Class_from_dict(cls, kwargs, error, check_as_dict = False):
     if kwargs:
         as_dict = to_js_dict(deepcopy(kwargs))
     else:
@@ -617,6 +620,8 @@ def Class_from_dict(cls, kwargs, error):
                     result_value = getattr(instance, 'pattern_options')
                 elif key == 'type':
                     result_value = getattr(instance, 'type')
+                elif check_as_dict:
+                    result_value = instance.get(key, None)
                 else:
                     result_value = getattr(instance, key)
                 print(kwarg_value)
@@ -627,9 +632,12 @@ def Class_from_dict(cls, kwargs, error):
             instance = cls.from_dict(as_dict)
 
 
-def Class_to_dict(cls, kwargs, error):
+def Class_to_dict(cls, kwargs, error, trim_expected = True):
     untrimmed_expected = to_js_dict(deepcopy(kwargs))
-    expected = trim_expected(untrimmed_expected)
+    if trim_expected:
+        expected = trim_expected_dict(untrimmed_expected)
+    else:
+        expected = untrimmed_expected
     check_dicts = True
     for key in expected:
         if not checkers.is_type(expected[key], (str, int, float, bool, list, dict)):

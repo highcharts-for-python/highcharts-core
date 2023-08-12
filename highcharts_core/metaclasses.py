@@ -796,14 +796,20 @@ class JavaScriptDict(UserDict):
         super().__setitem__(key, item)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def from_dict(cls,
+                  as_dict: dict,
+                  allow_snake_case: bool = True):
         """Construct an instance of the class from a :class:`dict <python:dict>` object.
 
         :param as_dict: A :class:`dict <python:dict>` representation of the object.
         :type as_dict: :class:`dict <python:dict>`
 
+        :param allow_snake_case: If ``True``, interprets ``snake_case`` keys as equivalent
+          to ``camelCase`` keys. Defaults to ``True``.
+        :type allow_snake_case: :class:`bool <python:bool>`
+
         :returns: A Python object representation of ``as_dict``.
-        :rtype: :class:`JavaScriptDict`
+        :rtype: :class:`HighchartsMeta`
         """
         as_dict = validators.dict(as_dict, allow_empty = True)
         if not as_dict:
@@ -1120,9 +1126,98 @@ class JavaScriptDict(UserDict):
                                                     range = range,
                                                     _break_loop_on_failure = True)
                 else:
-                    raise errors.HighchartsParseError('._validate_js_function() expects '
+                    raise errors.HighchartsParseError('._validate_js_literal() expects '
                                                       'a str containing a valid '
-                                                      'JavaScript function. Could not '
-                                                      'find a valid function.')
+                                                      'JavaScript literal object. Could '
+                                                      'not find a valid JS literal '
+                                                      'object.')
 
         return parsed, as_str
+
+    @classmethod
+    def from_js_literal(cls,
+                        as_str_or_file,
+                        allow_snake_case: bool = True,
+                        _break_loop_on_failure: bool = False):
+        """Return a Python object representation of a Highcharts JavaScript object
+        literal.
+
+        :param as_str_or_file: The JavaScript object literal, represented either as a
+          :class:`str <python:str>` or as a filename which contains the JS object literal.
+        :type as_str_or_file: :class:`str <python:str>`
+
+        :param allow_snake_case: If ``True``, interprets ``snake_case`` keys as equivalent
+          to ``camelCase`` keys. Defaults to ``True``.
+        :type allow_snake_case: :class:`bool <python:bool>`
+
+        :param _break_loop_on_failure: If ``True``, will break any looping operations in
+          the event of a failure. Otherwise, will attempt to repair the failure. Defaults
+          to ``False``.
+        :type _break_loop_on_failure: :class:`bool <python:bool>`
+
+        :returns: A Python object representation of the Highcharts JavaScript object
+          literal.
+        :rtype: :class:`HighchartsMeta`
+        """
+        is_file = checkers.is_file(as_str_or_file)
+        if is_file:
+            with open(as_str_or_file, 'r') as file_:
+                as_str = file_.read()
+        else:
+            as_str = as_str_or_file
+
+        parsed, updated_str = cls._validate_js_literal(as_str)
+
+        as_dict = {}
+        if not parsed.body:
+            return cls()
+
+        if len(parsed.body) > 1:
+            raise errors.HighchartsCollectionError(f'each JavaScript object literal is '
+                                                   f'expected to contain one object. '
+                                                   f'However, you attempted to parse '
+                                                   f'{len(parsed.body)} objects.')
+
+        body = parsed.body[0]
+        if not checkers.is_type(body, 'VariableDeclaration') and \
+           _break_loop_on_failure is False:
+            prefixed_str = f'var randomVariable = {as_str}'
+            return cls.from_js_literal(prefixed_str,
+                                       _break_loop_on_failure = True)
+        elif not checkers.is_type(body, 'VariableDeclaration'):
+            raise errors.HighchartsVariableDeclarationError('To parse a JavaScriot '
+                                                            'object literal, it is '
+                                                            'expected to be either a '
+                                                            'variable declaration or a'
+                                                            'standalone block statement.'
+                                                            'Input received did not '
+                                                            'conform.')
+        declarations = body.declarations
+        if not declarations:
+            return cls()
+
+        if len(declarations) > 1:
+            raise errors.HighchartsCollectionError(f'each JavaScript object literal is '
+                                                   f'expected to contain one object. '
+                                                   f'However, you attempted to parse '
+                                                   f'{len(parsed.body)} objects.')
+        object_expression = declarations[0].init
+        if not checkers.is_type(object_expression, 'ObjectExpression'):
+            raise errors.HighchartsParseError(f'Highcharts expects an object literal to '
+                                              f'to be defined as a standard '
+                                              f'ObjectExpression. Received: '
+                                              f'{type(object_expression)}')
+
+        properties = object_expression.properties
+        if not properties:
+            return cls()
+
+        key_value_pairs = [(x[0], x[1]) for x in get_key_value_pairs(properties,
+                                                                     updated_str)]
+
+        for pair in key_value_pairs:
+            as_dict[pair[0]] = pair[1]
+
+        return cls.from_dict(as_dict,
+                             allow_snake_case = allow_snake_case)
+

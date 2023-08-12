@@ -8,8 +8,8 @@
     symbolFill: '#ccc',
     text: 'Button Label',
     theme: {
-        fill: '#fff',
-        stroke: '#ccc'
+        'fill': '#fff',
+        'stroke': '#ccc'
     },
     titleKey: 'somevalue',
     x: 10,

@@ -32,7 +32,7 @@ def test_from_dict(kwargs, error):
 
 @pytest.mark.parametrize('kwargs, error',  STANDARD_PARAMS)
 def test_to_dict(kwargs, error):
-    from tests.fixtures import trim_expected, does_kwarg_value_match_result
+    from tests.fixtures import trim_expected_dict, does_kwarg_value_match_result
     from validator_collection import checkers
 
     kwargs_copy = deepcopy(kwargs)
@@ -58,7 +58,7 @@ def test_to_dict(kwargs, error):
     else:
         untrimmed_expected = to_js_dict(deepcopy(kwargs))
 
-    expected = trim_expected(untrimmed_expected)
+    expected = trim_expected_dict(untrimmed_expected)
     check_dicts = True
     for key in expected:
         if not checkers.is_type(expected[key], (str, int, float, bool, list, dict)):
