@@ -364,11 +364,25 @@ def test_ButtonTheme_from_js_literal(input_files, filename, as_file, error):
     
     
 def test_issue86_ButtonTheme_to_json():
+    try:
+        import orjson as json
+    except ImportError:
+        print('using standard library')
+        import json
+
     kwargs = STANDARD_PARAMS_5[1][0]
     instance = cls5(**kwargs)
     
     assert instance['states'] is not None
     assert instance['states'].hover is not None
     
-    result = str(instance.to_json(), encoding = 'utf-8')
-    assert result == str(kwargs).replace("'", '"')
+    input_as_json = json.dumps(kwargs)
+    print(type(input_as_json))
+    
+    result_as_json = instance.to_json()
+    if isinstance(result_as_json, str) and isinstance(input_as_json, bytes):
+        result_as_json = result_as_json.encode('utf-8')
+    elif isinstance(result_as_json, bytes) and isinstance(input_as_json, str):
+        input_as_json = input_as_json.encode('utf-8')
+
+    assert result_as_json == input_as_json
