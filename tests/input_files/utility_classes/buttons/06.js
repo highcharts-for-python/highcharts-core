@@ -1,0 +1,4 @@
+{
+    'fill': '#fff',
+    'stroke': '#ccc'
+}

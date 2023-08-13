@@ -20,17 +20,57 @@ from highcharts_core.metaclasses import HighchartsMeta, JavaScriptDict
 from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
 from highcharts_core.utility_classes.javascript_functions import CallbackFunction
+from highcharts_core.utility_classes.ast import AttributeObject
+from highcharts_core.utility_classes.states import States
 
 
-class ButtonTheme(HighchartsMeta):
+class ButtonTheme(AttributeObject):
     """Settings used to style buttons."""
 
     def __init__(self, **kwargs):
-        self._fill = None
-        self._stroke = None
+        trimmed_kwargs = {x: y for x, y in kwargs.items() if not hasattr(self, x)}
+        super().__init__(**trimmed_kwargs)
 
         self.fill = kwargs.get('fill', None)
+        self.padding = kwargs.get('padding', None)
         self.stroke = kwargs.get('stroke', None)
+        self.states = kwargs.get('states', None)
+        
+    def __setitem__(self, key, item):
+        validate_key = False
+        try:
+            validate_key = key not in self
+        except AttributeError:
+            validate_key = True
+
+        if validate_key:
+            try:
+                key = validators.variable_name(key, allow_empty = False)
+            except validator_errors.InvalidVariableNameError as error:
+                if '-' in key:
+                    try:
+                        test_key = key.replace('-', '_')
+                        validators.variable_name(test_key, allow_empty = False)
+                    except validator_errors.InvalidVariableNameError:
+                        raise error
+                else:
+                    raise error
+
+        if self._valid_value_types:
+            try:
+                item = validate_types(item,
+                                      types = self._valid_value_types,
+                                      allow_none = self._allow_empty_value)
+            except errors.HighchartsValueError as error:
+                if self._allow_empty_value and not item:
+                    item = None
+                else:
+                    try:
+                        item = self._valid_value_types(item)
+                    except (TypeError, ValueError, AttributeError):
+                        raise error
+
+        super().__setitem__(key, item)
 
     @property
     def fill(self) -> Optional[str | Gradient | Pattern]:
@@ -40,11 +80,36 @@ class ButtonTheme(HighchartsMeta):
         :rtype: :class:`str <python:str>` (for colors), :class:`Gradient` for gradients,
           :class:`Pattern` for pattern definitions, or :obj:`None <python:None>`
         """
-        return self._fill
+        return self.get('fill', None)
 
     @fill.setter
     def fill(self, value):
-        self._fill = utility_functions.validate_color(value)
+        self['fill'] = utility_functions.validate_color(value)
+        
+    @property
+    def padding(self) -> Optional[int | float | Decimal]:
+        """Padding for the button. Defaults to `5`.
+        
+        :rtype: numeric
+        """
+        return self.get('padding', None)
+    
+    @padding.setter
+    def padding(self, value):
+        self['padding'] = validators.numeric(value, allow_empty = True)
+        
+    @property
+    def states(self) -> Optional[States]:
+        """States to apply to the button. Defaults to :obj:`None <python:None>`.
+        
+        :rtype: :class:`States <highcharts_core.utility_classes.states.States>` or 
+          :obj:`None <python:None>`
+        """
+        return self.get('states', None)
+    
+    @states.setter
+    def states(self, value):
+        self['states'] = validate_types(value, States)
 
     @property
     def stroke(self) -> Optional[str]:
@@ -52,28 +117,26 @@ class ButtonTheme(HighchartsMeta):
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return self._stroke
+        return self.get('stroke', None)
 
     @stroke.setter
     def stroke(self, value):
-        self._stroke = validators.string(value, allow_empty = True)
+        self['stroke'] = validators.string(value, allow_empty = True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'fill': as_dict.get('fill', None),
+            'padding': as_dict.get('padding', None),
+            'states': as_dict.get('states', None),
             'stroke': as_dict.get('stroke', None)
         }
+        
+        for key in as_dict:
+            if key not in kwargs:
+                kwargs[key] = as_dict.get(key, None)
 
         return kwargs
-
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
-        untrimmed = {
-            'fill': self.fill,
-            'stroke': self.stroke
-        }
-
-        return untrimmed
 
 
 class ButtonConfiguration(HighchartsMeta):

@@ -1,4 +1,11 @@
 
+Release 1.3.4
+=========================================
+
+* **ENHANCEMENT:** Converted `ButtonTheme` into an extensible descendent of `JavaScriptDict` (#86).
+
+---------------------
+
 Release 1.3.3
 =========================================
 
