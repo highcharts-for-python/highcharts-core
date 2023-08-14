@@ -1,4 +1,13 @@
 
+Release 1.4.0
+=========================================
+
+* **ENHANCEMENT:** Added one-shot chart creation and rendering from Series objects (#89).
+* **ENHANCEMENT:** Added one-shot chart creation using ``series`` and ``data``/``series_type`` keywords. (#90).
+
+---------------------
+
+
 Release 1.3.4
 =========================================
 
