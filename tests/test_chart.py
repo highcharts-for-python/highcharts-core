@@ -338,3 +338,46 @@ def test__str__(kwargs, error):
     else:
         with pytest.raises(error):
             result = str(obj)
+            
+
+@pytest.mark.parametrize('kwargs, expected_series, expected_data_points, error', [
+    ({}, 0, [], None),
+
+    ({
+        'series': [
+            {
+                'data': [[1, 2], [3, 4]],
+                'type': 'line'
+            }
+        ]
+    }, 1, [(0, 2)], None),
+    ({
+        'series': {
+            'data': [[1, 2], [3, 4]],
+            'type': 'line'
+        }
+    }, 1, [(0, 2)], None),
+    
+    ({
+        'data': [[1, 2], [3, 4]],
+        'series_type': 'line'
+    }, 1, [(0, 2)], None),
+
+    ({
+        'data': [[1, 2], [3, 4]],
+    }, 1, [(0, 2)], errors.HighchartsValueError),
+
+])
+def test_issue90_one_shot_creation(kwargs, expected_series, expected_data_points, error):
+    if not error:
+        result = cls(**kwargs)
+        assert result is not None
+        if kwargs:
+            assert getattr(result, 'options') is not None
+            assert getattr(result.options, 'series') is not None
+            assert len(result.options.series) == expected_series
+            for item in expected_data_points:
+                assert len(result.options.series[item[0]].data) == item[1]
+    else:
+        with pytest.raises(error):
+            result = cls(**kwargs)
