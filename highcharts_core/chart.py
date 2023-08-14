@@ -19,6 +19,51 @@ class Chart(HighchartsMeta):
     """Python representation of a Highcharts ``Chart`` object."""
 
     def __init__(self, **kwargs):
+        """Creates a :class:`Chart <highcharts_core.chart.Chart>` instance.
+        
+        When creating a :class:`Chart <highcharts_core.chart.Chart>` instance, you can
+        provide any of the object's properties as keyword arguments.
+        **Positional arguments are not supported**.
+        
+        In addition to the standard properties, there are three special keyword 
+        arguments which streamline the creation of 
+        :class:`Chart <highcharts_core.chart.Chart>` instances:
+        
+          * ``series`` which accepts an iterable of 
+            :class:`SeriesBase <highcharts_core.options.series.SeriesBase>` descendents.
+            These are automatically then populated as series within the chart.
+            
+            .. note::
+            
+              Each member of ``series`` must be coercable into a Highcharts Core for Python
+              series. And it must contain a ``type`` property.
+              
+          * ``data`` which accepts an iterable of objects that are coercable to Highcharts
+            data point objects, which are then automatically used to create/populate a 
+            series on your chart instance
+          * ``series_type`` which accepts a string indicating the type of series to render
+            for your data.
+            
+        .. warning::
+        
+          If you supply ``series``, the ``data`` and ``series_type`` keywords will be 
+          *ignored*.
+          
+          If you supply ``data``, then ``series_type`` must *also* be supplied. Failure 
+          to do so will raise a 
+          :exc:`HighchartsValueError <highcharts_core.errors.HighchartsValueError>`.
+
+          If you are also supplying an 
+          :meth:`options <highcharts_core.chart.Chart.options>` keyword argument, then 
+          any series derived from ``series``, ``data``, and ``series_type`` will be 
+          *added* to any series defined in that ``options`` value.
+
+        :raises: :exc:`HighchartsValueError <highcharts_core.errors.HighchartsValueError>`
+          if supplying ``data`` with no ``series_type``.
+
+        :returns: A :class:`Chart <highcharts_core.chart.Chart>` instance.
+        :rtype: :class:`Chart <highcharts_core.chart.Chart>`
+        """
         self._callback = None
         self._container = None
         self._options = None
@@ -35,7 +80,27 @@ class Chart(HighchartsMeta):
                                      None) or os.environ.get('HIGHCHARTS_MODULE_URL',
                                                              'https://code.highcharts.com/')
 
-        super().__init__(**kwargs)
+        series = kwargs.get('series', None)
+        series_type = kwargs.get('series_type', None)
+        data = kwargs.get('data', None)
+
+        if series_type and not data:
+            data = []
+
+        if series is not None:
+            if not checkers.is_iterable(series, forbid_literals = (str, bytes, dict, UserDict)):
+                series = [series]
+            self.add_series(*series)
+        elif data is not None and series_type:
+            series_as_dict = {
+                'data': data,
+                'type': series_type
+            }
+            self.add_series(series_as_dict)
+        elif data is not None:
+            raise errors.HighchartsValueError('If ``data`` is provided, then '
+                                              '``series_type`` must also be provided. '
+                                              '``series_type`` was empty.')
 
     def __str__(self):
         """Return a human-readable :class:`str <python:str>` representation of the chart.

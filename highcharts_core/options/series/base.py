@@ -943,3 +943,106 @@ class SeriesBase(SeriesOptions):
         instance.load_from_pyspark(df, property_map)
 
         return instance
+
+    def to_chart(self, chart_kwargs = None, options_kwargs = None):
+        """Create a :class:`Chart <highcharts_core.chart.Chart>` instance containing the
+        series instance.
+        
+        :param chart_kwargs: Optional keyword arguments to use when constructing the 
+          :class:`Chart <highcharts_core.chart.Chart>` instance. Defaults to
+          :obj:`None <python:None>`.
+        :type chart_kwargs: :class:`dict <python:dict>`
+        
+        :param options_kwargs: Optional keyword arguments to use when constructing the
+          chart's :class:`HighchartsOptions <highcharts_core.options.HighchartsOptions>`
+          object. Defaults to :obj:`None <python:None>`.
+          
+          .. warning:: 
+          
+            If your ``chart_kwargs`` contains an ``options`` key, its value
+            will be overwritten if you supply ``options_kwargs``.
+
+        :type options_kwargs: :class:`dict <python:dict>`
+        
+        :returns: A :class:`Chart <highcharts_core.chart.Chart>` instance containing the
+          series instance.
+        :rtype: :class:`Chart <highcharts_core.chart.Chart>`
+        """
+        from highcharts_core.chart import Chart
+        
+        chart_kwargs = validators.dict(chart_kwargs, allow_empty = True) or {}
+        
+        as_chart = Chart(**chart_kwargs)
+        if options_kwargs:
+            as_chart.options = options_kwargs
+            
+        as_chart.add_series(self)
+        
+        return as_chart
+    
+    def display(self,
+                global_options = None,
+                container = None,
+                retries = 5,
+                interval = 1000,
+                chart_kwargs = None,
+                options_kwargs = None):
+        """Display the series in `Jupyter Labs <https://jupyter.org/>`_ or
+        `Jupyter Notebooks <https://jupyter.org/>`_.
+
+        :param global_options: The :term:`shared options` to use when rendering the chart.
+          Defaults to :obj:`None <python:None>`
+        :type global_options: :class:`SharedOptions <highcharts_stock.global_options.shared_options.SharedOptions>`
+          or :obj:`None <python:None>`
+
+        :param container: The ID to apply to the HTML container when rendered in Jupyter Labs. Defaults to
+          :obj:`None <python:None>`, which applies the :meth:`.container <highcharts_core.chart.Chart.container>`
+          property if set, and ``'highcharts_target_div'`` if not set.
+
+          .. note::
+
+            Highcharts for Python will append a 6-character random string to the value of ``container``
+            to ensure uniqueness of the chart's container when rendering in a Jupyter Notebook/Labs context. The
+            :class:`Chart <highcharts_core.chart.Chart>` instance will retain the mapping between container and the
+            random string so long as the instance exists, thus allowing you to easily update the rendered chart by
+            calling the :meth:`.display() <highcharts_core.chart.Chart.display>` method again.
+
+            If you wish to create a new chart from the instance that does not update the existing chart, then you can do
+            so by specifying a new ``container`` value.
+
+        :type container: :class:`str <python:str>` or :obj:`None <python:None>`
+
+        :param retries: The number of times to retry rendering the chart. Used to avoid race conditions with the 
+          Highcharts script. Defaults to 5.
+        :type retries: :class:`int <python:int>`
+
+        :param interval: The number of milliseconds to wait between retrying rendering the chart. Defaults to 1000 (1
+          seocnd).
+        :type interval: :class:`int <python:int>`
+
+        :param chart_kwargs: Optional keyword arguments to use when constructing the 
+          :class:`Chart <highcharts_core.chart.Chart>` instance. Defaults to
+          :obj:`None <python:None>`.
+        :type chart_kwargs: :class:`dict <python:dict>`
+        
+        :param options_kwargs: Optional keyword arguments to use when constructing the
+          chart's :class:`HighchartsOptions <highcharts_core.options.HighchartsOptions>`
+          object. Defaults to :obj:`None <python:None>`.
+          
+          .. warning:: 
+          
+            If your ``chart_kwargs`` contains an ``options`` key, its value
+            will be overwritten if you supply ``options_kwargs``.
+
+        :type options_kwargs: :class:`dict <python:dict>`
+
+        :raises HighchartsDependencyError: if
+          `ipython <https://ipython.readthedocs.io/en/stable/>`_ is not available in the
+          runtime environment
+        """
+        as_chart = self.to_chart(chart_kwargs = chart_kwargs, 
+                                 options_kwargs = options_kwargs)
+        as_chart.display(global_options = global_options,
+                         container = container,
+                         retries = retries,
+                         interval = interval)

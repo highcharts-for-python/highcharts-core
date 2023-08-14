@@ -3,6 +3,7 @@
 import pytest
 
 from json.decoder import JSONDecodeError
+from validator_collection import checkers
 
 from highcharts_core.options.series.base import SeriesBase as cls
 from highcharts_core import errors
@@ -684,7 +685,20 @@ def test_load_from_pandas(input_files, filename, property_map, error):
     else:
         with pytest.raises(error):
             instance.load_from_pandas(df, property_map = property_map)
-            
+
+
+@pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
+def test_to_chart(kwargs, error):
+    if not error:
+        instance = cls(**kwargs)
+        chart = instance.to_chart()
+        assert chart is not None
+        assert checkers.is_type(chart, 'Chart')
+    else:
+        with pytest.raises(error):
+            instance = cls(**kwargs)
+            chart = instance.to_chart()
+
 
 @pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
 def test__repr__(kwargs, error):
