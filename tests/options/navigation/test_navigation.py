@@ -93,7 +93,10 @@ STANDARD_PARAMS = [
         'selectButton': """function (event) {return true;}""",
         'showPopup': """function(event) {return true;}"""
       },
-      'icons_url': 'https://www.somewhere.com/'
+      'icons_url': 'https://www.somewhere.com/',
+      'menu_item_style': {"fontWeight": "bold", "fontSize": "12px"},
+      'menu_item_hover_style': {"fontWeight": "bold", "fontSize": "12px"},
+      'menu_style': {"border-width": "1px"}
     }, None),
 ]
 
