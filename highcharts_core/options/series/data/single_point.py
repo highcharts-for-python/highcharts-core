@@ -197,7 +197,8 @@ class SinglePointData(SinglePointBase):
 
         return collection
 
-    def _get_props_from_array(self) -> List[str]:
+    @classmethod
+    def _get_props_from_array(cls) -> List[str]:
         """Returns a list of the property names that can be set using the
         :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
         method.
@@ -361,7 +362,8 @@ class SingleValueData(SinglePointBase):
 
         return collection
 
-    def _get_props_from_array(self) -> List[str]:
+    @classmethod
+    def _get_props_from_array(cls) -> List[str]:
         """Returns a list of the property names that can be set using the
         :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
         method.
@@ -516,7 +518,8 @@ class SingleXData(SinglePointBase):
 
         return collection
 
-    def _get_props_from_array(self) -> List[str]:
+    @classmethod
+    def _get_props_from_array(cls) -> List[str]:
         """Returns a list of the property names that can be set using the
         :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
         method.
