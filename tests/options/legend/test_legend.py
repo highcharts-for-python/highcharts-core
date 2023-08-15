@@ -59,6 +59,13 @@ STANDARD_PARAMS = [
       'x': 0,
       'y': 0
     }, None),
+    ({
+        'item_style': {
+            'color': '#5f5e5e',
+            'fontFamily': 'Roboto',
+            'fontSize': '12px'
+        }
+    }, None),
 ]
 
 
