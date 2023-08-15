@@ -1,4 +1,12 @@
 
+Release 1.3.5
+=========================================
+
+* **BUGFIX:** Fixed validation of style properties in the ``Legend`` class (#93).
+
+---------------------
+
+
 Release 1.3.4
 =========================================
 
