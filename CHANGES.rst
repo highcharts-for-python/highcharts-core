@@ -1,4 +1,11 @@
 
+Release 1.3.6
+=========================================
+
+* **BUGFIX:** Adding missing ``menu...Style`` properties to `Navigation` class (#95).
+
+---------------------
+
 Release 1.3.5
 =========================================
 
