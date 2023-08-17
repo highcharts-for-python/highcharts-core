@@ -232,6 +232,26 @@ def test_trim_iterable(untrimmed, expected_type, expected_length, error):
         with pytest.raises(error):
             result = TestClass.trim_iterable(untrimmed)
 
+
+@pytest.mark.parametrize('instance, error', [
+    (test_class_instance, None),
+    (test_class_trimmed_instance, None),
+    (test_class_iterable, None),
+    (test_class_none_iterable, None),
+])
+def test_copy(instance, error):
+    if not error:
+        result = instance.copy()
+        assert result is not None
+        assert isinstance(result, instance.__class__) is True
+        result_as_dict = result.to_dict()
+        instance_as_dict = instance.to_dict()
+        assert checkers.are_dicts_equivalent(result_as_dict, instance_as_dict) is True
+    else:
+        with pytest.raises(error):
+            result = instance.copy()
+    
+
 """
 @pytest.mark.parametrize('error', [
     (None),

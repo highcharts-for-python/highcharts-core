@@ -1,6 +1,7 @@
 """Tests for ``highcharts.no_data``."""
 
 import pytest
+from typing import List
 
 from json.decoder import JSONDecodeError
 
@@ -17,12 +18,37 @@ class NonAbstractDataBase(DataBase):
     def from_array(cls, value):
         pass
 
+    def _get_props_from_array(self) -> List[str]:
+        """Returns a list of the property names that can be set using the
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
+        method.
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        """
+        return ['fromArrayProp1', 'fromArrayProp2']
+
+
+
 cls = NonAbstractDataBase
 
 
 class RequiringJSObject(NonAbstractDataBase):
     def _to_untrimmed_dict(self):
         return {'someKey': 123}
+
+class NotRequiringJSObject(NonAbstractDataBase):
+    def _to_untrimmed_dict(self):
+        return {
+            'fromArrayProp1': 456,
+            'fromArrayProp2': 789
+        }
+
+
+class RequiringJSObject2(NonAbstractDataBase):
+    def _to_untrimmed_dict(self):
+        return {'someKey': 123,
+                'fromArrayProp1': 456,
+                'fromArrayProp2': 789}
 
 
 STANDARD_PARAMS = [
@@ -102,8 +128,10 @@ def test_from_js_literal(input_files, filename, as_file, error):
 
 @pytest.mark.parametrize('cls, expected', [
     (NonAbstractDataBase, False),
+    (NotRequiringJSObject, False),
     (RequiringJSObject, True),
-    
+    (RequiringJSObject2, True)
+
 ])
 def test_requires_js_object(cls, expected):
     obj = cls()

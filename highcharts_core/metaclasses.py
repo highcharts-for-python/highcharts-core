@@ -664,8 +664,14 @@ class HighchartsMeta(ABC):
 
         :returns: The value that should be placed in ``other`` for ``key``.
         """
+        if not isinstance(original, (dict, UserDict)):
+            return original
+
         original_value = original[key]
-        other_value = other.get(key, None)
+        if other is None:
+            other_value = None
+        else:
+            other_value = other.get(key, None)
 
         if isinstance(original_value, (dict, UserDict)):
             new_value = {}

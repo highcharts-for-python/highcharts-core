@@ -1,4 +1,12 @@
 
+Release 1.3.7
+=========================================
+
+* **BUGFIX:** Fixed bug in ``HighchartsMeta.copy()`` (#98).
+* **BUGFIX:** Fixed bug in data point serialization to primitive array.
+
+---------------------
+
 Release 1.3.6
 =========================================
 
