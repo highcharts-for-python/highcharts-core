@@ -8,6 +8,7 @@ from validator_collection import validators, checkers
 from highcharts_core import constants, errors
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.options.series.data.base import DataBase
+from highcharts_core.options.series.data.collections import DataPointCollection
 from highcharts_core.options.plot_options.drag_drop import DragDropOptions
 from highcharts_core.utility_classes.data_labels import DataLabel
 from highcharts_core.utility_classes.markers import Marker
@@ -190,6 +191,26 @@ class CartesianData(DataBase):
         return collection
 
     @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1, 2]
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        from highcharts_core.options.series.data.cartesian import CartesianDataCollection
+
+        return CartesianDataCollection.from_ndarray(value)
+    
+    @classmethod
     def _get_props_from_array(cls) -> List[str]:
         """Returns a list of the property names that can be set using the
         :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
@@ -300,6 +321,29 @@ class CartesianData(DataBase):
         return untrimmed
 
 
+class CartesianDataCollection(DataPointCollection):
+    """A collection of :class:`CartesianData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return CartesianData
+
+
+
 class Cartesian3DData(CartesianData):
     """Variant of :class:`CartesianData` which supports three dimensions (an x, y, and
     z-axis)."""
@@ -380,6 +424,26 @@ class Cartesian3DData(CartesianData):
 
         return collection
 
+    @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1, 2, 3]
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        from highcharts_core.options.series.data.cartesian import Cartesian3DDataCollection
+
+        return Cartesian3DDataCollection.from_ndarray(value)
+    
     @classmethod
     def _get_props_from_array(cls) -> List[str]:
         """Returns a list of the property names that can be set using the
@@ -499,6 +563,28 @@ class Cartesian3DData(CartesianData):
         return untrimmed
 
 
+class Cartesian3DDataCollection(DataPointCollection):
+    """A collection of :class:`Cartesian3DData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return Cartesian3DData
+
+
 class CartesianValueData(CartesianData):
     """Variant of :class:`CartesianData` which supports three values (an ``x``, ``y``, and
     ``value``)."""
@@ -592,6 +678,26 @@ class CartesianValueData(CartesianData):
 
         return collection
 
+    @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1, 2, 3]
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        from highcharts_core.options.series.data.cartesian import CartesianValueDataCollection
+
+        return CartesianValueDataCollection.from_ndarray(value)
+    
     @classmethod
     def _get_props_from_array(cls) -> List[str]:
         """Returns a list of the property names that can be set using the
@@ -713,3 +819,25 @@ class CartesianValueData(CartesianData):
         }
 
         return untrimmed
+
+
+class CartesianValueDataCollection(CartesianDataCollection):
+    """A collection of :class:`Cartesian3DData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return CartesianValueData

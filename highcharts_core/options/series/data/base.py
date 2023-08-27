@@ -11,6 +11,7 @@ except ImportError:
 from highcharts_core import constants, errors, utility_functions
 from highcharts_core.decorators import class_sensitive, validate_types
 from highcharts_core.metaclasses import HighchartsMeta, JavaScriptDict
+from highcharts_core.js_literal_functions import serialize_to_js_literal, assemble_js_literal, get_js_literal
 from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
 from highcharts_core.utility_classes.events import PointEvents
@@ -310,6 +311,14 @@ class DataBase(DataCore):
         return untrimmed
 
     @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1, 2, 3]
+
+    @classmethod
     def _get_props_from_array(cls) -> List[str]:
         """Returns a list of the property names that can be set using the
         :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
@@ -494,3 +503,47 @@ class DataBase(DataCore):
         from highcharts_core.options.series.data.collections import DataPointCollection
 
         return DataPointCollection.from_ndarray(value)
+    
+    def to_js_literal(self,
+                      filename = None,
+                      encoding = 'utf-8') -> Optional[str]:
+        """Return the object represented as a :class:`str <python:str>` containing the
+        JavaScript object literal.
+
+        :param filename: The name of a file to which the JavaScript object literal should
+          be persisted. Defaults to :obj:`None <python:None>`
+        :type filename: Path-like
+
+        :param encoding: The character encoding to apply to the resulting object. Defaults
+          to ``'utf-8'``.
+        :type encoding: :class:`str <python:str>`
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        if filename:
+            filename = validators.path(filename)
+
+        untrimmed = self.to_array()
+        if isinstance(untrimmed, dict):
+            as_dict = {}
+            for key in untrimmed:
+                item = untrimmed[key]
+                serialized = serialize_to_js_literal(item, encoding = encoding)
+                if serialized is not None:
+                    as_dict[key] = serialized
+
+            as_str = assemble_js_literal(as_dict)
+        else:
+            serialized = serialize_to_js_literal(untrimmed)
+            if isinstance(serialized, list):
+                as_str = ','.join([get_js_literal(x)
+                                   for x in serialized])
+                as_str = f'[{as_str}]'
+            else:
+                as_str = serialized
+
+        if filename:
+            with open(filename, 'w', encoding = encoding) as file_:
+                file_.write(as_str)
+
+        return as_str

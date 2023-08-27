@@ -119,7 +119,7 @@ class DataPointCollection(HighchartsMeta):
         
         :rtype: :class:`list <python:list>` of :class:`int <python:int>`
         """
-        return [1, 2, 3]
+        return cls._get_data_point_class()._get_supported_dimensions()
 
     @classmethod
     def _get_props_from_array(cls) -> List[str]:
