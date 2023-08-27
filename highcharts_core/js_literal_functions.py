@@ -8,10 +8,16 @@ from validator_collection import checkers, validators
 import esprima
 from esprima.error_handler import Error as ParseError
 
-from highcharts_core import constants, errors
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
+    
+from highcharts_core import constants, errors, utility_functions
 
 
-def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
+def serialize_to_js_literal(item, encoding = 'utf-8', ignore_to_array = False) -> Optional[str]:
     """Convert ``item`` to the contents of a JavaScript object literal code snippet.
 
     :param item: A value that is to be converted into a JS object literal notation value.
@@ -19,16 +25,34 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
     :param encoding: The character encoding to apply to the resulting object. Defaults
       to ``'utf-8'``.
     :type encoding: :class:`str <python:str>`
+    
+    :param ignore_to_array: If ``True``, will ignore handling of the ``.to_array()`` method
+      to break recursion. Defaults to ``False``.
+    :type ignore_to_array: :class:`bool <python:bool>`
 
     :returns: A JavaScript object literal code snippet, expressed as a string. Or
       :obj:`None <python:None>` if ``item`` is not serializable.
     :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
     """
-    if checkers.is_iterable(item, forbid_literals = (str, bytes, dict, UserDict)):
-        requires_js_objects = all([getattr(x, 'requires_js_object', True) 
+    if not ignore_to_array and hasattr(item, 'to_array'):
+        requires_js_objects = getattr(item, 'requires_js_object', True)
+        if requires_js_objects and hasattr(item, 'to_js_literal'):
+            return item.to_js_literal(encoding = encoding)
+        elif requires_js_objects:
+            return serialize_to_js_literal(item, 
+                                           encoding = encoding, 
+                                           ignore_to_array = True)
+        else:
+            return serialize_to_js_literal(item.to_array(), encoding = encoding)
+    elif HAS_NUMPY and isinstance(item, np.ndarray):
+        return utility_functions.from_ndarray(item)
+    elif checkers.is_iterable(item, forbid_literals = (str, bytes, dict, UserDict)):
+        requires_js_objects = any([getattr(x, 'requires_js_object', True) 
                                    for x in item])
         if requires_js_objects:
-            return [serialize_to_js_literal(x, encoding = encoding) 
+            return [serialize_to_js_literal(x,
+                                            encoding = encoding,
+                                            ignore_to_array = True)
                     for x in item]
         else:
             return [serialize_to_js_literal(x.to_array(), encoding = encoding)

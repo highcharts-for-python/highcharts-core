@@ -14,6 +14,11 @@ from copy import deepcopy
 from collections import UserDict
 
 import pytest
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
 
 from validator_collection import checkers, validators
 from highcharts_core import constants
@@ -215,6 +220,8 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
                 return False
 
         return True
+    elif HAS_NUMPY and isinstance(kwarg_value, np.ndarray):
+        return np.array_equal(kwarg_value, result_value)
     elif checkers.is_iterable(kwarg_value):
         print('- evaluating a KWARG value that is iterable')
         if hasattr(result_value, 'from_setter'):
@@ -267,6 +274,8 @@ def trim_expected_dict(expected):
             trimmed_value = trim_expected_dict(expected[key])
             if trimmed_value:
                 new_dict[key] = trimmed_value
+        elif HAS_NUMPY and isinstance(expected[key], np.ndarray):
+            new_dict[key] = expected[key]
         elif checkers.is_iterable(expected[key]):
             trimmed_value = []
             for item in expected[key]:
@@ -290,8 +299,8 @@ def compare_js_literals(original, new):
 
     counter = 0
     for char in original:
-        min_index = max(0, counter - 20)
-        max_index = min(counter + 20, len(original))
+        min_index = max(0, counter - 200)
+        max_index = min(counter + 200, len(original))
 
         if new[counter] != char:
             print(f'\nMISMATCH FOUND AT ORIGINAL CHARACTER: {counter}')
@@ -326,8 +335,10 @@ def Class__init__(cls, kwargs, error, check_as_dict = False):
             #kwargs['type'] = result.type
         for key in kwargs_copy:
             print(f'CHECKING: {key}')
-            if kwargs.get(key) and isinstance(kwargs_copy[key],
-                                              str) and kwargs[key].startswith('function'):
+            if HAS_NUMPY and isinstance(kwargs.get(key, None), np.ndarray):
+                continue
+            elif kwargs.get(key) and isinstance(kwargs_copy[key],
+                                                str) and kwargs[key].startswith('function'):
                 continue
             if kwargs.get(key) and isinstance(kwargs_copy[key],
                                               str) and kwargs[key].startswith('class'):
@@ -393,6 +404,9 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
             kwarg_value = kwargs_copy[key]
             result_value = result.get(key)
 
+            if HAS_NUMPY and isinstance(kwarg_value, np.ndarray):
+                assert np.array_equal(kwarg_value, result_value)
+                continue
             if kwargs.get(key) and isinstance(kwargs_copy[key],
                                               str) and kwargs[key].startswith('function'):
                 continue

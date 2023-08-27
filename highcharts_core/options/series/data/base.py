@@ -2,9 +2,14 @@ from typing import Optional, List, Dict
 from decimal import Decimal
 
 from validator_collection import validators, checkers
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
 
 from highcharts_core import constants, errors, utility_functions
-from highcharts_core.decorators import class_sensitive
+from highcharts_core.decorators import class_sensitive, validate_types
 from highcharts_core.metaclasses import HighchartsMeta, JavaScriptDict
 from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
@@ -304,7 +309,8 @@ class DataBase(DataCore):
 
         return untrimmed
 
-    def _get_props_from_array(self) -> List[str]:
+    @classmethod
+    def _get_props_from_array(cls) -> List[str]:
         """Returns a list of the property names that can be set using the
         :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
         method.
@@ -424,7 +430,11 @@ class DataBase(DataCore):
         """
         if not value:
             return []
-        elif checkers.is_string(value):
+        if HAS_NUMPY:
+            if isinstance(value, np.ndarray):
+                return cls.from_ndarray(value)
+
+        if checkers.is_string(value):
             try:
                 value = validators.json(value)
             except (ValueError, TypeError):
@@ -468,7 +478,19 @@ class DataBase(DataCore):
         :rtype: :class:`list <python:list>` of values or :class:`dict <python:dict>`
         """
         if self.requires_js_object or force_object:
-            return self._to_untrimmed_dict()
+            return self._to_untrimmed_dict(in_cls = self.__class__.__name__)
 
         return [getattr(self, x, constants.EnforcedNull)
                 for x in self._get_props_from_array()]
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        from highcharts_core.options.series.data.collections import DataPointCollection
+
+        return DataPointCollection.from_ndarray(value)

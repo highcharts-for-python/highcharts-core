@@ -2,8 +2,9 @@
 import csv
 import string
 import random
+from collections import UserDict
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 try:
     import numpy as np
     HAS_NUMPY = True
@@ -544,6 +545,11 @@ def to_ndarray(value):
     for i, item in enumerate(value):
         if item is None or isinstance(item, constants.EnforcedNullType):
             value[i] = np.nan
+        elif checkers.is_iterable(item, forbid_literals = (str, bytes, dict, UserDict)):
+            for index, subitem in enumerate(item):
+                if subitem is None or isinstance(subitem, constants.EnforcedNullType):
+                    item[i] = np.nan
+            value[i] = item
 
     if hasattr(value, '__array__'):
         as_array = np.array(value)
@@ -584,7 +590,7 @@ def from_ndarray(as_ndarray, force_enforced_null = False):
     if not isinstance(as_ndarray, np.ndarray):
         raise errors.HighchartsValueError(f'as_ndarray is expected to be a NumPy ndarray. '
                                           f'Received: {as_ndarray.__class__.__name__}')
-        
+
     if force_enforced_null:
         nan_replacement = constants.EnforcedNull
     else:
