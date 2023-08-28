@@ -6,6 +6,7 @@ from validator_collection import validators, checkers
 from highcharts_core import constants, errors
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.options.series.data.bar import BarData
+from highcharts_core.options.series.data.cartesian import CartesianDataCollection
 from highcharts_core.options.plot_options.bullet import TargetOptions
 
 
@@ -49,7 +50,7 @@ class BulletData(BarData):
         self._target_options = value
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -98,6 +99,16 @@ class BulletData(BarData):
             collection.append(as_obj)
 
         return collection
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return BulletDataCollection.from_ndarray(value)
 
     @classmethod
     def _get_props_from_array(cls) -> List[str]:
@@ -208,3 +219,25 @@ class BulletData(BarData):
             untrimmed[key] = parent_as_dict[key]
 
         return untrimmed
+
+
+class BulletDataCollection(CartesianDataCollection):
+    """A collection of :class:`BulletData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return BulletData

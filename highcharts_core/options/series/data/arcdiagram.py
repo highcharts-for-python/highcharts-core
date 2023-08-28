@@ -3,9 +3,15 @@ from decimal import Decimal
 from collections import UserDict
 
 from validator_collection import validators, checkers
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
 
 from highcharts_core import utility_functions, constants, errors
 from highcharts_core.options.series.data.base import DataBase
+from highcharts_core.options.series.data.collections import DataPointCollection
 from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
 
@@ -86,7 +92,7 @@ class ArcDiagramData(DataBase):
         self._weight = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -125,6 +131,24 @@ class ArcDiagramData(DataBase):
             collection.append(as_obj)
 
         return collection
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return ArcDiagramDataCollection.from_ndarray(value)
+
+    @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1, 3]
 
     @classmethod
     def _get_props_from_array(cls) -> List[str]:
@@ -191,3 +215,25 @@ class ArcDiagramData(DataBase):
         }
 
         return untrimmed
+
+
+class ArcDiagramDataCollection(DataPointCollection):
+    """Collection of data points.
+    
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return ArcDiagramData

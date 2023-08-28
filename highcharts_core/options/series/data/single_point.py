@@ -7,6 +7,7 @@ from validator_collection import validators, checkers
 from highcharts_core import constants, errors
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.options.series.data.base import DataBase
+from highcharts_core.options.series.data.collections import DataPointCollection
 from highcharts_core.options.plot_options.drag_drop import DragDropOptions
 from highcharts_core.utility_classes.data_labels import DataLabel
 
@@ -161,7 +162,7 @@ class SinglePointData(SinglePointBase):
             self._y = validators.numeric(value)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -196,6 +197,24 @@ class SinglePointData(SinglePointBase):
             collection.append(as_obj)
 
         return collection
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return SinglePointDataCollection.from_ndarray(value)
+    
+    @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1, 2]
 
     @classmethod
     def _get_props_from_array(cls) -> List[str]:
@@ -305,6 +324,16 @@ class SinglePointData(SinglePointBase):
         return untrimmed
 
 
+class SinglePointDataCollection(DataPointCollection):
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return SinglePointData
+
+
 class SingleValueData(SinglePointBase):
     """Data point that features a single and ``value`` value."""
 
@@ -332,7 +361,7 @@ class SingleValueData(SinglePointBase):
             self._value = validators.numeric(value_)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -361,6 +390,24 @@ class SingleValueData(SinglePointBase):
             collection.append(as_obj)
 
         return collection
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return SingleValueDataCollection.from_ndarray(value)
+    
+    @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1]
 
     @classmethod
     def _get_props_from_array(cls) -> List[str]:
@@ -461,6 +508,16 @@ class SingleValueData(SinglePointBase):
         return untrimmed
 
 
+class SingleValueDataCollection(DataPointCollection):
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return SingleValueData
+
+
 class SingleXData(SinglePointBase):
     """Data point that features a single labeled ``x`` value."""
 
@@ -488,7 +545,7 @@ class SingleXData(SinglePointBase):
             self._x = validators.numeric(value)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -517,6 +574,24 @@ class SingleXData(SinglePointBase):
             collection.append(as_obj)
 
         return collection
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return SingleXDataCollection.from_ndarray(value)
+    
+    @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1]
 
     @classmethod
     def _get_props_from_array(cls) -> List[str]:
@@ -618,6 +693,16 @@ class SingleXData(SinglePointBase):
         return untrimmed
 
 
+class SingleXDataCollection(DataPointCollection):
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return SingleXData
+
+
 class LabeledSingleXData(SingleXData):
     """Data point that features a single labeled ``x`` value."""
 
@@ -641,7 +726,7 @@ class LabeledSingleXData(SingleXData):
         self._label = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -776,7 +861,7 @@ class ConnectedSingleXData(SingleXData):
         self._connector_width = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):

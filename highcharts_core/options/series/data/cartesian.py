@@ -4,6 +4,12 @@ from decimal import Decimal
 import datetime
 
 from validator_collection import validators, checkers
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
+
 
 from highcharts_core import constants, errors
 from highcharts_core.decorators import class_sensitive
@@ -148,7 +154,7 @@ class CartesianData(DataBase):
             self._y = validators.numeric(value)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -206,8 +212,6 @@ class CartesianData(DataBase):
         :returns: A collection of data point values.
         :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
         """
-        from highcharts_core.options.series.data.cartesian import CartesianDataCollection
-
         return CartesianDataCollection.from_ndarray(value)
     
     @classmethod
@@ -343,7 +347,6 @@ class CartesianDataCollection(DataPointCollection):
         return CartesianData
 
 
-
 class Cartesian3DData(CartesianData):
     """Variant of :class:`CartesianData` which supports three dimensions (an x, y, and
     z-axis)."""
@@ -372,7 +375,7 @@ class Cartesian3DData(CartesianData):
             self._z = validators.numeric(value)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -440,8 +443,6 @@ class Cartesian3DData(CartesianData):
         :returns: A collection of data point values.
         :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
         """
-        from highcharts_core.options.series.data.cartesian import Cartesian3DDataCollection
-
         return Cartesian3DDataCollection.from_ndarray(value)
     
     @classmethod
@@ -626,7 +627,7 @@ class CartesianValueData(CartesianData):
             self._value = validators.numeric(value_)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -694,8 +695,6 @@ class CartesianValueData(CartesianData):
         :returns: A collection of data point values.
         :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
         """
-        from highcharts_core.options.series.data.cartesian import CartesianValueDataCollection
-
         return CartesianValueDataCollection.from_ndarray(value)
     
     @classmethod

@@ -6,6 +6,7 @@ from validator_collection import validators, checkers
 from highcharts_core import constants, errors
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.options.series.data.base import DataBase
+from highcharts_core.options.series.data.collections import DataPointCollection
 from highcharts_core.options.plot_options.drag_drop import DragDropOptions
 from highcharts_core.utility_classes.data_labels import DataLabel
 
@@ -177,7 +178,7 @@ class ConnectionData(ConnectionBase):
         self._drag_drop = value
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         """Generator method which produces a collection of :class:`ConnectionData`
         instances derived from ``value``. Generally consumed by the setter methods in
         series-type specific data classes.
@@ -214,6 +215,24 @@ class ConnectionData(ConnectionBase):
 
         return collection
 
+    @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1, 2]
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return ConnectionDataCollection.from_ndarray(value)
+    
     @classmethod
     def _get_props_from_array(cls) -> List[str]:
         """Returns a list of the property names that can be set using the
@@ -274,6 +293,16 @@ class ConnectionData(ConnectionBase):
         return untrimmed
 
 
+class ConnectionDataCollection(DataPointCollection):
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return ConnectionData
+
+
 class WeightedConnectionData(ConnectionData):
     """Variant of :class:`ConnectionData` that also applies a ``weight`` to the
     connection."""
@@ -298,7 +327,7 @@ class WeightedConnectionData(ConnectionData):
         self._weight = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         """Generator method which produces a collection of :class:`ConnectionData`
         instances derived from ``value``. Generally consumed by the setter methods in
         series-type specific data classes.
@@ -331,6 +360,14 @@ class WeightedConnectionData(ConnectionData):
             collection.append(as_obj)
 
         return collection
+
+    @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1]
 
     @classmethod
     def _get_props_from_array(cls) -> List[str]:
@@ -433,7 +470,7 @@ class OutgoingWeightedConnectionData(WeightedConnectionData):
             self._outgoing = bool(value)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         """Generator method which produces a collection of
         :class:`OutgoingWeightedConnectionData` instances derived from ``value``.
         Generally consumed by the setter methods in series-type specific data classes.
