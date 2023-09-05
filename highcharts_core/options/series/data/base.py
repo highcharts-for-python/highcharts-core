@@ -1,5 +1,6 @@
 from typing import Optional, List, Dict
 from decimal import Decimal
+from collections import UserDict
 
 from validator_collection import validators, checkers
 try:
@@ -350,6 +351,78 @@ class DataBase(DataCore):
             return True
         
         return False
+
+    def populate_from_array(self, value):
+        """Update the data point's properties with values provided by an array (iterable).
+        
+        This method is used to parse data that is input to **Highcharts for Python** 
+        without property names, in an array-organized
+        structure as described in the `Highcharts JS <https://www.highcharts.com>`__
+        documentation.
+        
+          .. seealso::
+
+            The specific structure of the expected array is highly dependent on the type
+            of data point that the series needs, which itself is dependent on the series
+            type itself.
+
+            Please review the detailed :ref:`series documentation <series_documentation>`
+            for series type-specific details of relevant array structures.
+
+          .. note::
+
+            An example of how this works for a simple
+            :class:`LineSeries <highcharts_core.options.series.area.LineSeries>` (which
+            uses
+            :class:`CartesianData <highcharts_core.options.series.data.cartesian.CartesianData>`
+            data points) would be:
+
+            .. code-block:: python
+
+              my_data_point = CartesianData()
+
+              # A simple array of numerical values which correspond to the Y value of the
+              # data point
+              my_data_point.populate_from_array([0, 0])
+              my_data_point.populate_from_array([1, 5])
+              my_data_point.populate_from_array([2, 3])
+              my_data_point.populate_from_array([3, 5])
+
+        :param value: The value that should contain the data which will be converted into
+          data point property values.
+
+          .. note::
+
+            If ``value`` is not an iterable, it will be converted into an iterable to be
+            further de-serialized correctly.
+
+        :type value: iterable
+
+        """
+        properties = self._get_props_from_array()
+        if not value:
+            value = [None for x in properties]
+
+        if HAS_NUMPY:
+            is_ndarray = isinstance(value, np.ndarray)
+        else:
+            is_ndarray = False
+            
+        if not is_ndarray and not checkers.is_iterable(value,
+                                                       forbid_literals = (
+                                                           str,
+                                                           bytes,
+                                                           dict,
+                                                           UserDict
+                                                       )):
+            value = [value]
+
+        if len(value) < len(properties):
+            value = value[:len(properties)]
+
+        for item in value:
+            for index, prop in enumerate(properties):
+                setattr(self, prop, item[index])
 
     @classmethod
     def from_list(cls, value):
