@@ -85,3 +85,50 @@ def test_from_ndarray(as_ndarray, force_enforced_null, error):
                 assert isinstance(item, constants.EnforcedNullType)
             else:
                 assert item is None
+
+@pytest.mark.parametrize('array, index, expected, error', [
+    (np.asarray([[1, 2, 3], [4, 5, 6]]), 1, np.asarray([2, 5]), None),
+    (np.asarray([[1, 2, 3], [4, 5, 6]]), 4, np.full((2, 1), np.nan), None),
+])
+def test_get_ndarray_slice(array, index, expected, error):
+    if not error:
+        result = utility_functions.get_ndarray_slice(array, index)
+        print(f'Expected:\n{expected}')
+        print(f'Result:\n{result}')
+        assert np.array_equal(expected, result, equal_nan = True)
+    else:
+        with pytest.raises(error):
+            result = utility_functions.get_ndarray_slice(array, index)
+            
+
+@pytest.mark.parametrize('value, members, error', [
+    (1, 5, None),
+    #(np.asarray([1, 2, 3]), 5, None),
+    (np.asarray([[1, 2, 3], [4, 5, 6]]), 5, None),
+])
+def test_lengthen_array(value, members, error):
+    if not error:
+        result = utility_functions.lengthen_array(value, members)
+        assert isinstance(result, np.ndarray) is True
+        assert result.shape[0] == members
+        if isinstance(value, int):
+            expected = np.full((members, 1), value)
+            assert np.allclose(result, expected, atol = 1e-15, equal_nan = True)
+    else:
+        with pytest.raises(error):
+            result = utility_functions.lengthen_array(value, members)
+            
+
+@pytest.mark.parametrize('value, expected, error', [
+    (np.asarray([[1, 2, 3], [4, 5, 6]]), True, None),
+    ([1, 2, 3], True, None),
+    ([[1, 2, 3], [4, 5, 6]], True, None),
+    ('not an array', False, None),
+])
+def test_is_arraylike(value, expected, error):
+    if not error:
+        result = utility_functions.is_arraylike(value)
+        assert result is expected
+    else:
+        with pytest.raises(error):
+            result = utility_functions.is_arraylike(value)

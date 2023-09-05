@@ -637,12 +637,16 @@ def get_ndarray_slice(array, index):
     """
     index = validators.integer(index, minimum = 0, allow_none = False)
     if HAS_NUMPY and isinstance(array, np.ndarray):
-        if index < array.ndim:
+        if index < array.shape[1]:
             return array[:, index]
         else:
             len_array = array.shape[0]
     
-            return np.empty((len_array, 1))
+            return np.full((len_array, 1), np.nan)
+    else:
+        array = validators.iterable(array, 
+                                    allow_empty = True, 
+                                    forbid_literals = (str, bytes, dict, UserDict)) or []
     
     return [x[index] for x in array]
 
@@ -678,10 +682,12 @@ def lengthen_array(value, members):
                                                'installed in your runtime '
                                                'environment.')
 
-    is_ndarray = isinstance(value, np.ndarray) 
-    is_list = checkers.is_iterable(value,
-                                   forbid_literals = (str, bytes, dict, UserDict),
-                                   allow_empty = False)
+    is_ndarray = isinstance(value, np.ndarray)
+    is_list = False
+    if not is_ndarray:
+        is_list = checkers.is_iterable(value,
+                                       forbid_literals = (str, bytes, dict, UserDict),
+                                       allow_empty = False)
     is_int = False
     if not is_ndarray and not is_list:
         value = validators.integer(value, allow_empty = None)
@@ -691,7 +697,7 @@ def lengthen_array(value, members):
         value = np.asarray(value)
     elif is_int:
         value = np.full((members, 1), value)
-        
+
     if len(value) > members:
         raise errors.HighchartsValueError(f'Value has more members than specified. '
                                           f'Received: {len(value)}. Expected up to: '
@@ -702,7 +708,10 @@ def lengthen_array(value, members):
         members_to_add = 0
 
     if members_to_add:
-        value = np.vstack((value, np.empty((members_to_add, value.ndim))))
+        try:
+            value = np.vstack((value, np.full((members_to_add, value.shape[1]), np.nan)))
+        except IndexError:
+            value = np.vstack((value, np.full((members_to_add, value.ndim), np.nan)))
 
     return value
 
@@ -732,5 +741,4 @@ def is_arraylike(value) -> bool:
                                                                      bytes, 
                                                                      dict,
                                                                      UserDict
-                                                                 ),
-                                                                 allow_empty = False)
+                                                                 ))
