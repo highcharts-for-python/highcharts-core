@@ -2,6 +2,7 @@
 import csv
 import string
 import random
+import typing
 from collections import UserDict
 
 from validator_collection import validators, checkers
@@ -610,3 +611,126 @@ def from_ndarray(as_ndarray, force_enforced_null = False):
         return stripped
 
     return stripped.tolist()
+
+
+def get_ndarray_slice(array, index):
+    """Return the slice of ``array`` at ``index``.
+    
+    :param array: A `NumPy <https://numpy.org>`__ :class:`ndarray <numpy:numpy.ndarray>`
+      instance or a Python iterable.
+    :type array: :class:`numpy.ndarray <numpy:numpy.ndarray>` or iterable
+    
+    :param index: The 0-based index of the column to return from ``array``.
+    
+      .. note::
+      
+        If ``index`` exceeds the number of dimensions in ``array``, then
+        an empty collection of values should be returned, with the number
+        of empty values matching the length of the ``array``.
+        
+    :type index: :class:`int <python:int>`
+    
+    :returns: A collection of values.
+    :rtype: :class:`numpy.ndarray <numpy:numpy.ndarray>`
+      or :class:`list <python:list>`
+
+    """
+    index = validators.integer(index, minimum = 0, allow_none = False)
+    if HAS_NUMPY and isinstance(array, np.ndarray):
+        if index < array.ndim:
+            return array[:, index]
+        else:
+            len_array = array.shape[0]
+    
+            return np.empty((len_array, 1))
+    
+    return [x[index] for x in array]
+
+
+def lengthen_array(value, members):
+    """Create a NumPy :class:`ndarray <numpy:numpy.ndarray>` from 
+    ``value`` where the result has ``members``.
+    
+    :param value: The array-like value to be inserted into the resulting array.
+    
+      .. note::
+      
+        If an :class:`int <python:int>` is supplied, the value will be repeated all
+        ``members``.
+    
+    :type value: Array-like or :class:`int <python:int>`
+    
+    :param members: The number of members the resulting ``value`` expects.
+    :type members: :class:`int <python:int>`
+    
+    :returns: A NumPy :class:`ndarray <numpy:numpy.ndarray>` of length ``members``.
+    :rtype: :class:`numpy.ndarray <numpy:numpy.ndarray>`
+    
+    :raises HighchartsDependencyError: if NumPy is not available in the runtime
+      environment
+    :raises HighchartsValueError: if ``value`` has more members than ``members``
+
+    """
+    if not HAS_NUMPY:
+        raise errors.HighchartsDependencyError('NumPy is required for this feature. '
+                                               'It was not found in your runtime '
+                                               'environment. Please make sure it is '
+                                               'installed in your runtime '
+                                               'environment.')
+
+    is_ndarray = isinstance(value, np.ndarray) 
+    is_list = checkers.is_iterable(value,
+                                   forbid_literals = (str, bytes, dict, UserDict),
+                                   allow_empty = False)
+    is_int = False
+    if not is_ndarray and not is_list:
+        value = validators.integer(value, allow_empty = None)
+        is_int = True
+
+    if is_list:
+        value = np.asarray(value)
+    elif is_int:
+        value = np.full((members, 1), value)
+        
+    if len(value) > members:
+        raise errors.HighchartsValueError(f'Value has more members than specified. '
+                                          f'Received: {len(value)}. Expected up to: '
+                                          f'{members}.')
+    elif len(value) < members:
+        members_to_add = members - len(value)
+    else:
+        members_to_add = 0
+
+    if members_to_add:
+        value = np.vstack((value, np.empty((members_to_add, value.ndim))))
+
+    return value
+
+
+def is_arraylike(value) -> bool:
+    """Evaluate whether ``value`` is a NumPy array or a Python iterable.
+    
+    :param value: The value to evaluate.
+    :type value: Any
+    
+    :raises HighchartsDependencyError: if NumPy is not available in the runtime
+      environment
+    
+    :returns: ``True`` if an array or array-like. ``False`` if not.
+    :rtype: :class:`bool <python:bool>`
+    """
+    if not HAS_NUMPY:
+        raise errors.HighchartsDependencyError('NumPy is required for this feature. '
+                                               'It was not found in your runtime '
+                                               'environment. Please make sure it is '
+                                               'installed in your runtime '
+                                               'environment.')
+
+    return isinstance(value, np.ndarray) or checkers.is_iterable(value,
+                                                                 forbid_literals = (
+                                                                     str,
+                                                                     bytes, 
+                                                                     dict,
+                                                                     UserDict
+                                                                 ),
+                                                                 allow_empty = False)
