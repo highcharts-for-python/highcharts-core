@@ -45,7 +45,137 @@ class DataPointCollection(HighchartsMeta):
         
         self.data_points = kwargs.get('data_points', None)
         self.ndarray = kwargs.get('ndarray', None)
+
+    def __getattr__(self, name):
+        """Facilitates the retrieval of a 1D array of values from the collection.
         
+        The basic logic is as follows:
+        
+        1. This method is automatically called when an attribute is not found in the 
+           instance.
+        2. It checks to see whether the attribute is a valid property of the data point
+           class.
+        3. If it is, and NumPy is installed, it assembles the array and returns the
+           dimension indicated by the attribute name. If NumPy is not installed, it
+           returns a simple list with values as per the attribute name.
+        4. If ``name`` is not a valid property of the data point class, then it
+           calls the ``super().__getattribute__()`` method to handle the attribute.
+           
+        :param name: The name of the attribute to retrieve.
+        :type name: :class:`str <python:str>`
+        
+        :returns: The value of the attribute.
+        
+        :raises AttributeError: If ``name`` is not a valid attribute of the data point
+          class or the instance.
+        """
+        data_point_properties = self._get_props_from_array()
+        data_point_class = self._get_data_point_class()
+        
+        if name not in data_point_properties and hasattr(data_point_class, name) is False:
+            return super().__getattribute__(name)
+        
+        if name in data_point_properties and self.ndarray is not None:
+            position = data_point_properties.index(name)
+            return utility_functions.get_ndarray_slice(self.ndarray, position)
+        
+        data_points = self._assemble_data_points()
+        as_list = [getattr(x, name, None) for x in data_points]
+        
+        if HAS_NUMPY:
+            return np.asarray(as_list)
+        
+        return as_list
+
+    def __setattr__(self, name, value):
+        """Updates the collected data values if ``name`` is a valid property of the 
+        data point.
+        
+        The basic logic is as follows:
+        
+          1. Check if ``name`` is a valid property of the data point class.
+          2. If it is not, then call the ``super().__setattr__()`` method to handle
+             the attribute. End the method.
+          3. If it is, then check whether the call requires merging into existing
+             data (as opposed to wholesale overwrite).
+          4. If merging is required, check whether ``value`` is of the same length
+             as other existing data. If it is shorter, then pad it with empty values.
+             If it is longer, then raise an error.
+          5. If NumPy is supported, then convert ``value`` to a NumPy array. Otherwise,
+             leave it as is.
+          6. If NumPy is supported and an array is present, replace the corresponding 
+             slice with the new value.Otherwise, reconstitute the resulting array with 
+             new values.
+          7. If no array is supported, then set the corresponding property on the data
+             points.
+
+        """
+        data_point_properties = self._get_props_from_array()
+        
+        has_ndarray = self.ndarray is not None
+        has_data_points = self.data_points is not None
+        if name in data_point_properties and has_ndarray:
+            index = data_point_properties.index(name)
+            extend_columns = index > self.ndarray.ndim
+            is_arraylike = utility_functions.is_arraylike(value)
+            
+            array = self.ndarray.copy()
+
+            # if value is not an array
+            if not is_arraylike:
+                value = np.full((len(array), 1), value)
+
+            extend_ndarray = len(value) > len(self.ndarray)
+            extend_value = len(value) < len(self.ndarray)
+
+            # if the data prop name implies a dimension index that does not exist 
+            # in ndarray
+            if extend_columns:
+                empty = np.empty((len(array), index))
+                array = np.hstack((array, empty))
+
+            # if value has more members (values) than the existing ndarray
+            if extend_ndarray:
+                array = utility_functions.lengthen_array(array,
+                                                         members = len(value))
+                array[:, index] = value
+            # if value has fewer members (values) than the existing ndarray
+            elif extend_value:
+                value = utility_functions.lengthen_array(value,
+                                                         members = len(self.ndarray))
+            array[:, index] = value
+            self.ndarray = array
+
+        elif name in data_point_properties and has_data_points:
+            is_arraylike = utility_functions.is_arraylike(value)
+            if not is_arraylike:
+                value = np.full((len(self.data_points), 1), value)
+            
+            if len(self.data_points) < len(value):
+                missing = len(value) - len(self.data_points)
+                for i in range(missing):
+                    self.data.append(self._data_point_class())
+                    
+            if len(value) < len(self.data_points):
+                value = utility_functions.lengthen_array(value,
+                                                         members = len(self.data_points))
+
+            for i in range(len(self.data_points)):
+                self.data_points[i].populate_from_array(value[i])
+            
+        elif name in data_point_properties:
+            index = data_point_properties.index(name)
+            is_arraylike = utility_functions.is_arraylike(value)
+            
+            # if value is not an array
+            if not is_arraylike:
+                as_list = [None for x in data_point_properties]
+                as_list[index] = value
+                
+            self.ndarray = as_list
+        else:
+            super().__setattr__(name, value)
+          
     @property
     def data_points(self) -> Optional[List[DataBase]]:
         """The collection of data points for the series. Defaults to
@@ -78,12 +208,21 @@ class DataPointCollection(HighchartsMeta):
 
     @ndarray.setter
     def ndarray(self, value):
+        if not HAS_NUMPY:
+            raise errors.HighchartsDependencyError('NumPy is required for this feature. '
+                                                   'It was not found in the runtime environment. '
+                                                   'Please install it using "pip install numpy" '
+                                                   'or equivalent.')
+        
         if value is None:
             self._ndarray = None
             as_array = False
         elif not isinstance(value, 
                             np.ndarray) and checkers.is_iterable(value,
-                                                                 forbid_literals = (str, bytes, dict, UserDict)):
+                                                                 forbid_literals = (str, 
+                                                                                    bytes, 
+                                                                                    dict, 
+                                                                                    UserDict)):
             as_array = utility_functions.to_ndarray(value)
         else:
             as_array = value
@@ -95,8 +234,8 @@ class DataPointCollection(HighchartsMeta):
                 supported_as_str += f', or {str(supported_dimensions[-1])}'
                 
                 raise errors.HighchartsValueError(f'{self.__name__} supports arrays with '
-                                                f'{supported_as_str} dimensions. Received'
-                                                f' a value with: {as_array.ndim}')
+                                                  f'{supported_as_str} dimensions. Received'
+                                                  f' a value with: {as_array.ndim}')
 
             self._ndarray = as_array
         elif value is not None:
