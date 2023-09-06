@@ -152,3 +152,96 @@ def test_from_ndarray(value, expected_shape, has_data_points, error):
     else:
         with pytest.raises(error):
             result = cls.from_ndarray(value)
+            
+
+@pytest.mark.parametrize('value, expected_shape, has_ndarray, has_data_points, error', [
+    (np.asarray([
+        [0.0, 15.0], 
+        [10.0, -50.0], 
+        [20.0, -56.5], 
+        [30.0, -46.5], 
+        [40.0, -22.1],
+        [50.0, -2.5], 
+        [60.0, -27.7], 
+        [70.0, -55.7], 
+        [80.0, -76.5]
+    ]), (9, 2), True, False, None),
+    ([
+        {
+            'id': 'some-value'
+        },
+        {
+            'id': 'some other value'
+        },
+    ], (9, 2), False, True, None),
+    
+    ('Not an Array', None, True, False, ValueError),
+])
+def test_from_array(value, expected_shape, has_ndarray, has_data_points, error):
+    if has_ndarray is False and has_data_points is False:
+        raise AssertionError('Test is invalid. has_ndarray or has_data_points must be '
+                             'True. Both were supplied as False.')
+    if not error:
+        result = cls.from_array(value)
+        assert result is not None
+        if has_ndarray:
+            assert result.ndarray is not None
+            assert result.ndarray.shape == expected_shape
+        if has_data_points:
+            assert result.data_points is not None
+    else:
+        with pytest.raises(error):
+            result = cls.from_array(value)
+            
+
+@pytest.mark.parametrize('value, kwargs, expects_objects, error', [
+    (np.asarray([
+        [0.0, 15.0], 
+        [10.0, -50.0], 
+        [20.0, -56.5], 
+        [30.0, -46.5], 
+        [40.0, -22.1],
+        [50.0, -2.5], 
+        [60.0, -27.7], 
+        [70.0, -55.7], 
+        [80.0, -76.5]
+    ]), {}, False, None),
+    ([
+        {
+            'id': 'some-value'
+        },
+        {
+            'id': 'some other value'
+        },
+    ], {}, True, None),
+    (np.asarray([
+        [0.0, 15.0], 
+        [10.0, -50.0], 
+        [20.0, -56.5], 
+        [30.0, -46.5], 
+        [40.0, -22.1],
+        [50.0, -2.5], 
+        [60.0, -27.7], 
+        [70.0, -55.7], 
+        [80.0, -76.5]
+    ]), {'force_object': True}, True, None),
+    ([
+        {
+            'id': 'some-value'
+        },
+        {
+            'id': 'some other value'
+        },
+    ], {'force_ndarray': True}, False, None),
+    
+])
+def test_to_array(value, kwargs, expects_objects, error):
+    if not error:
+        obj = cls.from_array(value)
+        result = obj.to_array(**kwargs)
+        assert result is not None
+        assert isinstance(result, list) is True
+        assert len(result) == len(value)
+        if expects_objects:
+            for item in result:
+                assert isinstance(item, DataBase) is True

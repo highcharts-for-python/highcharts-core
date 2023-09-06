@@ -40,11 +40,11 @@ class DataPointCollection(HighchartsMeta):
     """
     
     def __init__(self, **kwargs):
-        self._data_points = None
         self._ndarray = None
+        self._data_points = None
         
-        self.data_points = kwargs.get('data_points', None)
         self.ndarray = kwargs.get('ndarray', None)
+        self.data_points = kwargs.get('data_points', None)
 
     def __getattr__(self, name):
         """Facilitates the retrieval of a 1D array of values from the collection.
@@ -112,8 +112,13 @@ class DataPointCollection(HighchartsMeta):
         """
         data_point_properties = self._get_props_from_array()
         
-        has_ndarray = self.ndarray is not None
-        has_data_points = self.data_points is not None
+        try:
+            has_ndarray = self.ndarray is not None
+            has_data_points = self.data_points is not None
+        except AttributeError:
+            has_ndarray = False
+            has_data_points = False
+
         if name in data_point_properties and has_ndarray:
             index = data_point_properties.index(name)
             extend_columns = index > self.ndarray.ndim
@@ -394,7 +399,11 @@ class DataPointCollection(HighchartsMeta):
           instances.
 
         """
-        data_points = [x for x in self.data_points]
+        if self.data_points is not None:
+            data_points = [x for x in self.data_points]
+        else:
+            data_points = []
+
         if self.ndarray is None:
             return data_points
         
@@ -406,8 +415,8 @@ class DataPointCollection(HighchartsMeta):
         if len(data_points) < len(self.ndarray):
             missing = len(self.ndarray) - len(data_points)
             for i in range(missing):
-                data_points.append(self._data_point_class())
-                    
+                data_points.append(self._get_data_point_class()())
+
         for index in range(len(self.ndarray)):
             data_points[index].populate_from_array(self.ndarray[index])
 

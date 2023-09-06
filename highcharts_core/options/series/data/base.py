@@ -400,7 +400,7 @@ class DataBase(DataCore):
 
         """
         properties = self._get_props_from_array()
-        if not value:
+        if len(value) == 0:
             value = [None for x in properties]
 
         if HAS_NUMPY:
