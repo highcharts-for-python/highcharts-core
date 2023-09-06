@@ -266,16 +266,21 @@ class DataPointCollection(HighchartsMeta):
         return cls._get_data_point_class()._get_supported_dimensions()
 
     @classmethod
-    def _get_props_from_array(cls) -> List[str]:
+    def _get_props_from_array(cls, length = None) -> List[str]:
         """Returns a list of the property names that can be set using the
         :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
         method.
+        
+        :param length: The length of the array, which may determine the properties to 
+          parse. Defaults to :obj:`None <python:None>`, which returns the full list of 
+          properties.
+        :type length: :class:`int <python:int>` or :obj:`None <python:None>`
         
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
         data_point_cls = cls._get_data_point_class()
         
-        return data_point_cls._get_props_from_array()
+        return data_point_cls._get_props_from_array(length)
 
     @classmethod
     def from_array(cls, value):
@@ -438,9 +443,13 @@ class DataPointCollection(HighchartsMeta):
         """
         if not self.data_points:
             return np.ndarray.empty()
+        
+        props = self._get_props_from_array()
+        if props[-1] == 'name':
+            props = props[:-1]
 
         as_list = [[getattr(data_point, x, constants.EnforcedNull)
-                    for x in self._get_props_from_array()]
+                    for x in props]
                    for data_point in self.data_points]
         
         return utility_functions.to_ndarray(as_list)

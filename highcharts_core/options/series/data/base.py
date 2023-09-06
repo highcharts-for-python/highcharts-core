@@ -320,10 +320,15 @@ class DataBase(DataCore):
         return [1, 2, 3]
 
     @classmethod
-    def _get_props_from_array(cls) -> List[str]:
+    def _get_props_from_array(cls, length = None) -> List[str]:
         """Returns a list of the property names that can be set using the
         :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
         method.
+        
+        :param length: The length of the array, which may determine the properties to 
+          parse. Defaults to :obj:`None <python:None>`, which returns the full list of 
+          properties.
+        :type length: :class:`int <python:int>` or :obj:`None <python:None>`
         
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
@@ -399,10 +404,6 @@ class DataBase(DataCore):
         :type value: iterable
 
         """
-        properties = self._get_props_from_array()
-        if len(value) == 0:
-            value = [None for x in properties]
-
         if HAS_NUMPY:
             is_ndarray = isinstance(value, np.ndarray)
         else:
@@ -416,6 +417,14 @@ class DataBase(DataCore):
                                                            UserDict
                                                        )):
             value = [value]
+
+        try:
+            properties = self._get_props_from_array(len(value))
+        except KeyError:
+            properties = []
+
+        if len(value) == 0:
+            value = [None for x in properties]
 
         if len(value) < len(properties):
             value = value[:len(properties)]
@@ -529,6 +538,22 @@ class DataBase(DataCore):
                 as_obj = cls.from_dict(item)
             elif item is None or isinstance(item, constants.EnforcedNullType):
                 as_obj = cls()
+            elif checkers.is_iterable(item, forbid_literals = (str,
+                                                               bytes,
+                                                               dict,
+                                                               UserDict)):
+                try:
+                    array_props = cls._get_props_from_array(len(item))
+                except KeyError:
+                    raise errors.HighchartsValueError(f'each data point supplied must either '
+                                                      f'be a DataBase Data Point or be '
+                                                      f'coercable to one. Could not coerce: '
+                                                      f'{item}')
+                kwargs = {}
+                for index, prop in enumerate(array_props):
+                    kwargs[prop] = item[index]
+
+                as_obj = cls(**kwargs)
             else:
                 raise errors.HighchartsValueError(f'each data point supplied must either '
                                                   f'be a DataBase Data Point or be '
@@ -654,8 +679,13 @@ class DataBase(DataCore):
         if self.requires_js_object or force_object:
             return self._to_untrimmed_dict(in_cls = self.__class__.__name__)
 
+        props = self._get_props_from_array()
+
+        if props[-1] == 'name':
+            props = props[:-1]
+
         return [getattr(self, x, constants.EnforcedNull)
-                for x in self._get_props_from_array()]
+                for x in props]
 
     @classmethod
     def from_ndarray(cls, value):

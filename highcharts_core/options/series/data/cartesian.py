@@ -215,14 +215,24 @@ class CartesianData(DataBase):
         return CartesianDataCollection.from_ndarray(value)
     
     @classmethod
-    def _get_props_from_array(cls) -> List[str]:
+    def _get_props_from_array(cls, length = None) -> List[str]:
         """Returns a list of the property names that can be set using the
         :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
         method.
         
+        :param length: The length of the array, which may determine the properties to 
+          parse. Defaults to :obj:`None <python:None>`, which returns the full list of 
+          properties.
+        :type length: :class:`int <python:int>` or :obj:`None <python:None>`
+        
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
-        return ['x', 'y', 'name']
+        prop_list = {
+            None: ['x', 'y', 'name'],
+            1: ['y'],
+            2: ['x', 'y']
+        }
+        return prop_list[length]
 
     def to_array(self, force_object = False) -> List | Dict:
         """Generate the array representation of the data point (the inversion 
@@ -446,14 +456,24 @@ class Cartesian3DData(CartesianData):
         return Cartesian3DDataCollection.from_ndarray(value)
     
     @classmethod
-    def _get_props_from_array(cls) -> List[str]:
+    def _get_props_from_array(cls, length = None) -> List[str]:
         """Returns a list of the property names that can be set using the
         :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
         method.
         
+        :param length: The length of the array, which may determine the properties to 
+          parse. Defaults to :obj:`None <python:None>`, which returns the full list of 
+          properties.
+        :type length: :class:`int <python:int>` or :obj:`None <python:None>`
+        
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
-        return ['x', 'y', 'z', 'name']
+        prop_list = {
+            None: ['x', 'y', 'z', 'name'],
+            3: ['x', 'y', 'z'],
+            2: ['y', 'z']
+        }
+        return prop_list[length]
 
     def to_array(self, force_object = False) -> List | Dict:
         """Generate the array representation of the data point (the inversion 
@@ -698,14 +718,24 @@ class CartesianValueData(CartesianData):
         return CartesianValueDataCollection.from_ndarray(value)
     
     @classmethod
-    def _get_props_from_array(cls) -> List[str]:
+    def _get_props_from_array(cls, length = None) -> List[str]:
         """Returns a list of the property names that can be set using the
         :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
         method.
         
+        :param length: The length of the array, which may determine the properties to 
+          parse. Defaults to :obj:`None <python:None>`, which returns the full list of 
+          properties.
+        :type length: :class:`int <python:int>` or :obj:`None <python:None>`
+        
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
-        return ['x', 'y', 'value', 'name']
+        prop_list = {
+            None: ['x', 'y', 'value', 'name'],
+            3: ['x', 'y', 'value'],
+            2: ['y', 'value'],
+        }
+        return prop_list[length]
 
     def to_array(self, force_object = False) -> List | Dict:
         """Generate the array representation of the data point (the inversion 

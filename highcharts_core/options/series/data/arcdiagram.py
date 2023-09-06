@@ -151,10 +151,15 @@ class ArcDiagramData(DataBase):
         return [1, 3]
 
     @classmethod
-    def _get_props_from_array(cls) -> List[str]:
+    def _get_props_from_array(cls, length = None) -> List[str]:
         """Returns a list of the property names that can be set using the
         :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
         method.
+        
+        :param length: The length of the array, which may determine the properties to 
+          parse. Defaults to :obj:`None <python:None>`, which returns the full list of 
+          properties.
+        :type length: :class:`int <python:int>` or :obj:`None <python:None>`
         
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
