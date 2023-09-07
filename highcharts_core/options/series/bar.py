@@ -1,13 +1,27 @@
 from typing import Optional, List
 
 from highcharts_core import constants
+from highcharts_core.decorators import validate_types
 from highcharts_core.options.series.base import SeriesBase
-from highcharts_core.options.series.data.cartesian import CartesianData, Cartesian3DData
-from highcharts_core.options.series.data.bar import BarData, WaterfallData, WindBarbData, XRangeData
-from highcharts_core.options.series.data.range import RangeData
-from highcharts_core.options.plot_options.bar import BaseBarOptions, BarOptions, WaterfallOptions, \
-    WindBarbOptions, XRangeOptions
-from highcharts_core.utility_functions import mro__to_untrimmed_dict
+from highcharts_core.options.series.data.cartesian import (CartesianData, 
+                                                           Cartesian3DData,
+                                                           CartesianDataCollection,
+                                                           Cartesian3DDataCollection)
+from highcharts_core.options.series.data.bar import (BarData, 
+                                                     BarDataCollection,
+                                                     WaterfallData, 
+                                                     WaterfallDataCollection,
+                                                     WindBarbData, 
+                                                     WindBarbDataCollection,
+                                                     XRangeData,
+                                                     XRangeDataCollection)
+from highcharts_core.options.series.data.range import RangeData, RangeDataCollection
+from highcharts_core.options.plot_options.bar import (BaseBarOptions, 
+                                                      BarOptions, 
+                                                      WaterfallOptions,
+                                                      WindBarbOptions, 
+                                                      XRangeOptions)
+from highcharts_core.utility_functions import mro__to_untrimmed_dict, is_ndarray
 
 
 class BaseBarSeries(SeriesBase, BaseBarOptions):
@@ -17,7 +31,7 @@ class BaseBarSeries(SeriesBase, BaseBarOptions):
         super().__init__(**kwargs)
 
     @property
-    def data(self) -> Optional[List[BarData]]:
+    def data(self) -> Optional[List[BarData] | BarDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -80,13 +94,14 @@ class BaseBarSeries(SeriesBase, BaseBarOptions):
             A one-dimensional collection of :class:`BarData` objects.
 
         :rtype: :class:`list <python:list>` of :class:`BarData` or
+          :class:`BarDataCollection`
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = BarData.from_array(value)
@@ -366,7 +381,7 @@ class ColumnPyramidSeries(ColumnSeries):
 
     """
     @property
-    def data(self) -> Optional[List[CartesianData]]:
+    def data(self) -> Optional[List[CartesianData] | CartesianDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -429,13 +444,14 @@ class ColumnPyramidSeries(ColumnSeries):
             A one-dimensional collection of :class:`CartesianData` objects.
 
         :rtype: :class:`list <python:list>` of :class:`CartesianData` or
+          :class:`CartesianDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = CartesianData.from_array(value)
@@ -467,7 +483,7 @@ class ColumnRangeSeries(ColumnSeries):
 
     """
     @property
-    def data(self) -> Optional[List[RangeData]]:
+    def data(self) -> Optional[List[RangeData] | RangeDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -530,13 +546,14 @@ class ColumnRangeSeries(ColumnSeries):
             A one-dimensional collection of :class:`RangeData` objects.
 
         :rtype: :class:`list <python:list>` of :class:`RangeData` or
+          :class:`RangeDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = RangeData.from_array(value)
@@ -584,7 +601,7 @@ class VariwideSeries(BaseBarSeries):
 
     """
     @property
-    def data(self) -> Optional[List[Cartesian3DData]]:
+    def data(self) -> Optional[List[Cartesian3DData] | Cartesian3DDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -652,13 +669,14 @@ class VariwideSeries(BaseBarSeries):
             A one-dimensional collection of :class:`Cartesian3DData` objects.
 
         :rtype: :class:`list <python:list>` of :class:`Cartesian3DData` or
+          :class:`Cartesian3DDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = Cartesian3DData.from_array(value)
@@ -696,7 +714,7 @@ class WaterfallSeries(ColumnSeries, WaterfallOptions):
         super().__init__(**kwargs)
 
     @property
-    def data(self) -> Optional[List[WaterfallData]]:
+    def data(self) -> Optional[List[WaterfallData] | WaterfallDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -759,13 +777,14 @@ class WaterfallSeries(ColumnSeries, WaterfallOptions):
             A one-dimensional collection of :class:`WaterfallData` objects.
 
         :rtype: :class:`list <python:list>` of :class:`WaterfallData` or
+          :class:`WaterfallDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = WaterfallData.from_array(value)
@@ -899,7 +918,7 @@ class WindBarbSeries(BarSeries, WindBarbOptions):
         super().__init__(**kwargs)
 
     @property
-    def data(self) -> Optional[List[WindBarbData]]:
+    def data(self) -> Optional[List[WindBarbData] | WindBarbDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -964,13 +983,14 @@ class WindBarbSeries(BarSeries, WindBarbOptions):
             A one-dimensional collection of :class:`WindBarbData` objects.
 
         :rtype: :class:`list <python:list>` of :class:`WindBarbData` or
+          :class:`WindBarbDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = WindBarbData.from_array(value)
@@ -1112,7 +1132,7 @@ class XRangeSeries(BaseBarSeries, XRangeOptions):
         super().__init__(**kwargs)
 
     @property
-    def data(self) -> Optional[List[XRangeData]]:
+    def data(self) -> Optional[List[XRangeData] | XRangeDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -1121,13 +1141,14 @@ class XRangeSeries(BaseBarSeries, XRangeOptions):
         :class:`dict <python:dict>` instances that can be coerced to :class:`XRangeData`.
 
         :rtype: :class:`list <python:list>` of :class:`XRangeData` or
+          :class:`XRangeDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = XRangeData.from_array(value)

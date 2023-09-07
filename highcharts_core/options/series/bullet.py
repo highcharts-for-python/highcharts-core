@@ -1,9 +1,9 @@
 from typing import Optional, List
 
 from highcharts_core.options.series.bar import BarSeries
-from highcharts_core.options.series.data.bullet import BulletData
+from highcharts_core.options.series.data.bullet import BulletData, BulletDataCollection
 from highcharts_core.options.plot_options.bullet import BulletOptions
-from highcharts_core.utility_functions import mro__to_untrimmed_dict
+from highcharts_core.utility_functions import mro__to_untrimmed_dict, is_ndarray
 
 
 class BulletSeries(BarSeries, BulletOptions):
@@ -23,7 +23,7 @@ class BulletSeries(BarSeries, BulletOptions):
         super().__init__(**kwargs)
 
     @property
-    def data(self) -> Optional[List[BulletData]]:
+    def data(self) -> Optional[List[BulletData] | BulletDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -92,13 +92,14 @@ class BulletSeries(BarSeries, BulletOptions):
             A one-dimensional collection of :class:`BulletData` objects.
 
         :rtype: :class:`list <python:list>` of :class:`BulletData` or
+          :class:`BulletDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = BulletData.from_array(value)

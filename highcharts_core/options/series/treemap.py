@@ -1,9 +1,9 @@
 from typing import Optional, List
 
 from highcharts_core.options.series.base import SeriesBase
-from highcharts_core.options.series.data.treemap import TreemapData
+from highcharts_core.options.series.data.treemap import TreemapData, TreemapDataCollection
 from highcharts_core.options.plot_options.treemap import TreemapOptions
-from highcharts_core.utility_functions import mro__to_untrimmed_dict
+from highcharts_core.utility_functions import mro__to_untrimmed_dict, is_ndarray
 
 
 class TreemapSeries(SeriesBase, TreemapOptions):
@@ -22,7 +22,7 @@ class TreemapSeries(SeriesBase, TreemapOptions):
         super().__init__(**kwargs)
 
     @property
-    def data(self) -> Optional[List[TreemapData]]:
+    def data(self) -> Optional[List[TreemapData] | TreemapDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -37,13 +37,14 @@ class TreemapSeries(SeriesBase, TreemapOptions):
             :class:`dict <python:dict>` instances coercable to :class:`TreemapData`
 
         :rtype: :class:`list <python:list>` of :class:`TreemapData` or
+          :class:`TreemapDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = TreemapData.from_array(value)

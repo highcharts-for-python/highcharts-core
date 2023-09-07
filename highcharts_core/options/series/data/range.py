@@ -441,6 +441,16 @@ class ConnectedRangeData(CartesianData):
         self._low_color = utility_functions.validate_color(value)
 
     @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return ConnectedRangeDataCollection.from_ndarray(value)
+
+    @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         """Convenience method which returns the keyword arguments used to initialize the
         class from a Highcharts Javascript-compatible :class:`dict <python:dict>` object.
@@ -494,3 +504,25 @@ class ConnectedRangeData(CartesianData):
             untrimmed[key] = parent_as_dict[key]
 
         return untrimmed
+
+
+class ConnectedRangeDataCollection(CartesianDataCollection):
+    """A collection of :class:`ConnectedRangeData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return ConnectedRangeData

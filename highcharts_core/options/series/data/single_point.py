@@ -772,6 +772,16 @@ class LabeledSingleXData(SingleXData):
         return collection
 
     @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return LabeledSingleXDataCollection.from_ndarray(value)
+
+    @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         """Convenience method which returns the keyword arguments used to initialize the
         class from a Highcharts Javascript-compatible :class:`dict <python:dict>` object.
@@ -834,6 +844,16 @@ class LabeledSingleXData(SingleXData):
         }
 
         return untrimmed
+
+
+class LabeledSingleXDataCollection(DataPointCollection):
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return LabeledSingleXData
 
 
 class ConnectedSingleXData(SingleXData):
@@ -907,6 +927,16 @@ class ConnectedSingleXData(SingleXData):
         return collection
 
     @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return ConnectedSingleXDataCollection.from_ndarray(value)
+
+    @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         """Convenience method which returns the keyword arguments used to initialize the
         class from a Highcharts Javascript-compatible :class:`dict <python:dict>` object.
@@ -971,3 +1001,15 @@ class ConnectedSingleXData(SingleXData):
         }
 
         return untrimmed
+
+
+class ConnectedSingleXDataCollection(DataPointCollection):
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return ConnectedSingleXData
+
+

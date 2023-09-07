@@ -647,7 +647,8 @@ class DataBase(DataCore):
           :class:`DataBase <highcharts_core.options.series.data.base.DataBase>`)
         :rtype: :class:`list <python:list>` of
           :class:`DataBase <highcharts_core.options.series.data.base.DataBase>`
-          descendant instances
+          descendant instances or 
+          :class:`CartesianDataCollection <highcharts_core.options.series.data.cartesian.CartesianDataCollection>`
         """
         if not value:
             return []
@@ -681,7 +682,7 @@ class DataBase(DataCore):
 
         props = self._get_props_from_array()
 
-        if props[-1] == 'name':
+        if props and props[-1] == 'name':
             props = props[:-1]
 
         return [getattr(self, x, constants.EnforcedNull)

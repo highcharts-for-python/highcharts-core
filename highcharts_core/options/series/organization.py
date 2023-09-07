@@ -2,10 +2,11 @@ from typing import Optional, List
 
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.options.series.bar import BarSeries
-from highcharts_core.options.series.data.connections import OutgoingWeightedConnectionData
+from highcharts_core.options.series.data.connections import (OutgoingWeightedConnectionData,
+                                                             OutgoingWeightedConnectionDataCollection)
 from highcharts_core.options.plot_options.organization import OrganizationOptions
 from highcharts_core.utility_classes.nodes import OrganizationNodeOptions
-from highcharts_core.utility_functions import mro__to_untrimmed_dict
+from highcharts_core.utility_functions import mro__to_untrimmed_dict, is_ndarray
 
 
 class OrganizationSeries(BarSeries, OrganizationOptions):
@@ -38,7 +39,7 @@ class OrganizationSeries(BarSeries, OrganizationOptions):
         super().__init__(**kwargs)
 
     @property
-    def data(self) -> Optional[List[OutgoingWeightedConnectionData]]:
+    def data(self) -> Optional[List[OutgoingWeightedConnectionData] | OutgoingWeightedConnectionDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -98,16 +99,18 @@ class OrganizationSeries(BarSeries, OrganizationOptions):
 
           .. tab:: Object Collection
 
-            A one-dimensional collection of :class:`OrganizationData` objects.
+            A one-dimensional collection of :class:`OutgoingWeightedConnectionData` 
+            objects.
 
-        :rtype: :class:`list <python:list>` of :class:`OrganizationData` or
+        :rtype: :class:`list <python:list>` of :class:`OutgoingWeightedConnectionData` or
+          :class:`OutgoingWeightedConnectionData` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = OutgoingWeightedConnectionData.from_array(value)

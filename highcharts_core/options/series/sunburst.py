@@ -1,9 +1,9 @@
 from typing import Optional, List
 
 from highcharts_core.options.series.base import SeriesBase
-from highcharts_core.options.series.data.sunburst import SunburstData
+from highcharts_core.options.series.data.sunburst import SunburstData, SunburstDataCollection
 from highcharts_core.options.plot_options.sunburst import SunburstOptions
-from highcharts_core.utility_functions import mro__to_untrimmed_dict
+from highcharts_core.utility_functions import mro__to_untrimmed_dict, is_ndarray
 
 
 class SunburstSeries(SeriesBase, SunburstOptions):
@@ -23,7 +23,7 @@ class SunburstSeries(SeriesBase, SunburstOptions):
         super().__init__(**kwargs)
 
     @property
-    def data(self) -> Optional[List[SunburstData]]:
+    def data(self) -> Optional[List[SunburstData] | SunburstDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -38,13 +38,14 @@ class SunburstSeries(SeriesBase, SunburstOptions):
             :class:`dict <python:dict>` instances coercable to :class:`SunburstData`
 
         :rtype: :class:`list <python:list>` of :class:`SunburstData` or
+          :class:`SunburstDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = SunburstData.from_array(value)

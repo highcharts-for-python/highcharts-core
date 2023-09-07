@@ -11,13 +11,19 @@ except ImportError:
             import simplejson as json
         except ImportError:
             import json
+try:
+  import numpy as np
+  HAS_NUMPY = True
+except ImportError:
+  HAS_NUMPY = False
 
 from validator_collection import validators, checkers
 
 from highcharts_core import errors, utility_functions, constants
-from highcharts_core.decorators import class_sensitive
+from highcharts_core.decorators import class_sensitive, validate_types
 from highcharts_core.options.plot_options.series import SeriesOptions
 from highcharts_core.options.series.data.base import DataBase
+from highcharts_core.options.series.data.collections import DataPointCollection
 
 
 class SeriesBase(SeriesOptions):
@@ -86,19 +92,25 @@ class SeriesBase(SeriesOptions):
         return f'series.{self.type}'
 
     @property
-    def data(self) -> Optional[List[DataBase]]:
+    def data(self) -> Optional[List[DataBase] | DataPointCollection]:
         """The collection of data points for the series. Defaults to
         :obj:`None <python:None>`.
 
-        :rtype: :class:`DataBase` or :obj:`None <python:None>`
+        :rtype: :class:`DataBase` or 
+          :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>` 
+          or :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
-    @class_sensitive(DataBase, force_iterable = True)
     def data(self, value):
-        self._data = value
-
+        if utility_functions.is_ndarray(value):
+            self._data = DataBase.from_ndarray(value)
+        else:
+            self._data = validate_types(value, 
+                                        DataBase,
+                                        force_iterable = True)
+              
     @property
     def id(self) -> Optional[str]:
         """An id for the series. Defaults to :obj:`None <python:None>`.

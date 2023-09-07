@@ -2,8 +2,8 @@ from typing import Optional, List
 from highcharts_core.options.series.funnel import FunnelSeries
 from highcharts_core.options.series.pie import PieSeries
 from highcharts_core.options.plot_options.pyramid import PyramidOptions, Pyramid3DOptions
-from highcharts_core.options.series.data.single_point import SinglePointData
-from highcharts_core.utility_functions import mro__to_untrimmed_dict
+from highcharts_core.options.series.data.single_point import SinglePointData, SinglePointDataCollection
+from highcharts_core.utility_functions import mro__to_untrimmed_dict, is_ndarray
 
 
 class PyramidSeries(FunnelSeries, PyramidOptions):
@@ -40,7 +40,7 @@ class Pyramid3DSeries(PyramidOptions, PieSeries):
         super().__init__(**kwargs)
 
     @property
-    def data(self) -> Optional[List[SinglePointData]]:
+    def data(self) -> Optional[List[SinglePointData] | SinglePointDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -64,13 +64,14 @@ class Pyramid3DSeries(PyramidOptions, PieSeries):
             A one-dimensional collection of :class:`SinglePointData` objects.
 
         :rtype: :class:`list <python:list>` of :class:`SinglePointData` or
+          :class:`SinglePointDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = SinglePointData.from_array(value)

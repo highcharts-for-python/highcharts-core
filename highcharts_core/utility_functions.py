@@ -742,3 +742,15 @@ def is_arraylike(value) -> bool:
                                                                      dict,
                                                                      UserDict
                                                                  ))
+
+
+def is_ndarray(value) -> bool:
+    """Evaluate whether ``value`` is a NumPy :class:`ndarray <numpy:numpy.ndarray>`.
+    
+    :param value: The value to evaluate.
+    :type value: Any
+    
+    :returns: ``True`` if an array. ``False`` if not.
+    :rtype: :class:`bool <python:bool>`
+    """
+    return checkers.is_type(value, 'ndarray')

@@ -2,9 +2,9 @@ from typing import Optional, List
 
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.options.series.base import SeriesBase
-from highcharts_core.options.series.data.connections import ConnectionData
+from highcharts_core.options.series.data.connections import ConnectionData, ConnectionDataCollection
 from highcharts_core.options.plot_options.networkgraph import NetworkGraphOptions
-from highcharts_core.utility_functions import mro__to_untrimmed_dict
+from highcharts_core.utility_functions import mro__to_untrimmed_dict, is_ndarray
 
 
 class NetworkGraphSeries(SeriesBase, NetworkGraphOptions):
@@ -23,7 +23,7 @@ class NetworkGraphSeries(SeriesBase, NetworkGraphOptions):
         super().__init__(**kwargs)
 
     @property
-    def data(self) -> Optional[List[ConnectionData]]:
+    def data(self) -> Optional[List[ConnectionData] | ConnectionDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -37,14 +37,17 @@ class NetworkGraphSeries(SeriesBase, NetworkGraphOptions):
             instances coercable to a :class:`ConnectionData` instance.
 
         :rtype: :class:`list <python:list>` of :class:`ConnectionData` or
+          :class:`ConnectionDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
-    @class_sensitive(ConnectionData, force_iterable = True)
     def data(self, value):
-        self._data = value
+        if not is_ndarray(value) and not value:
+            self._data = None
+        else:
+            self._data = ConnectionData.from_array(value)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

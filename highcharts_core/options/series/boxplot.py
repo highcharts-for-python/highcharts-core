@@ -1,10 +1,10 @@
 from typing import Optional, List
 
 from highcharts_core.options.series.bar import BarSeries
-from highcharts_core.options.series.data.boxplot import BoxPlotData
-from highcharts_core.options.series.data.range import RangeData
+from highcharts_core.options.series.data.boxplot import BoxPlotData, BoxPlotDataCollection
+from highcharts_core.options.series.data.range import RangeData, RangeDataCollection
 from highcharts_core.options.plot_options.boxplot import BoxPlotOptions
-from highcharts_core.utility_functions import mro__to_untrimmed_dict
+from highcharts_core.utility_functions import mro__to_untrimmed_dict, is_ndarray
 
 
 class BoxPlotSeries(BarSeries, BoxPlotOptions):
@@ -29,7 +29,7 @@ class BoxPlotSeries(BarSeries, BoxPlotOptions):
         super().__init__(**kwargs)
 
     @property
-    def data(self) -> Optional[List[BoxPlotData]]:
+    def data(self) -> Optional[List[BoxPlotData] | BoxPlotDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -104,13 +104,14 @@ class BoxPlotSeries(BarSeries, BoxPlotOptions):
             A one-dimensional collection of :class:`BoxPlotData` objects.
 
         :rtype: :class:`list <python:list>` of :class:`BoxPlotData` or
+          :class:`BoxPlotDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = BoxPlotData.from_array(value)
@@ -249,7 +250,7 @@ class ErrorBarSeries(BoxPlotSeries):
     """
 
     @property
-    def data(self) -> Optional[List[RangeData]]:
+    def data(self) -> Optional[List[RangeData] | RangeDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -318,13 +319,14 @@ class ErrorBarSeries(BoxPlotSeries):
             A one-dimensional collection of :class:`RangeData` objects.
 
         :rtype: :class:`list <python:list>` of :class:`RangeData` or
+          :class:`RangeDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = RangeData.from_array(value)

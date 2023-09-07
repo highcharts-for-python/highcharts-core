@@ -367,6 +367,16 @@ class WeightedConnectionData(ConnectionData):
         return collection
 
     @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return WeightedConnectionDataCollection.from_ndarray(value)
+    
+    @classmethod
     def _get_supported_dimensions(cls) -> List[int]:
         """Returns a list of the supported dimensions for the data point.
         
@@ -453,6 +463,16 @@ class WeightedConnectionData(ConnectionData):
         return untrimmed
 
 
+class WeightedConnectionDataCollection(DataPointCollection):
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return WeightedConnectionData
+
+
 class OutgoingWeightedConnectionData(WeightedConnectionData):
     """Variant of :class:`WeightedConnectionData` that supports the ``outoging`` flag."""
 
@@ -516,6 +536,16 @@ class OutgoingWeightedConnectionData(WeightedConnectionData):
         return collection
 
     @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return OutgoingWeightedConnectionDataCollection.from_ndarray(value)
+    
+    @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         """Convenience method which returns the keyword arguments used to initialize the
         class from a Highcharts Javascript-compatible :class:`dict <python:dict>` object.
@@ -565,3 +595,13 @@ class OutgoingWeightedConnectionData(WeightedConnectionData):
             untrimmed[key] = parent_as_dict[key]
 
         return untrimmed
+
+
+class OutgoingWeightedConnectionDataCollection(DataPointCollection):
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return OutgoingWeightedConnectionData

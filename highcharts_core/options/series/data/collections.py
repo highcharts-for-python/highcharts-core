@@ -445,7 +445,7 @@ class DataPointCollection(HighchartsMeta):
             return np.ndarray.empty()
         
         props = self._get_props_from_array()
-        if props[-1] == 'name':
+        if props and props[-1] == 'name':
             props = props[:-1]
 
         as_list = [[getattr(data_point, x, constants.EnforcedNull)

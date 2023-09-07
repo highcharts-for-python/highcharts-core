@@ -1,9 +1,9 @@
 from typing import Optional, List
 
 from highcharts_core.options.series.base import SeriesBase
-from highcharts_core.options.series.data.single_point import SinglePointData
+from highcharts_core.options.series.data.single_point import SinglePointData, SinglePointDataCollection
 from highcharts_core.options.plot_options.gauge import GaugeOptions, SolidGaugeOptions
-from highcharts_core.utility_functions import mro__to_untrimmed_dict
+from highcharts_core.utility_functions import mro__to_untrimmed_dict, is_ndarray
 
 
 class GaugeSeries(SeriesBase, GaugeOptions):
@@ -22,7 +22,7 @@ class GaugeSeries(SeriesBase, GaugeOptions):
         super().__init__(**kwargs)
 
     @property
-    def data(self) -> Optional[List[SinglePointData]]:
+    def data(self) -> Optional[List[SinglePointData] | SinglePointDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -46,13 +46,14 @@ class GaugeSeries(SeriesBase, GaugeOptions):
             A one-dimensional collection of :class:`SinglePointData` objects.
 
         :rtype: :class:`list <python:list>` of :class:`SinglePointData` or
+          :class:`SinglePointDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = SinglePointData.from_array(value)
@@ -164,7 +165,7 @@ class SolidGaugeSeries(SeriesBase, SolidGaugeOptions):
         super().__init__(**kwargs)
 
     @property
-    def data(self) -> Optional[List[SinglePointData]]:
+    def data(self) -> Optional[List[SinglePointData] | SinglePointDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -188,13 +189,14 @@ class SolidGaugeSeries(SeriesBase, SolidGaugeOptions):
             A one-dimensional collection of :class:`SinglePointData` objects.
 
         :rtype: :class:`list <python:list>` of :class:`SinglePointData` or
+          :class:`SinglePointDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = SinglePointData.from_array(value)
