@@ -22,6 +22,24 @@ class BulletSeries(BarSeries, BulletOptions):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+    @classmethod
+    def _data_collection_class(cls):
+        """Returns the class object used for the data collection.
+        
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+          descendent
+        """
+        return BulletDataCollection
+    
+    @classmethod
+    def _data_point_class(cls):
+        """Returns the class object used for individual data points.
+        
+        :rtype: :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` 
+          descendent
+        """
+        return BulletData
+
     @property
     def data(self) -> Optional[List[BulletData] | BulletDataCollection]:
         """Collection of data that represents the series. Defaults to

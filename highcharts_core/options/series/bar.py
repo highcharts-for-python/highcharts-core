@@ -30,6 +30,24 @@ class BaseBarSeries(SeriesBase, BaseBarOptions):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+    @classmethod
+    def _data_collection_class(cls):
+        """Returns the class object used for the data collection.
+        
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+          descendent
+        """
+        return BarDataCollection
+    
+    @classmethod
+    def _data_point_class(cls):
+        """Returns the class object used for individual data points.
+        
+        :rtype: :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` 
+          descendent
+        """
+        return BarData
+
     @property
     def data(self) -> Optional[List[BarData] | BarDataCollection]:
         """Collection of data that represents the series. Defaults to
@@ -380,6 +398,24 @@ class ColumnPyramidSeries(ColumnSeries):
           :align: center
 
     """
+    @classmethod
+    def _data_collection_class(cls):
+        """Returns the class object used for the data collection.
+        
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+          descendent
+        """
+        return CartesianDataCollection
+    
+    @classmethod
+    def _data_point_class(cls):
+        """Returns the class object used for individual data points.
+        
+        :rtype: :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` 
+          descendent
+        """
+        return CartesianData
+
     @property
     def data(self) -> Optional[List[CartesianData] | CartesianDataCollection]:
         """Collection of data that represents the series. Defaults to
@@ -482,6 +518,24 @@ class ColumnRangeSeries(ColumnSeries):
           :align: center
 
     """
+    @classmethod
+    def _data_collection_class(cls):
+        """Returns the class object used for the data collection.
+        
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+          descendent
+        """
+        return RangeDataCollection
+    
+    @classmethod
+    def _data_point_class(cls):
+        """Returns the class object used for individual data points.
+        
+        :rtype: :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` 
+          descendent
+        """
+        return RangeData
+
     @property
     def data(self) -> Optional[List[RangeData] | RangeDataCollection]:
         """Collection of data that represents the series. Defaults to
@@ -600,6 +654,25 @@ class VariwideSeries(BaseBarSeries):
           :align: center
 
     """
+
+    @classmethod
+    def _data_collection_class(cls):
+        """Returns the class object used for the data collection.
+        
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+          descendent
+        """
+        return Cartesian3DDataCollection
+    
+    @classmethod
+    def _data_point_class(cls):
+        """Returns the class object used for individual data points.
+        
+        :rtype: :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` 
+          descendent
+        """
+        return Cartesian3DData
+
     @property
     def data(self) -> Optional[List[Cartesian3DData] | Cartesian3DDataCollection]:
         """Collection of data that represents the series. Defaults to
@@ -712,6 +785,24 @@ class WaterfallSeries(ColumnSeries, WaterfallOptions):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+    @classmethod
+    def _data_collection_class(cls):
+        """Returns the class object used for the data collection.
+        
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+          descendent
+        """
+        return WaterfallDataCollection
+    
+    @classmethod
+    def _data_point_class(cls):
+        """Returns the class object used for individual data points.
+        
+        :rtype: :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` 
+          descendent
+        """
+        return WaterfallData
 
     @property
     def data(self) -> Optional[List[WaterfallData] | WaterfallDataCollection]:
@@ -916,6 +1007,24 @@ class WindBarbSeries(BarSeries, WindBarbOptions):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+    @classmethod
+    def _data_collection_class(cls):
+        """Returns the class object used for the data collection.
+        
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+          descendent
+        """
+        return WindBarbDataCollection
+    
+    @classmethod
+    def _data_point_class(cls):
+        """Returns the class object used for individual data points.
+        
+        :rtype: :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` 
+          descendent
+        """
+        return WindBarbData
 
     @property
     def data(self) -> Optional[List[WindBarbData] | WindBarbDataCollection]:
@@ -1130,6 +1239,24 @@ class XRangeSeries(BaseBarSeries, XRangeOptions):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+    @classmethod
+    def _data_collection_class(cls):
+        """Returns the class object used for the data collection.
+        
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+          descendent
+        """
+        return XRangeData
+    
+    @classmethod
+    def _data_point_class(cls):
+        """Returns the class object used for individual data points.
+        
+        :rtype: :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` 
+          descendent
+        """
+        return XRangeDataCollection
 
     @property
     def data(self) -> Optional[List[XRangeData] | XRangeDataCollection]:

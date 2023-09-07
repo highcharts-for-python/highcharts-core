@@ -88,6 +88,24 @@ class PictorialSeries(SeriesBase, PictorialOptions):
         
         super().__init__(**kwargs)
 
+    @classmethod
+    def _data_collection_class(cls):
+        """Returns the class object used for the data collection.
+        
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+          descendent
+        """
+        return CartesianDataCollection
+    
+    @classmethod
+    def _data_point_class(cls):
+        """Returns the class object used for individual data points.
+        
+        :rtype: :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` 
+          descendent
+        """
+        return CartesianData
+
     @property
     def data(self) -> Optional[List[CartesianData] | CartesianDataCollection]:
         """Collection of data that represents the series. Defaults to

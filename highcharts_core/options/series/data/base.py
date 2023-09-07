@@ -650,13 +650,14 @@ class DataBase(DataCore):
           descendant instances or 
           :class:`CartesianDataCollection <highcharts_core.options.series.data.cartesian.CartesianDataCollection>`
         """
-        if not value:
+        if not utility_functions.is_ndarray(value) and not value:
             return []
+        elif utility_functions.is_ndarray(value):
+            return cls.from_ndarray(value)
 
-        if HAS_NUMPY:
-            if isinstance(value, np.ndarray):
-                return cls.from_ndarray(value)
-            
+        if checkers.is_type(value, 'DataPointCollection'):
+            return value
+
         return cls.from_list(value)
 
     def to_array(self, force_object = False) -> List | Dict:
