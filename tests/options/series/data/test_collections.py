@@ -5,6 +5,8 @@ import numpy as np
 
 from json.decoder import JSONDecodeError
 
+from validator_collection import checkers
+
 from highcharts_core.options.series.data.collections import DataPointCollection as cls
 from highcharts_core.options.series.data.base import DataBase
 from highcharts_core import errors
@@ -28,7 +30,7 @@ class RequiringJSObject(NonAbstractDataBase):
 STANDARD_PARAMS = [
     ({}, None),
     ({
-        'data_points': {
+        'data_points': [{
             'accessibility': {
                 'description': 'Some description goes here',
                 'enabled': True
@@ -51,14 +53,14 @@ STANDARD_PARAMS = [
             'labelrank': 3,
             'name': 'Some Name Goes here',
             'selected': False
-        }
+        }]
     }, None),
     ({
         'ndarray': np.array([1, 2, 3])
     }, None),
     ({
         'ndarray': np.array([1, 2, 3]),
-        'data_points': {
+        'data_points': [{
             'accessibility': {
                 'description': 'Some description goes here',
                 'enabled': True
@@ -81,7 +83,7 @@ STANDARD_PARAMS = [
             'labelrank': 3,
             'name': 'Some Name Goes here',
             'selected': False
-        }
+        }]
     }, None),
 ]
 
@@ -245,3 +247,147 @@ def test_to_array(value, kwargs, expects_objects, error):
         if expects_objects:
             for item in result:
                 assert isinstance(item, DataBase) is True
+                
+
+@pytest.mark.parametrize('kwargs, name, expected, error', [
+    ({}, 'ndarray', None, None),
+    ({}, 'data_points', None, None),
+    ({
+        'ndarray': np.array([1, 2, 3])
+    }, 'ndarray', np.array([1, 2, 3]), None),
+    ({
+        'ndarray': np.array([1, 2, 3])
+    }, 'data_points', None, None),
+    ({
+        'ndarray': np.array([1, 2, 3]),
+        'data_points': {
+            'accessibility': {
+                'description': 'Some description goes here',
+                'enabled': True
+            },
+            'className': 'some-class-name',
+            'color': '#ccc',
+            'colorIndex': 2,
+            'custom': {
+                'some_key': 123,
+                'other_key': 456
+            },
+            'description': 'Some description goes here',
+            'events': {
+                'click': """function(event) { return true; }""",
+                'drag': """function(event) { return true; }""",
+                'drop': """function(event) { return true; }""",
+                'mouseOut': """function(event) { return true; }"""
+            },
+            'id': 'some-id-goes-here',
+            'labelrank': 3,
+            'name': 'Some Name Goes here',
+            'selected': False
+        }
+    }, 'ndarray', np.array([1, 2, 3]), None),
+    ({
+        'data_points': {
+            'accessibility': {
+                'description': 'Some description goes here',
+                'enabled': True
+            },
+            'className': 'some-class-name',
+            'color': '#ccc',
+            'colorIndex': 2,
+            'custom': {
+                'some_key': 123,
+                'other_key': 456
+            },
+            'description': 'Some description goes here',
+            'events': {
+                'click': """function(event) { return true; }""",
+                'drag': """function(event) { return true; }""",
+                'drop': """function(event) { return true; }""",
+                'mouseOut': """function(event) { return true; }"""
+            },
+            'id': 'some-id-goes-here',
+            'labelrank': 3,
+            'name': 'Some Name Goes here',
+            'selected': False
+        }
+    }, 'color', np.asarray(['#ccc']), None),
+])
+def test__getattr__(kwargs, name, expected, error):
+    if not error:
+        obj = cls(**kwargs)
+        result = getattr(obj, name)
+        if not checkers.is_type(result, 'ndarray'):
+            assert checkers.are_equivalent(result, expected) is True
+        else:
+            assert np.array_equiv(result, expected) is True
+    else:
+        with pytest.raises(error):
+            obj = cls(**kwargs)
+            result = getattr(obj, name)
+            
+
+@pytest.mark.parametrize('name, value, expected, error', [
+    ('ndarray', np.array([1, 2, 3]), np.array([1, 2, 3]), None),
+    ('data_points', {
+            'accessibility': {
+                'description': 'Some description goes here',
+                'enabled': True
+            },
+            'className': 'some-class-name',
+            'color': '#ccc',
+            'colorIndex': 2,
+            'custom': {
+                'some_key': 123,
+                'other_key': 456
+            },
+            'description': 'Some description goes here',
+            'events': {
+                'click': """function(event) { return true; }""",
+                'drag': """function(event) { return true; }""",
+                'drop': """function(event) { return true; }""",
+                'mouseOut': """function(event) { return true; }"""
+            },
+            'id': 'some-id-goes-here',
+            'labelrank': 3,
+            'name': 'Some Name Goes here',
+            'selected': False
+        }, [DataBase(**{
+            'accessibility': {
+                'description': 'Some description goes here',
+                'enabled': True
+            },
+            'className': 'some-class-name',
+            'color': '#ccc',
+            'colorIndex': 2,
+            'custom': {
+                'some_key': 123,
+                'other_key': 456
+            },
+            'description': 'Some description goes here',
+            'events': {
+                'click': """function(event) { return true; }""",
+                'drag': """function(event) { return true; }""",
+                'drop': """function(event) { return true; }""",
+                'mouseOut': """function(event) { return true; }"""
+            },
+            'id': 'some-id-goes-here',
+            'labelrank': 3,
+            'name': 'Some Name Goes here',
+            'selected': False
+        })], None),
+])
+def test__setattr__(name, value, expected, error):
+    if not error:
+        obj = cls()
+        setattr(obj, name, value)
+        result = getattr(obj, name)
+        if not checkers.is_type(result, 'ndarray') and name == 'data_points':
+            assert len(result) == len(expected)
+        elif not checkers.is_type(result, 'ndarray'):
+            assert checkers.are_equivalent(result, expected) is True
+        else:
+            assert np.array_equiv(result, expected) is True
+    else:
+        with pytest.raises(error):
+            obj = cls()
+            setattr(obj, name, value)

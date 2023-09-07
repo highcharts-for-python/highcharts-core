@@ -71,14 +71,19 @@ class DataPointCollection(HighchartsMeta):
         """
         data_point_properties = self._get_props_from_array()
         data_point_class = self._get_data_point_class()
-        
-        if name not in data_point_properties and hasattr(data_point_class, name) is False:
-            return super().__getattribute__(name)
-        
+        data_point_obj = data_point_class()
+
+        try:
+            result = super().__getattribute__(name)
+            return result
+        except AttributeError as error:
+            if name in ['_ndarray', 'ndarray', '_data_points', 'data_points']:
+                raise error
+            
         if name in data_point_properties and self.ndarray is not None:
             position = data_point_properties.index(name)
             return utility_functions.get_ndarray_slice(self.ndarray, position)
-        
+
         data_points = self._assemble_data_points()
         as_list = [getattr(x, name, None) for x in data_points]
         
@@ -199,6 +204,12 @@ class DataPointCollection(HighchartsMeta):
             validated = validate_types(value,
                                        types = self._get_data_point_class(),
                                        force_iterable = True)
+            if not checkers.is_iterable(validated, forbid_literals = (str,
+                                                                      bytes,
+                                                                      dict,
+                                                                      UserDict)):
+                validated = [validated]
+
             self._data_points = validated
 
     @property

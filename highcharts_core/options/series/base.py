@@ -30,7 +30,6 @@ class SeriesBase(SeriesOptions):
     """Generic base class for specific series configurations."""
 
     def __init__(self, **kwargs):
-        print('INIT: _data')
         self._data = None
         self._id = None
         self._index = None
@@ -41,7 +40,6 @@ class SeriesBase(SeriesOptions):
         self._y_axis = None
         self._z_index = None
 
-        print('INIT: data')
         self.data = kwargs.get('data', None)
         self.id = kwargs.get('id', None)
         self.index = kwargs.get('index', None)
