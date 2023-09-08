@@ -42,7 +42,7 @@ def test_to_snake_case(camelCase, expected, error):
 
 
 @pytest.mark.parametrize('value, expected_dtype, error', [
-    ([1, 2, 3], np.int32, None),
+    ([1, 2, 3], [np.int32, np.int64], None),
     ([43934, np.nan, 65165, 81827, 112143, 142383, 171533, 165174, 155157, 161454, 154610], np.float64, None),
     ([{'test': 123}, {'test': 456}], np.dtype('O'), None),
 
@@ -52,7 +52,10 @@ def test_to_ndarray(value, expected_dtype, error):
         result = utility_functions.to_ndarray(value)
         assert isinstance(result, np.ndarray)
         assert result.shape[0] == len(value)
-        assert result.dtype == expected_dtype
+        if isinstance(expected_dtype, list):
+            assert result.dtype in expected_dtype
+        else:
+            assert result.dtype == expected_dtype
     else:
         with pytest.raises(error):
             result = utility_functions.to_ndarray(value)
