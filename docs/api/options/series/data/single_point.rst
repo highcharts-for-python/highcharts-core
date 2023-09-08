@@ -29,6 +29,24 @@ class: :class:`SinglePointData <highcharts_core.options.series.data.single_point
 
 -----------------------
 
+************************************************************************************************************************
+class: :class:`SinglePointDataCollection <highcharts_core.options.series.data.single_point.SinglePointDataCollection>`
+************************************************************************************************************************
+
+.. autoclass:: SinglePointDataCollection
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: SinglePointDataCollection
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
+-----------------------
+
 ********************************************************************************************************************
 class: :class:`SingleValueData <highcharts_core.options.series.data.single_point.SingleValueData>`
 ********************************************************************************************************************
@@ -40,6 +58,24 @@ class: :class:`SingleValueData <highcharts_core.options.series.data.single_point
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: SingleValueData
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
+---------------------
+
+***********************************************************************************************************************
+class: :class:`SingleValueDataCollection <highcharts_core.options.series.data.single_point.SingleValueDataCollection>`
+***********************************************************************************************************************
+
+.. autoclass:: SingleValueDataCollection
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: SingleValueDataCollection
       :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 
@@ -66,6 +102,24 @@ class: :class:`SingleXData <highcharts_core.options.series.data.single_point.Sin
 ---------------
 
 ********************************************************************************************************************
+class: :class:`SingleXDataCollection <highcharts_core.options.series.data.single_point.SingleXDataCollection>`
+********************************************************************************************************************
+
+.. autoclass:: SingleXDataCollection
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: SingleXDataCollection
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
+---------------
+
+********************************************************************************************************************
 class: :class:`LabeledSingleXData <highcharts_core.options.series.data.single_point.LabeledSingleXData>`
 ********************************************************************************************************************
 
@@ -84,6 +138,24 @@ class: :class:`LabeledSingleXData <highcharts_core.options.series.data.single_po
 ---------------------
 
 ********************************************************************************************************************
+class: :class:`LabeledSingleXDataCollection <highcharts_core.options.series.data.single_point.LabeledSingleXDataCollection>`
+********************************************************************************************************************
+
+.. autoclass:: LabeledSingleXDataCollection
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: LabeledSingleXDataCollection
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
+---------------------
+
+********************************************************************************************************************
 class: :class:`ConnectedSingleXData <highcharts_core.options.series.data.single_point.ConnectedSingleXData>`
 ********************************************************************************************************************
 
@@ -94,6 +166,24 @@ class: :class:`ConnectedSingleXData <highcharts_core.options.series.data.single_
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: ConnectedSingleXData
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
+--------------------
+
+********************************************************************************************************************
+class: :class:`ConnectedSingleXDataCollection <highcharts_core.options.series.data.single_point.ConnectedSingleXDataCollection>`
+********************************************************************************************************************
+
+.. autoclass:: ConnectedSingleXDataCollection
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: ConnectedSingleXDataCollection
       :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 

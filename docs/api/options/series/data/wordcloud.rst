@@ -26,3 +26,21 @@ class: :class:`WordcloudData <highcharts_core.options.series.data.wordcloud.Word
       :parts: -1
 
   |
+
+--------------
+
+********************************************************************************************************************
+class: :class:`WordcloudDataCollection <highcharts_core.options.series.data.wordcloud.WordcloudDataCollection>`
+********************************************************************************************************************
+
+.. autoclass:: WordcloudDataCollection
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: WordcloudDataCollection
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

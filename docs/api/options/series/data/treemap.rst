@@ -26,3 +26,21 @@ class: :class:`TreemapData <highcharts_core.options.series.data.treemap.TreemapD
       :parts: -1
 
   |
+
+--------------
+
+********************************************************************************************************************
+class: :class:`TreemapDataCollection <highcharts_core.options.series.data.treemap.TreemapDataCollection>`
+********************************************************************************************************************
+
+.. autoclass:: TreemapDataCollection
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: TreemapDataCollection
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

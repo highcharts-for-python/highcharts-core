@@ -26,3 +26,21 @@ class: :class:`BulletData <highcharts_core.options.series.data.bullet.BulletData
       :parts: -1
 
   |
+
+--------------
+
+********************************************************************************************************************
+class: :class:`BulletDataCollection <highcharts_core.options.series.data.bullet.BulletDataCollection>`
+********************************************************************************************************************
+
+.. autoclass:: BulletDataCollection
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: BulletDataCollection
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

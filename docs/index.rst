@@ -46,7 +46,8 @@ Highcharts Core for Python
     * Highcharts Core (JS) 10.2 or higher,
     * Jupyter Notebook 6.4 or higher,
     * IPython 8.10 or higher,
-    * Pandas 1.3 or higher
+    * NumPy 1.19 or higher,
+    * Pandas 1.3 or higher,
     * PySpark 3.3 or higher
 
 **Highcharts Core for Python** is a Python library that provides a Python wrapper
