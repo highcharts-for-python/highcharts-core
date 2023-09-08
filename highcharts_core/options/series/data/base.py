@@ -431,7 +431,9 @@ class DataBase(DataCore):
 
         for item in value:
             for index, prop in enumerate(properties):
-                setattr(self, prop, item[index])
+                if hasattr(item, 'item'):
+                    item = item.item()
+                setattr(self, prop, item)
 
     @classmethod
     def from_list(cls, value):

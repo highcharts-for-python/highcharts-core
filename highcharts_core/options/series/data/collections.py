@@ -185,7 +185,21 @@ class DataPointCollection(HighchartsMeta):
             self.ndarray = as_list
         else:
             super().__setattr__(name, value)
-          
+
+    def __len__(self):
+        """Returns the number of data points in the collection.
+        
+        :rtype: :class:`int <python:int>`
+        """
+        if utility_functions.is_ndarray(self.ndarray):
+            result = len(self.ndarray)
+        elif self.data_points:
+            result = len(self.data_points)
+        else:
+            result = 0
+            
+        return result
+        
     @property
     def data_points(self) -> Optional[List[DataBase]]:
         """The collection of data points for the series. Defaults to
