@@ -5,6 +5,7 @@ from validator_collection import validators, checkers
 
 from highcharts_core import constants, errors
 from highcharts_core.options.series.data.cartesian import CartesianData
+from highcharts_core.options.series.data.collections import DataPointCollection
 
 
 class VectorData(CartesianData):
@@ -51,7 +52,7 @@ class VectorData(CartesianData):
         self._length = validators.numeric(value, allow_empty = True)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -93,14 +94,43 @@ class VectorData(CartesianData):
 
         return collection
 
-    def _get_props_from_array(self) -> List[str]:
+    @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1, 3, 4]
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return VectorDataCollection.from_ndarray(value)
+    
+    @classmethod
+    def _get_props_from_array(cls, length = None) -> List[str]:
         """Returns a list of the property names that can be set using the
         :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
         method.
         
+        :param length: The length of the array, which may determine the properties to 
+          parse. Defaults to :obj:`None <python:None>`, which returns the full list of 
+          properties.
+        :type length: :class:`int <python:int>` or :obj:`None <python:None>`
+        
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
-        return ['x', 'y', 'length', 'direction', 'name']
+        prop_list = {
+            None: ['x', 'y', 'length', 'direction', 'name'],
+            4: ['x', 'y', 'length', 'direction'],
+            3: ['y', 'length', 'direction'],
+        }
+        return prop_list[length]
 
     def to_array(self, force_object = False) -> List | Dict:
         """Generate the array representation of the data point (the inversion 
@@ -215,3 +245,27 @@ class VectorData(CartesianData):
         }
 
         return untrimmed
+
+
+class VectorDataCollection(DataPointCollection):
+    """A collection of :class:`VectorData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return VectorData
+
+

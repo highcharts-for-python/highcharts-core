@@ -1,5 +1,6 @@
 from typing import Optional, List
 from decimal import Decimal
+from collections import UserDict
 
 try:
     import orjson as json
@@ -11,13 +12,18 @@ except ImportError:
             import simplejson as json
         except ImportError:
             import json
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
 
 from validator_collection import validators, checkers
 
 from highcharts_core import errors, utility_functions, constants
-from highcharts_core.decorators import class_sensitive
 from highcharts_core.options.plot_options.series import SeriesOptions
 from highcharts_core.options.series.data.base import DataBase
+from highcharts_core.options.series.data.collections import DataPointCollection
 
 
 class SeriesBase(SeriesOptions):
@@ -77,6 +83,112 @@ class SeriesBase(SeriesOptions):
 
         return f'{self.__class__.__name__}({kwargs_as_str})'
 
+    def __getattr__(self, name):
+        """Facilitates the retrieval of properties from the series and its underlying data.
+        
+        The logic is:
+        
+          1. If the attribute exists on the series object, then return it.
+          2. If ``.data`` is empty, then return :obj:`None <python:None>`.
+          3. If ``.data`` contains a 
+             :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`,
+             then return the attribute from the collection.
+          4. Since ``.data`` contains a list of data points, return an iterable
+             containing the attribute from each data point. If NumPy is available,
+             return this iterable as a NumPy :class:`ndarray <numpy:numpy.ndarray>`.
+
+        :param name: The name of the attribute to retrieve.
+        :type name: :class:`str <python:str>`
+        
+        :returns: The value of the attribute.
+        
+        :raises AttributeError: If ``name`` is not a valid attribute of the data point
+          class or the instance.
+        """
+        try:
+            return super().__getattribute__(name)
+        except AttributeError:
+            pass
+
+        if not self.data:
+            raise AttributeError(name)
+        
+        if isinstance(self.data, DataPointCollection):
+            return getattr(self.data, name)
+        
+        result = [getattr(x, name) for x in self.data]
+        if HAS_NUMPY:
+            result = np.asarray(result)
+        
+        return result
+    
+    def __setattr__(self, name, value):
+        """Updates the series attribute, or descendent attributes on the ``.data`` 
+        properties.
+        """
+        try:
+            super().__setattr__(name, value)
+            return
+        except AttributeError:
+            pass
+        
+        collection_cls = self._data_collection_class()
+        data_point_cls = self._data_point_class()
+        
+        if not utility_functions.is_ndarray(self.data) and not self.data:
+            if HAS_NUMPY:
+                collection = collection_cls()
+                setattr(collection, name, value)
+                self.data = collection
+            elif checkers.is_iterable(value, forbid_literals = (str, 
+                                                                bytes, 
+                                                                dict, 
+                                                                UserDict)):
+                data_points = [data_point_cls(name = x) for x in value]
+                self.data = data_points
+            else:
+                data_point = data_point_cls(name = value)
+                self._data = [data_point]
+        elif not self.data:
+            collection = collection_cls()
+            setattr(collection, name, value)
+            self.data = collection
+        elif checkers.is_type(self.data, 'DataPointCollection'):
+            setattr(self.data, name, value)
+        else:
+            if not checkers.is_iterable(value, forbid_literals = (str,
+                                                                  bytes,
+                                                                  dict,
+                                                                  UserDict)):
+                value = [value for x in self.data]
+            
+            if len(self.data) > len(value):
+                value = value + [None for x in range(len(self.data) - len(value))]
+            elif len(self.data) < len(value):
+                self.data = self.data + [data_point_cls() 
+                                         for x in range(len(value) - len(self.data))]
+            
+            for index in range(len(self.data)):
+                setattr(self.data[index], name, value[index])
+
+    @classmethod
+    def _data_collection_class(cls):
+        """Returns the class object used for the data collection.
+        
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+          descendent
+        """
+        return DataPointCollection
+    
+    @classmethod
+    def _data_point_class(cls):
+        """Returns the class object used for individual data points.
+        
+        :rtype: :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` 
+          descendent
+        """
+        return DataBase
+
     @property
     def _dot_path(self) -> Optional[str]:
         """The dot-notation path to the options key for the current class.
@@ -86,19 +198,23 @@ class SeriesBase(SeriesOptions):
         return f'series.{self.type}'
 
     @property
-    def data(self) -> Optional[List[DataBase]]:
+    def data(self) -> Optional[List[DataBase] | DataPointCollection]:
         """The collection of data points for the series. Defaults to
         :obj:`None <python:None>`.
 
-        :rtype: :class:`DataBase` or :obj:`None <python:None>`
+        :rtype: :class:`DataBase` or 
+          :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>` 
+          or :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
-    @class_sensitive(DataBase, force_iterable = True)
     def data(self, value):
-        self._data = value
-
+        if not utility_functions.is_ndarray(value) and not value:
+            self._data = None
+        else:
+            self._data = DataBase.from_array(value)
+              
     @property
     def id(self) -> Optional[str]:
         """An id for the series. Defaults to :obj:`None <python:None>`.

@@ -1,9 +1,9 @@
 from typing import Optional, List
 
 from highcharts_core.options.series.networkgraph import NetworkGraphSeries
-from highcharts_core.options.series.data.single_point import SingleValueData
+from highcharts_core.options.series.data.single_point import SingleValueData, SingleValueDataCollection
 from highcharts_core.options.plot_options.packedbubble import PackedBubbleOptions
-from highcharts_core.utility_functions import mro__to_untrimmed_dict
+from highcharts_core.utility_functions import mro__to_untrimmed_dict, is_ndarray
 
 
 class PackedBubbleSeries(NetworkGraphSeries, PackedBubbleOptions):
@@ -32,8 +32,26 @@ class PackedBubbleSeries(NetworkGraphSeries, PackedBubbleOptions):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+    @classmethod
+    def _data_collection_class(cls):
+        """Returns the class object used for the data collection.
+        
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+          descendent
+        """
+        return SingleValueDataCollection
+    
+    @classmethod
+    def _data_point_class(cls):
+        """Returns the class object used for individual data points.
+        
+        :rtype: :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` 
+          descendent
+        """
+        return SingleValueData
+
     @property
-    def data(self) -> Optional[List[SingleValueData]]:
+    def data(self) -> Optional[List[SingleValueData] | SingleValueDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -58,13 +76,14 @@ class PackedBubbleSeries(NetworkGraphSeries, PackedBubbleOptions):
             A one-dimensional collection of :class:`SingleValueData` objects.
 
         :rtype: :class:`list <python:list>` of :class:`SingleValueData` or
+          :class:`SingleValueDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = SingleValueData.from_array(value)

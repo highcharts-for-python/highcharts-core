@@ -14,6 +14,12 @@ except ImportError:
         except ImportError:
             import json
 
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
+
 import esprima
 from esprima.error_handler import Error as ParseError
 from validator_collection import validators, checkers, errors as validator_errors
@@ -197,6 +203,9 @@ class HighchartsMeta(ABC):
 
         :rtype: iterable
         """
+        if HAS_NUMPY and isinstance(untrimmed, np.ndarray):
+            return untrimmed
+
         if not checkers.is_iterable(untrimmed, forbid_literals = (str, bytes, dict)):
             return untrimmed
 
@@ -258,6 +267,18 @@ class HighchartsMeta(ABC):
             value = untrimmed.get(key, None)
             # bool -> Boolean
             if isinstance(value, bool):
+                as_dict[key] = value
+            # ndarray -> (for json) -> list
+            elif HAS_NUMPY and to_json and isinstance(value, np.ndarray):
+                untrimmed_value = utility_functions.from_ndarray(value)
+                trimmed_value = HighchartsMeta.trim_iterable(value,
+                                                             to_json = to_json,
+                                                             context = context)
+                if trimmed_value:
+                    as_dict[key] = trimmed_value
+                    continue
+            # ndarray -> ndarray
+            elif HAS_NUMPY and isinstance(value, np.ndarray):
                 as_dict[key] = value
             # Callback Function
             elif checkers.is_type(value, 'CallbackFunction') and to_json:

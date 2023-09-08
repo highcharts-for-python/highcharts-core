@@ -1,8 +1,10 @@
 """Tests for ``highcharts.no_data``."""
 
 import pytest
+import numpy as np
 
 from json.decoder import JSONDecodeError
+from validator_collection import checkers
 
 from highcharts_core.options.series.bar import BaseBarSeries as cls
 from highcharts_core.options.series.bar import BarSeries as cls2
@@ -903,6 +905,89 @@ def test_BarSeries_to_dict(kwargs, error):
 def test_BarSeries_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls2, input_files, filename, as_file, error)
 
+
+@pytest.mark.parametrize('kwargs, name, expected, error', [
+    ({'data': [[1, 2], [3, 4], [5, 6]]},
+     'data', 
+     cls2._data_point_class().from_array([[1, 2], [3, 4], [5, 6]]),
+     None),
+    ({'data': np.asarray([[1, 2], [3, 4], [5, 6]])},
+     'data',
+     cls2._data_collection_class().from_ndarray(np.asarray([[1, 2], [3, 4], [5, 6]])),
+     None),
+    ({'data': [[1, 2], [3, 4], [5, 6]]},
+     'x', 
+     np.asarray([1, 3, 5]),
+     None),
+    ({'data': [[1, 2], [3, 4], [5, 6]]},
+     'y', 
+     np.asarray([2, 4, 6]),
+     None),
+    ({'data': np.asarray([[1, 2], [3, 4], [5, 6]])},
+     'x', 
+     np.asarray([1, 3, 5]),
+     None),
+    ({'data': np.asarray([[1, 2], [3, 4], [5, 6]])},
+     'y', 
+     np.asarray([2, 4, 6]),
+     None),
+])
+def test_BarSeries__getattr__(kwargs, name, expected, error):
+    if not error:
+        obj = cls2(**kwargs)
+        result = getattr(obj, name)
+        if not checkers.is_type(expected, 'ndarray'):
+            assert result == expected
+        else:
+            assert np.array_equiv(result, expected) is True
+    else:
+        with pytest.raises(error):
+            obj = cls(**kwargs)
+            result = getattr(obj, name)
+
+
+@pytest.mark.parametrize('name, value, expected, error', [
+    ('data',
+     [[1, 2], [3, 4], [5, 6]],
+     cls2._data_point_class().from_array([[1, 2], [3, 4], [5, 6]]),
+     None),
+    ('data', 
+     np.asarray([[1, 2], [3, 4], [5, 6]]),
+     cls2._data_collection_class().from_ndarray(np.asarray([[1, 2], [3, 4], [5, 6]])),
+     None),
+    ('x',
+     [1, 3, 5],
+     np.asarray([1, 3, 5]),
+     None),
+    ('y',
+     [2, 4, 6],
+     np.asarray([2, 4, 6]),
+     None),
+    ('x',
+     np.asarray([1, 3, 5]),
+     np.asarray([1, 3, 5]),
+     None),
+    ('y',
+     np.asarray([2, 4, 6]),
+     np.asarray([2, 4, 6]),
+     None),
+])
+def test_BarSeries__setattr__(name, value, expected, error):
+    if not error:
+        obj = cls()
+        setattr(obj, name, value)
+        result = getattr(obj, name)
+        if not checkers.is_type(expected, 'ndarray') and name == 'data_points':
+            assert len(result) == len(expected)
+        elif not checkers.is_type(expected, 'ndarray'):
+            assert result == expected
+        else:
+            assert np.array_equiv(result, expected) is True
+    else:
+        with pytest.raises(error):
+            obj = cls()
+            setattr(obj, name, value)
+    
 
 # NEXT CLASS!
 

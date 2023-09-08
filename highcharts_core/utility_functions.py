@@ -2,10 +2,17 @@
 import csv
 import string
 import random
+import typing
+from collections import UserDict
 
-from validator_collection import validators
+from validator_collection import validators, checkers
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
 
-from highcharts_core import errors
+from highcharts_core import errors, constants
 
 
 def get_random_string(length = 6):
@@ -515,3 +522,235 @@ def prep_js_for_jupyter(js_str,
         function_str += f"""retryHighcharts(insertChart, '{container}', {retries}, {retries}, {interval});"""
 
     return function_str
+
+
+def to_ndarray(value):
+    """Convert ``value`` to a :class:`numpy.ndarray <numpy:numpy.ndarray>`.
+    
+    :param value: The value to be converted. Expects the value to be an iterable.
+    :type value: iterable
+    
+    :raises HighchartsDependencyError: if NumPy is not installed
+    
+    :returns: A :class:`numpy.ndarray <numpy:numpy.ndarray>` representation of 
+      ``value``.
+    :rtype: :class:`numpy.ndarray <numpy:numpy.ndarray>`
+    
+    """
+    if not HAS_NUMPY:
+        raise errors.HighchartsDependencyError('NumPy is required for this feature. '
+                                               'It was not found in the runtime environment. '
+                                               'Please install it using "pip install numpy" '
+                                               'or equivalent.')
+
+    for i, item in enumerate(value):
+        if item is None or isinstance(item, constants.EnforcedNullType):
+            value[i] = np.nan
+        elif checkers.is_iterable(item, forbid_literals = (str, bytes, dict, UserDict)):
+            for index, subitem in enumerate(item):
+                if subitem is None or isinstance(subitem, constants.EnforcedNullType):
+                    item[i] = np.nan
+            value[i] = item
+
+    if hasattr(value, '__array__'):
+        as_array = np.array(value)
+    else:
+        as_array = np.asarray(value)
+
+    return as_array
+
+
+def from_ndarray(as_ndarray, force_enforced_null = False):
+    """Convert ``as_ndarray`` to a Python :class:`list <python:list>`.
+    
+    :param as_ndarray: The :class:`numpy.ndarray <numpy:numpy.ndarray>` 
+      to be converted.
+    :type as_ndarray: :class:`numpy.ndarray <numpy:numpy.ndarray>`
+    
+    :param force_enforced_null: if ``True``, converts any 
+      :class:`numpy.nan <numpy:numpy.nan>` values to :obj:`EnforcedNull`.
+      Otherwise, converts them to :obj:`None <python:None>`. Defaults to 
+      ``False``.
+    :type force_enforced_null: :class:`bool <python:bool>`
+    
+    :raises HighchartsDependencyError: if NumPy is not installed
+    :raises HighchartsValueError: if ``as_ndarray`` is not a 
+      :class:`numpy.ndarray <numpy:numpy.ndarray>`
+    
+    :returns: The Python :class:`list <python:list>` representation of
+      ``as_ndarray``.
+    :rtype: :class:`list <python:list>`
+    
+    """
+    if not HAS_NUMPY:
+        raise errors.HighchartsDependencyError('NumPy is required for this feature. '
+                                               'It was not found in the runtime environment. '
+                                               'Please install it using "pip install numpy" '
+                                               'or equivalent.')
+
+    if not isinstance(as_ndarray, np.ndarray):
+        raise errors.HighchartsValueError(f'as_ndarray is expected to be a NumPy ndarray. '
+                                          f'Received: {as_ndarray.__class__.__name__}')
+
+    if force_enforced_null:
+        nan_replacement = constants.EnforcedNull
+    else:
+        nan_replacement = None
+
+    if as_ndarray.dtype != np.dtype('O'):
+        stripped = np.where(np.isnan(as_ndarray), nan_replacement, as_ndarray)
+    else:
+        prelim_stripped = as_ndarray.tolist()
+        stripped = []
+        for item in prelim_stripped:
+            if item == np.nan:
+                stripped.append(nan_replacement)
+            else:
+                stripped.append(item)
+                
+        return stripped
+
+    return stripped.tolist()
+
+
+def get_ndarray_slice(array, index):
+    """Return the slice of ``array`` at ``index``.
+    
+    :param array: A `NumPy <https://numpy.org>`__ :class:`ndarray <numpy:numpy.ndarray>`
+      instance or a Python iterable.
+    :type array: :class:`numpy.ndarray <numpy:numpy.ndarray>` or iterable
+    
+    :param index: The 0-based index of the column to return from ``array``.
+    
+      .. note::
+      
+        If ``index`` exceeds the number of dimensions in ``array``, then
+        an empty collection of values should be returned, with the number
+        of empty values matching the length of the ``array``.
+        
+    :type index: :class:`int <python:int>`
+    
+    :returns: A collection of values.
+    :rtype: :class:`numpy.ndarray <numpy:numpy.ndarray>`
+      or :class:`list <python:list>`
+
+    """
+    index = validators.integer(index, minimum = 0, allow_none = False)
+    if HAS_NUMPY and isinstance(array, np.ndarray):
+        if index < array.shape[1]:
+            return array[:, index]
+        else:
+            len_array = array.shape[0]
+    
+            return np.full((len_array, 1), np.nan)
+    else:
+        array = validators.iterable(array, 
+                                    allow_empty = True, 
+                                    forbid_literals = (str, bytes, dict, UserDict)) or []
+    
+    return [x[index] for x in array]
+
+
+def lengthen_array(value, members):
+    """Create a NumPy :class:`ndarray <numpy:numpy.ndarray>` from 
+    ``value`` where the result has ``members``.
+    
+    :param value: The array-like value to be inserted into the resulting array.
+    
+      .. note::
+      
+        If an :class:`int <python:int>` is supplied, the value will be repeated all
+        ``members``.
+    
+    :type value: Array-like or :class:`int <python:int>`
+    
+    :param members: The number of members the resulting ``value`` expects.
+    :type members: :class:`int <python:int>`
+    
+    :returns: A NumPy :class:`ndarray <numpy:numpy.ndarray>` of length ``members``.
+    :rtype: :class:`numpy.ndarray <numpy:numpy.ndarray>`
+    
+    :raises HighchartsDependencyError: if NumPy is not available in the runtime
+      environment
+    :raises HighchartsValueError: if ``value`` has more members than ``members``
+
+    """
+    if not HAS_NUMPY:
+        raise errors.HighchartsDependencyError('NumPy is required for this feature. '
+                                               'It was not found in your runtime '
+                                               'environment. Please make sure it is '
+                                               'installed in your runtime '
+                                               'environment.')
+
+    is_ndarray = isinstance(value, np.ndarray)
+    is_list = False
+    if not is_ndarray:
+        is_list = checkers.is_iterable(value,
+                                       forbid_literals = (str, bytes, dict, UserDict),
+                                       allow_empty = False)
+    is_int = False
+    if not is_ndarray and not is_list:
+        value = validators.integer(value, allow_empty = None)
+        is_int = True
+
+    if is_list:
+        value = np.asarray(value)
+    elif is_int:
+        value = np.full((members, 1), value)
+
+    if len(value) > members:
+        raise errors.HighchartsValueError(f'Value has more members than specified. '
+                                          f'Received: {len(value)}. Expected up to: '
+                                          f'{members}.')
+    elif len(value) < members:
+        members_to_add = members - len(value)
+    else:
+        members_to_add = 0
+
+    if members_to_add:
+        try:
+            value = np.vstack((value, np.full((members_to_add, value.shape[1]), np.nan)))
+        except IndexError:
+            value = np.vstack((value, np.full((members_to_add, value.ndim), np.nan)))
+
+    return value
+
+
+def is_arraylike(value) -> bool:
+    """Evaluate whether ``value`` is a NumPy array or a Python iterable.
+    
+    :param value: The value to evaluate.
+    :type value: Any
+    
+    :raises HighchartsDependencyError: if NumPy is not available in the runtime
+      environment
+    
+    :returns: ``True`` if an array or array-like. ``False`` if not.
+    :rtype: :class:`bool <python:bool>`
+    """
+    if not HAS_NUMPY:
+        raise errors.HighchartsDependencyError('NumPy is required for this feature. '
+                                               'It was not found in your runtime '
+                                               'environment. Please make sure it is '
+                                               'installed in your runtime '
+                                               'environment.')
+
+    return isinstance(value, np.ndarray) or checkers.is_iterable(value,
+                                                                 forbid_literals = (
+                                                                     str,
+                                                                     bytes, 
+                                                                     dict,
+                                                                     UserDict
+                                                                 ))
+
+
+def is_ndarray(value) -> bool:
+    """Evaluate whether ``value`` is a NumPy :class:`ndarray <numpy:numpy.ndarray>`.
+    
+    :param value: The value to evaluate.
+    :type value: Any
+    
+    :returns: ``True`` if an array. ``False`` if not.
+    :rtype: :class:`bool <python:bool>`
+    """
+    return checkers.is_type(value, 'ndarray')
