@@ -206,7 +206,9 @@ class HighchartsMeta(ABC):
         if HAS_NUMPY and isinstance(untrimmed, np.ndarray):
             return untrimmed
 
-        if not checkers.is_iterable(untrimmed, forbid_literals = (str, bytes, dict)):
+        if isinstance(untrimmed, 
+                      (str, bytes, dict, UserDict)) or not hasattr(untrimmed, 
+                                                                   '__iter__'):
             return untrimmed
 
         trimmed = []
@@ -228,7 +230,9 @@ class HighchartsMeta(ABC):
                     trimmed.append(HighchartsMeta.trim_dict(item, 
                                                             to_json = to_json,
                                                             context = context))
-            elif checkers.is_iterable(item, forbid_literals = (str, bytes, dict)):
+            elif not isinstance(item, 
+                                (str, bytes, dict, UserDict)) and hasattr(item, 
+                                                                          '__iter__'):
                 if item:
                     trimmed.append(HighchartsMeta.trim_iterable(item, 
                                                                 to_json = to_json,
@@ -306,7 +310,9 @@ class HighchartsMeta(ABC):
                 if trimmed_value:
                     as_dict[key] = trimmed_value
             # iterable -> array
-            elif checkers.is_iterable(value, forbid_literals = (str, bytes, dict)):
+            elif not isinstance(value, 
+                                (str, bytes, dict, UserDict)) and hasattr(value, 
+                                                                          '__iter__'):
                 trimmed_value = HighchartsMeta.trim_iterable(value, 
                                                              to_json = to_json,
                                                              context = context)
