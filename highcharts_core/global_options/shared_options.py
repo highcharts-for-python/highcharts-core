@@ -16,7 +16,8 @@ class SharedOptions(HighchartsOptions):
 
     def to_js_literal(self,
                       filename = None,
-                      encoding = 'utf-8') -> Optional[str]:
+                      encoding = 'utf-8',
+                      careful_validation = False) -> Optional[str]:
         """Return the object represented as a :class:`str <python:str>` containing the
         JavaScript object literal.
 
@@ -27,6 +28,18 @@ class SharedOptions(HighchartsOptions):
         :param encoding: The character encoding to apply to the resulting object. Defaults
           to ``'utf-8'``.
         :type encoding: :class:`str <python:str>`
+
+      :param careful_validation: if ``True``, will carefully validate JavaScript values
+        along the way using the
+        `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
+        to ``False``.
+        
+        .. warning::
+        
+          Setting this value to ``True`` will significantly degrade serialization
+          performance, though it may prove useful for debugging purposes.
+
+      :type careful_validation: :class:`bool <python:bool>`
 
         .. note::
 
@@ -40,7 +53,8 @@ class SharedOptions(HighchartsOptions):
         :rtype: :class:`str <python:str>`
         """
         prefix = 'Highcharts.setOptions('
-        options_body = super().to_js_literal(encoding = encoding)
+        options_body = super().to_js_literal(encoding = encoding,
+                                             careful_validation = careful_validation)
 
         as_str = prefix + options_body + ');'
 

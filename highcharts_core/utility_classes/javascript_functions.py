@@ -132,7 +132,8 @@ class CallbackFunction(HighchartsMeta):
 
     def to_js_literal(self,
                       filename = None,
-                      encoding = 'utf-8') -> str:
+                      encoding = 'utf-8',
+                      careful_validation = False) -> str:
         if filename:
             filename = validators.path(filename)
 
@@ -484,7 +485,8 @@ class JavaScriptClass(HighchartsMeta):
 
     def to_js_literal(self,
                       filename = None,
-                      encoding = 'utf-8') -> str:
+                      encoding = 'utf-8',
+                      careful_validation = False) -> str:
         if filename:
             filename = validators.path(filename)
 

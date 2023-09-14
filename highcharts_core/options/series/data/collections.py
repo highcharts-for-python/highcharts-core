@@ -590,7 +590,8 @@ class DataPointCollection(HighchartsMeta):
 
     def to_js_literal(self,
                       filename = None,
-                      encoding = 'utf-8') -> Optional[str]:
+                      encoding = 'utf-8',
+                      careful_validation = False) -> Optional[str]:
         """Return the object represented as a :class:`str <python:str>` containing the
         JavaScript object literal.
 
@@ -602,6 +603,18 @@ class DataPointCollection(HighchartsMeta):
           to ``'utf-8'``.
         :type encoding: :class:`str <python:str>`
 
+        :param careful_validation: if ``True``, will carefully validate JavaScript values
+        along the way using the
+        `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
+        to ``False``.
+        
+        .. warning::
+        
+            Setting this value to ``True`` will significantly degrade serialization
+            performance, though it may prove useful for debugging purposes.
+
+        :type careful_validation: :class:`bool <python:bool>`
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         if filename:
@@ -611,10 +624,14 @@ class DataPointCollection(HighchartsMeta):
         is_ndarray = all([isinstance(x, list) for x in untrimmed])
         if not is_ndarray:
             as_str = '['
-            as_str += ','.join([x.to_js_literal() for x in untrimmed])
+            as_str += ','.join([x.to_js_literal(encoding = encoding,
+                                                careful_validation = careful_validation)
+                                for x in untrimmed])
             as_str += ']'
         else:
-            serialized = serialize_to_js_literal(untrimmed)
+            serialized = serialize_to_js_literal(untrimmed,
+                                                 encoding = encoding,
+                                                 careful_validation = careful_validation)
             as_str = serialized
 
         if filename:

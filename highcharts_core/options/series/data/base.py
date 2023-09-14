@@ -705,7 +705,8 @@ class DataBase(DataCore):
     
     def to_js_literal(self,
                       filename = None,
-                      encoding = 'utf-8') -> Optional[str]:
+                      encoding = 'utf-8',
+                      careful_validation = False) -> Optional[str]:
         """Return the object represented as a :class:`str <python:str>` containing the
         JavaScript object literal.
 
@@ -717,6 +718,18 @@ class DataBase(DataCore):
           to ``'utf-8'``.
         :type encoding: :class:`str <python:str>`
 
+        :param careful_validation: if ``True``, will carefully validate JavaScript values
+        along the way using the
+        `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
+        to ``False``.
+        
+        .. warning::
+        
+            Setting this value to ``True`` will significantly degrade serialization
+            performance, though it may prove useful for debugging purposes.
+
+        :type careful_validation: :class:`bool <python:bool>`
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         if filename:
@@ -727,15 +740,19 @@ class DataBase(DataCore):
             as_dict = {}
             for key in untrimmed:
                 item = untrimmed[key]
-                serialized = serialize_to_js_literal(item, encoding = encoding)
+                serialized = serialize_to_js_literal(item,
+                                                     encoding = encoding,
+                                                     careful_validation = careful_validation)
                 if serialized is not None:
                     as_dict[key] = serialized
 
-            as_str = assemble_js_literal(as_dict)
+            as_str = assemble_js_literal(as_dict,
+                                         careful_validation = careful_validation)
         else:
-            serialized = serialize_to_js_literal(untrimmed)
+            serialized = serialize_to_js_literal(untrimmed,
+                                                 careful_validation = careful_validation)
             if isinstance(serialized, list):
-                as_str = ','.join([get_js_literal(x)
+                as_str = ','.join([get_js_literal(x, careful_validation = careful_validation)
                                    for x in serialized])
                 as_str = f'[{as_str}]'
             else:

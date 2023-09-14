@@ -2,6 +2,8 @@
 Release 1.4.0
 =========================================
 
+* **MAJOR** performance gains in the ``.to_js_literal()`` method. Implementation seems to
+  improve performance by 50 - 90%. (#51)
 * **ENHANCEMENT:** Added one-shot chart creation and rendering from Series objects (#89).
 * **ENHANCEMENT:** Added one-shot chart creation using ``series`` and ``data``/``series_type`` keywords. (#90).
 

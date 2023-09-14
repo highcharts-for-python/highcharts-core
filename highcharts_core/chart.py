@@ -456,7 +456,8 @@ class Chart(HighchartsMeta):
 
     def to_js_literal(self,
                       filename = None,
-                      encoding = 'utf-8') -> Optional[str]:
+                      encoding = 'utf-8',
+                      careful_validation = False) -> Optional[str]:
         """Return the object represented as a :class:`str <python:str>` containing the
         JavaScript object literal.
 
@@ -467,6 +468,18 @@ class Chart(HighchartsMeta):
         :param encoding: The character encoding to apply to the resulting object. Defaults
           to ``'utf-8'``.
         :type encoding: :class:`str <python:str>`
+
+        :param careful_validation: if ``True``, will carefully validate JavaScript values
+        along the way using the
+        `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
+        to ``False``.
+        
+        .. warning::
+        
+            Setting this value to ``True`` will significantly degrade serialization
+            performance, though it may prove useful for debugging purposes.
+
+        :type careful_validation: :class:`bool <python:bool>`
 
         .. note::
 
@@ -487,7 +500,9 @@ class Chart(HighchartsMeta):
         as_dict = {}
         for key in untrimmed:
             item = untrimmed[key]
-            serialized = serialize_to_js_literal(item, encoding = encoding)
+            serialized = serialize_to_js_literal(item, 
+                                                 encoding = encoding,
+                                                 careful_validation = careful_validation)
             if serialized is not None:
                 as_dict[key] = serialized
 
@@ -499,13 +514,19 @@ class Chart(HighchartsMeta):
             container_as_str = """null"""
 
         if self.options:
-            options_as_str = "{}".format(self.options.to_js_literal(encoding = encoding))
+            options_as_str = "{}".format(
+                self.options.to_js_literal(encoding = encoding,
+                                           careful_validation = careful_validation)
+            )
         else:
             options_as_str = """null"""
 
         callback_as_str = ''
         if self.callback:
-            callback_as_str = "{}".format(self.callback.to_js_literal(encoding = encoding))
+            callback_as_str = "{}".format(
+                self.callback.to_js_literal(encoding = encoding,
+                                            careful_validation = careful_validation)
+            )
             signature_elements += 1
 
         signature = """Highcharts.chart("""
