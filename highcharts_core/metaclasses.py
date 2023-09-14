@@ -206,7 +206,9 @@ class HighchartsMeta(ABC):
         if HAS_NUMPY and isinstance(untrimmed, np.ndarray):
             return untrimmed
 
-        if not checkers.is_iterable(untrimmed, forbid_literals = (str, bytes, dict)):
+        if isinstance(untrimmed, 
+                      (str, bytes, dict, UserDict)) or not hasattr(untrimmed, 
+                                                                   '__iter__'):
             return untrimmed
 
         trimmed = []
@@ -228,7 +230,9 @@ class HighchartsMeta(ABC):
                     trimmed.append(HighchartsMeta.trim_dict(item, 
                                                             to_json = to_json,
                                                             context = context))
-            elif checkers.is_iterable(item, forbid_literals = (str, bytes, dict)):
+            elif not isinstance(item, 
+                                (str, bytes, dict, UserDict)) and hasattr(item, 
+                                                                          '__iter__'):
                 if item:
                     trimmed.append(HighchartsMeta.trim_iterable(item, 
                                                                 to_json = to_json,
@@ -306,7 +310,9 @@ class HighchartsMeta(ABC):
                 if trimmed_value:
                     as_dict[key] = trimmed_value
             # iterable -> array
-            elif checkers.is_iterable(value, forbid_literals = (str, bytes, dict)):
+            elif not isinstance(value, 
+                                (str, bytes, dict, UserDict)) and hasattr(value, 
+                                                                          '__iter__'):
                 trimmed_value = HighchartsMeta.trim_iterable(value, 
                                                              to_json = to_json,
                                                              context = context)
@@ -498,7 +504,8 @@ class HighchartsMeta(ABC):
 
     def to_js_literal(self,
                       filename = None,
-                      encoding = 'utf-8') -> Optional[str]:
+                      encoding = 'utf-8',
+                      careful_validation = False) -> Optional[str]:
         """Return the object represented as a :class:`str <python:str>` containing the
         JavaScript object literal.
 
@@ -510,6 +517,18 @@ class HighchartsMeta(ABC):
           to ``'utf-8'``.
         :type encoding: :class:`str <python:str>`
 
+        :param careful_validation: if ``True``, will carefully validate JavaScript values
+        along the way using the
+        `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
+        to ``False``.
+        
+        .. warning::
+        
+            Setting this value to ``True`` will significantly degrade serialization
+            performance, though it may prove useful for debugging purposes.
+
+        :type careful_validation: :class:`bool <python:bool>`
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         if filename:
@@ -519,11 +538,14 @@ class HighchartsMeta(ABC):
         as_dict = {}
         for key in untrimmed:
             item = untrimmed[key]
-            serialized = serialize_to_js_literal(item, encoding = encoding)
+            serialized = serialize_to_js_literal(item, 
+                                                 encoding = encoding,
+                                                 careful_validation = careful_validation)
             if serialized is not None:
                 as_dict[key] = serialized
 
-        as_str = assemble_js_literal(as_dict)
+        as_str = assemble_js_literal(as_dict,
+                                     careful_validation = careful_validation)
 
         if filename:
             with open(filename, 'w', encoding = encoding) as file_:
@@ -1080,7 +1102,8 @@ class JavaScriptDict(UserDict):
 
     def to_js_literal(self,
                       filename = None,
-                      encoding = 'utf-8') -> Optional[str]:
+                      encoding = 'utf-8',
+                      careful_validation = False) -> Optional[str]:
         """Return the object represented as a :class:`str <python:str>` containing the
         JavaScript object literal.
 
@@ -1092,6 +1115,18 @@ class JavaScriptDict(UserDict):
           to ``'utf-8'``.
         :type encoding: :class:`str <python:str>`
 
+        :param careful_validation: if ``True``, will carefully validate JavaScript values
+        along the way using the
+        `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
+        to ``False``.
+        
+        .. warning::
+        
+            Setting this value to ``True`` will significantly degrade serialization
+            performance, though it may prove useful for debugging purposes.
+
+        :type careful_validation: :class:`bool <python:bool>`
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         if filename:
@@ -1101,11 +1136,15 @@ class JavaScriptDict(UserDict):
         as_dict = {}
         for key in untrimmed:
             item = untrimmed[key]
-            serialized = serialize_to_js_literal(item, encoding = encoding)
+            serialized = serialize_to_js_literal(item, 
+                                                 encoding = encoding,
+                                                 careful_validation = careful_validation)
             if serialized is not None:
                 as_dict[key] = serialized
 
-        as_str = assemble_js_literal(as_dict, keys_as_strings = True)
+        as_str = assemble_js_literal(as_dict, 
+                                     keys_as_strings = True,
+                                     careful_validation = careful_validation)
 
         if filename:
             with open(filename, 'w', encoding = encoding) as file_:
