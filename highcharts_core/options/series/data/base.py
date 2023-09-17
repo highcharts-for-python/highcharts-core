@@ -421,7 +421,11 @@ class DataBase(DataCore):
         try:
             properties = self._get_props_from_array(len(value))
         except KeyError:
-            properties = []
+            full_properties = self._get_props_from_array()
+            if len(full_properties) == len(value):
+                properties = full_properties
+            else:
+                properties = []
 
         if len(value) == 0:
             value = [None for x in properties]
@@ -429,12 +433,13 @@ class DataBase(DataCore):
         if len(value) < len(properties):
             value = value[:len(properties)]
 
-        for item in value:
-            for index, prop in enumerate(properties):
-                if hasattr(item, 'item'):
-                    item = item.item()
-                setattr(self, prop, item)
-
+        for index, prop in enumerate(properties):
+            if hasattr(value[index], 'item'):
+                item = value[index].item()
+            else:
+                item = value[index]
+            setattr(self, prop, item)
+        
     @classmethod
     def from_list(cls, value):
         """Creates a collection of data point instances, parsing the contents of ``value``

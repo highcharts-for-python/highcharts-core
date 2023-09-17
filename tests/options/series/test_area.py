@@ -2748,7 +2748,7 @@ def test_LineSeries_from_pandas(input_files, filename, property_map, error):
     
     input_file = check_input_file(input_files, filename)
     df = pandas.read_csv(input_file, header = 0, thousands = ',')
-    print(df.dtypes)
+    #print(df.dtypes)
     
     if not error:
         result = cls5.from_pandas(df, property_map = property_map)
@@ -2756,6 +2756,10 @@ def test_LineSeries_from_pandas(input_files, filename, property_map, error):
         assert isinstance(result, cls5)
         assert result.data is not None
         assert len(result.data) == len(df)
+        assert result.data.ndarray is not None
+        for key in property_map:
+            assert getattr(result.data, key, None) is not None
+        print(result.data.to_array(force_object = True)[0])
         for item in result.data:
             for key in property_map:
                 assert getattr(item, key, None) is not None

@@ -544,9 +544,12 @@ def to_ndarray(value):
                                                'or equivalent.')
 
     for i, item in enumerate(value):
+        is_iterable = not isinstance(item,
+                                     (str, bytes, dict, UserDict)) and hasattr(item, 
+                                                                               '__iter__')
         if item is None or isinstance(item, constants.EnforcedNullType):
             value[i] = np.nan
-        elif checkers.is_iterable(item, forbid_literals = (str, bytes, dict, UserDict)):
+        elif is_iterable:
             for index, subitem in enumerate(item):
                 if subitem is None or isinstance(subitem, constants.EnforcedNullType):
                     item[i] = np.nan

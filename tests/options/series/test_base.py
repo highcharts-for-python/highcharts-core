@@ -662,7 +662,7 @@ def test_from_js_literal(input_files, filename, as_file, error):
     ('test-data-files/nst-est2019-01.csv', {}, ValueError),
     ('test-data-files/nst-est2019-01.csv',
      {
-         'name': 'Geographic Area'
+         'name': 'Geographic Area',
      },
      None),
 
