@@ -941,14 +941,16 @@ class SeriesBase(SeriesOptions):
         for key in property_map:
             map_value = property_map[key]
 
-            if map_value not in df.columns:
-                raise errors.HighchartsPandasDeserializationError(
-                    f'Unable to find a column labeled "{map_value}" in df.'
-                )
-
             is_iterable = not isinstance(map_value, (str, bytes, dict, UserDict)) and \
                 hasattr(map_value, '__iter__')
+
             if is_iterable:
+                for item in map_value:
+                    if item not in df.columns.values:
+                        raise errors.HighchartsPandasDeserializationError(
+                            f'Unable to find a column labeled "{item}" in df.'
+                        )
+
                 implied_series = len(map_value)
                 if number_of_series == 1 and implied_series > number_of_series:
                     number_of_series = implied_series
@@ -957,6 +959,11 @@ class SeriesBase(SeriesOptions):
                 
                 iterable_values[key] = map_value
             else:
+                if map_value not in df.columns.values:
+                    raise errors.HighchartsPandasDeserializationError(
+                        f'Unable to find a column labeled "{map_value}" in df.'
+                    )
+
                 fixed_values[key] = map_value
         
         if mismatched_series:
@@ -1139,10 +1146,12 @@ class SeriesBase(SeriesOptions):
           not available in the runtime environment
         """
         series_kwargs = validators.dict(series_kwargs, allow_empty = True) or {}
+
+        # SCENARIO 0: Series in Rows
         if series_in_rows:
             return cls.from_pandas_in_rows(df, series_kwargs, **kwargs)
 
-        # SCENARIO: Has Property Map
+        # SCENARIO 1: Has Property Map
         if property_map:
             series_list = cls._from_pandas_multi_map(df,
                                                      property_map,
@@ -1153,10 +1162,12 @@ class SeriesBase(SeriesOptions):
             
             return series_list
 
-        # SCENARIO: Properties in KWARGS
+        # SCENARIO 2: Properties in KWARGS
         collection_cls = cls._data_collection_class()
         data_point_cls = cls._data_point_class()
         props_from_array = data_point_cls._get_props_from_array()
+        if not props_from_array:
+            props_from_array = ['x', 'y']
 
         property_map = {}
         for prop in props_from_array:
@@ -1177,19 +1188,21 @@ class SeriesBase(SeriesOptions):
             
             return series_list
 
-        # SCENARIO: No Explicit Properties
+        # SCENARIO 3: No Explicit Properties
         series_index = kwargs.get('index', df.index)
         column_count = len(df.columns)
         supported_dimensions = collection_cls._get_supported_dimensions()
         
-        # A: Single Series, Data Frame Columns align exactly to Data Point Properties
+        # SCENARIO 3a: Single Series, Data Frame Columns align exactly to Data Point Properties
         if column_count in supported_dimensions:
             property_map = {}
             props_from_array = data_point_cls._get_props_from_array(length = column_count)
+            if not props_from_array:
+                props_from_array = ['x', 'y']
             property_map[props_from_array[0]] = series_index
 
             for index, prop in enumerate(props_from_array[1:]):
-                prop_value = df.iloc[index].values
+                prop_value = df.iloc[:, index + 1].values
                 property_map[prop] = prop_value
             
             collection = collection_cls()
@@ -1204,13 +1217,14 @@ class SeriesBase(SeriesOptions):
 
             return series_instance
 
-        # B: Multiple Series, Data Frame Columns correspond to multiples of Data Point Properties
-        reversed_dimensions = supported_dimensions.sort(reverse = True)
+        # SCENARIO 3b: Multiple Series, Data Frame Columns correspond to multiples of Data Point Properties
+        reversed_dimensions = sorted(supported_dimensions, reverse = True)
         columns_per_series = None
         if reversed_dimensions:
             for dimension in reversed_dimensions:
                 if dimension > 1 and column_count % dimension == 0:
                     columns_per_series = dimension
+                    break
                 elif dimension == 1:
                     columns_per_series = 1
         
@@ -1222,18 +1236,21 @@ class SeriesBase(SeriesOptions):
                 f'by explicitly specificying data property kwargs.'
             )
 
-        series_count = column_count / columns_per_series
+        series_count = column_count // columns_per_series
         series_list = []
         for index in range(series_count):
             start = len(series_list) * columns_per_series
 
             property_map = {}
             props_from_array = data_point_cls._get_props_from_array(length = columns_per_series)
+            if not props_from_array:
+                props_from_array = ['x', 'y']
+
             property_map[props_from_array[0]] = series_index
 
             for index, prop in enumerate(props_from_array[1:]):
                 index = start + index
-                prop_value = df.iloc[index].values
+                prop_value = df.iloc[:, index].values
                 property_map[prop] = prop_value
             
             collection = collection_cls()

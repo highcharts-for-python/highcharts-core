@@ -116,6 +116,7 @@ class DataPointCollection(HighchartsMeta):
             return
         elif name in ['ndarray', 'data_points']:
             super().__setattr__(name, value)
+            return
 
         data_point_properties = self._get_props_from_array()
 
