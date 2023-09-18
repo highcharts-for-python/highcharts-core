@@ -73,13 +73,9 @@ class DataPointCollection(HighchartsMeta):
         data_point_class = self._get_data_point_class()
         data_point_obj = data_point_class()
 
-        try:
-            result = super().__getattribute__(name)
-            return result
-        except AttributeError as error:
-            if name in ['_ndarray', 'ndarray', '_data_points', 'data_points']:
-                raise error
-            
+        if name in ['_ndarray', 'ndarray', '_data_points', 'data_points']:
+            return super().__getattr__(name)
+
         if name in data_point_properties and self.ndarray is not None:
             position = data_point_properties.index(name)
             return utility_functions.get_ndarray_slice(self.ndarray, position)
@@ -115,8 +111,15 @@ class DataPointCollection(HighchartsMeta):
              points.
 
         """
+        if name.startswith('_'):
+            super().__setattr__(name, value)
+            return
+        elif name in ['ndarray', 'data_points']:
+            super().__setattr__(name, value)
+            return
+
         data_point_properties = self._get_props_from_array()
-        
+
         try:
             has_ndarray = self.ndarray is not None
             has_data_points = self.data_points is not None
@@ -155,7 +158,6 @@ class DataPointCollection(HighchartsMeta):
                                                          members = len(self.ndarray))
             array[:, index] = value
             self.ndarray = array
-
         elif name in data_point_properties and has_data_points:
             is_arraylike = utility_functions.is_arraylike(value)
             if not is_arraylike:
@@ -164,25 +166,57 @@ class DataPointCollection(HighchartsMeta):
             if len(self.data_points) < len(value):
                 missing = len(value) - len(self.data_points)
                 for i in range(missing):
-                    self.data.append(self._data_point_class())
+                    data_point_cls = self._get_data_point_class()
+                    empty_data_point = data_point_cls()
+                    self.data_points.append(empty_data_point)
                     
             if len(value) < len(self.data_points):
                 value = utility_functions.lengthen_array(value,
                                                          members = len(self.data_points))
 
             for i in range(len(self.data_points)):
-                self.data_points[i].populate_from_array(value[i])
-            
+                if hasattr(value[i], 'item'):
+                    checked_value = value[i].item()
+                else:
+                    checked_value = value[i]
+                setattr(self.data_points[i], name, checked_value)
+
         elif name in data_point_properties:
             index = data_point_properties.index(name)
-            is_arraylike = utility_functions.is_arraylike(value)
             
-            # if value is not an array
-            if not is_arraylike:
+            is_iterable = not isinstance(value,
+                                         (str, bytes, dict, UserDict)) and hasattr(value, 
+                                                                                   '__iter__')
+            if is_iterable:
+                as_list = []
+                for i in range(len(value)):
+                    inner_list = [np.nan for x in data_point_properties]
+                    inner_list[index] = value[i]
+                    as_list.append(inner_list)
+            else:
                 as_list = [None for x in data_point_properties]
                 as_list[index] = value
-                
-            self.ndarray = as_list
+
+            self.ndarray = as_list            
+        elif utility_functions.is_arraylike(value):
+            if not has_data_points:
+                data_point_cls = self._get_data_point_class()
+                data_points = [data_point_cls() for x in value]
+                for index in range(len(data_points)):
+                    setattr(data_points[index], name, value[index])
+                super().__setattr__('data_points', [x for x in data_points])
+            elif len(value) <= len(self.data_points):
+                for index in range(len(value)):
+                    setattr(self.data_points[index], name, value[index])
+            else:
+                cut_off = len(self.data_points)
+                data_point_cls = self._get_data_point_class()
+                for index in range(cut_off):
+                    setattr(self.data_points[index], name, value[index])
+                for index in range(len(value[cut_off:])):
+                    data_point = data_point_cls()
+                    setattr(data_point, name, value[index])
+                    self.data_points.append(data_point)
         else:
             super().__setattr__(name, value)
 
@@ -199,7 +233,18 @@ class DataPointCollection(HighchartsMeta):
             result = 0
             
         return result
-        
+
+    def __iter__(self):
+        self._current_index = 0
+        return iter(self.to_array(force_object = True))
+    
+    def __next__(self):
+        if self._current_index < len(self):
+            x = self.to_array(force_object = True)[self._current_index]
+            self._current_index += 1
+            return x
+        raise StopIteration
+
     @property
     def data_points(self) -> Optional[List[DataBase]]:
         """The collection of data points for the series. Defaults to
@@ -224,7 +269,7 @@ class DataPointCollection(HighchartsMeta):
                                                                       UserDict)):
                 validated = [validated]
 
-            self._data_points = validated
+            super().__setattr__('_data_points', validated)
 
     @property
     def ndarray(self) -> Optional[np.ndarray]:
@@ -243,16 +288,14 @@ class DataPointCollection(HighchartsMeta):
                                                    'It was not found in the runtime environment. '
                                                    'Please install it using "pip install numpy" '
                                                    'or equivalent.')
-        
+        is_iterable = not isinstance(value, 
+                                     (str, bytes, dict, UserDict)) and hasattr(value, 
+                                                                               '__iter__')
         if value is None:
             self._ndarray = None
             as_array = False
         elif not isinstance(value, 
-                            np.ndarray) and checkers.is_iterable(value,
-                                                                 forbid_literals = (str, 
-                                                                                    bytes, 
-                                                                                    dict, 
-                                                                                    UserDict)):
+                            np.ndarray) and is_iterable:
             as_array = utility_functions.to_ndarray(value)
         else:
             as_array = value
@@ -448,7 +491,8 @@ class DataPointCollection(HighchartsMeta):
                 data_points.append(self._get_data_point_class()())
 
         for index in range(len(self.ndarray)):
-            data_points[index].populate_from_array(self.ndarray[index])
+            array = self.ndarray[index]
+            data_points[index].populate_from_array(array)
 
         return data_points
 
@@ -639,4 +683,3 @@ class DataPointCollection(HighchartsMeta):
                 file_.write(as_str)
 
         return as_str
-

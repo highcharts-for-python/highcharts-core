@@ -544,9 +544,12 @@ def to_ndarray(value):
                                                'or equivalent.')
 
     for i, item in enumerate(value):
+        is_iterable = not isinstance(item,
+                                     (str, bytes, dict, UserDict)) and hasattr(item, 
+                                                                               '__iter__')
         if item is None or isinstance(item, constants.EnforcedNullType):
             value[i] = np.nan
-        elif checkers.is_iterable(item, forbid_literals = (str, bytes, dict, UserDict)):
+        elif is_iterable:
             for index, subitem in enumerate(item):
                 if subitem is None or isinstance(subitem, constants.EnforcedNullType):
                     item[i] = np.nan
@@ -716,6 +719,20 @@ def lengthen_array(value, members):
     return value
 
 
+def is_iterable(value) -> bool:
+    """Evaluate whether ``value`` is iterable, with support for NumPy arrays.
+    
+    :param value: The value to evaluate.
+    :type value: Any
+    
+    :returns: ``True`` if iterable, ``False`` if not
+    :rtype: :class:`bool <python:bool>`
+    """
+    return checkers.is_type(value, 'ndarray') or \
+        (not isinstance(value,
+                        (str, bytes, dict, UserDict)) and hasattr(value, '__iter__'))
+
+
 def is_arraylike(value) -> bool:
     """Evaluate whether ``value`` is a NumPy array or a Python iterable.
     
@@ -735,13 +752,7 @@ def is_arraylike(value) -> bool:
                                                'installed in your runtime '
                                                'environment.')
 
-    return isinstance(value, np.ndarray) or checkers.is_iterable(value,
-                                                                 forbid_literals = (
-                                                                     str,
-                                                                     bytes, 
-                                                                     dict,
-                                                                     UserDict
-                                                                 ))
+    return isinstance(value, np.ndarray) or is_iterable(value)
 
 
 def is_ndarray(value) -> bool:
