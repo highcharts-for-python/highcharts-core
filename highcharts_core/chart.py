@@ -1155,30 +1155,22 @@ class Chart(HighchartsMeta):
         return instance
 
     @classmethod
-    def from_pandas(cls,
-                    df,
-                    property_map,
-                    series_type,
-                    series_kwargs = None,
-                    options_kwargs = None,
-                    chart_kwargs = None):
-        """Create a :class:`Chart <highcharts_core.chart.Chart>` instance whose
-        data is populated from a `pandas <https://pandas.pydata.org/>`_
-        :class:`DataFrame <pandas:DataFrame>`.
+    def from_pandas_in_rows(cls,
+                            df,
+                            series_type = 'line',
+                            series_kwargs = None,
+                            options_kwargs = None,
+                            chart_kwargs = None,
+                            **kwargs):
+        """Create a chart from a Pandas :class:`DataFrame <pandas:pandas.DataFrame>`, 
+        treating each row in the dataframe as a :term:`series` instances.
 
-        :param df: The :class:`DataFrame <pandas:DataFrame>` from which data should be
-          loaded.
-        :type df: :class:`DataFrame <pandas:DataFrame>`
-
-        :param property_map: A :class:`dict <python:dict>` used to indicate which
-          data point property should be set to which column in ``df``. The keys in the
-          :class:`dict <python:dict>` should correspond to properties in the data point
-          class, while the value should indicate the label for the
-          :class:`DataFrame <pandas:DataFrame>` column.
-        :type property_map: :class:`dict <python:dict>`
-
+        :param df: The :class:`DataFrame <pyspark:pyspark.sql.DataFrame>` from which data
+          should be loaded.
+        :type df: :class:`DataFrame <pyspark:pyspark.sql.DataFrame>`
+        
         :param series_type: Indicates the series type that should be created from the data
-          in ``df``.
+          in ``df``. Defaults to ``'line'``.
         :type series_type: :class:`str <python:str>`
 
         :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
@@ -1214,6 +1206,101 @@ class Chart(HighchartsMeta):
             ``options_kwargs`` and the data in ``df`` instead.
 
         :type chart_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
+        
+        :param **kwargs: Additional keyword arguments that are - in turn - propagated to 
+          the series created from the ``df``.
+
+        :returns: A :class:`Chart <highcharts_core.chart.Chart>` instance with its
+          data populated from the data in ``df``.
+        :rtype: :class:`Chart <highcharts_core.chart.Chart>`
+
+        :raises HighchartsPandasDeserializationError: if ``property_map`` references
+          a column that does not exist in the data frame
+        :raises HighchartsDependencyError: if `pandas <https://pandas.pydata.org/>`_ is
+          not available in the runtime environment
+
+        """
+        return cls.from_pandas(df,
+                               property_map = None,
+                               series_type = series_type,
+                               series_kwargs = series_kwargs,
+                               options_kwargs = options_kwargs,
+                               chart_kwargs = chart_kwargs,
+                               series_in_rows = True,
+                               **kwargs)
+
+    @classmethod
+    def from_pandas(cls,
+                    df,
+                    property_map = None,
+                    series_type = 'line',
+                    series_kwargs = None,
+                    options_kwargs = None,
+                    chart_kwargs = None,
+                    series_in_rows = False,
+                    **kwargs):
+        """Create a :class:`Chart <highcharts_core.chart.Chart>` instance whose
+        data is populated from a `pandas <https://pandas.pydata.org/>`_
+        :class:`DataFrame <pandas:DataFrame>`.
+
+        :param df: The :class:`DataFrame <pandas:DataFrame>` from which data should be
+          loaded.
+        :type df: :class:`DataFrame <pandas:DataFrame>`
+
+        :param property_map: A :class:`dict <python:dict>` used to indicate which
+          data point property should be set to which column in ``df``. The keys in the
+          :class:`dict <python:dict>` should correspond to properties in the data point
+          class, while the value should indicate the label for the
+          :class:`DataFrame <pandas:DataFrame>` column. Defaults to 
+          :obj:`None <python:None>`.
+        :type property_map: :class:`dict <python:dict>` or :obj:`None <python:None>`
+
+        :param series_type: Indicates the series type that should be created from the data
+          in ``df``. Defaults to ``'line'``.
+        :type series_type: :class:`str <python:str>`
+
+        :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the series instance. Defaults
+          to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``series_kwargs`` contains a ``data`` key, its value will be *overwritten*.
+            The ``data`` value will be created from ``df`` instead.
+
+        :type series_kwargs: :class:`dict <python:dict>`
+
+        :param options_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the :class:`HighchartsOptions`
+          instance. Defaults to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``options_kwargs`` contains a ``series`` key, the ``series`` value will be
+            *overwritten*. The ``series`` value will be created from the data in ``df``.
+
+        :type options_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
+
+        :param chart_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the :class:`Chart` instance.
+          Defaults to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``chart_kwargs`` contains an ``options`` key, ``options`` will be
+            *overwritten*. The ``options`` value will be created from the
+            ``options_kwargs`` and the data in ``df`` instead.
+
+        :type chart_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
+        
+        :param series_in_rows: if ``True``, will attempt a streamlined cartesian series
+          with x-values taken from column names, y-values taken from row values, and
+          the series name taken from the row index. Defaults to 
+          :obj:`False <python:False>`.
+        :type series_in_rows: :class:`bool <python:bool>`
+
+        :param **kwargs: Additional keyword arguments that are - in turn - propagated to 
+          the series created from the ``df``.
 
         :returns: A :class:`Chart <highcharts_core.chart.Chart>` instance with its
           data populated from the data in ``df``.
@@ -1232,15 +1319,26 @@ class Chart(HighchartsMeta):
 
         options_kwargs = validators.dict(options_kwargs, allow_empty = True) or {}
         chart_kwargs = validators.dict(chart_kwargs, allow_empty = True) or {}
+        kwargs = validators.dict(kwargs, allow_empty = True) or {}
 
         series_cls = SERIES_CLASSES.get(series_type, None)
 
-        series = series_cls.from_pandas(df,
-                                        property_map,
-                                        series_kwargs)
+        if series_in_rows:
+            series = series_cls.from_pandas_in_rows(df,
+                                                    series_kwargs = series_kwargs,
+                                                    options_kwargs = options_kwargs,
+                                                    **kwargs)
+        else:
+            series = series_cls.from_pandas(df,
+                                            property_map = property_map,
+                                            series_kwargs = series_kwargs,
+                                            **kwargs)
 
+        if isinstance(series, series_cls):
+            series = [series]
+
+        options_kwargs['series'] = series
         options = HighchartsOptions(**options_kwargs)
-        options.series = [series]
 
         instance = cls(**chart_kwargs)
         instance.options = options
