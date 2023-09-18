@@ -6,6 +6,14 @@ Release 1.4.0
   improve performance by 50 - 90%. (#51)
 * *SIGNIFICANT* performance gains in the ``.to_json()`` method. Implementation seems to 
   improve performance by 30 - 90%.
+* **ENHANCEMENT:** Significantly simplified use of the ``.from_pandas()`` method to support:
+
+  * creation of multiple series from one DataFrame in one method call
+  * creation of series without needing to specify a full property map
+  * support for creating series by DataFrame row, rather than just by DataFrame column
+
+* **ENHANCEMENT:** Added the ``.from_pandas_in_rows()`` method to support creation of
+  charts and series from simple two-dimensional DataFrames laid out in rows.
 * **ENHANCEMENT:** Added one-shot chart creation and rendering from Series objects (#89).
 * **ENHANCEMENT:** Added one-shot chart creation using ``series`` and ``data``/``series_type`` keywords. (#90).
 
