@@ -871,6 +871,14 @@ class SeriesBase(SeriesOptions):
         new_instance = cls.from_pandas(df, 
                                        property_map = property_map,
                                        series_in_rows = series_in_rows)
+        if isinstance(new_instance, list):
+            raise errors.HighchartsPandasDeserializationError(
+                f'Expected data for a single series, but got {len(new_instance)} when '
+                f'loading from df. Please either modify the structure of df '
+                f'or provide more targeted instructions using the property_map '
+                f'argument.'
+            )
+
         self.data = new_instance.data
 
     @classmethod
@@ -1056,7 +1064,8 @@ class SeriesBase(SeriesOptions):
         for row in range(series_count):
             series_name = name_values[row]
             y_values = df.iloc[[row]].values
-            
+            y_values = y_values.reshape(x_values.shape)
+
             as_array = np.column_stack((x_values, y_values))
             collection = collection_cls.from_array(as_array)
             series_instance_kwargs = series_kwargs.copy()

@@ -658,16 +658,42 @@ def test_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
 
 
-@pytest.mark.parametrize('filename, property_map, error', [
-    ('test-data-files/nst-est2019-01.csv', {}, ValueError),
+@pytest.mark.parametrize('filename, error', [
+    ('test-data-files/nst-est2019-01.csv', None),
+])
+def test_from_pandas_in_rows(input_files, filename, error):
+    import pandas
+    
+    input_file = check_input_file(input_files, filename)
+    df = pandas.read_csv(input_file, header = 0, thousands = ',')
+    df.index = df['Geographic Area']
+    df = df.drop(columns = ['Geographic Area'])
+    print(df)
+        
+    if not error:
+        result = cls.from_pandas_in_rows(df)
+        assert result is not None
+        assert isinstance(result, list)
+        assert len(result) == len(df)
+        for series in result:
+            assert isinstance(series, cls)
+            assert series.data is not None
+            assert len(series.data) == len(df.columns)
+    else:
+        with pytest.raises(error):
+            result = cls.from_pandas_in_rows(df)
+
+@pytest.mark.parametrize('filename, property_map, series_in_rows, error', [
     ('test-data-files/nst-est2019-01.csv',
      {
          'name': 'Geographic Area',
      },
+     False,
      None),
-
+    ('test-data-files/nst-est2019-01.csv', {}, False, ValueError),
+    
 ])
-def test_load_from_pandas(input_files, filename, property_map, error):
+def test_load_from_pandas(input_files, filename, property_map, series_in_rows, error):
     import pandas
 
     input_file = check_input_file(input_files, filename)
