@@ -956,10 +956,9 @@ class Chart(HighchartsMeta):
         display(javascript_display)
 
     @classmethod
-    def from_csv(cls,
+    def from_csv_in_rows(cls,
                  as_string_or_file,
-                 property_column_map,
-                 series_type,
+                 series_type = 'line',
                  has_header_row = True,
                  series_kwargs = None,
                  options_kwargs = None,
@@ -970,7 +969,8 @@ class Chart(HighchartsMeta):
                  line_terminator = '\r\n',
                  wrap_all_strings = False,
                  double_wrapper_character_when_nested = False,
-                 escape_character = "\\"):
+                 escape_character = "\\",
+                 **kwargs):
         """Create a new :class:`Chart <highcharts_core.chart.Chart>` instance with
         data populated from a CSV string or file.
 
@@ -1010,23 +1010,8 @@ class Chart(HighchartsMeta):
 
         :type as_string_or_file: :class:`str <python:str>` or Path-like
 
-        :param property_column_map: A :class:`dict <python:dict>` used to indicate which
-          data point property should be set to which CSV column. The keys in the
-          :class:`dict <python:dict>` should correspond to properties in the data point
-          class, while the value can either be a numerical index (starting with 0) or a
-          :class:`str <python:str>` indicating the label for the CSV column.
-
-          .. warning::
-
-            If the ``property_column_map`` uses :class:`str <python:str>` values, the CSV
-            file *must* have a header row (this is expected, by default). If there is no
-            header row and a :class:`str <python:str>` value is found, a
-            :exc:`HighchartsCSVDeserializationError` will be raised.
-
-        :type property_column_map: :class:`dict <python:dict>`
-
         :param series_type: Indicates the series type that should be created from the CSV
-          data.
+          data. Defaults to ``'line'``.
         :type series_type: :class:`str <python:str>`
 
         :param has_header_row: If ``True``, indicates that the first row of
@@ -1115,6 +1100,205 @@ class Chart(HighchartsMeta):
           which is Python's native escape character).
         :type escape_character: :class:`str <python:str>`
 
+        :param **kwargs: Remaining keyword arguments will be attempted on the resulting
+          :term:`series` instance and the data points it contains.
+
+        :returns: A :class:`Chart <highcharts_core.chart.Chart>` instance with its
+          data populated from the CSV data.
+        :rtype: :class:`Chart <highcharts_core.chart.Chart>`
+
+        :raises HighchartsCSVDeserializationError: if ``property_column_map`` references
+          CSV columns by their label, but the CSV data does not contain a header row
+
+        """
+        return cls.from_csv(as_string_or_file,
+                            property_column_map = None,
+                            series_type = series_type,
+                            has_header_row = has_header_row,
+                            series_kwargs = series_kwargs,
+                            options_kwargs = options_kwargs,
+                            chart_kwargs = chart_kwargs,
+                            delimiter = delimiter,
+                            null_text = null_text,
+                            wrapper_character = wrapper_character,
+                            line_terminator = line_terminator,
+                            wrap_all_strings = wrap_all_strings,
+                            double_wrapper_character_when_nested = double_wrapper_character_when_nested,
+                            escape_character = escape_character,
+                            series_in_rows = True,
+                            **kwargs)
+
+    @classmethod
+    def from_csv(cls,
+                 as_string_or_file,
+                 property_column_map = None,
+                 series_type = 'line',
+                 has_header_row = True,
+                 series_kwargs = None,
+                 options_kwargs = None,
+                 chart_kwargs = None,
+                 delimiter = ',',
+                 null_text = 'None',
+                 wrapper_character = "'",
+                 line_terminator = '\r\n',
+                 wrap_all_strings = False,
+                 double_wrapper_character_when_nested = False,
+                 escape_character = "\\",
+                 series_in_rows = False,
+                 **kwargs):
+        """Create a new :class:`Chart <highcharts_core.chart.Chart>` instance with
+        data populated from a CSV string or file.
+
+          .. note::
+
+            For an example
+            :class:`LineSeries <highcharts_core.options.series.area.LineSeries>`, the
+            minimum code required would be:
+
+              .. code-block:: python
+
+                my_chart = Chart.from_csv('some-csv-file.csv',
+                                          property_column_map = {
+                                              'x': 0,
+                                              'y': 3,
+                                              'id': 'id'
+                                          },
+                                          series_type = 'line')
+
+            As the example above shows, data is loaded into the ``my_chart`` instance
+            from the CSV file with a filename ``some-csv-file.csv``. The
+            :meth:`x <CartesianData.x>`
+            values for each data point will be taken from the first (index 0) column in
+            the CSV file. The :meth:`y <CartesianData.y>` values will be taken from the
+            fourth (index 3) column in the CSV file. And the :meth:`id <CartesianData.id>`
+            values will be taken from a column whose header row is labeled ``'id'``
+            (regardless of its index).
+
+        :param as_string_or_file: The CSV data to use to pouplate data. Accepts either
+          the raw CSV data as a :class:`str <python:str>` or a path to a file in the
+          runtime environment that contains the CSV data.
+
+          .. tip::
+
+            Unwrapped empty column values are automatically interpreted as null
+            (:obj:`None <python:None>`).
+
+        :type as_string_or_file: :class:`str <python:str>` or Path-like
+
+        :param property_column_map: A :class:`dict <python:dict>` used to indicate which
+          data point property should be set to which CSV column. The keys in the
+          :class:`dict <python:dict>` should correspond to properties in the data point
+          class, while the value can either be a numerical index (starting with 0) or a
+          :class:`str <python:str>` indicating the label for the CSV column. Defaults to
+          :obj:`None <python:None>`.
+
+          .. warning::
+
+            If the ``property_column_map`` uses :class:`str <python:str>` values, the CSV
+            file *must* have a header row (this is expected, by default). If there is no
+            header row and a :class:`str <python:str>` value is found, a
+            :exc:`HighchartsCSVDeserializationError` will be raised.
+
+        :type property_column_map: :class:`dict <python:dict>`
+
+        :param series_type: Indicates the series type that should be created from the CSV
+          data. Defaults to ``'line'``.
+        :type series_type: :class:`str <python:str>`
+
+        :param has_header_row: If ``True``, indicates that the first row of
+          ``as_string_or_file`` contains column labels, rather than actual data. Defaults
+          to ``True``.
+        :type has_header_row: :class:`bool <python:bool>`
+
+        :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the series instance. Defaults
+          to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``series_kwargs`` contains a ``data`` key, its value will be *overwritten*.
+            The ``data`` value will be created from the CSV file instead.
+
+        :type series_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
+
+        :param options_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the :class:`HighchartsOptions`
+          instance. Defaults to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``options_kwargs`` contains a ``series`` key, the ``series`` value will be
+            *overwritten*. The ``series`` value will be created from the CSV file instead.
+
+        :type options_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
+
+        :param chart_kwargs: An optional :class:`dict <python:dict>` containing keyword
+          arguments that should be used when instantiating the :class:`Chart` instance.
+          Defaults to :obj:`None <python:None>`.
+
+          .. warning::
+
+            If ``chart_kwargs`` contains an ``options`` key, ``options`` will be
+            *overwritten*. The ``options`` value will be created from the
+            ``options_kwargs`` and CSV file instead.
+
+        :type chart_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
+
+        :param delimiter: The delimiter used between columns. Defaults to ``,``.
+        :type delimiter: :class:`str <python:str>`
+
+        :param wrapper_character: The string used to wrap string values when
+          wrapping is applied. Defaults to ``'``.
+        :type wrapper_character: :class:`str <python:str>`
+
+        :param null_text: The string used to indicate an empty value if empty
+          values are wrapped. Defaults to `None`.
+        :type null_text: :class:`str <python:str>`
+
+        :param line_terminator: The string used to indicate the end of a line/record in
+          the CSV data. Defaults to ``'\\r\\n'``.
+
+          .. note::
+
+            The Python :mod:`csv <python:csv>` currently ignores the ``line_terminator``
+            parameter and always applies ``'\\r\\n'``, by design. The Python docs say this
+            may change in the future, so for future backwards compatibility we are
+            including it here.
+
+        :type line_terminator: :class:`str <python:str>`
+
+        :param wrap_all_strings: If ``True``, indicates that the CSV file has all string
+          data values wrapped in quotation marks. Defaults to ``False``.
+
+          .. warning::
+
+            If set to ``True``, the :mod:`csv <python:csv>` module will try to coerce
+            any value that is *not* wrapped in quotation marks to a
+            :class:`float <python:float>`. This can cause unexpected behavior, and
+            typically we recommend leaving this as ``False`` and then re-casting values
+            after they have been parsed.
+
+        :type wrap_all_strings: :class:`bool <python:bool>`
+
+        :param double_wrapper_character_when_nested: If ``True``, quote character is
+          doubled when appearing within a string value. If ``False``, the
+          ``escape_character`` is used to prefix quotation marks. Defaults to ``False``.
+        :type double_wrapper_character_when_nested: :class:`bool <python:bool>`
+
+        :param escape_character: A one-character string that indicates the character used
+          to escape quotation marks if they appear within a string value that is already
+          wrapped in quotation marks. Defaults to ``\\\\`` (which is Python for ``'\\'``,
+          which is Python's native escape character).
+        :type escape_character: :class:`str <python:str>`
+
+        :param series_in_rows: if ``True``, will attempt a streamlined cartesian series
+          with x-values taken from column names, y-values taken from row values, and
+          the series name taken from the row index. Defaults to ``False``.
+        :type series_in_rows: :class:`bool <python:bool>`
+
+        :param **kwargs: Remaining keyword arguments will be attempted on the resulting
+          :term:`series` instance and the data points it contains.
+
         :returns: A :class:`Chart <highcharts_core.chart.Chart>` instance with its
           data populated from the CSV data.
         :rtype: :class:`Chart <highcharts_core.chart.Chart>`
@@ -1134,20 +1318,40 @@ class Chart(HighchartsMeta):
 
         series_cls = SERIES_CLASSES.get(series_type, None)
 
-        series = series_cls.from_csv(as_string_or_file,
-                                     property_column_map,
-                                     has_header_row = has_header_row,
-                                     series_kwargs = series_kwargs,
-                                     delimiter = delimiter,
-                                     null_text = null_text,
-                                     wrapper_character = wrapper_character,
-                                     line_terminator = line_terminator,
-                                     wrap_all_strings = wrap_all_strings,
-                                     double_wrapper_character_when_nested = double_wrapper_character_when_nested,
-                                     escape_character = escape_character)
+        if series_in_rows:
+            series = series_cls.from_csv_in_rows(
+                as_string_or_file,
+                has_header_row = has_header_row,
+                series_kwargs = series_kwargs,
+                delimiter = delimiter,
+                null_text = null_text,
+                wrapper_character = wrapper_character,
+                line_terminator = line_terminator,
+                wrap_all_strings = wrap_all_strings,
+                double_wrapper_character_when_nested = double_wrapper_character_when_nested,
+                escape_character = escape_character,
+                **kwargs
+            )
+        else:
+            series = series_cls.from_csv(as_string_or_file,
+                                         property_column_map = property_column_map,
+                                         has_header_row = has_header_row,
+                                         series_kwargs = series_kwargs,
+                                         delimiter = delimiter,
+                                         null_text = null_text,
+                                         wrapper_character = wrapper_character,
+                                         line_terminator = line_terminator,
+                                         wrap_all_strings = wrap_all_strings,
+                                         double_wrapper_character_when_nested = double_wrapper_character_when_nested,
+                                         escape_character = escape_character,
+                                         **kwargs)
+
+        if not isinstance(series, list):
+            series = [series]
+
+        options_kwargs['series'] = series
 
         options = HighchartsOptions(**options_kwargs)
-        options.series = [series]
 
         instance = cls(**chart_kwargs)
         instance.options = options
