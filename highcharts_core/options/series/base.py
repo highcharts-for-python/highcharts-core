@@ -1482,3 +1482,62 @@ class SeriesBase(SeriesOptions):
                          container = container,
                          retries = retries,
                          interval = interval)
+        
+    def convert_to(self, series_type):
+        """Creates a new series of ``series_type`` from the current series.
+        
+        :param series_type: The series type that should be returned.
+        :type series_type: :class:`str <python:str>` or
+          :class:`SeriesBase <highcharts_core.options.series.base.SeriesBase>`-descended
+          
+        .. warning::
+        
+          This operation is *not* guaranteed to work converting between all series 
+          types. This is because some series types have different properties, different
+          logic / functionality for their properties, and may have entirely different
+          data requirements.
+          
+          In general, this method is expected to be *lossy* in nature, meaning that when
+          the series can be converted "close enough" the series will be converted. 
+          However, if the target ``series_type`` does not support certain properties set
+          on the original instance, then those settings will *not* be propagated to the 
+          new series.
+          
+          In certain cases, this method may raise an 
+          :exc:`HighchartsSeriesConversionError <highcharts_core.errors.HighchartsSeriesConversionError>`
+          if the method is unable to convert (even losing some data) the original into 
+          ``series_type``.
+        
+        :returns: A new series of ``series_type``, maintaining relevant properties and
+          data from the original instance.
+        :rtype: ``series_type``
+          :class:`SeriesBase <highcharts_core.options.series.base.SeriesBase>` descendant
+          
+        :raises HighchartsSeriesConversionError: if unable to convert (even after losing 
+          some data) the original instance into an instance of ``series_type``.
+        :raises HighchartsValueError: if ``series_type`` is not a recognized series type
+
+        """
+        from highcharts_core.options.series.series_generator import SERIES_CLASSES
+        if isinstance(series_type, str):
+            series_type = series_type.lower()
+            if series_type not in SERIES_CLASSES:
+                raise errors.HighchartsValueError(f'series_type expects a valid Highcharts '
+                                                  f'series type. Received: {series_type}')
+            series_type_name = series_type
+            series_type = SERIES_CLASSES.get(series_type)
+        elif not issubclass(series_type, SeriesBase):
+            raise errors.HighchartsValueError(f'series_type expects a valid Highcharts '
+                                              f'series type. Received: {series_type}')
+        else:
+            series_type_name = series_type.__name__
+
+        as_js_literal = self.to_js_literal()
+        try:
+            target = series_type.from_js_literal(as_js_literal)
+        except (ValueError, TypeError):
+            raise errors.HighchartsSeriesConversionError(f'Unable to convert '
+                                                         f'{self.__class__.__name__} instance '
+                                                         f'to {series_type_name}')
+        
+        return target

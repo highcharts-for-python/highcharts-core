@@ -16,6 +16,7 @@ Release 1.4.0
   charts and series from simple two-dimensional DataFrames laid out in rows.
 * **ENHANCEMENT:** Added one-shot chart creation and rendering from Series objects (#89).
 * **ENHANCEMENT:** Added one-shot chart creation using ``series`` and ``data``/``series_type`` keywords. (#90).
+* **ENHANCEMENT:** Added ``.convert_to()`` convenience method to Series objects (#107).
 
 ---------------------
 

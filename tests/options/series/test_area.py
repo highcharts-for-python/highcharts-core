@@ -1396,6 +1396,43 @@ def test_AreaSeries_to_dict(kwargs, error):
 def test_AreaSeries_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
 
+
+@pytest.mark.parametrize('filename, target_type, as_cls, error', [
+    ('series/area/01.js', 'line', False, None),
+    ('series/area/02.js', 'line', False, None),
+    ('series/area/03.js', 'line', False, None),
+
+    ('series/area/01.js', 'line', True, None),
+    ('series/area/02.js', 'line', True, None),
+    ('series/area/03.js', 'line', True, None),
+
+    ('series/area/01.js', 'not a series type', False, ValueError),
+    ('series/area/01.js', 123, False, ValueError),
+
+])
+def test_convert_to(input_files, filename, target_type, as_cls, error):
+    input_file = check_input_file(input_files, filename)
+    if not error:
+        from highcharts_core.options.series.series_generator import SERIES_CLASSES
+
+        original = cls.from_js_literal(input_file)
+
+        if isinstance(target_type, str):
+            target_type_cls = SERIES_CLASSES.get(target_type)
+            target_type_name = target_type
+        else:
+            target_type_cls = target_type
+            target_type_name = target_type.__name__
+
+        if as_cls:
+            target_type = target_type_cls
+        else:
+            target_type = target_type_name
+        
+        converted = original.convert_to(target_type)
+        assert converted is not None
+        assert isinstance(converted, cls)
+        assert isinstance(converted, target_type_cls)
 #### NEXT CLASS
 
 STANDARD_PARAMS_2 = [

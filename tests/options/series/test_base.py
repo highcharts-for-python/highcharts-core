@@ -864,3 +864,40 @@ def test__str__(kwargs, error):
     else:
         with pytest.raises(error):
             result = str(obj)
+            
+@pytest.mark.parametrize('filename, target_type, as_cls, error', [
+    ('series/base/01.js', 'line', False, None),
+    ('series/base/02.js', 'line', False, None),
+    ('series/base/03.js', 'line', False, None),
+
+    ('series/base/01.js', 'line', True, None),
+    ('series/base/02.js', 'line', True, None),
+    ('series/base/03.js', 'line', True, None),
+
+    ('series/base/01.js', 'not a series type', False, ValueError),
+    ('series/base/01.js', 123, False, ValueError),
+])
+def test_convert_to(input_files, filename, target_type, as_cls, error):
+    input_file = check_input_file(input_files, filename)
+    if not error:
+        from highcharts_core.options.series.base import SeriesBase
+        from highcharts_core.options.series.series_generator import SERIES_CLASSES
+
+        original = cls.from_js_literal(input_file)
+
+        if isinstance(target_type, str):
+            target_type_cls = SERIES_CLASSES.get(target_type)
+            target_type_name = target_type
+        else:
+            target_type_cls = target_type
+            target_type_name = target_type.__name__
+
+        if as_cls:
+            target_type = target_type_cls
+        else:
+            target_type = target_type_name
+        
+        converted = original.convert_to(target_type)
+        assert converted is not None
+        assert isinstance(converted, SeriesBase)
+        assert isinstance(converted, target_type_cls)
