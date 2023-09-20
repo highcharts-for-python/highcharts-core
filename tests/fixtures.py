@@ -78,6 +78,19 @@ def create_output_directory(request):
         return True
 
 
+@pytest.fixture
+def openai_api_key(request):
+    """Return the ``--openai`` command-line option."""
+    raw_api_key = request.config.getoption("--openai")
+    if raw_api_key == 'none':
+        api_key = None
+        
+    if not api_key:
+        api_key = os.env.get('OPENAI_API_KEY', None)
+    
+    return api_key
+
+
 def check_input_file(input_directory, input_value, create_directory = False):
     inputs = os.path.abspath(input_directory)
     if not os.path.exists(input_directory) and not create_directory:
