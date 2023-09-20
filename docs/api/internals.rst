@@ -174,3 +174,42 @@ function:: :func:`parse_csv() <highcharts_core.utility_functions.parse_csv>`
 =====================================================================================================
 
 .. autofunction:: parse_csv
+
+--------------
+
+.. module:: highcharts_core.ai
+
+******************************************************************************
+module: :mod:`.ai <highcharts_core.ai>`
+******************************************************************************
+
+The :mod:`.ai <highcharts_core.ai>` module contains - as one might
+expect - functions that enable Highcharts for Python to communicate with
+supported generative AI platforms. These functions are used to convert
+Python callables to their JavaScript equivalents in the 
+:meth:`CallbackFunction.from_python() <highcharts_core.utility_classes.javascript_functions.CallbackFunction.from_python>` method.
+
+function:: :func:`convert_to_js() <highcharts_core.ai.convert_to_js>`
+=====================================================================================================
+
+.. autofunction:: convert_to_js
+
+function:: :func:`openai_moderate() <highcharts_core.ai.openai_moderate>`
+=====================================================================================================
+
+.. autofunction:: openai_moderate
+
+function:: :func:`openai_conversion() <highcharts_core.ai.openai_conversion>`
+=====================================================================================================
+
+.. autofunction:: openai_conversion
+
+function:: :func:`anthropic_conversion() <highcharts_core.ai.anthropic_conversion>`
+=====================================================================================================
+
+.. autofunction:: anthropic_conversion
+
+function:: :func:`get_source() <highcharts_core.ai.get_source>`
+=====================================================================================================
+
+.. autofunction:: get_source

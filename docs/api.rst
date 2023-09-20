@@ -745,6 +745,12 @@ familiarize yourself with these internals.
       :func:`to_camelCase() <highcharts_core.utility_functions.to_camelCase>`
       :func:`to_snake_case() <highcharts_core.utility_functions.to_snake_case>`
       :func:`parse_csv() <highcharts_core.utility_functions.parse_csv>`
+  * - :mod:`.ai <highcharts_core.ai>`
+    - :func:`convert_to_js() <highcharts_core.ai.convert_to_js>`
+      :func:`openai_moderate() <highcharts_core.ai.openai_moderate>`
+      :func:`openai_conversion() <highcharts_core.ai.openai_conversion>`
+      :func:`anthropic_conversion() <highcharts_core.ai.anthropic_conversion>`
+      :func:`get_source() <highcharts_core.ai.get_source>`
 
 .. target-notes::
 

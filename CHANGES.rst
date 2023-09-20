@@ -17,6 +17,8 @@ Release 1.4.0
 * **ENHANCEMENT:** Added one-shot chart creation and rendering from Series objects (#89).
 * **ENHANCEMENT:** Added one-shot chart creation using ``series`` and ``data``/``series_type`` keywords. (#90).
 * **ENHANCEMENT:** Added ``.convert_to()`` convenience method to Series objects (#107).
+* **ENHANCEMENT:** Added ``CallbackFunction.from_python()`` method which converts a Python function
+  to its JavaScript equivalent using generative AI, with support for both OpenAI and Anthropic (#109).
 
 ---------------------
 
