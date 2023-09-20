@@ -45,6 +45,10 @@ def pytest_addoption(parser):
                      help=("pyspark: set to 'false' to disable tests of pyspark-related"
                            " functionality, or 'true' to enable those tests. Defaults to"
                            " 'false'"))
+    parser.addoption("--openai",
+                     action="store",
+                     default="none",
+                     help=("openai: The API key to use to authenticate against OpenAI."))
 
 
 def pytest_runtest_makereport(item, call):
