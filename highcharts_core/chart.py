@@ -470,11 +470,11 @@ class Chart(HighchartsMeta):
         :type encoding: :class:`str <python:str>`
 
         :param careful_validation: if ``True``, will carefully validate JavaScript values
-        along the way using the
-        `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
-        to ``False``.
+          along the way using the
+          `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
+          to ``False``.
         
-        .. warning::
+          .. warning::
         
             Setting this value to ``True`` will significantly degrade serialization
             performance, though it may prove useful for debugging purposes.
