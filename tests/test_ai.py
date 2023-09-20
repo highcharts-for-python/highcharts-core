@@ -1,4 +1,5 @@
-"""Tests for ``highcharts.ai``."""
+"""Tests for ``highcharts_core.ai``."""
+import os
 
 import pytest
 
@@ -50,7 +51,14 @@ def test_get_source(callable, expected, error):
 ])
 def test_convert_to_js(callable, model, expected, error):
     if not error:
-        result = ai.convert_to_js(callable, model)
+        try:
+            result = ai.convert_to_js(callable, model)
+        except errors.HighchartsValueError as error:
+            openai_api_key = os.getenv('OPENAI_API_KEY', None)
+            api_key_present = openai_api_key is not None
+            print(f'OPENAI_API_KEY: {api_key_present}')
+            print(f'os.environ keys:\n{os.environ.keys()}')
+            raise error
         try:
             assert result == expected
         except AssertionError:
