@@ -39,6 +39,15 @@ def validate_js_function(as_str, _break_loop_on_failure = False, range = True):
     return parsed, as_str
 
 
+def func1():
+    return 'A value!'
+
+
+def func2(arg1, keyword_arg = 'default'):
+    arg1 += 123
+    return arg1 in keyword_arg
+
+
 @pytest.mark.parametrize('kwargs, error', [
     ({}, None),
     ({
@@ -244,6 +253,21 @@ def test_CallbackFunction_from_js_literal(original_str, error):
         with pytest.raises(error):
             result = js_f.CallbackFunction.from_js_literal(original_str)
 
+
+@pytest.mark.parametrize('callable, model, error', [
+    (func1, 'gpt-3.5-turbo', None),
+    (func2, 'gpt-3.5-turbo', None),
+
+    (1, 'gpt-3.5-turbo', ValueError),
+])
+def test_CallbackFunction_from_python(callable, model, error):
+    if not error:
+        result = js_f.CallbackFunction.from_python(callable, model)
+        assert result is not None
+        assert isinstance(result, js_f.CallbackFunction) is True
+    else:
+        with pytest.raises(error):
+            result = js_f.CallbackFunction.from_python(callable, model)
 
 @pytest.mark.parametrize('kwargs, error', [
     ({}, None),
