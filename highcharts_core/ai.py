@@ -260,7 +260,7 @@ def convert_to_js(callable,
                                           'variables.')
 
     if provider == 'OpenAI':
-        is_acceptable, flags = openai_moderate(prompt,
+        is_acceptable, flags = openai_moderate(prompt[-1],
                                                api_key,
                                                api_type = openai_api_type,
                                                api_base = openai_api_base,
@@ -287,7 +287,7 @@ def convert_to_js(callable,
     return result
 
 
-def openai_moderate(prompt, 
+def openai_moderate(prompt,
                     api_key = None,
                     api_type = None,
                     api_base = None,
@@ -299,9 +299,8 @@ def openai_moderate(prompt,
     This function calls OpenAI's `moderation API <https://platform.openai.com/docs/guides/moderation>`__
     to evaluate whether ``prompt`` violates their content moderation policies.
     
-    :param prompt: The prompt to evaluate, provided as a collection of OpenAI message 
-      :class:`dict <python:dict>` objects.
-    :type prompt: :class:`list <python:list>` of :class:`dict <python:dict>`
+    :param prompt: The prompt to evaluate.
+    :type prompt: :class:`str <python:str>`
     
     :param api_key: The API key used to authenticate with OpenAI.
       Defaults to :obj:`None <python:None>`, which then tries to find the API
@@ -364,40 +363,23 @@ def openai_moderate(prompt,
         openai.api_base = api_base
         openai.api_version = api_version
 
-    prompt = validators.iterable(prompt, 
-                                 allow_empty = False,
-                                 forbid_literals = (str, bytes, dict, UserDict))
-    is_acceptables = []
-    message_flags = []
-    
-    for message in prompt:
-        kwargs = {
-            'input': message['content']
-        }
-        if deployment_id:
-            kwargs['deployment_id'] = deployment_id
+    kwargs = {
+        'input': prompt['content']
+    }
+    if deployment_id:
+        kwargs['deployment_id'] = deployment_id
 
-        result = openai.Moderation.create(**kwargs)
-        is_flagged = result['results']['flagged']
-        flags = result['results']['categories']
-        is_acceptable = is_flagged is False
-        if is_acceptable:
-            flags = {}
-            
-        is_acceptables.append(is_acceptable)
-        message_flags.append(flags)
-        
-    is_acceptable = all(is_acceptables)
-    if not is_acceptable:
-        index = is_acceptables.index(False)
-        flags = message_flags[index]
-    else:
+    result = openai.Moderation.create(**kwargs)
+    is_flagged = result['results']['flagged']
+    flags = result['results']['categories']
+    is_acceptable = is_flagged is False
+    if is_acceptable:
         flags = {}
 
     return is_acceptable, flags
 
 
-def openai_conversion(prompt, 
+def openai_conversion(prompt,
                       model = 'gpt-3.5-turbo',
                       api_key = None,
                       api_type = None,
