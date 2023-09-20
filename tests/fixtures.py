@@ -81,8 +81,8 @@ def create_output_directory(request):
 @pytest.fixture
 def openai_api_key(request):
     """Return the ``--openai`` command-line option."""
-    raw_api_key = request.config.getoption("--openai")
-    if raw_api_key == 'none':
+    api_key = request.config.getoption("--openai")
+    if api_key == 'none':
         api_key = None
         
     if not api_key:
