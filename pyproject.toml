@@ -87,13 +87,24 @@ dev = [
     "IPython>=8.10.0",
     "pyspark>=3.3.0",
     "pandas>=1.3.3",
-    "orjson>=3.7.7"
+    "orjson>=3.7.7",
+    "anthropic>=0.3.11",
+    "dill>=0.3.7",
+    "openai>=0.28.0"
 ]
 soft = [
     "IPython>=8.10.0",
     "pyspark>=3.3.0",
     "pandas>=1.3.3",
-    "orjson>=3.7.7"
+    "orjson>=3.7.7",
+    "anthropic>=0.3.11",
+    "dill>=0.3.7",
+    "openai>=0.28.0"
+]
+ai = [
+    "anthropic>=0.3.11",
+    "dill>=0.3.7",
+    "openai>=0.28.0"
 ]
 docs = [
     "Sphinx==6.1.3",
