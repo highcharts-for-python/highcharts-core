@@ -140,6 +140,10 @@ def get_source(callable):
 def convert_to_js(callable,
                   model = 'gpt-3.5-turbo',
                   api_key = None,
+                  openai_api_type = None,
+                  openai_api_base = None,
+                  openai_api_version = None,
+                  openai_deployment_id = None,
                   **kwargs):
     """Converts ``source`` into a JavaScript function.
     
@@ -170,6 +174,30 @@ def convert_to_js(callable,
           
     :type api_key: :class:`str <python:str>` or :obj:`None <python:None>`
     
+    :param openai_api_type: If using `OpenAI <https://www.openai.com>`__
+      and Azure endpoints, this value should be set to ``'azure'``.
+      Defaults to :obj:`None <python:None>`.
+    :type openai_api_type: :class:`str <python:str>` or 
+      :obj:`None <python:None>`
+
+    :param openai_api_base: If using `OpenAI <https://www.openai.com>`__
+      and Azure endpoints, this value should be set to your base API
+      endpoint. Defaults to :obj:`None <python:None>`.
+    :type openai_api_base: :class:`str <python:str>` or
+      :obj:`None <python:None>`
+
+    :param openai_api_version: If using `OpenAI <https://www.openai.com>`__
+      and Azure endpoints, this value should be set to your API version.
+      Defaults to :obj:`None <python:None>`.
+    :type openai_api_version: :class:`str <python:str>` or
+      :obj:`None <python:None>`
+
+    :param openai_deployment_id: If using `OpenAI <https://www.openai.com>`__
+      and Azure endpoints, this value should be set to your deployment
+      ID. Defaults to :obj:`None <python:None>`.
+    :type openai_deployment_id: :class:`str <python:str>` or
+      :obj:`None <python:None>`
+
     :param **kwargs: Additional keyword arguments which are passed to
       the underlying model API. Useful for advanced configuration of
       the model's behavior.
@@ -218,13 +246,6 @@ def convert_to_js(callable,
     if provider == 'OpenAI':
         prompt[-1].replace('<HCP: REPLACE WITH SOURCE CODE>', source)
         api_key = api_key or os.getenv('OPENAI_API_KEY', None)
-        is_acceptable, flags = openai_moderate(prompt, api_key)
-        if not is_acceptable:
-            raise errors.HighchartsModerationError(
-                f'The supplied prompt violates OpenAI moderation policies. '
-                f'Please review your callable / Python function, and address '
-                f'the topics flagged in the following moderation report:\n{flags}'
-            )
         convert = openai_conversion
     elif provider == 'Anthropic':
         api_key = api_key or os.getenv('ANTHROPIC_API_KEY', None)
@@ -237,17 +258,45 @@ def convert_to_js(callable,
         raise errors.HighchartsValueError('No API key was provided, and none '
                                           'was found in supported environment '
                                           'variables.')
-    
-    result = convert(model, prompt, api_key, **kwargs)
+
+    if provider == 'OpenAI':
+        is_acceptable, flags = openai_moderate(prompt,
+                                               api_key,
+                                               api_type = openai_api_type,
+                                               api_base = openai_api_base,
+                                               api_version = openai_api_version,
+                                               deployment_id = openai_deployment_id)
+        if not is_acceptable:
+            raise errors.HighchartsModerationError(
+                f'The supplied prompt violates OpenAI moderation policies. '
+                f'Please review your callable / Python function, and address '
+                f'the topics flagged in the following moderation report:\n{flags}'
+            )
+
+        result = convert(prompt,
+                         model,
+                         api_key,
+                         api_type = openai_api_type,
+                         api_base = openai_api_base,
+                         api_version = openai_api_version,
+                         deployment_id = openai_deployment_id,
+                         **kwargs)
+    else:
+        result = convert(prompt, model, api_key, **kwargs)
     
     return result
 
 
-def openai_moderate(prompt, api_key = None):
+def openai_moderate(prompt, 
+                    api_key = None,
+                    api_type = None,
+                    api_base = None,
+                    api_version = None,
+                    deployment_id = None):
     """Evaluates ``prompt`` against OpenAI's content moderation policies to determine if
     it violates their usage policies.
     
-    This method calls OpenAI's `moderation API <https://platform.openai.com/docs/guides/moderation>`__
+    This function calls OpenAI's `moderation API <https://platform.openai.com/docs/guides/moderation>`__
     to evaluate whether ``prompt`` violates their content moderation policies.
     
     :param prompt: The prompt to evaluate, provided as a collection of OpenAI message 
@@ -259,6 +308,30 @@ def openai_moderate(prompt, api_key = None):
       key in the ``OPENAI_API_KEY``.
     :type api_key: :class:`str <python:str>` or :obj:`None <python:None>`
     
+    :param api_type: If using `OpenAI <https://www.openai.com>`__
+      and Azure endpoints, this value should be set to ``'azure'``.
+      Defaults to :obj:`None <python:None>`.
+    :type api_type: :class:`str <python:str>` or 
+      :obj:`None <python:None>`
+
+    :param api_base: If using `OpenAI <https://www.openai.com>`__
+      and Azure endpoints, this value should be set to your base API
+      endpoint. Defaults to :obj:`None <python:None>`.
+    :type api_base: :class:`str <python:str>` or
+      :obj:`None <python:None>`
+
+    :param api_version: If using `OpenAI <https://www.openai.com>`__
+      and Azure endpoints, this value should be set to your API version.
+      Defaults to :obj:`None <python:None>`.
+    :type api_version: :class:`str <python:str>` or
+      :obj:`None <python:None>`
+
+    :param deployment_id: If using `OpenAI <https://www.openai.com>`__
+      and Azure endpoints, this value should be set to your deployment
+      ID. Defaults to :obj:`None <python:None>`.
+    :type deployment_id: :class:`str <python:str>` or
+      :obj:`None <python:None>`
+
     :returns: A :class:`tuple <python:tuple>` containing two members:
     
       1. ``True`` if the prompt is acceptable, ``False`` otherwise
@@ -286,6 +359,10 @@ def openai_moderate(prompt, api_key = None):
                                           'variables.')
 
     openai.api_key = api_key
+    if api_type:
+        openai.api_type = api_type
+        openai.api_base = api_base
+        openai.api_version = api_version
 
     prompt = validators.iterable(prompt, 
                                  allow_empty = False,
@@ -294,7 +371,13 @@ def openai_moderate(prompt, api_key = None):
     message_flags = []
     
     for message in prompt:
-        result = openai.Moderation.create(input = message['content'])
+        kwargs = {
+            'input': message['content']
+        }
+        if deployment_id:
+            kwargs['deployment_id'] = deployment_id
+
+        result = openai.Moderation.create(**kwargs)
         is_flagged = result['results']['flagged']
         flags = result['results']['categories']
         is_acceptable = is_flagged is False
@@ -317,6 +400,10 @@ def openai_moderate(prompt, api_key = None):
 def openai_conversion(prompt, 
                       model = 'gpt-3.5-turbo',
                       api_key = None,
+                      api_type = None,
+                      api_base = None,
+                      api_version = None,
+                      deployment_id = None,
                       **kwargs):
     """Submits ``prompt`` to the OpenAI API for conversion into JavaScript source code.
 
@@ -340,6 +427,30 @@ def openai_conversion(prompt,
       variable.
     :type api_key: :class:`str <python:str>` or :obj:`None <python:None>`
     
+    :param api_type: If using `OpenAI <https://www.openai.com>`__
+      and Azure endpoints, this value should be set to ``'azure'``.
+      Defaults to :obj:`None <python:None>`.
+    :type api_type: :class:`str <python:str>` or 
+      :obj:`None <python:None>`
+
+    :param api_base: If using `OpenAI <https://www.openai.com>`__
+      and Azure endpoints, this value should be set to your base API
+      endpoint. Defaults to :obj:`None <python:None>`.
+    :type api_base: :class:`str <python:str>` or
+      :obj:`None <python:None>`
+
+    :param api_version: If using `OpenAI <https://www.openai.com>`__
+      and Azure endpoints, this value should be set to your API version.
+      Defaults to :obj:`None <python:None>`.
+    :type api_version: :class:`str <python:str>` or
+      :obj:`None <python:None>`
+
+    :param deployment_id: If using `OpenAI <https://www.openai.com>`__
+      and Azure endpoints, this value should be set to your deployment
+      ID. Defaults to :obj:`None <python:None>`.
+    :type deployment_id: :class:`str <python:str>` or
+      :obj:`None <python:None>`
+
     :param **kwargs: Additional keyword arguments which are passed to
       the underlying model API. Useful for advanced configuration of
       the model's behavior.
@@ -386,9 +497,20 @@ def openai_conversion(prompt,
                                           f'Received: {model}.')
 
     openai.api_key = api_key
-    result = openai.ChatCompletion.create(model = model,
-                                          messages = prompt,
-                                          **kwargs)
+    if api_type:
+        openai.api_type = api_type
+        openai.api_base = api_base
+        openai.api_version = api_version
+
+    if not deployment_id:
+        result = openai.ChatCompletion.create(model = model,
+                                              messages = prompt,
+                                              **kwargs)
+    else:
+        result = openai.ChatCompletion.create(deployment_id = deployment_id,
+                                              model = model,
+                                              messages = prompt,
+                                              **kwargs)
 
     raw_response = result.choices[0].message.content
     starting_index = raw_response.find('```')
