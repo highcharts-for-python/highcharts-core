@@ -244,7 +244,9 @@ def convert_to_js(callable,
     prompt = SUPPORTED_MODELS[model][1]
 
     if provider == 'OpenAI':
-        prompt[-1].replace('<HCP: REPLACE WITH SOURCE CODE>', source)
+        prompt[-1]['content'] = prompt[-1]['content'].replace(
+            '<HCP: REPLACE WITH SOURCE CODE>', source
+        )
         api_key = api_key or os.getenv('OPENAI_API_KEY', None)
         convert = openai_conversion
     elif provider == 'Anthropic':
@@ -370,8 +372,8 @@ def openai_moderate(prompt,
         kwargs['deployment_id'] = deployment_id
 
     result = openai.Moderation.create(**kwargs)
-    is_flagged = result['results']['flagged']
-    flags = result['results']['categories']
+    is_flagged = result['results'][0]['flagged']
+    flags = result['results'][0]['categories']
     is_acceptable = is_flagged is False
     if is_acceptable:
         flags = {}
@@ -515,6 +517,8 @@ def openai_conversion(prompt,
             f'different model.')
 
     js_as_str = raw_response[starting_index + 3:ending_index]
+    if js_as_str.startswith('javascript\n'):
+        js_as_str = js_as_str[11:]
 
     return js_as_str
 
