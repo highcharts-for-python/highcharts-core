@@ -91,6 +91,17 @@ def openai_api_key(request):
     return api_key
 
 
+@pytest.fixture
+def disable_ai(request):
+    """Return the ``--disable-ai`` command-line option."""
+    disable_ai = request.config.getoption("--disable-ai")
+    if disable_ai in ['false', False, 0, 'no', 'no', 'f', 'F']:
+        disable_ai = False
+    else:
+        disable_ai = True
+        
+    return disable_ai
+
 def check_input_file(input_directory, input_value, create_directory = False):
     inputs = os.path.abspath(input_directory)
     if not os.path.exists(input_directory) and not create_directory:

@@ -49,6 +49,10 @@ def pytest_addoption(parser):
                      action="store",
                      default="none",
                      help=("openai: The API key to use to authenticate against OpenAI."))
+    parser.addoption('--disable-ai',
+                     action='store',
+                     default='true',
+                     help=('disable-ai: set to "false" to enable tests of the AI'))
 
 
 def pytest_runtest_makereport(item, call):

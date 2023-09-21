@@ -259,8 +259,6 @@ class CallbackFunction(HighchartsMeta):
         elif parsed.body[0].type == 'MethodDefinition':
             property_definition = parsed.body[0].body[0]
         elif parsed.body[0].type != 'FunctionDeclaration':
-            print('DIAGNOSTIC:')
-            print(parsed.body[0])
             property_definition = parsed.body[0].declarations[0].init
 
         return cls._convert_from_js_ast(property_definition, updated_str)
