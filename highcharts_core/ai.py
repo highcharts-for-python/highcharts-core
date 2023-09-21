@@ -517,7 +517,7 @@ def openai_conversion(prompt,
             f'different model.')
 
     js_as_str = raw_response[starting_index + 3:ending_index]
-    if js_as_str.startswith('javascript\n'):
+    if js_as_str.startswith('javascript\n') or js_as_str.startswith('JavaScript\n'):
         js_as_str = js_as_str[11:]
 
     return js_as_str
