@@ -6,7 +6,7 @@ import pytest
 from highcharts_core import ai
 from highcharts_core import errors
 from highcharts_core.utility_classes.javascript_functions import CallbackFunction
-from tests.fixtures import openai_api_key
+from tests.fixtures import disable_ai, openai_api_key
 
 
 def func1():
@@ -50,11 +50,11 @@ def test_get_source(callable, expected, error):
 
     (1, 'gpt-3.5-turbo', 'not a valid function', ValueError),
 ])
-def test_convert_to_js(openai_api_key, callable, model, expected, error):
-    if not error:
+def test_convert_to_js(disable_ai, openai_api_key, callable, model, expected, error):
+    if not error and not disable_ai:
         try:
-            result = ai.convert_to_js(callable, 
-                                      model, 
+            result = ai.convert_to_js(callable,
+                                      model,
                                       api_key = openai_api_key)
         except errors.HighchartsValueError as error:
             openai_api_key = os.getenv('OPENAI_API_KEY', None)
@@ -71,7 +71,7 @@ def test_convert_to_js(openai_api_key, callable, model, expected, error):
                 raise AssertionError(f'Expected {expected} but got something '
                                      f'that was not a valid JavaScript '
                                      f'function:\n{result}')
-    else:
+    elif not disable_ai:
         with pytest.raises(error):
             result = ai.convert_to_js(callable, 
                                       model,
