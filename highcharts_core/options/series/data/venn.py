@@ -6,6 +6,7 @@ from validator_collection import validators, checkers
 from highcharts_core import constants, errors
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.options.series.data.base import DataBase
+from highcharts_core.options.series.data.collections import DataPointCollection
 from highcharts_core.options.plot_options.drag_drop import DragDropOptions
 from highcharts_core.utility_classes.data_labels import DataLabel
 
@@ -113,7 +114,7 @@ class VennData(DataBase):
         self._value = validators.numeric(value_, allow_empty = True)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -141,6 +142,24 @@ class VennData(DataBase):
 
         return collection
 
+    @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1]
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return VennDataCollection.from_ndarray(value)
+    
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         """Convenience method which returns the keyword arguments used to initialize the
@@ -201,3 +220,25 @@ class VennData(DataBase):
         }
 
         return untrimmed
+
+
+class VennDataCollection(DataPointCollection):
+    """A collection of :class:`VennData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return VennData

@@ -1,4 +1,5 @@
 """Set of metaclasses used throughout the library."""
+import datetime
 from abc import ABC, abstractmethod
 from collections import UserDict
 from typing import Optional, List
@@ -12,6 +13,12 @@ except ImportError:
             import simplejson as json
         except ImportError:
             import json
+
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
 
 import esprima
 from esprima.error_handler import Error as ParseError
@@ -39,6 +46,23 @@ class HighchartsMeta(ABC):
         other_js_literal = other.to_js_literal()
 
         return self_js_literal == other_js_literal
+
+    def __repr__(self):
+        """Generate an unambiguous and complete :class:`str <python:str>` representation
+        of the object.
+        
+        :returns: An unambiguous and complete :class:`str <python:str>` representation
+          of the object (which may have varying degrees of readability).
+        :rtype: :class:`str <python:str>`
+        """
+        as_dict = self.to_dict()
+
+        kwargs = {utility_functions.to_snake_case(key): as_dict[key]
+                  for key in as_dict}
+        kwargs_as_str = ', '.join([f'{key} = {repr(kwargs[key])}'
+                                   for key in kwargs])
+
+        return f'{self.__class__.__name__}({kwargs_as_str})'
 
     @property
     def _dot_path(self) -> Optional[str]:
@@ -114,15 +138,16 @@ class HighchartsMeta(ABC):
           ``'.js'`` extension included. Defaults to ``False``.
         :type include_extension: :class:`bool <python:bool>`
 
-        :rtype: :class:`list <python:list>`
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
         initial_scripts = constants.MODULE_REQUIREMENTS.get(self._dot_path, [])
-        prelim_scripts = self._process_required_modules(initial_scripts, include_extension = include_extension)
+        prelim_scripts = self._process_required_modules(initial_scripts, 
+                                                        include_extension = include_extension)
         scripts = []
         
         has_all_indicators = False
         for script in prelim_scripts:
-            if script.endswith('indicators-all.js'):
+            if script.endswith('indicators-all.js') or script.endswith('indicators-all'):
                 has_all_indicators = True
         
         for script in prelim_scripts:
@@ -159,7 +184,8 @@ class HighchartsMeta(ABC):
 
     @staticmethod
     def trim_iterable(untrimmed,
-                      to_json = False):
+                      to_json = False,
+                      context: str = None):
         """Convert any :class:`EnforcedNullType` values in ``untrimmed`` to ``'null'``.
 
         :param untrimmed: The iterable whose members may still be
@@ -169,10 +195,20 @@ class HighchartsMeta(ABC):
         :param to_json: If ``True``, will remove all members from ``untrimmed`` that are
           not serializable to JSON. Defaults to ``False``.
         :type to_json: :class:`bool <python:bool>`
+        
+        :param context: If provided, will inform the method of the context in which it is
+          being run which may inform special handling cases (e.g. where empty strings may
+          be important / allowable). Defaults to :obj:`None <python:None>`.
+        :type context: :class:`str <python:str>` or :obj:`None <python:None>`
 
         :rtype: iterable
         """
-        if not checkers.is_iterable(untrimmed, forbid_literals = (str, bytes, dict)):
+        if HAS_NUMPY and isinstance(untrimmed, np.ndarray):
+            return untrimmed
+
+        if isinstance(untrimmed, 
+                      (str, bytes, dict, UserDict)) or not hasattr(untrimmed, 
+                                                                   '__iter__'):
             return untrimmed
 
         trimmed = []
@@ -182,16 +218,25 @@ class HighchartsMeta(ABC):
             elif item is None or item == constants.EnforcedNull:
                 trimmed.append('null')
             elif hasattr(item, 'trim_dict'):
+                updated_context = item.__class__.__name__
                 untrimmed_item = item._to_untrimmed_dict()
-                item_as_dict = HighchartsMeta.trim_dict(untrimmed_item, to_json = to_json)
+                item_as_dict = HighchartsMeta.trim_dict(untrimmed_item,
+                                                        to_json = to_json,
+                                                        context = updated_context)
                 if item_as_dict:
                     trimmed.append(item_as_dict)
             elif isinstance(item, dict):
                 if item:
-                    trimmed.append(HighchartsMeta.trim_dict(item, to_json = to_json))
-            elif checkers.is_iterable(item, forbid_literals = (str, bytes, dict)):
+                    trimmed.append(HighchartsMeta.trim_dict(item, 
+                                                            to_json = to_json,
+                                                            context = context))
+            elif not isinstance(item, 
+                                (str, bytes, dict, UserDict)) and hasattr(item, 
+                                                                          '__iter__'):
                 if item:
-                    trimmed.append(HighchartsMeta.trim_iterable(item, to_json = to_json))
+                    trimmed.append(HighchartsMeta.trim_iterable(item, 
+                                                                to_json = to_json,
+                                                                context = context))
             else:
                 trimmed.append(item)
 
@@ -199,7 +244,8 @@ class HighchartsMeta(ABC):
 
     @staticmethod
     def trim_dict(untrimmed: dict,
-                  to_json: bool = False) -> dict:
+                  to_json: bool = False,
+                  context: str = None) -> dict:
         """Remove keys from ``untrimmed`` whose values are :obj:`None <python:None>` and
         convert values that have ``.to_dict()`` methods.
 
@@ -210,15 +256,33 @@ class HighchartsMeta(ABC):
         :param to_json: If ``True``, will remove all keys from ``untrimmed`` that are not
           serializable to JSON. Defaults to ``False``.
         :type to_json: :class:`bool <python:bool>`
+        
+        :param context: If provided, will inform the method of the context in which it is
+          being run which may inform special handling cases (e.g. where empty strings may
+          be important / allowable). Defaults to :obj:`None <python:None>`.
+        :type context: :class:`str <python:str>` or :obj:`None <python:None>`
 
         :returns: Trimmed :class:`dict <python:dict>`
         :rtype: :class:`dict <python:dict>`
         """
         as_dict = {}
         for key in untrimmed:
+            context_key = f'{context}.{key}'
             value = untrimmed.get(key, None)
             # bool -> Boolean
             if isinstance(value, bool):
+                as_dict[key] = value
+            # ndarray -> (for json) -> list
+            elif HAS_NUMPY and to_json and isinstance(value, np.ndarray):
+                untrimmed_value = utility_functions.from_ndarray(value)
+                trimmed_value = HighchartsMeta.trim_iterable(value,
+                                                             to_json = to_json,
+                                                             context = context)
+                if trimmed_value:
+                    as_dict[key] = trimmed_value
+                    continue
+            # ndarray -> ndarray
+            elif HAS_NUMPY and isinstance(value, np.ndarray):
                 as_dict[key] = value
             # Callback Function
             elif checkers.is_type(value, 'CallbackFunction') and to_json:
@@ -226,32 +290,64 @@ class HighchartsMeta(ABC):
             # HighchartsMeta -> dict --> object
             elif value and hasattr(value, '_to_untrimmed_dict'):
                 untrimmed_value = value._to_untrimmed_dict()
+                updated_context = value.__class__.__name__
                 trimmed_value = HighchartsMeta.trim_dict(untrimmed_value,
-                                                         to_json = to_json)
+                                                         to_json = to_json,
+                                                         context = updated_context)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
             # Enforced null
             elif isinstance(value, constants.EnforcedNullType):
-                as_dict[key] = 'null'
+                if to_json:
+                    as_dict[key] = None
+                else:
+                    as_dict[key] = value
             # dict -> object
             elif isinstance(value, dict):
                 trimmed_value = HighchartsMeta.trim_dict(value,
-                                                         to_json = to_json)
+                                                         to_json = to_json,
+                                                         context = context)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
             # iterable -> array
-            elif checkers.is_iterable(value, forbid_literals = (str, bytes, dict)):
-                trimmed_value = HighchartsMeta.trim_iterable(value, to_json = to_json)
+            elif not isinstance(value, 
+                                (str, bytes, dict, UserDict)) and hasattr(value, 
+                                                                          '__iter__'):
+                trimmed_value = HighchartsMeta.trim_iterable(value, 
+                                                             to_json = to_json,
+                                                             context = context)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
+            # Datetime or Datetime-like
+            elif checkers.is_datetime(value):
+                trimmed_value = value
+                if to_json:
+                    if not value.tzinfo:
+                        trimmed_value = value.replace(tzinfo = datetime.timezone.utc)
+                    as_dict[key] = trimmed_value.timestamp() * 1000
+                elif hasattr(trimmed_value, 'to_pydatetime'):
+                    as_dict[key] = trimmed_value.to_pydatetime()
+                else:
+                    as_dict[key] = trimmed_value
+            # Date or Time
+            elif checkers.is_date(value) or checkers.is_time(value):
+                if to_json:
+                    as_dict[key] = value.isoformat()
+                else:
+                    as_dict[key] = value
             # other truthy -> str / number
             elif value:
-                trimmed_value = HighchartsMeta.trim_iterable(value, to_json = to_json)
+                trimmed_value = HighchartsMeta.trim_iterable(value,
+                                                             to_json = to_json,
+                                                             context = context)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
             # other falsy -> str / number
             elif value in [0, 0., False]:
                 as_dict[key] = value
+            # other falsy -> str, but empty string is allowed
+            elif value == '' and context_key in constants.EMPTY_STRING_CONTEXTS:
+                as_dict[key] = ''
 
         return as_dict
 
@@ -349,7 +445,8 @@ class HighchartsMeta(ABC):
         """
         untrimmed = self._to_untrimmed_dict()
 
-        return self.trim_dict(untrimmed)
+        return self.trim_dict(untrimmed,
+                              context = self.__class__.__name__)
 
     def to_json(self,
                 filename = None,
@@ -382,10 +479,12 @@ class HighchartsMeta(ABC):
 
         untrimmed = self._to_untrimmed_dict()
 
-        as_dict = self.trim_dict(untrimmed, to_json = True)
+        as_dict = self.trim_dict(untrimmed, 
+                                 to_json = True,
+                                 context = self.__class__.__name__)
 
         for key in as_dict:
-            if as_dict[key] == constants.EnforcedNull or as_dict[key] == 'null':
+            if as_dict[key] == constants.EnforcedNull or as_dict[key] is None:
                 as_dict[key] = None
         try:
             as_json = json.dumps(as_dict, encoding = encoding)
@@ -405,7 +504,8 @@ class HighchartsMeta(ABC):
 
     def to_js_literal(self,
                       filename = None,
-                      encoding = 'utf-8') -> Optional[str]:
+                      encoding = 'utf-8',
+                      careful_validation = False) -> Optional[str]:
         """Return the object represented as a :class:`str <python:str>` containing the
         JavaScript object literal.
 
@@ -417,6 +517,18 @@ class HighchartsMeta(ABC):
           to ``'utf-8'``.
         :type encoding: :class:`str <python:str>`
 
+        :param careful_validation: if ``True``, will carefully validate JavaScript values
+        along the way using the
+        `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
+        to ``False``.
+        
+        .. warning::
+        
+            Setting this value to ``True`` will significantly degrade serialization
+            performance, though it may prove useful for debugging purposes.
+
+        :type careful_validation: :class:`bool <python:bool>`
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         if filename:
@@ -426,11 +538,14 @@ class HighchartsMeta(ABC):
         as_dict = {}
         for key in untrimmed:
             item = untrimmed[key]
-            serialized = serialize_to_js_literal(item, encoding = encoding)
+            serialized = serialize_to_js_literal(item, 
+                                                 encoding = encoding,
+                                                 careful_validation = careful_validation)
             if serialized is not None:
                 as_dict[key] = serialized
 
-        as_str = assemble_js_literal(as_dict)
+        as_str = assemble_js_literal(as_dict,
+                                     careful_validation = careful_validation)
 
         if filename:
             with open(filename, 'w', encoding = encoding) as file_:
@@ -724,14 +839,20 @@ class JavaScriptDict(UserDict):
         super().__setitem__(key, item)
 
     @classmethod
-    def from_dict(cls, as_dict):
+    def from_dict(cls,
+                  as_dict: dict,
+                  allow_snake_case: bool = True):
         """Construct an instance of the class from a :class:`dict <python:dict>` object.
 
         :param as_dict: A :class:`dict <python:dict>` representation of the object.
         :type as_dict: :class:`dict <python:dict>`
 
+        :param allow_snake_case: If ``True``, interprets ``snake_case`` keys as equivalent
+          to ``camelCase`` keys. Defaults to ``True``.
+        :type allow_snake_case: :class:`bool <python:bool>`
+
         :returns: A Python object representation of ``as_dict``.
-        :rtype: :class:`JavaScriptDict`
+        :rtype: :class:`HighchartsMeta`
         """
         as_dict = validators.dict(as_dict, allow_empty = True)
         if not as_dict:
@@ -759,6 +880,154 @@ class JavaScriptDict(UserDict):
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         return self.data
+
+    @staticmethod
+    def trim_iterable(untrimmed,
+                      to_json = False,
+                      context: str = None):
+        """Convert any :class:`EnforcedNullType` values in ``untrimmed`` to ``'null'``.
+
+        :param untrimmed: The iterable whose members may still be
+          :obj:`None <python:None>` or Python objects.
+        :type untrimmed: iterable
+
+        :param to_json: If ``True``, will remove all members from ``untrimmed`` that are
+          not serializable to JSON. Defaults to ``False``.
+        :type to_json: :class:`bool <python:bool>`
+        
+        :param context: If provided, will inform the method of the context in which it is
+          being run which may inform special handling cases (e.g. where empty strings may
+          be important / allowable). Defaults to :obj:`None <python:None>`.
+        :type context: :class:`str <python:str>` or :obj:`None <python:None>`
+
+        :rtype: iterable
+        """
+        if not checkers.is_iterable(untrimmed, forbid_literals = (str, bytes, dict)):
+            return untrimmed
+
+        trimmed = []
+        for item in untrimmed:
+            if checkers.is_type(item, 'CallbackFunction') and to_json:
+                continue
+            elif item is None or item == constants.EnforcedNull:
+                trimmed.append('null')
+            elif hasattr(item, 'trim_dict'):
+                updated_context = item.__class__.__name__
+                untrimmed_item = item._to_untrimmed_dict()
+                item_as_dict = HighchartsMeta.trim_dict(untrimmed_item,
+                                                        to_json = to_json,
+                                                        context = updated_context)
+                if item_as_dict:
+                    trimmed.append(item_as_dict)
+            elif isinstance(item, dict):
+                if item:
+                    trimmed.append(HighchartsMeta.trim_dict(item, 
+                                                            to_json = to_json,
+                                                            context = context))
+            elif checkers.is_iterable(item, forbid_literals = (str, bytes, dict)):
+                if item:
+                    trimmed.append(HighchartsMeta.trim_iterable(item, 
+                                                                to_json = to_json,
+                                                                context = context))
+            else:
+                trimmed.append(item)
+
+        return trimmed
+
+    @staticmethod
+    def trim_dict(untrimmed: dict,
+                  to_json: bool = False,
+                  context: str = None) -> dict:
+        """Remove keys from ``untrimmed`` whose values are :obj:`None <python:None>` and
+        convert values that have ``.to_dict()`` methods.
+
+        :param untrimmed: The :class:`dict <python:dict>` whose values may still be
+          :obj:`None <python:None>` or Python objects.
+        :type untrimmed: :class:`dict <python:dict>`
+
+        :param to_json: If ``True``, will remove all keys from ``untrimmed`` that are not
+          serializable to JSON. Defaults to ``False``.
+        :type to_json: :class:`bool <python:bool>`
+        
+        :param context: If provided, will inform the method of the context in which it is
+          being run which may inform special handling cases (e.g. where empty strings may
+          be important / allowable). Defaults to :obj:`None <python:None>`.
+        :type context: :class:`str <python:str>` or :obj:`None <python:None>`
+
+        :returns: Trimmed :class:`dict <python:dict>`
+        :rtype: :class:`dict <python:dict>`
+        """
+        as_dict = {}
+        for key in untrimmed:
+            context_key = f'{context}.{key}'
+            value = untrimmed.get(key, None)
+            # bool -> Boolean
+            if isinstance(value, bool):
+                as_dict[key] = value
+            # Callback Function
+            elif checkers.is_type(value, 'CallbackFunction') and to_json:
+                continue
+            # HighchartsMeta -> dict --> object
+            elif value and hasattr(value, '_to_untrimmed_dict'):
+                untrimmed_value = value._to_untrimmed_dict()
+                updated_context = value.__class__.__name__
+                trimmed_value = HighchartsMeta.trim_dict(untrimmed_value,
+                                                         to_json = to_json,
+                                                         context = updated_context)
+                if trimmed_value:
+                    as_dict[key] = trimmed_value
+            # Enforced null
+            elif isinstance(value, constants.EnforcedNullType):
+                if to_json:
+                    as_dict[key] = None
+                else:
+                    as_dict[key] = value
+            # dict -> object
+            elif isinstance(value, dict):
+                trimmed_value = HighchartsMeta.trim_dict(value,
+                                                         to_json = to_json,
+                                                         context = context)
+                if trimmed_value:
+                    as_dict[key] = trimmed_value
+            # iterable -> array
+            elif checkers.is_iterable(value, forbid_literals = (str, bytes, dict)):
+                trimmed_value = HighchartsMeta.trim_iterable(value, 
+                                                             to_json = to_json,
+                                                             context = context)
+                if trimmed_value:
+                    as_dict[key] = trimmed_value
+            # Datetime or Datetime-like
+            elif checkers.is_datetime(value):
+                trimmed_value = value
+                if to_json:
+                    if not value.tzinfo:
+                        trimmed_value = value.replace(tzinfo = datetime.timezone.utc)
+                    as_dict[key] = trimmed_value.timestamp() * 1000
+                elif hasattr(trimmed_value, 'to_pydatetime'):
+                    as_dict[key] = trimmed_value.to_pydatetime()
+                else:
+                    as_dict[key] = trimmed_value
+            # Date or Time
+            elif checkers.is_date(value) or checkers.is_time(value):
+                if to_json:
+                    as_dict[key] = value.isoformat()
+                else:
+                    as_dict[key] = value
+            # other truthy -> str / number
+            elif value:
+                trimmed_value = HighchartsMeta.trim_iterable(value,
+                                                             to_json = to_json,
+                                                             context = context)
+                if trimmed_value:
+                    as_dict[key] = trimmed_value
+            # other falsy -> str / number
+            elif value in [0, 0., False]:
+                as_dict[key] = value
+            # other falsy -> str, but empty string is allowed
+            elif value == '' and context_key in constants.EMPTY_STRING_CONTEXTS:
+                as_dict[key] = ''
+
+        return as_dict
 
     def to_dict(self):
         """Generate a :class:`dict <python:dict>` representation of the object compatible
@@ -805,7 +1074,16 @@ class JavaScriptDict(UserDict):
         if filename:
             filename = validators.path(filename)
 
-        as_dict = self.to_dict()
+        untrimmed = self._to_untrimmed_dict()
+
+        as_dict = self.trim_dict(untrimmed,
+                                 to_json = True,
+                                 context = self.__class__.__name__)
+
+        for key in as_dict:
+            if as_dict[key] == constants.EnforcedNull or as_dict[key] is None:
+                as_dict[key] = None
+
         try:
             as_json = json.dumps(as_dict, encoding = encoding)
         except TypeError:
@@ -824,7 +1102,8 @@ class JavaScriptDict(UserDict):
 
     def to_js_literal(self,
                       filename = None,
-                      encoding = 'utf-8') -> Optional[str]:
+                      encoding = 'utf-8',
+                      careful_validation = False) -> Optional[str]:
         """Return the object represented as a :class:`str <python:str>` containing the
         JavaScript object literal.
 
@@ -836,6 +1115,18 @@ class JavaScriptDict(UserDict):
           to ``'utf-8'``.
         :type encoding: :class:`str <python:str>`
 
+        :param careful_validation: if ``True``, will carefully validate JavaScript values
+        along the way using the
+        `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
+        to ``False``.
+        
+        .. warning::
+        
+            Setting this value to ``True`` will significantly degrade serialization
+            performance, though it may prove useful for debugging purposes.
+
+        :type careful_validation: :class:`bool <python:bool>`
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         if filename:
@@ -845,11 +1136,15 @@ class JavaScriptDict(UserDict):
         as_dict = {}
         for key in untrimmed:
             item = untrimmed[key]
-            serialized = serialize_to_js_literal(item, encoding = encoding)
+            serialized = serialize_to_js_literal(item, 
+                                                 encoding = encoding,
+                                                 careful_validation = careful_validation)
             if serialized is not None:
                 as_dict[key] = serialized
 
-        as_str = assemble_js_literal(as_dict, keys_as_strings = True)
+        as_str = assemble_js_literal(as_dict, 
+                                     keys_as_strings = True,
+                                     careful_validation = careful_validation)
 
         if filename:
             with open(filename, 'w', encoding = encoding) as file_:
@@ -891,9 +1186,98 @@ class JavaScriptDict(UserDict):
                                                     range = range,
                                                     _break_loop_on_failure = True)
                 else:
-                    raise errors.HighchartsParseError('._validate_js_function() expects '
+                    raise errors.HighchartsParseError('._validate_js_literal() expects '
                                                       'a str containing a valid '
-                                                      'JavaScript function. Could not '
-                                                      'find a valid function.')
+                                                      'JavaScript literal object. Could '
+                                                      'not find a valid JS literal '
+                                                      'object.')
 
         return parsed, as_str
+
+    @classmethod
+    def from_js_literal(cls,
+                        as_str_or_file,
+                        allow_snake_case: bool = True,
+                        _break_loop_on_failure: bool = False):
+        """Return a Python object representation of a Highcharts JavaScript object
+        literal.
+
+        :param as_str_or_file: The JavaScript object literal, represented either as a
+          :class:`str <python:str>` or as a filename which contains the JS object literal.
+        :type as_str_or_file: :class:`str <python:str>`
+
+        :param allow_snake_case: If ``True``, interprets ``snake_case`` keys as equivalent
+          to ``camelCase`` keys. Defaults to ``True``.
+        :type allow_snake_case: :class:`bool <python:bool>`
+
+        :param _break_loop_on_failure: If ``True``, will break any looping operations in
+          the event of a failure. Otherwise, will attempt to repair the failure. Defaults
+          to ``False``.
+        :type _break_loop_on_failure: :class:`bool <python:bool>`
+
+        :returns: A Python object representation of the Highcharts JavaScript object
+          literal.
+        :rtype: :class:`HighchartsMeta`
+        """
+        is_file = checkers.is_file(as_str_or_file)
+        if is_file:
+            with open(as_str_or_file, 'r') as file_:
+                as_str = file_.read()
+        else:
+            as_str = as_str_or_file
+
+        parsed, updated_str = cls._validate_js_literal(as_str)
+
+        as_dict = {}
+        if not parsed.body:
+            return cls()
+
+        if len(parsed.body) > 1:
+            raise errors.HighchartsCollectionError(f'each JavaScript object literal is '
+                                                   f'expected to contain one object. '
+                                                   f'However, you attempted to parse '
+                                                   f'{len(parsed.body)} objects.')
+
+        body = parsed.body[0]
+        if not checkers.is_type(body, 'VariableDeclaration') and \
+           _break_loop_on_failure is False:
+            prefixed_str = f'var randomVariable = {as_str}'
+            return cls.from_js_literal(prefixed_str,
+                                       _break_loop_on_failure = True)
+        elif not checkers.is_type(body, 'VariableDeclaration'):
+            raise errors.HighchartsVariableDeclarationError('To parse a JavaScriot '
+                                                            'object literal, it is '
+                                                            'expected to be either a '
+                                                            'variable declaration or a'
+                                                            'standalone block statement.'
+                                                            'Input received did not '
+                                                            'conform.')
+        declarations = body.declarations
+        if not declarations:
+            return cls()
+
+        if len(declarations) > 1:
+            raise errors.HighchartsCollectionError(f'each JavaScript object literal is '
+                                                   f'expected to contain one object. '
+                                                   f'However, you attempted to parse '
+                                                   f'{len(parsed.body)} objects.')
+        object_expression = declarations[0].init
+        if not checkers.is_type(object_expression, 'ObjectExpression'):
+            raise errors.HighchartsParseError(f'Highcharts expects an object literal to '
+                                              f'to be defined as a standard '
+                                              f'ObjectExpression. Received: '
+                                              f'{type(object_expression)}')
+
+        properties = object_expression.properties
+        if not properties:
+            return cls()
+
+        key_value_pairs = [(x[0], x[1]) for x in get_key_value_pairs(properties,
+                                                                     updated_str)]
+
+        for pair in key_value_pairs:
+            as_dict[pair[0]] = pair[1]
+
+        return cls.from_dict(as_dict,
+                             allow_snake_case = allow_snake_case)
+

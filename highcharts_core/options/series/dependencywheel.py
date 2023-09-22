@@ -2,9 +2,9 @@ from typing import Optional, List
 
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.options.series.base import SeriesBase
-from highcharts_core.options.series.data.connections import WeightedConnectionData
+from highcharts_core.options.series.data.connections import WeightedConnectionData, WeightedConnectionDataCollection
 from highcharts_core.options.plot_options.dependencywheel import DependencyWheelOptions
-from highcharts_core.utility_functions import mro__to_untrimmed_dict
+from highcharts_core.utility_functions import mro__to_untrimmed_dict, is_ndarray
 from highcharts_core.utility_classes.nodes import DependencyWheelNodeOptions
 
 
@@ -27,8 +27,26 @@ class DependencyWheelSeries(SeriesBase, DependencyWheelOptions):
 
         super().__init__(**kwargs)
 
+    @classmethod
+    def _data_collection_class(cls):
+        """Returns the class object used for the data collection.
+        
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+          descendent
+        """
+        return WeightedConnectionDataCollection
+    
+    @classmethod
+    def _data_point_class(cls):
+        """Returns the class object used for individual data points.
+        
+        :rtype: :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` 
+          descendent
+        """
+        return WeightedConnectionData
+
     @property
-    def data(self) -> Optional[List[WeightedConnectionData]]:
+    def data(self) -> Optional[List[WeightedConnectionData] | WeightedConnectionDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -44,13 +62,14 @@ class DependencyWheelSeries(SeriesBase, DependencyWheelOptions):
             :class:`WeightedConnectionData` instances.
 
         :rtype: :class:`list <python:list>` of :class:`WeightedConnectionData` or
+          :class:`WeightedConnectionDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = WeightedConnectionData.from_array(value)

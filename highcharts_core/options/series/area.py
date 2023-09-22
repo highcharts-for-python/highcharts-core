@@ -1,10 +1,11 @@
 from typing import Optional, List
 
 from highcharts_core.options.series.base import SeriesBase
-from highcharts_core.options.series.data.cartesian import CartesianData
-from highcharts_core.options.series.data.range import RangeData
+from highcharts_core.decorators import validate_types
+from highcharts_core.options.series.data.cartesian import CartesianData, CartesianDataCollection
+from highcharts_core.options.series.data.range import RangeData, RangeDataCollection
 from highcharts_core.options.plot_options.area import AreaOptions
-from highcharts_core.utility_functions import mro__to_untrimmed_dict
+from highcharts_core.utility_functions import mro__to_untrimmed_dict, is_ndarray
 
 
 class AreaSeries(SeriesBase, AreaOptions):
@@ -19,8 +20,26 @@ class AreaSeries(SeriesBase, AreaOptions):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+    @classmethod
+    def _data_collection_class(cls):
+        """Returns the class object used for the data collection.
+        
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+          descendent
+        """
+        return CartesianDataCollection
+    
+    @classmethod
+    def _data_point_class(cls):
+        """Returns the class object used for individual data points.
+        
+        :rtype: :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` 
+          descendent
+        """
+        return CartesianData
+
     @property
-    def data(self) -> Optional[List[CartesianData]]:
+    def data(self) -> Optional[List[CartesianData] | CartesianDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -83,13 +102,14 @@ class AreaSeries(SeriesBase, AreaOptions):
             A one-dimensional collection of :class:`CartesianData` objects.
 
         :rtype: :class:`list <python:list>` of :class:`CartesianData` or
+          :class:`CartesianDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = CartesianData.from_array(value)
@@ -197,8 +217,26 @@ class AreaRangeSeries(AreaSeries):
 
     """
 
+    @classmethod
+    def _data_collection_class(cls):
+        """Returns the class object used for the data collection.
+        
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+          descendent
+        """
+        return RangeDataCollection
+    
+    @classmethod
+    def _data_point_class(cls):
+        """Returns the class object used for individual data points.
+        
+        :rtype: :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` 
+          descendent
+        """
+        return RangeData
+
     @property
-    def data(self) -> Optional[List[RangeData]]:
+    def data(self) -> Optional[List[RangeData] | RangeDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -267,13 +305,14 @@ class AreaRangeSeries(AreaSeries):
             A one-dimensional collection of :class:`RangeData` objects.
 
         :rtype: :class:`list <python:list>` of :class:`RangeData` or
+          :class:`RangeDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = RangeData.from_array(value)

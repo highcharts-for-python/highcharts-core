@@ -26,3 +26,21 @@ class: :class:`SunburstData <highcharts_core.options.series.data.sunburst.Sunbur
       :parts: -1
 
   |
+
+--------------
+
+********************************************************************************************************************
+class: :class:`SunburstDataCollection <highcharts_core.options.series.data.sunburst.SunburstDataCollection>`
+********************************************************************************************************************
+
+.. autoclass:: SunburstDataCollection
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: SunburstDataCollection
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

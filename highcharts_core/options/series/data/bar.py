@@ -1,13 +1,18 @@
-from typing import Optional
+from typing import Optional, List, Dict
 from decimal import Decimal
 
 import datetime
 
 from validator_collection import validators, checkers
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
 
 from highcharts_core import constants, errors
 from highcharts_core.decorators import class_sensitive
-from highcharts_core.options.series.data.cartesian import CartesianData
+from highcharts_core.options.series.data.cartesian import CartesianData, CartesianDataCollection
 from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
 from highcharts_core.utility_classes.partial_fill import PartialFillOptions
@@ -117,6 +122,16 @@ class BarData(CartesianData):
         self._point_width = validators.numeric(value, allow_empty = True)
 
     @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return BarDataCollection.from_ndarray(value)
+
+    @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         """Convenience method which returns the keyword arguments used to initialize the
         class from a Highcharts Javascript-compatible :class:`dict <python:dict>` object.
@@ -174,6 +189,28 @@ class BarData(CartesianData):
         return untrimmed
 
 
+class BarDataCollection(CartesianDataCollection):
+    """A collection of :class:`BarData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return BarData
+
+
 class WaterfallData(CartesianData):
     """Variant of :class:`CartesianData` which is used for data points in a waterfall
     chart."""
@@ -229,6 +266,16 @@ class WaterfallData(CartesianData):
             self._is_sum = bool(value)
 
     @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return WaterfallDataCollection.from_ndarray(value)
+
+    @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         """Convenience method which returns the keyword arguments used to initialize the
         class from a Highcharts Javascript-compatible :class:`dict <python:dict>` object.
@@ -282,6 +329,28 @@ class WaterfallData(CartesianData):
         return untrimmed
 
 
+class WaterfallDataCollection(CartesianDataCollection):
+    """A collection of :class:`BarData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return WaterfallData
+
+
 class WindBarbData(CartesianData):
     """Variant of :class:`CartesianData` which is used for data points in a windbarb
     chart."""
@@ -321,7 +390,15 @@ class WindBarbData(CartesianData):
         self._value = validators.numeric(value_, allow_empty = True)
 
     @classmethod
-    def from_array(cls, value):
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1, 3, 4]
+
+    @classmethod
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -365,6 +442,7 @@ class WindBarbData(CartesianData):
                 as_obj = cls.from_dict(as_dict)
                 if checkers.is_string(as_obj.x):
                     as_obj.name = as_obj.x
+                    as_obj.x = None
             else:
                 raise errors.HighchartsValueError(f'each data point supplied must either '
                                                   f'be a WindBarb Data Point or be '
@@ -374,6 +452,84 @@ class WindBarbData(CartesianData):
             collection.append(as_obj)
 
         return collection
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return WindBarbDataCollection.from_ndarray(value)
+
+    @classmethod
+    def _get_props_from_array(cls, length = None) -> List[str]:
+        """Returns a list of the property names that can be set using the
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
+        method.
+        
+        :param length: The length of the array, which may determine the properties to 
+          parse. Defaults to :obj:`None <python:None>`, which returns the full list of 
+          properties.
+        :type length: :class:`int <python:int>` or :obj:`None <python:None>`
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        """
+        prop_list = {
+            None: ['x', 'value', 'direction', 'y', 'name'],
+            4: ['x', 'value', 'direction', 'y'],
+            3: ['x', 'value', 'direction']
+        }
+        return prop_list[length]
+
+    def to_array(self, force_object = False) -> List | Dict:
+        """Generate the array representation of the data point (the inversion 
+        of 
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`).
+        
+        .. warning::
+        
+          If the data point *cannot* be serialized to a JavaScript array,
+          this method will instead return the untrimmed :class:`dict <python:dict>`
+          representation of the data point as a fallback.
+
+        :param force_object: if ``True``, forces the return of the instance's
+          untrimmed :class:`dict <python:dict>` representation. Defaults to ``False``.
+        :type force_object: :class:`bool <python:bool>`
+
+        :returns: The array representation of the data point.
+        :rtype: :class:`list <python:list>` of values or :class:`dict <python:dict>`
+        """
+        if self.requires_js_object or force_object:
+            return self._to_untrimmed_dict()
+        
+        if self.x is None and self.name is not None:
+            x = self.name
+        elif self.x is not None:
+            x = self.x
+        else:
+            x = constants.EnforcedNull
+            
+        if self.y is not None:
+            y = self.y
+        else:
+            y = constants.EnforcedNull
+        
+        if self.value is not None:
+            value = self.value
+        else:
+            value = constants.EnforcedNull
+            
+        if self.direction is not None:
+            direction = self.direction
+        else:
+            direction = constants.EnforcedNull
+        
+        if self.y is None:
+            return [x, value, direction]
+
+        return [x, value, direction, y]
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -427,6 +583,28 @@ class WindBarbData(CartesianData):
             untrimmed[key] = parent_as_dict[key]
 
         return untrimmed
+
+
+class WindBarbDataCollection(CartesianDataCollection):
+    """A collection of :class:`BarData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return WindBarbData
 
 
 class XRangeData(CartesianData):
@@ -523,7 +701,7 @@ class XRangeData(CartesianData):
             self._x2 = value
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -550,6 +728,16 @@ class XRangeData(CartesianData):
             collection.append(as_obj)
 
         return collection
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return XRangeDataCollection.from_ndarray(value)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -605,3 +793,25 @@ class XRangeData(CartesianData):
             untrimmed[key] = parent_as_dict[key]
 
         return untrimmed
+
+
+class XRangeDataCollection(CartesianDataCollection):
+    """A collection of :class:`XRangeData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return XRangeData

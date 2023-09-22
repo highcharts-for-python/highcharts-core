@@ -1,9 +1,9 @@
 from typing import Optional, List
 
 from highcharts_core.options.series.base import SeriesBase
-from highcharts_core.options.series.data.cartesian import CartesianData
+from highcharts_core.options.series.data.cartesian import CartesianData, CartesianDataCollection
 from highcharts_core.options.plot_options.polygon import PolygonOptions
-from highcharts_core.utility_functions import mro__to_untrimmed_dict
+from highcharts_core.utility_functions import mro__to_untrimmed_dict, is_ndarray
 
 
 class PolygonSeries(SeriesBase, PolygonOptions):
@@ -23,8 +23,26 @@ class PolygonSeries(SeriesBase, PolygonOptions):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
 
+    @classmethod
+    def _data_collection_class(cls):
+        """Returns the class object used for the data collection.
+        
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+          descendent
+        """
+        return CartesianDataCollection
+    
+    @classmethod
+    def _data_point_class(cls):
+        """Returns the class object used for individual data points.
+        
+        :rtype: :class:`DataBase <highcharts_core.options.series.data.base.DataBase>` 
+          descendent
+        """
+        return CartesianData
+
     @property
-    def data(self) -> Optional[List[CartesianData]]:
+    def data(self) -> Optional[List[CartesianData] | CartesianDataCollection]:
         """Collection of data that represents the series. Defaults to
         :obj:`None <python:None>`.
 
@@ -87,13 +105,14 @@ class PolygonSeries(SeriesBase, PolygonOptions):
             A one-dimensional collection of :class:`CartesianData` objects.
 
         :rtype: :class:`list <python:list>` of :class:`CartesianData` or
+          :class:`CartesianDataCollection` or
           :obj:`None <python:None>`
         """
         return self._data
 
     @data.setter
     def data(self, value):
-        if not value:
+        if not is_ndarray(value) and not value:
             self._data = None
         else:
             self._data = CartesianData.from_array(value)

@@ -7,7 +7,7 @@ from highcharts_core.metaclasses import HighchartsMeta
 from highcharts_core.options.annotations import Annotation
 from highcharts_core.options.navigation.bindings import Bindings
 from highcharts_core.utility_classes.breadcrumbs import BreadcrumbOptions
-from highcharts_core.utility_classes.buttons import ButtonConfiguration
+from highcharts_core.utility_classes.buttons import NavigationButtonConfiguration
 from highcharts_core.utility_classes.events import NavigationEvents
 
 
@@ -78,15 +78,15 @@ class NavigationBase(HighchartsMeta):
         self._bindings_class_name = validators.string(value, allow_empty = True)
 
     @property
-    def button_options(self) -> Optional[ButtonConfiguration]:
+    def button_options(self) -> Optional[NavigationButtonConfiguration]:
         """Configuration options for navigation buttons.
 
-        :rtype: :class:`ButtonOptions`
+        :rtype: :class:`NavigationButtonConfiguration <highcharts_core.utility_classes.buttons.NavigationButtonConfiguration>`
         """
         return self._button_options
 
     @button_options.setter
-    @class_sensitive(ButtonConfiguration)
+    @class_sensitive(NavigationButtonConfiguration)
     def button_options(self, value):
         self._button_options = value
 

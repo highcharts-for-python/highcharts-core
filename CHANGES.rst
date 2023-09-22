@@ -1,3 +1,83 @@
+
+Release 1.4.0
+=========================================
+
+* **MAJOR** performance gains in the ``.to_js_literal()`` method. Implementation seems to
+  improve performance by 50 - 90%. (#51)
+* *SIGNIFICANT* performance gains in the ``.to_json()`` method. Implementation seems to 
+  improve performance by 30 - 90%.
+* **ENHANCEMENT:** Significantly simplified use of the ``.from_pandas()`` method to support:
+
+  * creation of multiple series from one DataFrame in one method call
+  * creation of series without needing to specify a full property map
+  * support for creating series by DataFrame row, rather than just by DataFrame column
+
+* **ENHANCEMENT:** Added the ``.from_pandas_in_rows()`` method to support creation of
+  charts and series from simple two-dimensional DataFrames laid out in rows.
+* **ENHANCEMENT:** Added one-shot chart creation and rendering from Series objects (#89).
+* **ENHANCEMENT:** Added one-shot chart creation using ``series`` and ``data``/``series_type`` keywords. (#90).
+* **ENHANCEMENT:** Added ``.convert_to()`` convenience method to Series objects (#107).
+* **ENHANCEMENT:** Added ``CallbackFunction.from_python()`` method which converts a Python function
+  to its JavaScript equivalent using generative AI, with support for both OpenAI and Anthropic (#109).
+
+---------------------
+
+
+Release 1.3.4
+=========================================
+
+* **ENHANCEMENT:** Converted `ButtonTheme` into an extensible descendent of `JavaScriptDict` (#86).
+
+---------------------
+
+Release 1.3.3
+=========================================
+
+* **BUGFIX:** Added in a missing class extension for ``NavigationButtonConfiguration`` (#86).
+
+---------------------
+
+Release 1.3.2
+=========================================
+
+* **BUGFIX:** Fixed incorrect handling when defining a new ``Exporting.buttons`` context button under a different key name than ``contextButton``. (#84).
+
+---------------------
+
+Release 1.3.1
+=========================================
+
+* **BUGFIX:** Fixed incorrect ``style`` property deserialization in certain places (#82).
+
+---------------------
+
+Release 1.3.0
+=========================================
+
+* **ENHANCEMENT:** Modified the way that data points are serialized to JavaScript literal objects. Now, they are serialized to a JavaScript array if their configured properties are those that Highcharts (JS) supports in JavaScript array notation. Otherwise, the code falls back to serialize the data point as a JavaScript object literal. This change is intended to improve performance and reduce the size of the serialized data. (#77)
+* **ENHANCEMENT:** Added ``__repr__()`` method for Highcharts Core for Python classes (#76).
+* **ENHANCEMENT:** Added ``__str__()`` method with special handling for difficult-to-read classes (#76).
+* **ENHANCEMENT:** Added ``Chart.get_script_tags()`` to retrieve Javascript ``<script>`` tags (#78).
+* **ENHANCEMENT:** Added ``utility_functions.to_snake_case()`` function.
+* **BUGFIX:** Fixed incorrect serialization of datetime and Pandas ``Timestamp`` objects in ``.to_dict()`` and ``.to_json()`` (#74).
+* **BUGFIX:** Fixed incorrect serialization of ``EnforcedNull`` in ``.to_dict()`` and ``.to_json()`` (#75).
+
+------------------
+
+Release 1.2.6
+=========================================
+
+* **BUGFIX:** Fixed incorrect handling of an empty string in ``Annotation.draggable`` property (#71).
+
+------------------
+
+Release 1.2.5
+=========================================
+
+* **BUGFIX:** Fixed ``ExportServer`` handling of data relying on Pandas ``Timestamp`` instances.
+
+------------------
+
 Release 1.2.4
 =========================================
 

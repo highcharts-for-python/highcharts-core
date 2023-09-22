@@ -42,3 +42,82 @@ def test_to_dict(kwargs, error):
 ])
 def test_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
+
+
+@pytest.mark.parametrize('kwargs, error', [
+    ({}, None),
+    ({
+        'title': {
+            'text': 'My Chart'
+        }
+    }, None),
+    ({
+        'plot_options': {
+            'series': {
+                'crisp': True
+            }
+        }
+    }, None),
+    ({
+        'series': [
+            {
+                'crisp': True,
+                'type': 'bar'
+            },
+            {
+                'crisp': False,
+                'type': 'bar'
+            }
+        ]
+    }, None),
+])
+def test__repr__(kwargs, error):
+    obj = cls(**kwargs)
+    if not error:
+        result = repr(obj)
+        if 'plot_options' in kwargs:
+            assert 'plot_options = ' in result
+        if 'series' in kwargs:
+            assert 'series = ' in result
+    else:
+        with pytest.raises(error):
+            result = repr(obj)
+
+
+@pytest.mark.parametrize('kwargs, error', [
+    ({}, None),
+    ({
+        'title': {
+            'text': 'My Chart'
+        }
+    }, None),
+    ({
+        'plot_options': {
+            'series': {
+                'crisp': True
+            }
+        }
+    }, None),
+    ({
+        'series': [
+            {
+                'crisp': True,
+                'type': 'bar'
+            },
+            {
+                'crisp': False,
+                'type': 'bar'
+            }
+        ]
+    }, None),
+])
+def test__str__(kwargs, error):
+    obj = cls(**kwargs)
+    if not error:
+        result = str(obj)
+        print(result)
+        assert 'plot_options = ' not in result
+        assert 'series = ' not in result
+    else:
+        with pytest.raises(error):
+            result = str(obj)

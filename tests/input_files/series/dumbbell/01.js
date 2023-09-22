@@ -101,7 +101,6 @@
         symbol: 'circle',
         width: 48
       },
-      x: 'some category',
       y: 123,
 
       accessibility: {

@@ -30,6 +30,24 @@ class: :class:`PieData <highcharts_core.options.series.data.pie.PieData>`
 -----------------
 
 ********************************************************************************************************************
+class: :class:`PieDataCollection <highcharts_core.options.series.data.pie.PieDataCollection>`
+********************************************************************************************************************
+
+.. autoclass:: PieDataCollection
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: PieDataCollection
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
+-----------------
+
+********************************************************************************************************************
 class: :class:`VariablePieData <highcharts_core.options.series.data.pie.VariablePieData>`
 ********************************************************************************************************************
 
@@ -40,6 +58,24 @@ class: :class:`VariablePieData <highcharts_core.options.series.data.pie.Variable
   .. collapse:: Class Inheritance
 
     .. inheritance-diagram:: VariablePieData
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
+-----------------
+
+********************************************************************************************************************
+class: :class:`VariablePieDataCollection <highcharts_core.options.series.data.pie.VariablePieDataCollection>`
+********************************************************************************************************************
+
+.. autoclass:: VariablePieDataCollection
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: VariablePieDataCollection
       :top-classes: highcharts_core.metaclasses.HighchartsMeta
       :parts: -1
 

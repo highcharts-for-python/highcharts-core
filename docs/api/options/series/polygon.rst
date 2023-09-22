@@ -18,6 +18,7 @@ class: :class:`PolygonSeries <highcharts_core.options.series.polygon.PolygonSeri
 .. autoclass:: PolygonSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

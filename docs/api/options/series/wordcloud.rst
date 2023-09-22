@@ -18,6 +18,7 @@ class: :class:`WordcloudSeries <highcharts_core.options.series.wordcloud.Wordclo
 .. autoclass:: WordcloudSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

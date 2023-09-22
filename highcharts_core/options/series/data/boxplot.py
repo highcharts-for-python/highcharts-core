@@ -1,10 +1,11 @@
-from typing import Optional
+from typing import Optional, List, Dict
 from decimal import Decimal
 
 from validator_collection import validators, checkers
 
 from highcharts_core import constants, errors
 from highcharts_core.options.series.data.cartesian import CartesianData
+from highcharts_core.options.series.data.collections import DataPointCollection
 
 
 class BoxPlotData(CartesianData):
@@ -234,7 +235,7 @@ class BoxPlotData(CartesianData):
             self._whisker_dash_style = value
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -278,8 +279,9 @@ class BoxPlotData(CartesianData):
                                                       f'had {len(item)} dimensions.')
 
                 as_obj = cls.from_dict(as_dict)
-                if checkers.is_string(as_obj.x):
+                if checkers.is_string(as_obj.x) and not as_obj.name:
                     as_obj.name = as_obj.x
+                    as_obj.x = None
             else:
                 raise errors.HighchartsValueError(f'each data point supplied must either '
                                                   f'be a BoxPlot Data Point or be '
@@ -288,6 +290,102 @@ class BoxPlotData(CartesianData):
             collection.append(as_obj)
 
         return collection
+
+    @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1, 5, 6]
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return BoxPlotDataCollection.from_ndarray(value)
+    
+    @classmethod
+    def _get_props_from_array(cls, length = None) -> List[str]:
+        """Returns a list of the property names that can be set using the
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
+        method.
+        
+        :param length: The length of the array, which may determine the properties to 
+          parse. Defaults to :obj:`None <python:None>`, which returns the full list of 
+          properties.
+        :type length: :class:`int <python:int>` or :obj:`None <python:None>`
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        """
+        prop_list = {
+            None: ['x', 'low', 'q1', 'median', 'q3', 'high', 'name'],
+            6: ['x', 'low', 'q1', 'median', 'q3', 'high'],
+            5: ['low', 'q1', 'median', 'q3', 'high'],
+        }
+        return prop_list[length]
+
+    def to_array(self, force_object = False) -> List | Dict:
+        """Generate the array representation of the data point (the inversion 
+        of 
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`).
+        
+        .. warning::
+        
+          If the data point *cannot* be serialized to a JavaScript array,
+          this method will instead return the untrimmed :class:`dict <python:dict>`
+          representation of the data point as a fallback.
+
+        :param force_object: if ``True``, forces the return of the instance's
+          untrimmed :class:`dict <python:dict>` representation. Defaults to ``False``.
+        :type force_object: :class:`bool <python:bool>`
+
+        :returns: The array representation of the data point.
+        :rtype: :class:`list <python:list>` of values or :class:`dict <python:dict>`
+        """
+        if self.requires_js_object or force_object:
+            return self._to_untrimmed_dict()
+        
+        if self.x is not None:
+            x = self.x
+        elif self.name is not None:
+            x = self.name
+        else:
+            x = constants.EnforcedNull
+            
+        if self.low is not None:
+            low = self.low
+        else:
+            low = constants.EnforcedNull
+            
+        if self.q1 is not None:
+            q1 = self.q1
+        else:
+            q1 = constants.EnforcedNull
+            
+        if self.median is not None:
+            median = self.median
+        else:
+            median = constants.EnforcedNull
+            
+        if self.q3 is not None:
+            q3 = self.q3
+        else:
+            q3 = constants.EnforcedNull
+            
+        if self.high is not None:
+            high = self.high
+        else:
+            high = constants.EnforcedNull
+
+        if self.x is None and self.name is None:
+            return [low, q1, median, q3, high]
+
+        return [x, low, q1, median, q3, high]
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -353,3 +451,25 @@ class BoxPlotData(CartesianData):
             untrimmed[key] = parent_as_dict[key]
 
         return untrimmed
+
+
+class BoxPlotDataCollection(DataPointCollection):
+    """A collection of :class:`BoxPlotData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return BoxPlotData

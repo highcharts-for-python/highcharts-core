@@ -18,6 +18,7 @@ class: :class:`Chart <highcharts_core.chart.Chart>`
 .. autoclass:: Chart
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

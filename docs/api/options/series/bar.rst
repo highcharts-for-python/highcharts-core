@@ -18,6 +18,7 @@ class: :class:`BarSeries <highcharts_core.options.series.bar.BarSeries>`
 .. autoclass:: BarSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -36,6 +37,7 @@ class: :class:`ColumnSeries <highcharts_core.options.series.bar.ColumnSeries>`
 .. autoclass:: ColumnSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -54,6 +56,7 @@ class: :class:`ColumnPyramidSeries <highcharts_core.options.series.bar.ColumnPyr
 .. autoclass:: ColumnPyramidSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -72,6 +75,7 @@ class: :class:`ColumnRangeSeries <highcharts_core.options.series.bar.ColumnRange
 .. autoclass:: ColumnRangeSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -90,6 +94,7 @@ class: :class:`CylinderSeries <highcharts_core.options.series.bar.CylinderSeries
 .. autoclass:: CylinderSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -108,6 +113,7 @@ class: :class:`VariwideSeries <highcharts_core.options.series.bar.VariwideSeries
 .. autoclass:: VariwideSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -126,6 +132,7 @@ class: :class:`WaterfallSeries <highcharts_core.options.series.bar.WaterfallSeri
 .. autoclass:: WaterfallSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -144,6 +151,7 @@ class: :class:`WindBarbSeries <highcharts_core.options.series.bar.WindBarbSeries
 .. autoclass:: WindBarbSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -180,6 +188,8 @@ class: :class:`BaseBarSeries <highcharts_core.options.series.bar.BaseBarSeries>`
 .. autoclass:: BaseBarSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

@@ -103,6 +103,7 @@ intersphinx_mapping = {
     'python': ('https://docs.python.org/3.10', None),
     'validator-collection': ('http://validator-collection.readthedocs.io/en/latest/', None),
     'ipython': ('https://ipython.readthedocs.io/en/stable/', None),
+    'numpy': ('https://numpy.org/doc/stable/', None),
     'pandas': ('https://pandas.pydata.org/pandas-docs/stable/', None),
     'pyspark': ('https://spark.apache.org/docs/latest/api/python/', None),
 }

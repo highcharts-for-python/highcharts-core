@@ -18,6 +18,7 @@ class: :class:`TreegraphSeries <highcharts_core.options.series.treegraph.Treegra
 .. autoclass:: TreegraphSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

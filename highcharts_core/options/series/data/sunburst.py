@@ -1,10 +1,11 @@
 from typing import Optional
 
-from validator_collection import checkers
+from validator_collection import checkers, validators
 
 from highcharts_core import constants, errors
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.options.series.data.treemap import TreemapData
+from highcharts_core.options.series.data.collections import DataPointCollection
 from highcharts_core.utility_classes.markers import Marker
 
 
@@ -54,7 +55,7 @@ class SunburstData(TreemapData):
             self._sliced = bool(value)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -82,6 +83,16 @@ class SunburstData(TreemapData):
             collection.append(as_obj)
 
         return collection
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return SunburstDataCollection.from_ndarray(value)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -148,3 +159,25 @@ class SunburstData(TreemapData):
         }
 
         return untrimmed
+
+
+class SunburstDataCollection(DataPointCollection):
+    """A collection of :class:`SunburstData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return SunburstData

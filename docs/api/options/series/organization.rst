@@ -18,6 +18,7 @@ class: :class:`OrganizationSeries <highcharts_core.options.series.organization.O
 .. autoclass:: OrganizationSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

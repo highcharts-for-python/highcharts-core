@@ -11,7 +11,7 @@ from highcharts_core.options.series.data.cartesian import CartesianValueData as 
 from highcharts_core import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
-    Class_from_js_literal
+    Class_from_js_literal, Class_from_js_literal_with_expected
 
 STANDARD_PARAMS = [
     ({}, None),
@@ -113,7 +113,7 @@ STANDARD_PARAMS = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
+      'name': 'some category',
       'y': 123
     }, None),
     # Datetime X Value
@@ -746,6 +746,35 @@ def test_CartesianData_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
 
 
+utc_now = datetime.datetime.utcnow()
+today = datetime.date.today()
+
+
+@pytest.mark.parametrize('input_array, set_props, expected_type, expected', [
+    ([], {}, list, []),
+    ([[123, 456], [789, 123]], {}, list, [[123, 456], [789, 123]]),
+    ([['A', 456], ['B', 123]], {}, list, [['A', 456], ['B', 123]]),
+    ([[utc_now, 456], [utc_now, 123]], {}, list, [[utc_now, 456], [utc_now, 123]]),
+    ([[today, 456], [today, 123]], {}, list, [[today, 456], [today, 123]]),
+    
+    ([[123, 456], [789, 123]], {'id': 'some_id'}, dict, None),
+])
+def test_CartesianData_to_array(input_array, set_props, expected_type, expected):
+    iterable = cls.from_array(input_array)
+    for data_point in iterable:
+        for key in set_props:
+            setattr(data_point, key, set_props[key])
+    
+    results = []
+    for data_point in iterable:
+        result = data_point.to_array()
+        assert isinstance(result, expected_type) is True
+        results.append(result)
+        
+    if expected_type == list:
+        assert results == expected
+
+
 ## NEXT CLASS
 
 STANDARD_PARAMS_2 = [
@@ -853,8 +882,8 @@ STANDARD_PARAMS_2 = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
-      'y': 123
+      'y': 123,
+      'name': 'some category'
     }, None),
     # + DataBase options
     # Categorical X Value
@@ -1007,7 +1036,6 @@ def test_Cartesian3DData_to_dict(kwargs, error):
 
 
 @pytest.mark.parametrize('filename, as_file, error', [
-    ('series/data/cartesian/05.js', False, None),
     ('series/data/cartesian/06.js', False, None),
 
     ('series/data/cartesian/error-05.js',
@@ -1018,7 +1046,6 @@ def test_Cartesian3DData_to_dict(kwargs, error):
       TypeError,
       ValueError)),
 
-    ('series/data/cartesian/05.js', True, None),
     ('series/data/cartesian/06.js', True, None),
 
     ('series/data/cartesian/error-05.js',
@@ -1032,6 +1059,48 @@ def test_Cartesian3DData_to_dict(kwargs, error):
 ])
 def test_Cartesian3DData_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls2, input_files, filename, as_file, error)
+
+
+@pytest.mark.parametrize('input_filename, expected_filename, as_file, error', [
+    ('series/data/cartesian/05-input.js',
+     'series/data/cartesian/05-expected.js',
+     False,
+     None),
+])
+def test_Cartesian3DData_from_js_literal_expected(input_files, input_filename, expected_filename, as_file, error):
+    Class_from_js_literal_with_expected(cls2,
+                                        input_files,
+                                        input_filename,
+                                        expected_filename,
+                                        as_file,
+                                        error)
+
+
+@pytest.mark.parametrize('input_array, set_props, expected_type, expected', [
+    ([], {}, list, []),
+    ([[321, 123, 456], [123, 789, 123]], {}, list, [[321, 123, 456], [123, 789, 123]]),
+    ([[123, 456], [789, 123]], {}, list, [[123, 456], [789, 123]]),
+    ([['A', 123, 456], ['B', 321, 123]], {}, list, [['A', 123, 456], ['B', 321, 123]]),
+    ([[utc_now, 123, 456], [utc_now, 321, 123]], {}, list, [[utc_now, 123, 456], [utc_now, 321, 123]]),
+    ([[today, 123, 456], [today, 321, 123]], {}, list, [[today, 123, 456], [today, 321, 123]]),
+    
+    ([[123, 456], [789, 123]], {'id': 'some_id'}, dict, None),
+])
+def test_Cartesian3DData_to_array(input_array, set_props, expected_type, expected):
+    iterable = cls2.from_array(input_array)
+    for data_point in iterable:
+        for key in set_props:
+            setattr(data_point, key, set_props[key])
+    
+    results = []
+    for data_point in iterable:
+        result = data_point.to_array()
+        assert isinstance(result, expected_type) is True
+        results.append(result)
+        
+    if expected_type == list:
+        assert results == expected
+
 
 ## NEXT CLASS
 
@@ -1142,8 +1211,8 @@ STANDARD_PARAMS_3 = [
         'symbol': 'circle',
         'width': 48
       },
-      'x': 'some category',
-      'y': 123
+      'y': 123,
+      'name': 'some category'
     }, None),
     # + DataBase options
     # Categorical X Value
@@ -1322,3 +1391,29 @@ def test_CartesianValueData_to_dict(kwargs, error):
 ])
 def test_CartesianValueData_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls3, input_files, filename, as_file, error)
+
+
+@pytest.mark.parametrize('input_array, set_props, expected_type, expected', [
+    ([], {}, list, []),
+    ([[321, 123, 456], [123, 789, 123]], {}, list, [[321, 123, 456], [123, 789, 123]]),
+    ([[123, 456], [789, 123]], {}, list, [[123, 456], [789, 123]]),
+    ([['A', 123, 456], ['B', 321, 123]], {}, list, [['A', 123, 456], ['B', 321, 123]]),
+    ([[utc_now, 123, 456], [utc_now, 321, 123]], {}, list, [[utc_now, 123, 456], [utc_now, 321, 123]]),
+    ([[today, 123, 456], [today, 321, 123]], {}, list, [[today, 123, 456], [today, 321, 123]]),
+    
+    ([[123, 456], [789, 123]], {'id': 'some_id'}, dict, None),
+])
+def test_CartesianValueData_to_array(input_array, set_props, expected_type, expected):
+    iterable = cls3.from_array(input_array)
+    for data_point in iterable:
+        for key in set_props:
+            setattr(data_point, key, set_props[key])
+    
+    results = []
+    for data_point in iterable:
+        result = data_point.to_array()
+        assert isinstance(result, expected_type) is True
+        results.append(result)
+        
+    if expected_type == list:
+        assert results == expected

@@ -18,6 +18,7 @@ class: :class:`BellCurveSeries <highcharts_core.options.series.bellcurve.BellCur
 .. autoclass:: BellCurveSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

@@ -18,6 +18,7 @@ class: :class:`NetworkGraphSeries <highcharts_core.options.series.networkgraph.N
 .. autoclass:: NetworkGraphSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 

@@ -3,6 +3,7 @@
 import pytest
 
 from json.decoder import JSONDecodeError
+from validator_collection import checkers
 
 from highcharts_core.options.series.base import SeriesBase as cls
 from highcharts_core import errors
@@ -657,16 +658,42 @@ def test_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
 
 
-@pytest.mark.parametrize('filename, property_map, error', [
-    ('test-data-files/nst-est2019-01.csv', {}, ValueError),
+@pytest.mark.parametrize('filename, error', [
+    ('test-data-files/nst-est2019-01.csv', None),
+])
+def test_from_pandas_in_rows(input_files, filename, error):
+    import pandas
+    
+    input_file = check_input_file(input_files, filename)
+    df = pandas.read_csv(input_file, header = 0, thousands = ',')
+    df.index = df['Geographic Area']
+    df = df.drop(columns = ['Geographic Area'])
+    print(df)
+        
+    if not error:
+        result = cls.from_pandas_in_rows(df)
+        assert result is not None
+        assert isinstance(result, list)
+        assert len(result) == len(df)
+        for series in result:
+            assert isinstance(series, cls)
+            assert series.data is not None
+            assert len(series.data) == len(df.columns)
+    else:
+        with pytest.raises(error):
+            result = cls.from_pandas_in_rows(df)
+
+@pytest.mark.parametrize('filename, property_map, series_in_rows, error', [
     ('test-data-files/nst-est2019-01.csv',
      {
-         'name': 'Geographic Area'
+         'name': 'Geographic Area',
      },
+     False,
      None),
-
+    ('test-data-files/nst-est2019-01.csv', {}, False, ValueError),
+    
 ])
-def test_load_from_pandas(input_files, filename, property_map, error):
+def test_load_from_pandas(input_files, filename, property_map, series_in_rows, error):
     import pandas
 
     input_file = check_input_file(input_files, filename)
@@ -684,3 +711,193 @@ def test_load_from_pandas(input_files, filename, property_map, error):
     else:
         with pytest.raises(error):
             instance.load_from_pandas(df, property_map = property_map)
+
+
+def prep_df(df):
+    df.index = df['Geographic Area']
+    df = df.drop(columns = ['Geographic Area'])
+    
+    return df
+
+
+def reduce_to_two_columns(df):
+    df = df[['Geographic Area', '2010']]
+    
+    return df
+
+
+@pytest.mark.parametrize('filename, kwargs, pre_test_df_func, expected_series, expected_data_points, error', [
+    # SCENARIO 0: Series in Rows
+    ('test-data-files/nst-est2019-01.csv',
+     {
+         'series_in_rows': True
+     },
+     prep_df,
+     57,
+     10,
+     None),
+    
+    # SCENARIO 1a: Has Property Map, Single Series
+    ('test-data-files/nst-est2019-01.csv',
+     {
+         'property_map': {
+             'name': 'Geographic Area',
+         },
+         'series_in_rows': False
+     },
+     None,
+     1,
+     57,
+     None),
+
+    # SCENARIO 1b: Has Property Map, Multiple Series
+    ('test-data-files/nst-est2019-01.csv',
+     {
+         'property_map': {
+             'x': ['Geographic Area', '2010']
+         },
+         'series_in_rows': False
+     },
+     None,
+     2,
+     57,
+     None),
+    
+    # SCENARIO 2a: Single Property in KWARGS
+    ('test-data-files/nst-est2019-01.csv',
+     {
+         'x': 'Geographic Area',
+         'y': '2010'
+     },
+     None,
+     1,
+     57,
+     None),
+    
+    # SCENARIO 3a: Exact Match on Column Count
+    ('test-data-files/nst-est2019-01.csv',
+     {},
+     reduce_to_two_columns,
+     1,
+     57,
+     None),
+    
+    # SCENARIO 3b: Multiple Series, Multipled Columns
+    ('test-data-files/nst-est2019-01.csv',
+     {},
+     prep_df,
+     5,
+     57,
+     None),
+
+    # SCENARIO 4: Mismatched Columns
+    # NOTE: On SeriesBase, this will actually return one series per column.
+    # This is because SeriesBase supports 1D arrays.
+    ('test-data-files/nst-est2019-01.csv',
+     {},
+     None,
+     11,
+     57,
+     None),
+    
+])
+def test_from_pandas(input_files, filename, kwargs, pre_test_df_func, expected_series, expected_data_points, error):
+    import pandas
+
+    input_file = check_input_file(input_files, filename)
+    df = pandas.read_csv(input_file, header = 0, thousands = ',')
+    if pre_test_df_func:
+        df = pre_test_df_func(df)
+    print(df)
+
+    if not error:
+        result = cls.from_pandas(df, **kwargs)
+        assert result is not None
+        if expected_series > 1:
+            assert isinstance(result, list)
+            assert len(result) == expected_series
+            for series in result:
+                assert isinstance(series, cls)
+                assert series.data is not None
+                assert len(series.data) == expected_data_points
+        else:
+            assert isinstance(result, cls)
+            assert result.data is not None
+            assert len(result.data) == len(df)
+    else:
+        with pytest.raises(error):
+            result = cls.from_pandas(df, **kwargs)
+
+
+@pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
+def test_to_chart(kwargs, error):
+    if not error:
+        instance = cls(**kwargs)
+        chart = instance.to_chart()
+        assert chart is not None
+        assert checkers.is_type(chart, 'Chart')
+    else:
+        with pytest.raises(error):
+            instance = cls(**kwargs)
+            chart = instance.to_chart()
+
+
+@pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
+def test__repr__(kwargs, error):
+    obj = cls(**kwargs)
+    if not error:
+        result = repr(obj)
+        if 'data' in kwargs:
+            assert 'data = ' in result
+    else:
+        with pytest.raises(error):
+            result = repr(obj)
+
+
+@pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)
+def test__str__(kwargs, error):
+    obj = cls(**kwargs)
+    if not error:
+        result = str(obj)
+        print(result)
+        assert 'data = ' not in result
+    else:
+        with pytest.raises(error):
+            result = str(obj)
+            
+@pytest.mark.parametrize('filename, target_type, as_cls, error', [
+    ('series/base/01.js', 'line', False, None),
+    ('series/base/02.js', 'line', False, None),
+    ('series/base/03.js', 'line', False, None),
+
+    ('series/base/01.js', 'line', True, None),
+    ('series/base/02.js', 'line', True, None),
+    ('series/base/03.js', 'line', True, None),
+
+    ('series/base/01.js', 'not a series type', False, ValueError),
+    ('series/base/01.js', 123, False, ValueError),
+])
+def test_convert_to(input_files, filename, target_type, as_cls, error):
+    input_file = check_input_file(input_files, filename)
+    if not error:
+        from highcharts_core.options.series.base import SeriesBase
+        from highcharts_core.options.series.series_generator import SERIES_CLASSES
+
+        original = cls.from_js_literal(input_file)
+
+        if isinstance(target_type, str):
+            target_type_cls = SERIES_CLASSES.get(target_type)
+            target_type_name = target_type
+        else:
+            target_type_cls = target_type
+            target_type_name = target_type.__name__
+
+        if as_cls:
+            target_type = target_type_cls
+        else:
+            target_type = target_type_name
+        
+        converted = original.convert_to(target_type)
+        assert converted is not None
+        assert isinstance(converted, SeriesBase)
+        assert isinstance(converted, target_type_cls)

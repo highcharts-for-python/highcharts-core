@@ -26,3 +26,21 @@ class: :class:`TreegraphData <highcharts_core.options.series.data.treegraph.Tree
       :parts: -1
 
   |
+
+--------------
+
+********************************************************************************************************************
+class: :class:`TreegraphDataCollection <highcharts_core.options.series.data.treegraph.TreegraphDataCollection>`
+********************************************************************************************************************
+
+.. autoclass:: TreegraphDataCollection
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: TreegraphDataCollection
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

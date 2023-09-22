@@ -97,8 +97,8 @@
         symbol: 'circle',
         width: 48
       },
-      x: 'some category',
-      y: 123
+      y: 123,
+      name: 'some category'
     },
     {
       dataLabels: {
@@ -197,8 +197,8 @@
         symbol: 'circle',
         width: 48
       },
-      x: 'some category',
-      y: 123
+      y: 123,
+      name: 'some category'
     }
   ],
   id: 'some-id-goes-here',

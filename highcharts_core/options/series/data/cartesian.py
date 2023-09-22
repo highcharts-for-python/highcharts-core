@@ -1,13 +1,20 @@
-from typing import Optional
+from typing import Optional, List, Dict
 from decimal import Decimal
 
 import datetime
 
 from validator_collection import validators, checkers
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
+
 
 from highcharts_core import constants, errors
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.options.series.data.base import DataBase
+from highcharts_core.options.series.data.collections import DataPointCollection
 from highcharts_core.options.plot_options.drag_drop import DragDropOptions
 from highcharts_core.utility_classes.data_labels import DataLabel
 from highcharts_core.utility_classes.markers import Marker
@@ -147,7 +154,7 @@ class CartesianData(DataBase):
             self._y = validators.numeric(value)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -171,8 +178,6 @@ class CartesianData(DataBase):
             elif checkers.is_iterable(item):
                 if len(item) == 2:
                     as_obj = cls(x = item[0], y = item[1])
-                    if checkers.is_string(as_obj.x):
-                        as_obj.name = as_obj.x
                 elif len(item) == 1:
                     as_obj = cls(y = item[0])
                 else:
@@ -184,9 +189,88 @@ class CartesianData(DataBase):
                                                   f'be a Cartesian Data Point or be '
                                                   f'coercable to one. Could not coerce: '
                                                   f'{item}')
+            if checkers.is_string(as_obj.x) and not as_obj.name:
+                as_obj.name = as_obj.x
+                as_obj.x = None
             collection.append(as_obj)
 
         return collection
+
+    @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1, 2]
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return CartesianDataCollection.from_ndarray(value)
+    
+    @classmethod
+    def _get_props_from_array(cls, length = None) -> List[str]:
+        """Returns a list of the property names that can be set using the
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
+        method.
+        
+        :param length: The length of the array, which may determine the properties to 
+          parse. Defaults to :obj:`None <python:None>`, which returns the full list of 
+          properties.
+        :type length: :class:`int <python:int>` or :obj:`None <python:None>`
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        """
+        prop_list = {
+            None: ['x', 'y', 'name'],
+            1: ['y'],
+            2: ['x', 'y']
+        }
+        return prop_list[length]
+
+    def to_array(self, force_object = False) -> List | Dict:
+        """Generate the array representation of the data point (the inversion 
+        of 
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`).
+        
+        .. warning::
+        
+          If the data point *cannot* be serialized to a JavaScript array,
+          this method will instead return the untrimmed :class:`dict <python:dict>`
+          representation of the data point as a fallback.
+          
+        :param force_object: if ``True``, forces the return of the instance's
+          untrimmed :class:`dict <python:dict>` representation. Defaults to ``False``.
+        :type force_object: :class:`bool <python:bool>`
+
+        :returns: The array representation of the data point.
+        :rtype: :class:`list <python:list>` of values or :class:`dict <python:dict>`
+        """
+        if self.requires_js_object or force_object:
+            return self._to_untrimmed_dict()
+        
+        if self.y is not None:
+            y = self.y
+        else:
+            y = constants.EnforcedNull
+            
+        if self.x is None and self.name is None:
+            x = self.x
+        elif self.name is None:
+            x = self.x
+        else:
+            x = self.name
+        
+        if self.x is None and self.name is None:
+            return [y]
+
+        return [x, y]
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -251,6 +335,28 @@ class CartesianData(DataBase):
         return untrimmed
 
 
+class CartesianDataCollection(DataPointCollection):
+    """A collection of :class:`CartesianData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return CartesianData
+
+
 class Cartesian3DData(CartesianData):
     """Variant of :class:`CartesianData` which supports three dimensions (an x, y, and
     z-axis)."""
@@ -279,7 +385,7 @@ class Cartesian3DData(CartesianData):
             self._z = validators.numeric(value)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -324,9 +430,92 @@ class Cartesian3DData(CartesianData):
                                                   f'coercable to one. Could not coerce: '
                                                   f'{item}')
 
+            if checkers.is_string(as_obj.x) and not as_obj.name:
+                as_obj.name = as_obj.x
+                as_obj.x = None
             collection.append(as_obj)
 
         return collection
+
+    @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1, 2, 3]
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return Cartesian3DDataCollection.from_ndarray(value)
+    
+    @classmethod
+    def _get_props_from_array(cls, length = None) -> List[str]:
+        """Returns a list of the property names that can be set using the
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
+        method.
+        
+        :param length: The length of the array, which may determine the properties to 
+          parse. Defaults to :obj:`None <python:None>`, which returns the full list of 
+          properties.
+        :type length: :class:`int <python:int>` or :obj:`None <python:None>`
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        """
+        prop_list = {
+            None: ['x', 'y', 'z', 'name'],
+            3: ['x', 'y', 'z'],
+            2: ['y', 'z']
+        }
+        return prop_list[length]
+
+    def to_array(self, force_object = False) -> List | Dict:
+        """Generate the array representation of the data point (the inversion 
+        of 
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`).
+        
+        .. warning::
+        
+          If the data point *cannot* be serialized to a JavaScript array,
+          this method will instead return the untrimmed :class:`dict <python:dict>`
+          representation of the data point as a fallback.
+          
+        :param force_object: if ``True``, forces the return of the instance's
+          untrimmed :class:`dict <python:dict>` representation. Defaults to ``False``.
+        :type force_object: :class:`bool <python:bool>`
+
+        :returns: The array representation of the data point.
+        :rtype: :class:`list <python:list>` of values or :class:`dict <python:dict>`
+        """
+        if self.requires_js_object or force_object:
+            return self._to_untrimmed_dict()
+        
+        if self.y is not None:
+            y = self.y
+        else:
+            y = constants.EnforcedNull
+        if self.z is not None:
+            z = self.z
+        else:
+            z = constants.EnforcedNull
+            
+        if self.x is None and self.name is not None:
+            x = self.name
+        elif self.name is None and self.x is not None:
+            x = self.x
+        else:
+            x = constants.EnforcedNull
+        
+        if self.x is None and self.name is None:
+            return [y, z]
+
+        return [x, y, z]
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -395,6 +584,28 @@ class Cartesian3DData(CartesianData):
         return untrimmed
 
 
+class Cartesian3DDataCollection(DataPointCollection):
+    """A collection of :class:`Cartesian3DData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return Cartesian3DData
+
+
 class CartesianValueData(CartesianData):
     """Variant of :class:`CartesianData` which supports three values (an ``x``, ``y``, and
     ``value``)."""
@@ -436,7 +647,7 @@ class CartesianValueData(CartesianData):
             self._value = validators.numeric(value_)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -475,17 +686,99 @@ class CartesianValueData(CartesianData):
                                                       f'collection. Collection received '
                                                       f'had {len(item)} dimensions.')
                 as_obj = cls.from_dict(as_dict)
-                if checkers.is_string(as_obj.x):
-                    as_obj.name = as_obj.x
             else:
                 raise errors.HighchartsValueError(f'each data point supplied must either '
                                                   f'be a Cartesian Value Data Point or be'
                                                   f' coercable to one. Could not coerce: '
                                                   f'{item}')
 
+            if checkers.is_string(as_obj.x) and not as_obj.name:
+                as_obj.name = as_obj.x
+                as_obj.x = None
             collection.append(as_obj)
 
         return collection
+
+    @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1, 2, 3]
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return CartesianValueDataCollection.from_ndarray(value)
+    
+    @classmethod
+    def _get_props_from_array(cls, length = None) -> List[str]:
+        """Returns a list of the property names that can be set using the
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
+        method.
+        
+        :param length: The length of the array, which may determine the properties to 
+          parse. Defaults to :obj:`None <python:None>`, which returns the full list of 
+          properties.
+        :type length: :class:`int <python:int>` or :obj:`None <python:None>`
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        """
+        prop_list = {
+            None: ['x', 'y', 'value', 'name'],
+            3: ['x', 'y', 'value'],
+            2: ['y', 'value'],
+        }
+        return prop_list[length]
+
+    def to_array(self, force_object = False) -> List | Dict:
+        """Generate the array representation of the data point (the inversion 
+        of 
+        :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`).
+        
+        .. warning::
+        
+          If the data point *cannot* be serialized to a JavaScript array,
+          this method will instead return the untrimmed :class:`dict <python:dict>`
+          representation of the data point as a fallback.
+          
+        :param force_object: if ``True``, forces the return of the instance's
+          untrimmed :class:`dict <python:dict>` representation. Defaults to ``False``.
+        :type force_object: :class:`bool <python:bool>`
+
+        :returns: The array representation of the data point.
+        :rtype: :class:`list <python:list>` of values or :class:`dict <python:dict>`
+        """
+        if self.requires_js_object or force_object:
+            return self._to_untrimmed_dict()
+        
+        if self.y is not None:
+            y = self.y
+        else:
+            y = constants.EnforcedNull
+            
+        if self.value is not None:
+            value = self.value
+        else:
+            value = constants.EnforcedNull
+            
+        if self.x is None and self.name is not None:
+            x = self.name
+        elif self.x is not None:
+            x = self.x
+        else:
+            x = constants.EnforcedNull
+        
+        if self.x is None and self.name is None:
+            return [y, value]
+
+        return [x, y, value]
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -555,3 +848,25 @@ class CartesianValueData(CartesianData):
         }
 
         return untrimmed
+
+
+class CartesianValueDataCollection(CartesianDataCollection):
+    """A collection of :class:`Cartesian3DData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return CartesianValueData

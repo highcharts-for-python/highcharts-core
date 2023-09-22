@@ -18,6 +18,7 @@ class: :class:`DumbbellSeries <highcharts_core.options.series.dumbbell.DumbbellS
 .. autoclass:: DumbbellSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
@@ -36,6 +37,7 @@ class: :class:`LollipopSeries <highcharts_core.options.series.dumbbell.LollipopS
 .. autoclass:: LollipopSeries
   :members:
   :inherited-members:
+  :special-members: __str__, __repr__
 
   .. collapse:: Class Inheritance
 
