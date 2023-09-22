@@ -63,11 +63,25 @@ def serialize_to_js_literal(item,
             return serialize_to_js_literal(item.to_array(), 
                                            encoding = encoding,
                                            careful_validation = careful_validation)
-    elif HAS_NUMPY and isinstance(item, np.ndarray):
+    elif HAS_NUMPY and utility_functions.is_ndarray(item):
         return utility_functions.from_ndarray(item)
-    elif not isinstance(item, (str, bytes, dict, UserDict)) and hasattr(item, '__iter__'):
-        requires_js_objects = any([getattr(x, 'requires_js_object', True) 
-                                   for x in item])
+    elif hasattr(item, 'to_js_literal'):
+        return item.to_js_literal(encoding = encoding, 
+                                  careful_validation = careful_validation)
+    elif not isinstance(item,
+                        (str, bytes, dict, UserDict)) and hasattr(item, '__iter__'):
+        requires_js_objects = False
+        for x in item:
+            try:
+                if getattr(x, 'requires_js_object', True) is True:
+                    requires_js_objects = True
+                    break
+            except ValueError as error:
+                if utility_functions.is_ndarray(x):
+                    continue
+                else:
+                    raise error
+
         if requires_js_objects:
             return [serialize_to_js_literal(x,
                                             encoding = encoding,
@@ -75,13 +89,17 @@ def serialize_to_js_literal(item,
                                             careful_validation = careful_validation)
                     for x in item]
         else:
-            return [serialize_to_js_literal(x.to_array(), 
-                                            encoding = encoding,
-                                            careful_validation = careful_validation)
-                    for x in item]
-    elif hasattr(item, 'to_js_literal'):
-        return item.to_js_literal(encoding = encoding, 
-                                  careful_validation = careful_validation)
+            result = []
+            for x in item:
+                if not utility_functions.is_ndarray(x):
+                    js_literal = serialize_to_js_literal(x.to_array(),
+                                                         encoding = encoding,
+                                                         careful_validation = careful_validation)
+                    result.append(js_literal)
+                else:
+                    result.append(utility_functions.from_ndarray(x))
+            
+            return result
     elif isinstance(item, constants.EnforcedNullType) or item == 'null':
         return constants.EnforcedNull
     elif isinstance(item, bool):

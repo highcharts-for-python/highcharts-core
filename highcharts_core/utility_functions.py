@@ -561,31 +561,6 @@ def wrap_for_requirejs(if_require_js, if_no_requirejs = None):
     return js_str
 
 
-def wrap_for_requirejs(if_require_js, if_no_requirejs = None):
-    """Wrap ``if_require_js`` in a conditional JavaScript ``if ... { }`` statement
-    that evalutes whether RequireJS is present in the browser.
-    
-    :param if_require_js: The (JavaScript) code that should be executed if RequireJS
-      *is* present.
-    :type if_require_js: :class:`str <python:str>`
-    
-    :param if_no_require_js: The (JavaScript) code that should be executed if RequireJS
-      is *not* present. Defaults to :obj:`None <python:None>` (nothing gets executed).
-    :type if_no_require_js: :class:`str <python:str>`
-    """
-    js_str = """var has_requirejs = typeof requirejs !== 'undefined';\n"""
-    js_str += """if (has_requirejs) {\n"""
-    js_str += if_require_js + '\n}'
-    
-    if if_no_requirejs:
-        js_str += """ else {\n"""
-        js_str += if_no_requirejs + '\n}'
-        
-    js_str += ';'
-    
-    return js_str
-
-
 def to_ndarray(value):
     """Convert ``value`` to a :class:`numpy.ndarray <numpy:numpy.ndarray>`.
     
