@@ -15,7 +15,7 @@ from tests.fixtures import (input_files,
                             Class__to_untrimmed_dict,
                             Class_from_dict, Class_to_dict,
                             Class_from_js_literal,
-                            run_tests_from_pandas)
+                            run_pandas_tests)
 
 
 STANDARD_PARAMS = [
