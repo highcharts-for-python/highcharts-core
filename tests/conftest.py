@@ -53,10 +53,10 @@ def pytest_addoption(parser):
                      action='store',
                      default='true',
                      help=('disable-ai: set to "false" to enable tests of the AI'))
-    parser.addoptions('--pandas',
-                      action = 'store',
-                      default = os.getenv('ENABLE_PANDAS', 'true'),
-                      help=('pandas: set to "false" to disable tests of pandas-related'))
+    parser.addoption('--pandas',
+                     action = 'store',
+                     default = os.getenv('ENABLE_PANDAS', 'true'),
+                     help=('pandas: set to "false" to disable tests of pandas-related'))
 
 
 def pytest_runtest_makereport(item, call):
