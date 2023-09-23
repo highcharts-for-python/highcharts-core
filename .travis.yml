@@ -8,37 +8,27 @@ job:
     - python: "3.10"
       dist: focal
       env: TOXENV=py310
-      install:
-        - pip install -r requirements.dev.txt
     - python: "3.11"
       dist: bionic
       env: TOXENV=py311
-      install:
-        - pip install -r requirements.dev.txt
     - python: "3.10"
       dist: focal
-      env: TOXENV=py310_numpy
-      install:
-        - pip install -r requirements.dev.numpy.txt
+      env: TOXENV=numpy310
     - python: "3.11"
       dist: bionic
-      env: TOXENV=py311_numpy
-      install:
-        - pip install -r requirements.dev.numpy.txt
+      env: TOXENV=numpy311
     - python: "3.10"
       dist: focal
       env: TOXENV=coverage
-      install:
-        - pip install -r requirements.dev.txt
     - python: "3.10"
       dist: focal
       env: TOXENV=docs
-      install:
-        - pip install -r requirements.dev.txt
 os:
   - linux
 git:
   quiet: true
+install:
+  - pip install -r requirements.dev.txt
 before_script:
   - mkdir /home/travis/build/highcharts-for-python/highcharts-core/tests/input_files/headless_export/output/
   - curl -Os --retry 5 https://uploader.codecov.io/latest/linux/codecov
