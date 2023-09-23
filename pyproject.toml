@@ -92,7 +92,7 @@ dev = [
     "dill>=0.3.7",
     "openai>=0.28.0"
 ]
-dev_no_numpy = [
+tests = [
     "pytest>=7.0.2",
     "pytest-cov>=3.0.0",
     "pytest-xdist>=2.5.0",
