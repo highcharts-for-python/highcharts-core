@@ -143,7 +143,7 @@ class Chart(HighchartsMeta):
             
         return f'{self.__class__.__name__}({kwargs_as_str})'
 
-    def _jupyter_include_scripts(self):
+    def _jupyter_include_scripts(self, **kwargs):
         """Return the JavaScript code that is used to load the Highcharts JS libraries.
 
         :rtype: :class:`str <python:str>`
@@ -154,7 +154,7 @@ class Chart(HighchartsMeta):
         for item in required_modules:
             js_str += utility_functions.jupyter_add_script(item)
             js_str += """.then(() => {"""
-
+        
         for item in required_modules:
             js_str += """});"""
 
@@ -187,7 +187,7 @@ class Chart(HighchartsMeta):
         :type retries: :class:`int <python:int>`
 
         :param interval: The number of milliseconds to wait between retrying rendering the chart. Defaults to 1000 (1
-          seocnd).
+          second).
         :type interval: :class:`int <python:int>`
 
         :rtype: :class:`str <python:str>`
@@ -296,6 +296,57 @@ class Chart(HighchartsMeta):
         scripts = self._process_required_modules(initial_scripts, include_extension)
 
         return scripts
+
+    def _get_jupyter_script_loader(self, chart_js_str) -> str:
+        """Return the JavaScript code that loads ``required_modules`` in a Jupyter 
+        context.
+        
+        :param chart_js_str: The JavaScript code that renders the chart.
+        :type chart_js_str: :class:`str <python:str>`
+        
+        :returns: The JavaScript code that loads the required modules.
+        :rtype: :class:`str <python:str>`
+        """
+        if_no_requirejs = ''
+
+        if_requirejs = """require.config({\n"""
+        if_requirejs += """  packages: [{\n"""
+        if_requirejs += """    name: 'highcharts', main: 'highcharts' }],\n"""
+        if_requirejs += """  paths: {\n"""
+        if_requirejs += f"""    'highcharts': '{self.module_url}'\n"""
+        if_requirejs += """  }\n\n});"""
+        
+        if_requirejs += """ require(["""
+        requirejs_modules = []
+        for item in self.get_required_modules():
+            if item == 'highcharts' and item not in requirejs_modules:
+                requirejs_modules.append(item)
+            else:
+                revised_item = f'highcharts/{item}'
+                if revised_item not in requirejs_modules:
+                    requirejs_modules.append(revised_item)
+                
+        for index, item in enumerate(requirejs_modules):
+            is_last = index == len(requirejs_modules) - 1
+            if_requirejs += f"""'{item}'"""
+            if not is_last:
+                if_requirejs += ', '
+        if_requirejs += """], function (Highcharts) {\n"""
+        if_requirejs += chart_js_str
+        if_requirejs += """\n});"""
+
+        required_modules = [f'{self.module_url}{x}' 
+                            for x in self.get_required_modules(include_extension = True)]
+        for item in required_modules:
+            if_no_requirejs += utility_functions.jupyter_add_script(item)
+            if_no_requirejs += """.then(() => {"""
+
+        for item in required_modules:
+            if_no_requirejs += """});"""
+            
+        js_str = utility_functions.wrap_for_requirejs(if_requirejs, if_no_requirejs)
+            
+        return js_str
 
     @property
     def callback(self) -> Optional[CallbackFunction]:
@@ -928,9 +979,6 @@ class Chart(HighchartsMeta):
                                                    'your runtime environment. To install,'
                                                    'use: pip install ipython')
 
-        include_js_str = self._jupyter_include_scripts()
-        include_display = display_mod.Javascript(data = include_js_str)
-
         container = container or self.container or 'highcharts_target_div'
         if not self._random_slug:
             self._random_slug = {}
@@ -949,10 +997,14 @@ class Chart(HighchartsMeta):
                                                 random_slug = random_slug,
                                                 retries = retries,
                                                 interval = interval)
-        javascript_display = display_mod.Javascript(data = chart_js_str)
+        wrapped_chart_js_str = utility_functions.wrap_for_requirejs('', chart_js_str)
+        javascript_display = display_mod.Javascript(data = wrapped_chart_js_str)
 
-        display(include_display)
+        include_js_str = self._get_jupyter_script_loader(chart_js_str)
+        include_display = display_mod.Javascript(data = include_js_str)
+
         display(html_display)
+        display(include_display)
         display(javascript_display)
 
     @classmethod

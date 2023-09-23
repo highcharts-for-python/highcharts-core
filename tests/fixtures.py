@@ -86,7 +86,7 @@ def openai_api_key(request):
         api_key = None
         
     if not api_key:
-        api_key = os.env.get('OPENAI_API_KEY', None)
+        api_key = os.getenv('OPENAI_API_KEY', None)
     
     return api_key
 

@@ -365,7 +365,7 @@ def parse_csv(csv_data,
     return columns, records_as_dicts
 
 
-def jupyter_add_script(url, is_last = False):
+def jupyter_add_script(url, is_last = False, use_require = False):
     """Generates the JavaScript code Promise which adds a <script/> tag to the Jupyter 
     Lab environment.
     
@@ -375,24 +375,35 @@ def jupyter_add_script(url, is_last = False):
     :param is_last: Whether the URL is the last of the promises.
     :type is_last: :class:`bool <python:bool>`
     
+    :param use_require: Whether to return the script needed for RequireJS.
+      Defaults to ``False``.
+    :type use_require: :class:`bool <python:bool>`
+    
     :returns: The JavaScript code for adding the script.
     :rtype: :class:`str <python:str>`
     """
     url = validators.url(url)
     if url.endswith('.css'):
         return jupyter_add_link(url, is_last = is_last)
-    
+
     js_str = """"""
-    js_str += """new Promise(function(resolve, reject) {\n"""
-    js_str += f"""  var existing_tags = document.querySelectorAll("script[src='{url}']");"""
-    js_str += """  if (existing_tags.length == 0) {
-        var script = document.createElement("script");
-        script.onload = resolve;
-        script.onerror = reject;"""
-    js_str += f"""        script.src = '{url}';"""
-    js_str += """        document.head.appendChild(script);
-    };
-})"""
+    
+    if use_require:
+        js_str += f"""require(['{url}'], function() """
+        js_str += """{\n"""
+        if is_last:
+            js_str += """});"""
+    else:
+        js_str += """new Promise(function(resolve, reject) {\n"""
+        js_str += f"""  var existing_tags = document.querySelectorAll("script[src='{url}']");"""
+        js_str += """  if (existing_tags.length == 0) {
+            var script = document.createElement("script");
+            script.onload = resolve;
+            script.onerror = reject;"""
+        js_str += f"""        script.src = '{url}';"""
+        js_str += """        document.head.appendChild(script);
+        } else { resolve() };
+    })"""
 
     return js_str
 
@@ -423,7 +434,7 @@ def jupyter_add_link(url, is_last = False):
     js_str += f"""        link.rel = 'stylesheet';"""
     js_str += f"""        link.type = 'text/css';"""
     js_str += """        document.head.appendChild(link);
-    };
+    } else { resolve() };
 })"""
 
     return js_str
@@ -448,8 +459,9 @@ def get_retryHighcharts():
                         if (target_div) {
                             var timeElapsed = (retries * interval) / 1000;
                             var errorMessage = "Something went wrong with the Highcharts.js script. It should have been automatically loaded, but it did not load for over " + timeElapsed + " seconds. Check your internet connection, and then if the problem persists please reach out for support. (You can also check your browser's console log for more details.)<br/><br/>Detailed Error Message:<br/>" + err.message;
-                            var errorHTML = "<p>" + errorMessage + "</p>";
-                            target_div.innerHTML = errorMessage;
+                            var errorHTML = errorMessage;
+                            
+                            target_div.innerHTML = errorHTML;
                             console.log(errorMessage);
                             console.error(err);
                         }
@@ -522,6 +534,31 @@ def prep_js_for_jupyter(js_str,
         function_str += f"""retryHighcharts(insertChart, '{container}', {retries}, {retries}, {interval});"""
 
     return function_str
+
+
+def wrap_for_requirejs(if_require_js, if_no_requirejs = None):
+    """Wrap ``if_require_js`` in a conditional JavaScript ``if ... { }`` statement
+    that evalutes whether RequireJS is present in the browser.
+    
+    :param if_require_js: The (JavaScript) code that should be executed if RequireJS
+      *is* present.
+    :type if_require_js: :class:`str <python:str>`
+    
+    :param if_no_require_js: The (JavaScript) code that should be executed if RequireJS
+      is *not* present. Defaults to :obj:`None <python:None>` (nothing gets executed).
+    :type if_no_require_js: :class:`str <python:str>`
+    """
+    js_str = """var has_requirejs = typeof requirejs !== 'undefined';\n"""
+    js_str += """if (has_requirejs) {\n"""
+    js_str += if_require_js + '\n}'
+    
+    if if_no_requirejs:
+        js_str += """ else {\n"""
+        js_str += if_no_requirejs + '\n}'
+        
+    js_str += ';'
+    
+    return js_str
 
 
 def to_ndarray(value):

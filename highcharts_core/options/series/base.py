@@ -107,20 +107,23 @@ class SeriesBase(SeriesOptions):
         """
         try:
             return super().__getattribute__(name)
-        except AttributeError:
+        except AttributeError as error:
+            if name in ['__iter__', '__next__', 'requires_js_object']:
+                raise error
             pass
 
         if not self.data:
             raise AttributeError(name)
-        
+
         if isinstance(self.data, DataPointCollection):
             return getattr(self.data, name)
-        
-        result = [getattr(x, name) for x in self.data]
+
+        results = [getattr(x, name) for x in self.data]
+
         if HAS_NUMPY:
-            result = np.asarray(result)
-        
-        return result
+            results = np.asarray(results)
+
+        return results
     
     def __setattr__(self, name, value):
         """Updates the series attribute, or descendent attributes on the ``.data`` 
