@@ -998,13 +998,13 @@ class Chart(HighchartsMeta):
                                                 retries = retries,
                                                 interval = interval)
         wrapped_chart_js_str = utility_functions.wrap_for_requirejs('', chart_js_str)
-        javascript_display = display_mod.Javascript(data = chart_js_str)
+        javascript_display = display_mod.Javascript(data = wrapped_chart_js_str)
 
         include_js_str = self._get_jupyter_script_loader(chart_js_str)
         include_display = display_mod.Javascript(data = include_js_str)
 
-        display(include_display)
         display(html_display)
+        display(include_display)
         display(javascript_display)
 
     @classmethod
