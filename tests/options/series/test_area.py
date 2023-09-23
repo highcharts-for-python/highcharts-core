@@ -16,7 +16,7 @@ from highcharts_core.options.series.area import StreamGraphSeries as cls6
 from highcharts_core import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
-    Class_from_js_literal
+    Class_from_js_literal, run_pandas_tests
 
 STANDARD_PARAMS = [
     ({}, None),
@@ -2772,7 +2772,10 @@ def test_LineSeries_from_js_literal(input_files, filename, as_file, error):
 @pytest.mark.parametrize('filename, error', [
     ('test-data-files/nst-est2019-01.csv', None),
 ])
-def test_LineSeries_from_pandas_in_rows(input_files, filename, error):
+def test_LineSeries_from_pandas_in_rows(run_pandas_tests, input_files, filename, error):
+    if not run_pandas_tests:
+        return
+
     import pandas
     
     input_file = check_input_file(input_files, filename)
@@ -2883,13 +2886,17 @@ def reduce_to_two_columns(df):
      None),
     
 ])
-def test_LineSeries_from_pandas(input_files, 
+def test_LineSeries_from_pandas(run_pandas_tests,
+                                input_files, 
                                 filename, 
                                 kwargs, 
                                 pre_test_df_func, 
                                 expected_series, 
                                 expected_data_points, 
                                 error):
+    if not run_pandas_tests:
+        return
+
     import pandas
 
     input_file = check_input_file(input_files, filename)
