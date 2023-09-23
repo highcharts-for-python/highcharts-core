@@ -11,6 +11,8 @@ from esprima.error_handler import Error as ParseError
 from highcharts_core.utility_classes import javascript_functions as js_f
 from highcharts_core import errors
 
+from tests.fixtures import disable_ai
+
 
 def validate_js_function(as_str, _break_loop_on_failure = False, range = True):
     """Parse ``as_str`` as a valid JavaScript function.
@@ -260,14 +262,16 @@ def test_CallbackFunction_from_js_literal(original_str, error):
 
     (1, 'gpt-3.5-turbo', ValueError),
 ])
-def test_CallbackFunction_from_python(callable, model, error):
-    if not error:
-        result = js_f.CallbackFunction.from_python(callable, model)
-        assert result is not None
-        assert isinstance(result, js_f.CallbackFunction) is True
-    else:
-        with pytest.raises(error):
+def test_CallbackFunction_from_python(disable_ai, callable, model, error):
+    if not disable_ai:
+        if not error:
             result = js_f.CallbackFunction.from_python(callable, model)
+            assert result is not None
+            assert isinstance(result, js_f.CallbackFunction) is True
+        else:
+            with pytest.raises(error):
+                result = js_f.CallbackFunction.from_python(callable, model)
+
 
 @pytest.mark.parametrize('kwargs, error', [
     ({}, None),
