@@ -19,6 +19,8 @@ Release 1.4.0
 * **ENHANCEMENT:** Added ``.convert_to()`` convenience method to Series objects (#107).
 * **ENHANCEMENT:** Added ``CallbackFunction.from_python()`` method which converts a Python function
   to its JavaScript equivalent using generative AI, with support for both OpenAI and Anthropic (#109).
+* **BUGFIX:** Fixed instability issues in Jupyter Notebooks, both when operating as a Notebook (outside of 
+  Jupyter Lab) and when saved to a static HTML file (#66).
 
 ---------------------
 
