@@ -783,11 +783,7 @@ def is_arraylike(value) -> bool:
     :rtype: :class:`bool <python:bool>`
     """
     if not HAS_NUMPY:
-        raise errors.HighchartsDependencyError('NumPy is required for this feature. '
-                                               'It was not found in your runtime '
-                                               'environment. Please make sure it is '
-                                               'installed in your runtime '
-                                               'environment.')
+        return is_iterable(value)
 
     return isinstance(value, np.ndarray) or is_iterable(value)
 
@@ -802,3 +798,33 @@ def is_ndarray(value) -> bool:
     :rtype: :class:`bool <python:bool>`
     """
     return checkers.is_type(value, 'ndarray')
+
+
+def extend_columns(array, needed_members):
+    """Extends ``array`` with additional positions for the number 
+    of members to equal ``needed_members``. Additional positions recieve
+    a value of :obj:`None <python:None>`.
+    
+    :param array: The array to extend
+    :type array: iterable
+    
+    :param needed_members: the number of members the array should contain
+    :type needed_members: :class:`int <python:int>`
+    
+    :returns: ``array`` with ``needed_members``
+    :rtype: iterable
+    """
+    if not is_arraylike(array):
+        raise errors.HighchartsValueError(f'array is expected to be an iterable. '
+                                          f'Received a: {array.__class__.__name__}')
+
+    needed_members = validators.integer(needed_members)
+
+    original_length = len(array)
+    if needed_members <= original_length:
+        return array
+
+    new_members = original_length - needed_members
+    array.extend([None for x in range(new_members)])
+
+    return array

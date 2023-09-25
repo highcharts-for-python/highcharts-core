@@ -433,12 +433,23 @@ class DataBase(DataCore):
         if len(value) < len(properties):
             value = value[:len(properties)]
 
+        processed_x = False
+        processed_name = False
         for index, prop in enumerate(properties):
             if hasattr(value[index], 'item'):
                 item = value[index].item()
             else:
                 item = value[index]
             setattr(self, prop, item)
+            if prop == 'name' and item is not None:
+                processed_name = True
+            if prop == 'x':
+                processed_x = True
+
+        if processed_x and not processed_name:
+            if not self.name and checkers.is_string(self.x):
+                self.name = self.x
+                self.x = None
         
     @classmethod
     def from_list(cls, value):

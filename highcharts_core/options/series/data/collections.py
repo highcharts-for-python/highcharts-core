@@ -40,9 +40,11 @@ class DataPointCollection(HighchartsMeta):
     """
     
     def __init__(self, **kwargs):
+        self._array = None
         self._ndarray = None
         self._data_points = None
         
+        self.array = kwargs.get('array', None)
         self.ndarray = kwargs.get('ndarray', None)
         self.data_points = kwargs.get('data_points', None)
 
@@ -71,14 +73,24 @@ class DataPointCollection(HighchartsMeta):
         """
         data_point_properties = self._get_props_from_array()
         data_point_class = self._get_data_point_class()
-        data_point_obj = data_point_class()
 
-        if name in ['_ndarray', 'ndarray', '_data_points', 'data_points']:
+        if name in ['_array',
+                    'array',
+                    '_ndarray',
+                    'ndarray',
+                    '_data_points',
+                    'data_points']:
             return super().__getattr__(name)
 
-        if name in data_point_properties and self.ndarray is not None:
+        if name in data_point_properties and (
+            self.ndarray is not None or self.array is not None
+        ):
             position = data_point_properties.index(name)
-            return utility_functions.get_ndarray_slice(self.ndarray, position)
+
+            if HAS_NUMPY and self.ndarray is not None:
+                return utility_functions.get_ndarray_slice(self.ndarray, position)
+
+            return [x[position] for x in self.array]
 
         data_points = self._assemble_data_points()
         as_list = [getattr(x, name, None) for x in data_points]
@@ -114,7 +126,7 @@ class DataPointCollection(HighchartsMeta):
         if name.startswith('_'):
             super().__setattr__(name, value)
             return
-        elif name in ['ndarray', 'data_points']:
+        elif name in ['array', 'ndarray', 'data_points']:
             super().__setattr__(name, value)
             return
 
@@ -122,9 +134,11 @@ class DataPointCollection(HighchartsMeta):
 
         try:
             has_ndarray = self.ndarray is not None
+            has_array = self.array is not None
             has_data_points = self.data_points is not None
         except AttributeError:
             has_ndarray = False
+            has_array = False
             has_data_points = False
 
         if name in data_point_properties and has_ndarray:
@@ -158,6 +172,33 @@ class DataPointCollection(HighchartsMeta):
                                                          members = len(self.ndarray))
             array[:, index] = value
             self.ndarray = array
+        elif name in data_point_properties and has_array:
+            index = data_point_properties.index(name)
+            is_arraylike = utility_functions.is_arraylike(value)
+            
+            # if value is not an array
+            if not is_arraylike:
+                value = [value for x in range(len(self.array))]
+
+            if len(value) > len(self.array):
+                self.array.extend([[] for x in range(len(value) - len(self.array))])
+            elif len(value) < len(self.array):
+                value.extend([None for x in range(len(self.array) - len(value))])
+
+            array = []
+            for row_index, inner_array in enumerate(self.array):
+                revised_array = [x for x in inner_array]
+                revised_array = utility_functions.extend_columns(revised_array,
+                                                                 index + 1)
+                row_value = value[row_index]
+                if utility_functions.is_iterable(row_value):
+                    revised_array[index] = row_value[index]
+                else:
+                    revised_array[index] = row_value
+                
+                array.append(revised_array)
+            
+            self.array = array
         elif name in data_point_properties and has_data_points:
             is_arraylike = utility_functions.is_arraylike(value)
             if not is_arraylike:
@@ -190,14 +231,20 @@ class DataPointCollection(HighchartsMeta):
             if is_iterable:
                 as_list = []
                 for i in range(len(value)):
-                    inner_list = [np.nan for x in data_point_properties]
+                    if HAS_NUMPY:
+                        inner_list = [np.nan for x in data_point_properties]
+                    else:
+                        inner_list = [None for x in data_point_properties]
                     inner_list[index] = value[i]
                     as_list.append(inner_list)
             else:
                 as_list = [None for x in data_point_properties]
                 as_list[index] = value
 
-            self.ndarray = as_list            
+            if HAS_NUMPY:
+                self.ndarray = as_list
+            else:
+                self.array = as_list
         elif utility_functions.is_arraylike(value):
             if not has_data_points:
                 data_point_cls = self._get_data_point_class()
@@ -227,6 +274,8 @@ class DataPointCollection(HighchartsMeta):
         """
         if utility_functions.is_ndarray(self.ndarray):
             result = len(self.ndarray)
+        elif self.array:
+            result = len(self.array)
         elif self.data_points:
             result = len(self.data_points)
         else:
@@ -244,6 +293,32 @@ class DataPointCollection(HighchartsMeta):
             self._current_index += 1
             return x
         raise StopIteration
+
+    @property
+    def array(self) -> Optional[List]:
+        """Primitive collection of values for data points in the collection. Used if
+        `NumPy <https://www.numpy.org>`__ is not available. Defaults to 
+        :obj:`None <python:None>`.
+        
+        .. note::
+        
+          If `NumPy <https://www.numpy.org>`__ is availalbe, will instead behave as
+          an alias for
+          :meth:`.ndarray <highcharts_core.options.series.data.collections.DataPointCollection.ndarray>`
+        
+        :rtype: :class:`list <python:list>` or :obj:`None <python:None>`
+        """
+        return self._array
+    
+    @array.setter
+    def array(self, value):
+        if not value:
+            self._array = None
+        elif utility_functions.is_iterable(value):
+            self._array = [x for x in value]
+        else:
+            raise errors.HighchartsValueError(f'.array requires an iterable value. '
+                                              f'Received: {value}')
 
     @property
     def data_points(self) -> Optional[List[DataBase]]:
@@ -272,7 +347,7 @@ class DataPointCollection(HighchartsMeta):
             super().__setattr__('_data_points', validated)
 
     @property
-    def ndarray(self) -> Optional[np.ndarray]:
+    def ndarray(self):
         """The :class:`numpy.ndarray <numpy:numpy.ndarray>` instance that contains the
         data point collection's numerical values.
         
@@ -283,24 +358,18 @@ class DataPointCollection(HighchartsMeta):
 
     @ndarray.setter
     def ndarray(self, value):
-        if not HAS_NUMPY:
-            raise errors.HighchartsDependencyError('NumPy is required for this feature. '
-                                                   'It was not found in the runtime environment. '
-                                                   'Please install it using "pip install numpy" '
-                                                   'or equivalent.')
         is_iterable = not isinstance(value, 
                                      (str, bytes, dict, UserDict)) and hasattr(value, 
                                                                                '__iter__')
         if value is None:
             self._ndarray = None
             as_array = False
-        elif not isinstance(value, 
-                            np.ndarray) and is_iterable:
+        elif HAS_NUMPY and not isinstance(value, np.ndarray) and is_iterable:
             as_array = utility_functions.to_ndarray(value)
         else:
             as_array = value
 
-        if isinstance(as_array, np.ndarray):
+        if HAS_NUMPY and isinstance(as_array, np.ndarray):
             if as_array.ndim not in self._get_supported_dimensions():
                 supported_dimensions = self._get_supported_dimensions()
                 supported_as_str = ', '.join([str(x) for x in supported_dimensions[:-1]])
@@ -366,17 +435,9 @@ class DataPointCollection(HighchartsMeta):
           
         :raises HighchartsDependencyError: if `NumPy <https://numpy.org>`__ is not installed
         """
-        if not HAS_NUMPY:
-            raise errors.HighchartsDependencyError('DataPointCollection requires NumPy '
-                                                   'be installed. The runtime '
-                                                   'environment does not currently have '
-                                                   'NumPy installed. Please use the data '
-                                                   'point pattern instead, or install NumPy'
-                                                   ' using "pip install numpy" or similar.')
-        
-        if isinstance(value, np.ndarray) and value.dtype != np.dtype('O'):
+        if HAS_NUMPY and isinstance(value, np.ndarray) and value.dtype != np.dtype('O'):
             return cls.from_ndarray(value)
-        elif isinstance(value, np.ndarray):
+        elif HAS_NUMPY and isinstance(value, np.ndarray):
             as_list = value.tolist()
         else:
             as_list = value
@@ -386,7 +447,7 @@ class DataPointCollection(HighchartsMeta):
         return cls(data_points = data_points)
 
     @classmethod
-    def from_ndarray(cls, value: np.ndarray):
+    def from_ndarray(cls, value):
         """Creates a 
         :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>` 
         instance from an array of values.
@@ -477,22 +538,32 @@ class DataPointCollection(HighchartsMeta):
         else:
             data_points = []
 
-        if self.ndarray is None:
+        if self.ndarray is None and not self.array:
             return data_points
         
-        for data_point in data_points:
+        for index, data_point in enumerate(data_points):
             for prop in self._get_props_from_array():
                 if getattr(data_point, prop) is not None:
-                    data_point.prop = None
-                    
-        if len(data_points) < len(self.ndarray):
-            missing = len(self.ndarray) - len(data_points)
-            for i in range(missing):
-                data_points.append(self._get_data_point_class()())
+                    setattr(data_points[index], prop, None)
 
-        for index in range(len(self.ndarray)):
-            array = self.ndarray[index]
-            data_points[index].populate_from_array(array)
+        if HAS_NUMPY and self.ndarray is not None:
+            if len(data_points) < len(self.ndarray):
+                missing = len(self.ndarray) - len(data_points)
+                for i in range(missing):
+                    data_points.append(self._get_data_point_class()())
+
+            for index in range(len(self.ndarray)):
+                array = self.ndarray[index]
+                data_points[index].populate_from_array(array)
+        else:
+            if len(data_points) < len(self.array):
+                missing = len(self.array) - len(data_points)
+                for i in range(missing):
+                    data_points.append(self._get_data_point_class()())
+                    
+            for index in range(len(self.array)):
+                array = self.array[index]
+                data_points[index].populate_from_array(array)
 
         return data_points
 
@@ -582,15 +653,22 @@ class DataPointCollection(HighchartsMeta):
             raise errors.HighchartsValueError('force_object and force_ndarray cannot '
                                               'both be True')
 
-        if self.ndarray is None and not self.data_points:
+        if self.ndarray is None and not self.array and not self.data_points:
             return []
         
-        if force_object and self.data_points:
+        if force_object and self.data_points and not self.array:
             return [x for x in self.data_points]
         elif force_object and self.ndarray is not None:
             return [x for x in self._assemble_data_points()]
-            
-        if force_ndarray and self.ndarray is not None:
+        elif force_object and self.array is not None:
+            return [x for x in self._assemble_data_points()]
+
+        if force_ndarray and not HAS_NUMPY:
+            raise errors.HighchartsDependencyError('Cannot force ndarray if NumPy is '
+                                                   'not available in the runtime '
+                                                   'environment. Please install using '
+                                                   '"pip install numpy" or similar.')
+        elif force_ndarray and self.ndarray is not None:
             return utility_functions.from_ndarray(self.ndarray)
         elif force_ndarray and self.data_points:
             as_ndarray = self._assemble_ndarray()
@@ -598,8 +676,10 @@ class DataPointCollection(HighchartsMeta):
         
         if self.ndarray is not None and not self.requires_js_object:
             return utility_functions.from_ndarray(self.ndarray)
+        elif self.array is not None and not self.requires_js_object:
+            return [x for x in self.array]
         
-        if self.data_points:
+        if not self.array and self.data_points:
             return [x for x in self.data_points]
 
         return [x for x in self._assemble_data_points()]
@@ -618,6 +698,7 @@ class DataPointCollection(HighchartsMeta):
 
         """
         kwargs = {
+            'array': as_dict.get('array', None),
             'ndarray': as_dict.get('ndarray', None),
             'data_points': as_dict.get('dataPoints', None),
         }
@@ -626,6 +707,7 @@ class DataPointCollection(HighchartsMeta):
 
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
+            'array': self.array,
             'ndarray': self.ndarray,
             'dataPoints': self.data_points,
         }

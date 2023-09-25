@@ -1,7 +1,11 @@
 """Tests for ``highcharts.no_data``."""
 
 import pytest
-import numpy as np
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
 
 from json.decoder import JSONDecodeError
 
@@ -56,10 +60,10 @@ STANDARD_PARAMS = [
         }]
     }, None),
     ({
-        'ndarray': np.array([1, 2, 3])
-    }, None),
+        'ndarray': np.array([1, 2, 3]) if HAS_NUMPY else [1, 2, 3]
+    }, None if HAS_NUMPY else ValueError),
     ({
-        'ndarray': np.array([1, 2, 3]),
+        'ndarray': np.array([1, 2, 3]) if HAS_NUMPY else [1, 2, 3],
         'data_points': [{
             'accessibility': {
                 'description': 'Some description goes here',
@@ -84,7 +88,7 @@ STANDARD_PARAMS = [
             'name': 'Some Name Goes here',
             'selected': False
         }]
-    }, None),
+    }, None if HAS_NUMPY else ValueError),
 ]
 
 
@@ -112,10 +116,15 @@ def test_to_dict(kwargs, error):
     ('series/data/collections/01-input.js',
      'series/data/collections/01-expected.js',
      False,
-     None),
+     None if HAS_NUMPY else ValueError),
 
     ('series/data/collections/02-input.js',
      'series/data/collections/02-expected.js',
+     False,
+     None if HAS_NUMPY else ValueError),
+
+    ('series/data/collections/03-input.js',
+     'series/data/collections/03-expected.js',
      False,
      None),
 ])
@@ -127,33 +136,33 @@ def test_from_js_literal(input_files, input_filename, expected_filename, as_file
                                         as_file,
                                         error)
 
-
-@pytest.mark.parametrize('value, expected_shape, has_data_points, error', [
-    (np.asarray([
-        [0.0, 15.0], 
-        [10.0, -50.0], 
-        [20.0, -56.5], 
-        [30.0, -46.5], 
-        [40.0, -22.1],
-        [50.0, -2.5], 
-        [60.0, -27.7], 
-        [70.0, -55.7], 
-        [80.0, -76.5]
-    ]), (9, 2), False, None),
-    
-    ('Not an Array', None, False, ValueError),
-])
-def test_from_ndarray(value, expected_shape, has_data_points, error):
-    if not error:
-        result = cls.from_ndarray(value)
-        assert result is not None
-        assert result.ndarray is not None
-        assert result.ndarray.shape == expected_shape
-        if has_data_points:
-            assert result.data_points is not None
-    else:
-        with pytest.raises(error):
+if HAS_NUMPY:
+    @pytest.mark.parametrize('value, expected_shape, has_data_points, error', [
+        (np.asarray([
+            [0.0, 15.0], 
+            [10.0, -50.0], 
+            [20.0, -56.5], 
+            [30.0, -46.5], 
+            [40.0, -22.1],
+            [50.0, -2.5], 
+            [60.0, -27.7], 
+            [70.0, -55.7], 
+            [80.0, -76.5]
+        ]), (9, 2), False, None),
+        
+        ('Not an Array', None, False, ValueError),
+    ])
+    def test_from_ndarray(value, expected_shape, has_data_points, error):
+        if not error:
             result = cls.from_ndarray(value)
+            assert result is not None
+            assert result.ndarray is not None
+            assert result.ndarray.shape == expected_shape
+            if has_data_points:
+                assert result.data_points is not None
+        else:
+            with pytest.raises(error):
+                result = cls.from_ndarray(value)
             
 
 @pytest.mark.parametrize('value, expected_shape, has_ndarray, has_data_points, error', [
@@ -167,7 +176,17 @@ def test_from_ndarray(value, expected_shape, has_data_points, error):
         [60.0, -27.7], 
         [70.0, -55.7], 
         [80.0, -76.5]
-    ]), (9, 2), True, False, None),
+    ]) if HAS_NUMPY else [
+        [0.0, 15.0], 
+        [10.0, -50.0], 
+        [20.0, -56.5], 
+        [30.0, -46.5], 
+        [40.0, -22.1],
+        [50.0, -2.5], 
+        [60.0, -27.7], 
+        [70.0, -55.7], 
+        [80.0, -76.5]
+    ], (9, 2), True, False, None),
     ([
         {
             'id': 'some-value'
@@ -187,8 +206,15 @@ def test_from_array(value, expected_shape, has_ndarray, has_data_points, error):
         result = cls.from_array(value)
         assert result is not None
         if has_ndarray:
-            assert result.ndarray is not None
-            assert result.ndarray.shape == expected_shape
+            if HAS_NUMPY:
+                assert result.ndarray is not None
+                assert result.ndarray.shape == expected_shape
+            else:
+                assert result.array is not None or result.data_points is not None
+                if result.array:
+                    assert len(result.array) == expected_shape[0]
+                else:
+                    assert len(result.data_points) == expected_shape[0]
         if has_data_points:
             assert result.data_points is not None
     else:
@@ -207,7 +233,17 @@ def test_from_array(value, expected_shape, has_ndarray, has_data_points, error):
         [60.0, -27.7], 
         [70.0, -55.7], 
         [80.0, -76.5]
-    ]), {}, False, None),
+    ]) if HAS_NUMPY else [
+        [0.0, 15.0], 
+        [10.0, -50.0], 
+        [20.0, -56.5], 
+        [30.0, -46.5], 
+        [40.0, -22.1],
+        [50.0, -2.5], 
+        [60.0, -27.7], 
+        [70.0, -55.7], 
+        [80.0, -76.5]
+    ], {}, False, None),
     ([
         {
             'id': 'some-value'
@@ -226,7 +262,17 @@ def test_from_array(value, expected_shape, has_ndarray, has_data_points, error):
         [60.0, -27.7], 
         [70.0, -55.7], 
         [80.0, -76.5]
-    ]), {'force_object': True}, True, None),
+    ]) if HAS_NUMPY else [
+        [0.0, 15.0], 
+        [10.0, -50.0], 
+        [20.0, -56.5], 
+        [30.0, -46.5], 
+        [40.0, -22.1],
+        [50.0, -2.5], 
+        [60.0, -27.7], 
+        [70.0, -55.7], 
+        [80.0, -76.5]
+    ], {'force_object': True}, True, None),
     ([
         {
             'id': 'some-value'
@@ -234,7 +280,7 @@ def test_from_array(value, expected_shape, has_ndarray, has_data_points, error):
         {
             'id': 'some other value'
         },
-    ], {'force_ndarray': True}, False, None),
+    ], {'force_ndarray': True}, False, None if HAS_NUMPY else ValueError),
     
 ])
 def test_to_array(value, kwargs, expects_objects, error):
@@ -253,13 +299,16 @@ def test_to_array(value, kwargs, expects_objects, error):
     ({}, 'ndarray', None, None),
     ({}, 'data_points', None, None),
     ({
-        'ndarray': np.array([1, 2, 3])
-    }, 'ndarray', np.array([1, 2, 3]), None),
+        'ndarray': np.array([1, 2, 3]) if HAS_NUMPY else [1, 2, 3]
+    }, 'ndarray', np.array([1, 2, 3]) if HAS_NUMPY else [1, 2, 3], None if HAS_NUMPY else ValueError),
     ({
-        'ndarray': np.array([1, 2, 3])
-    }, 'data_points', None, None),
+        'ndarray': np.array([1, 2, 3]) if HAS_NUMPY else [1, 2, 3]
+     },
+     'data_points',
+     None, 
+     None if HAS_NUMPY else ValueError),
     ({
-        'ndarray': np.array([1, 2, 3]),
+        'ndarray': np.array([1, 2, 3]) if HAS_NUMPY else [1, 2, 3],
         'data_points': {
             'accessibility': {
                 'description': 'Some description goes here',
@@ -284,7 +333,10 @@ def test_to_array(value, kwargs, expects_objects, error):
             'name': 'Some Name Goes here',
             'selected': False
         }
-    }, 'ndarray', np.array([1, 2, 3]), None),
+    },
+     'ndarray',
+     np.array([1, 2, 3]) if HAS_NUMPY else [1, 2, 3],
+     None if HAS_NUMPY else ValueError),
     ({
         'data_points': {
             'accessibility': {
@@ -310,7 +362,7 @@ def test_to_array(value, kwargs, expects_objects, error):
             'name': 'Some Name Goes here',
             'selected': False
         }
-    }, 'color', np.asarray(['#ccc']), None),
+    }, 'color', np.asarray(['#ccc']) if HAS_NUMPY else ['#ccc'], None),
 ])
 def test__getattr__(kwargs, name, expected, error):
     if not error:
@@ -318,7 +370,7 @@ def test__getattr__(kwargs, name, expected, error):
         result = getattr(obj, name)
         if not checkers.is_type(result, 'ndarray'):
             assert checkers.are_equivalent(result, expected) is True
-        else:
+        elif HAS_NUMPY:
             assert np.array_equiv(result, expected) is True
     else:
         with pytest.raises(error):
@@ -327,7 +379,10 @@ def test__getattr__(kwargs, name, expected, error):
             
 
 @pytest.mark.parametrize('name, value, expected, error', [
-    ('ndarray', np.array([1, 2, 3]), np.array([1, 2, 3]), None),
+    ('ndarray', 
+     np.array([1, 2, 3]) if HAS_NUMPY else [1, 2, 3], 
+     np.array([1, 2, 3]) if HAS_NUMPY else [1, 2, 3], 
+     None if HAS_NUMPY else ValueError),
     ('data_points', {
             'accessibility': {
                 'description': 'Some description goes here',

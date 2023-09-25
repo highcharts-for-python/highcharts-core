@@ -147,8 +147,9 @@ class SeriesBase(SeriesOptions):
                                                                 bytes, 
                                                                 dict, 
                                                                 UserDict)):
-                data_points = [data_point_cls(name = x) for x in value]
-                self.data = data_points
+                collection = collection_cls()
+                setattr(collection, name, value)
+                self.data = collection
             else:
                 data_point = data_point_cls(name = value)
                 self._data = [data_point]

@@ -1,7 +1,11 @@
 """Tests for ``highcharts.no_data``."""
 
 import pytest
-import numpy as np
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
 
 from json.decoder import JSONDecodeError
 from validator_collection import checkers
@@ -911,25 +915,25 @@ def test_BarSeries_from_js_literal(input_files, filename, as_file, error):
      'data', 
      cls2._data_point_class().from_array([[1, 2], [3, 4], [5, 6]]),
      None),
-    ({'data': np.asarray([[1, 2], [3, 4], [5, 6]])},
+    ({'data': np.asarray([[1, 2], [3, 4], [5, 6]]) if HAS_NUMPY else [[1, 2], [3, 4], [5, 6]]},
      'data',
-     cls2._data_collection_class().from_ndarray(np.asarray([[1, 2], [3, 4], [5, 6]])),
+     cls2._data_collection_class().from_ndarray(np.asarray([[1, 2], [3, 4], [5, 6]])) if HAS_NUMPY else cls2._data_point_class().from_array([[1, 2], [3, 4], [5, 6]]),
      None),
     ({'data': [[1, 2], [3, 4], [5, 6]]},
      'x', 
-     np.asarray([1, 3, 5]),
+     np.asarray([1, 3, 5]) if HAS_NUMPY else [1, 3, 5],
      None),
     ({'data': [[1, 2], [3, 4], [5, 6]]},
      'y', 
-     np.asarray([2, 4, 6]),
+     np.asarray([2, 4, 6]) if HAS_NUMPY else [2, 4, 6],
      None),
-    ({'data': np.asarray([[1, 2], [3, 4], [5, 6]])},
+    ({'data': np.asarray([[1, 2], [3, 4], [5, 6]]) if HAS_NUMPY else [[1, 2], [3, 4], [5, 6]]},
      'x', 
-     np.asarray([1, 3, 5]),
+     np.asarray([1, 3, 5]) if HAS_NUMPY else [1, 3, 5],
      None),
-    ({'data': np.asarray([[1, 2], [3, 4], [5, 6]])},
+    ({'data': np.asarray([[1, 2], [3, 4], [5, 6]]) if HAS_NUMPY else [[1, 2], [3, 4], [5, 6]]},
      'y', 
-     np.asarray([2, 4, 6]),
+     np.asarray([2, 4, 6]) if HAS_NUMPY else [2, 4, 6],
      None),
 ])
 def test_BarSeries__getattr__(kwargs, name, expected, error):
@@ -952,24 +956,26 @@ def test_BarSeries__getattr__(kwargs, name, expected, error):
      cls2._data_point_class().from_array([[1, 2], [3, 4], [5, 6]]),
      None),
     ('data', 
-     np.asarray([[1, 2], [3, 4], [5, 6]]),
-     cls2._data_collection_class().from_ndarray(np.asarray([[1, 2], [3, 4], [5, 6]])),
+     np.asarray([[1, 2], [3, 4], [5, 6]]) if HAS_NUMPY else [[1, 2], [3, 4], [5, 6]],
+     cls2._data_collection_class().from_ndarray(
+         np.asarray([[1, 2], [3, 4], [5, 6]])
+     ) if HAS_NUMPY else cls2._data_point_class().from_array([[1, 2], [3, 4], [5, 6]]),
      None),
     ('x',
      [1, 3, 5],
-     np.asarray([1, 3, 5]),
+     np.asarray([1, 3, 5]) if HAS_NUMPY else [1, 3, 5],
      None),
     ('y',
      [2, 4, 6],
-     np.asarray([2, 4, 6]),
+     np.asarray([2, 4, 6]) if HAS_NUMPY else [2, 4, 6],
      None),
     ('x',
-     np.asarray([1, 3, 5]),
-     np.asarray([1, 3, 5]),
+     np.asarray([1, 3, 5]) if HAS_NUMPY else [1, 3, 5],
+     np.asarray([1, 3, 5]) if HAS_NUMPY else [1, 3, 5],
      None),
     ('y',
-     np.asarray([2, 4, 6]),
-     np.asarray([2, 4, 6]),
+     np.asarray([2, 4, 6]) if HAS_NUMPY else [2, 4, 6],
+     np.asarray([2, 4, 6]) if HAS_NUMPY else [2, 4, 6],
      None),
 ])
 def test_BarSeries__setattr__(name, value, expected, error):
