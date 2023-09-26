@@ -9,12 +9,6 @@ job:
       env: TOXENV=py311
     - python: "3.10"
       dist: focal
-      env: TOXENV=ppwonumpy310
-    - python: "3.11"
-      dist: bionic
-      env: TOXENV=ppwonumpy311
-    - python: "3.10"
-      dist: focal
       env: TOXENV=coverage
     - python: "3.10"
       dist: focal
