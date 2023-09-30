@@ -48,7 +48,7 @@ class ConnectionBase(DataBase):
         self._to = validators.string(value, allow_empty = True)
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):

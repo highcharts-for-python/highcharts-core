@@ -1009,20 +1009,20 @@ class Chart(HighchartsMeta):
 
     @classmethod
     def from_csv_in_rows(cls,
-                 as_string_or_file,
-                 series_type = 'line',
-                 has_header_row = True,
-                 series_kwargs = None,
-                 options_kwargs = None,
-                 chart_kwargs = None,
-                 delimiter = ',',
-                 null_text = 'None',
-                 wrapper_character = "'",
-                 line_terminator = '\r\n',
-                 wrap_all_strings = False,
-                 double_wrapper_character_when_nested = False,
-                 escape_character = "\\",
-                 **kwargs):
+                         as_string_or_file,
+                         series_type = 'line',
+                         has_header_row = True,
+                         series_kwargs = None,
+                         options_kwargs = None,
+                         chart_kwargs = None,
+                         delimiter = ',',
+                         null_text = 'None',
+                         wrapper_character = "'",
+                         line_terminator = '\r\n',
+                         wrap_all_strings = False,
+                         double_wrapper_character_when_nested = False,
+                         escape_character = "\\",
+                         **kwargs):
         """Create a new :class:`Chart <highcharts_core.chart.Chart>` instance with
         data populated from a CSV string or file.
 

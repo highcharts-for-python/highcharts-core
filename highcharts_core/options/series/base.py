@@ -2126,7 +2126,7 @@ class SeriesBase(SeriesOptions):
                          container = container,
                          retries = retries,
                          interval = interval)
-        
+
     def convert_to(self, series_type):
         """Creates a new series of ``series_type`` from the current series.
         
