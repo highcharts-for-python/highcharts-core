@@ -483,6 +483,7 @@ class SeriesBase(SeriesOptions):
                       double_wrapper_character_when_nested = False,
                       escape_character = "\\",
                       series_in_rows = False,
+                      series_index = True,
                       **kwargs):
         """Replace the existing
         :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` property
@@ -497,6 +498,16 @@ class SeriesBase(SeriesOptions):
               .. code-block:: python
 
                 my_series = LineSeries()
+                
+                # Minimal code - will attempt to update the line series
+                # taking x-values from the first column, and y-values from
+                # the second column. If there are too many columns in the CSV,
+                # will throw an error.
+                my_series = my_series.from_csv('some-csv-file.csv')
+                
+                # More precise code - will attempt to update the line series
+                # mapping columns in the CSV file to properties on the series
+                # instance.
                 my_series = my_series.from_csv('some-csv-file.csv',
                                                property_column_map = {
                                                    'x': 0,
@@ -505,11 +516,20 @@ class SeriesBase(SeriesOptions):
                                                })
 
             As the example above shows, data is loaded into the ``my_series`` instance
-            from the CSV file with a filename ``some-csv-file.csv``. The
-            :meth:`x <CartesianData.x>`
-            values for each data point will be taken from the first (index 0) column in
-            the CSV file. The :meth:`y <CartesianData.y>` values will be taken from the
-            fourth (index 3) column in the CSV file. And the :meth:`id <CartesianData.id>`
+            from the CSV file with a filename ``some-csv-file.csv``. Unless otherwise
+            specified, the :meth:`.x <CartesianData.x>` values for each data point will
+            be taken from the first (index 0) column in the CSV file, while the 
+            :meth:`.y <CartesianData.y>` values will be taken from the second column.
+            
+            If the CSV has more than 2 columns, then this will throw an
+            :exc:`HighchartsCSVDeserializationError` because the function is not certain
+            which columns to use to update the series. If this happens, you can precisely
+            specify which columns to use by providing a ``property_column_map`` argument, 
+            as shown in the second example. In that second example, the
+            :meth:`.x <CartesianData.x>` values for each data point will be taken from 
+            the first (index 0) column in the CSV file. The :meth:`.y <CartesianData.y>` 
+            values will be taken from the fourth (index 3) column in the CSV file. And 
+            the :meth:`.id <CartesianData.id>`
             values will be taken from a column whose header row is labeled ``'id'``
             (regardless of its index).
 
@@ -524,12 +544,12 @@ class SeriesBase(SeriesOptions):
 
         :type as_string_or_file: :class:`str <python:str>` or Path-like
 
-        :param property_column_map: A :class:`dict <python:dict>` used to indicate which
-          data point property should be set to which CSV column. The keys in the
-          :class:`dict <python:dict>` should correspond to properties in the data point
-          class, while the value can either be a numerical index (starting with 0) or a
-          :class:`str <python:str>` indicating the label for the CSV column. Defaults to
-          :obj:`None <python:None>`.
+        :param property_column_map: An optional :class:`dict <python:dict>` used to 
+          indicate which data point property should be set to which CSV column. The keys
+          in the :class:`dict <python:dict>` should correspond to properties in the data 
+          point class, while the value can either be a numerical index (starting with 0) 
+          or a :class:`str <python:str>` indicating the label for the CSV column. 
+          Defaults to :obj:`None <python:None>`.
 
           .. warning::
 
@@ -601,6 +621,14 @@ class SeriesBase(SeriesOptions):
           the series name taken from the row index. Defaults to 
           :obj:`False <python:False>`.
         :type series_in_rows: :class:`bool <python:bool>`
+        
+        :param series_index: if :obj:`None <python:None>`, will raise a 
+          :exc:`HighchartsCSVDeserializationError <highcharts_core.errors.HighchartsCSVDeserializationError>`
+          if the CSV data contains more than one series and no ``property_column_map`` 
+          is provided. Otherwise, will update the instance with the series found 
+          in the CSV at the ``series_index`` value. Defaults to 
+          :obj:`None <python:None>`.
+        :type series_index: :class:`int <python:int>` or :obj:`None <python:None>`
 
         :param **kwargs: Remaining keyword arguments will be attempted on the resulting
           :term:`series` instance and the data points it contains.
@@ -622,16 +650,19 @@ class SeriesBase(SeriesOptions):
             double_wrapper_character_when_nested = double_wrapper_character_when_nested,
             escape_character = escape_character,
             series_in_rows = series_in_rows,
+            series_index = series_index,
             **kwargs
         )
-        
-        if isinstance(new_instance, list):
-            raise errors.HighchartsPandasDeserializationError(
+
+        if series_index is None and isinstance(new_instance, list):
+            raise errors.HighchartsCSVDeserializationError(
                 f'Expected data for a single series, but got {len(new_instance)} when '
                 f'loading from CSV. Please either modify the structure of your CSV '
                 f'or provide more targeted instructions using the property_column_map '
                 f'argument.'
             )
+        elif isinstance(new_instance, list):
+            new_instance = new_instance[series_index]
 
         self.data = new_instance.data
 
@@ -940,6 +971,7 @@ class SeriesBase(SeriesOptions):
                  double_wrapper_character_when_nested = False,
                  escape_character = "\\",
                  series_in_rows = False,
+                 series_index = None,
                  **kwargs):
         """Create a new :term:`series` instance with a
         :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` property
@@ -1097,6 +1129,7 @@ class SeriesBase(SeriesOptions):
                 wrap_all_strings = wrap_all_strings,
                 double_wrapper_character_when_nested = double_wrapper_character_when_nested,
                 escape_character = escape_character,
+                series_index = series_index,
                 **kwargs
             )
 
@@ -1155,7 +1188,10 @@ class SeriesBase(SeriesOptions):
             
             if len(series_list) == 1:
                 return series_list[0]
-            
+
+            if series_index is not None:
+                return series_list[index]
+
             return series_list
 
         # SCENARIO 3: No Explicit Properties
@@ -1187,9 +1223,9 @@ class SeriesBase(SeriesOptions):
                 )
 
         try:
-            series_index = kwargs.get('index', columns[0])
+            series_idx = kwargs.get('index', columns[0])
         except IndexError:
-            series_index = kwargs.get('index', 0)
+            series_idx = kwargs.get('index', 0)
 
         column_count = len(columns)
         if not columns:
@@ -1204,7 +1240,7 @@ class SeriesBase(SeriesOptions):
             if not props_from_array:
                 props_from_array = ['x', 'y']
             
-            property_map[props_from_array[0]] = [x.get(series_index, None) 
+            property_map[props_from_array[0]] = [x.get(series_idx, None) 
                                                  for x in csv_records]
 
             for index, prop in enumerate(props_from_array[1:]):
@@ -1260,7 +1296,7 @@ class SeriesBase(SeriesOptions):
             if not props_from_array:
                 props_from_array = ['x', 'y']
 
-            property_map[props_from_array[0]] = [x.get(series_index, None) 
+            property_map[props_from_array[0]] = [x.get(series_idx, None) 
                                                  for x in csv_records]
 
             for index, prop in enumerate(props_from_array[1:]):
@@ -1279,6 +1315,9 @@ class SeriesBase(SeriesOptions):
                     setattr(series_instance, key, kwargs[key])
 
             series_list.append(series_instance)
+
+        if series_index is not None:
+            return series_list[series_index]
 
         return series_list
 
