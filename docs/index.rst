@@ -27,6 +27,7 @@ Highcharts Core for Python
   FAQ <faq>
   Toolkit Components and Roadmap <toolkit>
   Using Highcharts Core for Python <using>
+  Tutorials <tutorial>
   API Reference <api>
   Error Reference <errors>
   Getting Help <support>
@@ -211,48 +212,52 @@ Hello World, and Basic Usage
 
   .. code-block:: python
 
+    # from a primitive array, using keyword arguments
+    my_chart = Chart(data = [[1, 23], [2, 34], [3, 45]], 
+                     series_type = 'line')
+
+    # from a primitive array, using the .from_array() method
+    my_chart = Chart.from_array([[1, 23], [2, 34], [3, 45]], 
+                                series_type = 'line')
+
+    # from a Numpy ndarray, using keyword arguments
+    my_chart = Chart(data = numpy_array, series_type = 'line')
+
+    # from a Numpy ndarray, using the .from_array() method
+    my_chart = Chart.from_array(data = numpy_array, series_type = 'line')
+
     # from a JavaScript file
-    my_chart = highcharts.Chart.from_js_literal('my_js_literal.js')
+    my_chart = Chart.from_js_literal('my_js_literal.js')
 
     # from a JSON file
-    my_chart = highcharts.Chart.from_json('my_json.json')
+    my_chart = Chart.from_json('my_json.json')
 
     # from a Python dict
-    my_chart = highcharts.Chart.from_dict(my_dict_obj)
+    my_chart = Chart.from_dict(my_dict_obj)
 
     # from a Pandas dataframe
-    my_chart = highcharts.Chart.from_pandas(df,
-                                            property_map = {
-                                                'x': 'transactionDate',
-                                                'y': 'invoiceAmt',
-                                                'id': 'id'
-                                            },
-                                            series_type = 'line')
+    my_chart = Chart.from_pandas(df)
 
     # from a PySpark dataframe
-    my_chart = highcharts.Chart.from_pyspark(df,
-                                             property_map = {
-                                                 'x': 'transactionDate',
-                                                 'y': 'invoiceAmt',
-                                                 'id': 'id'
-                                             },
-                                             series_type = 'line')
+    my_chart = Chart.from_pyspark(df,
+                                  property_map = {
+                                      'x': 'transactionDate',
+                                      'y': 'invoiceAmt',
+                                      'id': 'id'
+                                  },
+                                  series_type = 'line')
 
     # from a CSV
-    my_chart = highcharts.Chart.from_csv('/some_file_location/filename.csv'
-                                         column_property_map = {
-                                            'x': 0,
-                                            'y': 4,
-                                            'id': 14
-                                         },
-                                         series_type = 'line')
+    my_chart = Chart.from_csv('/some_file_location/filename.csv')
 
     # from a HighchartsOptions configuration object
-    my_chart = highcharts.Chart.from_options(my_options)
+    my_chart = Chart.from_options(my_options)
 
-    # from a Series configuration
-    my_chart = highcharts.Chart.from_series(my_series)
+    # from a Series configuration, using keyword arguments
+    my_chart = Chart(series = my_series)
 
+    # from a Series configuration, using .from_series()
+    my_chart = Chart.from_series(my_series)
 
 3. Configure Global Settings (optional)
 =============================================
@@ -283,6 +288,7 @@ Hello World, and Basic Usage
     from highcharts_core.options.title import Title
     from highcharts_core.options.credits import Credits
 
+    # EXAMPLE 1.
     # Using dicts
     my_chart.title = {
         'align': 'center'
@@ -293,7 +299,7 @@ Hello World, and Basic Usage
 
     my_chart.credits = {
         'enabled': True,
-        'href': 'https://www.highcharts.com/',
+        'href': 'https://www.highchartspython.com/',
         'position': {
             'align': 'center',
             'vertical_align': 'bottom',
@@ -308,16 +314,20 @@ Hello World, and Basic Usage
         'text': 'Chris Modzelewski'
     }
 
+    # EXAMPLE 2.
     # Using direct objects
     from highcharts_core.options.title import Title
     from highcharts_core.options.credits import Credits
 
-    my_title = Title(text = 'The Title for My Chart', floating = True, align = 'center')
+    my_title = Title(text = 'The Title for My Chart',
+                     floating = True, 
+                     align = 'center')
     my_chart.options.title = my_title
 
-    my_credits = Credits(text = 'Chris Modzelewski', enabled = True, href = 'https://www.highcharts.com')
+    my_credits = Credits(text = 'Chris Modzelewski', 
+                         enabled = True, 
+                         href = 'https://www.highchartspython.com')
     my_chart.options.credits = my_credits
-
 
 5. Generate the JavaScript Code for Your Chart
 =================================================
@@ -357,6 +367,13 @@ that will render the chart wherever it is you want it to go:
     # to an image file (and as in-memory bytes)
     my_image_bytes = my_chart.download_chart(filename = 'my_target_file.png',
                                              format = 'png')
+
+8. Render Your Chart in a Jupyter Notebook
+===============================================
+
+  .. code-block:: python
+
+    my_chart.display()
 
 --------------
 

@@ -1,19 +1,13 @@
 .. code-block:: python
 
   from highcharts_core.chart import Chart
-  from highcharts_core.options.series.area import LineSeries
   from highcharts_core.headless_export import ExportServer
 
   custom_server = ExportServer(url = 'https://www.mydomain.dev/some_pathname_goes_here')
 
-  my_chart = Chart(container = 'target_div',
-                   options = {
-                       'series': [
-                           LineSeries(data = [0, 5, 3, 5])
-                       ]
-                   },
-                   variable_name = 'myChart')
-
+  my_chart = Chart(data = [0, 5, 3, 5],
+                   series_type = 'line')
+ 
   # Download a PNG version of the chart in memory within your Python code.
   my_png_image = my_chart.download_chart(format = 'png',
                                          server_instance = custom_server)

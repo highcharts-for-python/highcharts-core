@@ -56,11 +56,13 @@
         $ pip install highcharts-core[soft]
 
     * `IPython <https://ipython.org/>`__ v. 8.10 or higher
+    * `Jupyter Notebook <https://jupyter.org/>`__ v.6.4 or higher
     * `orjson <https://github.com/ijl/orjson>`__ v.3.7.7 or higher
     * `NumPy <https://numpy.org>`__ v.1.19.3 or higher
     * `pandas <https://pandas.pydata.org/>`_ v. 1.3 or higher
     * `pyspark <https://spark.apache.org/docs/latest/api/python/index.html>`_ v.3.3 or
       higher
+
 
   .. tab:: Developer
 

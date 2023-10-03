@@ -84,3 +84,95 @@ provided that you adhere to the terms of our :doc:`license`.
 
 Absolutely! We encourage contributions to the toolkit from the community! For more information, please read our :doc:`Contributor Guide <contributing>`.
 
+-----------
+
+******************************
+Running into Issues
+******************************
+
+**In Jupyter Notebook, I keep getting an error that says "Something went wrong with the Highcharts.js script." What gives?**
+
+This is a known issue affecting Jupyter Notebook users, but it can be caused by multiple different things:
+
+*Network Connectivity*. When calling :meth:`Chart.display() <highcharts_core.chart.Chart.display>`, 
+**Highcharts for Python** will attempt to load the required Highcharts (JS) JavaScript libraries into the
+environment where where Jupyter Notebook is running. By default, **Highcharts for Python** tries for 5 seconds.
+But if the relevant scripts have not (yet) loaded in 5 seconds, it will display an error. You can tell Jupyter
+to wait longer by adjusting the ``retries`` and ``interval`` properties on the ``.display()`` method. For example:
+
+  .. code-block:: python
+
+    # To wait for 7 seconds
+    my_chart.display(retries = 7, interval = 1000)
+
+    # To wait for 10 seconds
+    my_chart.display(retries = 10)
+
+*Incorrect IPython, Jupyter Notebook, or Jupyter Lab versions*. Please be sure to check the versions of
+IPython, Jupyter Notebook, and Jupyter Lab that you are using in your runtime environment. You can do this
+by running:
+
+  .. code-block:: bash
+
+    $ pip list
+
+  and then finding the entries for ``ipython``, ``notebook``, and ``jupyterlab``. Please check those versions 
+  against our (soft) dependencies:
+
+    .. include:: _dependencies.rst
+
+If you are using older versions, you can upgrade it by executing:
+
+  .. code-block:: bash
+
+    $ pip install --upgrade ipython notebook jupyterlab
+
+*VSCode Extension Conflict*. This is the most pernicious cause of this behavior. When you are running
+Jupyter Notebook within VSCode *and* have various Jupyter Notebook-related extensions installed/enabled,
+those extensions can *sometimes* cause this error. Unfortunately, it is not consistent, and the same
+extensions in two different environments may or may not produce this behavior. However, users report that 
+disabling those extensions, restarting VSCode, and then re-enabling
+those extensions seems to solve that problem. However, to reproduce this *very* inconsistent error, we'd
+appreciate if you could comment in `the relevant Github issue <https://github.com/highcharts-for-python/highcharts-core/issues/46>`__ to let us know which extensions you have installed when this problem occurs.
+
+**I'm getting a Highcharts error about boost/turbo mode - what does that mean?**
+
+Highcharts (JS) supports two similar features called "boost mode" and "turbo mode" that 
+accelerate rendering of the visualization in your users' browsers. However, these modes 
+work best when your chart's data is represented as a primitive array instead of as a full
+object:
+
+  .. list-table::
+    :widths: 50 50
+    :header-rows: 1
+
+    * - Primitive Array
+      - Full Object
+    * - .. code-block:: python
+
+          [
+              [1, 23],
+              [2, 34],
+              [3, 45]
+          ]
+      - .. code-block:: python
+
+          [
+              {'x': 1, 'y': 23},
+              {'x': 2, 'y': 34},
+              {'x': 3, 'y': 45}
+          ]
+
+When rendering a chart whose data is contained in full objects, by default Highcharts (JS) disables
+boost/turbo mode if there are more data points than a configurable threshold. You can adjust the thresholds
+using various options, including :meth:`.turbo_threshold <highcharts_core.options.series.base.SeriesBase.turbo_threshold>`, 
+:meth:`.boost_threshold <highcharts_core.options.series.base.SeriesBase.boost_threshold>` and the
+configuration of chart-level :class:`Boost <highcharts_core.options.boost.Boost>` options.
+
+  .. seealso::
+
+    * Highcharts (JS) Documentation: `Boost module <https://www.highcharts.com/docs/advanced-chart-features/boost-module>`__
+    * :class:`Boost <highcharts_core.options.boost.Boost>` options
+    * Plot Options: :meth:`.boost_threshold <highcharts_core.options.plot_options.generic.GenericTypeOptions.turbo_threshold>`
+    * Series Configuration: :meth:`.boost_threshold <highcharts_core.options.series.base.SeriesBase.boost_threshold>`
+    * Series Configuration: :meth:`.turbo_threshold <highcharts_core.options.series.base.SeriesBase.turbo_threshold>`
