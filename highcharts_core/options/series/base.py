@@ -217,7 +217,7 @@ class SeriesBase(SeriesOptions):
         if not utility_functions.is_ndarray(value) and not value:
             self._data = None
         else:
-            self._data = DataBase.from_array(value)
+            self._data = self._data_point_class().from_array(value)
               
     @property
     def id(self) -> Optional[str]:
@@ -471,6 +471,57 @@ class SeriesBase(SeriesOptions):
 
         return untrimmed
 
+    def load_from_array(self, value):
+        """Update the :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>`
+        property with data loaded from an iterable in ``value``.
+
+        :param value: The value that should contain the data which will be converted into data
+          point instances.
+
+          .. note::
+
+            If ``value`` is not an iterable, it will be converted into an iterable to be
+            further de-serialized correctly.
+
+        :type value: iterable
+
+        """
+        data_point_cls = self._data_point_class()
+
+        self.data = data_point_cls.from_array(value)
+
+    @classmethod
+    def from_array(cls, value, series_kwargs = None):
+        """Create one instance of the series with ``data`` populated from ``value``.
+
+        :param value: The value that should contain the data which will be converted into data
+          point instances.
+
+          .. note::
+
+            If ``value`` is not an iterable, it will be converted into an iterable to be
+            further de-serialized correctly.
+
+        :type value: iterable
+        
+        :param series_kwargs: Optional keyword arguments to apply when instanting the 
+          series. Defaults to :obj:`None <python:None>`.
+        :type series_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
+        
+        :returns: An instance of the series type with ``data`` populated from the value.
+        :rtype: :class:`SeriesBase <highcharts_core.options.series.base.SeriesBase>`
+          descendent
+        """
+        series_kwargs = validators.dict(series_kwargs, allow_empty = True) or {}
+
+        data_point_cls = cls._data_point_class()
+        data_points = data_point_cls.from_array(value)
+
+        series_kwargs['data'] = data_points
+        series = cls(**series_kwargs)
+
+        return series
+
     def load_from_csv(self,
                       as_string_or_file,
                       property_column_map = None,
@@ -499,39 +550,50 @@ class SeriesBase(SeriesOptions):
 
                 my_series = LineSeries()
                 
-                # Minimal code - will attempt to update the line series
+                # EXAMPLE 1. Minimal code - will attempt to update the line series
                 # taking x-values from the first column, and y-values from
                 # the second column. If there are too many columns in the CSV,
                 # will throw an error.
+                
                 my_series = my_series.from_csv('some-csv-file.csv')
                 
-                # More precise code - will attempt to update the line series
+                # EXAMPLE 2. More precise code - will attempt to update the line series
                 # mapping columns in the CSV file to properties on the series
                 # instance.
+                
                 my_series = my_series.from_csv('some-csv-file.csv',
                                                property_column_map = {
                                                    'x': 0,
                                                    'y': 3,
                                                    'id': 'id'
                                                })
+                
+                # EXAMPLE 3. More precise code - will update the line series
+                # using a specific series generated from the CSV file.
+                
+                my_series = my_series.from_csv('some-csv-file.csv', series_index = 2)
 
             As the example above shows, data is loaded into the ``my_series`` instance
-            from the CSV file with a filename ``some-csv-file.csv``. Unless otherwise
-            specified, the :meth:`.x <CartesianData.x>` values for each data point will
-            be taken from the first (index 0) column in the CSV file, while the 
-            :meth:`.y <CartesianData.y>` values will be taken from the second column.
+            from the CSV file with a filename ``some-csv-file.csv``. As shown in
+            EXAMPLE 1, unless otherwise specified, the :meth:`.x <CartesianData.x>` 
+            values for each data point will be taken from the first (index 0) column
+            in the CSV file, while the :meth:`.y <CartesianData.y>` values will be 
+            taken from the second column.
             
             If the CSV has more than 2 columns, then this will throw an
             :exc:`HighchartsCSVDeserializationError` because the function is not certain
-            which columns to use to update the series. If this happens, you can precisely
-            specify which columns to use by providing a ``property_column_map`` argument, 
-            as shown in the second example. In that second example, the
-            :meth:`.x <CartesianData.x>` values for each data point will be taken from 
-            the first (index 0) column in the CSV file. The :meth:`.y <CartesianData.y>` 
-            values will be taken from the fourth (index 3) column in the CSV file. And 
-            the :meth:`.id <CartesianData.id>`
-            values will be taken from a column whose header row is labeled ``'id'``
-            (regardless of its index).
+            which columns to use to update the series. If this happens, you can either:
+            
+              #. As shown in EXAMPLE 2, precisely specify which columns to use by 
+                 providing a ``property_column_map`` argument. In EXAMPLE 2, the
+                 :meth:`.x <CartesianData.x>` values for each data point will be taken
+                 from the first (index 0) column in the CSV file. The 
+                 :meth:`.y <CartesianData.y>` values will be taken from the fourth 
+                 (index 3) column in the CSV file. And the 
+                 :meth:`.id <CartesianData.id>` values will be taken from a column whose
+                 header row is labeled ``'id'`` (regardless of its index).
+              #. Supply a ``series_index`` argument, which indicates which of the series
+                 generated from the CSV file should be used to update the instance.
 
         :param as_string_or_file: The CSV data to use to pouplate data. Accepts either
           the raw CSV data as a :class:`str <python:str>` or a path to a file in the
@@ -973,8 +1035,8 @@ class SeriesBase(SeriesOptions):
                  series_in_rows = False,
                  series_index = None,
                  **kwargs):
-        """Create a new :term:`series` instance with a
-        :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` property
+        """Create one or more new :term:`series` instances with
+        :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>`
         populated from data in a CSV string or file.
 
           .. note::
@@ -985,10 +1047,29 @@ class SeriesBase(SeriesOptions):
 
               .. code-block:: python
 
+                # Create one or more LineSeries instances from the CSV file "some-csv-file.csv".
+
+                # EXAMPLE 1. The minimum code to produce one series for each
+                # column in the CSV file (excluding the first column):
+
+                my_series = LineSeries.from_csv('some-csv-file.csv')
+
+                # EXAMPLE 2. Produces ONE series with more precise configuration:
+
                 my_series = LineSeries.from_csv('some-csv-file.csv',
                                                 property_column_map = {
                                                     'x': 0,
                                                     'y': 3,
+                                                    'id': 'id'
+                                                })
+
+                # EXAMPLE 3. Produces THREE series instances with 
+                # more precise configuration:
+
+                my_series = LineSeries.from_csv('some-csv-file.csv',
+                                                property_column_map = {
+                                                    'x': 0,
+                                                    'y': [3, 5, 8],
                                                     'id': 'id'
                                                 })
 
@@ -1019,12 +1100,31 @@ class SeriesBase(SeriesOptions):
           :class:`str <python:str>` indicating the label for the CSV column. Defaults to
           :obj:`None <python:None>`.
 
-          .. warning::
+            .. note::
+          
+              If any of the values in ``property_column_map`` contain an iterable, then
+              one series will be produced for each item in the iterable. For example,
+              the following:
+            
+                .. code-block:: python
+            
+                  {
+                      'x': 0,
+                      'y': [3, 5, 8]
+                  }
+              
+              will return *three* series, each of which will have its 
+              :meth:`.x <CartesianData.x>` value populated from the first column 
+              (index 0), and whose :meth:`.y <CartesianData.y>`
+              values will be populated from the fourth, sixth, and ninth columns (indices 
+              3, 5, and 8), respectively.
 
-            If the ``property_column_map`` uses :class:`str <python:str>` values, the CSV
-            file *must* have a header row (this is expected, by default). If there is no
-            header row and a :class:`str <python:str>` value is found, a
-            :exc:`HighchartsCSVDeserializationError` will be raised.
+            .. warning::
+
+              If the ``property_column_map`` uses :class:`str <python:str>` values, the CSV
+              file *must* have a header row (this is expected, by default). If there is no
+              header row and a :class:`str <python:str>` value is found, a
+              :exc:`HighchartsCSVDeserializationError` will be raised.
 
         :type property_column_map: :class:`dict <python:dict>` or :obj:`None <python:None>`
 
@@ -1100,6 +1200,12 @@ class SeriesBase(SeriesOptions):
           the series name taken from the row index. Defaults to ``False``.
           :obj:`False <python:False>`.
         :type series_in_rows: :class:`bool <python:bool>`
+
+        :param series_index: If supplied, return the series that Highcharts for Python
+          generated from the CSV at the ``series_index`` position. Defaults to 
+          :obj:`None <python:None>`, which returns all series generated from the CSV.
+        :type series_index: :class:`int <python:int>`, slice, or 
+          :obj:`None <python:None>`
 
         :param **kwargs: Remaining keyword arguments will be attempted on the resulting
           :term:`series` instance and the data points it contains.
@@ -1521,7 +1627,8 @@ class SeriesBase(SeriesOptions):
     def load_from_pandas(self,
                          df,
                          property_map = None,
-                         series_in_rows = False):
+                         series_in_rows = False,
+                         series_index = None):
         """Replace the contents of the
         :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` property
         with data points populated from a `pandas <https://pandas.pydata.org/>`_
@@ -1537,6 +1644,7 @@ class SeriesBase(SeriesOptions):
           class, while the value should indicate the label for the
           :class:`DataFrame <pandas:DataFrame>` column. Defaults to 
           :obj:`None <python:None>`.
+
         :type property_map: :class:`dict <python:dict>` or :obj:`None <python:None>`
 
         :param series_in_rows: if ``True``, will attempt a streamlined cartesian series
@@ -1545,22 +1653,38 @@ class SeriesBase(SeriesOptions):
           :obj:`False <python:False>`.
         :type series_in_rows: :class:`bool <python:bool>`
 
+        :param series_index: If supplied, return the series that Highcharts for Python
+          generated from ``df`` at the ``series_index`` value. Defaults to 
+          :obj:`None <python:None>`, which returns all series generated from ``df``.
+
+          .. warning::
+
+            If :obj:`None <python:None>` and Highcharts for Python generates multiple
+            series, then a :exc:`HighchartsPandasDeserializationError` will be raised.
+
+        :type series_index: :class:`int <python:int>`, or :obj:`None <python:None>`
+
         :raises HighchartsPandasDeserializationError: if ``property_map`` references
           a column that does not exist in the data frame
+        :raises HighchartsPandasDeserializationError: if ``series_index`` is 
+          :obj:`None <python:None>`, and it is ambiguous which series generated from
+          the dataframe should be used
         :raises HighchartsDependencyError: if `pandas <https://pandas.pydata.org/>`_ is
           not available in the runtime environment
         """
         cls = self.__class__
-        new_instance = cls.from_pandas(df, 
+        new_instance = cls.from_pandas(df,
                                        property_map = property_map,
                                        series_in_rows = series_in_rows)
-        if isinstance(new_instance, list):
+        if series_index is None and isinstance(new_instance, list):
             raise errors.HighchartsPandasDeserializationError(
                 f'Expected data for a single series, but got {len(new_instance)} when '
                 f'loading from df. Please either modify the structure of df '
                 f'or provide more targeted instructions using the property_map '
                 f'argument.'
             )
+        elif isinstance(new_instance, list):
+            new_instance = new_instance[series_index]
 
         self.data = new_instance.data
 
@@ -1776,11 +1900,46 @@ class SeriesBase(SeriesOptions):
                     property_map = None,
                     series_kwargs = None,
                     series_in_rows = False,
+                    series_index = None,
                     **kwargs):
         """Create one or more :term:`series` instances whose
         :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` properties
         are populated from a `pandas <https://pandas.pydata.org/>`_
         :class:`DataFrame <pandas:DataFrame>`.
+
+          .. code-block:: python
+
+            # Given a Pandas DataFrame instance named "df"
+            from highcharts_core.chart import Chart
+            from highcharts_core.options.series.area import LineSeries
+
+            # Creating a Series from the DataFrame
+        
+            ## EXAMPLE 1. Minimum code required. Creates one or more series.
+
+            my_series = LineSeries.from_pandas(df)
+
+            ## EXAMPLE 2. More precise configuration. Creates ONE series.
+
+            my_series = LineSeries.from_pandas(df, series_index = 2)
+
+            ## EXAMPLE 3. More precise configuration. Creates ONE series.
+
+            my_series = LineSeries.from_pandas(df,
+                                               property_map = {
+                                                  'x': 'date',
+                                                  'y': 'value',
+                                                  'id': 'id'
+                                               })
+        
+            ## EXAMPLE 4. More precise configuration. Creates THREE series.
+
+            my_series = LineSeries.from_pandas(df,
+                                               property_map = {
+                                                  'x': 'date',
+                                                  'y': ['value1', 'value2', 'value3'],
+                                                  'id': 'id'
+                                               })
 
         :param df: The :class:`DataFrame <pandas:DataFrame>` from which data should be
           loaded.
@@ -1792,6 +1951,26 @@ class SeriesBase(SeriesOptions):
           class, while the value should indicate the label for the
           :class:`DataFrame <pandas:DataFrame>` column. Defaults to 
           :obj:`None <python:None>`.
+
+            .. note::
+          
+              If any of the values in ``property_map`` contain an iterable, then
+              one series will be produced for each item in the iterable. For example,
+              the following:
+            
+                .. code-block:: python
+            
+                  {
+                      'x': 'timestamp',
+                      'y': ['value1', 'value2', 'value3']
+                  }
+              
+              will return *three* series, each of which will have its 
+              :meth:`.x <CartesianData.x>` value populated from the column
+              labeled ``'timestamp'``, and whose :meth:`.y <CartesianData.y>`
+              values will be populated from the columns labeled ``'value1'``,
+              ``'value2'``, and ``'value3'``, respectively.
+
         :type property_map: :class:`dict <python:dict>` or :obj:`None <python:None>`
 
         :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
@@ -1810,6 +1989,13 @@ class SeriesBase(SeriesOptions):
           the series name taken from the row index. Defaults to ``False``.
           :obj:`False <python:False>`.
         :type series_in_rows: :class:`bool <python:bool>`
+
+        :param series_index: If supplied, return the series that Highcharts for Python
+          generated from ``df`` at the ``series_index`` value. Defaults to 
+          :obj:`None <python:None>`, which returns all series generated from ``df``.
+
+        :type series_index: :class:`int <python:int>`, slice, or 
+          :obj:`None <python:None>`
 
         :param **kwargs: Remaining keyword arguments will be attempted on the resulting
           :term:`series` instance and the data points it contains.
@@ -1842,7 +2028,10 @@ class SeriesBase(SeriesOptions):
                                                      **kwargs)
             if len(series_list) == 1:
                 return series_list[0]
-            
+
+            if series_index is not None:
+                return series_list[series_index]
+
             return series_list
 
         # SCENARIO 2: Properties in KWARGS
@@ -1868,11 +2057,14 @@ class SeriesBase(SeriesOptions):
             
             if len(series_list) == 1:
                 return series_list[0]
-            
+
+            if series_index is not None:
+                return series_list[series_index]
+
             return series_list
 
         # SCENARIO 3: No Explicit Properties
-        series_index = kwargs.get('index', df.index)
+        series_idx = kwargs.get('index', df.index)
         column_count = len(df.columns)
         supported_dimensions = collection_cls._get_supported_dimensions()
         
@@ -1882,7 +2074,7 @@ class SeriesBase(SeriesOptions):
             props_from_array = data_point_cls._get_props_from_array(length = column_count)
             if not props_from_array:
                 props_from_array = ['x', 'y']
-            property_map[props_from_array[0]] = series_index
+            property_map[props_from_array[0]] = series_idx
 
             for index, prop in enumerate(props_from_array[1:]):
                 prop_value = df.iloc[:, index + 1].values
@@ -1929,7 +2121,7 @@ class SeriesBase(SeriesOptions):
             if not props_from_array:
                 props_from_array = ['x', 'y']
 
-            property_map[props_from_array[0]] = series_index
+            property_map[props_from_array[0]] = series_idx
 
             for index, prop in enumerate(props_from_array[1:]):
                 index = start + index
@@ -1947,6 +2139,9 @@ class SeriesBase(SeriesOptions):
                     setattr(series_instance, key, kwargs[key])
 
             series_list.append(series_instance)
+
+        if series_index is not None:
+            return series_list[index]
 
         return series_list
         

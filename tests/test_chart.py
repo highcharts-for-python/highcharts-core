@@ -1,6 +1,11 @@
 """Tests for ``highcharts.no_data``."""
 
 import pytest
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
 
 from json.decoder import JSONDecodeError
 
@@ -691,3 +696,65 @@ def test_from_csv(input_files, filename, property_map, kwargs, expected_series, 
             result = cls.from_csv(input_file,
                                   property_column_map = property_map,
                                   **kwargs)
+
+
+@pytest.mark.parametrize('value, expected_shape, has_ndarray, has_data_points, error', [
+    (np.asarray([
+        [0.0, 15.0], 
+        [10.0, -50.0], 
+        [20.0, -56.5], 
+        [30.0, -46.5], 
+        [40.0, -22.1],
+        [50.0, -2.5], 
+        [60.0, -27.7], 
+        [70.0, -55.7], 
+        [80.0, -76.5]
+    ]) if HAS_NUMPY else [
+        [0.0, 15.0], 
+        [10.0, -50.0], 
+        [20.0, -56.5], 
+        [30.0, -46.5], 
+        [40.0, -22.1],
+        [50.0, -2.5], 
+        [60.0, -27.7], 
+        [70.0, -55.7], 
+        [80.0, -76.5]
+    ], (9, 2), True, False, None),
+    ([
+        {
+            'id': 'some-value'
+        },
+        {
+            'id': 'some other value'
+        },
+    ], (2, 2), False, True, None),
+    
+    ('Not an Array', None, True, False, ValueError),
+])
+def test_from_array(value, expected_shape, has_ndarray, has_data_points, error):
+    if has_ndarray is False and has_data_points is False:
+        raise AssertionError('Test is invalid. has_ndarray or has_data_points must be '
+                             'True. Both were supplied as False.')
+    if not error:
+        result = cls.from_array(value)
+        assert result is not None
+        assert result.options.series is not None
+        assert len(result.options.series) == 1
+        assert result.options.series[0].data is not None
+
+        if has_ndarray:
+            data = result.options.series[0].data
+            if HAS_NUMPY:
+                assert data.ndarray is not None
+                assert data.ndarray.shape == expected_shape
+            else:
+                assert data.array is not None or data.data_points is not None
+                if data.array:
+                    assert len(data.array) == expected_shape[0]
+                else:
+                    assert len(data.data_points) == expected_shape[0]
+        if has_data_points:
+            assert len(result.options.series[0].data) == expected_shape[0]
+    else:
+        with pytest.raises(error):
+            result = cls.from_array(value)

@@ -284,21 +284,21 @@ class CallbackFunction(HighchartsMeta):
         :type callable: callable
         
         :param model: The generative AI model to use. 
-        Defaults to ``'gpt-3.5-turbo'``. Accepts:
+          Defaults to ``'gpt-3.5-turbo'``. Accepts:
         
-          * ``'gpt-3.5-turbo'`` (default)
-          * ``'gpt-3.5-turbo-16k'``
-          * ``'gpt-4'``
-          * ``'gpt-4-32k'``
-          * ``'claude-instant-1'``
-          * ``'claude-2'``
+            * ``'gpt-3.5-turbo'`` (default)
+            * ``'gpt-3.5-turbo-16k'``
+            * ``'gpt-4'``
+            * ``'gpt-4-32k'``
+            * ``'claude-instant-1'``
+            * ``'claude-2'``
 
         :type model: :class:`str <python:str>`
 
         :param api_key: The API key used to authenticate against the
-        generative AI provider. Defaults to
-        :obj:`None <python:None>`, which then tries to find the API
-        key in the appropriate environment variable:
+          generative AI provider. Defaults to
+          :obj:`None <python:None>`, which then tries to find the API
+          key in the appropriate environment variable:
 
             * ``OPENAI_API_KEY`` if using an 
               `OpenAI <https://www.openai.com/>`__ provided model
@@ -311,7 +311,8 @@ class CallbackFunction(HighchartsMeta):
           the underlying model API. Useful for advanced configuration of
           the model's behavior.
 
-        :returns: The JavaScript source code produced by the model.
+        :returns: The ``CallbackFunction`` representation of the JavaScript
+          code that does the same as the ``callable`` argument.
         
           .. warning::
 
@@ -329,8 +330,8 @@ class CallbackFunction(HighchartsMeta):
             That being said, for "quick and dirty" EDA, fast prototyping, etc.
             the functionality may be "good enough".
 
-        :rtype: :class:`str <python:str>`
-        
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>`
+
         :raises HighchartsValueError: if ``callable`` is not a Python callable
         :raises HighchartsValueError: if no ``api_key`` is available
         :raises HighchartsDependencyError: if a required dependency is not
