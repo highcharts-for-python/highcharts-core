@@ -934,6 +934,7 @@ class SeriesBase(SeriesOptions):
         iterable_values = {}
         number_of_series = 1
         mismatched_series = {}
+        names = []
         for key in cleaned_column_map:
             map_value = cleaned_column_map[key]
 
@@ -955,6 +956,10 @@ class SeriesBase(SeriesOptions):
                     mismatched_series[key] = implied_series
                 
                 iterable_values[key] = map_value
+                if key == 'y':
+                    name_list = [x if isinstance(x, str) else columns[x]
+                                 for x in map_value]
+                    names.extend(name_list)
             else:
                 if isinstance(map_value, str) and map_value not in columns:
                     raise errors.HighchartsCSVDeserializationError(
@@ -971,7 +976,12 @@ class SeriesBase(SeriesOptions):
                     )
 
                 fixed_values[key] = map_value
-        
+                if key == 'y':
+                    if isinstance(map_value, str):
+                        names.append(map_value)
+                    else:
+                        names.append(columns[map_value])
+
         if mismatched_series:
             raise errors.HighchartsCSVDeserializationError(
                 f'Unable to create series from CSV. The property map implied '
@@ -992,7 +1002,7 @@ class SeriesBase(SeriesOptions):
                         if checkers.is_numeric(test_value):
                             value = test_value
                     prop_array[i] = value
-                    
+
                 setattr(collection_instance, key, prop_array)
             for key in fixed_values:
                 fixed_value = fixed_values[key]
@@ -1013,6 +1023,10 @@ class SeriesBase(SeriesOptions):
         for index in range(number_of_series):
             series_kwargs['data'] = collections[index]
             series_instance = cls(**series_kwargs)
+            try:
+                series_instance.name = names[index]
+            except IndexError:
+                pass
             for key in kwargs:
                 if key not in series_kwargs and key not in cleaned_column_map:
                     setattr(series_instance, key, kwargs[key])
@@ -1352,8 +1366,12 @@ class SeriesBase(SeriesOptions):
                                                  for x in csv_records]
 
             for index, prop in enumerate(props_from_array[1:]):
-                prop_array = [x.get(columns[index + 1], index + 1)
-                              for x in csv_records]
+                if series_idx is not None:
+                    prop_array = [x.get(columns[index + 1], index + 1)
+                                  for x in csv_records]
+                else:
+                    prop_array = [x.get(columns[index], index)
+                                  for x in csv_records]
                 for i, value in enumerate(prop_array):
                     if value and isinstance(value, str) and ',' in value:
                         test_value = value.replace(',', '')
@@ -1377,9 +1395,16 @@ class SeriesBase(SeriesOptions):
 
         # SCENARIO 3b: Multiple Series, Data Frame Columns correspond to multiples of Data Point Properties
         reversed_dimensions = sorted(supported_dimensions, reverse = True)
+
         columns_per_series = None
         if reversed_dimensions:
             for dimension in reversed_dimensions:
+                if series_idx is not None and dimension > 1 and column_count % (dimension - 1) == 0:
+                    if dimension > 2 and props_from_array[-1] == 'name':
+                        columns_per_series = dimension - 2
+                    else:
+                        columns_per_series = dimension - 1
+                    break
                 if dimension > 1 and column_count % dimension == 0:
                     columns_per_series = dimension
                     break
@@ -1395,23 +1420,43 @@ class SeriesBase(SeriesOptions):
             )
 
         series_count = column_count // columns_per_series
+        if columns_per_series == 1 and series_idx:
+            series_count -= 1
+
         series_list = []
         for index in range(series_count):
-            start = len(series_list) * columns_per_series
+            start = 1 + (len(series_list) * columns_per_series)
 
             property_map = {}
-            props_from_array = data_point_cls._get_props_from_array(length = columns_per_series)
+            if series_idx is not None:
+                expected_length = columns_per_series + 1
+            else:
+                expected_length = columns_per_series
+                
+            props_from_array = data_point_cls._get_props_from_array(length = expected_length)
             if not props_from_array:
                 props_from_array = ['x', 'y']
 
             property_map[props_from_array[0]] = [x.get(series_idx, None) 
                                                  for x in csv_records]
             
-            for index, prop in enumerate(props_from_array[1:]):
-                index = start + index
-                prop_array = [x.get(columns[index + 1], index + 1) for x in csv_records]
+            has_implicit_series_name = 'name' not in kwargs and 'name' not in series_kwargs
+            if has_implicit_series_name:
+                try:
+                    series_name = columns[start]
+                except (IndexError, TypeError):
+                    series_name = None
+            else:
+                series_name = series_kwargs.get('name', None) or kwargs.get('name', None)
+
+            props_from_array = props_from_array[1:]
+            for idx, prop in enumerate(props_from_array):
+                index = start + idx
+
+                prop_array = [x.get(columns[index], idx) for x in csv_records]
+
                 property_map[prop] = prop_array
-            
+
             collection = collection_cls()
             for key in property_map:
                 try:
@@ -1427,6 +1472,9 @@ class SeriesBase(SeriesOptions):
             for key in kwargs:
                 if key not in series_kwargs and key not in property_map:
                     setattr(series_instance, key, kwargs[key])
+
+            if 'name' not in series_kwargs and 'name' not in kwargs:
+                series_instance.name = series_name
 
             series_list.append(series_instance)
 
