@@ -1567,6 +1567,7 @@ class Chart(HighchartsMeta):
                             series_kwargs = None,
                             options_kwargs = None,
                             chart_kwargs = None,
+                            series_index = None,
                             **kwargs):
         """Create a chart from a Pandas :class:`DataFrame <pandas:pandas.DataFrame>`, 
         treating each row in the dataframe as a :term:`series` instances.
@@ -1613,6 +1614,14 @@ class Chart(HighchartsMeta):
 
         :type chart_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
         
+        :param series_index: If supplied, generate the chart with the series that 
+          Highcharts for Python generated from ``df`` at the ``series_index`` position. 
+          Defaults to :obj:`None <python:None>`, which includes all series generated 
+          from ``df`` on the chart.
+
+        :type series_index: :class:`int <python:int>`, slice, or 
+          :obj:`None <python:None>`
+
         :param **kwargs: Additional keyword arguments that are - in turn - propagated to 
           the series created from the ``df``.
 
@@ -1631,6 +1640,7 @@ class Chart(HighchartsMeta):
                                options_kwargs = options_kwargs,
                                chart_kwargs = chart_kwargs,
                                series_in_rows = True,
+                               series_index = series_index,
                                **kwargs)
 
     @classmethod
@@ -1646,7 +1656,7 @@ class Chart(HighchartsMeta):
                     **kwargs):
         """Create a :class:`Chart <highcharts_core.chart.Chart>` instance whose
         series are populated from a `pandas <https://pandas.pydata.org/>`_
-        :class:`DataFrame <pandas:DataFrame>`.
+        :class:`DataFrame <pandas:pandas.DataFrame>`.
 
           .. code-block:: python
 
@@ -1680,15 +1690,15 @@ class Chart(HighchartsMeta):
                                       },
                                       series_type = 'line')
 
-        :param df: The :class:`DataFrame <pandas:DataFrame>` from which data should be
+        :param df: The :class:`DataFrame <pandas:pandas.DataFrame>` from which data should be
           loaded.
-        :type df: :class:`DataFrame <pandas:DataFrame>`
+        :type df: :class:`DataFrame <pandas:pandas.DataFrame>`
 
         :param property_map: A :class:`dict <python:dict>` used to indicate which
           data point property should be set to which column in ``df``. The keys in the
           :class:`dict <python:dict>` should correspond to properties in the data point
           class, while the value should indicate the label for the
-          :class:`DataFrame <pandas:DataFrame>` column. Defaults to 
+          :class:`DataFrame <pandas:pandas.DataFrame>` column. Defaults to 
           :obj:`None <python:None>`.
 
             .. note::
@@ -1776,22 +1786,37 @@ class Chart(HighchartsMeta):
         :raises HighchartsDependencyError: if `pandas <https://pandas.pydata.org/>`_ is
           not available in the runtime environment
         """
-        series_type = validators.string(series_type, allow_empty = False)
-        series_type = series_type.lower()
+        if not series_type:
+            raise errors.HighchartsValueError('series_type cannot be empty')
+        series_type = str(series_type).lower()
         if series_type not in SERIES_CLASSES:
             raise errors.HighchartsValueError(f'series_type expects a valid Highcharts '
                                               f'series type. Received: {series_type}')
 
-        options_kwargs = validators.dict(options_kwargs, allow_empty = True) or {}
-        chart_kwargs = validators.dict(chart_kwargs, allow_empty = True) or {}
-        kwargs = validators.dict(kwargs, allow_empty = True) or {}
+        if not isinstance(options_kwargs, (dict, UserDict, type(None))):
+            raise errors.HighchartsValueError(f'options_kwarts expects a dict. '
+                                              f'Received: {options_kwargs.__class__.__name__}')
+        if not options_kwargs:
+            options_kwargs = {}
+            
+        if not isinstance(chart_kwargs, (dict, UserDict, type(None))):
+            raise errors.HighchartsValueError(f'chart_kwargs expects a dict. '
+                                              f'Received: {chart_kwargs.__class__.__name__}')
+        if not chart_kwargs:
+            chart_kwargs = {}
+            
+        if not isinstance(kwargs, (dict, UserDict, type(None))):
+            raise errors.HighchartsValueError(f'kwargs expects a dict. '
+                                              f'Received: {kwargs.__class__.__name__}')
+        if not kwargs:
+            kwargs = {}
 
         series_cls = SERIES_CLASSES.get(series_type, None)
 
         if series_in_rows:
             series = series_cls.from_pandas_in_rows(df,
                                                     series_kwargs = series_kwargs,
-                                                    options_kwargs = options_kwargs,
+                                                    series_index = series_index,
                                                     **kwargs)
         else:
             series = series_cls.from_pandas(df,

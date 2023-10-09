@@ -234,7 +234,7 @@ class SinglePointData(SinglePointBase):
             2: ['y', 'name'],
             1: ['y'],
         }
-        return prop_list[length]
+        return cls._get_props_from_array_helper(prop_list, length)
 
     def to_array(self, force_object = False) -> List | Dict:
         """Generate the array representation of the data point (the inversion 

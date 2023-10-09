@@ -232,7 +232,7 @@ class CartesianData(DataBase):
             1: ['y'],
             2: ['x', 'y']
         }
-        return prop_list[length]
+        return cls._get_props_from_array_helper(prop_list, length)
 
     def to_array(self, force_object = False) -> List | Dict:
         """Generate the array representation of the data point (the inversion 
@@ -473,7 +473,7 @@ class Cartesian3DData(CartesianData):
             3: ['x', 'y', 'z'],
             2: ['y', 'z']
         }
-        return prop_list[length]
+        return cls._get_props_from_array_helper(prop_list, length)
 
     def to_array(self, force_object = False) -> List | Dict:
         """Generate the array representation of the data point (the inversion 
@@ -735,7 +735,7 @@ class CartesianValueData(CartesianData):
             3: ['x', 'y', 'value'],
             2: ['y', 'value'],
         }
-        return prop_list[length]
+        return cls._get_props_from_array_helper(prop_list, length)
 
     def to_array(self, force_object = False) -> List | Dict:
         """Generate the array representation of the data point (the inversion 

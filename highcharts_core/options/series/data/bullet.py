@@ -128,7 +128,7 @@ class BulletData(BarData):
             3: ['x', 'y', 'target'],
             2: ['y', 'target'],
         }
-        return prop_list[length]
+        return cls._get_props_from_array_helper(prop_list, length)
 
     def to_array(self, force_object = False) -> List | Dict:
         """Generate the array representation of the data point (the inversion 

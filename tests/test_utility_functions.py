@@ -141,3 +141,23 @@ if HAS_NUMPY:
         else:
             with pytest.raises(error):
                 result = utility_functions.is_arraylike(value)
+
+
+    class NdarraySubclass(np.ndarray):
+        pass
+
+
+    @pytest.mark.parametrize('value, expected, error', [
+        (np.asarray([[1, 2, 3], [4, 5, 6]]), True, None),
+        (NdarraySubclass((2, 1)), True, None),
+        ([1, 2, 3], False, None),
+        (123, False, None),
+        ('not a number', False, None),
+    ])
+    def test_is_ndarray(value, expected, error):
+        if not error:
+            result = utility_functions.is_ndarray(value)
+            assert result is expected
+        else:
+            with pytest.raises(error):
+                result = utility_functions.is_ndarray(value)

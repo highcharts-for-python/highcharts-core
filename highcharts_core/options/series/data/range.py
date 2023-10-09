@@ -252,7 +252,7 @@ class RangeData(DataBase):
             3: ['x', 'low', 'high'],
             2: ['low', 'high'],
         }
-        return prop_list[length]
+        return cls._get_props_from_array_helper(prop_list, length)
 
     def to_array(self, force_object = False) -> List | Dict:
         """Generate the array representation of the data point (the inversion 

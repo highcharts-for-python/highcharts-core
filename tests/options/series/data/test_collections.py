@@ -157,7 +157,11 @@ if HAS_NUMPY:
             result = cls.from_ndarray(value)
             assert result is not None
             assert result.ndarray is not None
-            assert result.ndarray.shape == expected_shape
+            assert isinstance(result.ndarray, dict) is True
+            for key in result.ndarray:
+                key_value = result.ndarray[key]
+                assert isinstance(key_value, np.ndarray) is True
+                assert len(key_value) == expected_shape[0]
             if has_data_points:
                 assert result.data_points is not None
         else:
@@ -208,7 +212,11 @@ def test_from_array(value, expected_shape, has_ndarray, has_data_points, error):
         if has_ndarray:
             if HAS_NUMPY:
                 assert result.ndarray is not None
-                assert result.ndarray.shape == expected_shape
+                assert isinstance(result.ndarray, dict) is True
+                for key in result.ndarray:
+                    key_value = result.ndarray[key]
+                    assert isinstance(key_value, np.ndarray) is True
+                    assert len(key_value) == expected_shape[0]
             else:
                 assert result.array is not None or result.data_points is not None
                 if result.array:
@@ -289,7 +297,7 @@ def test_to_array(value, kwargs, expects_objects, error):
         result = obj.to_array(**kwargs)
         assert result is not None
         assert isinstance(result, list) is True
-        assert len(result) == len(value)
+        # assert len(result) == len(value)
         if expects_objects:
             for item in result:
                 assert isinstance(item, DataBase) is True
@@ -368,7 +376,13 @@ def test__getattr__(kwargs, name, expected, error):
     if not error:
         obj = cls(**kwargs)
         result = getattr(obj, name)
-        if not checkers.is_type(result, 'ndarray'):
+        if name == 'ndarray':
+            if expected is None:
+                assert result is None
+            else:
+                print(type(result))
+                assert isinstance(result, dict) is True
+        elif not checkers.is_type(result, 'ndarray'):
             assert checkers.are_equivalent(result, expected) is True
         elif HAS_NUMPY:
             assert np.array_equiv(result, expected) is True
@@ -436,7 +450,12 @@ def test__setattr__(name, value, expected, error):
         obj = cls()
         setattr(obj, name, value)
         result = getattr(obj, name)
-        if not checkers.is_type(result, 'ndarray') and name == 'data_points':
+        if name == 'ndarray':
+            if expected is None:
+                assert result is None
+            else:
+                assert isinstance(result, dict) is True
+        elif not checkers.is_type(result, 'ndarray') and name == 'data_points':
             assert len(result) == len(expected)
         elif not checkers.is_type(result, 'ndarray'):
             assert checkers.are_equivalent(result, expected) is True

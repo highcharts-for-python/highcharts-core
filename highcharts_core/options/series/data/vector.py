@@ -130,7 +130,7 @@ class VectorData(CartesianData):
             4: ['x', 'y', 'length', 'direction'],
             3: ['y', 'length', 'direction'],
         }
-        return prop_list[length]
+        return cls._get_props_from_array_helper(prop_list, length)
 
     def to_array(self, force_object = False) -> List | Dict:
         """Generate the array representation of the data point (the inversion 

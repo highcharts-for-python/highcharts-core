@@ -332,7 +332,34 @@ class DataBase(DataCore):
         
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
-        return []
+        return cls._get_props_from_array_helper({}, length)
+
+    @staticmethod
+    def _get_props_from_array_helper(prop_list, length = None) -> List[str]:
+        """Helper which adjusts the prop list to account for name.
+        
+        :param prop_list: List of properties
+        :type prop_list: :class:`list <python:list>` of :class:`str <python:str>`
+        
+        :param length: The length of the array, which may determine the properties to 
+          parse. Defaults to :obj:`None <python:None>`, which returns the full list of 
+          properties.
+        :type length: :class:`int <python:int>` or :obj:`None <python:None>`
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        
+        """
+        try:
+            return prop_list[length]
+        except KeyError as error:
+            try:
+                last_key = list(prop_list.keys())[-1]
+            except IndexError:
+                return prop_list.get(None, [])
+            if length == (last_key + 1) and prop_list[None][-1] == 'name':
+                return prop_list[None]
+            
+            raise error
 
     @property
     def requires_js_object(self) -> bool:
@@ -440,6 +467,8 @@ class DataBase(DataCore):
                 item = value[index].item()
             else:
                 item = value[index]
+            if HAS_NUMPY and not checkers.is_string(item) and np.isnan(item):
+                item = None
             setattr(self, prop, item)
             if prop == 'name' and item is not None:
                 processed_name = True

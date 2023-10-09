@@ -327,7 +327,7 @@ class BoxPlotData(CartesianData):
             6: ['x', 'low', 'q1', 'median', 'q3', 'high'],
             5: ['low', 'q1', 'median', 'q3', 'high'],
         }
-        return prop_list[length]
+        return cls._get_props_from_array_helper(prop_list, length)
 
     def to_array(self, force_object = False) -> List | Dict:
         """Generate the array representation of the data point (the inversion 

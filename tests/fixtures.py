@@ -440,7 +440,11 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
             result_value = result.get(key)
 
             if HAS_NUMPY and isinstance(kwarg_value, np.ndarray):
-                assert np.array_equal(kwarg_value, result_value)
+                assert isinstance(result_value, dict) is True
+                for key in result_value:
+                    key_value = result_value[key]
+                    assert isinstance(key_value, np.ndarray) is True
+                    assert len(key_value) == len(kwarg_value)
                 continue
             if kwargs.get(key) and isinstance(kwargs_copy[key],
                                               str) and kwargs[key].startswith('function'):
@@ -675,7 +679,13 @@ def Class_from_dict(cls, kwargs, error, check_as_dict = False):
                     result_value = getattr(instance, key)
                 print(kwarg_value)
                 print(result_value)
-                assert does_kwarg_value_match_result(kwarg_value, result_value)
+                if key == 'ndarray':
+                    assert isinstance(result_value, dict) is True
+                    for key in result_value:
+                        key_value = result_value[key]
+                        assert isinstance(key_value, np.ndarray) is True
+                else:
+                    assert does_kwarg_value_match_result(kwarg_value, result_value)
     else:
         with pytest.raises(error):
             instance = cls.from_dict(as_dict)

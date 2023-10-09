@@ -190,7 +190,10 @@ def to_camelCase(snake_case):
     :returns: A ``camelCase`` representation of ``snake_case``.
     :rtype: :class:`str <python:str>`
     """
-    snake_case = validators.string(snake_case)
+    if not snake_case:
+        raise errors.HighchartsValueError(f'snake_case cannot be empty')
+    
+    snake_case = str(snake_case)
 
     if '_' not in snake_case:
         return snake_case
@@ -600,6 +603,47 @@ def to_ndarray(value):
     return as_array
 
 
+def to_ndarray_dict(keys, as_iterable):
+    """Convert ``as_iterable`` into a :class:`dict <python:dict>`
+    whose keys align to the values in ``keys``, and whose values
+    are :class:`numpy.ndarray <numpy:numpy.ndarray>` instances
+    corresponding to the index in ``as_iterable``.
+    
+    :param keys: The collection of keys to use for the resulting
+      :class:`dict <python:dict>`.
+    :type keys: iterable of :class:`str <python:str>`
+    
+    :param as_iterable: The collection of values to be converted
+      to :class:`numpy.ndarray <numpy:numpy.ndarray>` instances
+    :type as_iterable: iterable
+    
+    :returns: A :class:`dict <python:dict>` whose keys are values
+      from ``keys``, and whose values are items from ``as_iterable``
+      with each item converted to a 
+      :class:`numpy.ndarray <numpy:numpy.ndarray>`
+    :rtype: :class:`dict <python:dict>`
+    
+    :raises HighchartsValueError: if ``keys`` and ``as_iterable``
+      have different lengths
+    """
+    keys = validators.iterable(keys,
+                               allow_empty = False,
+                               forbid_literals = (str, bytes, dict, UserDict))
+    as_iterable = validators.iterable(as_iterable,
+                                      allow_empty = False,
+                                      forbid_literals = (str, bytes, dict, UserDict))
+    if len(keys) != len(as_iterable):
+        raise errors.HighchartsValueError(f'keys and as_iterable must have the same '
+                                          f'length. Received: {len(keys)} for keys,'
+                                          f'{len(as_iterable)} for as_iterable ')
+        
+    as_dict = {}
+    for index, key in enumerate(keys):
+        as_dict[key] = to_ndarray(as_iterable[index])
+        
+    return as_dict
+
+
 def from_ndarray(as_ndarray, force_enforced_null = False):
     """Convert ``as_ndarray`` to a Python :class:`list <python:list>`.
     
@@ -637,7 +681,7 @@ def from_ndarray(as_ndarray, force_enforced_null = False):
     else:
         nan_replacement = None
 
-    if as_ndarray.dtype != np.dtype('O'):
+    if as_ndarray.dtype.char not in ['O', 'U']:
         stripped = np.where(np.isnan(as_ndarray), nan_replacement, as_ndarray)
     else:
         prelim_stripped = as_ndarray.tolist()
@@ -797,7 +841,11 @@ def is_ndarray(value) -> bool:
     :returns: ``True`` if an array. ``False`` if not.
     :rtype: :class:`bool <python:bool>`
     """
-    return checkers.is_type(value, 'ndarray')
+    if value.__class__.__name__ == 'ndarray':
+        return True
+    classes = [x.__name__ for x in value.__class__.__mro__]
+    
+    return 'ndarray' in classes
 
 
 def extend_columns(array, needed_members):
@@ -828,3 +876,29 @@ def extend_columns(array, needed_members):
     array.extend([None for x in range(new_members)])
 
     return array
+
+
+def dict_to_ndarray(as_dict):
+    """Convert ``as_dict`` to a :class:`numpy.ndarray <numpy:numpy.ndarray>`,
+    with each key becoming a column.
+    
+    :param as_dict: :class:`dict <python:dict>` to be converted
+    :type as_dict: :class:`dict <python:dict>`
+    
+    :returns: :class:`numpy.ndarray <numpy:numpy.ndarray>` with 1 column
+      per key in ``as_dict``
+    :rtype: :class:`numpy.ndarray <nunpy:numpy.ndarray>`
+    
+    """
+    if not HAS_NUMPY:
+        raise errors.HighchartsDependencyError('NumPy is required for this feature. '
+                                               'It was not found in your runtime '
+                                               'environment. Please make sure it is '
+                                               'installed in your runtime '
+                                               'environment.')
+
+    as_dict = validators.dict(as_dict, allow_empty = True) or {}
+    columns = [as_dict[key] for key in as_dict]
+    as_ndarray = np.column_stack(columns)
+
+    return as_ndarray

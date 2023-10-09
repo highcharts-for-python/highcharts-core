@@ -246,8 +246,12 @@ class ConnectionData(ConnectionBase):
         
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
-        return ['from_',
-                'to']
+        prop_list = {
+            None: ['from_', 'to'],
+            2: ['from_', 'to']
+        }
+        
+        return cls._get_props_from_array_helper(prop_list, length)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
@@ -397,7 +401,9 @@ class WeightedConnectionData(ConnectionData):
         
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
-        return []
+        prop_list = {}
+        
+        return cls._get_props_from_array_helper(prop_list, length)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

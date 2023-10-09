@@ -2871,7 +2871,7 @@ def reduce_to_two_columns(df):
     ('test-data-files/nst-est2019-01.csv',
      {},
      prep_df,
-     5,
+     10,
      57,
      None),
 
@@ -2883,7 +2883,7 @@ def reduce_to_two_columns(df):
      None,
      11,
      57,
-     None),
+     TypeError),
     
 ])
 def test_LineSeries_from_pandas(run_pandas_tests,
@@ -2942,8 +2942,9 @@ def test_bugfix32_LineSeries_from_csv(kwargs, error):
         assert isinstance(result, cls5) is True
         assert result.data is not None
         for item in result.data:
-            assert item.name is not None
+            assert item.x is not None or item.name is not None
             assert item.y is not None
+            assert item.id is not None
 
 
 @pytest.mark.parametrize('filename, expected_series, expected_data_points, error', [
@@ -3101,8 +3102,10 @@ def test_LineSeries_from_csv(input_files, filename, property_map, kwargs, expect
             assert result.data is not None
             for item in result.data:
                 for key in property_map:
-                    if key == 'x' and 'name' not in property_map:
-                        assert getattr(item, 'name', None) is not None
+                    if key == 'x':
+                        x_value = getattr(item, 'x', None)
+                        if x_value is None:
+                            assert getattr(item, 'name', None) is not None
                     else:
                         assert getattr(item, key, None) is not None
 

@@ -885,7 +885,7 @@ class SeriesBase(SeriesOptions):
             pass
 
         property_column_map = validators.dict(property_column_map,
-                                              allow_empty = False) or {}
+                                              allow_empty = True) or {}
         cleaned_column_map = {}
         for key in property_column_map:
             map_value = property_column_map.get(key, None)
@@ -1005,6 +1005,8 @@ class SeriesBase(SeriesOptions):
                     prop_array[i] = value
 
                 setattr(collection_instance, key, prop_array)
+                getattr(collection_instance, key, None)
+
             collections.append(collection_instance)
         
         series_list = []
@@ -1404,7 +1406,7 @@ class SeriesBase(SeriesOptions):
 
             property_map[props_from_array[0]] = [x.get(series_idx, None) 
                                                  for x in csv_records]
-
+            
             for index, prop in enumerate(props_from_array[1:]):
                 index = start + index
                 prop_array = [x.get(columns[index + 1], index + 1) for x in csv_records]
@@ -1412,7 +1414,13 @@ class SeriesBase(SeriesOptions):
             
             collection = collection_cls()
             for key in property_map:
-                setattr(collection, key, property_map[key])
+                try:
+                    setattr(collection, key, property_map[key])
+                except ValueError as error:
+                    if key not in ['x', 'name'] and 'name' not in property_map:
+                        setattr(collection, 'name', property_map[key])
+                    else:
+                        raise error
 
             series_kwargs['data'] = collection
             series_instance = cls(**series_kwargs)
@@ -1632,17 +1640,17 @@ class SeriesBase(SeriesOptions):
         """Replace the contents of the
         :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` property
         with data points populated from a `pandas <https://pandas.pydata.org/>`_
-        :class:`DataFrame <pandas:DataFrame>`.
+        :class:`DataFrame <pandas:pandas.DataFrame>`.
 
-        :param df: The :class:`DataFrame <pandas:DataFrame>` from which data should be
+        :param df: The :class:`DataFrame <pandas:pandas.DataFrame>` from which data should be
           loaded.
-        :type df: :class:`DataFrame <pandas:DataFrame>`
+        :type df: :class:`DataFrame <pandas:pandas.DataFrame>`
 
         :param property_map: A :class:`dict <python:dict>` used to indicate which
           data point property should be set to which column in ``df``. The keys in the
           :class:`dict <python:dict>` should correspond to properties in the data point
           class, while the value should indicate the label for the
-          :class:`DataFrame <pandas:DataFrame>` column. Defaults to 
+          :class:`DataFrame <pandas:pandas.DataFrame>` column. Defaults to 
           :obj:`None <python:None>`.
 
         :type property_map: :class:`dict <python:dict>` or :obj:`None <python:None>`
@@ -1697,18 +1705,18 @@ class SeriesBase(SeriesOptions):
         """Create one or more :term:`series` instances whose
         :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` properties
         are populated from a `pandas <https://pandas.pydata.org/>`_
-        :class:`DataFrame <pandas:DataFrame>`, when ``property_map`` suggests there are
+        :class:`DataFrame <pandas:pandas.DataFrame>`, when ``property_map`` suggests there are
         multiple series.
 
-        :param df: The :class:`DataFrame <pandas:DataFrame>` from which data should be
+        :param df: The :class:`DataFrame <pandas:pandas.DataFrame>` from which data should be
           loaded.
-        :type df: :class:`DataFrame <pandas:DataFrame>`
+        :type df: :class:`DataFrame <pandas:pandas.DataFrame>`
 
         :param property_map: A :class:`dict <python:dict>` used to indicate which
           data point property should be set to which column in ``df``. The keys in the
           :class:`dict <python:dict>` should correspond to properties in the data point
           class, while the value should indicate the label for the
-          :class:`DataFrame <pandas:DataFrame>` column. Defaults to :obj:`None <python:None>`
+          :class:`DataFrame <pandas:pandas.DataFrame>` column. Defaults to :obj:`None <python:None>`
         :type property_map: :class:`dict <python:dict>` or :obj:`None <python:None>`
 
         :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
@@ -1745,6 +1753,7 @@ class SeriesBase(SeriesOptions):
         iterable_values = {}
         number_of_series = 1
         mismatched_series = {}
+        names = []
         for key in property_map:
             map_value = property_map[key]
 
@@ -1765,13 +1774,18 @@ class SeriesBase(SeriesOptions):
                     mismatched_series[key] = implied_series
                 
                 iterable_values[key] = map_value
+                if key == 'y':
+                    names.extend(map_value)
             else:
                 if map_value not in df.columns.values:
-                    raise errors.HighchartsPandasDeserializationError(
-                        f'Unable to find a column labeled "{map_value}" in df.'
-                    )
+                    if map_value != df.index.name:
+                        raise errors.HighchartsPandasDeserializationError(
+                            f'Unable to find a column labeled "{map_value}" in df.'
+                        )
 
                 fixed_values[key] = map_value
+                if key == 'y':
+                    names.append(map_value)
         
         if mismatched_series:
             raise errors.HighchartsPandasDeserializationError(
@@ -1790,7 +1804,10 @@ class SeriesBase(SeriesOptions):
                 setattr(collection_instance, key, prop_array)
             for key in fixed_values:
                 fixed_value = fixed_values[key]
-                prop_array = df[fixed_value].values
+                try:
+                    prop_array = df[fixed_value].values
+                except KeyError:
+                    prop_array = df.index.values
                 setattr(collection_instance, key, prop_array)
             collections.append(collection_instance)
         
@@ -1798,6 +1815,7 @@ class SeriesBase(SeriesOptions):
         for index in range(number_of_series):
             series_kwargs['data'] = collections[index]
             series_instance = cls(**series_kwargs)
+            series_instance.name = names[index]
             for key in kwargs:
                 if key not in series_kwargs and property_map:
                     setattr(series_instance, key, kwargs[key])
@@ -1810,6 +1828,7 @@ class SeriesBase(SeriesOptions):
     def from_pandas_in_rows(cls,
                             df,
                             series_kwargs = None,
+                            series_index = None,
                             **kwargs):
         """Create a collection of :term:`series` instances, one for each
         row in ``df``.
@@ -1828,6 +1847,13 @@ class SeriesBase(SeriesOptions):
             *overwritten*. The ``data`` value will be created from ``df`` instead.
 
         :type series_kwargs: :class:`dict <python:dict>`
+
+        :param series_index: If supplied, return the series that Highcharts for Python
+          generated from ``df`` at the ``series_index`` value. Defaults to 
+          :obj:`None <python:None>`, which returns all series generated from ``df``.
+
+        :type series_index: :class:`int <python:int>`, slice, or 
+          :obj:`None <python:None>`
 
         :param **kwargs: Remaining keyword arguments will be attempted on the resulting
           :term:`series` instance and the data points it contains.
@@ -1892,6 +1918,9 @@ class SeriesBase(SeriesOptions):
 
             series_list.append(series_instance)
 
+        if series_index is not None:
+            return series_list[series_index]
+
         return series_list
 
     @classmethod
@@ -1905,7 +1934,7 @@ class SeriesBase(SeriesOptions):
         """Create one or more :term:`series` instances whose
         :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` properties
         are populated from a `pandas <https://pandas.pydata.org/>`_
-        :class:`DataFrame <pandas:DataFrame>`.
+        :class:`DataFrame <pandas:pandas.DataFrame>`.
 
           .. code-block:: python
 
@@ -1941,15 +1970,15 @@ class SeriesBase(SeriesOptions):
                                                   'id': 'id'
                                                })
 
-        :param df: The :class:`DataFrame <pandas:DataFrame>` from which data should be
+        :param df: The :class:`DataFrame <pandas:pandas.DataFrame>` from which data should be
           loaded.
-        :type df: :class:`DataFrame <pandas:DataFrame>`
+        :type df: :class:`DataFrame <pandas:pandas.DataFrame>`
 
         :param property_map: A :class:`dict <python:dict>` used to indicate which
           data point property should be set to which column in ``df``. The keys in the
           :class:`dict <python:dict>` should correspond to properties in the data point
           class, while the value should indicate the label for the
-          :class:`DataFrame <pandas:DataFrame>` column. Defaults to 
+          :class:`DataFrame <pandas:pandas.DataFrame>` column. Defaults to 
           :obj:`None <python:None>`.
 
             .. note::
@@ -2015,10 +2044,13 @@ class SeriesBase(SeriesOptions):
           not available in the runtime environment
         """
         series_kwargs = validators.dict(series_kwargs, allow_empty = True) or {}
-
+        
         # SCENARIO 0: Series in Rows
         if series_in_rows:
-            return cls.from_pandas_in_rows(df, series_kwargs, **kwargs)
+            return cls.from_pandas_in_rows(df,
+                                           series_kwargs,
+                                           series_index = series_index,
+                                           **kwargs)
 
         # SCENARIO 1: Has Property Map
         if property_map:
@@ -2079,7 +2111,7 @@ class SeriesBase(SeriesOptions):
             for index, prop in enumerate(props_from_array[1:]):
                 prop_value = df.iloc[:, index + 1].values
                 property_map[prop] = prop_value
-            
+                
             collection = collection_cls()
             for key in property_map:
                 setattr(collection, key, property_map[key])
@@ -2097,12 +2129,17 @@ class SeriesBase(SeriesOptions):
         columns_per_series = None
         if reversed_dimensions:
             for dimension in reversed_dimensions:
-                if dimension > 1 and column_count % dimension == 0:
+                if series_idx is not None and dimension > 1 and column_count % (dimension - 1) == 0:
+                    if dimension > 2 and props_from_array[-1] == 'name':
+                        columns_per_series = dimension - 2
+                    else:
+                        columns_per_series = dimension - 1
+                    break
+                elif dimension > 1 and column_count % dimension == 0:
                     columns_per_series = dimension
                     break
                 elif dimension == 1:
                     columns_per_series = 1
-        
         if not columns_per_series:
             raise errors.HighchartsPandasDeserializationError(
                 f'Could not determine how to deserialize data frame with {column_count}'
@@ -2117,11 +2154,21 @@ class SeriesBase(SeriesOptions):
             start = len(series_list) * columns_per_series
 
             property_map = {}
-            props_from_array = data_point_cls._get_props_from_array(length = columns_per_series)
+            if series_idx is not None:
+                expected_length = columns_per_series + 1
+            else:
+                expected_length = columns_per_series
+            props_from_array = data_point_cls._get_props_from_array(length = expected_length)
             if not props_from_array:
                 props_from_array = ['x', 'y']
-
+                
             property_map[props_from_array[0]] = series_idx
+
+            has_implicit_series_name = 'name' not in kwargs and 'name' not in series_kwargs
+            if has_implicit_series_name:
+                series_name = df.columns[start]
+            else:
+                series_name = series_kwargs.get('name', None) or kwargs.get('name', None)
 
             for index, prop in enumerate(props_from_array[1:]):
                 index = start + index
@@ -2133,6 +2180,7 @@ class SeriesBase(SeriesOptions):
                 setattr(collection, key, property_map[key])
 
             series_kwargs['data'] = collection
+            series_kwargs['name'] = series_name
             series_instance = cls(**series_kwargs)
             for key in kwargs:
                 if key not in series_kwargs and key not in property_map:
@@ -2142,9 +2190,11 @@ class SeriesBase(SeriesOptions):
 
         if series_index is not None:
             return series_list[index]
+          
+
 
         return series_list
-        
+
     def load_from_pyspark(self,
                           df,
                           property_map):

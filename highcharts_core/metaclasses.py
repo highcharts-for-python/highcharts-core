@@ -87,15 +87,26 @@ class HighchartsMeta(ABC):
         """
         if not scripts:
             scripts = []
-            
-        properties = [x[1:] for x in self.__dict__
-                      if x.startswith('_') and hasattr(self, x[1:])]
+        
+        properties = {}
+        for key in self.__dict__:
+            if key[0] != '_':
+                continue
+
+            properties[key[1:]] = getattr(self, key[1:], None)
 
         for property_name in properties:
-            property_value = getattr(self, property_name, None)
+            property_value = properties[property_name]
             if property_value is None:
                 continue
-            if checkers.is_iterable(property_value, forbid_literals = (str, bytes, dict)):
+            if not utility_functions.is_ndarray(
+                property_value
+            ) and hasattr(
+                property_value, '__iter__'
+            ) and not isinstance(
+                property_value, 
+                (str, bytes, dict, UserDict)
+            ):
                 additional_scripts = []
                 for item in property_value:
                     if hasattr(item, 'get_required_modules'):
@@ -127,7 +138,7 @@ class HighchartsMeta(ABC):
                 else:
                     final_scripts.append(f'{script}.js')
             return final_scripts
-            
+        
         return scripts
 
     def get_required_modules(self, include_extension = False) -> List[str]:

@@ -7,7 +7,7 @@ try:
 except ImportError:
     HAS_NUMPY = False
 
-from validator_collection import checkers, validators
+from validator_collection import checkers, validators, errors as validator_errors
 
 from highcharts_core import constants, errors, utility_functions
 from highcharts_core.decorators import validate_types
@@ -85,12 +85,15 @@ class DataPointCollection(HighchartsMeta):
         if name in data_point_properties and (
             self.ndarray is not None or self.array is not None
         ):
+            if HAS_NUMPY and self.ndarray is not None and name in self.ndarray:
+                return self.ndarray[name]
+
             position = data_point_properties.index(name)
-
-            if HAS_NUMPY and self.ndarray is not None:
-                return utility_functions.get_ndarray_slice(self.ndarray, position)
-
-            return [x[position] for x in self.array]
+            
+            try:
+                return [x[position] for x in self.array]
+            except (TypeError, IndexError):
+                raise AttributeError(name)
 
         data_points = self._assemble_data_points()
         as_list = [getattr(x, name, None) for x in data_points]
@@ -141,38 +144,35 @@ class DataPointCollection(HighchartsMeta):
             has_array = False
             has_data_points = False
 
-        if name in data_point_properties and has_ndarray:
+        if name in data_point_properties and has_ndarray and name != 'name':
             index = data_point_properties.index(name)
-            extend_columns = index > self.ndarray.ndim
             is_arraylike = utility_functions.is_arraylike(value)
             
-            array = self.ndarray.copy()
+            array_dict = self.ndarray.copy()
 
             # if value is not an array
             if not is_arraylike:
-                value = np.full((len(array), 1), value)
+                value = np.full((self.ndarray_length, 1), value)
 
-            extend_ndarray = len(value) > len(self.ndarray)
-            extend_value = len(value) < len(self.ndarray)
-
-            # if the data prop name implies a dimension index that does not exist 
-            # in ndarray
-            if extend_columns:
-                empty = np.empty((len(array), index))
-                array = np.hstack((array, empty))
-
+            extend_ndarray = len(value) > self.ndarray_length
+            extend_value = len(value) < self.ndarray_length
+            
             # if value has more members (values) than the existing ndarray
             if extend_ndarray:
-                array = utility_functions.lengthen_array(array,
-                                                         members = len(value))
-                array[:, index] = value
+                for key in self.ndarray:
+                    if key == name:
+                        continue
+                    array_dict[key] = utility_functions.lengthen_array(array_dict[key],
+                                                                       members = len(value))
+                array_dict[name] = value
             # if value has fewer members (values) than the existing ndarray
             elif extend_value:
                 value = utility_functions.lengthen_array(value,
-                                                         members = len(self.ndarray))
-            array[:, index] = value
-            self.ndarray = array
-        elif name in data_point_properties and has_array:
+                                                         members = self.ndarray_length)
+            array_dict[name] = value
+
+            self._ndarray = array_dict
+        elif name in data_point_properties and has_array and name != 'name':
             index = data_point_properties.index(name)
             is_arraylike = utility_functions.is_arraylike(value)
             
@@ -220,9 +220,19 @@ class DataPointCollection(HighchartsMeta):
                     checked_value = value[i].item()
                 else:
                     checked_value = value[i]
-                setattr(self.data_points[i], name, checked_value)
+                try:
+                    setattr(self.data_points[i], name, checked_value)
+                except validator_errors.CannotCoerceError as error:
+                    if isinstance(checked_value, str) and ',' in checked_value:
+                        checked_value = checked_value.replace(',', '')
+                        setattr(self.data_points[i], name, checked_value)
+                    elif checkers.is_numeric(checked_value):
+                        checked_value = str(checked_value)
+                        setattr(self.data_points[i], name, checked_value)
+                    else:
+                        raise error
 
-        elif name in data_point_properties:
+        elif name in data_point_properties and name == 'name':
             index = data_point_properties.index(name)
             
             is_iterable = not isinstance(value,
@@ -232,13 +242,23 @@ class DataPointCollection(HighchartsMeta):
                 as_list = []
                 for i in range(len(value)):
                     if HAS_NUMPY:
-                        inner_list = [np.nan for x in data_point_properties]
+                        if name != 'name' and data_point_properties[-1] == 'name':
+                            inner_list = [np.nan for x in data_point_properties[:-1]]
+                        else:
+                            inner_list = [np.nan for x in data_point_properties]
                     else:
-                        inner_list = [None for x in data_point_properties]
-                    inner_list[index] = value[i]
+                        if name != 'name' and data_point_properties[-1] == 'name':
+                            inner_list = [None for x in data_point_properties[:-1]]
+                        else:
+                            inner_list = [None for x in data_point_properties]
+                    if index < len(inner_list):
+                        inner_list[index] = value[i]
                     as_list.append(inner_list)
             else:
-                as_list = [None for x in data_point_properties]
+                if name != 'name' and data_point_properties[-1] == 'name':
+                    as_list = [None for x in data_point_properties[:-1]]
+                else:
+                    as_list = [None for x in data_point_properties]
                 as_list[index] = value
 
             if HAS_NUMPY:
@@ -250,7 +270,23 @@ class DataPointCollection(HighchartsMeta):
                 data_point_cls = self._get_data_point_class()
                 data_points = [data_point_cls() for x in value]
                 for index in range(len(data_points)):
-                    setattr(data_points[index], name, value[index])
+                    try:
+                        setattr(data_points[index], name, value[index])
+                    except validator_errors.CannotCoerceError:
+                        if isinstance(value[index], str) and ',' in value[index]:
+                            coerced_value = value[index].replace(',', '')
+                            setattr(data_points[index], name, coerced_value)
+                        elif checkers.is_numeric(value[index]) or (
+                            HAS_NUMPY and isinstance(value[index], np.number)
+                        ):
+                            coerced_value = str(value[index])
+                            setattr(data_points[index], name, coerced_value)
+                        else:
+                            raise errors.HighchartsValueError(
+                                f'Unable to set {name} to {value[index]}. '
+                                f'If using a helper method, this is likely '
+                                f'due to mismatched columns. Please review '
+                                f'your input data.')
                 super().__setattr__('data_points', [x for x in data_points])
             elif len(value) <= len(self.data_points):
                 for index in range(len(value)):
@@ -264,6 +300,25 @@ class DataPointCollection(HighchartsMeta):
                     data_point = data_point_cls()
                     setattr(data_point, name, value[index])
                     self.data_points.append(data_point)
+        elif name == 'name':
+            if not has_data_points:
+                data_point_cls = self._get_data_point_class()
+                if has_ndarray:
+                    length = self.ndarray_length
+                elif has_array:
+                    length = len(self.array)
+                else:
+                    length = 1
+                    
+                data_points = [data_point_cls() for x in range(length)]
+
+                for index in range(len(data_points)):
+                    setattr(data_points[index], name, value)
+
+                super().__setattr__('data_points', [x for x in data_points])
+            else:
+                for index in range(len(value)):
+                    setattr(self.data_points[index], name, value[index])
         else:
             super().__setattr__(name, value)
 
@@ -272,8 +327,8 @@ class DataPointCollection(HighchartsMeta):
         
         :rtype: :class:`int <python:int>`
         """
-        if utility_functions.is_ndarray(self.ndarray):
-            result = len(self.ndarray)
+        if self.ndarray is not None:
+            result = self.ndarray_length
         elif self.array:
             result = len(self.array)
         elif self.data_points:
@@ -293,6 +348,9 @@ class DataPointCollection(HighchartsMeta):
             self._current_index += 1
             return x
         raise StopIteration
+
+    def __bool__(self):
+        return len(self) > 0
 
     @property
     def array(self) -> Optional[List]:
@@ -348,16 +406,26 @@ class DataPointCollection(HighchartsMeta):
 
     @property
     def ndarray(self):
-        """The :class:`numpy.ndarray <numpy:numpy.ndarray>` instance that contains the
-        data point collection's numerical values.
+        """A :class:`dict <python:dict>` whose keys correspond to data point properties, 
+        and whose values are :class:`numpy.ndarray <numpy:numpy.ndarray>` instances that 
+        contain the data point collection's values.
         
-        :rtype: :class:`numpy.ndarray <numpy:numpy.ndarray>` or
-          :obj:`None <python:None>`
+        :rtype: :class:`dict <python:dict>` or :obj:`None <python:None>`
         """
         return self._ndarray
 
     @ndarray.setter
     def ndarray(self, value):
+        def raise_unsupported_dimension_error(length):
+            supported_dimensions = self._get_supported_dimensions()
+            
+            supported_as_str = ', '.join([str(x) for x in supported_dimensions[:-1]])
+            supported_as_str += f', or {str(supported_dimensions[-1])}'
+            
+            raise errors.HighchartsValueError(f'{self.__name__} supports arrays with '
+                                                f'{supported_as_str} dimensions. Received'
+                                                f' a value with: {length}')
+            
         is_iterable = not isinstance(value, 
                                      (str, bytes, dict, UserDict)) and hasattr(value, 
                                                                                '__iter__')
@@ -365,21 +433,40 @@ class DataPointCollection(HighchartsMeta):
             self._ndarray = None
             as_array = False
         elif HAS_NUMPY and not isinstance(value, np.ndarray) and is_iterable:
+            length = len(value[0])
+            for item in value:
+                if len(item) not in self._get_supported_dimensions():
+                    raise_unsupported_dimension_error(len(item))
+            props_from_array = self._get_props_from_array(length = length)
+            as_dict = {}
+            for index, prop in enumerate(props_from_array):
+                prop_value = [x[index] for x in value]
+                as_dict[prop] = utility_functions.to_ndarray(prop_value)
+
             as_array = utility_functions.to_ndarray(value)
         else:
             as_array = value
 
         if HAS_NUMPY and isinstance(as_array, np.ndarray):
-            if as_array.ndim not in self._get_supported_dimensions():
-                supported_dimensions = self._get_supported_dimensions()
-                supported_as_str = ', '.join([str(x) for x in supported_dimensions[:-1]])
-                supported_as_str += f', or {str(supported_dimensions[-1])}'
-                
-                raise errors.HighchartsValueError(f'{self.__name__} supports arrays with '
-                                                  f'{supported_as_str} dimensions. Received'
-                                                  f' a value with: {as_array.ndim}')
-
-            self._ndarray = as_array
+            dimensions = as_array.ndim
+            supported_dimensions = self._get_supported_dimensions()
+            if dimensions not in supported_dimensions:
+                dimensions = as_array.ndim + 1
+                if dimensions not in supported_dimensions:
+                    raise_unsupported_dimension_error(dimensions)
+            props_from_array = self._get_props_from_array(length = dimensions)
+            if props_from_array and props_from_array[-1] != 'name':
+                props_from_array.append('name')
+            as_dict = {}
+            for index, prop in enumerate(props_from_array):
+                try:
+                    as_dict[prop] = as_array[:, index]
+                except IndexError as error:
+                    if index == len(props_from_array) - 1 and prop == 'name':
+                        pass
+                    else:
+                        raise error
+            self._ndarray = as_dict
         elif value is not None:
             raise errors.HighchartsValueError(f'.ndarray expects a numpy.ndarray '
                                               f'or an iterable that can easily be '
@@ -400,7 +487,13 @@ class DataPointCollection(HighchartsMeta):
         
         :rtype: :class:`list <python:list>` of :class:`int <python:int>`
         """
-        return cls._get_data_point_class()._get_supported_dimensions()
+        dimensions = cls._get_data_point_class()._get_supported_dimensions()
+        last_dimension = dimensions[-1]
+        data_point_properties = cls._get_props_from_array()
+        if 'name' not in data_point_properties or len(data_point_properties) > last_dimension:
+            dimensions.append(last_dimension + 1)
+        
+        return dimensions
 
     @classmethod
     def _get_props_from_array(cls, length = None) -> List[str]:
@@ -507,6 +600,18 @@ class DataPointCollection(HighchartsMeta):
         
         return False
 
+    @property
+    def ndarray_length(self) -> int:
+        """The length of the array stored in 
+        :meth:`.ndarray <highcharts_core.options.series.data.collections.DataPointCollection.ndarray>`.
+        
+        :rtype: :class:`int <python:int>`
+        """
+        if not self.ndarray:
+            return 0
+
+        return len(self.ndarray[list(self.ndarray.keys())[0]])
+
     def _assemble_data_points(self):
         """Assemble a collection of 
         :class:`DataBase <highcharts_core.options.series.data.base.DataBase>`-descended
@@ -547,14 +652,14 @@ class DataPointCollection(HighchartsMeta):
                     setattr(data_points[index], prop, None)
 
         if HAS_NUMPY and self.ndarray is not None:
-            if len(data_points) < len(self.ndarray):
-                missing = len(self.ndarray) - len(data_points)
+            if len(data_points) < self.ndarray_length:
+                missing = self.ndarray_length - len(data_points)
                 for i in range(missing):
                     data_points.append(self._get_data_point_class()())
 
-            for index in range(len(self.ndarray)):
-                array = self.ndarray[index]
-                data_points[index].populate_from_array(array)
+            for index in range(self.ndarray_length):
+                inner_list = [self.ndarray[key][index] for key in self.ndarray]
+                data_points[index].populate_from_array(inner_list)
         else:
             if len(data_points) < len(self.array):
                 missing = len(self.array) - len(data_points)
@@ -673,9 +778,19 @@ class DataPointCollection(HighchartsMeta):
         elif force_ndarray and self.data_points:
             as_ndarray = self._assemble_ndarray()
             return utility_functions.from_ndarray(as_ndarray)
-        
+
         if self.ndarray is not None and not self.requires_js_object:
-            return utility_functions.from_ndarray(self.ndarray)
+            as_list = []
+            columns = []
+            for key in self.ndarray:
+                value = self.ndarray[key]
+                if utility_functions.is_ndarray(value):
+                    columns.append(utility_functions.from_ndarray(value))
+                else:
+                    columns.append(value)
+            as_list = [list(x) for x in zip(*columns)]
+            
+            return as_list
         elif self.array is not None and not self.requires_js_object:
             return [x for x in self.array]
         
