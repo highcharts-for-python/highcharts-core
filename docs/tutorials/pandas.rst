@@ -138,7 +138,7 @@ so:
         my_chart = Chart.from_pandas(df)
         my_chart.display()
 
-    - .. image:: /_static/census-time-series-03.png
+    - .. image:: /_static/tutorials/census-time-series-03.png
         :width: 100%
         :alt: Rendering of the chart produced by Chart.from_pandas(df)
 
@@ -165,7 +165,7 @@ Why don't we switch it to a bar chart?
         my_chart = Chart.from_pandas(df, series_type = 'bar')
         my_chart.display()
 
-    - .. image:: /_static/census-time-series-04.png
+    - .. image:: /_static/tutorials/census-time-series-04.png
         :width: 100%
         :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'bar')
 
@@ -190,7 +190,7 @@ Basic Property Mapping
                                        'y': '2019'
                                      })
 
-    - .. image:: /_static/census-time-series-05.png
+    - .. image:: /_static/tutorials/census-time-series-05.png
         :width: 100%
         :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'bar', property_map = {'x': 'Geographic Area', 'y': '2019'})
 
@@ -227,7 +227,7 @@ Property Mapping with Multiple Series
                                          'y': ['2017', '2018', '2019']
                                      })
 
-    - .. image:: /_static/census-time-series-06.png
+    - .. image:: /_static/tutorials/census-time-series-06.png
         :width: 100%
         :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'bar', property_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019']})
 
@@ -298,8 +298,9 @@ Configuring Series Options
                                      series_kwargs = {
                                          'point_padding': 5
                                      })
+        my_chart.display()
 
-    - .. image:: /_static/census-time-series-07.png
+    - .. image:: /_static/tutorials/census-time-series-07.png
         :width: 100%
         :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'bar', property_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019'], 'id': 'Geographic Area'}, series_kwargs = {'point_padding': 0.5})
 
@@ -333,8 +334,9 @@ Configuring Options
                                              'text': 'This Is My Chart Title'
                                          }
                                      })
+        my_chart.display()
 
-    - .. image:: /_static/census-time-series-08.png
+    - .. image:: /_static/tutorials/census-time-series-08.png
         :width: 100%
         :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'bar', property_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019'], 'id': 'Geographic Area'}, series_kwargs = {'point_padding': 0.25}, options_kwargs = {'title': {'text': 'This Is My Chart Title'}})
 
@@ -390,8 +392,9 @@ Visualizing Data in Rows
         my_chart = Chart.from_pandas(df,
                                      series_type = 'line',
                                      series_in_rows = True)
+        my_chart.display()
 
-    - .. image:: /_static/census-time-series-09.png
+    - .. image:: /_static/tutorials/census-time-series-09.png
         :width: 100%
         :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'line', series_in_rows = True)
 
@@ -427,7 +430,7 @@ Filtering Rows
                                      series_in_rows = True,
                                      series_index = slice(7, 10))
 
-    - .. image:: /_static/census-time-series-10.png
+    - .. image:: /_static/tutorials/census-time-series-10.png
         :width: 100%
         :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'line', series_in_rows = True, series_index = slice(7, 10))
 
