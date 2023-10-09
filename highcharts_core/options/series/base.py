@@ -1815,7 +1815,10 @@ class SeriesBase(SeriesOptions):
         for index in range(number_of_series):
             series_kwargs['data'] = collections[index]
             series_instance = cls(**series_kwargs)
-            series_instance.name = names[index]
+            try:
+                series_instance.name = names[index]
+            except IndexError:
+                pass
             for key in kwargs:
                 if key not in series_kwargs and property_map:
                     setattr(series_instance, key, kwargs[key])
