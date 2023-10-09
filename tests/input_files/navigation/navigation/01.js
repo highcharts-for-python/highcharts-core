@@ -36,5 +36,23 @@
     selectButton: function (event) {return true;},
     showPopup: function(event) {return true;}
   },
-  iconsURL: 'https://www.somewhere.com/'
+  iconsURL: 'https://www.somewhere.com/',
+  menuItemHoverStyle: {
+    'color': '#5f5e5e',
+    'fontFamily': 'Roboto',
+    'fontSize': '12px',
+    'fontWeight': '400'
+  },
+  menuItemStyle: {
+    'color': '#5f5e5e',
+    'fontFamily': 'Roboto',
+    'fontSize': '12px',
+    'fontWeight': '400'
+  },
+  menuStyle: {
+    'color': '#5f5e5e',
+    'fontFamily': 'Roboto',
+    'fontSize': '12px',
+    'fontWeight': '400'
+  }
 }

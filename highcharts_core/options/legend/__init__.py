@@ -319,18 +319,24 @@ class Legend(HighchartsMeta):
             self._floating = bool(value)
 
     @property
-    def item_checkbox_style(self) -> Optional[str]:
+    def item_checkbox_style(self) -> Optional[str | dict]:
         """Default styling for the checkbox next to a legend item when
         :meth:`Legend.show_checkbox` is ``True``. Defaults to:
         ``'{"width": "13px", "height": "13px", "position":"absolute"}'``.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`str <python:str>` or :class:`dict <python:dict>` or 
+          :obj:`None <python:None>`
         """
         return self._item_checkbox_style
 
     @item_checkbox_style.setter
     def item_checkbox_style(self, value):
-        self._item_checkbox_style = validators.string(value, allow_empty = True)
+        try:
+            self._item_checkbox_style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._item_checkbox_style = validators.string(value, 
+                                                          allow_empty = True,
+                                                          coerce_value = True)
 
     @property
     def item_distance(self) -> Optional[int | float | Decimal]:
@@ -348,7 +354,7 @@ class Legend(HighchartsMeta):
                                                  minimum = 0)
 
     @property
-    def item_hidden_style(self) -> Optional[str]:
+    def item_hidden_style(self) -> Optional[str | dict]:
         """Default styling for the legend item when the corresponding series or data
         point is hidden. Defaults to:
         ``'{"color": "#cccccc"}'``.
@@ -367,10 +373,15 @@ class Legend(HighchartsMeta):
 
     @item_hidden_style.setter
     def item_hidden_style(self, value):
-        self._item_hidden_style = validators.string(value, allow_empty = True)
+        try:
+            self._item_hidden_style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._item_hidden_style = validators.string(value, 
+                                                        allow_empty = True,
+                                                        coerce_value = True)
 
     @property
-    def item_hover_style(self) -> Optional[str]:
+    def item_hover_style(self) -> Optional[str | dict]:
         """Default styling for the legend item when the corresponding series or data
         point is in a hover state. Defaults to:
         ``'{"color": "#000000"}'``.
@@ -383,13 +394,19 @@ class Legend(HighchartsMeta):
 
           Properties are inherited from :meth:`Legend.style` unless overridden here.
 
-        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: :class:`str <python:str>` or :class:`dict <python:dict>` or 
+          :obj:`None <python:None>`
         """
         return self._item_hover_style
 
     @item_hover_style.setter
     def item_hover_style(self, value):
-        self._item_hover_style = validators.string(value, allow_empty = True)
+        try:
+            self._item_hover_style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._item_hover_style = validators.string(value, 
+                                                       allow_empty = True,
+                                                       coerce_value = True)
 
     @property
     def item_margin_bottom(self) -> Optional[int | float | Decimal]:
@@ -422,9 +439,9 @@ class Legend(HighchartsMeta):
                                                       minimum = 0)
 
     @property
-    def item_style(self) -> Optional[str]:
+    def item_style(self) -> Optional[str | dict]:
         """Default styling for each legend item. Defaults to:
-        ``'{"color": "#333333", "cursor": "pointer", "fontSize": "12px", "fontWeight": "bold", "textOverflow": "ellipsis"}'``.
+        ``{"color": "#333333", "cursor": "pointer", "fontSize": "12px", "fontWeight": "bold", "textOverflow": "ellipsis"}``.
 
         .. warning::
 
@@ -442,7 +459,12 @@ class Legend(HighchartsMeta):
 
     @item_style.setter
     def item_style(self, value):
-        self._item_style = validators.string(value, allow_empty = True)
+        try:
+            self._item_style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._item_style = validators.string(value, 
+                                                 allow_empty = True,
+                                                 coerce_value = True)
 
     @property
     def item_width(self) -> Optional[int | float | Decimal]:

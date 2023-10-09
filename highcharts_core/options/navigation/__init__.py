@@ -23,6 +23,9 @@ class NavigationBase(HighchartsMeta):
         self._button_options = None
         self._events = None
         self._icons_url = None
+        self._menu_item_hover_style = None
+        self._menu_item_style = None
+        self._menu_style = None
 
         self.annotation_options = kwargs.get('annotation_options', None)
         self.bindings = kwargs.get('bindings', None)
@@ -30,6 +33,9 @@ class NavigationBase(HighchartsMeta):
         self.button_options = kwargs.get('button_options', None)
         self.events = kwargs.get('events', None)
         self.icons_url = kwargs.get('icons_url', None)
+        self.menu_item_hover_style = kwargs.get('menu_item_hover_style', None)
+        self.menu_item_style = kwargs.get('menu_item_style', None)
+        self.menu_style = kwargs.get('menu_style', None)
 
         super().__init__(**kwargs)
 
@@ -118,6 +124,74 @@ class NavigationBase(HighchartsMeta):
     def icons_url(self, value):
         self._icons_url = validators.string(value, allow_empty = True)
 
+    @property
+    def menu_item_hover_style(self) -> Optional[str | dict]:
+        """CSS styles for the individual items within the popup menu when the user's mouse hovers over them.
+
+        .. note::
+
+          Font size defaults to 11px on desktop and 14px on touch devices.
+
+        Defaults to:
+        ``{"background": "#f2f2f2" }``.
+
+        :rtype: :class:`str <python:str>` or :class:`dict <python:dict>` or :obj:`None <python:None>`
+        """
+        return self._menu_item_hover_style
+
+    @menu_item_hover_style.setter
+    def menu_item_hover_style(self, value):
+        try:
+            self._menu_item_hover_style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._menu_item_hover_style = validators.string(value,
+                                                            allow_empty = True,
+                                                            coerce_value = True)
+
+    @property
+    def menu_item_style(self) -> Optional[str | dict]:
+        """CSS styles for the individual items within the popup menu.
+
+        .. note::
+
+          Font size defaults to 11px on desktop and 14px on touch devices.
+
+        Defaults to:
+        ``{"padding": "0.5em", "color": "#333333", "background": "none", "borderRadius": "3px", "fontSize": "0.8em", "transition": "background 250ms, color 250ms"}``.
+
+        :rtype: :class:`str <python:str>` or :class:`dict <python:dict>` or :obj:`None <python:None>`
+        """
+        return self._menu_item_style
+
+    @menu_item_style.setter
+    def menu_item_style(self, value):
+        try:
+            self._menu_item_style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._menu_item_style = validators.string(value,
+                                                      allow_empty = True,
+                                                      coerce_value = True)
+
+    @property
+    def menu_style(self) -> Optional[str | dict]:
+        """CSS styles for the popup menu appearing when the popup button is clicked.
+
+        Defaults to:
+        ``{"background": "#ffffff", "borderRadius": "3px", "padding": "0.5em"}``.
+
+        :rtype: :class:`str <python:str>` or :class:`dict <python:dict>` or :obj:`None <python:None>`
+        """
+        return self._menu_style
+
+    @menu_style.setter
+    def menu_style(self, value):
+        try:
+            self._menu_style = validators.dict(value, allow_empty = True)
+        except (ValueError, TypeError):
+            self._menu_style = validators.string(value,
+                                                 allow_empty = True,
+                                                 coerce_value = True)
+
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
@@ -127,6 +201,9 @@ class NavigationBase(HighchartsMeta):
             'button_options': as_dict.get('buttonOptions', None),
             'events': as_dict.get('events', None),
             'icons_url': as_dict.get('iconsURL', None),
+            'menu_item_hover_style': as_dict.get('menuItemHoverStyle', None),
+            'menu_item_style': as_dict.get('menuItemStyle', None),
+            'menu_style': as_dict.get('menuStyle', None),
         }
 
         return kwargs
@@ -138,7 +215,10 @@ class NavigationBase(HighchartsMeta):
             'bindingsClassName': self.bindings_class_name,
             'buttonOptions': self.button_options,
             'events': self.events,
-            'iconsURL': self.icons_url
+            'iconsURL': self.icons_url,
+            'menuItemHoverStyle': self.menu_item_hover_style,
+            'menuItemStyle': self.menu_item_style,
+            'menuStyle': self.menu_style,
         }
 
         return untrimmed
@@ -194,6 +274,9 @@ class Navigation(NavigationBase):
             'button_options': as_dict.get('buttonOptions', None),
             'events': as_dict.get('events', None),
             'icons_url': as_dict.get('iconsURL', None),
+            'menu_item_hover_style': as_dict.get('menuItemHoverStyle', None),
+            'menu_item_style': as_dict.get('menuItemStyle', None),
+            'menu_style': as_dict.get('menuStyle', None),
 
             'breadcrumbs': as_dict.get('breadcrumbs', None),
         }

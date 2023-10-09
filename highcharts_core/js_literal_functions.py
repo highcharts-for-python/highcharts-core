@@ -81,7 +81,6 @@ def serialize_to_js_literal(item,
                     continue
                 else:
                     raise error
-
         if requires_js_objects:
             return [serialize_to_js_literal(x,
                                             encoding = encoding,

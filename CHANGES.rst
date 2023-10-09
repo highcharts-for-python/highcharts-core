@@ -22,6 +22,28 @@ Release 1.4.0
 * **BUGFIX:** Fixed instability issues in Jupyter Notebooks, both when operating as a Notebook (outside of 
   Jupyter Lab) and when saved to a static HTML file (#66).
 
+--------------------
+
+Release 1.3.7
+=========================================
+
+* **BUGFIX:** Fixed bug in ``HighchartsMeta.copy()`` (#98).
+* **BUGFIX:** Fixed bug in data point serialization to primitive array.
+
+---------------------
+
+Release 1.3.6
+=========================================
+
+* **BUGFIX:** Adding missing ``menu...Style`` properties to `Navigation` class (#95).
+
+---------------------
+
+Release 1.3.5
+=========================================
+
+* **BUGFIX:** Fixed validation of style properties in the ``Legend`` class (#93).
+
 ---------------------
 
 
