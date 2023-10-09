@@ -1239,6 +1239,14 @@ class Chart(HighchartsMeta):
           which is Python's native escape character).
         :type escape_character: :class:`str <python:str>`
 
+        :param series_index: If supplied, generate the chart with the series that 
+          Highcharts for Python generated from ``df`` at the ``series_index`` position. 
+          Defaults to :obj:`None <python:None>`, which includes all series generated 
+          from ``df`` on the chart.
+
+        :type series_index: :class:`int <python:int>`, slice, or 
+          :obj:`None <python:None>`
+
         :param **kwargs: Remaining keyword arguments will be attempted on the resulting
           :term:`series` instance and the data points it contains.
 

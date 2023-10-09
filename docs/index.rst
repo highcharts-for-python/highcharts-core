@@ -13,8 +13,6 @@ Highcharts Core for Python
 
 **High-end data visualization for the Python ecosystem**
 
-.. include:: _unit_tests_code_coverage.rst
-
 .. toctree::
   :hidden:
   :maxdepth: 3
