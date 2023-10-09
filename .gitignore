@@ -109,7 +109,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-.py310/
+.py31*/
 
 # Spyder project settings
 .spyderproject

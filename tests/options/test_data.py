@@ -10,7 +10,7 @@ from highcharts_core.options.data import Data as cls
 from highcharts_core import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
-    Class_from_js_literal, run_pyspark_tests
+    Class_from_js_literal, run_pyspark_tests, run_pandas_tests
 
 STANDARD_PARAMS = [
     ({}, None),
@@ -100,7 +100,10 @@ def test_from_js_literal(input_files, filename, as_file, error):
      None),
 
 ])
-def test_from_pandas(input_files, filename, kwargs, error):
+def test_from_pandas(run_pandas_tests, input_files, filename, kwargs, error):
+    if not run_pandas_tests:
+        return
+
     import pandas
 
     input_file = check_input_file(input_files, filename)

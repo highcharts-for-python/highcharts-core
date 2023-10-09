@@ -1,11 +1,18 @@
 from typing import Optional, List, Dict
 from decimal import Decimal
+from collections import UserDict
 
 from validator_collection import validators, checkers
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
 
 from highcharts_core import constants, errors, utility_functions
-from highcharts_core.decorators import class_sensitive
+from highcharts_core.decorators import class_sensitive, validate_types
 from highcharts_core.metaclasses import HighchartsMeta, JavaScriptDict
+from highcharts_core.js_literal_functions import serialize_to_js_literal, assemble_js_literal, get_js_literal
 from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
 from highcharts_core.utility_classes.events import PointEvents
@@ -304,14 +311,55 @@ class DataBase(DataCore):
 
         return untrimmed
 
-    def _get_props_from_array(self) -> List[str]:
+    @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1, 2, 3]
+
+    @classmethod
+    def _get_props_from_array(cls, length = None) -> List[str]:
         """Returns a list of the property names that can be set using the
         :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
         method.
         
+        :param length: The length of the array, which may determine the properties to 
+          parse. Defaults to :obj:`None <python:None>`, which returns the full list of 
+          properties.
+        :type length: :class:`int <python:int>` or :obj:`None <python:None>`
+        
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
-        return []
+        return cls._get_props_from_array_helper({}, length)
+
+    @staticmethod
+    def _get_props_from_array_helper(prop_list, length = None) -> List[str]:
+        """Helper which adjusts the prop list to account for name.
+        
+        :param prop_list: List of properties
+        :type prop_list: :class:`list <python:list>` of :class:`str <python:str>`
+        
+        :param length: The length of the array, which may determine the properties to 
+          parse. Defaults to :obj:`None <python:None>`, which returns the full list of 
+          properties.
+        :type length: :class:`int <python:int>` or :obj:`None <python:None>`
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>`
+        
+        """
+        try:
+            return prop_list[length]
+        except KeyError as error:
+            try:
+                last_key = list(prop_list.keys())[-1]
+            except IndexError:
+                return prop_list.get(None, [])
+            if length == (last_key + 1) and prop_list[None][-1] == 'name':
+                return prop_list[None]
+            
+            raise error
 
     @property
     def requires_js_object(self) -> bool:
@@ -336,8 +384,104 @@ class DataBase(DataCore):
         
         return False
 
+    def populate_from_array(self, value):
+        """Update the data point's properties with values provided by an array (iterable).
+        
+        This method is used to parse data that is input to **Highcharts for Python** 
+        without property names, in an array-organized
+        structure as described in the `Highcharts JS <https://www.highcharts.com>`__
+        documentation.
+        
+          .. seealso::
+
+            The specific structure of the expected array is highly dependent on the type
+            of data point that the series needs, which itself is dependent on the series
+            type itself.
+
+            Please review the detailed :ref:`series documentation <series_documentation>`
+            for series type-specific details of relevant array structures.
+
+          .. note::
+
+            An example of how this works for a simple
+            :class:`LineSeries <highcharts_core.options.series.area.LineSeries>` (which
+            uses
+            :class:`CartesianData <highcharts_core.options.series.data.cartesian.CartesianData>`
+            data points) would be:
+
+            .. code-block:: python
+
+              my_data_point = CartesianData()
+
+              # A simple array of numerical values which correspond to the Y value of the
+              # data point
+              my_data_point.populate_from_array([0, 0])
+              my_data_point.populate_from_array([1, 5])
+              my_data_point.populate_from_array([2, 3])
+              my_data_point.populate_from_array([3, 5])
+
+        :param value: The value that should contain the data which will be converted into
+          data point property values.
+
+          .. note::
+
+            If ``value`` is not an iterable, it will be converted into an iterable to be
+            further de-serialized correctly.
+
+        :type value: iterable
+
+        """
+        if HAS_NUMPY:
+            is_ndarray = isinstance(value, np.ndarray)
+        else:
+            is_ndarray = False
+            
+        if not is_ndarray and not checkers.is_iterable(value,
+                                                       forbid_literals = (
+                                                           str,
+                                                           bytes,
+                                                           dict,
+                                                           UserDict
+                                                       )):
+            value = [value]
+
+        try:
+            properties = self._get_props_from_array(len(value))
+        except KeyError:
+            full_properties = self._get_props_from_array()
+            if len(full_properties) == len(value):
+                properties = full_properties
+            else:
+                properties = []
+
+        if len(value) == 0:
+            value = [None for x in properties]
+
+        if len(value) < len(properties):
+            value = value[:len(properties)]
+
+        processed_x = False
+        processed_name = False
+        for index, prop in enumerate(properties):
+            if hasattr(value[index], 'item'):
+                item = value[index].item()
+            else:
+                item = value[index]
+            if HAS_NUMPY and not checkers.is_string(item) and np.isnan(item):
+                item = None
+            setattr(self, prop, item)
+            if prop == 'name' and item is not None:
+                processed_name = True
+            if prop == 'x':
+                processed_x = True
+
+        if processed_x and not processed_name:
+            if not self.name and checkers.is_string(self.x):
+                self.name = self.x
+                self.x = None
+        
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         """Creates a collection of data point instances, parsing the contents of ``value``
         as an array (iterable). This method is specifically used to parse data that is
         input to **Highcharts for Python** without property names, in an array-organized
@@ -424,7 +568,8 @@ class DataBase(DataCore):
         """
         if not value:
             return []
-        elif checkers.is_string(value):
+
+        if checkers.is_string(value):
             try:
                 value = validators.json(value)
             except (ValueError, TypeError):
@@ -440,6 +585,22 @@ class DataBase(DataCore):
                 as_obj = cls.from_dict(item)
             elif item is None or isinstance(item, constants.EnforcedNullType):
                 as_obj = cls()
+            elif checkers.is_iterable(item, forbid_literals = (str,
+                                                               bytes,
+                                                               dict,
+                                                               UserDict)):
+                try:
+                    array_props = cls._get_props_from_array(len(item))
+                except KeyError:
+                    raise errors.HighchartsValueError(f'each data point supplied must either '
+                                                      f'be a DataBase Data Point or be '
+                                                      f'coercable to one. Could not coerce: '
+                                                      f'{item}')
+                kwargs = {}
+                for index, prop in enumerate(array_props):
+                    kwargs[prop] = item[index]
+
+                as_obj = cls(**kwargs)
             else:
                 raise errors.HighchartsValueError(f'each data point supplied must either '
                                                   f'be a DataBase Data Point or be '
@@ -448,6 +609,103 @@ class DataBase(DataCore):
             collection.append(as_obj)
 
         return collection
+
+    @classmethod
+    def from_array(cls, value):
+        """Creates a collection of data point instances, parsing the contents of ``value``
+        as an array (iterable). This method is specifically used to parse data that is
+        input to **Highcharts for Python** without property names, in an array-organized
+        structure as described in the `Highcharts JS <https://www.highcharts.com>`__
+        documentation.
+
+          .. seealso::
+
+            The specific structure of the expected array is highly dependent on the type
+            of data point that the series needs, which itself is dependent on the series
+            type itself.
+
+            Please review the detailed :ref:`series documentation <series_documentation>`
+            for series type-specific details of relevant array structures.
+
+          .. note::
+
+            An example of how this works for a simple
+            :class:`LineSeries <highcharts_core.options.series.area.LineSeries>` (which
+            uses
+            :class:`CartesianData <highcharts_core.options.series.data.cartesian.CartesianData>`
+            data points) would be:
+
+            .. code-block:: python
+
+              my_series = LineSeries()
+
+              # A simple array of numerical values which correspond to the Y value of the
+              # data point
+              my_series.data = [0, 5, 3, 5]
+
+              # An array containing 2-member arrays (corresponding to the X and Y values
+              # of the data point)
+              my_series.data = [
+                  [0, 0],
+                  [1, 5],
+                  [2, 3],
+                  [3, 5]
+              ]
+
+              # An array of dict with named values
+              my_series.data = [
+                {
+                    'x': 0,
+                    'y': 0,
+                    'name': 'Point1',
+                    'color': '#00FF00'
+                },
+                {
+                    'x': 1,
+                    'y': 5,
+                    'name': 'Point2',
+                    'color': '#CCC'
+                },
+                {
+                    'x': 2,
+                    'y': 3,
+                    'name': 'Point3',
+                    'color': '#999'
+                },
+                {
+                    'x': 3,
+                    'y': 5,
+                    'name': 'Point4',
+                    'color': '#000'
+                }
+              ]
+
+        :param value: The value that should contain the data which will be converted into
+          data point instances.
+
+          .. note::
+
+            If ``value`` is not an iterable, it will be converted into an iterable to be
+            further de-serialized correctly.
+
+        :type value: iterable
+
+        :returns: Collection of :term:`data point` instances (descended from
+          :class:`DataBase <highcharts_core.options.series.data.base.DataBase>`)
+        :rtype: :class:`list <python:list>` of
+          :class:`DataBase <highcharts_core.options.series.data.base.DataBase>`
+          descendant instances or 
+          :class:`CartesianDataCollection <highcharts_core.options.series.data.cartesian.CartesianDataCollection>`
+        """
+        if not utility_functions.is_ndarray(value) and not value:
+            return []
+        elif utility_functions.is_ndarray(value):
+            return cls.from_ndarray(value)
+
+        if checkers.is_type(value, 'DataPointCollection'):
+            return value
+
+        return cls.from_list(value)
 
     def to_array(self, force_object = False) -> List | Dict:
         """Generate the array representation of the data point (the inversion 
@@ -468,7 +726,85 @@ class DataBase(DataCore):
         :rtype: :class:`list <python:list>` of values or :class:`dict <python:dict>`
         """
         if self.requires_js_object or force_object:
-            return self._to_untrimmed_dict()
+            return self._to_untrimmed_dict(in_cls = self.__class__.__name__)
+
+        props = self._get_props_from_array()
+
+        if props and props[-1] == 'name':
+            props = props[:-1]
 
         return [getattr(self, x, constants.EnforcedNull)
-                for x in self._get_props_from_array()]
+                for x in props]
+
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        from highcharts_core.options.series.data.collections import DataPointCollection
+
+        return DataPointCollection.from_ndarray(value)
+    
+    def to_js_literal(self,
+                      filename = None,
+                      encoding = 'utf-8',
+                      careful_validation = False) -> Optional[str]:
+        """Return the object represented as a :class:`str <python:str>` containing the
+        JavaScript object literal.
+
+        :param filename: The name of a file to which the JavaScript object literal should
+          be persisted. Defaults to :obj:`None <python:None>`
+        :type filename: Path-like
+
+        :param encoding: The character encoding to apply to the resulting object. Defaults
+          to ``'utf-8'``.
+        :type encoding: :class:`str <python:str>`
+
+        :param careful_validation: if ``True``, will carefully validate JavaScript values
+        along the way using the
+        `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
+        to ``False``.
+        
+        .. warning::
+        
+            Setting this value to ``True`` will significantly degrade serialization
+            performance, though it may prove useful for debugging purposes.
+
+        :type careful_validation: :class:`bool <python:bool>`
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        if filename:
+            filename = validators.path(filename)
+
+        untrimmed = self.to_array()
+        if isinstance(untrimmed, dict):
+            as_dict = {}
+            for key in untrimmed:
+                item = untrimmed[key]
+                serialized = serialize_to_js_literal(item,
+                                                     encoding = encoding,
+                                                     careful_validation = careful_validation)
+                if serialized is not None:
+                    as_dict[key] = serialized
+
+            as_str = assemble_js_literal(as_dict,
+                                         careful_validation = careful_validation)
+        else:
+            serialized = serialize_to_js_literal(untrimmed,
+                                                 careful_validation = careful_validation)
+            if isinstance(serialized, list):
+                as_str = ','.join([get_js_literal(x, careful_validation = careful_validation)
+                                   for x in serialized])
+                as_str = f'[{as_str}]'
+            else:
+                as_str = serialized
+
+        if filename:
+            with open(filename, 'w', encoding = encoding) as file_:
+                file_.write(as_str)
+
+        return as_str

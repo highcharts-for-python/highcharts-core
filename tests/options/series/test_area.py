@@ -16,7 +16,7 @@ from highcharts_core.options.series.area import StreamGraphSeries as cls6
 from highcharts_core import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
-    Class_from_js_literal
+    Class_from_js_literal, run_pandas_tests
 
 STANDARD_PARAMS = [
     ({}, None),
@@ -1396,6 +1396,43 @@ def test_AreaSeries_to_dict(kwargs, error):
 def test_AreaSeries_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
 
+
+@pytest.mark.parametrize('filename, target_type, as_cls, error', [
+    ('series/area/01.js', 'line', False, None),
+    ('series/area/02.js', 'line', False, None),
+    ('series/area/03.js', 'line', False, None),
+
+    ('series/area/01.js', 'line', True, None),
+    ('series/area/02.js', 'line', True, None),
+    ('series/area/03.js', 'line', True, None),
+
+    ('series/area/01.js', 'not a series type', False, ValueError),
+    ('series/area/01.js', 123, False, ValueError),
+
+])
+def test_convert_to(input_files, filename, target_type, as_cls, error):
+    input_file = check_input_file(input_files, filename)
+    if not error:
+        from highcharts_core.options.series.series_generator import SERIES_CLASSES
+
+        original = cls.from_js_literal(input_file)
+
+        if isinstance(target_type, str):
+            target_type_cls = SERIES_CLASSES.get(target_type)
+            target_type_name = target_type
+        else:
+            target_type_cls = target_type
+            target_type_name = target_type.__name__
+
+        if as_cls:
+            target_type = target_type_cls
+        else:
+            target_type = target_type_name
+        
+        converted = original.convert_to(target_type)
+        assert converted is not None
+        assert isinstance(converted, cls)
+        assert isinstance(converted, target_type_cls)
 #### NEXT CLASS
 
 STANDARD_PARAMS_2 = [
@@ -2732,36 +2769,159 @@ def test_LineSeries_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls5, input_files, filename, as_file, error)
 
 
-@pytest.mark.parametrize('filename, property_map, error', [
-    ('test-data-files/nst-est2019-01.csv', {}, ValueError),
-    ('test-data-files/nst-est2019-01.csv',
-     {
-         'name': 'Geographic Area',
-         'x': 'Geographic Area',
-         'y': '2010'
-     },
-     None),
-
+@pytest.mark.parametrize('filename, error', [
+    ('test-data-files/nst-est2019-01.csv', None),
 ])
-def test_LineSeries_from_pandas(input_files, filename, property_map, error):
+def test_LineSeries_from_pandas_in_rows(run_pandas_tests, input_files, filename, error):
+    if not run_pandas_tests:
+        return
+
     import pandas
     
     input_file = check_input_file(input_files, filename)
     df = pandas.read_csv(input_file, header = 0, thousands = ',')
-    print(df.dtypes)
+    df.index = df['Geographic Area']
+    df = df.drop(columns = ['Geographic Area'])
+    print(df)
     
     if not error:
-        result = cls5.from_pandas(df, property_map = property_map)
+        result = cls5.from_pandas_in_rows(df)
         assert result is not None
-        assert isinstance(result, cls5)
-        assert result.data is not None
-        assert len(result.data) == len(df)
-        for item in result.data:
-            for key in property_map:
-                assert getattr(item, key, None) is not None
+        assert isinstance(result, list)
+        assert len(result) == len(df)
+        for series in result:
+            assert isinstance(series, cls5)
+            assert series.data is not None
+            assert len(series.data) == len(df.columns)
     else:
         with pytest.raises(error):
-            result = cls5.from_pandas(df, property_map = property_map)
+            result = cls5.from_pandas_in_rows(df)
+
+
+def prep_df(df):
+    df.index = df['Geographic Area']
+    df = df.drop(columns = ['Geographic Area'])
+    
+    return df
+
+
+def reduce_to_two_columns(df):
+    df = df[['Geographic Area', '2010']]
+    
+    return df
+
+
+@pytest.mark.parametrize('filename, kwargs, pre_test_df_func, expected_series, expected_data_points, error', [
+    # SCENARIO 0: Series in Rows
+    ('test-data-files/nst-est2019-01.csv',
+     {
+         'series_in_rows': True
+     },
+     prep_df,
+     57,
+     10,
+     None),
+    
+    # SCENARIO 1a: Has Property Map, Single Series
+    ('test-data-files/nst-est2019-01.csv',
+     {
+         'property_map': {
+             'name': 'Geographic Area',
+         },
+         'series_in_rows': False
+     },
+     None,
+     1,
+     57,
+     None),
+
+    # SCENARIO 1b: Has Property Map, Multiple Series
+    ('test-data-files/nst-est2019-01.csv',
+     {
+         'property_map': {
+             'x': ['Geographic Area', '2010']
+         },
+         'series_in_rows': False
+     },
+     None,
+     2,
+     57,
+     None),
+    
+    # SCENARIO 2a: Single Property in KWARGS
+    ('test-data-files/nst-est2019-01.csv',
+     {
+         'x': 'Geographic Area',
+         'y': '2010'
+     },
+     None,
+     1,
+     57,
+     None),
+    
+    # SCENARIO 3a: Exact Match on Column Count
+    ('test-data-files/nst-est2019-01.csv',
+     {},
+     reduce_to_two_columns,
+     1,
+     57,
+     None),
+    
+    # SCENARIO 3b: Multiple Series, Multipled Columns
+    ('test-data-files/nst-est2019-01.csv',
+     {},
+     prep_df,
+     10,
+     57,
+     None),
+
+    # SCENARIO 4: Mismatched Columns
+    # NOTE: On SeriesBase, this will actually return one series per column.
+    # This is because SeriesBase supports 1D arrays.
+    ('test-data-files/nst-est2019-01.csv',
+     {},
+     None,
+     11,
+     57,
+     TypeError),
+    
+])
+def test_LineSeries_from_pandas(run_pandas_tests,
+                                input_files, 
+                                filename, 
+                                kwargs, 
+                                pre_test_df_func, 
+                                expected_series, 
+                                expected_data_points, 
+                                error):
+    if not run_pandas_tests:
+        return
+
+    import pandas
+
+    input_file = check_input_file(input_files, filename)
+    df = pandas.read_csv(input_file, header = 0, thousands = ',')
+    if pre_test_df_func:
+        df = pre_test_df_func(df)
+    print(df)
+
+    if not error:
+        result = cls5.from_pandas(df, **kwargs)
+        assert result is not None
+        if expected_series > 1:
+            assert isinstance(result, list)
+            assert len(result) == expected_series
+            for series in result:
+                assert isinstance(series, cls)
+                assert series.data is not None
+                assert len(series.data) == expected_data_points
+        else:
+            assert isinstance(result, cls)
+            assert result.data is not None
+            assert len(result.data) == len(df)
+    else:
+        with pytest.raises(error):
+            result = cls5.from_pandas(df, **kwargs)
 
 
 @pytest.mark.parametrize('kwargs, error', [
@@ -2781,14 +2941,41 @@ def test_bugfix32_LineSeries_from_csv(kwargs, error):
         assert result is not None
         assert isinstance(result, cls5) is True
         assert result.data is not None
-        assert isinstance(result.data, list) is True
         for item in result.data:
-            assert item.name is not None
+            assert item.x is not None or item.name is not None
             assert item.y is not None
+            assert item.id is not None
 
 
-@pytest.mark.parametrize('filename, property_map, kwargs, error', [
-    ('test-data-files/nst-est2019-01.csv', {}, {}, ValueError),
+@pytest.mark.parametrize('filename, expected_series, expected_data_points, error', [
+    ('test-data-files/nst-est2019-01.csv', 57, 10, None),
+])
+def test_LineSeries_from_csv_in_rows(input_files, filename, expected_series, expected_data_points, error):
+    input_file = check_input_file(input_files, filename)
+    if not error:
+        result = cls5.from_csv_in_rows(input_file,
+                                       wrapper_character = '"')
+        assert result is not None
+        assert isinstance(result, list)
+        assert len(result) == expected_series
+        for series in result:
+            assert isinstance(series, cls5)
+            assert series.data is not None
+            assert len(series.data) == expected_data_points
+    else:
+        with pytest.raises(error):
+            result = cls5.from_pandas_in_rows(input_file)
+
+
+@pytest.mark.parametrize('filename, property_map, kwargs, expected_series, expected_data_points, error', [
+    ('test-data-files/nst-est2019-01.csv', 
+     {}, 
+     {
+         'wrapper_character': '"'
+     },
+     10,
+     57,
+     None),
     ('test-data-files/nst-est2019-01.csv',
      {
          'name': 'Geographic Area',
@@ -2798,10 +2985,105 @@ def test_bugfix32_LineSeries_from_csv(kwargs, error):
      {
          'wrapper_character': '"'
      },
+     1,
+     57,
      None),
 
+    # SCENARIO 0: Series in Rows
+    ('test-data-files/nst-est2019-01.csv',
+     {},
+     {
+         'wrapper_character': '"',
+         'series_in_rows': True
+     },
+     57,
+     10,
+     None),
+    
+    # SCENARIO 1a: Has Property Map, Single Series
+    ('test-data-files/nst-est2019-01.csv',
+     {
+         'name': 'Geographic Area'
+     },
+     {
+         'wrapper_character': '"',
+         'series_in_rows': False
+     },
+     1,
+     57,
+     None),
+
+    ('test-data-files/nst-est2019-01.csv',
+     {
+         'x': 'Geographic Area',
+         'y': '2010'
+     },
+     {
+         'wrapper_character': '"'
+     },
+     1,
+     57,
+     None),
+
+    # SCENARIO 1b: Has Property Map, Multiple Series
+    ('test-data-files/nst-est2019-01.csv',
+     {
+         'x': ['Geographic Area', '2010']
+     },
+     {
+         'series_in_rows': False,
+         'wrapper_character': '"'
+          },
+     2,
+     57,
+     None),
+    
+    # SCENARIO 2a: Single Property in KWARGS
+    ('test-data-files/nst-est2019-01.csv',
+     {},
+     {
+         'wrapper_character': '"',
+         'x': 'Geographic Area',
+         'y': '2010'
+     },
+     1,
+     57,
+     None),
+    
+    # SCENARIO 3a: Exact Match on Column Count
+    ('test-data-files/nst-est2019-01-reduced-to-two.csv',
+     {},
+     {
+         'wrapper_character': '"'
+     },
+     1,
+     57,
+     None),
+    
+    # SCENARIO 3b: Multiple Series, Multipled Columns
+    ('test-data-files/nst-est2019-01-removed-column.csv',
+     {},
+     {
+         'wrapper_character': '"'
+     },
+     9,
+     57,
+     None),
+
+    # SCENARIO 4: Mismatched Columns
+    # NOTE: On SeriesBase, this will actually return one series per column.
+    # This is because SeriesBase supports 1D arrays.
+    ('test-data-files/nst-est2019-01.csv',
+     {},
+     {
+         'wrapper_character': '"'
+     },
+     10,
+     57,
+     None),
+    
 ])
-def test_LineSeries_from_csv(input_files, filename, property_map, kwargs, error):
+def test_LineSeries_from_csv(input_files, filename, property_map, kwargs, expected_series, expected_data_points, error):
     input_file = check_input_file(input_files, filename)
     
     if not error:
@@ -2809,11 +3091,24 @@ def test_LineSeries_from_csv(input_files, filename, property_map, kwargs, error)
                                property_column_map = property_map,
                                **kwargs)
         assert result is not None
-        assert isinstance(result, cls5)
-        assert result.data is not None
-        for item in result.data:
-            for key in property_map:
-                assert getattr(item, key, None) is not None
+        if isinstance(result, list):
+            assert len(result) == expected_series
+            for series in result:
+                assert isinstance(series, cls5)
+                assert series.data is not None
+                assert len(series.data) == expected_data_points
+        else:
+            assert isinstance(result, cls5)
+            assert result.data is not None
+            for item in result.data:
+                for key in property_map:
+                    if key == 'x':
+                        x_value = getattr(item, 'x', None)
+                        if x_value is None:
+                            assert getattr(item, 'name', None) is not None
+                    else:
+                        assert getattr(item, key, None) is not None
+
     else:
         with pytest.raises(error):
             result = cls5.from_csv(input_file, 

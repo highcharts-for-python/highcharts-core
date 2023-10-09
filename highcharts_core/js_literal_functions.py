@@ -8,10 +8,19 @@ from validator_collection import checkers, validators
 import esprima
 from esprima.error_handler import Error as ParseError
 
-from highcharts_core import constants, errors
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
+    
+from highcharts_core import constants, errors, utility_functions
 
 
-def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
+def serialize_to_js_literal(item, 
+                            encoding = 'utf-8', 
+                            ignore_to_array = False,
+                            careful_validation = False) -> Optional[str]:
     """Convert ``item`` to the contents of a JavaScript object literal code snippet.
 
     :param item: A value that is to be converted into a JS object literal notation value.
@@ -19,27 +28,82 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
     :param encoding: The character encoding to apply to the resulting object. Defaults
       to ``'utf-8'``.
     :type encoding: :class:`str <python:str>`
+    
+    :param ignore_to_array: If ``True``, will ignore handling of the ``.to_array()`` method
+      to break recursion. Defaults to ``False``.
+    :type ignore_to_array: :class:`bool <python:bool>`
+
+    :param careful_validation: if ``True``, will carefully validate JavaScript values
+      along the way using the
+      `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
+      to ``False``.
+      
+      .. warning::
+      
+        Setting this value to ``True`` will significantly degrade serialization
+        performance, though it may prove useful for debugging purposes.
+
+    :type careful_validation: :class:`bool <python:bool>`
 
     :returns: A JavaScript object literal code snippet, expressed as a string. Or
       :obj:`None <python:None>` if ``item`` is not serializable.
     :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
     """
-    if checkers.is_iterable(item, forbid_literals = (str, bytes, dict, UserDict)):
-        requires_js_objects = any([getattr(x, 'requires_js_object', True) 
-                                   for x in item])
+    if not ignore_to_array and hasattr(item, 'to_array'):
+        requires_js_objects = getattr(item, 'requires_js_object', True)
+        if requires_js_objects and hasattr(item, 'to_js_literal'):
+            return item.to_js_literal(encoding = encoding,
+                                      careful_validation = careful_validation)
+        elif requires_js_objects:
+            return serialize_to_js_literal(item, 
+                                           encoding = encoding, 
+                                           ignore_to_array = True,
+                                           careful_validation = careful_validation)
+        else:
+            return serialize_to_js_literal(item.to_array(), 
+                                           encoding = encoding,
+                                           careful_validation = careful_validation)
+    elif HAS_NUMPY and utility_functions.is_ndarray(item):
+        return utility_functions.from_ndarray(item)
+    elif hasattr(item, 'to_js_literal'):
+        return item.to_js_literal(encoding = encoding, 
+                                  careful_validation = careful_validation)
+    elif not isinstance(item,
+                        (str, bytes, dict, UserDict)) and hasattr(item, '__iter__'):
+        requires_js_objects = False
+        for x in item:
+            try:
+                if getattr(x, 'requires_js_object', True) is True:
+                    requires_js_objects = True
+                    break
+            except ValueError as error:
+                if utility_functions.is_ndarray(x):
+                    continue
+                else:
+                    raise error
         if requires_js_objects:
-            return [serialize_to_js_literal(x, encoding = encoding) 
+            return [serialize_to_js_literal(x,
+                                            encoding = encoding,
+                                            ignore_to_array = True,
+                                            careful_validation = careful_validation)
                     for x in item]
         else:
-            return [serialize_to_js_literal(x.to_array(), encoding = encoding)
-                    for x in item]
-    elif hasattr(item, 'to_js_literal'):
-        return item.to_js_literal(encoding = encoding)
+            result = []
+            for x in item:
+                if not utility_functions.is_ndarray(x):
+                    js_literal = serialize_to_js_literal(x.to_array(),
+                                                         encoding = encoding,
+                                                         careful_validation = careful_validation)
+                    result.append(js_literal)
+                else:
+                    result.append(utility_functions.from_ndarray(x))
+            
+            return result
     elif isinstance(item, constants.EnforcedNullType) or item == 'null':
         return constants.EnforcedNull
     elif isinstance(item, bool):
         return item
-    elif checkers.is_string(item):
+    elif isinstance(item, str):
         return_value = item.replace("'", "\\'")
         return return_value
     elif checkers.is_numeric(item) and not isinstance(item, Decimal):
@@ -48,15 +112,17 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
         return float(item)
     elif checkers.is_type(item, ('CallbackFunction')):
         return str(item)
-    elif checkers.is_type(item, (dict, UserDict)):
+    elif isinstance(item, (dict, UserDict)):
         as_dict = {}
         for key in item:
-            as_dict[key] = serialize_to_js_literal(item[key], encoding = encoding)
+            as_dict[key] = serialize_to_js_literal(item[key], 
+                                                   encoding = encoding,
+                                                   careful_validation = careful_validation)
         return str(as_dict)
     elif checkers.is_datetime(item):
         if not item.tzinfo:
             item = item.replace(tzinfo = datetime.timezone.utc)
-        return item.timestamp()*1000
+        return item.timestamp() * 1000
     elif checkers.is_date(item):
         return f'Date.UTC({item.year}, {item.month - 1}, {item.day})'
     elif checkers.is_time(item):
@@ -67,39 +133,65 @@ def serialize_to_js_literal(item, encoding = 'utf-8') -> Optional[str]:
     return None
 
 
-def is_js_object(as_str):
+def is_js_object(as_str, careful_validation = False):
     """Determine whether ``as_str`` is a JavaScript object.
     
     :param as_str: The string to evaluate.
     :type as_str: :class:`str <python:str>`
     
+    :param careful_validation: if ``True``, will carefully validate JavaScript values
+      along the way using the
+      `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
+      to ``False``.
+      
+      .. warning::
+      
+        Setting this value to ``True`` will significantly degrade serialization
+        performance, though it may prove useful for debugging purposes.
+
+    :type careful_validation: :class:`bool <python:bool>`
+
     :returns: ``True`` if ``as_str`` is a JavaScript function. ``False`` if not.
     :rtype: :class:`bool <python:bool>`
     """
-    expression_item = f'const testName = {as_str}'
-    try:
-        parsed = esprima.parseScript(expression_item)
-    except ParseError:
+
+    if not careful_validation:
+        is_empty = as_str[1:-1].strip() == ''
+        if is_empty:
+            return True
+        has_colon = ':' in as_str
+        if has_colon:
+            return True
+        if 'new ' in as_str:
+            return True
+        if 'Object.create(' in as_str:
+            return True
+        return False
+    else:
+        expression_item = f'const testName = {as_str}'
         try:
-            parsed = esprima.parseModule(expression_item)
+            parsed = esprima.parseScript(expression_item)
         except ParseError:
+            try:
+                parsed = esprima.parseModule(expression_item)
+            except ParseError:
+                return False
+
+        body = parsed.body
+        if not body:
             return False
 
-    body = parsed.body
-    if not body:
-        return False
+        first_item = body[0]
+        if first_item.type != 'VariableDeclaration':
+            return False
 
-    first_item = body[0]
-    if first_item.type != 'VariableDeclaration':
-        return False
+        init = first_item.declarations[0].init
+        if not init:
+            return False
+        if init.type in ('ObjectExpression'):
+            return True
 
-    init = first_item.declarations[0].init
-    if not init:
         return False
-    if init.type in ('ObjectExpression'):
-        return True
-
-    return False
 
 
 def attempt_variable_declaration(as_str):
@@ -143,63 +235,118 @@ def attempt_variable_declaration(as_str):
     return False
 
 
-def is_js_function_or_class(as_str) -> bool:
+def is_js_function_or_class(as_str, careful_validation = False) -> bool:
     """Determine whether ``as_str`` is a JavaScript function or not.
 
     :param as_str: The string to evaluate.
     :type as_str: :class:`str <python:str>`
 
+    :param careful_validation: if ``True``, will carefully validate JavaScript values
+      along the way using the
+      `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
+      to ``False``.
+      
+      .. warning::
+      
+        Setting this value to ``True`` will significantly degrade serialization
+        performance, though it may prove useful for debugging purposes.
+
+    :type careful_validation: :class:`bool <python:bool>`
+
     :returns: ``True`` if ``as_str`` is a JavaScript function. ``False`` if not.
     :rtype: :class:`bool <python:bool>`
     """
-    if not checkers.is_string(as_str):
+    if not isinstance(as_str, str):
         return False
-
-    try:
-        parsed = esprima.parseScript(as_str)
-    except ParseError:
-        try:
-            parsed = esprima.parseModule(as_str)
-        except ParseError:
-            if as_str.startswith('function') is False:
-                return False
-            else:
-                return attempt_variable_declaration(as_str)
-
-    body = parsed.body
-    if not body:
-        return False
-
-    first_item = body[0]
-    if first_item.type in ('FunctionDeclaration', 'ClassDeclaration'):
-        return True
-    elif as_str.startswith('function') or as_str.startswith('class'):
-        return attempt_variable_declaration(as_str)
-    elif first_item.type == 'VariableDeclaration':
-        init = first_item.declarations[0].init
-        if not init:
-            return False
-        if init.type in ('FunctionExpression', 'ArrowFunctionExpression',
-                         'ClassExpression'):
+    if not careful_validation:
+        is_function = as_str.startswith('function ') or as_str.startswith('function*')
+        if is_function:
             return True
-        elif init.type == 'NewExpression':
-            callee = init.callee
-            if not callee:
+
+        is_function = 'function(' in as_str or 'function*(' in as_str
+        if is_function:
+            return True
+
+        is_function = ')=>' in as_str or ') =>' in as_str
+
+        if is_function:
+            return True
+
+        is_function = 'new Function(' in as_str
+        if is_function:
+            return True
+        
+        is_class = as_str.startswith('class ')
+        if is_class:
+            return True        
+        
+        is_class = 'class {' in as_str or 'class{' in as_str
+        if is_class:
+            return True
+        
+        is_class = '= class' in as_str or '=class' in as_str
+        if is_class:
+            return True
+        
+        return False
+    else:
+        try:
+            parsed = esprima.parseScript(as_str)
+        except ParseError:
+            try:
+                parsed = esprima.parseModule(as_str)
+            except ParseError:
+                if as_str.startswith('function') is False:
+                    return False
+                else:
+                    return attempt_variable_declaration(as_str)
+
+        body = parsed.body
+        if not body:
+            return False
+
+        first_item = body[0]
+        if first_item.type in ('FunctionDeclaration', 'ClassDeclaration'):
+            return True
+        elif as_str.startswith('function') or as_str.startswith('class'):
+            return attempt_variable_declaration(as_str)
+        elif first_item.type == 'VariableDeclaration':
+            init = first_item.declarations[0].init
+            if not init:
                 return False
-            if callee.name == 'Function':
+            if init.type in ('FunctionExpression', 'ArrowFunctionExpression',
+                            'ClassExpression'):
                 return True
+            elif init.type == 'NewExpression':
+                callee = init.callee
+                if not callee:
+                    return False
+                if callee.name == 'Function':
+                    return True
 
     return False
 
 
-def get_js_literal(item) -> str:
+def get_js_literal(item, careful_validation = False) -> str:
     """Convert the value of ``item`` into a JavaScript literal string.
+
+    :param careful_validation: if ``True``, will carefully validate JavaScript values
+      along the way using the
+      `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
+      to ``False``.
+      
+      .. warning::
+      
+        Setting this value to ``True`` will significantly degrade serialization
+        performance, though it may prove useful for debugging purposes.
+
+    :type careful_validation: :class:`bool <python:bool>`
 
     :returns: The JavaScript literal string.
     :rtype: :class:`str <python:str>`
     """
     as_str = ''
-    if checkers.is_iterable(item, forbid_literals = (str, bytes, dict, UserDict)):
+    if not isinstance(item, (str, bytes, dict, UserDict)) and hasattr(item, '__iter__'):
         subitems = [get_js_literal(x) for x in item]
         as_str += '['
         subitem_counter = 0
@@ -211,11 +358,11 @@ def get_js_literal(item) -> str:
             if subitem_counter < len(subitems):
                 as_str += ',\n'
         as_str += ']'
-    elif checkers.is_string(item):
+    elif isinstance(item, str):
         if (item.startswith('[') or item.startswith('Date')) and item != 'Date':
             as_str += f"""{item}"""
         elif item.startswith('{') and item.endswith('}'):
-            if is_js_object(item):
+            if is_js_object(item, careful_validation = careful_validation):
                 as_str += f"""{item}"""
             elif "'" in item:
                 item = item.replace("'", "\\'")
@@ -227,7 +374,7 @@ def get_js_literal(item) -> str:
         elif item.startswith == 'HCP: REPLACE-WITH-':
             item_str = item.replace('HCP: REPLACE-WITH-', '')
             as_str += f"""{item_str}"""
-        elif not is_js_function_or_class(item):
+        elif not is_js_function_or_class(item, careful_validation = careful_validation):
             as_str += f"""'{item}'"""
         else:
             as_str += f"""{item}"""
@@ -243,7 +390,9 @@ def get_js_literal(item) -> str:
     return as_str
 
 
-def assemble_js_literal(as_dict, keys_as_strings = False) -> Optional[str]:
+def assemble_js_literal(as_dict, 
+                        keys_as_strings = False,
+                        careful_validation = False) -> Optional[str]:
     """Convert ``as_dict`` into a JavaScript object literal string.
 
     :param as_dict: A :class:`dict <python:dict>` representation of the JavaScript object.
@@ -254,10 +403,24 @@ def assemble_js_literal(as_dict, keys_as_strings = False) -> Optional[str]:
       to ``False``.
     :type keys_as_strings: :class:`bool <python:bool>`
 
+    :param careful_validation: if ``True``, will carefully validate JavaScript values
+      along the way using the
+      `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
+      to ``False``.
+      
+      .. warning::
+      
+        Setting this value to ``True`` will significantly degrade serialization
+        performance, though it may prove useful for debugging purposes.
+
+    :type careful_validation: :class:`bool <python:bool>`
+
     :returns: The JavaScript object literal representation of ``as_dict``.
     :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
     """
-    as_dict = validators.dict(as_dict, allow_empty = True)
+    if careful_validation:
+        as_dict = validators.dict(as_dict, allow_empty = True)
+
     if not as_dict:
         return None
 
@@ -279,7 +442,7 @@ def assemble_js_literal(as_dict, keys_as_strings = False) -> Optional[str]:
         else:
             as_str += f"""  {key}: """
 
-        as_str += get_js_literal(item)
+        as_str += get_js_literal(item, careful_validation = careful_validation)
 
         if current_key < keys:
             as_str += ',\n'

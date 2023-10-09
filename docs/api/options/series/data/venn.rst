@@ -26,3 +26,21 @@ class: :class:`VennData <highcharts_core.options.series.data.venn.VennData>`
       :parts: -1
 
   |
+
+--------------
+
+********************************************************************************************************************
+class: :class:`VennDataCollection <highcharts_core.options.series.data.venn.VennDataCollection>`
+********************************************************************************************************************
+
+.. autoclass:: VennDataCollection
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: VennDataCollection
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

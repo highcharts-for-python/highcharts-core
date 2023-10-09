@@ -275,3 +275,40 @@ HighchartsMissingExportSettingsError (from :class:`ValueError <python:ValueError
 
     .. inheritance-diagram:: HighchartsMissingExportSettingsError
       :parts: -1
+
+------------
+
+HighchartsMissingSeriesError (from :class:`ValueError <python:ValueError>`)
+==========================================================================================
+
+.. autoexception:: HighchartsMissingSeriesError
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: HighchartsMissingSeriesError
+      :parts: -1
+
+------------
+
+HighchartsPythonConversionError (from :class:`ValueError <python:ValueError>`)
+==========================================================================================
+
+.. autoexception:: HighchartsPythonConversionError
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: HighchartsPythonConversionError
+      :parts: -1
+
+------------
+
+HighchartsModerationError (from :class:`ValueError <python:ValueError>`)
+==========================================================================================
+
+.. autoexception:: HighchartsModerationError
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: HighchartsModerationError
+      :parts: -1
+

@@ -1,10 +1,6 @@
 language: python
 job:
   include:
-    #- python: "3.8"
-    #  env: TOXENV=py38
-    #- python: "3.9"
-    #  env: TOXENV=py39
     - python: "3.10"
       dist: focal
       env: TOXENV=py310
