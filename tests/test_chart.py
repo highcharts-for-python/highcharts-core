@@ -565,7 +565,7 @@ def test_from_csv_in_rows(input_files, filename, expected_series, expected_data_
      {
          'wrapper_character': '"'
      },
-     11,
+     10,
      57,
      None),
     ('test-data-files/nst-est2019-01.csv',
@@ -658,7 +658,7 @@ def test_from_csv_in_rows(input_files, filename, expected_series, expected_data_
      {
          'wrapper_character': '"'
      },
-     5,
+     9,
      57,
      None),
 
@@ -670,7 +670,7 @@ def test_from_csv_in_rows(input_files, filename, expected_series, expected_data_
      {
          'wrapper_character': '"'
      },
-     11,
+     10,
      57,
      None),
     
