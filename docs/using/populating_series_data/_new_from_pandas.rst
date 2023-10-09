@@ -2,7 +2,7 @@
 
     The ``.from_pandas()`` method is available on all :term:`series` classes and on the
     :class:`Chart <highcharts_core.chart.Chart>` class, allowing you to either assemble
-    a series or an entire chart from Pandas :class:`DataFrame <pandas:DataFrame>`
+    a series or an entire chart from Pandas :class:`DataFrame <pandas:pandas.DataFrame>`
     with only one method call.
 
 .. code-block:: python
@@ -101,17 +101,17 @@
     Create one or more :term:`series` instances whose
     :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` properties
     are populated from a `pandas <https://pandas.pydata.org/>`_
-    :class:`DataFrame <pandas:DataFrame>`.
+    :class:`DataFrame <pandas:pandas.DataFrame>`.
 
-    :param df: The :class:`DataFrame <pandas:DataFrame>` from which data should be
+    :param df: The :class:`DataFrame <pandas:pandas.DataFrame>` from which data should be
       loaded.
-    :type df: :class:`DataFrame <pandas:DataFrame>`
+    :type df: :class:`DataFrame <pandas:pandas.DataFrame>`
 
     :param property_map: An optional :class:`dict <python:dict>` used to indicate which
       data point property should be set to which column in ``df``. The keys in the
       :class:`dict <python:dict>` should correspond to properties in the data point
       class, while the value should indicate the label for the
-      :class:`DataFrame <pandas:DataFrame>` column.
+      :class:`DataFrame <pandas:pandas.DataFrame>` column.
 
         .. note::
       

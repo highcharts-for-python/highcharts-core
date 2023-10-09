@@ -465,7 +465,7 @@ As you can see, **Highcharts for Python** represents its data the same way that
 However, constructing tens, hundreds, or possibly thousands of data points 
 individually in your code would be a nightmare. For that reason, the 
 **Highcharts for Python Toolkit** natively supports vectorized 
-:class:`numpy.ndarray <numpy:ndarray>` values, and automatically assembles data
+:class:`numpy.ndarray <numpy:numpy.ndarray>` values, and automatically assembles data
 point collections for easy management/manipulation. In addition, the Toolkit 
 provides a number of convenience methods to make it easier to populate your 
 series.

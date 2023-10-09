@@ -7,8 +7,8 @@ with one :term:`series` of type ``line`` (represented as a
 :class:`LineSeries <highcharts_core.options.series.area.LineSeries>` instance).
 
 Depending on how we've wrangled our data, we can similarly produce a chart
-from a :class:`pandas.DataFrame <pandas:DataFrame>`, 
-:class:`numpy.ndarray <numpy:ndarray>`, or Python :class:`dict <python:dict>`:
+from a :class:`pandas.DataFrame <pandas:pandas.DataFrame>`, 
+:class:`numpy.ndarray <numpy:numpy.ndarray>`, or Python :class:`dict <python:dict>`:
 
   .. code-block:: python
 

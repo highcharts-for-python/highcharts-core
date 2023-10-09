@@ -30,17 +30,17 @@
     Replace the contents of the
     :meth:`.data <highcharts_core.options.series.base.SeriesBase.data>` property
     with data points populated from a `pandas <https://pandas.pydata.org/>`__
-    :class:`DataFrame <pandas:DataFrame>`.
+    :class:`DataFrame <pandas:pandas.DataFrame>`.
 
-    :param df: The :class:`DataFrame <pandas:DataFrame>` from which data should be
+    :param df: The :class:`DataFrame <pandas:pandas.DataFrame>` from which data should be
       loaded.
-    :type df: :class:`DataFrame <pandas:DataFrame>`
+    :type df: :class:`DataFrame <pandas:pandas.DataFrame>`
 
     :param property_map: A :class:`dict <python:dict>` used to indicate which
       data point property should be set to which column in ``df``. The keys in the
       :class:`dict <python:dict>` should correspond to properties in the data point
       class, while the value should indicate the label for the
-      :class:`DataFrame <pandas:DataFrame>` column.
+      :class:`DataFrame <pandas:pandas.DataFrame>` column.
     :type property_map: :class:`dict <python:dict>`
 
     :param series_in_rows: if ``True``, will attempt a streamlined cartesian series

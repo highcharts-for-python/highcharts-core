@@ -151,8 +151,8 @@ This will create a :class:`LineSeries <highcharts_core.options.series.area.LineS
 instance.
 
 Depending on how we've wrangled our data, we can similarly produce one or more
-series from a :class:`pandas.DataFrame <pandas:DataFrame>`, 
-:class:`numpy.ndarray <numpy:ndarray>`, or Python :class:`dict <python:dict>`:
+series from a :class:`pandas.DataFrame <pandas:pandas.DataFrame>`, 
+:class:`numpy.ndarray <numpy:numpy.ndarray>`, or Python :class:`dict <python:dict>`:
 
   .. code-block:: python
 

@@ -27,7 +27,7 @@ Highcharts Core for Python
   FAQ <faq>
   Toolkit Components and Roadmap <toolkit>
   Using Highcharts Core for Python <using>
-  Tutorials <tutorial>
+  Tutorials <tutorials>
   API Reference <api>
   Error Reference <errors>
   Getting Help <support>

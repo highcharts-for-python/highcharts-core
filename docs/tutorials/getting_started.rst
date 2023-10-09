@@ -83,7 +83,7 @@ That's all I need to wrangle my data! **Highcharts for Python** can work with
   series type-specific details of relevant iterable/array structures.
 
 Alternatively, we can convert ``my_iterable`` into a 
-:class:`pandas.DataFrame <pandas:DataFrame>`, :class:`numpy.ndarray <numpy:ndarray>`,
+:class:`pandas.DataFrame <pandas:pandas.DataFrame>`, :class:`numpy.ndarray <numpy:numpy.ndarray>`,
 or Python :class:`dict <python:dict>`:
 
   .. code-block:: python
@@ -254,7 +254,7 @@ is architected. We see three - typical - patterns employed:
 
        .. caution::
 
-         **DO NOT USE JAVASCRIPT'S ``eval()`` FUNCTION**.
+         **DO NOT USE JAVASCRIPT'S eval() FUNCTION**.
          
          It is deprecated, and for good reason:
          

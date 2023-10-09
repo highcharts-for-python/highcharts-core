@@ -163,7 +163,7 @@ different ways you can represent this data:
             ...
         ]
 
-  #. As a :class:`numpy.ndarray <numpy:ndarray>`, which might look like this:
+  #. As a :class:`numpy.ndarray <numpy:numpy.ndarray>`, which might look like this:
 
       .. list-table::
         :widths: 30 70
