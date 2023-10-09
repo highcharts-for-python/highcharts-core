@@ -36,7 +36,7 @@ chart as a tree.
 .. list-table::
   :widths: 30 70
 
-  * - .. image:: /_static/images/data_structure.png
+  * - .. image:: /_static/highcharts-chart-anatomy.png
         :width: 100%
         :alt: Diagram of chart structure: Chart > Options > Series Collection > Series > Data Collection > Data Point
 
@@ -168,13 +168,7 @@ different ways you can represent this data:
       .. list-table::
         :widths: 30 70
 
-        * - .. code-block:: python
-      
-              raw_data = np.genfromtext('census-time-series.csv',
-                                        delimiter = ',',
-                                        names = True)
-
-          - .. image:: /_static/images/raw_data_as_numpy.png
+          - .. image:: /_static/tutorials/raw-data-as-numpy.png
               :width: 100%
               :alt: Rendering of the numpy.ndarray produced by np.genfromtext('census-time-series.csv', delimiter = ',', names = True)
 
@@ -185,9 +179,12 @@ different ways you can represent this data:
 
         * - .. code-block:: python
       
-              raw_data = pandas.read_csv('census-time-series.csv')
+              raw_data = pandas.read_csv('census-time-series.csv',
+                                         index_col = 0,
+                                         thousands = ',', 
+                                         delimiter = ',')
 
-        * - .. image:: /_static/images/raw_data_as_pandas.png
+        * - .. image:: /_static/tutorials/census-time-series-02.png
               :width: 100%
               :alt: Rendering of the Pandas DataFrame loaded from "census-time-series.csv"
 

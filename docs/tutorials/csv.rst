@@ -63,7 +63,7 @@ Preparing Your CSV Data
 So let's try a real-world example. Let's say you've got some annual population
 counts stored in a CSV file named ``'census-time-series.csv'`` that looks like this:
 
-  .. image:: /_static/census-time-series.png
+  .. image:: /_static/tutorials/census-time-series-csv-01.png
      :width: 100%
      :alt: Rendering of the data contained in 'census-time-series.csv'
 
@@ -84,20 +84,20 @@ The simplest way to create a chart from a CSV file is to call
 :class:`Chart.from_csv() <highcharts_core.chart.Chart.from_csv>` like
 so:
 
-.. list-table::
-  :widths: 30 70
-  
-  * - .. code-block:: python
+.. code-block:: python
 
-        my_chart = Chart.from_csv('census-time-series.csv)
+  my_chart = Chart.from_csv('census-time-series.csv',
+                            wrapper_character = '"')
+  my_chart.display()
 
-    - .. image:: /_static/census-time-series_01.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv')
+.. image:: /_static/tutorials/census-time-series-03.png
+  :width: 100%
+  :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv')
 
 As you can see, we haven't provided any more instructions besides telling it to
-generate a chart from the file ``'census-time-series.csv'``. The result is a line 
-chart, with one series for each year, and one point for each region. 
+generate a chart from the file ``'census-time-series.csv'``, and to interpret a single 
+quotation mark as a wrapper character. The result is a line chart, with one series for 
+each year, and one point for each region. 
 
   .. tip::
 
@@ -109,17 +109,15 @@ Setting the Series Type
 
 Why don't we switch it to a bar chart?
 
-.. list-table::
-  :widths: 30 70
-
-  * - .. code-block:: python
+.. code-block:: python
         
-        my_chart = Chart.from_csv('census-time-series.csv', 
-                                  series_type = 'bar')
+  my_chart = Chart.from_csv('census-time-series.csv', 
+                            series_type = 'bar',
+                            wrapper_character = '"')
 
-    - .. image:: /_static/census-time-series_02.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv', series_type = 'bar')
+.. image:: /_static/tutorials/census-time-series-04.png
+  :width: 100%
+  :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv', series_type = 'bar')
 
 Now the result is a little more readable, but still not great: After all, there are more than
 fifty geographic regions represented for each year, which makes the chart super crowded. 
@@ -130,21 +128,18 @@ Let's try focusing our chart.
 Basic Property Mapping
 ==========================
 
-.. list-table::
-  :widths: 30 70
+.. code-block:: python
 
-  * - .. code-block:: python
+  my_chart = Chart.from_csv('census-time-series.csv',
+                            series_type = 'bar',
+                            property_column_map = {
+                                'x': 'Geographic Area',
+                                'y': '2019'
+                            })
 
-        my_chart = Chart.from_csv('census-time-series.csv',
-                                  series_type = 'bar',
-                                  property_column_map = {
-                                      'x': 'Geographic Area',
-                                      'y': '2019'
-                                  })
-
-    - .. image:: /_static/census-time-series_03.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv', series_type = 'bar', property_column_map = {'x': 'Geographic Area', 'y': '2019'})
+.. image:: /_static/tutorials/census-time-series-05.png
+  :width: 100%
+  :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv', series_type = 'bar', property_column_map = {'x': 'Geographic Area', 'y': '2019'})
 
 Much better! We've now added a ``property_column_map`` argument to the ``.from_csv()`` method call. 
 This argument tells Highcharts for Python how to map columns in your data to properties in the 
@@ -179,21 +174,18 @@ But maybe we actually want to compare a couple different years? Let's try that.
 Property Mapping with Multiple Series
 ========================================
 
-.. list-table::
-  :widths: 30 70
+.. code-block:: python
 
-  * - .. code-block:: python
+  my_chart = Chart.from_csv('census-time-series.csv',
+                            series_type = 'column',
+                            property_column_map = {
+                                'x': 'Geographic Area',
+                                'y': ['2017', '2018', '2019']
+                            })
 
-        my_chart = Chart.from_csv('census-time-series.csv',
-                                  series_type = 'bar',
-                                  property_column_map = {
-                                      'x': 'Geographic Area',
-                                      'y': ['2017', '2018', '2019']
-                                  })
-
-    - .. image:: /_static/census-time-series_04.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv', series_type = 'bar', property_column_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019']})
+.. image:: /_static/tutorials/census-time-series-06.png
+  :width: 100%
+  :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv', series_type = 'bar', property_column_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019']})
 
 Now we're getting somewhere! We've added a list of column names to the ``'y'`` key in the ``property_column_map`` 
 argument. Each of those columns has now produced a *separate* 
@@ -209,7 +201,7 @@ all still sharing the ``'Geographic Area'`` column as their
       .. code-block:: python
 
         my_chart = Chart.from_csv('census-time-series.csv',
-                                     series_type = 'bar',
+                                     series_type = 'column',
                                      property_column_map = {
                                          'x': ['Geographic Area', 'Geographic Area', 'Geographic Area'],
                                          'y': ['2017', '2018', '2019']
@@ -226,29 +218,22 @@ configure additional properties? Easy!
 Configuring Additional Properties
 =====================================
 
-.. list-table::
-  :widths: 30 70
+.. code-block:: python
 
-  * - .. code-block:: python
+  my_chart = Chart.from_csv('census-time-series.csv',
+                            series_type = 'bar',
+                            property_column_map = {
+                                'x': 'Geographic Area',
+                                'y': ['2017', '2018', '2019'],
+                                'id': 'some other column'
+                            })
 
-        my_chart = Chart.from_csv('census-time-series.csv',
-                                  series_type = 'bar',
-                                  property_column_map = {
-                                      'x': 'Geographic Area',
-                                      'y': ['2017', '2018', '2019'],
-                                      'id': 'Geographic Area'
-                                  })
-
-    - .. image:: /_static/census-time-series_05.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv', series_type = 'bar', property_column_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019'], 'id': 'Geographic Area'})
-
-And now the :meth:`.id <highcharts_core.options.series.data.bar.BarData.id>` property of each data point
-will *also* be equal to the value in the ``'Geographic Area'`` column.
+Now, our CSV is pretty simple does not contain a column named ``'some other column'`. But *if* it did,
+then it would use that column to set the :meth:`.id <highcharts_core.options.series.data.bar.BarData.id>` property of each data point.
 
   .. note::
 
-    You can supply any property you want to the ``property_column_map``. If the property is not
+    You can supply any property you want to the ``property_map``. If the property is not
     supported by the series type you've selected, then it will be ignored.
 
 But our chart is still looking a little basic - why don't we tweak some series configuration options?
@@ -256,25 +241,21 @@ But our chart is still looking a little basic - why don't we tweak some series c
 Configuring Series Options
 ===============================
 
-.. list-table::
-  :widths: 30 70
+.. code-block:: python
 
-  * - .. code-block:: python
+  my_chart = Chart.from_csv('census-time-series.csv',
+                            series_type = 'bar',
+                            property_column_map = {
+                                'x': 'Geographic Area',
+                                'y': ['2017', '2018', '2019'],
+                            },
+                            series_kwargs = {
+                                'point_padding': 5
+                            })
 
-        my_chart = Chart.from_csv('census-time-series.csv',
-                                  series_type = 'bar',
-                                  property_column_map = {
-                                      'x': 'Geographic Area',
-                                      'y': ['2017', '2018', '2019'],
-                                      'id': 'Geographic Area'
-                                  },
-                                  series_kwargs = {
-                                      'point_padding': 0.25
-                                  })
-
-    - .. image:: /_static/census-time-series_06.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv', series_type = 'bar', property_column_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019'], 'id': 'Geographic Area'}, series_kwargs = {'point_padding': 0.25})
+.. image:: /_static/tutorials/census-time-series-07.png
+  :width: 100%
+  :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv', series_type = 'bar', property_column_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019'], 'id': 'Geographic Area'}, series_kwargs = {'point_padding': 0.25})
 
 As you can see, we supplied a new ``series_kwargs`` argument to the ``.from_csv()`` method call. This
 argument receives a :class:`dict <python:dict>` with keys that correspond to properties on the series. In
@@ -287,30 +268,27 @@ But our chart is *still* a little basic - why don't we give it a reasonable titl
 Configuring Options
 =============================
 
-.. list-table::
-  :widths: 30 70
+.. code-block:: python
 
-  * - .. code-block:: python
+  my_chart = Chart.from_csv('census-time-series.csv',
+                            series_type = 'bar',
+                            wrapper_character = '"',
+                            property_column_map = {
+                                'x': 'Geographic Area',
+                                'y': ['2017', '2018', '2019']
+                            },
+                            series_kwargs = {
+                                'point_padding': 5
+                            },
+                            options_kwargs = {
+                                'title': {
+                                  'text': 'This Is My Chart Title'
+                                }
+                            })
 
-        my_chart = Chart.from_csv('census-time-series.csv',
-                                  series_type = 'bar',
-                                  property_column_map = {
-                                      'x': 'Geographic Area',
-                                      'y': ['2017', '2018', '2019'],
-                                      'id': 'Geographic Area'
-                                  },
-                                  series_kwargs = {
-                                      'point_padding': 0.25
-                                  },
-                                  options_kwargs = {
-                                     'title': {
-                                        'text': 'This Is My Chart Title'
-                                     }
-                                  })
-
-    - .. image:: /_static/census-time-series_07.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv', series_type = 'bar', property_column_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019'], 'id': 'Geographic Area'}, series_kwargs = {'point_padding': 0.25}, options_kwargs = {'title': {'text': 'This Is My Chart Title'}})
+.. image:: /_static/tutorials/census-time-series-08.png
+  :width: 100%
+  :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv', series_type = 'bar', property_column_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019'], 'id': 'Geographic Area'}, series_kwargs = {'point_padding': 0.25}, options_kwargs = {'title': {'text': 'This Is My Chart Title'}})
 
 As you can see, we've now given our chart a title. We did this by adding a new ``options_kwargs`` argument,
 which likewise takes a :class:`dict <python:dict>` with keys that correspond to properties on the chart's
@@ -322,33 +300,26 @@ we can configure that in the same method call.
 Configuring Chart Settings
 ==============================
 
-.. list-table::
-  :widths: 30 70
+.. code-block:: python
 
-  * - .. code-block:: python
-
-        my_chart = Chart.from_csv('census-time-series.csv',
-                                  series_type = 'bar',
-                                  property_column_map = {
-                                     'x': 'Geographic Area',
-                                     'y': ['2017', '2018', '2019'],
-                                     'id': 'Geographic Area'
-                                  },
-                                  series_kwargs = {
-                                     'point_padding': 0.25
-                                  },
-                                  options_kwargs = {
-                                     'title': {
-                                        'text': 'This Is My Chart Title'
-                                     }
-                                  },
-                                  chart_kwargs = {
-                                     'container': 'my_target_div'
-                                  })
-
-    - .. image:: /_static/census-time-series_08.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv', series_type = 'bar', property_column_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019'], 'id': 'Geographic Area'}, series_kwargs = {'point_padding': 0.25}, options_kwargs = {'title': {'text': 'This Is My Chart Title'}}, chart_kwargs = {'container': 'my_target_div'})
+  my_chart = Chart.from_csv('census-time-series.csv',
+                            series_type = 'bar',
+                            wrapper_character = '"',
+                            property_column_map = {
+                                'x': 'Geographic Area',
+                                'y': ['2017', '2018', '2019'],
+                            },
+                            series_kwargs = {
+                                'point_padding': 0.25
+                            },
+                            options_kwargs = {
+                                'title': {
+                                  'text': 'This Is My Chart Title'
+                                }
+                            },
+                            chart_kwargs = {
+                                'container': 'my_target_div'
+                            })
 
 While you can't really *see* the difference here, by adding the ``chart_kwargs`` argument to
 the method call, we now set the :meth:`.container <highcharts_core.chart.Chart.container>` property
@@ -360,18 +331,16 @@ Well, we can do that easily by visualizing each *row* of ``census-time-series.cs
 Visualizing Data in Rows
 ==============================
 
-.. list-table::
-  :widths: 30 70
+.. code-block:: python
 
-  * - .. code-block:: python
+  my_chart = Chart.from_csv('census-time-series.csv',
+                            series_type = 'line',
+                            series_in_rows = True,
+                            wrapper_character = '"')
 
-        my_chart = Chart.from_csv('census-time-series.csv',
-                                  series_type = 'line',
-                                  series_in_rows = True)
-
-    - .. image:: /_static/census-time-series_09.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv', series_type = 'line', series_in_rows = True)
+.. image:: /_static/tutorials/census-time-series-09.png
+  :width: 100%
+  :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv', series_type = 'line', series_in_rows = True)
 
 Okay, so here we removed some of the other arguments we'd been using to simplify the example. You'll see we've now
 added the ``series_in_rows`` argument, and set it to ``True``. This tells **Highcharts for Python** that we expect
@@ -397,23 +366,21 @@ But maybe we don't want *all* geographic areas shown on the chart - maybe we onl
 Filtering Rows
 =======================
 
-.. list-table::
-  :widths: 30 70
+.. code-block:: python
 
-  * - .. code-block:: python
+  my_chart = Chart.from_csv('census-time-series.csv',
+                            series_type = 'line',
+                            series_in_rows = True,
+                            wrapper_character = '"',
+                            series_index = slice(7, 10))
 
-        my_chart = Chart.from_csv('census-time-series.csv',
-                                  series_type = 'line',
-                                  series_in_rows = True,
-                                  series_index = slice(3, 7))
-
-    - .. image:: /_static/census-time-series_10.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv', series_type = 'line', series_in_rows = True, series_index = slice(3, 5))
+.. image:: /_static/tutorials/census-time-series-10.png
+  :width: 100%
+  :alt: Rendering of the chart produced by Chart.from_csv('census-time-series.csv', series_type = 'line', series_in_rows = True, series_index = slice(7, 10))
 
 What we did here is we added a ``series_index`` argument, which tells **Highcharts for Python** to only
 include the series found at that index in the resulting chart. In this case, we supplied a :func:`slice <python:slice>`
-object, which operates just like ``list_of_series[3:7]``. The result only returns those series between index 3 and 6.
+object, which operates just like ``list_of_series[7:10]``. The result only returns those series between index 7 and 10.
 
 ------------------------
 

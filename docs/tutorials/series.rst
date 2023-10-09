@@ -21,7 +21,7 @@ As a result, when you constructing your chart in **Highcharts for Python**,
 what you are really doing is constructing one or more :term:`series` that
 are then placed on a shared canvas, with shared axes, a shared legend, etc.
 
-  .. image:: /_static/images/chart-anatomy.png
+  .. image:: /_static/highcharts-chart-anatomy.png
     :width: 75
     :align: right
     :alt: Diagram showing the conceptual components of a Highcharts chart

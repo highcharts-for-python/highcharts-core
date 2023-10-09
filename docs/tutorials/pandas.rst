@@ -130,17 +130,14 @@ The simplest way to create a chart from a :class:`DataFrame <pandas:pandas.DataF
 is to call :class:`Chart.from_pandas() <highcharts_core.chart.Chart.from_pandas>` like
 so:
 
-.. list-table::
-  :widths: 30 70
-  
-  * - .. code-block:: python
+.. code-block:: python
 
-        my_chart = Chart.from_pandas(df)
-        my_chart.display()
+  my_chart = Chart.from_pandas(df)
+  my_chart.display()
 
-    - .. image:: /_static/tutorials/census-time-series-03.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_pandas(df)
+.. image:: /_static/tutorials/census-time-series-03.png
+  :width: 100%
+  :alt: Rendering of the chart produced by Chart.from_pandas(df)
 
 As you can see, we haven't provided any more instructions besides telling it to
 generate a chart from ``df``. The result is a line chart, with one series for each year, and
@@ -160,14 +157,14 @@ Why don't we switch it to a bar chart?
 .. list-table::
   :widths: 30 70
 
-  * - .. code-block:: python
+.. code-block:: python
         
-        my_chart = Chart.from_pandas(df, series_type = 'bar')
-        my_chart.display()
+  my_chart = Chart.from_pandas(df, series_type = 'bar')
+  my_chart.display()
 
-    - .. image:: /_static/tutorials/census-time-series-04.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'bar')
+.. image:: /_static/tutorials/census-time-series-04.png
+  :width: 100%
+  :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'bar')
 
 Now the result is a little more readable, but still not great: After all, there are more than
 fifty geographic regions represented for each year, which makes the chart super crowded. 
@@ -178,21 +175,18 @@ Let's try focusing our chart.
 Basic Property Mapping
 ==========================
 
-.. list-table::
-  :widths: 30 70
+.. code-block:: python
 
-  * - .. code-block:: python
+  my_chart = Chart.from_pandas(df,
+                               series_type = 'bar',
+                               property_map = {
+                                   'x': 'Geographic Area',
+                                   'y': '2019'
+                               })
 
-        my_chart = Chart.from_pandas(df,
-                                     series_type = 'bar',
-                                     property_map = {
-                                       'x': 'Geographic Area',
-                                       'y': '2019'
-                                     })
-
-    - .. image:: /_static/tutorials/census-time-series-05.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'bar', property_map = {'x': 'Geographic Area', 'y': '2019'})
+.. image:: /_static/tutorials/census-time-series-05.png
+  :width: 100%
+  :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'bar', property_map = {'x': 'Geographic Area', 'y': '2019'})
 
 Much better! We've now added a ``property_map`` argument to the ``.from_pandas()`` method call. 
 This argument tells Highcharts for Python how to map columns in your 
@@ -215,21 +209,19 @@ But maybe we actually want to compare a couple different years? Let's try that.
 Property Mapping with Multiple Series
 ========================================
 
-.. list-table::
-  :widths: 30 70
+.. code-block:: python
 
-  * - .. code-block:: python
+  my_chart = Chart.from_pandas(df,
+                               series_type = 'column',
+                               property_map = {
+                                   'x': 'Geographic Area',
+                                   'y': ['2017', '2018', '2019']
+                               })
+  my_chart.display()
 
-        my_chart = Chart.from_pandas(df,
-                                     series_type = 'column',
-                                     property_map = {
-                                         'x': 'Geographic Area',
-                                         'y': ['2017', '2018', '2019']
-                                     })
-
-    - .. image:: /_static/tutorials/census-time-series-06.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'bar', property_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019']})
+.. image:: /_static/tutorials/census-time-series-06.png
+  :width: 100%
+  :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'bar', property_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019']})
 
 Now we're getting somewhere! First, we changed our series type to a :class:`ColumnSeries <highcharts_core.options.series.bar.ColumnSeries>` to make it (a little) easier to read. Then we  added a list of column names to the ``'y'`` key in the ``property_map``  argument. Each of those columns has now produced a *separate* :class:`ColumnSeries <highcharts_core.options.series.bar.ColumnSeries>` instance - but they're all still sharing the ``'Geographic Area'`` column as their :meth:`.x <highcharts_core.options.series.data.bar.BarData.x>` value.
 
@@ -258,18 +250,15 @@ configure additional properties? Easy!
 Configuring Additional Properties
 =====================================
 
-.. list-table::
-  :widths: 30 70
+.. code-block:: python
 
-  * - .. code-block:: python
-
-        my_chart = Chart.from_pandas(df,
-                                     series_type = 'column',
-                                     property_map = {
-                                         'x': 'Geographic Area',
-                                         'y': ['2017', '2018', '2019'],
-                                         'id': 'some other column'
-                                     })
+  my_chart = Chart.from_pandas(df,
+                               series_type = 'column',
+                               property_map = {
+                                   'x': 'Geographic Area',
+                                   'y': ['2017', '2018', '2019'],
+                                   'id': 'some other column'
+                               })
 
 Now, our data frame is pretty simple does not contain a column named ``'some other column'`. But *if* it did,
 then it would use that column to set the :meth:`.id <highcharts_core.options.series.data.bar.BarData.id>` property of each data point.
@@ -284,25 +273,22 @@ But our chart is still looking a little basic - why don't we tweak some series c
 Configuring Series Options
 ===============================
 
-.. list-table::
-  :widths: 30 70
+.. code-block:: python
 
-  * - .. code-block:: python
+  my_chart = Chart.from_pandas(df,
+                               series_type = 'column',
+                               property_map = {
+                                   'x': 'Geographic Area',
+                                   'y': ['2017', '2018', '2019'],
+                               },
+                               series_kwargs = {
+                                   'point_padding': 5
+                               })
+  my_chart.display()
 
-        my_chart = Chart.from_pandas(df,
-                                     series_type = 'column',
-                                     property_map = {
-                                         'x': 'Geographic Area',
-                                         'y': ['2017', '2018', '2019'],
-                                     },
-                                     series_kwargs = {
-                                         'point_padding': 5
-                                     })
-        my_chart.display()
-
-    - .. image:: /_static/tutorials/census-time-series-07.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'bar', property_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019'], 'id': 'Geographic Area'}, series_kwargs = {'point_padding': 0.5})
+.. image:: /_static/tutorials/census-time-series-07.png
+  :width: 100%
+  :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'bar', property_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019'], 'id': 'Geographic Area'}, series_kwargs = {'point_padding': 0.5})
 
 As you can see, we supplied a new ``series_kwargs`` argument to the ``.from_pandas()`` method call. This
 argument receives a :class:`dict <python:dict>` with keys that correspond to properties on the series. In
@@ -315,30 +301,27 @@ But our chart is *still* a little basic - why don't we give it a reasonable titl
 Configuring Options
 =============================
 
-.. list-table::
-  :widths: 30 70
+.. code-block:: python
 
-  * - .. code-block:: python
+  my_chart = Chart.from_pandas(df,
+                               series_type = 'column',
+                               property_map = {
+                                   'x': 'Geographic Area',
+                                   'y': ['2017', '2018', '2019'],
+                               },
+                               series_kwargs = {
+                                   'point_padding': 0.5
+                               },
+                               options_kwargs = {
+                                   'title': {
+                                       'text': 'This Is My Chart Title'
+                                   }
+                               })
+  my_chart.display()
 
-        my_chart = Chart.from_pandas(df,
-                                     series_type = 'column',
-                                     property_map = {
-                                         'x': 'Geographic Area',
-                                         'y': ['2017', '2018', '2019'],
-                                     },
-                                     series_kwargs = {
-                                         'point_padding': 0.5
-                                     },
-                                     options_kwargs = {
-                                         'title': {
-                                             'text': 'This Is My Chart Title'
-                                         }
-                                     })
-        my_chart.display()
-
-    - .. image:: /_static/tutorials/census-time-series-08.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'bar', property_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019'], 'id': 'Geographic Area'}, series_kwargs = {'point_padding': 0.25}, options_kwargs = {'title': {'text': 'This Is My Chart Title'}})
+.. image:: /_static/tutorials/census-time-series-08.png
+  :width: 100%
+  :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'bar', property_map = {'x': 'Geographic Area', 'y': ['2017', '2018', '2019'], 'id': 'Geographic Area'}, series_kwargs = {'point_padding': 0.25}, options_kwargs = {'title': {'text': 'This Is My Chart Title'}})
 
 As you can see, we've now given our chart a title. We did this by adding a new ``options_kwargs`` argument,
 which likewise takes a :class:`dict <python:dict>` with keys that correspond to properties on the chart's
@@ -350,29 +333,26 @@ we can configure that in the same method call.
 Configuring Chart Settings
 ==============================
 
-.. list-table::
-  :widths: 30 70
+.. code-block:: python
 
-  * - .. code-block:: python
-
-        my_chart = Chart.from_pandas(df,
-                                     series_type = 'bar',
-                                     property_map = {
-                                         'x': 'Geographic Area',
-                                         'y': ['2017', '2018', '2019'],
-                                         'id': 'Geographic Area'
-                                     },
-                                     series_kwargs = {
-                                         'point_padding': 0.25
-                                     },
-                                     options_kwargs = {
-                                         'title': {
-                                             'text': 'This Is My Chart Title'
-                                         }
-                                     },
-                                     chart_kwargs = {
-                                         'container': 'my_target_div'
-                                     })
+  my_chart = Chart.from_pandas(df,
+                               series_type = 'bar',
+                               property_map = {
+                                   'x': 'Geographic Area',
+                                   'y': ['2017', '2018', '2019'],
+                                   'id': 'Geographic Area'
+                               },
+                               series_kwargs = {
+                                   'point_padding': 0.25
+                               },
+                               options_kwargs = {
+                                   'title': {
+                                       'text': 'This Is My Chart Title'
+                                   }
+                               },
+                               chart_kwargs = {
+                                   'container': 'my_target_div'
+                               })
 
 While you can't really *see* the difference here, by adding the ``chart_kwargs`` argument to
 the method call, we now set the :meth:`.container <highcharts_core.chart.Chart.container>` property
@@ -384,19 +364,16 @@ Well, we can do that easily by visualizing each *row* of ``df`` rather than each
 Visualizing Data in Rows
 ==============================
 
-.. list-table::
-  :widths: 30 70
+.. code-block:: python
 
-  * - .. code-block:: python
+  my_chart = Chart.from_pandas(df,
+                               series_type = 'line',
+                               series_in_rows = True)
+  my_chart.display()
 
-        my_chart = Chart.from_pandas(df,
-                                     series_type = 'line',
-                                     series_in_rows = True)
-        my_chart.display()
-
-    - .. image:: /_static/tutorials/census-time-series-09.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'line', series_in_rows = True)
+.. image:: /_static/tutorials/census-time-series-09.png
+  :width: 100%
+  :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'line', series_in_rows = True)
 
 Okay, so here we removed some of the other arguments we'd been using to simplify the example. You'll see we've now
 added the ``series_in_rows`` argument, and set it to ``True``. This tells **Highcharts for Python** that we expect
@@ -420,19 +397,16 @@ But maybe we don't want *all* geographic areas shown on the chart - maybe we onl
 Filtering Rows
 =======================
 
-.. list-table::
-  :widths: 30 70
+.. code-block:: python
 
-  * - .. code-block:: python
+  my_chart = Chart.from_pandas(df,
+                               series_type = 'line',
+                               series_in_rows = True,
+                               series_index = slice(7, 10))
 
-        my_chart = Chart.from_pandas(df,
-                                     series_type = 'line',
-                                     series_in_rows = True,
-                                     series_index = slice(7, 10))
-
-    - .. image:: /_static/tutorials/census-time-series-10.png
-        :width: 100%
-        :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'line', series_in_rows = True, series_index = slice(7, 10))
+.. image:: /_static/tutorials/census-time-series-10.png
+  :width: 100%
+  :alt: Rendering of the chart produced by Chart.from_pandas(df, series_type = 'line', series_in_rows = True, series_index = slice(7, 10))
 
 What we did here is we added a ``series_index`` argument, which tells **Highcharts for Python** to only
 include the series found at that index in the resulting chart. In this case, we supplied a :func:`slice <python:slice>`
