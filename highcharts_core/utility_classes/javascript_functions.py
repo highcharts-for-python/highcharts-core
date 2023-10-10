@@ -4,7 +4,7 @@ from validator_collection import validators, checkers
 import esprima
 from esprima.error_handler import Error as ParseError
 
-from highcharts_core import errors
+from highcharts_core import errors, ai
 from highcharts_core.decorators import validate_types
 from highcharts_core.metaclasses import HighchartsMeta
 
@@ -77,8 +77,18 @@ class CallbackFunction(HighchartsMeta):
         if not value:
             self._arguments = None
         else:
-            self._arguments = [validators.variable_name(x)
-                               for x in validators.iterable(value)]
+            arguments = validators.iterable(value)
+            validated_value = []
+            for argument in arguments:
+                if '=' not in argument:
+                    validated_value.append(validators.variable_name(argument))
+                else:
+                    variable = argument.split('=')[0]
+                    default_value = argument.split('=')[1]
+                    variable = validators.variable_name(variable)
+                    validated_value.append(f'{variable}={default_value}')
+
+            self._arguments = validated_value
 
     @property
     def body(self) -> Optional[str]:
@@ -132,7 +142,8 @@ class CallbackFunction(HighchartsMeta):
 
     def to_js_literal(self,
                       filename = None,
-                      encoding = 'utf-8') -> str:
+                      encoding = 'utf-8',
+                      careful_validation = False) -> str:
         if filename:
             filename = validators.path(filename)
 
@@ -192,10 +203,19 @@ class CallbackFunction(HighchartsMeta):
 
         function_body = original_str[body_start:body_end]
 
+        arguments = []
         if property_definition.type in ['MethodDefinition', 'Property']:
-            arguments = [x.name for x in property_definition.value.params]
+            for item in property_definition.value.params:
+                if item.name:
+                    arguments.append(item.name)
+                elif item.left.name and item.right.name:
+                    arguments.append(f'{item.left.name}={item.right.name}')
         else:
-            arguments = [x.name for x in property_definition.params]
+            for item in property_definition.params:
+                if item.name:
+                    arguments.append(item.name)
+                elif item.left.name and item.right.name:
+                    arguments.append(f'{item.left.name}={item.right.name}')
 
         return cls(function_name = function_name,
                    arguments = arguments,
@@ -242,6 +262,98 @@ class CallbackFunction(HighchartsMeta):
             property_definition = parsed.body[0].declarations[0].init
 
         return cls._convert_from_js_ast(property_definition, updated_str)
+
+    @classmethod
+    def from_python(cls,
+                    callable, 
+                    model = 'gpt-3.5-turbo',
+                    api_key = None,
+                    **kwargs):
+        """Return a :class:`CallbackFunction` having converted a Python callable into
+        a JavaScript function using the generative AI ``model`` indicated.
+        
+        .. note::
+        
+          Because this relies on the outside APIs exposed by 
+          `OpenAI <https://www.openai.com/>`__ and `Anthropic <https://www.anthropic.com>`__,
+          if you wish to use one of their models you *must* supply your own API key.
+          These are paid services which they provide, and so you *will* be incurring
+          costs by using these generative AIs.
+
+        :param callable: The Python callable to convert.
+        :type callable: callable
+        
+        :param model: The generative AI model to use. 
+          Defaults to ``'gpt-3.5-turbo'``. Accepts:
+        
+            * ``'gpt-3.5-turbo'`` (default)
+            * ``'gpt-3.5-turbo-16k'``
+            * ``'gpt-4'``
+            * ``'gpt-4-32k'``
+            * ``'claude-instant-1'``
+            * ``'claude-2'``
+
+        :type model: :class:`str <python:str>`
+
+        :param api_key: The API key used to authenticate against the
+          generative AI provider. Defaults to
+          :obj:`None <python:None>`, which then tries to find the API
+          key in the appropriate environment variable:
+
+            * ``OPENAI_API_KEY`` if using an 
+              `OpenAI <https://www.openai.com/>`__ provided model
+            * ``ANTHROPIC_API_KEY`` if using an 
+              `Anthropic <https://www.anthropic.com/>`__ provided model
+
+        :type api_key: :class:`str <python:str>` or :obj:`None <python:None>`
+
+        :param **kwargs: Additional keyword arguments which are passed to
+          the underlying model API. Useful for advanced configuration of
+          the model's behavior.
+
+        :returns: The ``CallbackFunction`` representation of the JavaScript
+          code that does the same as the ``callable`` argument.
+        
+          .. warning::
+
+            Generating the JavaScript source code is *not* deterministic.
+            That means that it may not be correct, and we **STRONGLY** 
+            recommend reviewing it before using it in a production 
+            application.
+
+            Every single generative AI is known to have issues - whether 
+            "hallucinations", biases, or incoherence. We cannot stress
+            enough:
+
+            **DO NOT RELY ON AI-GENERATED CODE IN PRODUCTION WITHOUT HUMAN REVIEW.**
+
+            That being said, for "quick and dirty" EDA, fast prototyping, etc.
+            the functionality may be "good enough".
+
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>`
+
+        :raises HighchartsValueError: if ``callable`` is not a Python callable
+        :raises HighchartsValueError: if no ``api_key`` is available
+        :raises HighchartsDependencyError: if a required dependency is not
+          available in the runtime environment
+        :raises HighchartsModerationError: if using an OpenAI model, and 
+          OpenAI detects that the supplied input violates their usage policies
+        :raises HighchartsPythonConversionError: if the model was unable to
+          convert ``callable`` into JavaScript source code
+
+        """
+        js_str = ai.convert_to_js(callable, model, api_key, **kwargs)
+
+        try:
+            obj = cls.from_js_literal(js_str)
+        except errors.HighchartsParseError:
+            raise errors.HighchartsPythonConversionError(
+                f'The JavaScript function generated by model "{model}" '
+                f'failed to be validated as a proper JavaScript function. '
+                f'Please retry, or select a different model and retry.'
+            )
+        
+        return obj
 
     @classmethod
     def _validate_js_function(cls,
@@ -484,7 +596,8 @@ class JavaScriptClass(HighchartsMeta):
 
     def to_js_literal(self,
                       filename = None,
-                      encoding = 'utf-8') -> str:
+                      encoding = 'utf-8',
+                      careful_validation = False) -> str:
         if filename:
             filename = validators.path(filename)
 

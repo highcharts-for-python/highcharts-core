@@ -8,7 +8,7 @@ from validator_collection import validators, checkers
 from highcharts_core import constants, errors
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.options.series.data.base import DataBase
-from highcharts_core.options.series.data.cartesian import CartesianData
+from highcharts_core.options.series.data.cartesian import CartesianData, CartesianDataCollection
 from highcharts_core.options.plot_options.drag_drop import DragDropOptions
 from highcharts_core.utility_classes.data_labels import DataLabel
 from highcharts_core.utility_classes.markers import Marker
@@ -159,7 +159,7 @@ class RangeData(DataBase):
             self._x = value
 
     @classmethod
-    def from_array(cls, value):
+    def from_list(cls, value):
         if not value:
             return []
         elif checkers.is_string(value):
@@ -216,14 +216,43 @@ class RangeData(DataBase):
 
         return collection
 
-    def _get_props_from_array(self) -> List[str]:
+    @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return RangeDataCollection.from_ndarray(value)
+
+    @classmethod
+    def _get_supported_dimensions(cls) -> List[int]:
+        """Returns a list of the supported dimensions for the data point.
+        
+        :rtype: :class:`list <python:list>` of :class:`int <python:int>`
+        """
+        return [1, 2, 3]
+
+    @classmethod
+    def _get_props_from_array(cls, length = None) -> List[str]:
         """Returns a list of the property names that can be set using the
         :meth:`.from_array() <highcharts_core.options.series.data.base.DataBase.from_array>`
         method.
         
+        :param length: The length of the array, which may determine the properties to 
+          parse. Defaults to :obj:`None <python:None>`, which returns the full list of 
+          properties.
+        :type length: :class:`int <python:int>` or :obj:`None <python:None>`
+        
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
-        return ['x', 'low', 'high', 'name']
+        prop_list = {
+            None: ['x', 'low', 'high', 'name'],
+            3: ['x', 'low', 'high'],
+            2: ['low', 'high'],
+        }
+        return cls._get_props_from_array_helper(prop_list, length)
 
     def to_array(self, force_object = False) -> List | Dict:
         """Generate the array representation of the data point (the inversion 
@@ -333,6 +362,28 @@ class RangeData(DataBase):
         return untrimmed
 
 
+class RangeDataCollection(CartesianDataCollection):
+    """A collection of :class:`RangeData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return RangeData
+
+
 class ConnectedRangeData(CartesianData):
     """Variant of :class:`CartesianData` which extends the class with connector
     attributes."""
@@ -390,6 +441,16 @@ class ConnectedRangeData(CartesianData):
         self._low_color = utility_functions.validate_color(value)
 
     @classmethod
+    def from_ndarray(cls, value):
+        """Creates a collection of data points from a `NumPy <https://numpy.org>`__ 
+        :class:`ndarray <numpy:ndarray>` instance.
+        
+        :returns: A collection of data point values.
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+        """
+        return ConnectedRangeDataCollection.from_ndarray(value)
+
+    @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         """Convenience method which returns the keyword arguments used to initialize the
         class from a Highcharts Javascript-compatible :class:`dict <python:dict>` object.
@@ -443,3 +504,25 @@ class ConnectedRangeData(CartesianData):
             untrimmed[key] = parent_as_dict[key]
 
         return untrimmed
+
+
+class ConnectedRangeDataCollection(CartesianDataCollection):
+    """A collection of :class:`ConnectedRangeData` objects.
+
+    .. note::
+    
+      When serializing to JS literals, if possible, the collection is serialized to a primitive
+      array to boost performance within Python *and* JavaScript. However, this may not always be
+      possible if data points have non-array-compliant properties configured (e.g. adjusting their 
+      style, names, identifiers, etc.). If serializing to a primitive array is not possible, the
+      results are serialized as JS literal objects.
+
+    """
+
+    @classmethod
+    def _get_data_point_class(cls):
+        """The Python class to use as the underlying data point within the Collection.
+        
+        :rtype: class object
+        """
+        return ConnectedRangeData

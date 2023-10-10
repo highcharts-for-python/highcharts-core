@@ -137,3 +137,15 @@ class HighchartsMissingSeriesError(HighchartsValueError):
     """:exc:`ValueError <python:ValueError>` encountered when trying to reference a
     series that does not actually exist in the chart."""
     pass
+
+
+class HighchartsPythonConversionError(HighchartsValueError):
+    """:exc:`ValueError <python:ValueError>` encountered when a generative AI model
+    failed to convert a Python callable into a valid JavaScript function."""
+    pass
+
+
+class HighchartsModerationError(HighchartsValueError):
+    """:exc:`ValueError <python:ValueError>` encountered when a generative AI model
+    determined that the content supplied to it fails its content moderation criteria."""
+    pass

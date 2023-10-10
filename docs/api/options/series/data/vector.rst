@@ -26,3 +26,21 @@ class: :class:`VectorData <highcharts_core.options.series.data.vector.VectorData
       :parts: -1
 
   |
+
+--------------
+
+********************************************************************************************************************
+class: :class:`VectorDataCollection <highcharts_core.options.series.data.vector.VectorDataCollection>`
+********************************************************************************************************************
+
+.. autoclass:: VectorDataCollection
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: VectorDataCollection
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |

@@ -760,7 +760,7 @@ class ExportServer(HighchartsMeta):
                                       code_as_str)
 
         result = requests.post(self.url,
-                               data = as_json,
+                               data = as_json.encode('utf-8'),
                                headers = { 'Content-Type': 'application/json' },
                                auth = basic_auth,
                                timeout = timeout)

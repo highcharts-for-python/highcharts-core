@@ -780,9 +780,9 @@ class Data(HighchartsMeta):
         """Create a :class:`Data` instance from a Pandas
         :class:`DataFrame <pandas:DataFrame`.
 
-        :param as_df: The :class:`DataFrame <pandas:DataFrame>` from which to create the
+        :param as_df: The :class:`DataFrame <pandas:pandas.DataFrame>` from which to create the
           :class:`Data` instance.
-        :type as_df: :class:`DataFrame <pandas:DataFrame>`
+        :type as_df: :class:`DataFrame <pandas:pandas.DataFrame>`
 
         :param represent_as: The format to which ``as_df`` should be serialized. Accepts
           ``'csv'`` or ``'html'``. Defaults to ``'csv'``.
