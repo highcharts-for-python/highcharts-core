@@ -1,4 +1,11 @@
 
+Release 1.4.1
+=========================================
+
+* **BUGFIX:** Fixed handling of ``numpy.datetime64`` values in ``DataPointCollection``. (#118)
+
+---------------------
+
 Release 1.4.0
 =========================================
 
