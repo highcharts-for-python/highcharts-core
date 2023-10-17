@@ -783,12 +783,26 @@ will display the chart in full.
 
 .. warning::
 
-  The current version of **Highcharts for Python** assumes that your web content already
-  has all the ``<script/>`` tags which include the
-  `Highcharts (JS) <https://www.highcharts.com>`__ modules your chart relies on.
+  The :meth:`.to_js_literal() <highcharts_core.chart.Chart.to_js_literal>` method 
+  assumes that your web content already has all the ``<script/>`` tags which include 
+  the `Highcharts (JS) <https://www.highcharts.com>`__ modules your chart relies on.
 
-  This is likely to change in a future version of **Highcharts for Python**, where the
-  library will support the production of ``<script/>`` tags (see roadmap issue :issue:`12`).
+  If you need to generate the required ``<script/>`` tags for your chart, you can do
+  so by calling:
+
+    .. code-block:: python
+
+      # EXAMPLE 1.
+      # Get a list of <script/> tags.
+      list_of_script_tags = my_chart.get_script_tags()
+
+      # EXAMPLE 2.
+      # Get a string of <script/> tags.
+      script_tags_as_str = my_chart.get_script_tags(as_str = True)
+
+      # EXAMPLE 3.
+      # Get a list of the required Highcharts modules.
+      required_modules = my_chart.get_required_modules()
 
 For example:
 
