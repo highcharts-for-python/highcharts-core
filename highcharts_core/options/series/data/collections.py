@@ -1,3 +1,4 @@
+import datetime
 from typing import Optional, List
 from collections import UserDict
 
@@ -273,7 +274,18 @@ class DataPointCollection(HighchartsMeta):
                     try:
                         setattr(data_points[index], name, value[index])
                     except validator_errors.CannotCoerceError:
-                        if isinstance(value[index], str) and ',' in value[index]:
+                        if 'datetime64' in value[index].__class__.__name__:
+                            try:
+                                coerced_value = value[index].astype(datetime.datetime)
+                                IS_DATETIME = True
+                            except (ValueError, TypeError):
+                                IS_DATETIME = False
+                        else:
+                            IS_DATETIME = False
+                            
+                        if IS_DATETIME:
+                            setattr(data_points[index], name, coerced_value)
+                        elif isinstance(value[index], str) and ',' in value[index]:
                             coerced_value = value[index].replace(',', '')
                             setattr(data_points[index], name, coerced_value)
                         elif checkers.is_numeric(value[index]) or (

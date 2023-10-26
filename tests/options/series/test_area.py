@@ -3116,6 +3116,31 @@ def test_LineSeries_from_csv(input_files, filename, property_map, kwargs, expect
                                    **kwargs)
 
 
+def test_Bugfix118_LineSeries_from_pandas_with_datetime():
+    import datetime as dt
+    try:
+        import pandas as pd
+        HAS_PANDAS = True
+    except ImportError:
+        HAS_PANDAS = False
+
+    if HAS_PANDAS:
+        # Generate timestamps for the first 5 days of October 2023
+        start_date = dt.datetime(2023, 10, 1)
+        end_date = dt.datetime(2023, 10, 5)
+        date_range = [start_date + dt.timedelta(days=i) for i in range(5)]
+
+        # Create a list of values
+        values = [10, 20, 30, 40, 50]
+
+        # Create a DataFrame
+        df = pd.DataFrame({'Timestamp': date_range, 'Value': values})
+        my_series = cls5.from_pandas(df, property_map={"x": "Timestamp", "y": "Value"})
+
+        assert my_series is not None
+        assert isinstance(my_series, cls5)
+
+
 #### NEXT CLASS
 
 @pytest.mark.parametrize('kwargs, error', STANDARD_PARAMS)

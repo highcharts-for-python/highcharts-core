@@ -1,11 +1,18 @@
 
-Release 1.4.1
+Release 1.4.2
 =========================================
 
 * **BUGFIX:** Fixed location of the ``histogram.js`` module and ``bellcurve.js`` module to reflect
   latest changes in Highcharts (JS).
 
 --------------------
+
+Release 1.4.1
+=========================================
+
+* **BUGFIX:** Fixed handling of ``numpy.datetime64`` values in ``DataPointCollection``. (#118)
+
+---------------------
 
 Release 1.4.0
 =========================================
