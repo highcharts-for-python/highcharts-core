@@ -1,4 +1,12 @@
 
+Release 1.4.1
+=========================================
+
+* **BUGFIX:** Fixed location of the ``histogram.js`` module and ``bellcurve.js`` module to reflect
+  latest changes in Highcharts (JS).
+
+--------------------
+
 Release 1.4.0
 =========================================
 
