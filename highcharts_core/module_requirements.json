@@ -274,7 +274,7 @@
     "stock/indicators/bollinger-bands"
   ],
   "plotOptions.bellcurve": [
-    "modules/bellcurve"
+    "modules/histogram-bellcurve"
   ],
   "plotOptions.boxplot": [
     "highcharts-more"
@@ -398,7 +398,7 @@
     "modules/heikinashi"
   ],
   "plotOptions.histogram": [
-    "modules/histogram"
+    "modules/histogram-bellcurve"
   ],
   "plotOptions.hollowcandlestick": [
     "modules/hollowcandlestick"
@@ -760,7 +760,7 @@
     "stock/indicators/bollinger-bands"
   ],
   "series.bellcurve": [
-    "modules/bellcurve"
+    "modules/histogram-bellcurve"
   ],
   "series.boxplot": [
     "highcharts-more"
@@ -844,7 +844,7 @@
     "modules/heikinashi"
   ],
   "series.histogram": [
-    "modules/histogram"
+    "modules/histogram-bellcurve"
   ],
   "series.hollowcandlestick": [
     "modules/hollowcandlestick"
