@@ -14,11 +14,13 @@ class AnnotationEvent(HighchartsMeta):
         self._after_update = None
         self._click = None
         self._remove = None
+        self._drag = None
 
         self.add = kwargs.get('add', None)
         self.after_update = kwargs.get('after_update', None)
         self.click = kwargs.get('click', None)
         self.remove = kwargs.get('remove', None)
+        self.drag = kwargs.get('drag', None)
 
     @property
     def _dot_path(self) -> Optional[str]:
@@ -86,13 +88,29 @@ class AnnotationEvent(HighchartsMeta):
     def remove(self, value):
         self._remove = value
 
+    @property
+    def drag(self) -> Optional[CallbackFunction]:
+        """JavaScript callback function called when an annotation 
+        is dragged by the user.
+
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` 
+          or :obj:`None <python:None>`
+        """
+        return self._drag
+        
+    @drag.setter
+    @class_sensitive(CallbackFunction)
+    def drag(self, value):
+        self._drag = value
+
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
             'add': as_dict.get('add', None),
             'after_update': as_dict.get('afterUpdate', None),
             'click': as_dict.get('click', None),
-            'remove': as_dict.get('remove', None)
+            'remove': as_dict.get('remove', None),
+            'drag': as_dict.get('drag', None),
         }
 
         return kwargs
@@ -102,7 +120,8 @@ class AnnotationEvent(HighchartsMeta):
             'add': self.add,
             'afterUpdate': self.after_update,
             'click': self.click,
-            'remove': self.remove
+            'remove': self.remove,
+            'drag': self.drag,
         }
 
         return untrimmed
