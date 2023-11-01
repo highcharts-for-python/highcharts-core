@@ -126,6 +126,7 @@ class TreegraphSeries(SeriesBase, TreegraphOptions):
             'crop_threshold': as_dict.get('cropThreshold', None),
             'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
             'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
+            'inactive_other_points': as_dict.get('inactiveOtherPoints', None),
             'relative_x_value': as_dict.get('relativeXValue', None),
             'soft_threshold': as_dict.get('softThreshold', None),
             'step': as_dict.get('step', None),

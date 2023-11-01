@@ -30,6 +30,7 @@ class SeriesBaseOptions(GenericTypeOptions):
         self._data_sorting = None
         self._find_nearest_point_by = None
         self._get_extremes_from_all = None
+        self._inactive_other_points = None
         self._linecap = None
         self._line_width = None
         self._relative_x_value = None
@@ -50,6 +51,7 @@ class SeriesBaseOptions(GenericTypeOptions):
         self.data_sorting = kwargs.get('data_sorting', None)
         self.find_nearest_point_by = kwargs.get('find_nearest_point_by', None)
         self.get_extremes_from_all = kwargs.get('get_extremes_from_all', None)
+        self.inactive_other_points = kwargs.get('inactive_other_points', None)
         self.linecap = kwargs.get('linecap', None)
         self.line_width = kwargs.get('line_width', None)
         self.relative_x_value = kwargs.get('relative_x_value', None)
@@ -285,6 +287,27 @@ class SeriesBaseOptions(GenericTypeOptions):
             self._get_extremes_from_all = bool(value)
 
     @property
+    def inactive_other_points(self) -> Optional[bool]:
+        """If ``True``, highlights only the hovered point and fades the other points.
+        Defaults to ``False``.
+        
+        .. warning::
+        
+          Scatter-type series require enabling the 'inactive' marker state and adjusting
+          opacity. This approach could affect performance\nwith large datasets.
+          
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._inactive_other_points
+    
+    @inactive_other_points.setter
+    def inactive_other_points(self, value):
+        if value is None:
+            self._inactive_other_points = None
+        else:
+            self._inactive_other_points = bool(value)
+
+    @property
     def linecap(self) -> Optional[str]:
         """The SVG value used for the ``stroke-linecap`` and ``stroke-linejoin`` of a line
         graph. Defaults to ``'round'``, which means that lines are rounded in the ends and
@@ -484,6 +507,7 @@ class SeriesBaseOptions(GenericTypeOptions):
             'data_sorting': as_dict.get('dataSorting', None),
             'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
             'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
+            'inactive_other_points': as_dict.get('inactiveOtherPoints', None),
             'linecap': as_dict.get('linecap', None),
             'line_width': as_dict.get('lineWidth', None),
             'relative_x_value': as_dict.get('relativeXValue', None),
@@ -509,6 +533,7 @@ class SeriesBaseOptions(GenericTypeOptions):
             'dataSorting': self.data_sorting,
             'findNearestPointBy': self.find_nearest_point_by,
             'getExtremesFromAll': self.get_extremes_from_all,
+            'inactiveOtherPoints': self.inactive_other_points,
             'linecap': self.linecap,
             'lineWidth': self.line_width,
             'relativeXValue': self.relative_x_value,
@@ -888,6 +913,7 @@ class SeriesOptions(SeriesBaseOptions):
             'data_sorting': as_dict.get('dataSorting', None),
             'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
             'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
+            'inactive_other_points': as_dict.get('inactiveOtherPoints', None),
             'linecap': as_dict.get('linecap', None),
             'line_width': as_dict.get('lineWidth', None),
             'relative_x_value': as_dict.get('relativeXValue', None),

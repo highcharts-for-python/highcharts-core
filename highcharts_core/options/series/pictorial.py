@@ -245,6 +245,7 @@ class PictorialSeries(SeriesBase, PictorialOptions):
             'data_sorting': as_dict.get('dataSorting', None),
             'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
             'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
+            'inactive_other_points': as_dict.get('inactiveOtherPoints', None),
             'linecap': as_dict.get('linecap', None),
             'line_width': as_dict.get('lineWidth', None),
             'relative_x_value': as_dict.get('relativeXValue', None),
