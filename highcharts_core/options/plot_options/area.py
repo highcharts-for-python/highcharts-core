@@ -227,6 +227,8 @@ class AreaRangeOptions(AreaOptions):
         
         self.low_marker = kwargs.get('low_marker', None)
         
+        super().__init__(**kwargs)
+        
     @property
     def low_marker(self) -> Optional[Marker]:
         """Options for the point markers of line-like series.
