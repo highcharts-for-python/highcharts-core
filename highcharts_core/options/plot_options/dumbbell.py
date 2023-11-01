@@ -12,6 +12,7 @@ from highcharts_core.utility_classes.shadows import ShadowOptions
 from highcharts_core.options.plot_options.data_sorting import DataSorting
 from highcharts_core.options.plot_options.drag_drop import HighLowDragDropOptions
 from highcharts_core.utility_classes.zones import Zone
+from highcharts_core.utility_classes.markers import Marker
 
 
 class DumbbellOptions(GenericTypeOptions):
@@ -45,6 +46,7 @@ class DumbbellOptions(GenericTypeOptions):
         self._linecap = None
         self._line_color = None
         self._low_color = None
+        self._low_marker = None
         self._negative_color = None
         self._negative_fill_color = None
         self._point_interval = None
@@ -78,6 +80,7 @@ class DumbbellOptions(GenericTypeOptions):
         self.linecap = kwargs.get('linecap', None)
         self.line_color = kwargs.get('line_color', None)
         self.low_color = kwargs.get('low_color', None)
+        self.low_marker = kwargs.get('low_marker', None)
         self.negative_color = kwargs.get('negative_color', None)
         self.negative_fill_color = kwargs.get('negative_fill_color', None)
         self.point_interval = kwargs.get('point_interval', None)
@@ -421,6 +424,23 @@ class DumbbellOptions(GenericTypeOptions):
     def low_color(self, value):
         from highcharts_core import utility_functions
         self._low_color = utility_functions.validate_color(value)
+
+    @property
+    def low_marker(self) -> Optional[Marker]:
+        """Options for the point markers of line-like series.
+
+        Properties like ``fill_color``, ``line_color`` and ``line_width`` define the
+        visual appearance of the markers. Other series types, like column series, don't
+        have markers, but have visual options on the series level instead.
+
+        :rtype: :class:`Marker` or :obj:`None <python:None>`
+        """
+        return self._low_marker
+
+    @low_marker.setter
+    @class_sensitive(Marker)
+    def low_marker(self, value):
+        self._marker = value
 
     @property
     def negative_color(self) -> Optional[str | Gradient | Pattern]:
@@ -814,6 +834,7 @@ class DumbbellOptions(GenericTypeOptions):
             'linecap': as_dict.get('linecap', None),
             'line_color': as_dict.get('lineColor', None),
             'low_color': as_dict.get('lowColor', None),
+            'low_marker': as_dict.get('lowMarker', None),
             'negative_color': as_dict.get('negativeColor', None),
             'negative_fill_color': as_dict.get('negativeFillColor', None),
             'point_interval': as_dict.get('pointInterval', None),
@@ -852,6 +873,7 @@ class DumbbellOptions(GenericTypeOptions):
             'linecap': self.linecap,
             'lineColor': self.line_color,
             'lowColor': self.low_color,
+            'lowMarker': self.low_marker,
             'negativeColor': self.negative_color,
             'negativeFillColor': self.negative_fill_color,
             'pointInterval': self.point_interval,

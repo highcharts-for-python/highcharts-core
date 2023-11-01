@@ -227,6 +227,7 @@ class DumbbellSeries(SeriesBase, DumbbellOptions):
             'group_padding': as_dict.get('groupPadding', None),
             'line_color': as_dict.get('lineColor', None),
             'low_color': as_dict.get('lowColor', None),
+            'low_marker': as_dict.get('lowMarker', None),
             'negative_fill_color': as_dict.get('negativeFillColor', None),
             'point_padding': as_dict.get('pointPadding', None),
         }
