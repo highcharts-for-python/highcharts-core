@@ -16,6 +16,7 @@ from highcharts_core.global_options.language.accessibility.series import SeriesL
 from highcharts_core.global_options.language.accessibility.sonification import SonificationLanguageOptions
 from highcharts_core.global_options.language.accessibility.table import TableLanguageOptions
 from highcharts_core.global_options.language.accessibility.zoom import ZoomLanguageOptions
+from highcharts_core.global_options.language.accessibility.navigator import NavigatorLanguageOptions
 
 
 class AccessibilityLanguageOptions(HighchartsMeta):
@@ -43,6 +44,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         self._exporting = None
         self._graphic_container_label = None
         self._legend = None
+        self._navigator = None
         self._range_selector = None
         self._screen_reader_section = None
         self._series = None
@@ -64,6 +66,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
         self.exporting = kwargs.get('exporting', None)
         self.graphic_container_label = kwargs.get('graphic_container_label', None)
         self.legend = kwargs.get('legend', None)
+        self.navigator = kwargs.get('navigator', None)
         self.range_selector = kwargs.get('range_selector', None)
         self.screen_reader_section = kwargs.get('screen_reader_section', None)
         self.series = kwargs.get('series', None)
@@ -226,6 +229,19 @@ class AccessibilityLanguageOptions(HighchartsMeta):
     @class_sensitive(LegendLanguageOptions)
     def legend(self, value):
         self._legend = value
+
+    @property
+    def navigator(self) -> Optional[NavigatorLanguageOptions]:
+        """Language options for the navigator when used in accessibility mode.
+        
+        :rtype: :class:`NavigatorLanguageOptions <highcharts_core.global_options.language.accessibility.navigator.NavigatorLanguageOptions>` or :obj:`None <python:None>`
+        """
+        return self._navigator
+    
+    @navigator.setter
+    @class_sensitive(NavigatorLanguageOptions)
+    def navigator(self, value):
+        self._navigator = value
 
     @property
     def range_selector(self) -> Optional[RangeSelectorLanguageOptions]:
@@ -401,6 +417,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
             'exporting': as_dict.get('exporting', None),
             'graphic_container_label': as_dict.get('graphicContainerLabel', None),
             'legend': as_dict.get('legend', None),
+            'navigator': as_dict.get('navigator', None),
             'range_selector': as_dict.get('rangeSelector', None),
             'screen_reader_section': as_dict.get('screenReaderSection', None),
             'series': as_dict.get('series', None),
@@ -427,6 +444,7 @@ class AccessibilityLanguageOptions(HighchartsMeta):
             'exporting': self.exporting,
             'graphicContainerLabel': self.graphic_container_label,
             'legend': self.legend,
+            'navigator': self.navigator,
             'rangeSelector': self.range_selector,
             'screenReaderSection': self.screen_reader_section,
             'series': self.series,

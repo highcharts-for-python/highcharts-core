@@ -84,6 +84,7 @@ class Exporting(HighchartsMeta):
         self._pdf_font = None
         self._print_max_width = None
         self._scale = None
+        self._show_export_in_progress = None
         self._show_table = None
         self._source_height = None
         self._source_width = None
@@ -109,6 +110,7 @@ class Exporting(HighchartsMeta):
         self.pdf_font = kwargs.get('pdf_font', None)
         self.print_max_width = kwargs.get('print_max_width', None)
         self.scale = kwargs.get('scale', None)
+        self.show_export_in_progress = kwargs.get('show_export_in_progress', None)
         self.show_table = kwargs.get('show_table', None)
         self.source_height = kwargs.get('source_height', None)
         self.source_width = kwargs.get('source_width', None)
@@ -483,6 +485,27 @@ class Exporting(HighchartsMeta):
         self._scale = validators.numeric(value, allow_empty = True)
 
     @property
+    def show_export_in_progress(self) -> Optional[bool]:
+        """If ``True``, displays a message when export is in progress. Defaults to
+        ``True``.
+        
+        .. note::
+        
+          The message displayed can be adjusted in 
+          :class:`Language.export_in_progress <highcharts_core.global_options.language.Language.export_in_progress>`.
+        
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._show_export_in_progress
+    
+    @show_export_in_progress.setter
+    def show_export_in_progress(self, value):
+        if value is None:
+            self._show_export_in_progress = None
+        else:
+            self._show_export_in_progress = bool(value)
+
+    @property
     def show_table(self) -> Optional[bool]:
         """If ``True``, shows an HTML table below the chart with the chart's current data.
         Defaults to ``False``.
@@ -686,6 +709,7 @@ class Exporting(HighchartsMeta):
             'pdf_font': as_dict.get('pdfFont', None),
             'print_max_width': as_dict.get('printMaxWidth', None),
             'scale': as_dict.get('scale', None),
+            'show_export_in_progress': as_dict.get('showExportInProgress', None),
             'show_table': as_dict.get('showTable', None),
             'source_height': as_dict.get('sourceHeight', None),
             'source_width': as_dict.get('sourceWidth', None),
@@ -716,6 +740,7 @@ class Exporting(HighchartsMeta):
             'pdfFont': self.pdf_font,
             'printMaxWidth': self.print_max_width,
             'scale': self.scale,
+            'showExportInProgress': self.show_export_in_progress,
             'showTable': self.show_table,
             'sourceHeight': self.source_height,
             'sourceWidth': self.source_width,
