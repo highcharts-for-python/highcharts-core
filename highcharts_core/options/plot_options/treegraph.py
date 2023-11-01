@@ -1,5 +1,5 @@
 import datetime
-from typing import Optional
+from typing import Optional, List
 from decimal import Decimal
 
 from validator_collection import validators
@@ -11,6 +11,7 @@ from highcharts_core.utility_classes.buttons import CollapseButtonConfiguration
 from highcharts_core.utility_classes.events import SeriesEvents
 from highcharts_core.utility_classes.javascript_functions import CallbackFunction
 from highcharts_core.options.plot_options.link import LinkOptions
+from highcharts_core.options.plot_options.levels import TreegraphLevelOptions
 
 
 class TreegraphEvents(SeriesEvents):
@@ -120,6 +121,8 @@ class TreegraphOptions(GenericTypeOptions):
         self._reversed = None        
         self._traverse_up_button = None
         
+        self._levels = None
+        
         self.animation_limit = kwargs.get('animation_limit', None)
         self.boost_blending = kwargs.get('boost_blending', None)
         self.boost_threshold = kwargs.get('boost_threshold', None)
@@ -143,6 +146,8 @@ class TreegraphOptions(GenericTypeOptions):
         self.fill_space = kwargs.get('fill_space', None)
         self.link = kwargs.get('link', None)
         self.reversed = kwargs.get('reversed', None)
+        
+        self.levels = kwargs.get('levels', None)
         
         super().__init__(**kwargs)
         
@@ -626,7 +631,25 @@ class TreegraphOptions(GenericTypeOptions):
             self._reversed = None
         else:
             self._reversed = bool(value)
-            
+
+    @property
+    def levels(self) -> Optional[List[TreegraphLevelOptions]]:
+        """Set options on specific levels. 
+        
+        .. note::
+        
+          Takes precedence over series options, but not point options.
+          
+        :rtype: :class:`TreemapLevelOptions <highcharts_core.options.plot_options.levels.TreemapLevelOptions>` 
+          or :obj:`None <python:None>`
+        """
+        return self._levels
+    
+    @levels.setter
+    @class_sensitive(TreegraphLevelOptions)
+    def levels(self, value):
+        self._levels = value
+        
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         """Convenience method which returns the keyword arguments used to initialize the
@@ -699,6 +722,7 @@ class TreegraphOptions(GenericTypeOptions):
             'fill_space': as_dict.get('fillSpace', None),
             'link': as_dict.get('link', None),
             'reversed': as_dict.get('reversed', None),
+            'levels': as_dict.get('levels', None),
         }
 
         return kwargs
@@ -762,6 +786,7 @@ class TreegraphOptions(GenericTypeOptions):
             'fillSpace': self.fill_space,
             'link': self.link,
             'reversed': self.reversed,
+            'levels': self.levels,
         }
 
         return untrimmed

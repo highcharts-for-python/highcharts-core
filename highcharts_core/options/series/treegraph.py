@@ -142,6 +142,7 @@ class TreegraphSeries(SeriesBase, TreegraphOptions):
             'fill_space': as_dict.get('fillSpace', None),
             'link': as_dict.get('link', None),
             'reversed': as_dict.get('reversed', None),
+            'levels': as_dict.get('levels', None),
 
             'data': as_dict.get('data', None),
             'id': as_dict.get('id', None),
