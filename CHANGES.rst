@@ -1,4 +1,13 @@
 
+Release 1.4.3
+=========================================
+
+* **BUGFIX:** Fixed edge case error when deserializing ``ChartOptions`` using ``.from_dict()``
+  with a ``dict`` that had been serialized using ``.to_dict()`` which errored on ``.margin`` 
+  and ``.spacing`` (#124).
+
+--------------------
+
 Release 1.4.2
 =========================================
 

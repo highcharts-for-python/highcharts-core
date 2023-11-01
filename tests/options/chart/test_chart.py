@@ -177,3 +177,166 @@ def test_to_dict(kwargs, error):
 ])
 def test_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
+
+
+@pytest.mark.parametrize('as_dict, as_js_literal, error', [
+    ({
+        'marginRight': 124
+    }, False, None),
+    ({
+        'type': 'bar',
+        'marginRight': 124,
+        'marginTop': 421,
+        'marginBottom': 321,
+        'marginLeft': 789,
+        'scrollablePlotArea': {
+            'minHeight': 1000,
+            'opacity': 1
+        }
+    }, False, None),
+
+    ({
+        'marginRight': 124
+    }, True, None),
+    ({
+        'type': 'bar',
+        'marginRight': 124,
+        'marginTop': 421,
+        'marginBottom': 321,
+        'marginLeft': 789,
+        'scrollablePlotArea': {
+            'minHeight': 1000,
+            'opacity': 1
+        }
+    }, True, None),
+])
+def test_bug124_margin_right(as_dict, as_js_literal, error):
+    if not error:
+        if not as_js_literal:
+            result = cls.from_dict(as_dict)
+        else:
+            as_str = str(as_dict)
+            result = cls.from_js_literal(as_str)
+        assert isinstance(result, cls) is True
+        if 'marginRight' in as_dict or 'margin_right' in as_dict:
+            assert result.margin_right == as_dict.get('marginRight', None)
+        if 'marginTop' in as_dict or 'margin_top' in as_dict:
+            assert result.margin_top == as_dict.get('marginTop', None)
+        if 'marginBottom' in as_dict or 'margin_bottom' in as_dict:
+            assert result.margin_bottom == as_dict.get('marginBottom', None)
+        if 'marginLeft' in as_dict or 'margin_left' in as_dict:
+            assert result.margin_left == as_dict.get('marginLeft', None)
+    else:
+        with pytest.raises(error):
+            if not as_js_literal:
+                result = cls.from_dict(as_dict)
+            else:
+                as_str = str(as_dict)
+                result = cls.from_js_literal(as_str)
+
+            
+@pytest.mark.parametrize('as_str, error', [
+    ("""{
+        marginRight: 124
+    }""", None),
+    ("""{type: 'bar',
+        marginRight: 124,
+        marginTop: 421,
+        marginBottom: 321,
+        marginLeft: 789,
+        scrollablePlotArea: {
+            minHeight: 1000,
+            opacity: 1
+        }
+    }""", None),
+
+    ("""{
+        marginRight: null
+    }""", None),
+])
+def test_bug124_margin_right_from_js_literal(as_str, error):
+    if not error:
+        result = cls.from_js_literal(as_str)
+        assert isinstance(result, cls) is True
+        if 'marginRight' in as_str or 'margin_right' in as_str:
+            if 'marginRight: null' not in as_str:
+                assert result.margin_right is not None
+            else:
+                assert result.margin_right is None
+        if 'marginTop' in as_str or 'margin_top' in as_str:
+            assert result.margin_top is not None
+        if 'marginBottom' in as_str or 'margin_bottom' in as_str:
+            assert result.margin_bottom is not None
+        if 'marginLeft' in as_str or 'margin_left' in as_str:
+            assert result.margin_left is not None
+    else:
+        with pytest.raises(error):
+            result = cls.from_js_literal(as_str)
+
+
+@pytest.mark.parametrize('as_dict, error', [
+    ({
+        'marginRight': 124
+    }, None),
+    ({
+        'type': 'bar',
+        'marginRight': 124,
+        'marginTop': 421,
+        'marginBottom': 321,
+        'marginLeft': 789,
+        'scrollablePlotArea': {
+            'minHeight': 1000,
+            'opacity': 1
+        }
+    }, None),
+
+])
+def test_bug124_margin_right_to_dict_from_dict(as_dict, error):
+    if not error:
+        initial_result = cls.from_dict(as_dict)
+        as_new_dict = initial_result.to_dict()
+        result = cls.from_dict(as_new_dict)
+        assert isinstance(result, cls) is True
+        assert result.margin_right == initial_result.margin_right
+        assert result.margin_top == initial_result.margin_top
+        assert result.margin_bottom == initial_result.margin_bottom
+        assert result.margin_left == initial_result.margin_left
+    else:
+        with pytest.raises(error):
+            initial_result = cls.from_dict(as_dict)
+            as_new_dict = initial_result.to_dict()
+            result = cls.from_dict(as_new_dict)
+
+
+@pytest.mark.parametrize('as_dict, error', [
+    ({
+        'spacingRight': 124
+    }, None),
+    ({
+        'type': 'bar',
+        'spacingRight': 124,
+        'spacingTop': 421,
+        'spacingBottom': 321,
+        'spacingLeft': 789,
+        'scrollablePlotArea': {
+            'minHeight': 1000,
+            'opacity': 1
+        }
+    }, None),
+
+])
+def test_bug124_spacing_right_to_dict_from_dict(as_dict, error):
+    if not error:
+        initial_result = cls.from_dict(as_dict)
+        as_new_dict = initial_result.to_dict()
+        result = cls.from_dict(as_new_dict)
+        assert isinstance(result, cls) is True
+        assert result.spacing_right == initial_result.spacing_right
+        assert result.spacing_top == initial_result.spacing_top
+        assert result.spacing_bottom == initial_result.spacing_bottom
+        assert result.spacing_left == initial_result.spacing_left
+    else:
+        with pytest.raises(error):
+            initial_result = cls.from_dict(as_dict)
+            as_new_dict = initial_result.to_dict()
+            result = cls.from_dict(as_new_dict)

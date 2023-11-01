@@ -592,10 +592,22 @@ class ChartOptions(HighchartsMeta):
                                                   f'or an iterable of four values. '
                                                   f'Received an iterable of {len(value)} '
                                                   f'values ({value})')
-            self.margin_top = value[0]
-            self.margin_right = value[1]
-            self.margin_bottom = value[2]
-            self.margin_left = value[3]
+            if value[0] == 'null':
+                self.margin_top = None
+            else:
+                self.margin_top = value[0]
+            if value[1] == 'null':
+                self.margin_right = None
+            else:
+                self.margin_right = value[1]
+            if value[2] == 'null':
+                self.margin_bottom = None
+            else:
+                self.margin_bottom = value[2]
+            if value[3] == 'null':
+                self.margin_left = None
+            else:
+                self.margin_left = value[3]
         else:
             self.margin_top = value
             self.margin_right = value
@@ -620,7 +632,10 @@ class ChartOptions(HighchartsMeta):
 
     @margin_bottom.setter
     def margin_bottom(self, value):
-        self._margin_bottom = validators.numeric(value, allow_empty = True)
+        if value is None or isinstance(value, constants.EnforcedNullType):
+            self._margin_bottom = None
+        else:
+            self._margin_bottom = validators.numeric(value)
 
     @property
     def margin_left(self) -> Optional[int | float | Decimal]:
@@ -640,7 +655,10 @@ class ChartOptions(HighchartsMeta):
 
     @margin_left.setter
     def margin_left(self, value):
-        self._margin_left = validators.numeric(value, allow_empty = True)
+        if value is None or isinstance(value, constants.EnforcedNullType):
+            self._margin_left = None
+        else:
+            self._margin_left = validators.numeric(value)
 
     @property
     def margin_right(self) -> Optional[int | float | Decimal]:
@@ -660,7 +678,10 @@ class ChartOptions(HighchartsMeta):
 
     @margin_right.setter
     def margin_right(self, value):
-        self._margin_right = validators.numeric(value, allow_empty = True)
+        if value is None or isinstance(value, constants.EnforcedNullType):
+            self._margin_right = None
+        else:
+            self._margin_right = validators.numeric(value)
 
     @property
     def margin_top(self) -> Optional[int | float | Decimal]:
@@ -680,7 +701,10 @@ class ChartOptions(HighchartsMeta):
 
     @margin_top.setter
     def margin_top(self, value):
-        self._margin_top = validators.numeric(value, allow_empty = True)
+        if value is None or isinstance(value, constants.EnforcedNullType):
+            self._margin_top = None
+        else:
+            self._margin_top = validators.numeric(value)
 
     @property
     def number_formatter(self) -> Optional[CallbackFunction]:
@@ -1119,13 +1143,23 @@ class ChartOptions(HighchartsMeta):
                                                   f' or an iterable of four values. '
                                                   f'Received an iterable of {len(value)} '
                                                   f'values ({value})')
-            value = [validators.numeric(x) for x in value]
-            self.spacing_top = value[0]
-            self.spacing_right = value[1]
-            self.spacing_bottom = value[2]
-            self.spacing_left = value[3]
+            if value[0] == 'null':
+                self.spacing_top = None
+            else:
+                self.spacing_top = value[0]
+            if value[1] == 'null':
+                self.spacing_right = None
+            else:
+                self.spacing_right = value[1]
+            if value[2] == 'null':
+                self.spacing_bottom = None
+            else:
+                self.spacing_bottom = value[2]
+            if value[3] == 'null':
+                self.spacing_left = None
+            else:
+                self.spacing_left = value[3]
         else:
-            value = validators.numeric(value, allow_empty = False)
             self.spacing_top = value
             self.spacing_right = value
             self.spacing_bottom = value
