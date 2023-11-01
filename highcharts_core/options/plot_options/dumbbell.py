@@ -440,7 +440,7 @@ class DumbbellOptions(GenericTypeOptions):
     @low_marker.setter
     @class_sensitive(Marker)
     def low_marker(self, value):
-        self._marker = value
+        self._low_marker = value
 
     @property
     def negative_color(self) -> Optional[str | Gradient | Pattern]:

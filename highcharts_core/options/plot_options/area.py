@@ -224,9 +224,9 @@ class AreaRangeOptions(AreaOptions):
     """
     def __init__(self, **kwargs):
         self._low_marker = None
-        
+
         self.low_marker = kwargs.get('low_marker', None)
-        
+
         super().__init__(**kwargs)
         
     @property
@@ -244,7 +244,7 @@ class AreaRangeOptions(AreaOptions):
     @low_marker.setter
     @class_sensitive(Marker)
     def low_marker(self, value):
-        self._marker = value
+        self._low_marker = value
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
