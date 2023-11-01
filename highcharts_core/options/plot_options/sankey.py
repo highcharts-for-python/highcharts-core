@@ -35,8 +35,10 @@ class SankeyOptions(DependencyWheelOptions):
     """
     def __init__(self, **kwargs):
         self._link_color_mode = None
+        self._node_alignment = None
       
         self.link_color_mode = kwargs.get('link_color_mode', None)
+        self.node_alignment = kwargs.get('node_alignment', None)
       
         super().__init__(**kwargs)
 
@@ -69,7 +71,39 @@ class SankeyOptions(DependencyWheelOptions):
                     f'link_color_mode expects a value of either "from", '
                     f'"gradient", or "to". Received "{value}"')
             self._link_color_mode = value
-            
+
+    @property
+    def node_alignment(self) -> Optional[str]:
+        """Determines on which side of the chart the nodes are to be aligned.
+        
+        Accepts:
+        
+          * ``'top'``
+          * ``'center'``
+          * ``'bottom'``
+        
+        .. note::
+        
+          When the chart is inverted, ``'top'`` aligns to the left and 
+          ``'bottom'`` to the right.
+          
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._node_alignment
+        
+    @node_alignment.setter
+    def node_alignment(self, value):
+        if not value:
+            self._node_alignment = None
+        else:
+            value = validators.string(value)
+            value = value.lower()
+            if value not in ['top', 'center', 'bottom']:
+                raise errors.HighchartsValueError(f'node_alignment expects a value'
+                                                  f'of either "top", "center", or '
+                                                  f'"bottom". Received "{value}"')
+            self._node_alignment = value
+
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
@@ -124,6 +158,7 @@ class SankeyOptions(DependencyWheelOptions):
             'start_angle': as_dict.get('startAngle', None),
             
             'link_color_mode': as_dict.get('linkColorMode', None),
+            'node_alignment': as_dict.get('nodeAlignment', None),
         }
 
         return kwargs
@@ -131,6 +166,7 @@ class SankeyOptions(DependencyWheelOptions):
     def _to_untrimmed_dict(self, in_cls = None) -> dict:
         untrimmed = {
             'linkColorMode': self.link_color_mode,
+            'nodeAlignment': self.node_alignment,
         }
         parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
 
