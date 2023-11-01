@@ -177,6 +177,8 @@ class SankeySeries(DependencyWheelSeries, SankeyOptions):
             'node_padding': as_dict.get('nodePadding', None),
             'node_width': as_dict.get('nodeWidth', None),
             'start_angle': as_dict.get('startAngle', None),
+            
+            'link_color_mode': as_dict.get('linkColorMode', None),
 
             'nodes': as_dict.get('nodes', None),
         }
