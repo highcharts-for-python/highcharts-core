@@ -36,6 +36,7 @@ class Language(HighchartsMeta):
         self._drillup_text = None
         self._exit_fullscreen = None
         self._export_data = None
+        self._export_in_progress = None
         self._hide_data = None
         self._invalid_date = None
         self._loading = None
@@ -69,6 +70,7 @@ class Language(HighchartsMeta):
         self.drillup_text = kwargs.get('drillup_text', None)
         self.exit_fullscreen = kwargs.get('exit_fullscreen', None)
         self.export_data = kwargs.get('export_data', None)
+        self.export_in_progress = kwargs.get('export_in_progress', None)
         self.hide_data = kwargs.get('hide_data', None)
         self.invalid_date = kwargs.get('invalid_date', None)
         self.loading = kwargs.get('loading', None)
@@ -293,6 +295,21 @@ class Language(HighchartsMeta):
     @class_sensitive(ExportDataLanguageOptions)
     def export_data(self, value):
         self._export_data = value
+
+    @property
+    def export_in_progress(self) -> Optional[str]:
+        """Text to show when export is in progress. Defaults to ``'Exporting...'``.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._export_in_progress
+    
+    @export_in_progress.setter
+    def export_in_progress(self, value):
+        if value is None:
+            self._export_in_progress = None
+        else:
+            self._export_in_progress = validators.string(value, allow_empty = True)
 
     @property
     def hide_data(self) -> Optional[str]:
@@ -701,6 +718,7 @@ class Language(HighchartsMeta):
             'drillup_text': as_dict.get('drillUpText', None),
             'exit_fullscreen': as_dict.get('exitFullscreen', None),
             'export_data': as_dict.get('exportData', None),
+            'export_in_progress': as_dict.get('exportInProgress', None),
             'hide_data': as_dict.get('hideData', None),
             'invalid_date': as_dict.get('invalidDate', None),
             'loading': as_dict.get('loading', None),
@@ -739,6 +757,7 @@ class Language(HighchartsMeta):
             'drillUpText': self.drillup_text,
             'exitFullscreen': self.exit_fullscreen,
             'exportData': self.export_data,
+            'exportInProgress': self.export_in_progress,
             'hideData': self.hide_data,
             'invalidDate': self.invalid_date,
             'loading': self.loading,
