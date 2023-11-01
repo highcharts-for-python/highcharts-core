@@ -10,6 +10,7 @@ from highcharts_core.utility_classes.data_labels import DataLabel
 from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
 from highcharts_core.utility_classes.states import States
+from highcharts_core.utility_classes.markers import Marker
 
 
 class BaseLevelOptions(HighchartsMeta):
@@ -617,3 +618,29 @@ class TreemapLevelOptions(BaseLevelOptions):
             untrimmed[key] = parent_as_dict[key]
 
         return untrimmed
+
+
+class TreegraphLevelOptions(TreemapLevelOptions):
+    """Set options on specific levels for Treegraph Charts. Takes precedence over series
+    options, but not points."""
+    
+    def __init__(self, **kwargs):
+        self._marker = None
+        
+        self.marker = kwargs.get('marker', None)
+        
+        super().__init__(**kwargs)
+        
+    @property
+    def marker(self) -> Optional[Marker]:
+        """Set marker options for nodes at the level.
+        
+        :rtype: :class:`Marker <highcharts_core.utility_classes.markers.Marker>` or 
+          :obj:`None <python:None>`
+        """
+        return self._marker
+    
+    @marker.setter
+    @class_sensitive(Marker)
+    def marker(self, value):
+        self._marker = value

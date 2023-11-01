@@ -59,6 +59,18 @@ class VectorOptions(SeriesOptions):
         self._cluster = value
 
     @property
+    def line_width(self) -> Optional[int | float | Decimal]:
+        """The line width for each vector arrow. Defaults to ``2``.
+        
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._line_width
+    
+    @line_width.setter
+    def line_width(self, value):
+        self._line_width = validators.numeric(value, allow_empty = True)
+
+    @property
     def rotation_origin(self) -> Optional[str]:
         """What part of the vector it should be rotated around. Defaults to ``'center'``.
 
@@ -159,11 +171,13 @@ class VectorOptions(SeriesOptions):
             'drag_drop': as_dict.get('dragDrop', None),
             'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
             'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
+            'inactive_other_points': as_dict.get('inactiveOtherPoints', None),
             'linecap': as_dict.get('linecap', None),
             'line_width': as_dict.get('lineWidth', None),
             'negative_color': as_dict.get('negativeColor', None),
             'point_description_format': as_dict.get('pointDescriptionFormat', None),
-            'point_interval': as_dict.get('pointInterval', None),            'point_interval_unit': as_dict.get('pointIntervalUnit', None),
+            'point_interval': as_dict.get('pointInterval', None),
+            'point_interval_unit': as_dict.get('pointIntervalUnit', None),
             'point_placement': as_dict.get('pointPlacement', None),
             'point_start': as_dict.get('pointStart', None),
             'relative_x_value': as_dict.get('relativeXValue', None),

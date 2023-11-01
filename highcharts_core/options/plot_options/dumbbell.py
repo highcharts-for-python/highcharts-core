@@ -12,6 +12,7 @@ from highcharts_core.utility_classes.shadows import ShadowOptions
 from highcharts_core.options.plot_options.data_sorting import DataSorting
 from highcharts_core.options.plot_options.drag_drop import HighLowDragDropOptions
 from highcharts_core.utility_classes.zones import Zone
+from highcharts_core.utility_classes.markers import Marker
 
 
 class DumbbellOptions(GenericTypeOptions):
@@ -45,6 +46,7 @@ class DumbbellOptions(GenericTypeOptions):
         self._linecap = None
         self._line_color = None
         self._low_color = None
+        self._low_marker = None
         self._negative_color = None
         self._negative_fill_color = None
         self._point_interval = None
@@ -78,6 +80,7 @@ class DumbbellOptions(GenericTypeOptions):
         self.linecap = kwargs.get('linecap', None)
         self.line_color = kwargs.get('line_color', None)
         self.low_color = kwargs.get('low_color', None)
+        self.low_marker = kwargs.get('low_marker', None)
         self.negative_color = kwargs.get('negative_color', None)
         self.negative_fill_color = kwargs.get('negative_fill_color', None)
         self.point_interval = kwargs.get('point_interval', None)
@@ -421,6 +424,23 @@ class DumbbellOptions(GenericTypeOptions):
     def low_color(self, value):
         from highcharts_core import utility_functions
         self._low_color = utility_functions.validate_color(value)
+
+    @property
+    def low_marker(self) -> Optional[Marker]:
+        """Options for the point markers of line-like series.
+
+        Properties like ``fill_color``, ``line_color`` and ``line_width`` define the
+        visual appearance of the markers. Other series types, like column series, don't
+        have markers, but have visual options on the series level instead.
+
+        :rtype: :class:`Marker` or :obj:`None <python:None>`
+        """
+        return self._low_marker
+
+    @low_marker.setter
+    @class_sensitive(Marker)
+    def low_marker(self, value):
+        self._low_marker = value
 
     @property
     def negative_color(self) -> Optional[str | Gradient | Pattern]:
@@ -810,10 +830,12 @@ class DumbbellOptions(GenericTypeOptions):
             'drag_drop': as_dict.get('dragDrop', None),
             'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
             'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
+            'inactive_other_points': as_dict.get('inactiveOtherPoints', None),
             'group_padding': as_dict.get('groupPadding', None),
             'linecap': as_dict.get('linecap', None),
             'line_color': as_dict.get('lineColor', None),
             'low_color': as_dict.get('lowColor', None),
+            'low_marker': as_dict.get('lowMarker', None),
             'negative_color': as_dict.get('negativeColor', None),
             'negative_fill_color': as_dict.get('negativeFillColor', None),
             'point_interval': as_dict.get('pointInterval', None),
@@ -852,6 +874,7 @@ class DumbbellOptions(GenericTypeOptions):
             'linecap': self.linecap,
             'lineColor': self.line_color,
             'lowColor': self.low_color,
+            'lowMarker': self.low_marker,
             'negativeColor': self.negative_color,
             'negativeFillColor': self.negative_fill_color,
             'pointInterval': self.point_interval,
@@ -891,4 +914,115 @@ class LollipopOptions(DumbbellOptions):
       :align: center
 
     """
-    pass
+    def __init__(self, **kwargs):
+        self._grouping = None
+        
+        self.grouping = kwargs.get('grouping', None)
+        
+        super().__init__(**kwargs)
+        
+    @property
+    def grouping(self) -> Optional[bool]:
+        """If ``True``, groups non-stacked lollipop points. Otherwise,
+        renders them independent of each other (i.e. individually and 
+        possibly overlapping). Defaults to ``True``.
+        
+        :rtype: :class:`bool <python:bool>`
+        """
+        return self._grouping
+    
+    @grouping.setter
+    def grouping(self, value):
+        if value is None:
+            self._grouping = None
+        else:
+            self._grouping = bool(value)
+            
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'accessibility': as_dict.get('accessibility', None),
+            'allow_point_select': as_dict.get('allowPointSelect', None),
+            'animation': as_dict.get('animation', None),
+            'class_name': as_dict.get('className', None),
+            'clip': as_dict.get('clip', None),
+            'color': as_dict.get('color', None),
+            'cursor': as_dict.get('cursor', None),
+            'custom': as_dict.get('custom', None),
+            'dash_style': as_dict.get('dashStyle', None),
+            'data_labels': as_dict.get('dataLabels', None),
+            'description': as_dict.get('description', None),
+            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
+            'events': as_dict.get('events', None),
+            'include_in_data_export': as_dict.get('includeInDataExport', None),
+            'keys': as_dict.get('keys', None),
+            'label': as_dict.get('label', None),
+            'legend_symbol': as_dict.get('legendSymbol', None),
+            'linked_to': as_dict.get('linkedTo', None),
+            'marker': as_dict.get('marker', None),
+            'on_point': as_dict.get('onPoint', None),
+            'opacity': as_dict.get('opacity', None),
+            'point': as_dict.get('point', None),
+            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
+            'selected': as_dict.get('selected', None),
+            'show_checkbox': as_dict.get('showCheckbox', None),
+            'show_in_legend': as_dict.get('showInLegend', None),
+            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
+            'sonification': as_dict.get('sonification', None),
+            'states': as_dict.get('states', None),
+            'sticky_tracking': as_dict.get('stickyTracking', None),
+            'threshold': as_dict.get('threshold', None),
+            'tooltip': as_dict.get('tooltip', None),
+            'turbo_threshold': as_dict.get('turboThreshold', None),
+            'visible': as_dict.get('visible', None),
+
+            'animation_limit': as_dict.get('animationLimit', None),
+            'color_axis': as_dict.get('colorAxis', None),
+            'color_index': as_dict.get('colorIndex', None),
+            'color_key': as_dict.get('colorKey', None),
+            'connect_ends': as_dict.get('connectEnds', None),
+            'connect_nulls': as_dict.get('connectNulls', None),
+            'connector_color': as_dict.get('connectorColor', None),
+            'connector_width': as_dict.get('connectorWidth', None),
+            'crisp': as_dict.get('crisp', None),
+            'crop_threshold': as_dict.get('cropThreshold', None),
+            'data_sorting': as_dict.get('dataSorting', None),
+            'drag_drop': as_dict.get('dragDrop', None),
+            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
+            'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
+            'inactive_other_points': as_dict.get('inactiveOtherPoints', None),
+            'group_padding': as_dict.get('groupPadding', None),
+            'linecap': as_dict.get('linecap', None),
+            'line_color': as_dict.get('lineColor', None),
+            'low_color': as_dict.get('lowColor', None),
+            'low_marker': as_dict.get('lowMarker', None),
+            'negative_color': as_dict.get('negativeColor', None),
+            'negative_fill_color': as_dict.get('negativeFillColor', None),
+            'point_interval': as_dict.get('pointInterval', None),
+            'point_interval_unit': as_dict.get('pointIntervalUnit', None),
+            'point_padding': as_dict.get('pointPadding', None),
+            'point_placement': as_dict.get('pointPlacement', None),
+            'point_start': as_dict.get('pointStart', None),
+            'relative_x_value': as_dict.get('relativeXValue', None),
+            'shadow': as_dict.get('shadow', None),
+            'soft_threshold': as_dict.get('softThreshold', None),
+            'stacking': as_dict.get('stacking', None),
+            'step': as_dict.get('step', None),
+            'zone_axis': as_dict.get('zoneAxis', None),
+            'zones': as_dict.get('zones', None),
+            
+            'grouping': as_dict.get('grouping', None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        untrimmed = {
+            'grouping': self.grouping,
+        }
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
+
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
+
+        return untrimmed

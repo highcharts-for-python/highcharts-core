@@ -1012,12 +1012,14 @@ class AxisEvents(HighchartsMeta):
         self._after_breaks = None
         self._after_set_extremes = None
         self._point_break = None
+        self._point_break_out = None
         self._point_in_break = None
         self._set_extremes = None
 
         self.after_breaks = kwargs.get('after_breaks', None)
         self.after_set_extremes = kwargs.get('after_set_extremes', None)
         self.point_break = kwargs.get('point_break', None)
+        self.point_break_out = kwargs.get('point_break_out', None)
         self.point_in_break = kwargs.get('point_in_break', None)
         self.set_extremes = kwargs.get('set_extremes', None)
 
@@ -1075,6 +1077,19 @@ class AxisEvents(HighchartsMeta):
         self._point_break = value
 
     @property
+    def point_break_out(self) -> Optional[CallbackFunction]:
+        """An event fired when a point is outside a break after zoom.
+        
+        :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>`
+          or :obj:`None <python:None>`
+        """
+        return self._point_break_out
+    
+    @point_break_out.setter
+    def point_break_out(self, value):
+        self._point_break_out = value
+
+    @property
     def point_in_break(self) -> Optional[CallbackFunction]:
         """A JavaScript event fired when a point falls inside a break from this axis.
         Defaults to :obj:`None <python:None>`.
@@ -1118,6 +1133,7 @@ class AxisEvents(HighchartsMeta):
             'after_breaks': as_dict.get('afterBreaks', None),
             'after_set_extremes': as_dict.get('afterSetExtremes', None),
             'point_break': as_dict.get('pointBreak', None),
+            'point_break_out': as_dict.get('pointBreakOut', None),
             'point_in_break': as_dict.get('pointInBreak', None),
             'set_extremes': as_dict.get('setExtremes', None)
         }
@@ -1129,6 +1145,7 @@ class AxisEvents(HighchartsMeta):
             'afterBreaks': self.after_breaks,
             'afterSetExtremes': self.after_set_extremes,
             'pointBreak': self.point_break,
+            'pointBreakOut': self.point_break_out,
             'pointInBreak': self.point_in_break,
             'setExtremes': self.set_extremes
         }

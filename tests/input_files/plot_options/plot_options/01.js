@@ -1090,7 +1090,7 @@
         onArea: false,
         style: 'some style string'
     },
-    linkedTo: 'some_id',
+    linkedTo: 'some_id-arearange',
     marker: {
       enabled: true,
       fillColor: '#cccccc',

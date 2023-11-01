@@ -70,6 +70,11 @@ STANDARD_PARAMS = [
           'legendLabel': 'Legend',
           'legendLabelNoTitle': 'Label with no Title'
       },
+      'navigator': {
+          'changeAnnouncement': 'some value',
+          'groupLabel': 'another value',
+          'handleLabel': 'a third value',
+      },
       'range_selector': {
           'clickButtonAnnouncement': 'Selected Range',
           'dropdownLabel': 'Range',

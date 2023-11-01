@@ -60,6 +60,8 @@ Sub-components
     - :class:`ExportingLanguageOptions <highcharts_core.global_options.language.accessibility.exporting.ExportingLanguageOptions>`
   * - :mod:`global_options.language.accessibility.legend <highcharts_core.global_options.language.accessibility.legend>`
     - :class:`LegendLanguageOptions <highcharts_core.global_options.language.accessibility.legend.LegendLanguageOptions>`
+  * - :mod:`global_options.language.accessibility.navigator <highcharts_core.global_options.language.accessibility.navigator>`
+    - :class:`NavigatorLanguageOptions <highcharts_core.global_options.language.accessibility.navigator.NavigatorLanguageOptions>`
   * - :mod:`global_options.language.accessibility.range_selector <highcharts_core.global_options.language.accessibility.range_selector>`
     - :class:`RangeSelectorLanguageOptions <highcharts_core.global_options.language.accessibility.range_selector.RangeSelectorLanguageOptions>`
   * - :mod:`global_options.language.accessibility.screen_reader_section <highcharts_core.global_options.language.accessibility.screen_reader_section>`
