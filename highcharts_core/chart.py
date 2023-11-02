@@ -508,7 +508,7 @@ class Chart(HighchartsMeta):
     def to_js_literal(self,
                       filename = None,
                       encoding = 'utf-8',
-                      careful_validation = False) -> Optional[str]:
+                      careful_validation = False,
                       event_listener: str = 'DOMContentLoaded',
                       event_listener_enabled: bool = True) -> Optional[str]:
         """Return the object represented as a :class:`str <python:str>` containing the
