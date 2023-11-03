@@ -796,6 +796,7 @@ def Class_from_js_literal(cls, input_files, filename, as_file, error):
         assert isinstance(result, cls) is True
 
         as_js_literal = result.to_js_literal()
+        print(as_js_literal)
         #print('-----------------')
         #print('RESULT VALIDATION')
         if 'pattern:' in as_js_literal:

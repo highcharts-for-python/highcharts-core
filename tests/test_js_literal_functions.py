@@ -190,3 +190,21 @@ def test_convert_js_property_to_python(original_str, override, expected, error):
     else:
         with pytest.raises(error):
             result = js.convert_js_property_to_python(item, original_str)
+
+
+@pytest.mark.parametrize('original_str, expected, error', [
+    ("Object.create({item1:true})", True, None),
+    ("new Date()", True, None),
+    ("test string", False, None),
+    ("{item1: 456}", True, None),
+    ("'{point.name}: {point.y}'", False, None),
+    ("{item: {subitem: 123}}", True, None),
+    ("{item: 123, item2: 456, item3: {subitem: 789}}", True, None),
+])
+def test_is_js_object(original_str, expected, error):
+    if not error:
+        result = js.is_js_object(original_str)
+        assert result is expected
+    else:
+        with pytest.raises(error):
+            result = js.is_js_object(original_str)
