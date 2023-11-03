@@ -159,15 +159,25 @@ def is_js_object(as_str, careful_validation = False):
         is_empty = as_str[1:-1].strip() == ''
         if is_empty:
             return True
-        has_colon = ':' in as_str
-        if has_colon:
+        colon_count = as_str.count(':')
+        open_brace_count = as_str.count('{')
+        close_brace_count = as_str.count('}')
+        brace_set_count = (open_brace_count + close_brace_count) / 2
+        if colon_count > 0:
+            if brace_set_count == 1:
+                return True
+            elif brace_set_count > 1 and colon_count >= brace_set_count:
+                return True
+            else:
+                careful_validation = True
+        elif 'new ' in as_str:
             return True
-        if 'new ' in as_str:
+        elif 'Object.create(' in as_str:
             return True
-        if 'Object.create(' in as_str:
-            return True
-        return False
-    else:
+        else:
+            return False
+    
+    if careful_validation:
         expression_item = f'const testName = {as_str}'
         try:
             parsed = esprima.parseScript(expression_item)
@@ -192,6 +202,8 @@ def is_js_object(as_str, careful_validation = False):
             return True
 
         return False
+    
+    return False
 
 
 def attempt_variable_declaration(as_str):
