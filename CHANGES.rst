@@ -1,4 +1,13 @@
 
+Release 1.5.1
+=========================================
+
+* **BUGFIX:** Fixed bug in JS literal serialization that would misinterpret strings that 
+  start with ``{``, end with ``}``, and contain a colon (``:``) as an object literal rather
+  than as a string. (#130)
+
+--------------------
+
 Release 1.5.0
 =========================================
 
