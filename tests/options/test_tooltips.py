@@ -9,7 +9,7 @@ from highcharts_core.utility_classes.javascript_functions import CallbackFunctio
 from highcharts_core import errors
 from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_dict, \
     Class__init__, Class__to_untrimmed_dict, Class_from_dict, Class_to_dict, \
-    Class_from_js_literal
+    Class_from_js_literal, compare_js_literals
 
 STANDARD_PARAMS = [
     ({}, None),
@@ -86,6 +86,9 @@ STANDARD_PARAMS = [
         }""",
         'split': True
      }, None),
+    ({
+        'format': '{point.name} {point.y}'
+      }, None),
 
     ({
       'border_width': 'not-a-number'
@@ -128,3 +131,17 @@ def test_to_dict(kwargs, error):
 ])
 def test_from_js_literal(input_files, filename, as_file, error):
     Class_from_js_literal(cls, input_files, filename, as_file, error)
+
+
+def test_bug130_tooltip_serialization():
+    as_js_literal = """{
+        format: '{point.name}: {point.y}'
+    }"""
+    
+    obj = cls.from_js_literal(as_js_literal)
+    assert obj is not None
+    assert isinstance(obj, cls) is True
+    assert obj.format == '{point.name}: {point.y}'
+    
+    result = obj.to_js_literal()
+    assert "'{point.name}: {point.y}'" in result or '"{point.name}: {point.y}"' in result
