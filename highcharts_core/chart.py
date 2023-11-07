@@ -247,19 +247,36 @@ class Chart(HighchartsMeta):
 
         return container_str
 
-    def _repr_html_(self):
+    def _repr_html_(self) -> str:
         """Produce the HTML representation of the chart.
-
-        .. note::
-
-          Currently includes *all* `Highcharts JS <https://www.highcharts.com/>`_ modules
-          in the HTML. This issue will be addressed when roadmap issue :issue:`2` is
-          released.
 
         :returns: The HTML representation of the chart.
         :rtype: :class:`str <python:str>`
         """
-        return self.display()
+        container = self.container or 'highcharts_target_div'
+        if not self._random_slug:
+            self._random_slug = {}
+
+        random_slug = self._random_slug.get(container, None)
+
+        if not random_slug:
+            random_slug = utility_functions.get_random_string()
+            self._random_slug[container] = random_slug
+
+        html_str = self._jupyter_container_html(container, random_slug)
+
+        chart_js_str = self._jupyter_javascript(container = container,
+                                                random_slug = random_slug)
+        wrapped_chart_js_str = utility_functions.wrap_for_requirejs('', chart_js_str)
+
+        include_js_str = self._get_jupyter_script_loader(chart_js_str)
+
+        include_str = f"""<script>{include_js_str}</script>"""
+        js_str = f"""<script>{wrapped_chart_js_str}</script>"""
+
+        as_str = f"""{html_str}\n{include_str}\n{js_str}"""
+
+        return as_str
 
     def get_script_tags(self, as_str = False) -> List[str] | str:
         """Return the collection of ``<script/>`` tags needed to load the modules
