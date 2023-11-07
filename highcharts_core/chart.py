@@ -278,6 +278,54 @@ class Chart(HighchartsMeta):
 
         return as_str
 
+    def _repr_png_(self) -> bytes:
+        """Return a PNG representation of the chart, expressed as bytes.
+        
+        .. note::
+        
+          This relies on the 
+          :meth:`.download_chart() <highcharts_core.chart.Chart.download_chart>` method,
+          which in turn relies on the Highcharts Export Server. If you need to override
+          the default Export Server configuration, you can do so using environment 
+          variables as documented for the 
+          :class:`ExportServer <highcharts_core.headless_export.ExportServer>` class.
+        
+        :rtype: :class:`bytes <python:bytes>`
+        """
+        return self.download_chart(format = 'png')
+
+    def _repr_svg_(self):
+        """Return an SVG representation of the chart.
+        
+        .. note::
+        
+          This relies on the 
+          :meth:`.download_chart() <highcharts_core.chart.Chart.download_chart>` method,
+          which in turn relies on the Highcharts Export Server. If you need to override
+          the default Export Server configuration, you can do so using environment 
+          variables as documented for the 
+          :class:`ExportServer <highcharts_core.headless_export.ExportServer>` class.
+        
+        :rtype: :class:`str <python:str>`
+        """
+        return self.download_chart(format = 'svg')
+
+    def _repr_jpeg_(self) -> bytes:
+        """Return a JPEG representation of the chart, expressed as bytes.
+        
+        .. note::
+        
+          This relies on the 
+          :meth:`.download_chart() <highcharts_core.chart.Chart.download_chart>` method,
+          which in turn relies on the Highcharts Export Server. If you need to override
+          the default Export Server configuration, you can do so using environment 
+          variables as documented for the 
+          :class:`ExportServer <highcharts_core.headless_export.ExportServer>` class.
+        
+        :rtype: :class:`bytes <python:bytes>`
+        """
+        return self.download_chart(format = 'jpeg')
+
     def get_script_tags(self, as_str = False) -> List[str] | str:
         """Return the collection of ``<script/>`` tags needed to load the modules
         for the chart to render.
