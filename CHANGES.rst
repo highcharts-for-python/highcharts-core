@@ -1,4 +1,14 @@
 
+Release 1.6.0
+=========================================
+
+* **ENHANCEMENT:** Added ability to remove or override the JavaScript event listener when 
+  serializing a chart to a JavaScript literal (#131 - courtesy of 
+  `@ByronCook <https://github.com/ByronCook>`__ ).
+
+--------------------
+
+
 Release 1.5.1
 =========================================
 
