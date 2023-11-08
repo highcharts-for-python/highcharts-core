@@ -599,6 +599,17 @@ class Chart(HighchartsMeta):
 
         :type careful_validation: :class:`bool <python:bool>`
 
+        :param event_listener: The name of the JS event to which a listener function
+          should be attached. Defaults to ``'DOMContentLoaded'``, which renders the
+          chart once all DOM content has been loaded.
+        :type event_listener: :class:`str <python:str>`
+
+        :param event_listener_enabled: If ``True``, generates the JS literal
+          as per the event listener supplied by the ``event_listener``
+          keyword argument. If ``False``, generates directly executable JS
+          code. Defaults to ``True``.
+        :type event_listener_enabled: :class:`bool <python:bool>`
+
         .. note::
 
           If :meth:`variable_name <Chart.variable_name>` is set, will render a string as
