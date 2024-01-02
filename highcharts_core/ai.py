@@ -103,6 +103,8 @@ SUPPORTED_MODELS = {
     'gpt-3.5-turbo-16k': ('OpenAI', OPENAI_MESSAGES),
     'gpt-4': ('OpenAI', OPENAI_MESSAGES),
     'gpt-4-32k': ('OpenAI', OPENAI_MESSAGES),
+    'gpt-4-1106-preview': ('OpenAI', OPENAI_MESSAGES),
+    'gpt-4-vision-preview': ('OpenAI', OPENAI_MESSAGES),
     'claude-instant-1': ('Anthropic', ANTHROPIC_PROMPT),
     'claude-2': ('Anthropic', ANTHROPIC_PROMPT),
 }
@@ -157,6 +159,8 @@ def convert_to_js(callable,
         * ``'gpt-3.5-turbo-16k'``
         * ``'gpt-4'``
         * ``'gpt-4-32k'``
+        * ``'gpt-4-1106-preview'``
+        * ``'gpt-4-vision-preview'``
         * ``'claude-instant-1'``
         * ``'claude-2'``
         
