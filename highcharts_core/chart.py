@@ -8,6 +8,7 @@ from highcharts_core import constants, errors, utility_functions
 from highcharts_core.decorators import class_sensitive, validate_types
 from highcharts_core.metaclasses import HighchartsMeta
 from highcharts_core.options import HighchartsOptions
+from highcharts_core.options.series.custom import CustomSeries
 from highcharts_core.utility_classes.javascript_functions import CallbackFunction
 from highcharts_core.js_literal_functions import serialize_to_js_literal
 from highcharts_core.headless_export import ExportServer
@@ -549,6 +550,26 @@ class Chart(HighchartsMeta):
     def variable_name(self, value):
         self._variable_name = validators.variable_name(value, allow_empty = True)
 
+    @property
+    def custom_series_types(self) -> List[CustomSeries]:
+        """Collection of custom series types that are used in the chart.
+        
+        :rtype: :class:`list <python:list>` of 
+          :class:`CustomSeries <highcharts_core.options.series.custom.CustomSeries>`
+        """
+        if self.options:
+            return self.options.custom_series_types
+        
+        return []
+        
+    @property
+    def uses_custom_series_types(self) -> bool:
+        """Read-only flag which indicates whether the chart uses custom series types.
+        
+        :rtype: :class:`bool <python:bool>`
+        """
+        return len(self.custom_series_types) > 0
+
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
@@ -658,6 +679,10 @@ class Chart(HighchartsMeta):
             )
             signature_elements += 1
 
+        custom_series = [x.to_registration_js_literal(encoding = encoding,
+                                                      careful_validation = careful_validation)
+                         for x in self.custom_series_types]
+
         signature = """Highcharts.chart("""
         signature += container_as_str
         if signature_elements > 1:
@@ -669,11 +694,15 @@ class Chart(HighchartsMeta):
             signature += callback_as_str
         signature += ');'
 
+        series_registration_prefix = ''
+        if custom_series:
+            series_registration_prefix = '\n'.join(custom_series) + '\n'
+
         constructor_prefix = ''
         if self.variable_name:
             constructor_prefix = f'var {self.variable_name} = '
 
-        as_str = constructor_prefix + signature
+        as_str = series_registration_prefix + constructor_prefix + signature
 
         if event_listener_enabled:
             if event_listener:

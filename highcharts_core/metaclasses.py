@@ -548,6 +548,9 @@ class HighchartsMeta(ABC):
         untrimmed = self._to_untrimmed_dict()
         as_dict = {}
         for key in untrimmed:
+            if checkers.is_type(self, ['CustomSeries']) and key in ['drawPoints', 'parentType']:
+                continue
+
             item = untrimmed[key]
             serialized = serialize_to_js_literal(item, 
                                                  encoding = encoding,

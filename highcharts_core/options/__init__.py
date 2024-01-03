@@ -1,7 +1,7 @@
 """Implements the :class:`HighchartsOptions` class."""
 from typing import Optional, List
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
 from highcharts_core import utility_functions
 from highcharts_core.metaclasses import HighchartsMeta
@@ -633,6 +633,26 @@ class Options(HighchartsMeta):
     @class_sensitive(YAxis, force_iterable = True)
     def y_axis(self, value):
         self._y_axis = value
+
+    @property
+    def custom_series_types(self) -> List[GenericTypeOptions]:
+        """Collection of custom series types that are used in the chart.
+        
+        :rtype: :class:`list <python:list>` of 
+          :class:`CustomSeries <highcharts_core.options.series.custom.CustomSeries>`
+        """
+        if not self.series:
+            return []
+
+        return [x for x in self.series if checkers.is_type(x, ['CustomSeries']) is True]
+        
+    @property
+    def uses_custom_series_types(self) -> bool:
+        """Read-only flag which indicates whether the chart uses custom series types.
+        
+        :rtype: :class:`bool <python:bool>`
+        """
+        return len(self.custom_series_types) > 0
 
     def add_series(self, *series):
         """Adds ``series`` to the
