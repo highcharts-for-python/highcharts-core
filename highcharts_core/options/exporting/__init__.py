@@ -216,6 +216,10 @@ class Exporting(HighchartsMeta):
           value of :obj:`None <python:None>`.
 
         :rtype: :class:`Options` or :obj:`None <python:None>`
+        
+        :raises HighchartsInstanceNeededError: if attempting to set it to a value that is
+          not a :class:`Options <highcharts_core.options.Options>` (or descendent) 
+          instance.
         """
         return self._chart_options
 
@@ -223,15 +227,17 @@ class Exporting(HighchartsMeta):
     def chart_options(self, value):
         if not value:
             self._chart_options = None
-        elif not checkers.is_type(value, 'Options'):
-            raise errors.InstanceNeededError(f'The Exporting.chart_options property is '
-                                             f'one of the few properties in Highcharts '
-                                             f'for Python that REQUIRES a Highcharts for '
-                                             f'Python instance as its value (or None). '
-                                             f'Specifically, you should supply an Options'
-                                             f' instance to it, rather than a dict or a '
-                                             f'string. The value you supplied was: '
-                                             f'{value.__class__.__name}')
+        elif not checkers.is_type(value, ['Options']):
+            raise errors.HighchartsInstanceNeededError(
+                f'The Exporting.chart_options property is '
+                f'one of the few properties in Highcharts '
+                f'for Python that REQUIRES a Highcharts for '
+                f'Python instance as its value (or None). '
+                f'Specifically, you should supply an Options'
+                f' instance to it, rather than a dict or a '
+                f'string. The value you supplied was: '
+                f'{value.__class__.__name__}'
+            )
         else:
             self._chart_options = value
 
