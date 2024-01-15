@@ -6,7 +6,10 @@ from highcharts_core.decorators import class_sensitive
 from highcharts_core import errors
 from highcharts_core.options.series.base import SeriesBase
 from highcharts_core.utility_classes.javascript_functions import CallbackFunction
-from highcharts_core.js_literal_functions import assemble_js_literal, serialize_to_js_literal
+from highcharts_core.js_literal_functions import (
+    assemble_js_literal,
+    serialize_to_js_literal,
+)
 
 try:
     from highcharts_gantt.options.series.series_generator import SERIES_CLASSES
@@ -25,14 +28,55 @@ class CustomSeries(SeriesBase):
 
     def __init__(self, **kwargs):
         self._draw_points = None
+        self.__parent_instance = None
         self._parent_type = None
         self._type = None
 
         self.draw_points = kwargs.get("draw_points", None)
+        self._parent_instance = kwargs.get("parent_instance", None)
         self.parent_type = kwargs.get("parent_type", None)
         self.type = kwargs.get("type", None)
+        
+        if not self._parent_instance and self.parent_type:
+            self._parent_instance = self._parent_cls(**kwargs)
 
         super().__init__(**kwargs)
+
+    @property
+    def _parent_cls(self):
+        """The class object of the parent series type.
+        
+        :rtype: :class:`SeriesBase <highcharts_core.options.series.base.SeriesBase>`-descendant
+          or :obj:`None <python:None>`
+        """
+        if not self.parent_type:
+            return None
+        
+        return SERIES_CLASSES[self.parent_type]
+
+    @property
+    def _parent_instance(self) -> Optional[SeriesBase]:
+        """Container property which stores an instance of the parent type.
+
+        Used to provide access to the parent series type's methods and properties.
+
+        :rtype: :class:`SeriesBase <highcharts_core.options.series.base.SeriesBase>`
+        """
+        return self.__parent_instance
+
+    @_parent_instance.setter
+    def _parent_instance(self, value):
+        if not value:
+            self.__parent_instance = None
+        elif isinstance(value, SeriesBase):
+            self.__parent_instance = value
+            self.parent_type = value.type
+        elif isinstance(value, dict) and self._parent_cls:
+            self.__parent_instance = self._parent_cls.from_dict(value)
+        else:
+            raise errors.HighchartsTypeError(
+                f"_parent_instance must be a SeriesBase instance, not {value.__class__.__name__}"
+            )
 
     @property
     def draw_points(self) -> CallbackFunction:
@@ -204,13 +248,20 @@ class CustomSeries(SeriesBase):
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
+            
+        if self._parent_instance:
+            parent_instance_untrimmed = self._parent_instance._to_untrimmed_dict(in_cls = in_cls)
+        else:
+            parent_instance_untrimmed = {}
+            
+        for key in untrimmed:
+            parent_instance_untrimmed[key] = untrimmed[key]
 
-        return untrimmed
+        return parent_instance_untrimmed
 
-    def to_registration_js_literal(self,
-                                   filename = None, 
-                                   encoding = "utf-8", 
-                                   careful_validation = False) -> Optional[str]:
+    def to_registration_js_literal(
+        self, filename=None, encoding="utf-8", careful_validation=False
+    ) -> Optional[str]:
         """Return the JS literal string that is used to register the custom series
         type within Highcharts prior to its rendering in the chart.
 
@@ -226,9 +277,9 @@ class CustomSeries(SeriesBase):
         along the way using the
         `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
         to ``False``.
-        
+
         .. warning::
-        
+
             Setting this value to ``True`` will significantly degrade serialization
             performance, though it may prove useful for debugging purposes.
 
@@ -239,25 +290,26 @@ class CustomSeries(SeriesBase):
         if filename:
             filename = validators.path(filename)
 
-        prefix_as_str = f"""Highcharts.seriesType('{self.type}', '{self.parent_type}', """
-        
+        prefix_as_str = (
+            f"""Highcharts.seriesType('{self.type}', '{self.parent_type}', """
+        )
+
         untrimmed = self._to_untrimmed_dict()
         as_dict = {}
         for key in untrimmed:
             item = untrimmed[key]
-            serialized = serialize_to_js_literal(item, 
-                                                 encoding = encoding,
-                                                 careful_validation = careful_validation)
+            serialized = serialize_to_js_literal(
+                item, encoding=encoding, careful_validation=careful_validation
+            )
             if serialized is not None:
                 as_dict[key] = serialized
 
-        as_str = assemble_js_literal(as_dict,
-                                     careful_validation = careful_validation)
+        as_str = assemble_js_literal(as_dict, careful_validation=careful_validation)
 
         as_str = prefix_as_str + as_str + "\n});"
 
         if filename:
-            with open(filename, 'w', encoding = encoding) as file_:
+            with open(filename, "w", encoding=encoding) as file_:
                 file_.write(as_str)
 
         return as_str
