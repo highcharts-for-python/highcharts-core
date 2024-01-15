@@ -708,7 +708,7 @@ def Class_to_dict(cls, kwargs, error, trim_expected = True):
 
     if not error:
         instance = cls(**kwargs)
-        if checkers.is_type(instance, 'GenericTypeOptions'):
+        if checkers.is_type(instance, 'GenericTypeOptions') and not checkers.is_type(instance, 'CustomSeries'):
             expected['type'] = instance.type
 
         result = instance.to_dict()
