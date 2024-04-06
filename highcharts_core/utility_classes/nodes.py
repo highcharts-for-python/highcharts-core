@@ -1,3 +1,4 @@
+import os
 from typing import Optional, List
 from decimal import Decimal
 
@@ -315,7 +316,9 @@ class OrganizationNodeOptions(DependencyWheelNodeOptions):
             self._image = None
         else:
             try:
-                value = validators.url(value)
+                value = validators.url(
+                    value, allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False)
+                )
             except ValueError:
                 value = validators.path(value)
 

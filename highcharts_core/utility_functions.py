@@ -1,5 +1,6 @@
 """Collection of utility functions used across the library."""
 import csv
+import os
 import string
 import random
 import typing
@@ -385,7 +386,9 @@ def jupyter_add_script(url, is_last = False, use_require = False):
     :returns: The JavaScript code for adding the script.
     :rtype: :class:`str <python:str>`
     """
-    url = validators.url(url)
+    url = validators.url(
+        url, allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False)
+    )
     if url.endswith('.css'):
         return jupyter_add_link(url, is_last = is_last)
 
@@ -424,7 +427,9 @@ def jupyter_add_link(url, is_last = False):
     :returns: The JavaScript code for adding the link.
     :rtype: :class:`str <python:str>`
     """
-    url = validators.url(url)
+    url = validators.url(
+        url, allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False)
+    )
     
     js_str = ''
     js_str += """new Promise(function(resolve, reject) {\n"""
@@ -522,7 +527,8 @@ def prep_js_for_jupyter(js_str,
         """document.addEventListener('DOMContentLoaded', function() {""", '')
     js_str = js_str.replace('renderTo = ', '')
     js_str = js_str.replace(',\noptions = ', ',\n')
-    js_str = js_str[:-3]
+    if '.setOptions(' not in js_str:
+        js_str = js_str[:-3]
 
     if random_slug:
         function_str = f"""function insertChart_{random_slug}() """

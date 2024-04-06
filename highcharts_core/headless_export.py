@@ -239,7 +239,11 @@ class ExportServer(HighchartsMeta):
 
     @url.setter
     def url(self, value):
-        value = validators.url(value, allow_empty = True)
+        value = validators.url(
+            value,
+            allow_empty=True,
+            allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False),
+        )
         if not value:
             self.protocol = None
             self.domain = None

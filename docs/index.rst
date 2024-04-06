@@ -37,7 +37,7 @@ Highcharts Core for Python
 
 .. sidebar:: Version Compatibility
 
-  **Latest Highcharts (JS) version supported:** v.11.2.0
+  **Latest Highcharts (JS) version supported:** v.11.3.0
 
   **Highcharts Core for Python** is designed to be compatible with:
 
@@ -289,7 +289,7 @@ Hello World, and Basic Usage
     # EXAMPLE 1.
     # Using dicts
     my_chart.title = {
-        'align': 'center'
+        'align': 'center',
         'floating': True,
         'text': 'The Title for My Chart',
         'use_html': False,

@@ -9,6 +9,7 @@ from highcharts_core.options.plot_options.generic import GenericTypeOptions
 from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
 from highcharts_core.options.plot_options.levels import LevelOptions
+from highcharts_core.options.tooltips import DiagramTooltip
 
 
 class ArcDiagramOptions(GenericTypeOptions):
@@ -249,6 +250,21 @@ class ArcDiagramOptions(GenericTypeOptions):
             self._reversed = None
         else:
             self._reversed = bool(value)
+
+    @property
+    def tooltip(self) -> Optional[DiagramTooltip]:
+        """A configuration object for the tooltip rendering of each single series.
+        Properties are inherited from tooltip, but only the following properties can be
+        defined on a series level.
+
+        :rtype: :class:`DiagramTooltip <highcharts_core.options.tooltips.DiagramTooltip` or :obj:`None <python:None>`
+        """
+        return self._tooltip
+
+    @tooltip.setter
+    @class_sensitive(DiagramTooltip)
+    def tooltip(self, value):
+        self._tooltip = value
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

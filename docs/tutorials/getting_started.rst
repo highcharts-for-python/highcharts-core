@@ -92,7 +92,7 @@ or Python :class:`dict <python:dict>`:
     df = pandas.DataFrame(my_iterable, columns=['x', 'y'])
 
     # As a Numpy ndarray
-    as_ndarray = numpy.as_ndarray(my_iterable)
+    as_ndarray = numpy.asarray(my_iterable)
 
     # As a Python dict
     as_dict = {'x': x[0], 'y': x[1] for x in my_iterable}

@@ -209,6 +209,9 @@ def test_get_chart(input_files,
                     with open(target_file, 'r', encoding = 'utf-8') as file_:
                         file_contents = file_.read()
                     contents = str(file_contents)
-                    assert contents.startswith(
+                    is_content_expected = contents.startswith(
                         '<?xml version="1.0" standalone="no"?><!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"'
-                    ) is True
+                    ) or contents.startswith(
+                        '<svg version="1.1" class="highcharts-root"'
+                    )
+                    assert is_content_expected is True

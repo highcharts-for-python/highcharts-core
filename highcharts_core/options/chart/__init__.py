@@ -1,3 +1,4 @@
+import os
 from typing import Optional, List
 from decimal import Decimal
 
@@ -107,6 +108,7 @@ class ChartOptions(HighchartsMeta):
         self._align_ticks = None
         self._allow_mutating_data = None
         self._animation = None
+        self._axis_layout_runs = None
         self._background_color = None
         self._border_color = None
         self._border_radius = None
@@ -154,6 +156,7 @@ class ChartOptions(HighchartsMeta):
         self.align_ticks = kwargs.get('align_ticks', None)
         self.allow_mutating_data = kwargs.get('allow_mutating_data', None)
         self.animation = kwargs.get('animation', None)
+        self.axis_layout_runs = kwargs.get('axis_layout_runs', None)
         self.background_color = kwargs.get('background_color', None)
         self.border_color = kwargs.get('border_color', None)
         self.border_radius = kwargs.get('border_radius', None)
@@ -335,6 +338,38 @@ class ChartOptions(HighchartsMeta):
         else:
             self._animation = validate_types(value,
                                              types = AnimationOptions)
+
+    @property
+    def axis_layout_runs(self) -> Optional[int]:
+        """The number of axis layout runs to execute when rendering the chart. Defaults to ``2``.
+
+        .. note::
+
+          When a chart with an x and a y-axis is rendered, we first pre-render the labels of both
+          in order to measure them. Then, if either of the axis labels take up so much space that
+          it significantly affects the length of the other axis, we repeat the process.
+
+          By default we stop at two axis layout runs, but it may be that the second run also alters
+          the space required by either axis, for example if it causes the labels to rotate. In this
+          situation, a subsequent redraw of the chart may cause the tick and label placement to
+          change for apparently no reason.
+
+          Use the ``.axis_layout_runs`` property to set the maximum allowed number of repetitions.
+
+        .. warning::
+
+          Keep in mind that the default value of ``2`` is set because every run costs performance time.
+          Changing this value option to higher than the default might decrease performance significantly,
+          especially with bigger sets of data.
+
+        :returns: The maximum allowed number of axis layout runs.
+        :rtype: :class:`int <python:int>`
+        """
+        return self._axis_layout_runs
+    
+    @axis_layout_runs.setter
+    def axis_layout_runs(self, value):
+        self._axis_layout_runs = validators.integer(value, allow_empty = True)
 
     @property
     def background_color(self) -> Optional[str | Gradient | Pattern]:
@@ -892,7 +927,9 @@ class ChartOptions(HighchartsMeta):
             self._plot_background_image = None
         else:
             try:
-                self._plot_background_image = validators.url(value)
+                self._plot_background_image = validators.url(
+                    value, allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False)
+                )
             except ValueError:
                 try:
                     self._plot_background_image = validators.path(value)
@@ -1346,6 +1383,7 @@ class ChartOptions(HighchartsMeta):
             'align_ticks': as_dict.get('alignTicks', None),
             'allow_mutating_data': as_dict.get('allowMutatingData', None),
             'animation': as_dict.get('animation', None),
+            'axis_layout_runs': as_dict.get('axisLayoutRuns', None),
             'background_color': as_dict.get('backgroundColor', None),
             'border_color': as_dict.get('borderColor', None),
             'border_radius': as_dict.get('borderRadius', None),
@@ -1400,6 +1438,7 @@ class ChartOptions(HighchartsMeta):
             'alignTicks': self.align_ticks,
             'allowMutatingData': self.allow_mutating_data,
             'animation': self.animation,
+            'axisLayoutRuns': self.axis_layout_runs,
             'backgroundColor': self.background_color,
             'borderColor': self.border_color,
             'borderRadius': self.border_radius,

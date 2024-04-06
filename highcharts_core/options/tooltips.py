@@ -970,3 +970,100 @@ class Tooltip(HighchartsMeta):
         }
 
         return untrimmed
+
+
+class DiagramTooltip(Tooltip):
+    """Options for tooltips in diagram series, like :class:`DependencyWheelSeries <highcharts_core.options.series.dependencywheel.DependencyWheelSeries>` or :class:`SankeySeries <highcharts_core.options.series.sankey.SankeySeries>`."""
+    
+    def __init__(self, **kwargs):
+        self._node_format = None
+        self._node_formatter = None
+        
+        self.node_format = kwargs.get('node_format', None)
+        self.node_formatter = kwargs.get('node_formatter', None)
+        
+        super().__init__(**kwargs)
+        
+    @property
+    def node_format(self) -> Optional[str]:
+        """The format string specifying what to show for nodes in the tooltip of a diagram series, as opposed to links.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._node_format
+    
+    @node_format.setter
+    def node_format(self, value):
+        self._node_format = validators.string(value, allow_empty = True)
+
+    @property
+    def node_formatter(self) -> Optional[CallbackFunction]:
+        """JavaScript callback function to format the text of the tooltip's point line.
+
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
+        """
+        return self._node_formatter
+
+    @node_formatter.setter
+    @class_sensitive(CallbackFunction)
+    def node_formatter(self, value):
+        self._node_formatter = value
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            "animation": as_dict.get("animation", None),
+            "background_color": as_dict.get("backgroundColor", None),
+            "border_color": as_dict.get("borderColor", None),
+            "border_radius": as_dict.get("borderRadius", None),
+            "border_width": as_dict.get("borderWidth", None),
+            "class_name": as_dict.get("className", None),
+            "cluster_format": as_dict.get("clusterFormat", None),
+            "date_time_label_formats": as_dict.get("dateTimeLabelFormats", None),
+            "distance": as_dict.get("distance", None),
+            "enabled": as_dict.get("enabled", None),
+            "follow_pointer": as_dict.get("followPointer", None),
+            "follow_touch_move": as_dict.get("followTouchMove", None),
+            "footer_format": as_dict.get("footerFormat", None),
+            "format": as_dict.get("format", None),
+            "formatter": as_dict.get("formatter", None),
+            "header_format": as_dict.get("headerFormat", None),
+            "header_shape": as_dict.get("headerShape", None),
+            "hide_delay": as_dict.get("hideDelay", None),
+            "null_format": as_dict.get("nullFormat", None),
+            "null_formatter": as_dict.get("nullFormatter", None),
+            "outside": as_dict.get("outside", None),
+            "padding": as_dict.get("padding", None),
+            "point_format": as_dict.get("pointFormat", None),
+            "point_formatter": as_dict.get("pointFormatter", None),
+            "positioner": as_dict.get("positioner", None),
+            "shadow": as_dict.get("shadow", None),
+            "shape": as_dict.get("shape", None),
+            "shared": as_dict.get("shared", None),
+            "snap": as_dict.get("snap", None),
+            "split": as_dict.get("split", None),
+            "stick_on_contact": as_dict.get("stickOnContact", None),
+            "style": as_dict.get("style", None),
+            "use_html": as_dict.get("useHTML", None),
+            "value_decimals": as_dict.get("valueDecimals", None),
+            "value_prefix": as_dict.get("valuePrefix", None),
+            "value_suffix": as_dict.get("valueSuffix", None),
+            "x_date_format": as_dict.get("xDateFormat", None),
+            
+            "node_format": as_dict.get('nodeFormat', None),
+            'node_formatter': as_dict.get('nodeFormatter', None)
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
+        untrimmed = {
+            'nodeFormat': self.node_format,
+            'nodeFormatter': self.node_formatter,
+        }
+
+        parent_as_dict = super()._to_untrimmed_dict(in_cls=in_cls) or {}
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
+
+        return untrimmed

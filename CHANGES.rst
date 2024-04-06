@@ -1,4 +1,30 @@
 
+Release 1.6.0
+=========================================
+
+* **ENHANCEMENT:** Align the API to **Highcharts (JS) v.11.3** (#146). In particular, this includes:
+
+  * Added ``ChartOptions.axis_layout_runs`` property.
+  * Added ``ColorAxis.height`` property.
+  * Added ``ColorAxis.width`` property.
+  * Added ``Data.column_types`` property.
+  * Added ``Exporting.fetch_options`` property.
+  * Implemented support for verbose axis date-time unit labelling configuration (see: ``DateTimeLabelFormats``).
+  
+
+* **BUGFIX:** Added support for ``nodeFormat`` and ``nodeFormatter`` to tooltip properties for
+  diagram series (Organization, Dependency Wheel, and Sankey). (#148)
+* **ENHANCEMENT:** Added ability to remove or override the JavaScript event listener when 
+  serializing a chart to a JavaScript literal (#131 - courtesy of 
+  `@ByronCook <https://github.com/ByronCook>`__ ).
+* **ENHANCEMENT:** Added support for the ``HCP_ALLOW_SPECIAL_IPS`` environment variable
+  which allows localhost (or other special URLs) to pass URL validation. (#147)
+* **DOCUMENTATION:** Fixed typos in **Getting Started** tutorial. (#149)
+* **DOCUMENTATION:** Fixed typos in documentation (courtesy of `@karlacio <https://github.com/karlacio>`
+  and `@maxduganknight <https://github.com/maxduganknight>`).
+
+--------------------
+
 Release 1.5.1
 =========================================
 

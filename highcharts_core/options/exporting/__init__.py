@@ -1,3 +1,4 @@
+import os
 from typing import Optional
 from decimal import Decimal
 
@@ -77,6 +78,7 @@ class Exporting(HighchartsMeta):
         self._enabled = None
         self._error = None
         self._fallback_to_export_server = None
+        self._fetch_options = None
         self._filename = None
         self._form_attributes = None
         self._lib_url = None
@@ -103,6 +105,7 @@ class Exporting(HighchartsMeta):
         self.enabled = kwargs.get('enabled', None)
         self.error = kwargs.get('error', None)
         self.fallback_to_export_server = kwargs.get('fallback_to_export_server', None)
+        self.fetch_options = kwargs.get('fetch_options', None)
         self.filename = kwargs.get('filename', None)
         self.form_attributes = kwargs.get('form_attributes', None)
         self.lib_url = kwargs.get('lib_url', None)
@@ -216,6 +219,10 @@ class Exporting(HighchartsMeta):
           value of :obj:`None <python:None>`.
 
         :rtype: :class:`Options` or :obj:`None <python:None>`
+        
+        :raises HighchartsInstanceNeededError: if attempting to set it to a value that is
+          not a :class:`Options <highcharts_core.options.Options>` (or descendent) 
+          instance.
         """
         return self._chart_options
 
@@ -223,15 +230,17 @@ class Exporting(HighchartsMeta):
     def chart_options(self, value):
         if not value:
             self._chart_options = None
-        elif not checkers.is_type(value, 'Options'):
-            raise errors.InstanceNeededError(f'The Exporting.chart_options property is '
-                                             f'one of the few properties in Highcharts '
-                                             f'for Python that REQUIRES a Highcharts for '
-                                             f'Python instance as its value (or None). '
-                                             f'Specifically, you should supply an Options'
-                                             f' instance to it, rather than a dict or a '
-                                             f'string. The value you supplied was: '
-                                             f'{value.__class__.__name}')
+        elif not checkers.is_type(value, ['Options']):
+            raise errors.HighchartsInstanceNeededError(
+                f'The Exporting.chart_options property is '
+                f'one of the few properties in Highcharts '
+                f'for Python that REQUIRES a Highcharts for '
+                f'Python instance as its value (or None). '
+                f'Specifically, you should supply an Options'
+                f' instance to it, rather than a dict or a '
+                f'string. The value you supplied was: '
+                f'{value.__class__.__name__}'
+            )
         else:
             self._chart_options = value
 
@@ -333,6 +342,24 @@ class Exporting(HighchartsMeta):
             self._fallback_to_export_server = bool(value)
 
     @property
+    def fetch_options(self) -> Optional[dict]:
+        """Options for the fetch request used when sending the SVG to the export server.
+        Defaults to :obj:`None <python:None>`.
+        
+        .. seealso::
+        
+          * `MDN: Fetch <https://developer.mozilla.org/en-US/docs/Web/API/fetch>`__ for more information
+        
+        :returns: The options for the fetch request, expressed as a Python :class:`dict <python:dict>`
+        :rtype: :class:`dict <python:dict>` or :obj:`None <python:None>`
+        """
+        return self._fetch_options
+    
+    @fetch_options.setter
+    def fetch_options(self, value):
+        self._fetch_options = validators.dict(value, allow_empty = True)
+
+    @property
     def filename(self) -> Optional[str]:
         """The filename (without file type extension) to use for the exported chart.
         Defaults to ``'{constants.DEFAULT_EXPORTING_FILENAME}'``.
@@ -379,7 +406,11 @@ class Exporting(HighchartsMeta):
 
     @lib_url.setter
     def lib_url(self, value):
-        self._lib_url = validators.url(value, allow_empty = True)
+        self._lib_url = validators.url(
+            value,
+            allow_empty=True,
+            allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False),
+        )
 
     @property
     def menu_item_definitions(self) -> Optional[MenuObject]:
@@ -626,7 +657,11 @@ class Exporting(HighchartsMeta):
     @url.setter
     def url(self, value):
         try:
-            self._url = validators.url(value, allow_empty = True)
+            self._url = validators.url(
+                value,
+                allow_empty=True,
+                allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False),
+            )
         except ValueError:
             self._url = validators.path(value)
 
@@ -702,6 +737,7 @@ class Exporting(HighchartsMeta):
             'enabled': as_dict.get('enabled', None),
             'error': as_dict.get('error', None),
             'fallback_to_export_server': as_dict.get('fallbackToExportServer', None),
+            'fetch_options': as_dict.get('fetchOptions', None),
             'filename': as_dict.get('filename', None),
             'form_attributes': as_dict.get('formAttributes', None),
             'lib_url': as_dict.get('libURL', None),
@@ -733,6 +769,7 @@ class Exporting(HighchartsMeta):
             'enabled': self.enabled,
             'error': self.error,
             'fallbackToExportServer': self.fallback_to_export_server,
+            'fetchOptions': self.fetch_options,
             'filename': self.filename,
             'formAttributes': self.form_attributes,
             'libURL': self.lib_url,

@@ -20,42 +20,42 @@ class Chart(HighchartsMeta):
 
     def __init__(self, **kwargs):
         """Creates a :class:`Chart <highcharts_core.chart.Chart>` instance.
-        
+
         When creating a :class:`Chart <highcharts_core.chart.Chart>` instance, you can
         provide any of the object's properties as keyword arguments.
         **Positional arguments are not supported**.
-        
-        In addition to the standard properties, there are three special keyword 
-        arguments which streamline the creation of 
+
+        In addition to the standard properties, there are three special keyword
+        arguments which streamline the creation of
         :class:`Chart <highcharts_core.chart.Chart>` instances:
-        
-          * ``series`` which accepts an iterable of 
+
+          * ``series`` which accepts an iterable of
             :class:`SeriesBase <highcharts_core.options.series.SeriesBase>` descendents.
             These are automatically then populated as series within the chart.
-            
+
             .. note::
-            
+
               Each member of ``series`` must be coercable into a Highcharts Core for Python
               series. And it must contain a ``type`` property.
-              
+
           * ``data`` which accepts an iterable of objects that are coercable to Highcharts
-            data point objects, which are then automatically used to create/populate a 
+            data point objects, which are then automatically used to create/populate a
             series on your chart instance
           * ``series_type`` which accepts a string indicating the type of series to render
             for your data.
-            
+
         .. warning::
-        
-          If you supply ``series``, the ``data`` and ``series_type`` keywords will be 
+
+          If you supply ``series``, the ``data`` and ``series_type`` keywords will be
           *ignored*.
-          
-          If you supply ``data``, then ``series_type`` must *also* be supplied. Failure 
-          to do so will raise a 
+
+          If you supply ``data``, then ``series_type`` must *also* be supplied. Failure
+          to do so will raise a
           :exc:`HighchartsValueError <highcharts_core.errors.HighchartsValueError>`.
 
-          If you are also supplying an 
-          :meth:`options <highcharts_core.chart.Chart.options>` keyword argument, then 
-          any series derived from ``series``, ``data``, and ``series_type`` will be 
+          If you are also supplying an
+          :meth:`options <highcharts_core.chart.Chart.options>` keyword argument, then
+          any series derived from ``series``, ``data``, and ``series_type`` will be
           *added* to any series defined in that ``options`` value.
 
         :raises: :exc:`HighchartsValueError <highcharts_core.errors.HighchartsValueError>`
@@ -106,19 +106,19 @@ class Chart(HighchartsMeta):
         """Return a human-readable :class:`str <python:str>` representation of the chart.
 
         .. warning::
-        
-          To ensure that the result is human-readable, the chart's ``options`` property will 
-          be rendered *without* its ``plot_options`` and ``series`` sub-properties. 
-        
+
+          To ensure that the result is human-readable, the chart's ``options`` property will
+          be rendered *without* its ``plot_options`` and ``series`` sub-properties.
+
           .. tip::
-        
-            If you would like a *complete* and *unambiguous* :class:`str <python:str>` 
+
+            If you would like a *complete* and *unambiguous* :class:`str <python:str>`
             representation, then you can:
-            
+
             * use the :meth:`__repr__() <highcharts_core.chart.Chart.__repr__>` method,
             * call ``repr(my_chart)``, or
             * serialize the chart to JSON using ``my_chart.to_json()``.
-            
+
         :returns: A :class:`str <python:str>` representation of the chart.
         :rtype: :class:`str <python:str>`
         """
@@ -140,7 +140,7 @@ class Chart(HighchartsMeta):
                 kwargs_as_str += f'options = {kwargs[key]}'
             else:
                 kwargs_as_str += f'{key} = {repr(kwargs[key])}'
-            
+
         return f'{self.__class__.__name__}({kwargs_as_str})'
 
     def _jupyter_include_scripts(self, **kwargs):
@@ -148,13 +148,13 @@ class Chart(HighchartsMeta):
 
         :rtype: :class:`str <python:str>`
         """
-        required_modules = [f'{self.module_url}{x}' 
+        required_modules = [f'{self.module_url}{x}'
                             for x in self.get_required_modules(include_extension = True)]
         js_str = ''
         for item in required_modules:
             js_str += utility_functions.jupyter_add_script(item)
             js_str += """.then(() => {"""
-        
+
         for item in required_modules:
             js_str += """});"""
 
@@ -247,49 +247,114 @@ class Chart(HighchartsMeta):
 
         return container_str
 
-    def _repr_html_(self):
+    def _repr_html_(self) -> str:
         """Produce the HTML representation of the chart.
-
-        .. note::
-
-          Currently includes *all* `Highcharts JS <https://www.highcharts.com/>`_ modules
-          in the HTML. This issue will be addressed when roadmap issue :issue:`2` is
-          released.
 
         :returns: The HTML representation of the chart.
         :rtype: :class:`str <python:str>`
         """
-        return self.display()
+        container = self.container or 'highcharts_target_div'
+        if not self._random_slug:
+            self._random_slug = {}
+
+        random_slug = self._random_slug.get(container, None)
+
+        if not random_slug:
+            random_slug = utility_functions.get_random_string()
+            self._random_slug[container] = random_slug
+
+        html_str = self._jupyter_container_html(container, random_slug)
+
+        chart_js_str = self._jupyter_javascript(container = container,
+                                                random_slug = random_slug)
+        wrapped_chart_js_str = utility_functions.wrap_for_requirejs('', chart_js_str)
+
+        include_js_str = self._get_jupyter_script_loader(chart_js_str)
+
+        include_str = f"""<script>{include_js_str}</script>"""
+        js_str = f"""<script>{wrapped_chart_js_str}</script>"""
+
+        as_str = f"""{html_str}\n{include_str}\n{js_str}"""
+
+        return as_str
+
+    def _repr_png_(self) -> bytes:
+        """Return a PNG representation of the chart, expressed as bytes.
+        
+        .. note::
+        
+          This relies on the 
+          :meth:`.download_chart() <highcharts_core.chart.Chart.download_chart>` method,
+          which in turn relies on the Highcharts Export Server. If you need to override
+          the default Export Server configuration, you can do so using environment 
+          variables as documented for the 
+          :class:`ExportServer <highcharts_core.headless_export.ExportServer>` class.
+        
+        :rtype: :class:`bytes <python:bytes>`
+        """
+        return self.download_chart(format = 'png')
+
+    def _repr_svg_(self):
+        """Return an SVG representation of the chart.
+        
+        .. note::
+        
+          This relies on the 
+          :meth:`.download_chart() <highcharts_core.chart.Chart.download_chart>` method,
+          which in turn relies on the Highcharts Export Server. If you need to override
+          the default Export Server configuration, you can do so using environment 
+          variables as documented for the 
+          :class:`ExportServer <highcharts_core.headless_export.ExportServer>` class.
+        
+        :rtype: :class:`str <python:str>`
+        """
+        return self.download_chart(format = 'svg')
+
+    def _repr_jpeg_(self) -> bytes:
+        """Return a JPEG representation of the chart, expressed as bytes.
+        
+        .. note::
+        
+          This relies on the 
+          :meth:`.download_chart() <highcharts_core.chart.Chart.download_chart>` method,
+          which in turn relies on the Highcharts Export Server. If you need to override
+          the default Export Server configuration, you can do so using environment 
+          variables as documented for the 
+          :class:`ExportServer <highcharts_core.headless_export.ExportServer>` class.
+        
+        :rtype: :class:`bytes <python:bytes>`
+        """
+        return self.download_chart(format = 'jpeg')
 
     def get_script_tags(self, as_str = False) -> List[str] | str:
         """Return the collection of ``<script/>`` tags needed to load the modules
         for the chart to render.
-        
-        :param as_str: if ``True``, will return the result as a 
+
+        :param as_str: if ``True``, will return the result as a
           :class:`str <python:str>` instance, rather than a :class:`list <python:list>`
           of :class:`str <python:str>`. Defaults to ``False``.
         :type as_str: :class:`bool <python:bool>`
 
-        :rtype: :class:`list <python:list>` of :class:`str <python:str>` or 
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>` or
           :class:`str <python:str>`
         """
-        scripts = [f'<script src="{self.module_url}{x}"></script>' 
+        scripts = [f'<script src="{self.module_url}{x}"></script>'
                    for x in self.get_required_modules(include_extension = True)]
 
         if as_str:
             return '\n'.join(scripts)
-            
+
         return scripts
 
-    def get_required_modules(self, 
+    def get_required_modules(self,
                              include_extension = False) -> List[str]:
         """Return the list of URLs from which the Highcharts JavaScript modules
         needed to render the chart can be retrieved.
-        
-        :param include_extension: if ``True``, will return script names with the 
+
+        :param include_extension: if ``True``, will return script names with the
           ``'.js'`` extension included. Defaults to ``False``.
         :type include_extension: :class:`bool <python:bool>`
-        
+
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
         initial_scripts = ['highcharts']
@@ -298,12 +363,12 @@ class Chart(HighchartsMeta):
         return scripts
 
     def _get_jupyter_script_loader(self, chart_js_str) -> str:
-        """Return the JavaScript code that loads ``required_modules`` in a Jupyter 
+        """Return the JavaScript code that loads ``required_modules`` in a Jupyter
         context.
-        
+
         :param chart_js_str: The JavaScript code that renders the chart.
         :type chart_js_str: :class:`str <python:str>`
-        
+
         :returns: The JavaScript code that loads the required modules.
         :rtype: :class:`str <python:str>`
         """
@@ -315,7 +380,7 @@ class Chart(HighchartsMeta):
         if_requirejs += """  paths: {\n"""
         if_requirejs += f"""    'highcharts': '{self.module_url}'\n"""
         if_requirejs += """  }\n\n});"""
-        
+
         if_requirejs += """ require(["""
         requirejs_modules = []
         for item in self.get_required_modules():
@@ -325,7 +390,7 @@ class Chart(HighchartsMeta):
                 revised_item = f'highcharts/{item}'
                 if revised_item not in requirejs_modules:
                     requirejs_modules.append(revised_item)
-                
+
         for index, item in enumerate(requirejs_modules):
             is_last = index == len(requirejs_modules) - 1
             if_requirejs += f"""'{item}'"""
@@ -335,7 +400,7 @@ class Chart(HighchartsMeta):
         if_requirejs += chart_js_str
         if_requirejs += """\n});"""
 
-        required_modules = [f'{self.module_url}{x}' 
+        required_modules = [f'{self.module_url}{x}'
                             for x in self.get_required_modules(include_extension = True)]
         for item in required_modules:
             if_no_requirejs += utility_functions.jupyter_add_script(item)
@@ -343,9 +408,9 @@ class Chart(HighchartsMeta):
 
         for item in required_modules:
             if_no_requirejs += """});"""
-            
+
         js_str = utility_functions.wrap_for_requirejs(if_requirejs, if_no_requirejs)
-            
+
         return js_str
 
     @property
@@ -369,46 +434,48 @@ class Chart(HighchartsMeta):
 
     @property
     def module_url(self) -> str:
-        """The URL from which Highcharts modules should be downloaded when 
+        """The URL from which Highcharts modules should be downloaded when
         generating the ``<script/>`` tags. Will default to the
-        ``HIGHCHARTS_MODULE_URL`` environment variable if available, and 
+        ``HIGHCHARTS_MODULE_URL`` environment variable if available, and
         otherwise defaults to ``'https://code.highcharts.com/'``.
-        
+
         .. tip::
-        
+
           If you need to lock the version of Highharts used to render your
           charts, we recommend supplying one of the Highcharts CDN version
           paths, e.g.:
-          
+
             * ``'https://code.highcharts.com/11.0.1/'``
             * ``'https://code.highcharts.com/11.0.0/'``
             * etc.
-        
+
         .. warning::
-        
-          Module paths wlil be appended to this value without checking that
-          they resolve to an actual file, e.g. the module 
-          ``module/accessibility.js`` will get appended as 
+
+          Module paths will be appended to this value without checking that
+          they resolve to an actual file, e.g. the module
+          ``module/accessibility.js`` will get appended as
           ``'https://code.highcharts.com/module/accessibility.js'``. Be sure
           to modify this default value carefully.
-          
-          As a general rule of thumb, we *strongly* recommend that your URL 
+
+          As a general rule of thumb, we *strongly* recommend that your URL
           always end in a slash (``'/'``), unless your custom URL is loading
           modules dynamically (e.g. requires a ``'?module='`` or similar).
-          
+
         :returns: The url from which Highcharts modules should be loaded.
         :rtype: :class:`str <python:str>`
-        
+
         """
         return self._module_url
-    
+
     @module_url.setter
     def module_url(self, value):
         try:
-            value = validators.url(value, allow_empty = True)
+            value = validators.url(value, 
+                                   allow_empty = True, 
+                                   allow_special_ips = os.getenv('HCP_ALLOW_SPECIAL_IPS', False))
         except (ValueError, TypeError):
             value = validators.path(value, allow_empty = True)
-            
+
         self._module_url = value
 
     @property
@@ -508,7 +575,9 @@ class Chart(HighchartsMeta):
     def to_js_literal(self,
                       filename = None,
                       encoding = 'utf-8',
-                      careful_validation = False) -> Optional[str]:
+                      careful_validation = False,
+                      event_listener: str = 'DOMContentLoaded',
+                      event_listener_enabled: bool = True) -> Optional[str]:
         """Return the object represented as a :class:`str <python:str>` containing the
         JavaScript object literal.
 
@@ -524,13 +593,24 @@ class Chart(HighchartsMeta):
           along the way using the
           `esprima-python <https://github.com/Kronuz/esprima-python>`__ library. Defaults
           to ``False``.
-        
+
           .. warning::
-        
+
             Setting this value to ``True`` will significantly degrade serialization
             performance, though it may prove useful for debugging purposes.
 
         :type careful_validation: :class:`bool <python:bool>`
+
+        :param event_listener: The name of the JS event to which a listener function
+          should be attached. Defaults to ``'DOMContentLoaded'``, which renders the
+          chart once all DOM content has been loaded.
+        :type event_listener: :class:`str <python:str>`
+
+        :param event_listener_enabled: If ``True``, generates the JS literal
+          as per the event listener supplied by the ``event_listener``
+          keyword argument. If ``False``, generates directly executable JS
+          code. Defaults to ``True``.
+        :type event_listener_enabled: :class:`bool <python:bool>`
 
         .. note::
 
@@ -597,9 +677,13 @@ class Chart(HighchartsMeta):
 
         as_str = constructor_prefix + signature
 
-        prefix = """document.addEventListener('DOMContentLoaded', function() {\n"""
-        suffix = """});"""
-        as_str = prefix + as_str + '\n' + suffix
+        if event_listener_enabled:
+            if event_listener:
+                prefix = """document.addEventListener('""" + event_listener + """', function() {\n"""
+            else:
+                prefix = """document.addEventListener(function() {\n"""
+            suffix = """});"""
+            as_str = prefix + as_str + '\n' + suffix
 
         if validators.path(filename, allow_empty = True):
             with open(filename, 'w', encoding = encoding) as file_:
@@ -958,7 +1042,7 @@ class Chart(HighchartsMeta):
 
         :type container: :class:`str <python:str>` or :obj:`None <python:None>`
 
-        :param retries: The number of times to retry rendering the chart. Used to avoid race conditions with the 
+        :param retries: The number of times to retry rendering the chart. Used to avoid race conditions with the
           Highcharts script. Defaults to 5.
         :type retries: :class:`int <python:int>`
 
@@ -1016,7 +1100,7 @@ class Chart(HighchartsMeta):
                    chart_kwargs = None):
         """Create a :class:`Chart <highcharts_core.chart.Chart>` instance with
         one series populated from the array contained in ``value``.
-        
+
         .. seealso::
 
           The specific structure of the expected array is highly dependent on the type of data
@@ -1027,11 +1111,11 @@ class Chart(HighchartsMeta):
 
         :param value: The array to use to populate the series data.
         :type value: iterable
-        
+
         :param series_type: Indicates the series type that should be created from the array
           data. Defaults to ``'line'``.
         :type series_type: :class:`str <python:str>`
-        
+
         :param series_kwargs: An optional :class:`dict <python:dict>` containing keyword
           arguments that should be used when instantiating the series instance. Defaults
           to :obj:`None <python:None>`.
@@ -1065,11 +1149,11 @@ class Chart(HighchartsMeta):
             ``options_kwargs`` and the data in ``df`` instead.
 
         :type chart_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
-        
+
         :returns: A :class:`Chart <highcharts_core.chart.Chart>` instance with its
           data populated from the data in ``value``.
         :rtype: :class:`Chart <highcharts_core.chart.Chart>`
-        
+
         """
         series_type = validators.string(series_type, allow_empty = False)
         series_type = series_type.lower()
@@ -1239,12 +1323,12 @@ class Chart(HighchartsMeta):
           which is Python's native escape character).
         :type escape_character: :class:`str <python:str>`
 
-        :param series_index: If supplied, generate the chart with the series that 
-          Highcharts for Python generated from ``df`` at the ``series_index`` position. 
-          Defaults to :obj:`None <python:None>`, which includes all series generated 
+        :param series_index: If supplied, generate the chart with the series that
+          Highcharts for Python generated from ``df`` at the ``series_index`` position.
+          Defaults to :obj:`None <python:None>`, which includes all series generated
           from ``df`` on the chart.
 
-        :type series_index: :class:`int <python:int>`, slice, or 
+        :type series_index: :class:`int <python:int>`, slice, or
           :obj:`None <python:None>`
 
         :param **kwargs: Remaining keyword arguments will be attempted on the resulting
@@ -1301,14 +1385,14 @@ class Chart(HighchartsMeta):
           .. note::
 
             For an example chart containing
-            :class:`LineSeries <highcharts_core.options.series.area.LineSeries>` 
+            :class:`LineSeries <highcharts_core.options.series.area.LineSeries>`
             instances, the minimum code required would be:
 
               .. code-block:: python
 
                 # EXAMPLE 1: The minimum code:
                 my_chart = Chart.from_csv('some-csv-file.csv', series_type = 'line')
-                
+
                 # EXAMPLE 2: For more precise configuration and *one* series:
                 my_chart = Chart.from_csv('some-csv-file.csv',
                                           property_column_map = {
@@ -1317,7 +1401,7 @@ class Chart(HighchartsMeta):
                                               'id': 'id'
                                           },
                                           series_type = 'line')
-                
+
                 # EXAMPLE 3: For more precise configuration and *multiple* series:
                 my_chart = Chart.from_csv('some-csv-file.csv',
                                           property_column_map = {
@@ -1326,18 +1410,18 @@ class Chart(HighchartsMeta):
                                               'id': 'id'
                                           },
                                           series_type = 'line')
-                                          
+
 
             As the example above shows, data is loaded into the ``my_chart`` instance
-            from the CSV file with a filename ``some-csv-file.csv``. 
-            
-            In EXAMPLE 1, the chart will contain one or more series where each series 
-            will default to having its :meth:`.x <CartesianData.x>` values taken from 
-            the first (index 0) column in the CSV, and one 
-            :class:`LineSeries <highcharts_core.options.series.area.LineSeries>` 
-            instance will be created for each subsequent column (which will populate 
+            from the CSV file with a filename ``some-csv-file.csv``.
+
+            In EXAMPLE 1, the chart will contain one or more series where each series
+            will default to having its :meth:`.x <CartesianData.x>` values taken from
+            the first (index 0) column in the CSV, and one
+            :class:`LineSeries <highcharts_core.options.series.area.LineSeries>`
+            instance will be created for each subsequent column (which will populate
             that series' :meth:`.y <CartesianData.y>` values.
-            
+
             In EXAMPLE 2, the chart will contain one series, where the
             :meth:`x <CartesianData.x>`
             values for each data point will be taken from the first (index 0) column in
@@ -1345,10 +1429,10 @@ class Chart(HighchartsMeta):
             fourth (index 3) column in the CSV file. And the :meth:`id <CartesianData.id>`
             values will be taken from a column whose header row is labeled ``'id'``
             (regardless of its index).
-            
+
             In EXAMPLE 3, the chart will contain three series, all of which will have
             :meth:`.x <CartesianData.x>` values taken from the first (index 0) column,
-            :meth:`.id <CartesianData.id>` values from the column whose header row is 
+            :meth:`.id <CartesianData.id>` values from the column whose header row is
             labeled ``'id'``, and whose :meth:`.y <CartesianData.y>` will be taken
             from the fourth (index 3) column for the first series, the sixth (index 5)
             column for the second series, and the ninth (index 8) column for the third
@@ -1371,24 +1455,24 @@ class Chart(HighchartsMeta):
           class, while the value can either be a numerical index (starting with 0) or a
           :class:`str <python:str>` indicating the label for the CSV column. Defaults to
           :obj:`None <python:None>`.
-          
+
           .. note::
-          
+
             If any of the values in ``property_column_map`` contain an iterable, then
             one series will be produced for each item in the iterable. For example,
             the following:
-            
+
             .. code-block:: python
-            
+
               {
                   'x': 0,
                   'y': [3, 5, 8]
               }
-              
-            will return *three* series, each of which will have its 
-            :meth:`.x <CartesianData.x>` value populated from the first column 
+
+            will return *three* series, each of which will have its
+            :meth:`.x <CartesianData.x>` value populated from the first column
             (index 0), and whose :meth:`.y <CartesianData.y>`
-            values will be populated from the fourth, sixth, and ninth columns (indices 
+            values will be populated from the fourth, sixth, and ninth columns (indices
             3, 5, and 8), respectively.
 
           .. warning::
@@ -1497,10 +1581,10 @@ class Chart(HighchartsMeta):
 
         :param series_index: if :obj:`None <python:None>`, will attempt to populate
           the chart with multiple series from the CSV data. If an :class:`int <python:int>`
-          is supplied, will populate the chart only with the series found at 
+          is supplied, will populate the chart only with the series found at
           ``series_index``.
 
-        :type series_index: :class:`int <python:int>`, slice, or 
+        :type series_index: :class:`int <python:int>`, slice, or
           :obj:`None <python:None>`
 
         :param **kwargs: Remaining keyword arguments will be attempted on the resulting
@@ -1577,13 +1661,13 @@ class Chart(HighchartsMeta):
                             chart_kwargs = None,
                             series_index = None,
                             **kwargs):
-        """Create a chart from a Pandas :class:`DataFrame <pandas:pandas.DataFrame>`, 
+        """Create a chart from a Pandas :class:`DataFrame <pandas:pandas.DataFrame>`,
         treating each row in the dataframe as a :term:`series` instances.
 
         :param df: The :class:`DataFrame <pyspark:pyspark.sql.DataFrame>` from which data
           should be loaded.
         :type df: :class:`DataFrame <pyspark:pyspark.sql.DataFrame>`
-        
+
         :param series_type: Indicates the series type that should be created from the data
           in ``df``. Defaults to ``'line'``.
         :type series_type: :class:`str <python:str>`
@@ -1621,16 +1705,16 @@ class Chart(HighchartsMeta):
             ``options_kwargs`` and the data in ``df`` instead.
 
         :type chart_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
-        
-        :param series_index: If supplied, generate the chart with the series that 
-          Highcharts for Python generated from ``df`` at the ``series_index`` position. 
-          Defaults to :obj:`None <python:None>`, which includes all series generated 
+
+        :param series_index: If supplied, generate the chart with the series that
+          Highcharts for Python generated from ``df`` at the ``series_index`` position.
+          Defaults to :obj:`None <python:None>`, which includes all series generated
           from ``df`` on the chart.
 
-        :type series_index: :class:`int <python:int>`, slice, or 
+        :type series_index: :class:`int <python:int>`, slice, or
           :obj:`None <python:None>`
 
-        :param **kwargs: Additional keyword arguments that are - in turn - propagated to 
+        :param **kwargs: Additional keyword arguments that are - in turn - propagated to
           the series created from the ``df``.
 
         :returns: A :class:`Chart <highcharts_core.chart.Chart>` instance with its
@@ -1671,13 +1755,13 @@ class Chart(HighchartsMeta):
             from highcharts_core.chart import Chart
             from highcharts_core.options.series.area import LineSeries
 
-            # Create a chart with one or more LineSeries instances from 
+            # Create a chart with one or more LineSeries instances from
             # the CSV file "some-csv-file.csv".
 
             # EXAMPLE 1: The minimum code:
 
             my_chart = Chart.from_csv('some-csv-file.csv', series_type = 'line')
-        
+
             # EXAMPLE 2: For more precise configuration and *one* series:
 
             my_chart = Chart.from_csv('some-csv-file.csv',
@@ -1687,7 +1771,7 @@ class Chart(HighchartsMeta):
                                           'id': 'id'
                                       },
                                       series_type = 'line')
-        
+
             # EXAMPLE 3: For more precise configuration and *multiple* series:
 
             my_chart = Chart.from_csv('some-csv-file.csv',
@@ -1706,23 +1790,23 @@ class Chart(HighchartsMeta):
           data point property should be set to which column in ``df``. The keys in the
           :class:`dict <python:dict>` should correspond to properties in the data point
           class, while the value should indicate the label for the
-          :class:`DataFrame <pandas:pandas.DataFrame>` column. Defaults to 
+          :class:`DataFrame <pandas:pandas.DataFrame>` column. Defaults to
           :obj:`None <python:None>`.
 
             .. note::
-          
+
               If any of the values in ``property_map`` contain an iterable, then
               one series will be produced for each item in the iterable. For example,
               the following:
-            
+
                 .. code-block:: python
-            
+
                   {
                       'x': 'timestamp',
                       'y': ['value1', 'value2', 'value3']
                   }
-              
-              will return *three* series, each of which will have its 
+
+              will return *three* series, each of which will have its
               :meth:`.x <CartesianData.x>` value populated from the column
               labeled ``'timestamp'``, and whose :meth:`.y <CartesianData.y>`
               values will be populated from the columns labeled ``'value1'``,
@@ -1767,22 +1851,22 @@ class Chart(HighchartsMeta):
             ``options_kwargs`` and the data in ``df`` instead.
 
         :type chart_kwargs: :class:`dict <python:dict>` or :obj:`None <python:None>`
-        
+
         :param series_in_rows: if ``True``, will attempt a streamlined cartesian series
           with x-values taken from column names, y-values taken from row values, and
-          the series name taken from the row index. Defaults to 
+          the series name taken from the row index. Defaults to
           :obj:`False <python:False>`.
         :type series_in_rows: :class:`bool <python:bool>`
 
-        :param series_index: If supplied, generate the chart with the series that 
-          Highcharts for Python generated from ``df`` at the ``series_index`` position. 
-          Defaults to :obj:`None <python:None>`, which includes all series generated 
+        :param series_index: If supplied, generate the chart with the series that
+          Highcharts for Python generated from ``df`` at the ``series_index`` position.
+          Defaults to :obj:`None <python:None>`, which includes all series generated
           from ``df`` on the chart.
 
-        :type series_index: :class:`int <python:int>`, slice, or 
+        :type series_index: :class:`int <python:int>`, slice, or
           :obj:`None <python:None>`
 
-        :param **kwargs: Additional keyword arguments that are - in turn - propagated to 
+        :param **kwargs: Additional keyword arguments that are - in turn - propagated to
           the series created from the ``df``.
 
         :returns: A :class:`Chart <highcharts_core.chart.Chart>` instance with its
@@ -1806,13 +1890,13 @@ class Chart(HighchartsMeta):
                                               f'Received: {options_kwargs.__class__.__name__}')
         if not options_kwargs:
             options_kwargs = {}
-            
+
         if not isinstance(chart_kwargs, (dict, UserDict, type(None))):
             raise errors.HighchartsValueError(f'chart_kwargs expects a dict. '
                                               f'Received: {chart_kwargs.__class__.__name__}')
         if not chart_kwargs:
             chart_kwargs = {}
-            
+
         if not isinstance(kwargs, (dict, UserDict, type(None))):
             raise errors.HighchartsValueError(f'kwargs expects a dict. '
                                               f'Received: {kwargs.__class__.__name__}')

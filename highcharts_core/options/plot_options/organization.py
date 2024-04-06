@@ -8,6 +8,7 @@ from highcharts_core.decorators import class_sensitive, validate_types
 from highcharts_core.options.plot_options.bar import BarOptions
 from highcharts_core.options.plot_options.levels import LevelOptions
 from highcharts_core.utility_classes.data_labels import OrganizationDataLabel
+from highcharts_core.options.tooltips import DiagramTooltip
 
 
 class OrganizationOptions(BarOptions):
@@ -269,6 +270,21 @@ class OrganizationOptions(BarOptions):
     @node_width.setter
     def node_width(self, value):
         self._node_width = validators.numeric(value, allow_empty = True)
+
+    @property
+    def tooltip(self) -> Optional[DiagramTooltip]:
+        """A configuration object for the tooltip rendering of each single series.
+        Properties are inherited from tooltip, but only the following properties can be
+        defined on a series level.
+
+        :rtype: :class:`DiagramTooltip <highcharts_core.options.tooltips.DiagramTooltip` or :obj:`None <python:None>`
+        """
+        return self._tooltip
+
+    @tooltip.setter
+    @class_sensitive(DiagramTooltip)
+    def tooltip(self, value):
+        self._tooltip = value
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):

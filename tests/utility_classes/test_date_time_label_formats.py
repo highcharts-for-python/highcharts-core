@@ -12,16 +12,39 @@ from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_di
 
 STANDARD_PARAMS = [
     ({}, None),
-    ({
-      'day': 'test',
-      'hour': 'test',
-      'millisecond': 'test',
-      'minute': 'test',
-      'month': 'test',
-      'second': 'test',
-      'week': 'test',
-      'year': 'test'
-    }, None),
+    (
+        {
+            "day": "test",
+            "hour": "test",
+            "millisecond": "test",
+            "minute": "test",
+            "month": "test",
+            "second": "test",
+            "week": "test",
+            "year": "test",
+        },
+        None,
+    ),
+    (
+        {
+            "day": {
+                'main': 'test',
+                'list': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            },
+            "hour": {
+                'main': 'test',
+                'list': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+                'range': True,
+            },
+            "millisecond": "test",
+            "minute": "test",
+            "month": "test",
+            "second": "test",
+            "week": "test",
+            "year": "test",
+        },
+        None,
+    ),
 ]
 
 
