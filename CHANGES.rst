@@ -2,6 +2,8 @@
 Release 1.6.0
 =========================================
 
+* **BUGFIX:** Added support for ``nodeFormat`` and ``nodeFormatter`` to tooltip properties for
+  diagram series (Organization, Dependency Wheel, and Sankey). (#148)
 * **ENHANCEMENT:** Added ability to remove or override the JavaScript event listener when 
   serializing a chart to a JavaScript literal (#131 - courtesy of 
   `@ByronCook <https://github.com/ByronCook>`__ ).
