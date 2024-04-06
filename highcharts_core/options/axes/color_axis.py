@@ -55,6 +55,7 @@ class ColorAxis(GenericAxis):
     def __init__(self, **kwargs):
         self._data_class_color = None
         self._data_classes = None
+        self._height = None
         self._layout = None
         self._line_color = None
         self._marker = None
@@ -62,9 +63,11 @@ class ColorAxis(GenericAxis):
         self._min_color = None
         self._show_in_legend = None
         self._stops = None
+        self._width = None
 
         self.data_class_color = kwargs.get('data_class_color', None)
         self.data_classes = kwargs.get('data_classes', None)
+        self.height = kwargs.get('height', None)
         self.layout = kwargs.get('layout', None)
         self.line_color = kwargs.get('line_color', None)
         self.marker = kwargs.get('marker', None)
@@ -72,6 +75,7 @@ class ColorAxis(GenericAxis):
         self.min_color = kwargs.get('min_color', None)
         self.show_in_legend = kwargs.get('show_in_legend', None)
         self.stops = kwargs.get('stops', None)
+        self.width = kwargs.get('width', None)
 
         super().__init__(**kwargs)
 
@@ -117,6 +121,30 @@ class ColorAxis(GenericAxis):
     @class_sensitive(DataClass, force_iterable = True)
     def data_classes(self, value):
         self._data_classes = value
+
+    @property
+    def height(self) -> Optional[str | int | float | Decimal]:
+        """The height of the color axis, expressed either in pixels or as a
+        percentage of the total plot height. Defaults to
+        :obj:`None <python:None>`.
+
+        :rtype: numeric or :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        if value is None:
+            self._height = None
+        else:
+            try:
+                value = validators.string(value)
+                if "%" not in value:
+                    raise ValueError
+            except (TypeError, ValueError):
+                value = validators.numeric(value, minimum=0)
+
+            self._height = value
 
     @property
     def layout(self) -> Optional[str]:
@@ -273,6 +301,30 @@ class ColorAxis(GenericAxis):
 
             self._stops = processed_items
 
+    @property
+    def width(self) -> Optional[str | int | float | Decimal]:
+        """The width of the color axis, expressed either in
+        pixels or as a percentage of the total plot width. Defaults to
+        :obj:`None <python:None>`.
+
+        :rtype: numeric or :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._width
+
+    @width.setter
+    def width(self, value):
+        if value is None:
+            self._width = None
+        else:
+            try:
+                value = validators.string(value)
+                if "%" not in value:
+                    raise ValueError
+            except (TypeError, ValueError):
+                value = validators.numeric(value, minimum=0)
+
+            self._width = value
+
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
@@ -330,13 +382,15 @@ class ColorAxis(GenericAxis):
 
             'data_class_color': as_dict.get('dataClassColor', None),
             'data_classes': as_dict.get('dataClasses', None),
+            'height': as_dict.get('height', None),
             'layout': as_dict.get('layout', None),
             'line_color': as_dict.get('lineColor', None),
             'marker': as_dict.get('marker', None),
             'max_color': as_dict.get('maxColor', None),
             'min_color': as_dict.get('minColor', None),
             'show_in_legend': as_dict.get('showInLegend', None),
-            'stops': as_dict.get('stops', None)
+            'stops': as_dict.get('stops', None),
+            'width': as_dict.get('width', None),
         }
 
         return kwargs
@@ -397,13 +451,15 @@ class ColorAxis(GenericAxis):
 
             'dataClassColor': self.data_class_color,
             'dataClasses': self.data_classes,
+            'height': self.height,
             'layout': self.layout,
             'lineColor': self.line_color,
             'marker': self.marker,
             'maxColor': self.max_color,
             'minColor': self.min_color,
             'showInLegend': self.show_in_legend,
-            'stops': self.stops
+            'stops': self.stops,
+            'width': self.width,
         }
 
         return untrimmed
