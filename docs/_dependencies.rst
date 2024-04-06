@@ -6,7 +6,7 @@
     * "soft" dependencies, which will not produce errors but which may limit the value you
       get from the library,
     * "developer" dependencies that contributors will need in their local environment, and
-    * "documentation" dependencies that are necessary if you wish to generate (this)
+    * "documentation" dependencies that are necessary if you wish to generate this
       documentation
 
 .. tabs::
