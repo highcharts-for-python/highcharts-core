@@ -18,7 +18,7 @@ from a :class:`pandas.DataFrame <pandas:pandas.DataFrame>`,
 
     # From a Numpy ndarray
 
-    my_chart = Chart.from_array(data = as_ndarray, series_type = 'line')
+    my_chart = Chart.from_array(as_ndarray, series_type = 'line')
 
     # From a Python dict
 
