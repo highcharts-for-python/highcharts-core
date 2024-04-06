@@ -78,6 +78,7 @@ class Exporting(HighchartsMeta):
         self._enabled = None
         self._error = None
         self._fallback_to_export_server = None
+        self._fetch_options = None
         self._filename = None
         self._form_attributes = None
         self._lib_url = None
@@ -104,6 +105,7 @@ class Exporting(HighchartsMeta):
         self.enabled = kwargs.get('enabled', None)
         self.error = kwargs.get('error', None)
         self.fallback_to_export_server = kwargs.get('fallback_to_export_server', None)
+        self.fetch_options = kwargs.get('fetch_options', None)
         self.filename = kwargs.get('filename', None)
         self.form_attributes = kwargs.get('form_attributes', None)
         self.lib_url = kwargs.get('lib_url', None)
@@ -338,6 +340,24 @@ class Exporting(HighchartsMeta):
             self._fallback_to_export_server = None
         else:
             self._fallback_to_export_server = bool(value)
+
+    @property
+    def fetch_options(self) -> Optional[dict]:
+        """Options for the fetch request used when sending the SVG to the export server.
+        Defaults to :obj:`None <python:None>`.
+        
+        .. seealso::
+        
+          * `MDN: Fetch <https://developer.mozilla.org/en-US/docs/Web/API/fetch>`__ for more information
+        
+        :returns: The options for the fetch request, expressed as a Python :class:`dict <python:dict>`
+        :rtype: :class:`dict <python:dict>` or :obj:`None <python:None>`
+        """
+        return self._fetch_options
+    
+    @fetch_options.setter
+    def fetch_options(self, value):
+        self._fetch_options = validators.dict(value, allow_empty = True)
 
     @property
     def filename(self) -> Optional[str]:
@@ -717,6 +737,7 @@ class Exporting(HighchartsMeta):
             'enabled': as_dict.get('enabled', None),
             'error': as_dict.get('error', None),
             'fallback_to_export_server': as_dict.get('fallbackToExportServer', None),
+            'fetch_options': as_dict.get('fetchOptions', None),
             'filename': as_dict.get('filename', None),
             'form_attributes': as_dict.get('formAttributes', None),
             'lib_url': as_dict.get('libURL', None),
@@ -748,6 +769,7 @@ class Exporting(HighchartsMeta):
             'enabled': self.enabled,
             'error': self.error,
             'fallbackToExportServer': self.fallback_to_export_server,
+            'fetchOptions': self.fetch_options,
             'filename': self.filename,
             'formAttributes': self.form_attributes,
             'libURL': self.lib_url,
