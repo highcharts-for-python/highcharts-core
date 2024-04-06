@@ -1,11 +1,14 @@
-from typing import Optional
+from typing import Optional, List
 
 from validator_collection import validators
 
 from highcharts_core.decorators import class_sensitive
 from highcharts_core import errors
 from highcharts_core.options.series.base import SeriesBase
+from highcharts_core.options.series.data.base import DataBase
+from highcharts_core.options.series.data.collections import DataPointCollection
 from highcharts_core.utility_classes.javascript_functions import CallbackFunction
+from highcharts_core import utility_functions
 from highcharts_core.js_literal_functions import (
     assemble_js_literal,
     serialize_to_js_literal,
@@ -27,31 +30,98 @@ class CustomSeries(SeriesBase):
     """Class used to define a custom Highcharts series type."""
 
     def __init__(self, **kwargs):
+        self._data_cls = None
+        self._data_collection_cls = None
+        self._data = None
         self._draw_points = None
         self.__parent_instance = None
         self._parent_type = None
         self._type = None
 
+        self.data_cls = kwargs.get("data_cls", None)
+        self.data_collection_cls = kwargs.get("data_collection_cls", None)
+        self.data = kwargs.get("data", None)
         self.draw_points = kwargs.get("draw_points", None)
         self._parent_instance = kwargs.get("parent_instance", None)
         self.parent_type = kwargs.get("parent_type", None)
         self.type = kwargs.get("type", None)
-        
+
         if not self._parent_instance and self.parent_type:
+            del kwargs["data"]
             self._parent_instance = self._parent_cls(**kwargs)
 
         super().__init__(**kwargs)
 
     @property
+    def data_cls(self):
+        """The class object of the data type used by this custom series type.
+
+        :rtype: :class:`DataBase <highcharts_core.options.series.data.base.DataBase>`-descendant
+          or :obj:`None <python:None>`
+        """
+        return self._data_cls
+
+    @data_cls.setter
+    def data_cls(self, value):
+        if not value:
+            self._data_cls = None
+        elif isinstance(value, type):
+            self._data_cls = value
+        else:
+            raise errors.HighchartsValueError(
+                f".data_cls expects a subclass of DataBase. "
+                f"Received: {value.__class__.__name__}"
+            )
+
+    @property
+    def data_collection_cls(self):
+        """The class object of the data point collection type used by this custom series.
+
+        :rtype: :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`-descendent
+          or :obj:`None <python:None>`
+        """
+        return self._data_collection_cls
+
+    @data_collection_cls.setter
+    def data_collection_cls(self, value):
+        if not value:
+            self._data_collection_cls = None
+        elif isinstance(value, type):
+            self._data_collection_cls = value
+        else:
+            raise errors.HighchartsValueError(
+                f".data_cls expects a subclass of DataPointCollection. "
+                f"Received: {value.__class__.__name__}"
+            )
+
+    @property
+    def data(self) -> Optional[List[DataBase] | DataPointCollection]:
+        """The collection of data points for the series. Defaults to
+        :obj:`None <python:None>`.
+
+        :rtype: :class:`DataBase` or
+          :class:`DataPointCollection <highcharts_core.options.series.data.collections.DataPointCollection>`
+          or :obj:`None <python:None>`
+        """
+        return self._data
+
+    @data.setter
+    def data(self, value):
+        if not utility_functions.is_ndarray(value) and not value:
+            self._data = None
+        else:
+            self._data = self._data_cls.from_array(value)
+
+    @property
     def _parent_cls(self):
         """The class object of the parent series type.
-        
+
         :rtype: :class:`SeriesBase <highcharts_core.options.series.base.SeriesBase>`-descendant
           or :obj:`None <python:None>`
         """
         if not self.parent_type:
             return None
-        
+
         return SERIES_CLASSES[self.parent_type]
 
     @property
@@ -232,9 +302,13 @@ class CustomSeries(SeriesBase):
             "x_axis": as_dict.get("xAxis", None),
             "y_axis": as_dict.get("yAxis", None),
             "z_index": as_dict.get("zIndex", None),
+
             "draw_points": as_dict.get("drawPoints", None),
             "parent_type": as_dict.get("parentType", None),
             "type": as_dict.get("type", None),
+            "parent_instance": as_dict.get("parentInstance", None),
+            "data_cls": as_dict.get("dataCls", None),
+            "data_collection_cls": as_dict.get("dataCollectionCls", None),
         }
 
         return kwargs
@@ -248,12 +322,14 @@ class CustomSeries(SeriesBase):
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
-            
+
         if self._parent_instance:
-            parent_instance_untrimmed = self._parent_instance._to_untrimmed_dict(in_cls = in_cls)
+            parent_instance_untrimmed = self._parent_instance._to_untrimmed_dict(
+                in_cls=in_cls
+            )
         else:
             parent_instance_untrimmed = {}
-            
+
         for key in untrimmed:
             parent_instance_untrimmed[key] = untrimmed[key]
 
@@ -297,6 +373,8 @@ class CustomSeries(SeriesBase):
         untrimmed = self._to_untrimmed_dict()
         as_dict = {}
         for key in untrimmed:
+            if key in ["type", "parentType"]:
+                continue
             item = untrimmed[key]
             serialized = serialize_to_js_literal(
                 item, encoding=encoding, careful_validation=careful_validation
@@ -306,7 +384,7 @@ class CustomSeries(SeriesBase):
 
         as_str = assemble_js_literal(as_dict, careful_validation=careful_validation)
 
-        as_str = prefix_as_str + as_str + "\n});"
+        as_str = prefix_as_str + as_str + "\n);"
 
         if filename:
             with open(filename, "w", encoding=encoding) as file_:
