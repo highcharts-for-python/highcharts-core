@@ -1,3 +1,4 @@
+import os
 from typing import Optional
 
 from validator_collection import validators
@@ -130,7 +131,11 @@ class Credits(HighchartsMeta):
 
     @href.setter
     def href(self, value):
-        self._href = validators.url(value, allow_empty = True)
+        self._href = validators.url(
+            value,
+            allow_empty=True,
+            allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False),
+        )
 
     @property
     def position(self) -> Optional[Position]:
