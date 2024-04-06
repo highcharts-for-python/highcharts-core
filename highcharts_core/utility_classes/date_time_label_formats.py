@@ -113,7 +113,7 @@ class DateTimeLabelRangedUnitOptions(DateTimeLabelUnitOptions):
         untrimmed = {
             "list": self.list,
             "main": self.main,
-            'range': slef.range,
+            'range': self.range,
         }
 
         return untrimmed
@@ -182,7 +182,7 @@ class DateTimeLabelFormats(HighchartsMeta):
         elif isinstance(value, str):
             self._hour = value
         else:
-            self._hour = validate_types(value, DateTimeLabelUnitOptions)
+            self._hour = validate_types(value, DateTimeLabelRangedUnitOptions)
 
     @property
     def millisecond(self) -> Optional[str | DateTimeLabelRangedUnitOptions]:
@@ -202,7 +202,7 @@ class DateTimeLabelFormats(HighchartsMeta):
         elif isinstance(value, str):
             self._millisecond = value
         else:
-            self._millisecond = validate_types(value, DateTimeLabelUnitOptions)
+            self._millisecond = validate_types(value, DateTimeLabelRangedUnitOptions)
 
     @property
     def minute(self) -> Optional[str | DateTimeLabelRangedUnitOptions]:
@@ -222,7 +222,7 @@ class DateTimeLabelFormats(HighchartsMeta):
         elif isinstance(value, str):
             self._minute = value
         else:
-            self._minute = validate_types(value, DateTimeLabelUnitOptions)
+            self._minute = validate_types(value, DateTimeLabelRangedUnitOptions)
 
     @property
     def month(self) -> Optional[str | DateTimeLabelUnitOptions]:
@@ -262,7 +262,7 @@ class DateTimeLabelFormats(HighchartsMeta):
         elif isinstance(value, str):
             self._second = value
         else:
-            self._second = validate_types(value, DateTimeLabelUnitOptions)
+            self._second = validate_types(value, DateTimeLabelRangedUnitOptions)
 
     @property
     def week(self) -> Optional[str | DateTimeLabelUnitOptions]:
