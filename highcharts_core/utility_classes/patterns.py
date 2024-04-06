@@ -1,3 +1,4 @@
+import os
 from typing import Optional
 from decimal import Decimal
 from fractions import Fraction
@@ -134,7 +135,11 @@ class PatternOptions(HighchartsMeta):
     @image.setter
     def image(self, value):
         try:
-            self._image = validators.url(value, allow_empty = True)
+            self._image = validators.url(
+                value,
+                allow_empty=True,
+                allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False),
+            )
         except ValueError:
             self._image = validators.path(value, allow_empty = True)
 

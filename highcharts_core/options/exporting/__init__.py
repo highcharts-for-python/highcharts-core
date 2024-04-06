@@ -1,3 +1,4 @@
+import os
 from typing import Optional
 from decimal import Decimal
 
@@ -385,7 +386,11 @@ class Exporting(HighchartsMeta):
 
     @lib_url.setter
     def lib_url(self, value):
-        self._lib_url = validators.url(value, allow_empty = True)
+        self._lib_url = validators.url(
+            value,
+            allow_empty=True,
+            allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False),
+        )
 
     @property
     def menu_item_definitions(self) -> Optional[MenuObject]:
@@ -632,7 +637,11 @@ class Exporting(HighchartsMeta):
     @url.setter
     def url(self, value):
         try:
-            self._url = validators.url(value, allow_empty = True)
+            self._url = validators.url(
+                value,
+                allow_empty=True,
+                allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False),
+            )
         except ValueError:
             self._url = validators.path(value)
 

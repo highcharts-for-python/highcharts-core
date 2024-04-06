@@ -1,3 +1,4 @@
+import os
 from typing import Optional
 
 from validator_collection import validators
@@ -52,7 +53,11 @@ class PDFFontOptions(HighchartsMeta):
     @bold.setter
     def bold(self, value):
         try:
-            self._bold = validators.url(value, allow_empty = True)
+            self._bold = validators.url(
+                value,
+                allow_empty=True,
+                allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False),
+            )
         except ValueError:
             self._bold = validators.path(value, allow_empty = True)
 
@@ -70,7 +75,11 @@ class PDFFontOptions(HighchartsMeta):
     @bolditalic.setter
     def bolditalic(self, value):
         try:
-            self._bolditalic = validators.url(value, allow_empty = True)
+            self._bolditalic = validators.url(
+                value,
+                allow_empty=True,
+                allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False),
+            )
         except ValueError:
             self._bolditalic = validators.path(value, allow_empty = True)
 
@@ -87,7 +96,11 @@ class PDFFontOptions(HighchartsMeta):
     @italic.setter
     def italic(self, value):
         try:
-            self._italic = validators.url(value, allow_empty = True)
+            self._italic = validators.url(
+                value,
+                allow_empty=True,
+                allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False),
+            )
         except ValueError:
             self._italic = validators.path(value, allow_empty = True)
 
@@ -110,7 +123,11 @@ class PDFFontOptions(HighchartsMeta):
     @normal.setter
     def normal(self, value):
         try:
-            self._normal = validators.url(value, allow_empty = True)
+            self._normal = validators.url(
+                value,
+                allow_empty=True,
+                allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False),
+            )
         except ValueError:
             self._normal = validators.path(value, allow_empty = True)
 

@@ -5,6 +5,10 @@ Release 1.6.0
 * **ENHANCEMENT:** Added ability to remove or override the JavaScript event listener when 
   serializing a chart to a JavaScript literal (#131 - courtesy of 
   `@ByronCook <https://github.com/ByronCook>`__ ).
+* **ENHANCEMENT:** Added support for the ``HCP_ALLOW_SPECIAL_IPS`` environment variable
+  which allows localhost (or other special URLs) to pass URL validation. (#147)
+* **DOCUMENTATION:** Fixed typos in documentation (courtesy of `@karlacio <https://github.com/karlacio>`
+  and `@maxduganknight <https://github.com/maxduganknight>`).
 
 --------------------
 

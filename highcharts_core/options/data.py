@@ -176,7 +176,9 @@ class Data(HighchartsMeta):
             self._columns_url = None
         else:
             try:
-                self._columns_url = validators.url(value)
+                self._columns_url = validators.url(
+                    value, allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False)
+                )
             except ValueError as error:
                 try:
                     self._columns_url = validators.path(value)
@@ -250,7 +252,9 @@ class Data(HighchartsMeta):
             self._csv_url = None
         else:
             try:
-                self._csv_url = validators.url(value)
+                self._csv_url = validators.url(
+                    value, allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False)
+                )
             except ValueError as error:
                 try:
                     self._csv_url = validators.path(value)
@@ -600,7 +604,9 @@ class Data(HighchartsMeta):
             self._rows_url = None
         else:
             try:
-                self._rows_url = validators.url(value)
+                self._rows_url = validators.url(
+                    value, allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False)
+                )
             except ValueError as error:
                 try:
                     self._rows_url = validators.path(value)

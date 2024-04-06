@@ -1,3 +1,4 @@
+import os
 from typing import Optional, List
 from decimal import Decimal
 
@@ -158,7 +159,9 @@ class ShapeOptionsBase(HighchartsMeta):
             self._src = None
         else:
             try:
-                self._src = validators.url(value)
+                self._src = validators.url(
+                    value, allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False)
+                )
             except ValueError:
                 try:
                     self._src = validators.path(value)

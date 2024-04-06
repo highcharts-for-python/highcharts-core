@@ -470,7 +470,9 @@ class Chart(HighchartsMeta):
     @module_url.setter
     def module_url(self, value):
         try:
-            value = validators.url(value, allow_empty = True)
+            value = validators.url(value, 
+                                   allow_empty = True, 
+                                   allow_special_ips = os.getenv('HCP_ALLOW_SPECIAL_IPS', False))
         except (ValueError, TypeError):
             value = validators.path(value, allow_empty = True)
 

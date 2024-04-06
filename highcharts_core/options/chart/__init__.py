@@ -1,3 +1,4 @@
+import os
 from typing import Optional, List
 from decimal import Decimal
 
@@ -892,7 +893,9 @@ class ChartOptions(HighchartsMeta):
             self._plot_background_image = None
         else:
             try:
-                self._plot_background_image = validators.url(value)
+                self._plot_background_image = validators.url(
+                    value, allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False)
+                )
             except ValueError:
                 try:
                     self._plot_background_image = validators.path(value)
