@@ -31,6 +31,7 @@ class Data(HighchartsMeta):
         self._before_parse = None
         self._columns = None
         self._columns_url = None
+        self._column_types = None
         self._complete = None
         self._csv = None
         self._csv_url = None
@@ -59,6 +60,7 @@ class Data(HighchartsMeta):
         self.before_parse = kwargs.get('before_parse', None)
         self.columns = kwargs.get('columns', None)
         self.columns_url = kwargs.get('columns_url', None)
+        self.column_types = kwargs.get('column_types', None)
         self.complete = kwargs.get('complete', None)
         self.csv = kwargs.get('csv', None)
         self.csv_url = kwargs.get('csv_url', None)
@@ -184,6 +186,46 @@ class Data(HighchartsMeta):
                     self._columns_url = validators.path(value)
                 except ValueError:
                     raise error
+
+    @property
+    def column_types(self) -> Optional[List[str]]:
+        """The data types for each column in the related CSV data.
+        
+        This property expects an iterable of :class:`str <python:str>` values,
+        where each item in the iterable corresponds to a column in the underlying 
+        CSV data. The type specified for each column may be one of the following values:
+        
+          * ``'string'``
+          * ``'number'``
+          * ``'float'``
+          * ``'date'``
+        
+        Defaults to :obj:`None <python:None>`.
+        
+        :returns: The data types for each column in the related CSV data.
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>` or 
+          :obj:`None <python:None>`
+        """
+        return self._column_types
+    
+    @column_types.setter
+    def column_types(self, value):
+        if not value:
+            self._column_types = None
+        else:
+            values = []
+            value = validators.iterable(value, 
+                                        forbid_literals = (str, bytes))
+            for item in value:
+                item = str(item).lower()
+                if item not in constants.DATA_COLUMN_TYPES:
+                    raise errors.HighchartsValueError(
+                        f'column_types expects one of {constants.DATA_COLUMN_TYPES}. '
+                        f'Received: {item}'
+                    )
+                values.append(item)
+                
+            self._column_types = values
 
     @property
     def complete(self) -> Optional[CallbackFunction]:
@@ -716,6 +758,7 @@ class Data(HighchartsMeta):
             'before_parse': as_dict.get('beforeParse', None),
             'columns': as_dict.get('columns', None),
             'columns_url': as_dict.get('columnsURL', None),
+            'column_types': as_dict.get('columnTypes', None),
             'complete': as_dict.get('complete', None),
             'csv': as_dict.get('csv', None),
             'csv_url': as_dict.get('csvURL', None),
@@ -749,6 +792,7 @@ class Data(HighchartsMeta):
             'beforeParse': self.before_parse,
             'columns': self.columns,
             'columnsURL': self.columns_url,
+            'columnTypes': self.column_types,
             'complete': self.complete,
             'csv': self.csv,
             'csvURL': self.csv_url,

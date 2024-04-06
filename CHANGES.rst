@@ -2,6 +2,16 @@
 Release 1.6.0
 =========================================
 
+* **ENHANCEMENT:** Align the API to **Highcharts (JS) v.11.3** (#146). In particular, this includes:
+
+  * Added ``ChartOptions.axis_layout_runs`` property.
+  * Added ``ColorAxis.height`` property.
+  * Added ``ColorAxis.width`` property.
+  * Added ``Data.column_types`` property.
+  * Added ``Exporting.fetch_options`` property.
+  * Implemented support for verbose axis date-time unit labelling configuration (see: ``DateTimeLabelFormats``).
+  
+
 * **BUGFIX:** Added support for ``nodeFormat`` and ``nodeFormatter`` to tooltip properties for
   diagram series (Organization, Dependency Wheel, and Sankey). (#148)
 * **ENHANCEMENT:** Added ability to remove or override the JavaScript event listener when 
