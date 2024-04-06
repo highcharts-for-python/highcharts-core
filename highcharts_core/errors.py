@@ -37,6 +37,12 @@ class HighchartsNotSupportedError(HighchartsError, TypeError):
     pass
 
 
+class HighchartsInstanceNeededError(HighchartsNotSupportedError):
+    """:exc:`TypeError <python:TypeError>` encountered when attempting functionality that
+    requires a Highcharts instance of one type or another."""
+    pass
+
+
 class HighchartsJavaScriptError(HighchartsValueError):
     """:exc:`ValueError <python:ValueError>` encountered when a Python representation of
     some JavaScript code has been badly constructed. Typically an implementation error in
