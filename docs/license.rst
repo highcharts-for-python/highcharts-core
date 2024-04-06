@@ -10,6 +10,7 @@ Terms and Conditions for the Highcharts for Python Toolkit License
   creators of the Highcharts JavaScript library.
 
   **TO PURCHASE A LICENSE:** `https://shop.highcharts.com/ <https://shop.highcharts.com/>`__
+  **TO APPLY FOR A PERSONAL / EDUCATIONAL LICENSE:** `https://shop.highcharts.com/contact/educational <https://shop.highcharts.com/contact/educational>`__
 
 ***********************************************
 1. Acceptance of the Terms and Conditions
@@ -26,6 +27,8 @@ Without prejudice to the limited right to download and test the Wrapper for eval
 ***********************************************
 
 A Wrapper License (as defined below) or renewal thereof can only be purchased by a Licensee either already holding a License to the Software, or at the same time as purchasing such a License, as an add-on product to such License, and only by a Licensee holding an active and valid enrolment in the Highcharts Advantage plan. The purchase of, and right to use the Licensed Software shall remain governed by the terms and conditions of the License issued by Highsoft to Licensee, whether this is Highsoft Standard License Agreement, Highsoft Terms and Conditions for Subscription to Annual License to Highsoft Software, or another licensing agreement as agreed between Highsoft and Licensee, as applicable (such terms and conditions between Highsoft and Licensee hereinafter collectively referred to as the “Main Agreement”). 
+
+A Wrapper License (as defined below) can additionally be obtained by holding an active and valid Educational or Personal License to the Software. The right to use the Licensed Software shall remain governed by the terms and conditions of the Authorized User issued by Highsoft to Authorized User, as defined in the Educational and Personal License 1.0, (such terms and conditions between Highsoft and Authorized User hereinafter collectively referred to as the "Main Agreement").
 
 These Wrapper T&Cs constitute an addendum to the Main Agreement and an integral part thereof and apply to the use of the Wrapper only. 
 
@@ -95,13 +98,16 @@ Licensee shall not modify, delete or obscure any notices of proprietary rights o
 6. Wrapper Support
 ***********************************************
 
-A Wrapper License entitles Licensee to the support services and access to new Releases of the Wrapper as set out herein. While support for the Wrapper is contingent upon Licensee’s valid enrollment in the Highcharts Advantage plan and the annual number of hours of support available for support of the Licensed Software for each successive twelve month term during the period that Licensee is enrolled in Highcharts Advantage (each, a “Support Year”) are inclusive of the number of hours of support offered during such Support Year for the Wrapper, support of the Wrapper is not covered under Licensee’s enrollment in Highcharts Advantage, but is offered by Highsoft for a separate fee and provided separately, directly and independently by HCP.
+A Wrapper License entitles Licensee to the support services and access to new Releases of the Wrapper as set out herein. While support for the Wrapper is contingent upon Licensee's valid enrollment in the Highcharts Advantage plan and the annual number of hours of support available for support of the Licensed Software for each successive twelve month term during the period that Licensee is enrolled in Highcharts Advantage (each, a “Support Year”) are inclusive of the number of hours of support offered during such Support Year for the Wrapper, support of the Wrapper is not covered under Licensee’s enrollment in Highcharts Advantage, but is offered by Highsoft for a separate fee and provided separately, directly and independently by HCP. In the event that the Licensee is not enrolled in the Highcharts Advantage Plan, for example if the Main Agreement grants the Licensee a Personal or Educational License, then the Licensee shall not be entitled to the support services outlined herein.
 
 All support inquiries related to the Wrapper shall be sent to support@highchartspython.com or filed at https://www.highchartspython.com.
 
-Under a valid and effective Wrapper License, Licensee shall be entitled to receive from HCP: 
+Under a valid and effective Wrapper License, Licensee shall be entitled to receive from HCP:
 
   i. All new releases or updates of the Wrapper released during the applicable Advantage Period; 
+
+Under a valid and effective Wrapper License, contingent upon the Licensee’s valid enrollment in the Highcharts Advantage Plan and payment of applicable fees, Licensee shall be entitled to receive from HCP: 
+
   ii. Up to ten (10) hours of the personalized technical support for the Wrapper and/or the Licensed Software 
       (combined) per Developer per Support Year based on the number of Developers stated in the License Statement for 
       the License. Licensee may freely distribute its included total of ten (10) hours of personalized technical 

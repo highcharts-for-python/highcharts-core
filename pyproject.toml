@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "highcharts-core"
-description = "High-end Data Visualization for the Python Ecosystem"
+description = "High-end Data Visualization for the Python Ecosystem. Official wrapper for Highcharts Core (JS)."
 readme = "README.rst"
 license-files = { paths = ["LICENSE"] }
 

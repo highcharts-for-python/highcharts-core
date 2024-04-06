@@ -96,6 +96,18 @@ HighchartsNotSupportedError (from :exc:`ValueError <python:ValueError>` and :exc
     .. inheritance-diagram:: HighchartsNotSupportedError
       :parts: -1
 
+--------------------
+
+HighchartsInstanceNeededError (from :exc:`HighchartsNotSupportedError <HighchartsNotSupportedError>` and :exc:`TypeError <python:TypeError>`)
+====================================================================================================================================
+
+.. autoexception:: HighchartsInstanceNeededError
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: HighchartsInstanceNeededError
+      :parts: -1
+
 --------------
 
 HighchartsJavaScriptError (from :class:`ValueError <python:ValueError>`)
