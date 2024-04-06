@@ -954,3 +954,11 @@ EXPORT_SERVER_UNSUPPORTED_SERIES_TYPES = [
 EMPTY_STRING_CONTEXTS = [
     'Annotation.draggable',
 ]
+
+
+DATA_COLUMN_TYPES = [
+    'string',
+    'number',
+    'float',
+    'date',
+]
