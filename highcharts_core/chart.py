@@ -451,7 +451,7 @@ class Chart(HighchartsMeta):
 
         .. warning::
 
-          Module paths wlil be appended to this value without checking that
+          Module paths will be appended to this value without checking that
           they resolve to an actual file, e.g. the module
           ``module/accessibility.js`` will get appended as
           ``'https://code.highcharts.com/module/accessibility.js'``. Be sure
