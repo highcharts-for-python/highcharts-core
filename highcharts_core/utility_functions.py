@@ -527,7 +527,8 @@ def prep_js_for_jupyter(js_str,
         """document.addEventListener('DOMContentLoaded', function() {""", '')
     js_str = js_str.replace('renderTo = ', '')
     js_str = js_str.replace(',\noptions = ', ',\n')
-    js_str = js_str[:-3]
+    if '.setOptions(' not in js_str:
+        js_str = js_str[:-3]
 
     if random_slug:
         function_str = f"""function insertChart_{random_slug}() """
