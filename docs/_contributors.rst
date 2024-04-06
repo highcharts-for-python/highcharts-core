@@ -2,3 +2,5 @@
 * Erin Modzelewski (`@EBModz <https://github.com/EBModz>`__)
 * Jitendra Mishra (`@jmishra01 <https://github.com/jmishra01>`__)
 * Byron Cook (`@ByronCook <https://github.com/ByronCook>`__)
+* karlacio (`@karlacio <https://github.com/karlacio>`__)
+* Max Dugan Knight (`@maxduganknight <https://github.com/maxduganknight>`__)
