@@ -1,4 +1,5 @@
 from typing import Optional
+from decimal import Decimal
 
 from validator_collection import validators
 
@@ -36,9 +37,11 @@ class SankeyOptions(DependencyWheelOptions):
     def __init__(self, **kwargs):
         self._link_color_mode = None
         self._node_alignment = None
+        self._node_distance = None
       
         self.link_color_mode = kwargs.get('link_color_mode', None)
         self.node_alignment = kwargs.get('node_alignment', None)
+        self.node_distance = kwargs.get('node_distance', None)
       
         super().__init__(**kwargs)
 
@@ -104,6 +107,44 @@ class SankeyOptions(DependencyWheelOptions):
                                                   f'"bottom". Received "{value}"')
             self._node_alignment = value
 
+    @property
+    def node_distance(self) -> Optional[str | int | float | Decimal]:
+        """The distance between nodes in a sankey diagram in the longitudinal direction.
+        Defaults to ``30``.
+
+        .. note::
+
+          The longitudinal direction means the direction that the chart flows - in a
+          horizontal chart the distance is horizontal, in an inverted chart (vertical),
+          the distance is vertical.
+
+        If a number is given, it denotes pixels. If a percentage string is given, the
+        distance is a percentage of the rendered node width. A value of 100% will render
+        equal widths for the nodes and the gaps between them.
+
+        .. note::
+
+          This option applies only when the ``.node_width`` option is ``'auto'``, making
+          the node width respond to the number of columns.
+
+        :rtype: :class:`str <python:str>` or numeric or :obj:`None <python:None>`
+        """
+        return self._node_distance
+    
+    @node_distance.setter
+    def node_distance(self, value):
+        if value is None:
+            self._node_distance = None
+        else:
+            try:
+                value = validators.string(value)
+                if "%" not in value:
+                    raise ValueError
+            except (TypeError, ValueError):
+                value = validators.numeric(value)
+
+            self._node_distance = value
+
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
@@ -159,6 +200,7 @@ class SankeyOptions(DependencyWheelOptions):
             
             'link_color_mode': as_dict.get('linkColorMode', None),
             'node_alignment': as_dict.get('nodeAlignment', None),
+            'node_distance': as_dict.get('nodeDistance', None),
         }
 
         return kwargs
@@ -167,6 +209,7 @@ class SankeyOptions(DependencyWheelOptions):
         untrimmed = {
             'linkColorMode': self.link_color_mode,
             'nodeAlignment': self.node_alignment,
+            'nodeDistance': self.node_distance,
         }
         parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
 
