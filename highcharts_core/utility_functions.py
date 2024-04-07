@@ -1,5 +1,6 @@
 """Collection of utility functions used across the library."""
 import csv
+import datetime
 import os
 import string
 import random
@@ -908,3 +909,28 @@ def dict_to_ndarray(as_dict):
     as_ndarray = np.column_stack(columns)
 
     return as_ndarray
+
+
+def datetime64_to_datetime(dt64):
+    """Convert a NumPy :class:`datetime64 <numpy:numpy.datetime64>` to a Python 
+    :class:`datetime <python:datetime.datetime>`.
+    
+    :param dt64: The NumPy :class:`datetime64 <numpy:numpy.datetime64>` to convert.
+    :type dt64: :class:`numpy.datetime64 <numpy:numpy.datetime64>`
+    
+    :returns: A Python :class:`datetime <python:datetime.datetime>` instance.
+    :rtype: :class:`datetime <python:datetime.datetime>`
+    
+    :raises HighchartsDependencyError: if NumPy is not available in the runtime
+      environment
+
+    """
+    if not HAS_NUMPY:
+        raise errors.HighchartsDependencyError('NumPy is required for this feature. '
+                                               'It was not found in your runtime '
+                                               'environment. Please make sure it is '
+                                               'installed in your runtime '
+                                               'environment.')
+    timestamp = (dt64 - np.datetime64("1970-01-01T00:00:00")) / np.timedelta64(1, "s")
+    
+    return datetime.datetime.fromtimestamp(timestamp, datetime.timezone.utc)

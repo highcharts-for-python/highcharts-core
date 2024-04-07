@@ -924,3 +924,26 @@ def test_convert_to(input_files, filename, target_type, as_cls, error):
         assert converted is not None
         assert isinstance(converted, SeriesBase)
         assert isinstance(converted, target_type_cls)
+
+
+def test_bugfix162(input_files):
+    from highcharts_core.chart import Chart
+    from highcharts_core.options import HighchartsOptions
+    from highcharts_core.options.series.area import LineSeries
+
+    import pandas as pd
+    from collections import defaultdict
+    
+    filename = 'series/base/bugfix162.csv'
+    input_file = check_input_file(input_files, filename)
+
+    dtype = defaultdict(lambda: "str")
+
+    df = pd.read_csv(input_file, dtype=dtype, parse_dates=["start", "end"])
+    
+    # Creating a Series from the DataFrame
+    my_series = LineSeries.from_pandas(
+        df, property_map={"id": "task_id", "name": "name", "start": "start", "end": "end"}
+    )
+    
+    assert my_series is not None
