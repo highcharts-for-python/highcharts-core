@@ -40,6 +40,7 @@ class Accessibility(HighchartsMeta):
         self._custom_components = None
         self._description = None
         self._enabled = True
+        self._high_contrast_mode = None
         self._high_contrast_theme = None
         self._keyboard_navigation = None
         self._landmark_verbosity = None
@@ -53,6 +54,7 @@ class Accessibility(HighchartsMeta):
         self.custom_components = kwargs.get('custom_components', None)
         self.description = kwargs.get('description', None)
         self.enabled = kwargs.get('enabled', None)
+        self.high_contrast_mode = kwargs.get('high_contrast_mode', None)
         self.high_contrast_theme = kwargs.get('high_contrast_theme', None)
         self.keyboard_navigation = kwargs.get('keyboard_navigation', None)
         self.landmark_verbosity = kwargs.get('landmark_verbosity', None)
@@ -173,6 +175,25 @@ class Accessibility(HighchartsMeta):
             self._enabled = None
         else:
             self._enabled = bool(value)
+
+    @property
+    def high_contrast_mode(self) -> Optional[str]:
+        """Controls how 
+          :meth:`.high_contrast_theme <highcharts_core.options.accessibility.Accessibility.high_contrast_theme>`
+          is applied.
+        
+        .. note::
+          
+          Defaults to ``'auto'``, which applies the high contrast theme when the user's system has a 
+          high contrast theme active.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._high_contrast_mode
+    
+    @high_contrast_mode.setter
+    def high_contrast_mode(self, value):
+        self._high_contrast_mode = validators.string(value, allow_empty = True)
 
     @property
     def high_contrast_theme(self) -> Any:
@@ -356,6 +377,7 @@ class Accessibility(HighchartsMeta):
             'custom_components': as_dict.get('customComponents', None),
             'description': as_dict.get('description', None),
             'enabled': as_dict.get('enabled', None),
+            'high_contrast_mode': as_dict.get('highContrastMode', None),
             'high_contrast_theme': as_dict.get('highContrastTheme', None),
             'keyboard_navigation': as_dict.get('keyboardNavigation', None),
             'landmark_verbosity': as_dict.get('landmarkVerbosity', None),
@@ -374,6 +396,7 @@ class Accessibility(HighchartsMeta):
             'customComponents': self.custom_components,
             'description': self.description,
             'enabled': self.enabled,
+            'highContrastMode': self.high_contrast_mode,
             'highContrastTheme': self.high_contrast_theme,
             'keyboardNavigation': self.keyboard_navigation,
             'landmarkVerbosity': self.landmark_verbosity,
