@@ -15,7 +15,7 @@ visualization library, with full integration into the robust Python ecosystem, i
     dataframe.
   * ...and even more use-case specific integrations across the broader toolkit.
 
-The library supports Highcharts (JS) v.10.2 and higher, including Highcharts (JS) v.11.3.0.
+The library supports Highcharts (JS) v.10.2 and higher, including Highcharts (JS) v.11.4.0.
 
 **COMPLETE DOCUMENTATION:** https://core-docs.highchartspython.com/en/latest/index.html
 
@@ -291,7 +291,7 @@ Hello World, and Basic Usage
     # EXAMPLE 1.
     # Using dicts
     my_chart.title = {
-        'align': 'center'
+        'align': 'center',
         'floating': True,
         'text': 'The Title for My Chart',
         'use_html': False,
