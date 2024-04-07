@@ -122,6 +122,8 @@ class TreegraphOptions(GenericTypeOptions):
         self._traverse_up_button = None
         
         self._levels = None
+        self._node_distance = None
+        self._node_width = None
         
         self.animation_limit = kwargs.get('animation_limit', None)
         self.boost_blending = kwargs.get('boost_blending', None)
@@ -148,6 +150,8 @@ class TreegraphOptions(GenericTypeOptions):
         self.reversed = kwargs.get('reversed', None)
         
         self.levels = kwargs.get('levels', None)
+        self.node_distance = kwargs.get('node_distance', None)
+        self.node_width = kwargs.get('node_width', None)
         
         super().__init__(**kwargs)
         
@@ -649,7 +653,76 @@ class TreegraphOptions(GenericTypeOptions):
     @class_sensitive(TreegraphLevelOptions)
     def levels(self, value):
         self._levels = value
-        
+
+    @property
+    def node_distance(self) -> Optional[str | int | float | Decimal]:
+        """The distance between nodes in a treegraph diagram in the longitudinal 
+        direction. Defaults to ``30``.
+
+        .. note::
+
+          The longitudinal direction means the direction that the chart flows - in a
+          horizontal chart the distance is horizontal, in an inverted chart (vertical),
+          the distance is vertical.
+
+        If a number is given, it denotes pixels. If a percentage string is given, the
+        distance is a percentage of the rendered node width. A value of 100% will render
+        equal widths for the nodes and the gaps between them.
+
+        .. note::
+
+          This option applies only when the ``.node_width`` option is ``'auto'``, making
+          the node width respond to the number of columns.
+
+        :rtype: :class:`str <python:str>` or numeric or :obj:`None <python:None>`
+        """
+        return self._node_distance
+
+    @node_distance.setter
+    def node_distance(self, value):
+        if value is None:
+            self._node_distance = None
+        else:
+            try:
+                value = validators.string(value)
+                if "%" not in value:
+                    raise ValueError
+            except (TypeError, ValueError):
+                value = validators.numeric(value)
+
+            self._node_distance = value
+
+    @property
+    def node_width(self) -> Optional[str | int | float | Decimal]:
+        """The pixel width of each node in a treegraph, or the height in case the chart is
+        inverted. Defaults to :obj:`None <python:None>`.
+
+        For tree graphs, the node width is only applied if the marker symbol is ``'rect'``,
+        otherwise the marker sizing options apply.
+
+        Can be a number or a percentage string, or ``'auto'``. If ``'auto'``, the nodes are 
+        sized to fill up the plot area in the longitudinal direction, regardless of the 
+        number of levels.
+
+        :rtype: :class:`str <python:str>` or numeric or :obj:`None <python:None>`
+        """
+        return self._node_width
+
+    @node_width.setter
+    def node_width(self, value):
+        if value is None:
+            self._node_width = None
+        else:
+            try:
+                value = validators.string(value)
+                value = value.lower()
+                if value != "auto" and "%" not in value:
+                    raise ValueError
+            except (TypeError, ValueError):
+                value = validators.numeric(value)
+
+            self._node_width = value
+
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         """Convenience method which returns the keyword arguments used to initialize the
@@ -723,6 +796,8 @@ class TreegraphOptions(GenericTypeOptions):
             'link': as_dict.get('link', None),
             'reversed': as_dict.get('reversed', None),
             'levels': as_dict.get('levels', None),
+            'node_distance': as_dict.get('nodeDistance', None),
+            'node_width': as_dict.get('nodeWidth', None),
         }
 
         return kwargs
@@ -787,6 +862,8 @@ class TreegraphOptions(GenericTypeOptions):
             'link': self.link,
             'reversed': self.reversed,
             'levels': self.levels,
+            'nodeDistance': self.node_distance,
+            'nodeWidth': self.node_width,
         }
 
         return untrimmed

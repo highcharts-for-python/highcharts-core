@@ -1,4 +1,21 @@
 
+Release 1.7.0
+=========================================
+
+* **ENHANCEMENT:** Align the API to **Highcharts (JS) v.11.4** (#163). In particular, this includes:
+  * Added ``Accessibility.high_contrast_mode`` support.
+  * Added ``OrganizationOptions.hanging_side`` support.
+  * Added ``SankeyOptions.node_distance`` support.
+  * Added ``TreegraphOptions.node_distance`` support.
+  * Adjusted diagram (``ArcDiagramOptions``, ``TreegraphOptions``, ``DependencyWheelOptions``, and 
+    ``SankeyOptions``) ``.node_width`` support and documentation.
+  * Added ``NodeOptions.height`` support.
+
+* **ENHANCEMENT:** Added ``utility_functions.datetime64_to_datetime()`` function to convert 
+  ``numpy.datetime64`` to ``datetime.datetime`` (needed to close #162).
+
+--------------------
+
 Release 1.6.0
 =========================================
 

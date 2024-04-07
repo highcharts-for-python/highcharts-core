@@ -20,6 +20,7 @@ class NodeOptions(HighchartsMeta):
         self._color = None
         self._color_index = None
         self._data_labels = None
+        self._height = None
         self._id = None
         self._name = None
         self._offset_horizontal = None
@@ -28,6 +29,7 @@ class NodeOptions(HighchartsMeta):
         self.color = kwargs.get('color', None)
         self.color_index = kwargs.get('color_index', None)
         self.data_labels = kwargs.get('data_labels', None)
+        self.height = kwargs.get('height', None)
         self.id = kwargs.get('id', None)
         self.name = kwargs.get('name', None)
         self.offset_horizontal = kwargs.get('offset_horizontal', None)
@@ -75,6 +77,18 @@ class NodeOptions(HighchartsMeta):
     @class_sensitive(DataLabel)
     def data_labels(self, value):
         self._data_labels = value
+
+    @property
+    def height(self) -> Optional[int | float | Decimal]:
+        """The height of the node.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        self._height = validators.numeric(value, allow_empty=True)
 
     @property
     def id(self) -> Optional[str]:
@@ -173,6 +187,7 @@ class NodeOptions(HighchartsMeta):
             'color': as_dict.get('color', None),
             'color_index': as_dict.get('colorIndex', None),
             'data_labels': as_dict.get('dataLabels', None),
+            'height': as_dict.get('height', None),
             'id': as_dict.get('id', None),
             'name': as_dict.get('name', None),
             'offset_horizontal': as_dict.get('offsetHorizontal', None),
@@ -186,6 +201,7 @@ class NodeOptions(HighchartsMeta):
             'color': self.color,
             'colorIndex': self.color_index,
             'dataLabels': self.data_labels,
+            'height': self.height,
             'id': self.id,
             'name': self.name,
             'offsetHorizontal': self.offset_horizontal,
@@ -263,6 +279,7 @@ class DependencyWheelNodeOptions(NodeOptions):
             'color': as_dict.get('color', None),
             'color_index': as_dict.get('colorIndex', None),
             'data_labels': as_dict.get('dataLabels', None),
+            'height': as_dict.get('height', None),
             'id': as_dict.get('id', None),
             'name': as_dict.get('name', None),
             'offset_horizontal': as_dict.get('offsetHorizontal', None),
@@ -379,6 +396,7 @@ class OrganizationNodeOptions(DependencyWheelNodeOptions):
             'color': as_dict.get('color', None),
             'color_index': as_dict.get('colorIndex', None),
             'data_labels': as_dict.get('dataLabels', None),
+            'height': as_dict.get('height', None),
             'id': as_dict.get('id', None),
             'name': as_dict.get('name', None),
             'offset_horizontal': as_dict.get('offsetHorizontal', None),

@@ -36,6 +36,7 @@ class OrganizationOptions(BarOptions):
     def __init__(self, **kwargs):
         self._hanging_indent = None
         self._hanging_indent_translation = None
+        self._hanging_side = None
         self._levels = None
         self._link_color = None
         self._link_line_width = None
@@ -48,6 +49,7 @@ class OrganizationOptions(BarOptions):
 
         self.hanging_indent = kwargs.get('hanging_indent', None)
         self.hanging_indent_translation = kwargs.get('hanging_indent_translation', None)
+        self.hanging_side = kwargs.get('hanging_side', None)
         self.levels = kwargs.get('levels', None)
         self.link_color = kwargs.get('link_color', None)
         self.link_line_width = kwargs.get('link_line_width', None)
@@ -137,6 +139,36 @@ class OrganizationOptions(BarOptions):
                                                   f'"shrink", or None. Received: {value}')
 
             self._hanging_indent_translation = value
+
+    @property
+    def hanging_side(self) -> Optional[str]:
+        """Whether links connecting hanging nodes should be drawn on the left or right side.
+        
+        Accepts ``'left'`` or ``'right'``. Defaults to ``'left'``.
+        
+        .. tip::
+        
+          Useful for RTL (Right-to-Left) layouts.
+          
+        .. note::
+        
+          Only affects inverted (vertical) charts.
+          
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._hanging_side
+    
+    @hanging_side.setter
+    def hanging_side(self, value):
+        if not value:
+            self._hanging_side = None
+        else:
+            value = validators.string(value, allow_empty = False)
+            value = value.lower()
+            if value not in ['left', 'right']:
+                raise errors.HighchartsValueError(f'hanging_side expects a value of "left", '
+                                                  f'or "right". Received: {value}')
+            self._hanging_side = value
 
     @property
     def levels(self) -> Optional[List[LevelOptions]]:
@@ -380,6 +412,7 @@ class OrganizationOptions(BarOptions):
 
             'hanging_indent': as_dict.get('hangingIndent', None),
             'hanging_indent_translation': as_dict.get('hangingIndentTranslation', None),
+            'hanging_side': as_dict.get('hangingSide', None),
             'levels': as_dict.get('levels', None),
             'link_color': as_dict.get('linkColor', None),
             'link_line_width': as_dict.get('linkLineWidth', None),
@@ -397,6 +430,7 @@ class OrganizationOptions(BarOptions):
         untrimmed = {
             'hangingIndent': self.hanging_indent,
             'hangingIndentTranslation': self.hanging_indent_translation,
+            'hangingSide': self.hanging_side,
             'levels': self.levels,
             'linkColor': self.link_color,
             'linkLineWidth': self.link_line_width,
