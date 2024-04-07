@@ -2,6 +2,21 @@
 Release 1.6.0
 =========================================
 
+* **ENHANCEMENT:** Align the API to **Highcharts (JS) v.11.4** (#163). In particular, this includes:
+
+  * Added ``Accessibility.high_contrast_mode`` support.
+  * Added ``OrganizationOptions.hanging_side`` support.
+  * Added ``SankeyOptions.node_distance`` support.
+  * Added ``TreegraphOptions.node_distance`` support.
+  * Adjusted diagram (``ArcDiagramOptions``, ``TreegraphOptions``, ``DependencyWheelOptions``, and 
+    ``SankeyOptions``) ``.node_width`` support and documentation.
+  * Added ``NodeOptions.height`` support.
+
+--------------------
+
+Release 1.6.0
+=========================================
+
 * **ENHANCEMENT:** Align the API to **Highcharts (JS) v.11.3** (#146). In particular, this includes:
 
   * Added ``ChartOptions.axis_layout_runs`` property.
