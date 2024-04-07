@@ -145,6 +145,34 @@ class SankeyOptions(DependencyWheelOptions):
 
             self._node_distance = value
 
+    @property
+    def node_width(self) -> Optional[str | int | float | Decimal]:
+        """The pixel width of each node in a sankey diagram, or the height in case 
+        the chart is inverted. Defaults to ``20``.
+
+        Can be a number, a percentage string, or ``'auto'``. If ``'auto'``, the nodes 
+        are sized to fill up the plot area in the longitudinal direction, regardless 
+        of the number of levels.
+
+        :rtype: :class:`str <python:str>` or numeric or :obj:`None <python:None>`
+        """
+        return self._node_width
+
+    @node_width.setter
+    def node_width(self, value):
+        if value is None:
+            self._node_width = None
+        else:
+            try:
+                value = validators.string(value)
+                value = value.lower()
+                if value != 'auto' and "%" not in value:
+                    raise ValueError
+            except (TypeError, ValueError):
+                value = validators.numeric(value)
+
+            self._node_width = value
+
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {

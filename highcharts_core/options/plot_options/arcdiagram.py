@@ -221,16 +221,32 @@ class ArcDiagramOptions(GenericTypeOptions):
                                                   minimum = 0)
 
     @property
-    def node_width(self) -> Optional[int | float | Decimal]:
+    def node_width(self) -> Optional[str | int | float | Decimal]:
         """The pixel width of each node in a sankey diagram or dependency wheel, or the
-        height in case the chart is inverted. Defaults to ``20``.
+        height in case the chart is inverted.
 
-        :rtype: numeric or :obj:`None <python:None>`
+        Can be a number or a percentage string.
+        
+        Defaults to ``20``.
+
+        :rtype: :class:`str <python:str>` or numeric or :obj:`None <python:None>`
         """
         return self._node_width
 
     @node_width.setter
     def node_width(self, value):
+        if value is None:
+            self._node_width = None
+        else:
+            try:
+                value = validators.string(value)
+                if "%" not in value:
+                    raise ValueError
+            except (TypeError, ValueError):
+                value = validators.numeric(value)
+            
+            self._node_width = value
+
         self._node_width = validators.numeric(value,
                                               allow_empty = True,
                                               minimum = 0)

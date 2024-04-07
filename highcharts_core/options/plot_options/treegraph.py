@@ -123,6 +123,7 @@ class TreegraphOptions(GenericTypeOptions):
         
         self._levels = None
         self._node_distance = None
+        self._node_width = None
         
         self.animation_limit = kwargs.get('animation_limit', None)
         self.boost_blending = kwargs.get('boost_blending', None)
@@ -150,6 +151,7 @@ class TreegraphOptions(GenericTypeOptions):
         
         self.levels = kwargs.get('levels', None)
         self.node_distance = kwargs.get('node_distance', None)
+        self.node_width = kwargs.get('node_width', None)
         
         super().__init__(**kwargs)
         
@@ -690,6 +692,37 @@ class TreegraphOptions(GenericTypeOptions):
 
             self._node_distance = value
 
+    @property
+    def node_width(self) -> Optional[str | int | float | Decimal]:
+        """The pixel width of each node in a treegraph, or the height in case the chart is
+        inverted. Defaults to :obj:`None <python:None>`.
+
+        For tree graphs, the node width is only applied if the marker symbol is ``'rect'``,
+        otherwise the marker sizing options apply.
+
+        Can be a number or a percentage string, or ``'auto'``. If ``'auto'``, the nodes are 
+        sized to fill up the plot area in the longitudinal direction, regardless of the 
+        number of levels.
+
+        :rtype: :class:`str <python:str>` or numeric or :obj:`None <python:None>`
+        """
+        return self._node_width
+
+    @node_width.setter
+    def node_width(self, value):
+        if value is None:
+            self._node_width = None
+        else:
+            try:
+                value = validators.string(value)
+                value = value.lower()
+                if value != "auto" and "%" not in value:
+                    raise ValueError
+            except (TypeError, ValueError):
+                value = validators.numeric(value)
+
+            self._node_width = value
+
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         """Convenience method which returns the keyword arguments used to initialize the
@@ -764,6 +797,7 @@ class TreegraphOptions(GenericTypeOptions):
             'reversed': as_dict.get('reversed', None),
             'levels': as_dict.get('levels', None),
             'node_distance': as_dict.get('nodeDistance', None),
+            'node_width': as_dict.get('nodeWidth', None),
         }
 
         return kwargs
@@ -829,6 +863,7 @@ class TreegraphOptions(GenericTypeOptions):
             'reversed': self.reversed,
             'levels': self.levels,
             'nodeDistance': self.node_distance,
+            'nodeWidth': self.node_width,
         }
 
         return untrimmed
