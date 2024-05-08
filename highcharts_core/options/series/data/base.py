@@ -704,6 +704,8 @@ class DataBase(DataCore):
 
         if checkers.is_type(value, 'DataPointCollection'):
             return value
+        elif isinstance(value, dict) and 'dataPoints' in value:
+            return cls.from_list(value['dataPoints'])
 
         return cls.from_list(value)
 
