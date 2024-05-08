@@ -1417,3 +1417,36 @@ def test_CartesianValueData_to_array(input_array, set_props, expected_type, expe
         
     if expected_type == list:
         assert results == expected
+
+
+def test_BugFix_forum192819():
+    from highcharts_core import highcharts
+    import pandas as pd
+    import numpy as np
+
+    dates = [
+        "30/04/2024",
+        "30/04/2024",
+        "26/04/2024",
+        "12/04/2024",
+        "31/03/2024",
+        "31/03/2024",
+        "29/03/2024",
+        "15/03/2024",
+        "05/03/2024",
+    ]
+    amounts = 100 + np.random.normal(loc=100, scale=10, size=len(dates))
+
+    df = pd.DataFrame([{"date": x, "amount": y} for x, y in zip(dates, amounts)])
+    df["date"] = pd.to_datetime(df["date"], format="%d/%m/%Y")
+    df["milliseconds"] = (df["date"] - pd.Timestamp("1970-01-01")) // pd.Timedelta("1ms")
+
+    my_chart = highcharts.Chart.from_pandas(
+        df, property_map={"x": "milliseconds", "y": "amount"}, series_type="line"
+    )
+
+    as_json = my_chart.to_json()
+    assert as_json is not None
+    
+    my_new_chart = highcharts.Chart.from_json(as_json)
+    assert my_new_chart is not None
