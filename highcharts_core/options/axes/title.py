@@ -1,7 +1,7 @@
 from typing import Optional
 from decimal import Decimal
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
 from highcharts_core import errors, constants
 from highcharts_core.metaclasses import HighchartsMeta
@@ -370,5 +370,78 @@ class AxisTitle(HighchartsMeta):
             'x': self.x,
             'y': self.y
         }
+
+        return untrimmed
+
+
+class YAxisTitle(AxisTitle):
+    """The axis title, shown next to the axis line."""
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+    @property
+    def _dot_path(self) -> Optional[str]:
+        """The dot-notation path to the options key for the current class.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return "yAxis.title"
+
+    @property
+    def text(self) -> Optional[str | constants.EnforcedNullType]:
+        """The actual text of the title.
+
+        .. note::
+
+          A subset of HTML is supported, e.g. ``<b>``, ``<i>``, ``<span>`` (with in-line
+          styles), etc.
+
+        .. warning::
+
+          A :meth:`.text <highcharts_core.options.axes.title.YAxisTitle.text>` of 
+          :obj:`None <python:None>` will default to ``'Values'``. To clear the Y-Axis title 
+          on your chart, set its value to an empty string (``''``).
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._text
+
+    @text.setter
+    def text(self, value):
+        if isinstance(value, constants.EnforcedNullType):
+            self._text = constants.EnforcedNull
+        elif value == '':
+            self._text = ""
+        else:
+            self._text = validators.string(value, allow_empty=True)
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            "align": as_dict.get("align", None),
+            "margin": as_dict.get("margin", None),
+            "offset": as_dict.get("offset", None),
+            "position_3d": as_dict.get("position3d", None),
+            "reserve_space": as_dict.get("reserveSpace", None),
+            "rotation": as_dict.get("rotation", None),
+            "skew_3d": as_dict.get("skew3d", None),
+            "style": as_dict.get("style", None),
+            "text": as_dict.get("text", None),
+            "text_align": as_dict.get("textAlign", None),
+            "use_html": as_dict.get("useHTML", None),
+            "x": as_dict.get("x", None),
+            "y": as_dict.get("y", None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
+        untrimmed = {
+        }
+
+        parent_as_dict = super()._to_untrimmed_dict(in_cls=in_cls)
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
 
         return untrimmed

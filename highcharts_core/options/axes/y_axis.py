@@ -12,6 +12,7 @@ from highcharts_core.utility_classes.data_labels import DataLabel
 from highcharts_core.utility_functions import validate_color
 
 from highcharts_core.options.axes.x_axis import XAxis
+from highcharts_core.options.axes.title import AxisTitle, YAxisTitle
 
 
 class StackShadow(HighchartsMeta):
@@ -286,6 +287,25 @@ class YAxis(XAxis):
                 processed_items.append(item)
 
             self._stops = processed_items
+
+    @property
+    def title(self) -> Optional[AxisTitle | YAxisTitle]:
+        """The axis title, displayed next to the axis line. Defaults to
+        :obj:`None <python:None>`, which applies the default title of ``'Values'``.
+        
+        .. tip::
+        
+          To clear the y-axis value title, set its ``text`` property to an empty string
+          (``''``).
+
+        :rtype: :class:`YAxisTitle` or :obj:`None <python:None>`
+        """
+        return self._title
+
+    @title.setter
+    @class_sensitive(YAxisTitle)
+    def title(self, value):
+        self._title = value
 
     @property
     def tooltip_value_format(self) -> Optional[str]:

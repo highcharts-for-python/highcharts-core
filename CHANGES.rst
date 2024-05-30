@@ -1,4 +1,12 @@
 
+Release 1.7.2
+=========================================
+
+* **BUGFIX:** Fixed incorrect handling of empty string in ``YAxis.title.text`` (#171).
+* **ENHANCEMENT:** Bumped dependency on ``requests`` to ``v.2.32``.
+
+--------------------
+
 Release 1.7.1
 =========================================
 

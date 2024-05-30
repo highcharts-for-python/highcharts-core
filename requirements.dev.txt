@@ -9,7 +9,7 @@ sphinx-rtd-theme==1.2.0
 sphinx-toolbox==3.4.0
 sphinx-tabs==3.4.1
 tox==4.4.6
-requests==2.31.0
+requests==2.32.0
 validator-collection==1.5.0
 anthropic==0.3.11
 dill==0.3.7
