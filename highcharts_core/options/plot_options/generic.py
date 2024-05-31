@@ -167,7 +167,7 @@ class GenericTypeOptions(HighchartsMeta):
             self._allow_point_select = bool(value)
 
     @property
-    def animation(self) -> Optional[AnimationOptions]:
+    def animation(self) -> Optional[AnimationOptions | bool]:
         """Enable or disable the initial animation when a series is displayed.
 
         The animation can also be set as a configuration object. Please note that this
@@ -190,9 +190,13 @@ class GenericTypeOptions(HighchartsMeta):
         return self._animation
 
     @animation.setter
-    @class_sensitive(AnimationOptions)
     def animation(self, value):
-        self._animation = value
+        if value is None:
+            self._animation = None
+        elif value is False or value is True:
+            self._animation = value
+        else:
+            self._animation = validate_types(value, types = AnimationOptions, allow_none = False)
 
     @property
     def class_name(self) -> Optional[str]:
