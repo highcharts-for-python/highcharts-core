@@ -39,10 +39,12 @@ class ExportServer(HighchartsMeta):
         self._url = None
         self._port = None
         self._path = None
+
         self._options = None
         self._format_ = None
         self._scale = None
         self._width = None
+        self._height = None
         self._callback = None
         self._constructor = None
         self._use_base64 = None
@@ -61,12 +63,14 @@ class ExportServer(HighchartsMeta):
                                                  ''))
         self.path = kwargs.get('path', os.getenv('HIGHCHARTS_EXPORT_SERVER_PATH',
                                                  ''))
+
         self.options = kwargs.get('options', None)
         self.format_ = kwargs.get('format_', kwargs.get('type', 'png'))
         self.scale = kwargs.get('scale', 1)
         self.width = kwargs.get('width', None)
+        self.height = kwargs.get('height', None)
         self.callback = kwargs.get('callback', None)
-        self.constructor = kwargs.get('constructor', 'Chart')
+        self.constructor = kwargs.get('constructor', 'chart')
         self.use_base64 = kwargs.get('use_base64', False)
         self.no_download = kwargs.get('no_download', False)
         self.async_rendering = kwargs.get('async_rendering', False)
@@ -405,6 +409,28 @@ class ExportServer(HighchartsMeta):
         self._width = value
 
     @property
+    def height(self) -> Optional[int | float]:
+        """The height that the exported chart should have. Defaults to
+        :obj:`None <python:None>`.
+
+        .. warning::
+
+          If explicitly set, this setting will override
+          :meth:`scale <ExportServer.scale>`.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        value = validators.numeric(value, allow_empty=True, minimum=0)
+        if not value:
+            value = None
+
+        self._height = value
+
+    @property
     def callback(self) -> Optional[CallbackFunction]:
         """A JavaScript function to execute in the (JavaScript) Highcharts constructor.
 
@@ -429,7 +455,13 @@ class ExportServer(HighchartsMeta):
         Accepts:
 
           * ``'Chart'``
+          * ``'chart'``
           * ``'Stock'``
+          * ``'stockChart'``
+          * ``'Map'``
+          * ``'mapChart'``
+          * ``'Gantt'``
+          * ``'ganttChart'``
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -441,11 +473,19 @@ class ExportServer(HighchartsMeta):
         if not value:
             self._constructor = None
         else:
-            if value not in ['Chart', 'Stock']:
+            if value not in ['Chart', 'Stock', 'Map', 'Gantt', 'chart', 'stockChart', 'mapChart', 'ganttChart',]:
                 raise errors.HighchartsUnsupportedConstructorError(f'constructor expects '
-                                                                   f'either "Chart" or '
-                                                                   f'"Stock", but '
+                                                                   f'"Chart", "Stock", "Map", "Gantt", "chart", '
+                                                                   f'"stockChart",  "mapChart", or "ganttChart", but '
                                                                    f'received: "{value}"')
+            if value == 'Chart':
+                value = 'chart'
+            elif value == 'Stock':
+                value = 'stockChart'
+            elif value == 'Map':
+                value = 'mapChart'
+            elif value == 'Gantt':
+                value = 'ganttChart'
 
             self._constructor = value
 
@@ -669,7 +709,6 @@ class ExportServer(HighchartsMeta):
         self.no_download = kwargs.get('no_download', self.no_download)
         self.async_rendering = kwargs.get('async_rendering', self.async_rendering)
         self.global_options = kwargs.get('global_options', self.global_options)
-        self.data_options = kwargs.get('data_options', self.data_options)
         self.custom_code = kwargs.get('custom_code', self.custom_code)
 
         missing_details = []
@@ -701,16 +740,15 @@ class ExportServer(HighchartsMeta):
             'constr': self.constructor,
             'b64': self.use_base64,
             'noDownload': self.no_download,
-            'asyncRendering': self.async_rendering
         }
         if self.width:
             payload['width'] = self.width
+        if self.height:
+            payload['height'] = self.height
         if self.callback:
             payload['callback'] = 'HIGHCHARTS FOR PYTHON: REPLACE WITH CALLBACK'
         if self.global_options:
             payload['globalOptions'] = 'HIGHCHARTS FOR PYTHON: REPLACE WITH GLOBAL'
-        if self.data_options:
-            payload['dataOptions'] = 'HIGHCHARTS FOR PYTHON: REPLACE WITH DATA'
         if self.custom_code:
             payload['customCode'] = 'HIGHCHARTS FOR PYTHON: REPLACE WITH CUSTOM'
 
