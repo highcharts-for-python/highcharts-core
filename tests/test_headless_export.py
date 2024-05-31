@@ -43,7 +43,7 @@ def test_to_dict(kwargs, error):
         kwargs_copy['use_base64'] = False
         kwargs_copy['no_download'] = False
         kwargs_copy['async_rendering'] = False
-        kwargs_copy['constructor'] = 'Chart'
+        kwargs_copy['constructor'] = 'chart'
 
         untrimmed_expected = {
             'url': kwargs_copy['url'],
