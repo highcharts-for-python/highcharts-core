@@ -944,10 +944,6 @@ INSTRUMENT_PRESETS = [
 ]
 
 EXPORT_SERVER_UNSUPPORTED_SERIES_TYPES = [
-    'pictorial',
-    'flowmap',
-    'geoheatmap',
-    'treegraph',
 ]
 
 

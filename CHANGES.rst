@@ -1,4 +1,15 @@
 
+Release 1.7.3
+=========================================
+
+* **BUGFIX:** Fixed handling of boolean values in ``GenericTypeOptions.animation`` property.
+* **BUGFIX:** Fixed incorrect serialization of format strings that begin with ``{`` and end with ``}``.
+  In particular, now added an "escape hatch" if the ``{...}`` string is prefixed with ``$`` to ensure
+  proper serialization.
+* **BUGFIX:** Adjusted export support for Highcharts Node Export Server v.3.1.1.
+
+--------------------
+
 Release 1.7.2
 =========================================
 

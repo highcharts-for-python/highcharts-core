@@ -220,6 +220,9 @@ class HighchartsMeta(ABC):
         if isinstance(untrimmed, 
                       (str, bytes, dict, UserDict)) or not hasattr(untrimmed, 
                                                                    '__iter__'):
+            if to_json and isinstance(untrimmed, str) and untrimmed.startswith('${'):
+                return untrimmed[1:]
+            
             return untrimmed
 
         trimmed = []
