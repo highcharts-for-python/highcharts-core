@@ -373,6 +373,12 @@ def get_js_literal(item, careful_validation = False) -> str:
     elif isinstance(item, str):
         if (item.startswith('[') or item.startswith('Date')) and item != 'Date':
             as_str += f"""{item}"""
+        elif item.startswith('${'):
+            if "'" in item:
+                item = item.replace("'", "\\'")
+                as_str += f'"{item[1:]}"'
+            else:
+                as_str += f"'{item[1:]}'"
         elif item.startswith('{') and item.endswith('}'):
             if is_js_object(item, careful_validation = careful_validation):
                 as_str += f"""{item}"""

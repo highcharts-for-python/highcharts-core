@@ -231,6 +231,12 @@ class AxisLabelOptions(HighchartsMeta):
 
         To add custom numeric or datetime formatting, use ``'{value}'`` with formatting,
         for example ``'{value:.1f}'`` or ``'{value:%Y-%m-%d}'``.
+        
+        .. warning::
+        
+          If your format string begins with ``{`` and ends with ``}``, Highcharts
+          for Python may interpret it as a JavaScript or JSON object. To prevent this, please
+          add a ``$`` before the opening curly brace, like so: ``${value:.1f}``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
