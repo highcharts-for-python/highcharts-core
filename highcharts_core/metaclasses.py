@@ -230,7 +230,10 @@ class HighchartsMeta(ABC):
             if checkers.is_type(item, 'CallbackFunction') and to_json:
                 continue
             elif item is None or item == constants.EnforcedNull:
-                trimmed.append('null')
+                if to_json:
+                    trimmed.append(None)
+                else:
+                    trimmed.append('null')
             elif hasattr(item, 'trim_dict'):
                 updated_context = item.__class__.__name__
                 untrimmed_item = item._to_untrimmed_dict()

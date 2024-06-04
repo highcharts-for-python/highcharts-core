@@ -1,4 +1,12 @@
 
+Release 1.7.4
+=========================================
+
+* **BUGFIX:** Fixed incorrect ``.to_json()`` serialization of ``null`` values inside of an iterable.
+
+--------------------
+
+
 Release 1.7.3
 =========================================
 
