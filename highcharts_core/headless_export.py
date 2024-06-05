@@ -813,7 +813,7 @@ class ExportServer(HighchartsMeta):
             with open(filename, 'wb') as file_:
                 file_.write(result.content)
         elif filename and self.format_ == 'svg':
-            content = str(result.content, encoding = 'utf-8')
+            content = str(result.content, encoding="utf-8").replace("\u200b", " ")
             with open(filename, 'wt') as file_:
                 file_.write(content)
 

@@ -1,4 +1,11 @@
 
+Release 1.7.5
+=========================================
+
+* **BUGFIX:** Fixed encoding issue when handling certain exported SVGs from the Node Export Server.
+
+--------------------
+
 Release 1.7.4
 =========================================
 
