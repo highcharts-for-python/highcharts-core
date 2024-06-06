@@ -334,6 +334,7 @@ class ExportServer(HighchartsMeta):
           * ``'jpeg'``
           * ``'pdf'``
           * ``'svg'``
+          * ``'image/svg+xml'``
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
@@ -346,12 +347,15 @@ class ExportServer(HighchartsMeta):
             self._format_ = None
         else:
             value = value.lower()
-            if value not in ['png', 'jpeg', 'pdf', 'svg']:
+            if value not in ['png', 'jpeg', 'pdf', 'svg', 'image/svg+xml']:
                 raise errors.HighchartsUnsupportedExportTypeError(
                     f'format_ expects either '
-                    f'"png", "jpeg", "pdf", or '
-                    f'"svg". Received: {value}'
+                    f'"png", "jpeg", "pdf", "svg", or '
+                    f'"image/svg+xml". Received: {value}'
                 )
+            if value == 'svg':
+                value = 'image/svg+xml'
+
             self._format_ = value
 
     @property

@@ -1,4 +1,13 @@
 
+Release 1.7.6
+=========================================
+
+* **BUGFIX:** Enabled support for the ``'image/svg+xml'`` export type when using the Node Export Server.
+  Now supplying a type of ``'svg'`` will coerce (under the hood) to ``'image/svg+xml'`` which supports
+  more extensive rendering options.
+
+--------------------
+
 Release 1.7.5
 =========================================
 
