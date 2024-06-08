@@ -432,7 +432,7 @@ STANDARD_PARAMS_2 = [
         'symbol': 'circle',
         'width': 48
       },
-      'y': 123,
+      'low': 123,
       'name': 'some category'
     }, None),
     # + DataBase Options
@@ -538,7 +538,7 @@ STANDARD_PARAMS_2 = [
         'width': 48
       },
       'x': 'some category',
-      'y': 123,
+      'low': 123,
 
       'accessibility': {
           'description': 'Some description goes here',
