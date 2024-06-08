@@ -365,6 +365,9 @@ class HighchartsMeta(ABC):
             # other falsy -> str, but empty string is allowed
             elif value == '' and context_key in constants.EMPTY_STRING_CONTEXTS:
                 as_dict[key] = ''
+            elif value is None and context_key in constants.ALLOWED_NONE_CONTEXTS:
+                if to_json:
+                    as_dict[key] = None
 
         return as_dict
 
