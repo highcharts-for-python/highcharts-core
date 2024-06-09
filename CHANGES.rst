@@ -1,4 +1,15 @@
 
+Release 1.7.7
+=========================================
+
+* **BUGFIX:** Fixed over-eager trimming of ``None`` data values when serializing ``.to_json()`` for
+  export via the Export Server. Closes #168.
+* **BUGFIX:** Fixed ``DumbbellSeries.data`` incorrect type (reverted from ``CartesianData`` to 
+  ``RangeData``-descended). Closes #176.
+
+--------------------
+
+
 Release 1.7.6
 =========================================
 
