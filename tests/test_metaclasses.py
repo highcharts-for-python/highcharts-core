@@ -471,7 +471,7 @@ def test_to_json_with_date(error):
             assert 'date_value' in result
         as_dict = json.loads(result)
         assert 'date_value' in as_dict
-        assert checkers.is_string(as_dict['date_value']) is True
+        assert checkers.is_numeric(as_dict['date_value']) is True
     else:
         with pytest.raises(error):
             obj = ClassWithDate()
