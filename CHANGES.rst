@@ -6,6 +6,8 @@ Release 1.7.7
   export via the Export Server. Closes #168.
 * **BUGFIX:** Fixed ``DumbbellSeries.data`` incorrect type (reverted from ``CartesianData`` to 
   ``RangeData``-descended). Closes #176.
+* **BUGFIX:** Fixed coercion of `datetime.date` type values to milliseconds when serializaing ``.to_json()``
+  for export via the Export Server.
 
 --------------------
 
