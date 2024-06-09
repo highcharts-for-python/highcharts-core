@@ -348,7 +348,12 @@ class HighchartsMeta(ABC):
                     as_dict[key] = trimmed_value
             # Date or Time
             elif checkers.is_date(value) or checkers.is_time(value):
-                if to_json:
+                if to_json and checkers.is_date(value):
+                    trimmed_value = validators.datetime(value)
+                    if not trimmed_value.tzinfo:
+                        trimmed_value = trimmed_value.replace(tzinfo=datetime.timezone.utc)
+                    as_dict[key] = trimmed_value.timestamp() * 1000
+                elif to_json:
                     as_dict[key] = value.isoformat()
                 else:
                     as_dict[key] = value
