@@ -6,10 +6,10 @@ except ImportError:
 
 import json
 import os
-from typing import Optional
+from typing import Optional, Dict, List
 
 import requests
-from validator_collection import validators
+from validator_collection import validators, checkers
 
 from highcharts_core import errors, constants
 from highcharts_core.decorators import class_sensitive
@@ -53,6 +53,10 @@ class ExportServer(HighchartsMeta):
         self._global_options = None
         self._data_options = None
         self._custom_code = None
+        self._resources = None
+        self._files = None
+        self._css = None
+        self._js = None
 
         self.protocol = kwargs.get('protocol',
                                    os.getenv('HIGHCHARTS_EXPORT_SERVER_PROTOCOL',
@@ -77,7 +81,19 @@ class ExportServer(HighchartsMeta):
         self.global_options = kwargs.get('global_options', None)
         self.data_options = kwargs.get('data_options', None)
         self.custom_code = kwargs.get('custom_code', None)
-
+        
+        files = kwargs.get('files', None)
+        css = kwargs.get('css', None)
+        js = kwargs.get('js', None)
+        resources = kwargs.get('resources', None)
+        
+        if resources:
+            self.resources = kwargs.get('resources', None)
+        else:
+            self.files = files
+            self.css = css
+            self.js = js
+        
         super().__init__(**kwargs)
 
     @property
@@ -579,6 +595,106 @@ class ExportServer(HighchartsMeta):
     def custom_code(self, value):
         self._custom_code = value
 
+    @property
+    def resources(self) -> Optional[Dict]:
+        """A dictionary of resources to be used in the export server.
+        
+        Expects to contain up to three keys: 
+        
+          * ``files`` which contains an array of JS filenames
+          * ``js`` which contains a string representation of JS code
+          * ``css`` which contains a string representation of CSS code that will
+            applied to the chart on export
+        
+        Defaults to :obj:`None <python:None>`.
+
+        :rtype: :class:`dict <python:dict>` or :obj:`None <python:None>`
+        """
+        resources = {}
+        if self.files:
+            resources['files'] = self.files
+        if self.js:
+            resources['js'] = self.js
+        if self.css:
+            resources['css'] = self.css
+            
+        if not resources:
+            return None
+        
+        return resources
+    
+    @resources.setter
+    def resources(self, value):
+        if not value:
+            self.files = None
+            self.js = None
+            self.css = None
+        elif not isinstance(value, dict):
+            raise errors.HighchartsValueError('resources expects a dictionary with keys "files", "js", and "css"')
+        else:
+            self.files = value.get('files', None)
+            self.js = value.get('js', None)
+            self.css = value.get('css', None)
+
+    @property
+    def files(self) -> Optional[List[str]]:
+        """Collection of files that will be loaded into context for the export.
+        Defaults to :obj:`None <python:None>`.
+        
+        :rtype: :class:`list <python:list>` of :class:`str <python:str>` or
+          :obj:`None <python:None>`
+        """
+        return self._files
+    
+    @files.setter
+    def files(self, value):
+        if not value:
+            self._files = None
+        else:
+            if isinstance(value, str):
+                value = [value]
+            elif not checkers.is_iterable(value):
+                raise errors.HighchartsValueError('files expects a list of strings')
+            
+            self._files = value
+            
+    @property
+    def js(self) -> Optional[str]:
+        """JavaScript code that will be loaded into context for the exported chart.
+        Defaults to :obj:`None <python:None>`.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._js
+    
+    @js.setter
+    def js(self, value):
+        if not value:
+            self._js = None
+        else:
+            if not isinstance(value, str):
+                raise errors.HighchartsValueError('js expects a string')
+            self._js = value
+    
+    @property
+    def css(self) -> Optional[str]:
+        """CSS code that will be loaded into context for the exported chart.
+        Defaults to :obj:`None <python:None>`.
+        
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._css
+    
+    @css.setter
+    def css(self, value):
+        if not value:
+            self._css = None
+        else:
+            if not isinstance(value, str):
+                raise errors.HighchartsValueError('css expects a string')
+            
+            self._css = value
+
     @classmethod
     def is_export_supported(cls, options) -> bool:
         """Evaluates whether the Highcharts Export Server supports exporting the series types in ``options``.
@@ -660,7 +776,8 @@ class ExportServer(HighchartsMeta):
             'asyncRendering': self.async_rendering,
             'globalOptions': self.global_options,
             'dataOptions': self.data_options,
-            'customCode': self.custom_code
+            'customCode': self.custom_code,
+            'resources': self.resources,
         }
 
         return untrimmed
@@ -755,6 +872,8 @@ class ExportServer(HighchartsMeta):
             payload['globalOptions'] = 'HIGHCHARTS FOR PYTHON: REPLACE WITH GLOBAL'
         if self.custom_code:
             payload['customCode'] = 'HIGHCHARTS FOR PYTHON: REPLACE WITH CUSTOM'
+        if self.resources:
+            payload['resources'] = self.resources
 
         as_json = json.dumps(payload)
         
