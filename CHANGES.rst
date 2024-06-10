@@ -1,4 +1,11 @@
 
+Release 1.8.1
+=========================================
+
+* **ENHANCEMENT:** Added ``resources`` (``files``, ``js``, and ``css``) support to chart export.
+
+--------------------
+
 Release 1.8.0
 =========================================
 
