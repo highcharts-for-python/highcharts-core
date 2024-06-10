@@ -1,5 +1,5 @@
 
-Release 1.7.7
+Release 1.8.0
 =========================================
 
 * **BUGFIX:** Fixed over-eager trimming of ``None`` data values when serializing ``.to_json()`` for
@@ -8,6 +8,10 @@ Release 1.7.7
   ``RangeData``-descended). Closes #176.
 * **BUGFIX:** Fixed coercion of `datetime.date` type values to milliseconds when serializaing ``.to_json()``
   for export via the Export Server.
+* **ENHANCEMENT:** Added ``for_export`` as a special parameter to the ``.to_json()`` serialization method
+  to maintain past behavior while simultaneously fixing serialization bugs related to export via the Node
+  Export Server. Extended ``.trim_dict()`` and ``.trim_iterable()`` internal methods with ``for_export`` 
+  support for the same purpose.
 
 --------------------
 

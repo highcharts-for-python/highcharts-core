@@ -764,7 +764,7 @@ class ExportServer(HighchartsMeta):
                                                           'using a series type introduced in v.11. Sorry, but '
                                                           'that functionality is still forthcoming.')
         
-        options_as_json = self.options.to_json()
+        options_as_json = self.options.to_json(for_export = True)
         if isinstance(options_as_json, bytes):
             options_as_str = str(options_as_json, encoding = 'utf-8')
         else:
@@ -773,7 +773,7 @@ class ExportServer(HighchartsMeta):
         as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH OPTIONS"',
                                   options_as_str)
         if self.callback:
-            callback_as_json = self.callback.to_json()
+            callback_as_json = self.callback.to_json(for_export = True)
             if isinstance(callback_as_json, bytes):
                 callback_as_str = str(callback_as_json, encoding = 'utf-8')
             else:
@@ -781,7 +781,7 @@ class ExportServer(HighchartsMeta):
             as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH CALLBACK"',
                                       callback_as_str)
         if self.global_options:
-            global_as_json = self.global_options.to_json()
+            global_as_json = self.global_options.to_json(for_export = True)
             if isinstance(global_as_json, bytes):
                 global_as_str = str(global_as_json, encoding = 'utf-8')
             else:
@@ -789,7 +789,7 @@ class ExportServer(HighchartsMeta):
             as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH GLOBAL"',
                                       global_as_str)
         if self.data_options:
-            data_as_json = self.data_options.to_json()
+            data_as_json = self.data_options.to_json(for_export = True)
             if isinstance(data_as_json, bytes):
                 data_as_str = str(data_as_json, encoding = 'utf-8')
             else:
@@ -797,7 +797,7 @@ class ExportServer(HighchartsMeta):
             as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH DATA"',
                                       data_as_str)
         if self.custom_code:
-            code_as_json = self.custom_code.to_json()
+            code_as_json = self.custom_code.to_json(for_export = True)
             if isinstance(code_as_json, bytes):
                 code_as_str = str(code_as_json, encoding = 'utf-8')
             else:

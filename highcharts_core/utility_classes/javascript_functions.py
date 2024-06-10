@@ -137,7 +137,7 @@ class CallbackFunction(HighchartsMeta):
             'body': self.body
         }
 
-    def to_json(self, encoding = 'utf-8'):
+    def to_json(self, encoding = 'utf-8', for_export: bool = False):
         return None
 
     def to_js_literal(self,
