@@ -116,7 +116,7 @@ STANDARD_PARAMS = [
               'symbol': 'circle',
               'width': 48
             },
-            'y': 123,
+            'high': 123,
             'name': 'some category'
           }
       ]
@@ -225,7 +225,7 @@ STANDARD_PARAMS = [
               'symbol': 'circle',
               'width': 48
             },
-            'y': 123,
+            'high': 123,
             'name': 'some category'
           }
       ],
@@ -431,7 +431,7 @@ STANDARD_PARAMS = [
               'symbol': 'circle',
               'width': 48
             },
-            'y': 123,
+            'low': 123,
             'name': 'some category'
           }
       ],

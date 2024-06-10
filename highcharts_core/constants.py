@@ -953,6 +953,39 @@ EMPTY_STRING_CONTEXTS = [
 ]
 
 
+ALLOWED_NONE_CONTEXTS = [
+    "CartesianData.y",
+    "Cartesian3DData.y",
+    "Cartesian3DData.z",
+    "CartesianValueData.value",
+    "BarData.y",
+    "WaterfallData.y",
+    "WindBarbData.y",
+    "WindBarbData.value",
+    "XRangeData.y",
+    "BoxPlotData.low",
+    "BoxPlotData.high",
+    "BoxPlotData.median",
+    "BoxPlotData.q1",
+    "BoxPlotData.q3",
+    "VariablePieData.z",
+    "RangeData.low",
+    "RangeData.high",
+    
+    "HLCData.high",
+    "HLCData.low",
+    "HLCData.close",
+    "OHLCData.open",
+    "OHLCData.high",
+    "OHLCData.low",
+    "OHLCData.close",
+    "CandlestickData.open",
+    "CandlestickData.high",
+    "CandlestickData.low",
+    "CandlestickData.close",
+]
+
+
 DATA_COLUMN_TYPES = [
     'string',
     'number',

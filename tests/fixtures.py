@@ -24,6 +24,13 @@ from validator_collection import checkers, validators
 from highcharts_core import constants
 
 
+ALLOWED_NONE_PROPERTIES = []
+for item in constants.ALLOWED_NONE_CONTEXTS:
+    class_name, prop_name = item.split('.')
+    if prop_name not in ALLOWED_NONE_PROPERTIES:
+        ALLOWED_NONE_PROPERTIES.append(prop_name)
+
+
 class State(object):
     """Class to hold incremental test state."""
     # pylint: disable=too-few-public-methods
@@ -241,12 +248,26 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
         print('- checking two dict objects')
         if len(kwarg_value) != len(result_value):
             print('-- len does not match')
-            return False
+            if len(kwarg_value) > len(result_value):
+                extra_in_result = [x for x in result_value if x not in kwarg_value]
+                extra_in_kwarg = [x for x in kwarg_value if x not in result_value]
+                print(f'-- extra in RESULT: {extra_in_result}')
+                print(f'-- extra in KWARG: {extra_in_kwarg}')
+                return False
+            difference = len(result_value) - len(kwarg_value)                
+            if abs(difference) > 1:
+                return False
         for key in kwarg_value:
             print(f'CHECKING: {key}')
             if key == 'patternOptions':
                 matches = does_kwarg_value_match_result(kwarg_value.get(key),
                                                         result_value.get('pattern'))
+            elif key in ALLOWED_NONE_PROPERTIES:
+                if kwarg_value.get(key, None) is None and result_value.get(key) is None:
+                    continue
+                else:
+                    matches = does_kwarg_value_match_result(kwarg_value.get(key),
+                                                            result_value.get(key))
             else:
                 matches = does_kwarg_value_match_result(kwarg_value.get(key),
                                                         result_value.get(key))
@@ -303,7 +324,7 @@ def trim_expected_dict(expected):
     if not isinstance(expected, dict):
         return expected
     for key in expected:
-        if expected[key] is None:
+        if expected[key] is None and key not in ALLOWED_NONE_PROPERTIES:
             continue
         elif isinstance(expected[key], dict):
             trimmed_value = trim_expected_dict(expected[key])

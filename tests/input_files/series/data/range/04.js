@@ -85,6 +85,7 @@
       liveRedraw: true
   },
   drilldown: 'some-id-goes-here',
+  low: 123,
   marker: {
     enabled: true,
     fillColor: '#cccccc',
@@ -100,7 +101,6 @@
     width: 48
   },
   x: 'some category',
-  y: 123,
 
   accessibility: {
       description: 'Some description goes here',

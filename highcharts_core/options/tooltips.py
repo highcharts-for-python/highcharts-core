@@ -1051,7 +1051,7 @@ class DiagramTooltip(Tooltip):
             "x_date_format": as_dict.get("xDateFormat", None),
             
             "node_format": as_dict.get('nodeFormat', None),
-            'node_formatter': as_dict.get('nodeFormatter', None)
+            "node_formatter": as_dict.get('nodeFormatter', None)
         }
 
         return kwargs

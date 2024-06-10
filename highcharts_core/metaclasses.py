@@ -196,7 +196,8 @@ class HighchartsMeta(ABC):
     @staticmethod
     def trim_iterable(untrimmed,
                       to_json = False,
-                      context: str = None):
+                      context: str = None,
+                      for_export: bool = False):
         """Convert any :class:`EnforcedNullType` values in ``untrimmed`` to ``'null'``.
 
         :param untrimmed: The iterable whose members may still be
@@ -206,11 +207,15 @@ class HighchartsMeta(ABC):
         :param to_json: If ``True``, will remove all members from ``untrimmed`` that are
           not serializable to JSON. Defaults to ``False``.
         :type to_json: :class:`bool <python:bool>`
-        
+
         :param context: If provided, will inform the method of the context in which it is
           being run which may inform special handling cases (e.g. where empty strings may
           be important / allowable). Defaults to :obj:`None <python:None>`.
         :type context: :class:`str <python:str>` or :obj:`None <python:None>`
+
+        :param for_export: If ``True``, indicates that the method is being run to
+          produce a JSON for consumption by the export server. Defaults to ``False``.
+        :type for_export: :class:`bool <python:bool>`
 
         :rtype: iterable
         """
@@ -239,21 +244,24 @@ class HighchartsMeta(ABC):
                 untrimmed_item = item._to_untrimmed_dict()
                 item_as_dict = HighchartsMeta.trim_dict(untrimmed_item,
                                                         to_json = to_json,
-                                                        context = updated_context)
+                                                        context = updated_context,
+                                                        for_export = for_export)
                 if item_as_dict:
                     trimmed.append(item_as_dict)
             elif isinstance(item, dict):
                 if item:
                     trimmed.append(HighchartsMeta.trim_dict(item, 
                                                             to_json = to_json,
-                                                            context = context))
+                                                            context = context,
+                                                            for_export = for_export))
             elif not isinstance(item, 
                                 (str, bytes, dict, UserDict)) and hasattr(item, 
                                                                           '__iter__'):
                 if item:
                     trimmed.append(HighchartsMeta.trim_iterable(item, 
                                                                 to_json = to_json,
-                                                                context = context))
+                                                                context = context,
+                                                                for_export = for_export))
             else:
                 trimmed.append(item)
 
@@ -262,7 +270,8 @@ class HighchartsMeta(ABC):
     @staticmethod
     def trim_dict(untrimmed: dict,
                   to_json: bool = False,
-                  context: str = None) -> dict:
+                  context: str = None,
+                  for_export: bool = False) -> dict:
         """Remove keys from ``untrimmed`` whose values are :obj:`None <python:None>` and
         convert values that have ``.to_dict()`` methods.
 
@@ -278,6 +287,10 @@ class HighchartsMeta(ABC):
           being run which may inform special handling cases (e.g. where empty strings may
           be important / allowable). Defaults to :obj:`None <python:None>`.
         :type context: :class:`str <python:str>` or :obj:`None <python:None>`
+        
+        :param for_export: If ``True``, indicates that the method is being run to
+          produce a JSON for consumption by the export server. Defaults to ``False``.
+        :type for_export: :class:`bool <python:bool>`
 
         :returns: Trimmed :class:`dict <python:dict>`
         :rtype: :class:`dict <python:dict>`
@@ -294,7 +307,8 @@ class HighchartsMeta(ABC):
                 untrimmed_value = utility_functions.from_ndarray(value)
                 trimmed_value = HighchartsMeta.trim_iterable(value,
                                                              to_json = to_json,
-                                                             context = context)
+                                                             context = context,
+                                                             for_export = for_export)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
                     continue
@@ -310,7 +324,8 @@ class HighchartsMeta(ABC):
                 updated_context = value.__class__.__name__
                 trimmed_value = HighchartsMeta.trim_dict(untrimmed_value,
                                                          to_json = to_json,
-                                                         context = updated_context)
+                                                         context = updated_context,
+                                                         for_export=for_export)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
             # Enforced null
@@ -323,7 +338,8 @@ class HighchartsMeta(ABC):
             elif isinstance(value, dict):
                 trimmed_value = HighchartsMeta.trim_dict(value,
                                                          to_json = to_json,
-                                                         context = context)
+                                                         context = context,
+                                                         for_export = for_export)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
             # iterable -> array
@@ -332,7 +348,8 @@ class HighchartsMeta(ABC):
                                                                           '__iter__'):
                 trimmed_value = HighchartsMeta.trim_iterable(value, 
                                                              to_json = to_json,
-                                                             context = context)
+                                                             context = context,
+                                                             for_export = for_export)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
             # Datetime or Datetime-like
@@ -348,7 +365,12 @@ class HighchartsMeta(ABC):
                     as_dict[key] = trimmed_value
             # Date or Time
             elif checkers.is_date(value) or checkers.is_time(value):
-                if to_json:
+                if for_export and checkers.is_date(value):
+                    trimmed_value = validators.datetime(value)
+                    if not trimmed_value.tzinfo:
+                        trimmed_value = trimmed_value.replace(tzinfo=datetime.timezone.utc)
+                    as_dict[key] = trimmed_value.timestamp() * 1000
+                elif to_json:
                     as_dict[key] = value.isoformat()
                 else:
                     as_dict[key] = value
@@ -356,7 +378,8 @@ class HighchartsMeta(ABC):
             elif value:
                 trimmed_value = HighchartsMeta.trim_iterable(value,
                                                              to_json = to_json,
-                                                             context = context)
+                                                             context = context,
+                                                             for_export = for_export)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
             # other falsy -> str / number
@@ -365,6 +388,9 @@ class HighchartsMeta(ABC):
             # other falsy -> str, but empty string is allowed
             elif value == '' and context_key in constants.EMPTY_STRING_CONTEXTS:
                 as_dict[key] = ''
+            elif value is None and context_key in constants.ALLOWED_NONE_CONTEXTS:
+                if to_json:
+                    as_dict[key] = None
 
         return as_dict
 
@@ -467,7 +493,8 @@ class HighchartsMeta(ABC):
 
     def to_json(self,
                 filename = None,
-                encoding = 'utf-8'):
+                encoding = 'utf-8',
+                for_export: bool = False):
         """Generate a JSON string/byte string representation of the object compatible with
         the Highcharts JavaScript library.
 
@@ -487,6 +514,10 @@ class HighchartsMeta(ABC):
           to ``'utf-8'``.
         :type encoding: :class:`str <python:str>`
 
+        :param for_export: If ``True``, indicates that the method is being run to
+          produce a JSON for consumption by the export server. Defaults to ``False``.
+        :type for_export: :class:`bool <python:bool>`
+
         :returns: A JSON representation of the object compatible with the Highcharts
           library.
         :rtype: :class:`str <python:str>` or :class:`bytes <python:bytes>`
@@ -498,7 +529,8 @@ class HighchartsMeta(ABC):
 
         as_dict = self.trim_dict(untrimmed, 
                                  to_json = True,
-                                 context = self.__class__.__name__)
+                                 context = self.__class__.__name__,
+                                 for_export = for_export)
 
         for key in as_dict:
             if as_dict[key] == constants.EnforcedNull or as_dict[key] is None:
@@ -907,7 +939,8 @@ class JavaScriptDict(UserDict):
     @staticmethod
     def trim_iterable(untrimmed,
                       to_json = False,
-                      context: str = None):
+                      context: str = None,
+                      for_export: bool = False):
         """Convert any :class:`EnforcedNullType` values in ``untrimmed`` to ``'null'``.
 
         :param untrimmed: The iterable whose members may still be
@@ -917,11 +950,15 @@ class JavaScriptDict(UserDict):
         :param to_json: If ``True``, will remove all members from ``untrimmed`` that are
           not serializable to JSON. Defaults to ``False``.
         :type to_json: :class:`bool <python:bool>`
-        
+
         :param context: If provided, will inform the method of the context in which it is
           being run which may inform special handling cases (e.g. where empty strings may
           be important / allowable). Defaults to :obj:`None <python:None>`.
         :type context: :class:`str <python:str>` or :obj:`None <python:None>`
+
+        :param for_export: If ``True``, indicates that the method is being run to
+          produce a JSON for consumption by the export server. Defaults to ``False``.
+        :type for_export: :class:`bool <python:bool>`
 
         :rtype: iterable
         """
@@ -939,19 +976,22 @@ class JavaScriptDict(UserDict):
                 untrimmed_item = item._to_untrimmed_dict()
                 item_as_dict = HighchartsMeta.trim_dict(untrimmed_item,
                                                         to_json = to_json,
-                                                        context = updated_context)
+                                                        context = updated_context,
+                                                        for_export = for_export)
                 if item_as_dict:
                     trimmed.append(item_as_dict)
             elif isinstance(item, dict):
                 if item:
                     trimmed.append(HighchartsMeta.trim_dict(item, 
                                                             to_json = to_json,
-                                                            context = context))
+                                                            context = context,
+                                                            for_export = for_export))
             elif checkers.is_iterable(item, forbid_literals = (str, bytes, dict)):
                 if item:
                     trimmed.append(HighchartsMeta.trim_iterable(item, 
                                                                 to_json = to_json,
-                                                                context = context))
+                                                                context = context,
+                                                                for_export = for_export))
             else:
                 trimmed.append(item)
 
@@ -960,7 +1000,8 @@ class JavaScriptDict(UserDict):
     @staticmethod
     def trim_dict(untrimmed: dict,
                   to_json: bool = False,
-                  context: str = None) -> dict:
+                  context: str = None,
+                  for_export: bool = False) -> dict:
         """Remove keys from ``untrimmed`` whose values are :obj:`None <python:None>` and
         convert values that have ``.to_dict()`` methods.
 
@@ -976,6 +1017,10 @@ class JavaScriptDict(UserDict):
           being run which may inform special handling cases (e.g. where empty strings may
           be important / allowable). Defaults to :obj:`None <python:None>`.
         :type context: :class:`str <python:str>` or :obj:`None <python:None>`
+
+        :param for_export: If ``True``, indicates that the method is being run to
+          produce a JSON for consumption by the export server. Defaults to ``False``.
+        :type for_export: :class:`bool <python:bool>`
 
         :returns: Trimmed :class:`dict <python:dict>`
         :rtype: :class:`dict <python:dict>`
@@ -996,7 +1041,8 @@ class JavaScriptDict(UserDict):
                 updated_context = value.__class__.__name__
                 trimmed_value = HighchartsMeta.trim_dict(untrimmed_value,
                                                          to_json = to_json,
-                                                         context = updated_context)
+                                                         context = updated_context,
+                                                         for_export = for_export)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
             # Enforced null
@@ -1009,14 +1055,16 @@ class JavaScriptDict(UserDict):
             elif isinstance(value, dict):
                 trimmed_value = HighchartsMeta.trim_dict(value,
                                                          to_json = to_json,
-                                                         context = context)
+                                                         context = context,
+                                                         for_export = for_export)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
             # iterable -> array
             elif checkers.is_iterable(value, forbid_literals = (str, bytes, dict)):
                 trimmed_value = HighchartsMeta.trim_iterable(value, 
                                                              to_json = to_json,
-                                                             context = context)
+                                                             context = context,
+                                                             for_export = for_export)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
             # Datetime or Datetime-like
@@ -1032,7 +1080,14 @@ class JavaScriptDict(UserDict):
                     as_dict[key] = trimmed_value
             # Date or Time
             elif checkers.is_date(value) or checkers.is_time(value):
-                if to_json:
+                if for_export and checkers.is_date(value):
+                    trimmed_value = validators.datetime(value)
+                    if not trimmed_value.tzinfo:
+                        trimmed_value = trimmed_value.replace(
+                            tzinfo=datetime.timezone.utc
+                        )
+                    as_dict[key] = trimmed_value.timestamp() * 1000
+                elif to_json:
                     as_dict[key] = value.isoformat()
                 else:
                     as_dict[key] = value
@@ -1040,7 +1095,8 @@ class JavaScriptDict(UserDict):
             elif value:
                 trimmed_value = HighchartsMeta.trim_iterable(value,
                                                              to_json = to_json,
-                                                             context = context)
+                                                             context = context,
+                                                             for_export = for_export)
                 if trimmed_value:
                     as_dict[key] = trimmed_value
             # other falsy -> str / number
@@ -1049,6 +1105,9 @@ class JavaScriptDict(UserDict):
             # other falsy -> str, but empty string is allowed
             elif value == '' and context_key in constants.EMPTY_STRING_CONTEXTS:
                 as_dict[key] = ''
+            elif value is None and context_key in constants.ALLOWED_NONE_CONTEXTS:
+                if to_json:
+                    as_dict[key] = None
 
         return as_dict
 
@@ -1070,7 +1129,8 @@ class JavaScriptDict(UserDict):
 
     def to_json(self,
                 filename = None,
-                encoding = 'utf-8'):
+                encoding = 'utf-8',
+                for_export: bool = False):
         """Generate a JSON string/byte string representation of the object compatible with
         the Highcharts JavaScript library.
 
@@ -1090,6 +1150,10 @@ class JavaScriptDict(UserDict):
           to ``'utf8'``.
         :type encoding: :class:`str <python:str>`
 
+        :param for_export: If ``True``, indicates that the method is being run to
+          produce a JSON for consumption by the export server. Defaults to ``False``.
+        :type for_export: :class:`bool <python:bool>`
+
         :returns: A JSON representation of the object compatible with the Highcharts
           library.
         :rtype: :class:`str <python:str>` or :class:`bytes <python:bytes>`
@@ -1101,7 +1165,8 @@ class JavaScriptDict(UserDict):
 
         as_dict = self.trim_dict(untrimmed,
                                  to_json = True,
-                                 context = self.__class__.__name__)
+                                 context = self.__class__.__name__,
+                                 for_export = for_export)
 
         for key in as_dict:
             if as_dict[key] == constants.EnforcedNull or as_dict[key] is None:

@@ -8,7 +8,7 @@ from validator_collection import validators, checkers
 from highcharts_core import constants, errors
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.options.series.data.base import DataBase
-from highcharts_core.options.series.data.cartesian import CartesianData, CartesianDataCollection
+from highcharts_core.options.series.data.collections import DataPointCollection
 from highcharts_core.options.plot_options.drag_drop import DragDropOptions
 from highcharts_core.utility_classes.data_labels import DataLabel
 from highcharts_core.utility_classes.markers import Marker
@@ -362,7 +362,7 @@ class RangeData(DataBase):
         return untrimmed
 
 
-class RangeDataCollection(CartesianDataCollection):
+class RangeDataCollection(DataPointCollection):
     """A collection of :class:`RangeData` objects.
 
     .. note::
@@ -384,8 +384,8 @@ class RangeDataCollection(CartesianDataCollection):
         return RangeData
 
 
-class ConnectedRangeData(CartesianData):
-    """Variant of :class:`CartesianData` which extends the class with connector
+class ConnectedRangeData(RangeData):
+    """Variant of :class:`RangeData` which extends the class with connector
     attributes."""
 
     def __init__(self, **kwargs):
@@ -481,9 +481,10 @@ class ConnectedRangeData(CartesianData):
             'data_labels': as_dict.get('dataLabels', None),
             'drag_drop': as_dict.get('dragDrop', None),
             'drilldown': as_dict.get('drilldown', None),
+            'high': as_dict.get('high', None),
+            'low': as_dict.get('low', None),
             'marker': as_dict.get('marker', None),
             'x': as_dict.get('x', None),
-            'y': as_dict.get('y', None),
 
             'connector_color': as_dict.get('connectorColor', None),
             'connector_width': as_dict.get('connectorWidth', None),
@@ -506,7 +507,7 @@ class ConnectedRangeData(CartesianData):
         return untrimmed
 
 
-class ConnectedRangeDataCollection(CartesianDataCollection):
+class ConnectedRangeDataCollection(RangeDataCollection):
     """A collection of :class:`ConnectedRangeData` objects.
 
     .. note::
