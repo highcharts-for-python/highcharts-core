@@ -1,5 +1,5 @@
 ########################################################
-Using Highcharts Core for Python with Pandas
+Working with Data in Highcharts for Python
 ########################################################
 
 .. contents::
@@ -8,7 +8,7 @@ Using Highcharts Core for Python with Pandas
 
 -------------------
 
-The **Highcharts for Python Toolkit** is a data *visualizaiton* library.
+The **Highcharts for Python Toolkit** is a data *visualization* library.
 That means that it is designed to let you visualize the data that you
 or your users are analyzing, rather than to do the analysis itself. But
 while there are better tools to actually crunch the numbers, 
