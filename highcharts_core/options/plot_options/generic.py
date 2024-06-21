@@ -495,7 +495,8 @@ class GenericTypeOptions(HighchartsMeta):
     @property
     def legend_symbol(self) -> Optional[str]:
         """The type of legend symbol to render for the series. Accepts either 
-        ``'lineMarker'`` or ``'rectangle'``. Defaults to ``'rectangle'``.
+        ``'lineMarker'``, ``'areaMarker'``, or ``'rectangle'``. Defaults to 
+        ``'rectangle'``.
         
         :rtype: :class:`str <python:str>`
         """
@@ -510,9 +511,11 @@ class GenericTypeOptions(HighchartsMeta):
             value = value.lower()
             if value == 'linemarker':
                 value = 'lineMarker'
-            if value not in ['lineMarker', 'rectangle']:
+            if value == 'areamarker':
+                value = 'areaMarker'
+            if value not in ['lineMarker', 'areaMarker', 'rectangle']:
                 raise errors.HighchartsValueError(f'legend_symbol expects either '
-                                                  f'"lineMarker" or "rectangle". '
+                                                  f'"lineMarker", "areaMarker", or "rectangle". '
                                                   f'Received: "{value}".')
             self._legend_symbol = value
 

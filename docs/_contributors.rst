@@ -4,3 +4,4 @@
 * Byron Cook (`@ByronCook <https://github.com/ByronCook>`__)
 * karlacio (`@karlacio <https://github.com/karlacio>`__)
 * Max Dugan Knight (`@maxduganknight <https://github.com/maxduganknight>`__)
+* Julien Bacquart (`@JulienBacquart <https://github.com/JulienBacquart>`__)

@@ -1,4 +1,12 @@
 
+Release 1.8.2
+=========================================
+
+* **BUGFIX:** Added missing support for ``'areaMarker'`` legend symbol.
+* **DOCS:** Fixed some typos (courtesy of @JulienBacquart).
+
+----
+
 Release 1.8.1
 =========================================
 
