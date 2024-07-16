@@ -1,4 +1,12 @@
 
+Release 1.9.1
+=========================================
+
+* **ENHANCEMENT:** Added stringified JSON serialization of callback functions when serializing via 
+  ``.to_json(for_export = True)``.
+
+----
+
 Release 1.9.0
 =========================================
 

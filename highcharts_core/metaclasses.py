@@ -317,7 +317,12 @@ class HighchartsMeta(ABC):
                 as_dict[key] = value
             # Callback Function
             elif checkers.is_type(value, 'CallbackFunction') and to_json:
-                continue
+                if not for_export:
+                    continue
+                elif value:
+                    trimmed_value = str(value)
+                    if trimmed_value and trimmed_value != 'None':
+                        as_dict[key] = trimmed_value
             # HighchartsMeta -> dict --> object
             elif value and hasattr(value, '_to_untrimmed_dict'):
                 untrimmed_value = value._to_untrimmed_dict()
