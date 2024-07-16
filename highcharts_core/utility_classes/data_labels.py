@@ -914,6 +914,102 @@ class DataLabel(HighchartsMeta):
         return untrimmed
 
 
+class PieDataLabel(DataLabel):
+    """Variant of :class:`DataLabel` used for pie (and related) series."""
+    
+    def __init__(self, **kwargs):
+        self._distance = None
+        
+        self.distance = kwargs.get('distance', None)
+        
+        super().__init__(**kwargs)
+        
+    @property
+    def distance(self) -> Optional[int | float | Decimal | str]:
+        """The distance of the data label from the pie's edge. 
+        
+        .. note::
+        
+          Negative numbers put the data label on top of the pie slices. 
+          
+        .. tip::
+        
+          Can also be defined as a percentage of pie's radius. 
+        
+        .. warning::
+        
+          Connectors are only shown for data labels outside the pie.
+          
+        :rtype: numeric or :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._distance
+    
+    @distance.setter
+    def distance(self, value):
+        if not value:
+            self._distance = None
+        else:
+            try:
+                value = validators.numeric(value, allow_empty = False)
+            except (ValueError, TypeError):
+                if not isinstance(value, str):
+                    raise errors.HighchartsValueError(f'distance must be a number or a string, but received '
+                                                      f'{type(value).__name__}.')
+
+            self._distance = value
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            'align': as_dict.get('align', None),
+            'allow_overlap': as_dict.get('allowOverlap', None),
+            'animation': as_dict.get('animation', None),
+            'background_color': as_dict.get('backgroundColor', None),
+            'border_color': as_dict.get('borderColor', None),
+            'border_radius': as_dict.get('borderRadius', None),
+            'border_width': as_dict.get('borderWidth', None),
+            'class_name': as_dict.get('className', None),
+            'color': as_dict.get('color', None),
+            'crop': as_dict.get('crop', None),
+            'defer': as_dict.get('defer', None),
+            'enabled': as_dict.get('enabled', None),
+            'filter': as_dict.get('filter', None),
+            'format': as_dict.get('format', None),
+            'formatter': as_dict.get('formatter', None),
+            'inside': as_dict.get('inside', None),
+            'null_format': as_dict.get('nullFormat', None),
+            'null_formatter': as_dict.get('nullFormatter', None),
+            'overflow': as_dict.get('overflow', None),
+            'padding': as_dict.get('padding', None),
+            'position': as_dict.get('position', None),
+            'rotation': as_dict.get('rotation', None),
+            'shadow': as_dict.get('shadow', None),
+            'shape': as_dict.get('shape', None),
+            'style': as_dict.get('style', None),
+            'text_path': as_dict.get('textPath', None),
+            'use_html': as_dict.get('useHTML', None),
+            'vertical_align': as_dict.get('verticalAlign', None),
+            'x': as_dict.get('x', None),
+            'y': as_dict.get('y', None),
+            'z': as_dict.get('z', None),
+            
+            'distance': as_dict.get('distance', None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+        untrimmed = {
+            'distance': self.distance,
+        }
+
+        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
+
+        return untrimmed
+
+
 class SunburstDataLabel(DataLabel):
     """Variant of :class:`DataLabel` used for :term:`sunburst` series."""
     

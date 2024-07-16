@@ -68,6 +68,7 @@ Sub-components
     - :class:`DataGroupingOptions <highcharts_core.utility_classes.data_grouping.DataGroupingOptions>`
   * - :mod:`.utility_classes.data_labels <highcharts_core.utility_classes.data_labels>`
     - :class:`DataLabel <highcharts_core.utility_classes.data_labels.DataLabel>`
+      :class:`PieDataLabel <highcharts_core.utility_classes.data_labels.PieDataLabel>`
       :class:`SunburstDataLabel <highcharts_core.utility_classes.data_labels.SunburstDataLabel>`
       :class:`OrganizationDataLabel <highcharts_core.utility_classes.data_labels.OrganizationDataLabel>`
       :class:`NodeDataLabel <highcharts_core.utility_classes.data_labels.NodeDataLabel>`

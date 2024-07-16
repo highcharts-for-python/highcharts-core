@@ -1,12 +1,14 @@
 from typing import Optional, List
 from decimal import Decimal
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
 from highcharts_core import constants, errors, utility_functions
 from highcharts_core.options.plot_options.generic import GenericTypeOptions
 from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
+from highcharts_core.utility_classes.data_labels import PieDataLabel
+from highcharts_core.decorators import validate_types
 
 
 class PieOptions(GenericTypeOptions):
@@ -264,6 +266,35 @@ class PieOptions(GenericTypeOptions):
         else:
             value = validators.iterable(value)
             self._colors = [utility_functions.validate_color(x) for x in value]
+
+    @property
+    def data_labels(self) -> Optional[PieDataLabel | List[PieDataLabel]]:
+        """Options for the series data labels, appearing next to each data point.
+
+        .. note::
+
+          To have multiple data labels per data point, you can also supply a collection of
+          :class:`DataLabel` configuration settings.
+
+        :rtype: :class:`PieDataLabel`, :class:`list <python:list>` of :class:`PieDataLabel`, or
+          :obj:`None <python:None>`
+        """
+        return self._data_labels
+
+    @data_labels.setter
+    def data_labels(self, value):
+        if not value:
+            self._data_labels = None
+        else:
+            if checkers.is_iterable(value):
+                self._data_labels = validate_types(value,
+                                                   types = PieDataLabel,
+                                                   allow_none = False,
+                                                   force_iterable = True)
+            else:
+                self._data_labels = validate_types(value,
+                                                   types = PieDataLabel,
+                                                   allow_none = False)
 
     @property
     def depth(self) -> Optional[int | float | Decimal]:
