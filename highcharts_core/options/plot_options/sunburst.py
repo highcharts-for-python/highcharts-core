@@ -12,6 +12,7 @@ from highcharts_core.utility_classes.patterns import Pattern
 from highcharts_core.utility_classes.breadcrumbs import BreadcrumbOptions
 from highcharts_core.utility_classes.shadows import ShadowOptions
 from highcharts_core.utility_classes.data_labels import SunburstDataLabel
+from highcharts_core.utility_classes.border_radius import BorderRadius
 
 
 class SunburstOptions(GenericTypeOptions):
@@ -28,6 +29,7 @@ class SunburstOptions(GenericTypeOptions):
     """
 
     def __init__(self, **kwargs):
+        self._border_radius = None
         self._color_index = None
         self._crisp = None
         self._shadow = None
@@ -46,6 +48,7 @@ class SunburstOptions(GenericTypeOptions):
         self._sliced_offset = None
         self._start_angle = None
 
+        self.border_radius = kwargs.get('border_radius', None)
         self.color_index = kwargs.get('color_index', None)
         self.crisp = kwargs.get('crisp', None)
         self.shadow = kwargs.get('shadow', None)
@@ -116,6 +119,35 @@ class SunburstOptions(GenericTypeOptions):
         self._border_width = validators.numeric(value,
                                                 allow_empty = True,
                                                 minimum = 0)
+
+    @property
+    def border_radius(self) -> Optional[int | float | Decimal | str | BorderRadius]:
+        """The corner radius of the border surrounding each column or bar. Defaults to
+        ``0``.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._border_radius
+
+    @border_radius.setter
+    def border_radius(self, value):
+        if value is None:
+            self._border_radius = None
+        else:
+            try:
+                self._border_radius = validators.numeric(value,
+                                                        allow_empty = True,
+                                                        minimum = 0)
+            except (ValueError, TypeError):
+                try:
+                    self._border_radius = validate_types(value, BorderRadius)
+                except (ValueError, TypeError):
+                    if not isinstance(value, str):
+                        raise errors.HighchartsValueError(f'border_radius must be a numeric value, '
+                                                          f'a string, or an instance of BorderRadius. '
+                                                          f'Received {value.__class__.__name__}.')
+                        
+                    self._border_radius = value
 
     @property
     def breadcrumbs(self) -> Optional[BreadcrumbOptions]:
@@ -468,6 +500,7 @@ class SunburstOptions(GenericTypeOptions):
             'allow_traversing_tree': as_dict.get('allowTraversingTree', None),
             'border_color': as_dict.get('borderColor', None),
             'border_width': as_dict.get('borderWidth', None),
+            'border_radius': as_dict.get('borderRadius', None),
             'breadcrumbs': as_dict.get('breadcrumbs', None),
             'center': as_dict.get('center', None),
             'color_by_point': as_dict.get('colorByPoint', None),
@@ -491,6 +524,7 @@ class SunburstOptions(GenericTypeOptions):
             'allowTraversingTree': self.allow_traversing_tree,
             'borderColor': self.border_color,
             'borderWidth': self.border_width,
+            'borderRadius': self.border_radius,
             'breadcrumbs': self.breadcrumbs,
             'center': self.center,
             'colorByPoint': self.color_by_point,

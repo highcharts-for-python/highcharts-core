@@ -8,6 +8,7 @@ from highcharts_core.options.plot_options.generic import GenericTypeOptions
 from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
 from highcharts_core.utility_classes.data_labels import PieDataLabel
+from highcharts_core.utility_classes.border_radius import BorderRadius
 from highcharts_core.decorators import validate_types
 
 
@@ -95,7 +96,7 @@ class PieOptions(GenericTypeOptions):
         self._border_color = utility_functions.validate_color(value)
 
     @property
-    def border_radius(self) -> Optional[str | int | float | Decimal]:
+    def border_radius(self) -> Optional[str | int | float | Decimal | BorderRadius]:
         """
         .. versionadded:: Highcharts Core for Python v.1.1.0 / Highcharts Core (JS) v.11.0.0
         
@@ -106,7 +107,9 @@ class PieOptions(GenericTypeOptions):
             A numerical value signifies the value is expressed in pixels. A percentage string like `50%`
             signifies a size relative to the radius and the inner radius.
             
-        :rtype: numeric, :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: numeric, :class:`str <python:str>`, 
+          :class:`BorderRadius <highcharts_core.utility_classes.border_radius.BorderRadius>` or 
+          :obj:`None <python:None>`
         """
         return self._border_radius
 
@@ -116,11 +119,14 @@ class PieOptions(GenericTypeOptions):
             self._border_radius = None
         else:
             try:
-                value = validators.string(value)
-                if '%' not in value:
-                    raise ValueError
-            except (TypeError, ValueError):
-                value = validators.numeric(value, minimum = 0)
+                value = validate_types(value, types = BorderRadius)
+            except (ValueError, TypeError):
+                try:
+                    value = validators.string(value)
+                    if '%' not in value:
+                        raise ValueError
+                except (TypeError, ValueError):
+                    value = validators.numeric(value, minimum = 0)
 
             self._border_radius = value
 

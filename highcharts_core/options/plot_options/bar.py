@@ -10,6 +10,7 @@ from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
 from highcharts_core.utility_classes.data_grouping import DataGroupingOptions
 from highcharts_core.utility_classes.partial_fill import PartialFillOptions
+from highcharts_core.utility_classes.border_radius import BorderRadius
 
 
 class BaseBarOptions(SeriesOptions):
@@ -61,7 +62,7 @@ class BaseBarOptions(SeriesOptions):
         self._border_color = utility_functions.validate_color(value)
 
     @property
-    def border_radius(self) -> Optional[int | float | Decimal]:
+    def border_radius(self) -> Optional[int | float | Decimal | str | BorderRadius]:
         """The corner radius of the border surrounding each column or bar. Defaults to
         ``0``.
 
@@ -71,9 +72,23 @@ class BaseBarOptions(SeriesOptions):
 
     @border_radius.setter
     def border_radius(self, value):
-        self._border_radius = validators.numeric(value,
-                                                 allow_empty = True,
-                                                 minimum = 0)
+        if value is None:
+            self._border_radius = None
+        else:
+            try:
+                self._border_radius = validators.numeric(value,
+                                                        allow_empty = True,
+                                                        minimum = 0)
+            except (ValueError, TypeError):
+                try:
+                    self._border_radius = validate_types(value, BorderRadius)
+                except (ValueError, TypeError):
+                    if not isinstance(value, str):
+                        raise errors.HighchartsValueError(f'border_radius must be a numeric value, '
+                                                          f'a string, or an instance of BorderRadius. '
+                                                          f'Received {value.__class__.__name__}.')
+                        
+                    self._border_radius = value
 
     @property
     def border_width(self) -> Optional[int | float | Decimal]:
