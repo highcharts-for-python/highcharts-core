@@ -138,6 +138,9 @@ class CallbackFunction(HighchartsMeta):
         }
 
     def to_json(self, encoding = 'utf-8', for_export: bool = False):
+        if for_export:
+            return str(self)
+
         return None
 
     def to_js_literal(self,
