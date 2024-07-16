@@ -139,7 +139,7 @@ def test_get_key_value_pairs(original_str, override, expected, error):
     ("""const testObj = {item1:'test string'}""", None, 'test string', None),
     ("""const testObj = {item1:undefined}""", None, None, None),
     ("""const testObj = {item1:null}""", None, constants.EnforcedNull, None),
-
+    
     ('', 'not-a-literal', None, errors.HighchartsParseError),
 ])
 def test_convert_js_literal_to_python(original_str, override, expected, error):
@@ -170,6 +170,7 @@ def test_convert_js_literal_to_python(original_str, override, expected, error):
     ("""const testObj = {item1:null}""", None, constants.EnforcedNull, None),
     ("""const testObj = {item1:[1,2]}""", None, [1,2], None),
     ("""const testObj = {item1:{subitem:'test'}}""", None, {'subitem': 'test'}, None),
+    ("""const testObj = {item1:'abc' + 'def'}""", None, 'abcdef', None),
 
     ('', 'not-a-property', None, errors.HighchartsParseError),
 ])

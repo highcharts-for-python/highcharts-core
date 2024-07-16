@@ -581,6 +581,25 @@ def convert_js_property_to_python(property_definition, original_str = None):
     elif property_definition.value.type == 'ClassExpression':
         return JavaScriptClass._convert_from_js_ast(property_definition.value,
                                                     original_str)
+    elif property_definition.value.type == 'BinaryExpression':
+        property_value = property_definition.value
+        operator = property_value.operator
+        left, right = property_value.left, property_value.right
+        left_type, right_type = left.type, right.type
+        
+        if (left_type not in ['Literal']) or (right_type not in ['Literal']):
+            raise errors.HighchartsParseError(f'unable to find two Literal values within'
+                                              f'a Binary expression. Found: '
+                                              f'{left_type, right_type}')
+
+        left_value, right_value = left.value, right.value
+        if operator not in ['+', '-', '/']:
+            raise errors.HighchartsParseError(f'operator "{operator}" not supported within '
+                                              f'Binary expression parsing')
+        left_value = validators.string(left_value, allow_empty = False)
+        right_value = validators.string(right_value, allow_empty = False)
+        
+        return left_value + right_value
     elif property_definition.value.type == 'CallExpression':
         expression = property_definition.value
         try:
@@ -650,6 +669,7 @@ def convert_js_to_python(javascript, original_str = None):
                                'ObjectExpression',
                                'ArrayExpression',
                                'UnaryExpression',
+                               'BinaryExpression',
                                'FunctionExpression'):
         raise errors.HighchartsParseError(f'javascript should contain a '
                                           f'Property, Literal, ObjectExpression, '
