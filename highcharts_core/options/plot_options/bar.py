@@ -87,6 +87,11 @@ class BaseBarOptions(SeriesOptions):
                         raise errors.HighchartsValueError(f'border_radius must be a numeric value, '
                                                           f'a string, or an instance of BorderRadius. '
                                                           f'Received {value.__class__.__name__}.')
+                    if not value.endswith(('%', 'px', 'em')):
+                        raise errors.HighchartsValueError(f'border_radius must be a numeric value, '
+                                                          f'a percentage string, a pixel measurement, '
+                                                          f'or an instance of BorderRadius. '
+                                                          f'Received: "{value}".')
                         
                     self._border_radius = value
 
