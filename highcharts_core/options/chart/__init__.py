@@ -523,7 +523,7 @@ class ChartOptions(HighchartsMeta):
                     self._height = validators.numeric(value,
                                                       allow_empty = False,
                                                       minimum = 0)
-                except ValueError:
+                except (ValueError, TypeError):
                     self._height = validators.string(value,
                                                      allow_empty = False)
             except ValueError:
