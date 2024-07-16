@@ -234,6 +234,20 @@ class ChartEvents(HighchartsMeta):
         self._load = value
 
     @property
+    def render(self) -> Optional[CallbackFunction]:
+        """JavaScript callback function that fires when the chart is initially loaded 
+        (directly after the ``load`` event), and after each redraw (directly after the ``redraw`` event).
+
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
+        """
+        return self._render
+
+    @render.setter
+    @class_sensitive(CallbackFunction)
+    def render(self, value):
+        self._render = value
+
+    @property
     def redraw(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when the chart is redrawn, either after
         a JavaScript call to ``chart.redraw()`` or after an axis, series, or point is
@@ -300,6 +314,7 @@ class ChartEvents(HighchartsMeta):
             'fullscreen_open': as_dict.get('fullscreenOpen', None),
             'load': as_dict.get('load', None),
             'redraw': as_dict.get('redraw', None),
+            'render': as_dict.get('render', None),
             'selection': as_dict.get('selection', None)
         }
 
@@ -319,6 +334,7 @@ class ChartEvents(HighchartsMeta):
             'fullscreenOpen': self.fullscreen_open,
             'load': self.load,
             'redraw': self.redraw,
+            'render': self.render,
             'selection': self.selection
         }
 

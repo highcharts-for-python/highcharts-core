@@ -1,4 +1,21 @@
 
+Release 1.9.0
+=========================================
+
+* **BUGFIX:** Fixed missing serialization/de-serialization of ``ChartEvents.render``.
+* **BUGFIX:** Added new ``utility_classes.data_labels.PieDataLabel`` class to ensure support for
+  the ``.distance`` property on Pie-chart (and descended) data labels. Closes #183.
+* **BUGFIX:** Fixed ``options.chart.height`` type validation to accept string values as per JS API.
+  (Issue reported in #184).
+* **BUGFIX:** Added missing support for ``options.plot_options.sunburst.SunburstOptions.border_radius``
+  (issue reported in #184).
+* **BUGFIX:** Added support for concatenation via `+` operator in JS literal strings when parsed by
+  ``.from_js_literal()``. Closes #185.
+* **ENHANCEMENT:** Added support for ``utility_classes.border_radius.BorderRadius`` object.
+
+----
+
+
 Release 1.8.2
 =========================================
 
