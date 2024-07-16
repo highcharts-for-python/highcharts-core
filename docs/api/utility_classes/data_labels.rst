@@ -48,6 +48,24 @@ class: :class:`OrganizationDataLabel <highcharts_core.utility_classes.data_label
 -----------------
 
 ********************************************************************************************************************
+class: :class:`PieDataLabel <highcharts_core.utility_classes.data_labels.PieDataLabel>`
+********************************************************************************************************************
+
+.. autoclass:: PieDataLabel
+  :members:
+  :inherited-members:
+
+  .. collapse:: Class Inheritance
+
+    .. inheritance-diagram:: PieDataLabel
+      :top-classes: highcharts_core.metaclasses.HighchartsMeta
+      :parts: -1
+
+  |
+
+-----------------
+
+********************************************************************************************************************
 class: :class:`SunburstDataLabel <highcharts_core.utility_classes.data_labels.SunburstDataLabel>`
 ********************************************************************************************************************
 

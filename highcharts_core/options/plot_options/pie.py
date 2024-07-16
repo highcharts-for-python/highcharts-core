@@ -1,12 +1,15 @@
 from typing import Optional, List
 from decimal import Decimal
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
 from highcharts_core import constants, errors, utility_functions
 from highcharts_core.options.plot_options.generic import GenericTypeOptions
 from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
+from highcharts_core.utility_classes.data_labels import PieDataLabel
+from highcharts_core.utility_classes.border_radius import BorderRadius
+from highcharts_core.decorators import validate_types
 
 
 class PieOptions(GenericTypeOptions):
@@ -93,7 +96,7 @@ class PieOptions(GenericTypeOptions):
         self._border_color = utility_functions.validate_color(value)
 
     @property
-    def border_radius(self) -> Optional[str | int | float | Decimal]:
+    def border_radius(self) -> Optional[str | int | float | Decimal | BorderRadius]:
         """
         .. versionadded:: Highcharts Core for Python v.1.1.0 / Highcharts Core (JS) v.11.0.0
         
@@ -104,7 +107,9 @@ class PieOptions(GenericTypeOptions):
             A numerical value signifies the value is expressed in pixels. A percentage string like `50%`
             signifies a size relative to the radius and the inner radius.
             
-        :rtype: numeric, :class:`str <python:str>` or :obj:`None <python:None>`
+        :rtype: numeric, :class:`str <python:str>`, 
+          :class:`BorderRadius <highcharts_core.utility_classes.border_radius.BorderRadius>` or 
+          :obj:`None <python:None>`
         """
         return self._border_radius
 
@@ -114,11 +119,14 @@ class PieOptions(GenericTypeOptions):
             self._border_radius = None
         else:
             try:
-                value = validators.string(value)
-                if '%' not in value:
-                    raise ValueError
-            except (TypeError, ValueError):
-                value = validators.numeric(value, minimum = 0)
+                value = validate_types(value, types = BorderRadius)
+            except (ValueError, TypeError):
+                try:
+                    value = validators.string(value)
+                    if '%' not in value:
+                        raise ValueError
+                except (TypeError, ValueError):
+                    value = validators.numeric(value, minimum = 0)
 
             self._border_radius = value
 
@@ -264,6 +272,35 @@ class PieOptions(GenericTypeOptions):
         else:
             value = validators.iterable(value)
             self._colors = [utility_functions.validate_color(x) for x in value]
+
+    @property
+    def data_labels(self) -> Optional[PieDataLabel | List[PieDataLabel]]:
+        """Options for the series data labels, appearing next to each data point.
+
+        .. note::
+
+          To have multiple data labels per data point, you can also supply a collection of
+          :class:`DataLabel` configuration settings.
+
+        :rtype: :class:`PieDataLabel`, :class:`list <python:list>` of :class:`PieDataLabel`, or
+          :obj:`None <python:None>`
+        """
+        return self._data_labels
+
+    @data_labels.setter
+    def data_labels(self, value):
+        if not value:
+            self._data_labels = None
+        else:
+            if checkers.is_iterable(value):
+                self._data_labels = validate_types(value,
+                                                   types = PieDataLabel,
+                                                   allow_none = False,
+                                                   force_iterable = True)
+            else:
+                self._data_labels = validate_types(value,
+                                                   types = PieDataLabel,
+                                                   allow_none = False)
 
     @property
     def depth(self) -> Optional[int | float | Decimal]:

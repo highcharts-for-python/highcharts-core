@@ -622,6 +622,8 @@ Core Components
       :class:`ASTNode <highcharts_core.utility_classes.ast.ASTNode>`
       :class:`TextPath <highcharts_core.utility_classes.ast.TextPath>`
       :class:`AttributeObject <highcharts_core.utility_classes.ast.AttributeObject>`
+  * - :mod:`.utility_classes.border_radius <highcharts_core.utility_classes.border_radius>`
+    - :class:`BorderRadius <highcharts_core.utility_classes.border_radius.BorderRadius>`
   * - :mod:`.utility_classes.breadcrumbs <highcharts_core.utility_classes.breadcrumbs>`
     - :class:`BreadcrumbOptions <highcharts_core.utility_classes.breadcrumbs.BreadcrumbOptions>`
       :class:`Separator <highcharts_core.utility_classes.breadcrumbs.Separator>`
@@ -638,6 +640,7 @@ Core Components
     - :class:`DataGroupingOptions <highcharts_core.utility_classes.data_grouping.DataGroupingOptions>`
   * - :mod:`.utility_classes.data_labels <highcharts_core.utility_classes.data_labels>`
     - :class:`DataLabel <highcharts_core.utility_classes.data_labels.DataLabel>`
+      :class:`PieDataLabel <highcharts_core.utility_classes.data_labels.PieDataLabel>`
       :class:`SunburstDataLabel <highcharts_core.utility_classes.data_labels.SunburstDataLabel>`
       :class:`OrganizationDataLabel <highcharts_core.utility_classes.data_labels.OrganizationDataLabel>`
       :class:`NodeDataLabel <highcharts_core.utility_classes.data_labels.NodeDataLabel>`

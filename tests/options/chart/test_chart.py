@@ -13,6 +13,9 @@ from tests.fixtures import input_files, check_input_file, to_camelCase, to_js_di
 STANDARD_PARAMS = [
     ({}, None),
     ({
+        'height': '60%'
+    }, None),
+    ({
       'align_thresholds': True,
       'align_ticks': True,
       'allow_mutating_data': True,

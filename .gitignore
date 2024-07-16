@@ -132,3 +132,6 @@ dmypy.json
 # temp files
 ~$*.*
 tests/input_files/headless_export/output/
+
+# VSCode Settings
+.vscode/
