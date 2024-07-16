@@ -234,6 +234,20 @@ class ChartEvents(HighchartsMeta):
         self._load = value
 
     @property
+    def render(self) -> Optional[CallbackFunction]:
+        """JavaScript callback function that fires when the chart is initially loaded 
+        (directly after the ``load`` event), and after each redraw (directly after the ``redraw`` event).
+
+        :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
+        """
+        return self._render
+
+    @render.setter
+    @class_sensitive(CallbackFunction)
+    def render(self, value):
+        self._render = value
+
+    @property
     def redraw(self) -> Optional[CallbackFunction]:
         """JavaScript callback function that fires when the chart is redrawn, either after
         a JavaScript call to ``chart.redraw()`` or after an axis, series, or point is
