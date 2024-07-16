@@ -300,6 +300,7 @@ class ChartEvents(HighchartsMeta):
             'fullscreen_open': as_dict.get('fullscreenOpen', None),
             'load': as_dict.get('load', None),
             'redraw': as_dict.get('redraw', None),
+            'render': as_dict.get('render', None),
             'selection': as_dict.get('selection', None)
         }
 
@@ -319,6 +320,7 @@ class ChartEvents(HighchartsMeta):
             'fullscreenOpen': self.fullscreen_open,
             'load': self.load,
             'redraw': self.redraw,
+            'render': self.render,
             'selection': self.selection
         }
 
