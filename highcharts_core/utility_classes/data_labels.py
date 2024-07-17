@@ -946,7 +946,7 @@ class PieDataLabel(DataLabel):
     
     @distance.setter
     def distance(self, value):
-        if not value:
+        if value is None:
             self._distance = None
         else:
             try:
@@ -955,6 +955,8 @@ class PieDataLabel(DataLabel):
                 if not isinstance(value, str):
                     raise errors.HighchartsValueError(f'distance must be a number or a string, but received '
                                                       f'{type(value).__name__}.')
+                if value == '':
+                    value = None
 
             self._distance = value
 

@@ -1,4 +1,14 @@
 
+Release 1.9.2
+=========================================
+
+* **BUGFIX:** Resolved over-broad False-y validation of ``PieDataLabel.distance`` to allow for ``0`` 
+  values. Closes #192.
+* **BUGFIX:** Fixed over-broad False-y validation of ``Tooltip.header_format`` to allow for empty string
+  values, bringing it in line with ``Tooltip.footer_format``. Closes #193.
+
+----
+
 Release 1.9.1
 =========================================
 
