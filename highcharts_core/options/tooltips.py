@@ -438,7 +438,10 @@ class Tooltip(HighchartsMeta):
 
     @header_format.setter
     def header_format(self, value):
-        self._header_format = validators.string(value, allow_empty = True)
+        if value == '':
+            self._header_format = value
+        else:
+            self._header_format = validators.string(value, allow_empty = True)
 
     @property
     def header_shape(self) -> Optional[str]:
