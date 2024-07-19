@@ -98,7 +98,7 @@ Naming Conventions
   noun that describes what information is contained in the variable. If a ``bool``,
   preface with ``is_`` or ``has_`` or similar question-word that can be answered
   with a yes-or-no.
-* ``function_name`` and not ``function_name`` or ``functionName``. Should be an
+* ``function_name`` and not ``functionName`` or ``FunctionName``. Should be an
   imperative that describes what the function does (e.g. ``get_next_page``).
 * ``CONSTANT_NAME`` and not ``constant_name`` or ``ConstantName``.
 * ``ClassName`` and not ``class_name`` or ``Class_Name``.
