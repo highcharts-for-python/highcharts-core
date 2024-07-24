@@ -704,7 +704,7 @@ class HighchartsMeta(ABC):
             return cls.from_js_literal(prefixed_str,
                                        _break_loop_on_failure = True)
         elif not checkers.is_type(body, 'VariableDeclaration'):
-            raise errors.HighchartsVariableDeclarationError('To parse a JavaScriot '
+            raise errors.HighchartsVariableDeclarationError('To parse a JavaScript '
                                                             'object literal, it is '
                                                             'expected to be either a '
                                                             'variable declaration or a'
@@ -1338,7 +1338,7 @@ class JavaScriptDict(UserDict):
             return cls.from_js_literal(prefixed_str,
                                        _break_loop_on_failure = True)
         elif not checkers.is_type(body, 'VariableDeclaration'):
-            raise errors.HighchartsVariableDeclarationError('To parse a JavaScriot '
+            raise errors.HighchartsVariableDeclarationError('To parse a JavaScript '
                                                             'object literal, it is '
                                                             'expected to be either a '
                                                             'variable declaration or a'
