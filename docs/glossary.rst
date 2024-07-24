@@ -241,7 +241,7 @@ Glossary
 
     JavaScript Object Literal Notation *is* JavaScript source code. JSON is not. JSON is
     a way of encoding data into a text form that JavaScript is able to parse and
-    deserialize. Because Highcharts JS relies heavily on JavaScriot object literal
+    deserialize. Because Highcharts JS relies heavily on JavaScript object literal
     notation to support the definition of :term:`event handlers <event handler>` and
     :term:`callback functions <callback function>`, **Highcharts for Python** is designed
     to serialize and deserialize Python representations to/from their JavaScript object
@@ -254,7 +254,7 @@ Glossary
       :widths: 50 50
       :header-rows: 1
 
-      * - JavaScriot Object Literal Notation
+      * - JavaScript Object Literal Notation
         - JSON
       * - |
           .. code-block:: JavaScript
