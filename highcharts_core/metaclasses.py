@@ -323,6 +323,18 @@ class HighchartsMeta(ABC):
                     trimmed_value = str(value)
                     if trimmed_value and trimmed_value != 'None':
                         as_dict[key] = trimmed_value
+            # MapData -> dict --> object
+            elif checkers.is_type(value, 'MapData') and to_json and for_export:
+                untrimmed_value = value._to_untrimmed_dict()
+                updated_context = value.__class__.__name__
+                topology = untrimmed_value.get('topology', None)
+                if topology:
+                    trimmed_value = topology.to_dict()
+                else:
+                    trimmed_value = None
+
+                if trimmed_value:
+                    as_dict[key] = trimmed_value
             # HighchartsMeta -> dict --> object
             elif value and hasattr(value, '_to_untrimmed_dict'):
                 untrimmed_value = value._to_untrimmed_dict()
