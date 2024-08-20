@@ -4,6 +4,7 @@ Release 1.9.3
 
 * **BUGFIX:** Fixed incorrect export serialization of Highcharts Maps for Python map topologies.
 * **BUGFIX:** Added support for value ``'allow'`` to ``DataLabel.overflow`` property. Fixes #198.
+* **DOCS:** Fixed some typos in documentation (courtesy of @JulienBacquart).
 
 ----
 
