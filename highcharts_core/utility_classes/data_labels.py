@@ -561,8 +561,8 @@ class DataLabel(HighchartsMeta):
             self._overflow = None
         else:
             value = value.lower()
-            if value not in ['justify', 'none']:
-                raise errors.HighchartsValueError(f'overflow accepts "justify" or "none".'
+            if value not in ['justify', 'allow', 'none']:
+                raise errors.HighchartsValueError(f'overflow accepts "justify", "allow", or "none".'
                                                   f' Was: {value}')
             self._overflow = value
 

@@ -323,6 +323,18 @@ class HighchartsMeta(ABC):
                     trimmed_value = str(value)
                     if trimmed_value and trimmed_value != 'None':
                         as_dict[key] = trimmed_value
+            # MapData -> dict --> object
+            elif checkers.is_type(value, 'MapData') and to_json and for_export:
+                untrimmed_value = value._to_untrimmed_dict()
+                updated_context = value.__class__.__name__
+                topology = untrimmed_value.get('topology', None)
+                if topology:
+                    trimmed_value = topology.to_dict()
+                else:
+                    trimmed_value = None
+
+                if trimmed_value:
+                    as_dict[key] = trimmed_value
             # HighchartsMeta -> dict --> object
             elif value and hasattr(value, '_to_untrimmed_dict'):
                 untrimmed_value = value._to_untrimmed_dict()
@@ -704,7 +716,7 @@ class HighchartsMeta(ABC):
             return cls.from_js_literal(prefixed_str,
                                        _break_loop_on_failure = True)
         elif not checkers.is_type(body, 'VariableDeclaration'):
-            raise errors.HighchartsVariableDeclarationError('To parse a JavaScriot '
+            raise errors.HighchartsVariableDeclarationError('To parse a JavaScript '
                                                             'object literal, it is '
                                                             'expected to be either a '
                                                             'variable declaration or a'
@@ -1338,7 +1350,7 @@ class JavaScriptDict(UserDict):
             return cls.from_js_literal(prefixed_str,
                                        _break_loop_on_failure = True)
         elif not checkers.is_type(body, 'VariableDeclaration'):
-            raise errors.HighchartsVariableDeclarationError('To parse a JavaScriot '
+            raise errors.HighchartsVariableDeclarationError('To parse a JavaScript '
                                                             'object literal, it is '
                                                             'expected to be either a '
                                                             'variable declaration or a'
