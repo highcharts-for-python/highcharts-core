@@ -398,6 +398,8 @@ def get_js_literal(item, careful_validation = False) -> str:
             as_str += f"""{item}"""
     elif item == constants.EnforcedNull:
         as_str += """null"""
+    elif HAS_NUMPY and not isinstance(item, (dict, UserDict)) and np.isnan(item):
+        as_str += """null"""
     elif item is True:
         as_str += """true"""
     elif item is False:
