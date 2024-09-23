@@ -8,6 +8,12 @@ from highcharts_core import constants, errors
 from decimal import Decimal
 
 import esprima
+try:
+    import numpy as np
+    HAS_NUMPY = True
+except ImportError:
+    HAS_NUMPY = False
+
 from validator_collection import checkers
 
 
@@ -209,3 +215,70 @@ def test_is_js_object(original_str, expected, error):
     else:
         with pytest.raises(error):
             result = js.is_js_object(original_str)
+
+
+@pytest.mark.parametrize('original_value, error', [
+    ({'test', 123}, TypeError),
+    ([{'test': 123}], TypeError),
+    ({'test': {'subtest': 123}}, TypeError),
+    ({'test': 'string'}, TypeError),
+    ('string', TypeError),
+    (True, None),
+    (False, None),
+    (123, None),
+    (123.45, None),
+    (Decimal(123.45), TypeError),
+    ([1, 2, 3], None),
+    ([1.2, 3.4, 5.6], None),
+    (['string', 1, 2, 3], TypeError),
+    (['string', [1, 2, 3]], ValueError),
+    (['test', None], TypeError),
+    (None, TypeError),
+])
+def test_np_isnan(original_value, error):
+    print(f'ORIGINAL VALUE: {original_value}')
+    print(f'{type(original_value)}')
+    if HAS_NUMPY and not error:
+        result = np.isnan(original_value)
+        print(f'RESULT: {result}')
+        if not isinstance(result, np.ndarray):
+            assert result is False or not result
+        else:
+            assert result.all() is False or not result.all()
+    elif HAS_NUMPY:
+        with pytest.raises(error):
+            result = np.isnan(original_value)
+    else:
+        pass
+    
+
+@pytest.mark.parametrize('original_value, expected, error', [
+    ({'test': 123}, """{'test': 123}""", None),
+    ([{'test': 123}], """[{'test': 123}]""", None),
+    ({'test': {'subtest': 123}}, """{'test': {'subtest': 123}}""", None),
+    ({'test': 'string'}, """{'test': 'string'}""", None),
+    ('string', """'string'""", None),
+    (True, """true""", None),
+    (False, """false""", None),
+    (123, """123""", None),
+    (123.45, """123.45""", None),
+    (Decimal(123.45), """123.45""", None),
+    ([1, 2, 3], """[1,\n2,\n3]""", None),
+    ([1.2, 3.4, 5.6], """[1.2,\n3.4,\n5.6]""", None),
+    (['string', 1, 2, 3], """['string',\n1,\n2,\n3]""", None),
+    (['string', [1, 2, 3]], """['string',\n[1,\n2,\n3]]""", None),
+    (['test', None], """['test',\nnull]""", None),
+    (None, """null""", None),
+])
+def test_get_js_literal(original_value, expected, error):
+    print(f'ORIGINAL VALUE: {original_value}')
+    if not error:
+        result = js.get_js_literal(original_value)
+        if not isinstance(original_value, Decimal):
+            assert result == expected
+        else:
+            assert result == str(original_value)
+    else:
+        with pytest.raises(error):
+            result = js.get_js_literal(original_value)
+    
