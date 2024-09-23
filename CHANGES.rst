@@ -1,4 +1,12 @@
 
+Release 1.9.4
+=========================================
+
+* **BUGFIX:** Fixed ``TypeError`` which occurred on certain ``np.isnan()`` operations when serializing to JS 
+  Literal (courtesy of @ThomasGL) (closes #200).
+
+----
+
 Release 1.9.3
 =========================================
 
