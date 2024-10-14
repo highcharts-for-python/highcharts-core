@@ -496,3 +496,48 @@ the ``series_index`` argument tells it to only use the 10th series generated.
     lead to multiple series generated from the :class:`DataFrame <pandas:pandas.DataFrame>` - then
     the method will throw a 
     :exc:`HighchartsPandasDeserializationError <highcharts_core.errors.HighchartsPandasDeserializationError>`
+
+Working with Time Series
+======================================
+
+Normally, in the context of pandas one would reference their pandas DataFrame with the timeseries at the index.
+
+Beware that javascript renders time through epoch, and so does the Highcharts javascript library, thus keep in mind this is a requirement!
+
+For further read on the top, check the example under `Date.now() - JavaScript | MDN <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now>`__,
+also try playing with your browser console and use something like `Date.now();`, and you should see a very large int represeting the current time in epoch, meaning the time elapsed since 1970, January the first in nanoseconds.
+
+A demonstration is given below.
+
+  .. code-block:: python
+
+    import pandas as pd
+    import datetime as dt
+    import numpy as np
+    df = pd.DataFrame([
+        {"ref_date": dt.date(2024, 1, 1), "data": 1},
+        {"ref_date": dt.date(2024, 1, 2), "data": 5},
+        {"ref_date": dt.date(2024, 1, 3), "data": None},
+        {"ref_date": dt.date(2024, 1, 4), "data": 4},
+        {"ref_date": dt.date(2024, 1, 5), "data": None},
+    ])
+
+    df['ref_date'] = pd.to_datetime(df['ref_date'])
+    df.set_index('ref_date', inplace=True)
+    df.index = (df.index.astype(np.int64) / 10**6).astype(np.int64)
+
+    from highcharts_core.chart import Chart
+    chart = Chart.from_pandas(
+        df=df.reset_index(),
+        series_type='line',
+        property_map={
+            'x': df.index.name,
+            'y': df.columns.to_list()
+        }
+    )
+
+    chart.options.x_axis = {
+        'type': 'datetime'
+    }
+
+    chart.display()
