@@ -329,6 +329,44 @@ Hello World, and Basic Usage
                          href = 'https://www.highchartspython.com')
     my_chart.options.credits = my_credits
 
+    # EXAMPLE 3.
+    # Pandas with time series
+    import pandas as pd
+    import datetime as dt
+    import numpy as np
+    df = pd.DataFrame([
+        {"ref_date": dt.date(2024, 1, 1), "data": 1},
+        {"ref_date": dt.date(2024, 1, 2), "data": 5},
+        {"ref_date": dt.date(2024, 1, 3), "data": None},
+        {"ref_date": dt.date(2024, 1, 4), "data": 4},
+        {"ref_date": dt.date(2024, 1, 5), "data": None},
+    ])
+
+    df['ref_date'] = pd.to_datetime(df['ref_date'])
+    df.set_index('ref_date', inplace=True)
+
+    df.index = (df.index.astype(np.int64) / 10**6).astype(np.int64) 
+    # Correcting nanoseconds to epoch, which is crucial for javascript rendering, 
+    # See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now 
+    # for more information on this behaviour
+
+    from highcharts_core.chart import Chart
+    chart = Chart.from_pandas(
+        df=df.reset_index(),
+        series_type='line',
+        property_map={
+            'x': df.index.name,
+            'y': df.columns.to_list()
+        }
+    )
+
+    chart.options.x_axis = {
+        'type': 'datetime'
+    }
+
+    chart.display()
+
+
 5. Generate the JavaScript Code for Your Chart
 =================================================
 

@@ -128,6 +128,8 @@ class CartesianData(DataBase):
                 value = validators.datetime(value)
             elif checkers.is_date(value):
                 value = validators.date(value)
+            elif HAS_NUMPY and hasattr(value, 'dtype') and value.dtype.char == 'M':
+                value = (value.astype(np.int64) / 10**6).astype(np.int64)
             elif checkers.is_numeric(value):
                 value = validators.numeric(value)
             else:

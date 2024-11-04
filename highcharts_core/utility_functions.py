@@ -688,8 +688,10 @@ def from_ndarray(as_ndarray, force_enforced_null = False):
     else:
         nan_replacement = None
 
-    if as_ndarray.dtype.char not in ['O', 'U']:
+    if as_ndarray.dtype.char not in ['O', 'U', 'M']:
         stripped = np.where(np.isnan(as_ndarray), nan_replacement, as_ndarray)
+    elif as_ndarray.dtype.char == 'M':
+        stripped = (as_ndarray.astype(np.int64) / 10**6).astype(np.int64)
     else:
         prelim_stripped = as_ndarray.tolist()
         stripped = []

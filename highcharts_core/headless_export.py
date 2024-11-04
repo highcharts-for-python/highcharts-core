@@ -11,6 +11,7 @@ from typing import Optional, Dict, List
 import requests
 from validator_collection import validators, checkers
 
+from highcharts_core import __version__ as highcharts_version
 from highcharts_core import errors, constants
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.metaclasses import HighchartsMeta
@@ -57,6 +58,9 @@ class ExportServer(HighchartsMeta):
         self._files = None
         self._css = None
         self._js = None
+        
+        self._referer = None
+        self._user_agent = None
 
         self.protocol = kwargs.get('protocol',
                                    os.getenv('HIGHCHARTS_EXPORT_SERVER_PROTOCOL',
@@ -87,6 +91,11 @@ class ExportServer(HighchartsMeta):
         js = kwargs.get('js', None)
         resources = kwargs.get('resources', None)
         
+        self.referer = kwargs.get('referer', 
+                                  os.getenv('HIGHCHARTS_EXPORT_SERVER_REFERER', 'https://www.highcharts.com'))
+        self.user_agent = kwargs.get('user_agent',
+                                     os.getenv('HIGHCHARTS_EXPORT_SERVER_USER_AGENT', None))
+        
         if resources:
             self.resources = kwargs.get('resources', None)
         else:
@@ -95,6 +104,44 @@ class ExportServer(HighchartsMeta):
             self.js = js
         
         super().__init__(**kwargs)
+
+    @property
+    def referer(self) -> Optional[str]:
+        """The referer to use when making requests to the export server. Defaults to the 
+        ``HIGHCHARTS_EXPORT_SERVER_REFERER`` environment variable if present, otherwise defaults to
+        ``'https://www.highcharts.com'``.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._referer
+    
+    @referer.setter
+    def referer(self, value):
+        value = validators.url(value, allow_empty = True)
+        if not value:
+            value = 'https://www.highcharts.com'
+        
+        self._referer = value
+    
+    @property
+    def user_agent(self) -> Optional[str]:
+        """The user agent to use when making requests to the export server. Defaults to the ``HIGHCHARTS_EXPORT_SERVER_USER_AGENT`` environment variable if present, otherwise defaults to
+        ``Highcharts Core for Python / v.<VERSION NUMBER>.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        if self._user_agent:
+            return self._user_agent
+        
+        return f'Highcharts Core for Python / v.{highcharts_version.__version__}'
+    
+    @user_agent.setter
+    def user_agent(self, value):
+        value = validators.string(value, allow_empty = True)
+        if not value:
+            value = None
+        
+        self._user_agent = value
 
     @property
     def protocol(self) -> Optional[str]:
@@ -926,7 +973,11 @@ class ExportServer(HighchartsMeta):
 
         result = requests.post(self.url,
                                data = as_json.encode('utf-8'),
-                               headers = { 'Content-Type': 'application/json' },
+                               headers = { 
+                                   'Content-Type': 'application/json',
+                                   'Referer': self.referer,
+                                   'User-Agent': self.user_agent,
+                               },
                                auth = basic_auth,
                                timeout = timeout)
 
