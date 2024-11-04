@@ -1,4 +1,14 @@
 
+Release 1.10.0
+=========================================
+
+* **ENHANCEMENT:** Added `User-Agent` and `Referer` support to the `ExportServer` class to accommodate
+  new security measures on Highsoft's public Export Server instance.
+* **BUGFIX:** Adjusted handling of NumPy `datetime64` values to serialize them to Unix epoch milliseconds,
+  rather than the default nanoseconds (closes #204).
+
+----
+
 Release 1.9.4
 =========================================
 
