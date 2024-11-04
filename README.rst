@@ -330,7 +330,7 @@ Hello World, and Basic Usage
     my_chart.options.credits = my_credits
 
     # EXAMPLE 3.
-    # Pandas with timeseries
+    # Pandas with time series
     import pandas as pd
     import datetime as dt
     import numpy as np
@@ -344,7 +344,11 @@ Hello World, and Basic Usage
 
     df['ref_date'] = pd.to_datetime(df['ref_date'])
     df.set_index('ref_date', inplace=True)
-    df.index = (df.index.astype(np.int64) / 10**6).astype(np.int64) # Correcting nanoseconds to epoch, this is crucial for javascript rendering, check https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now for more information on this behaviour
+
+    df.index = (df.index.astype(np.int64) / 10**6).astype(np.int64) 
+    # Correcting nanoseconds to epoch, which is crucial for javascript rendering, 
+    # See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now 
+    # for more information on this behaviour
 
     from highcharts_core.chart import Chart
     chart = Chart.from_pandas(

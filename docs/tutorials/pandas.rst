@@ -412,6 +412,56 @@ What we did here is we added a ``series_index`` argument, which tells **Highchar
 include the series found at that index in the resulting chart. In this case, we supplied a :func:`slice <python:slice>`
 object, which operates just like ``list_of_series[7:10]``. The result only returns those series between index 7 and 10.
 
+Working with Time Series
+======================================
+
+Normally, in the context of Pandas one would reference their Pandas DataFrame with the time series at the index. 
+However, JavaScript (and the Highcharts JS library) renders time in relationship to the Unix epoch of January 1, 1970.
+
+.. seealso::
+  
+  To see how this behaves, check the example under 
+  `Date.now() - JavaScript | MDN <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now>`__ 
+  and try playing with your browser console with a command like ``Date.now();``. You should see a very large integer representing the number of nanoseconds elapsed since the first of January. 1970.
+
+While Highcharts for Python will automatically convert NumPy `datetime64 <numpy:numpy.datetime64>` values into their
+appropriate integers, you may want to do this conversion yourself. A demonstration is given below:
+
+  .. code-block:: python
+
+    import pandas as pd
+    import datetime as dt
+    import numpy as np
+    df = pd.DataFrame([
+        {"ref_date": dt.date(2024, 1, 1), "data": 1},
+        {"ref_date": dt.date(2024, 1, 2), "data": 5},
+        {"ref_date": dt.date(2024, 1, 3), "data": None},
+        {"ref_date": dt.date(2024, 1, 4), "data": 4},
+        {"ref_date": dt.date(2024, 1, 5), "data": None},
+    ])
+
+    df['ref_date'] = pd.to_datetime(df['ref_date'])
+    df.set_index('ref_date', inplace=True)
+    
+    df.index = (df.index.astype(np.int64) / 10**6).astype(np.int64)
+    # This line is the important one! It converts the datetime64 values into their epoch-based millisecond equivalents.
+
+    from highcharts_core.chart import Chart
+    chart = Chart.from_pandas(
+        df=df.reset_index(),
+        series_type='line',
+        property_map={
+            'x': df.index.name,
+            'y': df.columns.to_list()
+        }
+    )
+
+    chart.options.x_axis = {
+        'type': 'datetime'
+    }
+
+    chart.display()
+
 ------------------------
 
 **********************************************************************
@@ -467,6 +517,7 @@ Filtering Series Created from Rows
   my_series = LineSeries.from_pandas_in_rows(df, series_index = slice(0, 5))
 
 This will return the first five series in the list of 57.
+
 --------------------------
 
 ***********************************************************
@@ -497,47 +548,3 @@ the ``series_index`` argument tells it to only use the 10th series generated.
     the method will throw a 
     :exc:`HighchartsPandasDeserializationError <highcharts_core.errors.HighchartsPandasDeserializationError>`
 
-Working with Time Series
-======================================
-
-Normally, in the context of pandas one would reference their pandas DataFrame with the timeseries at the index.
-
-Beware that javascript renders time through epoch, and so does the Highcharts javascript library, thus keep in mind this is a requirement!
-
-For further read on the top, check the example under `Date.now() - JavaScript | MDN <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now>`__,
-also try playing with your browser console and use something like `Date.now();`, and you should see a very large int represeting the current time in epoch, meaning the time elapsed since 1970, January the first in nanoseconds.
-
-A demonstration is given below.
-
-  .. code-block:: python
-
-    import pandas as pd
-    import datetime as dt
-    import numpy as np
-    df = pd.DataFrame([
-        {"ref_date": dt.date(2024, 1, 1), "data": 1},
-        {"ref_date": dt.date(2024, 1, 2), "data": 5},
-        {"ref_date": dt.date(2024, 1, 3), "data": None},
-        {"ref_date": dt.date(2024, 1, 4), "data": 4},
-        {"ref_date": dt.date(2024, 1, 5), "data": None},
-    ])
-
-    df['ref_date'] = pd.to_datetime(df['ref_date'])
-    df.set_index('ref_date', inplace=True)
-    df.index = (df.index.astype(np.int64) / 10**6).astype(np.int64)
-
-    from highcharts_core.chart import Chart
-    chart = Chart.from_pandas(
-        df=df.reset_index(),
-        series_type='line',
-        property_map={
-            'x': df.index.name,
-            'y': df.columns.to_list()
-        }
-    )
-
-    chart.options.x_axis = {
-        'type': 'datetime'
-    }
-
-    chart.display()
