@@ -107,7 +107,8 @@ class ExportServer(HighchartsMeta):
 
     @property
     def referer(self) -> Optional[str]:
-        """The referer to use when making requests to the export server. Defaults to
+        """The referer to use when making requests to the export server. Defaults to the 
+        ``HIGHCHARTS_EXPORT_SERVER_REFERER`` environment variable if present, otherwise defaults to
         ``'https://www.highcharts.com'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
@@ -124,15 +125,15 @@ class ExportServer(HighchartsMeta):
     
     @property
     def user_agent(self) -> Optional[str]:
-        """The user agent to use when making requests to the export server. Defaults to
-        ``Highcharts for Python / v.<VERSION NUMBER>.
+        """The user agent to use when making requests to the export server. Defaults to the ``HIGHCHARTS_EXPORT_SERVER_USER_AGENT`` environment variable if present, otherwise defaults to
+        ``Highcharts Core for Python / v.<VERSION NUMBER>.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         if self._user_agent:
             return self._user_agent
         
-        return f'Highcharts for Python / v.{highcharts_version.__version__}'
+        return f'Highcharts Core for Python / v.{highcharts_version.__version__}'
     
     @user_agent.setter
     def user_agent(self, value):
