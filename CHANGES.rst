@@ -1,4 +1,12 @@
 
+Release 1.10.1
+=========================================
+
+* **BUGFIX:** Fixed missing handling of JS module for `HeatmapOptions` and `HeatmapSeries` (closes #207).
+
+----
+
+
 Release 1.10.0
 =========================================
 
