@@ -394,6 +394,9 @@
   "plotOptions.geoheatmap": [
     "modules/geoheatmap"
   ],
+  "plotOptions.heatmap": [
+    "modules/heatmap"
+  ],
   "plotOptions.heikinashi": [
     "modules/heikinashi"
   ],
@@ -839,6 +842,9 @@
   ],
   "series.gauge": [
     "highcharts-more"
+  ],
+  "series.heatmap": [
+    "modules/heatmap"
   ],
   "series.heikinashi": [
     "modules/heikinashi"

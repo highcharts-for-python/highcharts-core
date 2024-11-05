@@ -129,6 +129,7 @@ INCLUDE_STR = """
     <script src="https://code.highcharts.com/modules/full-screen.js"/>
     <script src="https://code.highcharts.com/modules/funnel.js"/>
     <script src="https://code.highcharts.com/modules/funnel3d.js"/>
+    <script src="https://code.highcharts.com/modules/heatmap.js"/>
     <script src="https://code.highcharts.com/modules/histogram.js"/>
     <script src="https://code.highcharts.com/modules/item-series.js"/>
     <script src="https://code.highcharts.com/modules/lollipop.js"/>
