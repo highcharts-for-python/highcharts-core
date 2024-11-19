@@ -1,4 +1,13 @@
 
+Release 1.10.2
+=========================================
+
+* **DOCS:** Added some additional documentation around the `User-Agent` and `Referer` support for use when
+  exporting charts.
+* **ENHANCEMENT:** Some minor refactoring.
+
+----
+
 Release 1.10.1
 =========================================
 
