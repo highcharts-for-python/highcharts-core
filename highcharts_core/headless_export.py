@@ -1,5 +1,6 @@
 try:
     from dotenv import load_dotenv
+
     load_dotenv()
 except ImportError:
     pass
@@ -58,71 +59,77 @@ class ExportServer(HighchartsMeta):
         self._files = None
         self._css = None
         self._js = None
-        
+
         self._referer = None
         self._user_agent = None
 
-        self.protocol = kwargs.get('protocol',
-                                   os.getenv('HIGHCHARTS_EXPORT_SERVER_PROTOCOL',
-                                             'https'))
-        self.domain = kwargs.get('domain', os.getenv('HIGHCHARTS_EXPORT_SERVER_DOMAIN',
-                                                     'export.highcharts.com'))
-        self.port = kwargs.get('port', os.getenv('HIGHCHARTS_EXPORT_SERVER_PORT',
-                                                 ''))
-        self.path = kwargs.get('path', os.getenv('HIGHCHARTS_EXPORT_SERVER_PATH',
-                                                 ''))
+        self.protocol = kwargs.get(
+            "protocol", os.getenv("HIGHCHARTS_EXPORT_SERVER_PROTOCOL", "https")
+        )
+        self.domain = kwargs.get(
+            "domain",
+            os.getenv("HIGHCHARTS_EXPORT_SERVER_DOMAIN", "export.highcharts.com"),
+        )
+        self.port = kwargs.get("port", os.getenv("HIGHCHARTS_EXPORT_SERVER_PORT", ""))
+        self.path = kwargs.get("path", os.getenv("HIGHCHARTS_EXPORT_SERVER_PATH", ""))
 
-        self.options = kwargs.get('options', None)
-        self.format_ = kwargs.get('format_', kwargs.get('type', 'png'))
-        self.scale = kwargs.get('scale', 1)
-        self.width = kwargs.get('width', None)
-        self.height = kwargs.get('height', None)
-        self.callback = kwargs.get('callback', None)
-        self.constructor = kwargs.get('constructor', 'chart')
-        self.use_base64 = kwargs.get('use_base64', False)
-        self.no_download = kwargs.get('no_download', False)
-        self.async_rendering = kwargs.get('async_rendering', False)
-        self.global_options = kwargs.get('global_options', None)
-        self.data_options = kwargs.get('data_options', None)
-        self.custom_code = kwargs.get('custom_code', None)
-        
-        files = kwargs.get('files', None)
-        css = kwargs.get('css', None)
-        js = kwargs.get('js', None)
-        resources = kwargs.get('resources', None)
-        
-        self.referer = kwargs.get('referer', 
-                                  os.getenv('HIGHCHARTS_EXPORT_SERVER_REFERER', 'https://www.highcharts.com'))
-        self.user_agent = kwargs.get('user_agent',
-                                     os.getenv('HIGHCHARTS_EXPORT_SERVER_USER_AGENT', None))
-        
+        self.options = kwargs.get("options", None)
+        self.format_ = kwargs.get("format_", kwargs.get("type", "png"))
+        self.scale = kwargs.get("scale", 1)
+        self.width = kwargs.get("width", None)
+        self.height = kwargs.get("height", None)
+        self.callback = kwargs.get("callback", None)
+        self.constructor = kwargs.get("constructor", "chart")
+        self.use_base64 = kwargs.get("use_base64", False)
+        self.no_download = kwargs.get("no_download", False)
+        self.async_rendering = kwargs.get("async_rendering", False)
+        self.global_options = kwargs.get("global_options", None)
+        self.data_options = kwargs.get("data_options", None)
+        self.custom_code = kwargs.get("custom_code", None)
+
+        files = kwargs.get("files", None)
+        css = kwargs.get("css", None)
+        js = kwargs.get("js", None)
+        resources = kwargs.get("resources", None)
+
+        self.referer = kwargs.get(
+            "referer",
+            os.getenv("HIGHCHARTS_EXPORT_SERVER_REFERER", "https://www.highcharts.com"),
+        )
+        self.user_agent = kwargs.get(
+            "user_agent", os.getenv("HIGHCHARTS_EXPORT_SERVER_USER_AGENT", None)
+        )
+
         if resources:
-            self.resources = kwargs.get('resources', None)
+            self.resources = kwargs.get("resources", None)
         else:
             self.files = files
             self.css = css
             self.js = js
-        
+
         super().__init__(**kwargs)
 
     @property
     def referer(self) -> Optional[str]:
-        """The referer to use when making requests to the export server. Defaults to the 
+        """The referer to use when making requests to the export server. Defaults to the
         ``HIGHCHARTS_EXPORT_SERVER_REFERER`` environment variable if present, otherwise defaults to
         ``'https://www.highcharts.com'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
+        if not self._referer:
+            return os.getenv(
+                "HIGHCHARTS_EXPORT_SERVER_REFERER", "https://www.highcharts.com"
+            )
+
         return self._referer
-    
+
     @referer.setter
     def referer(self, value):
-        value = validators.url(value, allow_empty = True)
-        if not value:
-            value = 'https://www.highcharts.com'
-        
+        value = validators.url(value, allow_empty=True)
+
         self._referer = value
-    
+
     @property
     def user_agent(self) -> Optional[str]:
         """The user agent to use when making requests to the export server. Defaults to the ``HIGHCHARTS_EXPORT_SERVER_USER_AGENT`` environment variable if present, otherwise defaults to
@@ -132,15 +139,20 @@ class ExportServer(HighchartsMeta):
         """
         if self._user_agent:
             return self._user_agent
-        
-        return f'Highcharts Core for Python / v.{highcharts_version.__version__}'
-    
+
+        user_agent = os.getenv(
+            "HIGHCHARTS_EXPORT_SERVER_USER_AGENT",
+            f"Highcharts Core for Python / v.{highcharts_version.__version__}",
+        )
+
+        return user_agent
+
     @user_agent.setter
     def user_agent(self, value):
-        value = validators.string(value, allow_empty = True)
+        value = validators.string(value, allow_empty=True)
         if not value:
             value = None
-        
+
         self._user_agent = value
 
     @property
@@ -167,15 +179,17 @@ class ExportServer(HighchartsMeta):
 
     @protocol.setter
     def protocol(self, value):
-        value = validators.string(value, allow_empty = True)
+        value = validators.string(value, allow_empty=True)
         if not value:
-            value = os.getenv('HIGHCHARTS_EXPORT_SERVER_PROTOCOL', 'https')
+            value = os.getenv("HIGHCHARTS_EXPORT_SERVER_PROTOCOL", "https")
 
         value = value.lower()
-        if value not in ['https', 'http']:
-            raise errors.HighchartsUnsupportedProtocolError(f'protocol expects either '
-                                                            f'"https" or "http". '
-                                                            f'Received: "{value}"')
+        if value not in ["https", "http"]:
+            raise errors.HighchartsUnsupportedProtocolError(
+                f"protocol expects either "
+                f'"https" or "http". '
+                f'Received: "{value}"'
+            )
 
         self._protocol = value
         self._url = None
@@ -203,10 +217,11 @@ class ExportServer(HighchartsMeta):
 
     @domain.setter
     def domain(self, value):
-        value = validators.domain(value, allow_empty = True)
+        value = validators.domain(value, allow_empty=True)
         if not value:
-            value = os.getenv('HIGHCHARTS_EXPORT_SERVER_DOMAIN',
-                              'export.highcharts.com')
+            value = os.getenv(
+                "HIGHCHARTS_EXPORT_SERVER_DOMAIN", "export.highcharts.com"
+            )
         self._domain = value
         self._url = None
 
@@ -234,12 +249,11 @@ class ExportServer(HighchartsMeta):
     @port.setter
     def port(self, value):
         if value or value == 0:
-            value = validators.integer(value,
-                                       allow_empty = True,
-                                       minimum = 0,
-                                       maximum = 65536)
+            value = validators.integer(
+                value, allow_empty=True, minimum=0, maximum=65536
+            )
         else:
-            value = os.getenv('HIGHCHARTS_EXPORT_SERVER_PORT', None)
+            value = os.getenv("HIGHCHARTS_EXPORT_SERVER_PORT", None)
 
         self._port = value
         self._url = None
@@ -268,9 +282,9 @@ class ExportServer(HighchartsMeta):
 
     @path.setter
     def path(self, value):
-        value = validators.path(value, allow_empty = True)
+        value = validators.path(value, allow_empty=True)
         if value is None:
-            value = os.getenv('HIGHCHARTS_EXPORT_SERVER_PATH', None)
+            value = os.getenv("HIGHCHARTS_EXPORT_SERVER_PATH", None)
 
         self._path = value
         self._url = None
@@ -296,9 +310,9 @@ class ExportServer(HighchartsMeta):
         if self._url:
             return self._url
         else:
-            return_value = f'{self.protocol}://{self.domain}'
+            return_value = f"{self.protocol}://{self.domain}"
             if self.port is not None:
-                return_value += f':{self.port}/'
+                return_value += f":{self.port}/"
             if self.path is not None:
                 return_value += self.path
 
@@ -318,41 +332,41 @@ class ExportServer(HighchartsMeta):
             self.path = None
         else:
             original_value = value
-            self.protocol = value[:value.index(':')]
+            self.protocol = value[: value.index(":")]
 
-            protocol = self.protocol + '://'
-            value = value.replace(protocol, '')
+            protocol = self.protocol + "://"
+            value = value.replace(protocol, "")
 
             no_port = False
             try:
-                end_of_domain = value.index(':')
+                end_of_domain = value.index(":")
                 self.domain = value[:end_of_domain]
             except ValueError:
                 no_port = True
                 try:
-                    end_of_domain = value.index('/')
+                    end_of_domain = value.index("/")
                     self.domain = value[:end_of_domain]
                 except ValueError:
                     self.domain = value
 
-            domain = self.domain + '/'
+            domain = self.domain + "/"
             if domain in value:
-                value = value.replace(domain, '')
+                value = value.replace(domain, "")
             elif self.domain in value:
-                value = value.replace(self.domain, '')
+                value = value.replace(self.domain, "")
 
             if value and no_port:
-                if value.startswith('/'):
+                if value.startswith("/"):
                     self.path = value[1:]
                 else:
                     self.path = value
             else:
-                if value.startswith(':'):
+                if value.startswith(":"):
                     start_of_port = 1
                 else:
                     start_of_port = 0
                 try:
-                    end_of_port = value.index('/')
+                    end_of_port = value.index("/")
                 except ValueError:
                     end_of_port = None
 
@@ -361,9 +375,9 @@ class ExportServer(HighchartsMeta):
                 else:
                     self.port = value[start_of_port:]
 
-                port = f':{self.port}'
-                value = value.replace(port, '')
-                if value.startswith('/'):
+                port = f":{self.port}"
+                value = value.replace(port, "")
+                if value.startswith("/"):
                     self.path = value[1:]
                 elif value:
                     self.path = value
@@ -405,19 +419,19 @@ class ExportServer(HighchartsMeta):
 
     @format_.setter
     def format_(self, value):
-        value = validators.string(value, allow_empty = True)
+        value = validators.string(value, allow_empty=True)
         if not value:
             self._format_ = None
         else:
             value = value.lower()
-            if value not in ['png', 'jpeg', 'pdf', 'svg', 'image/svg+xml']:
+            if value not in ["png", "jpeg", "pdf", "svg", "image/svg+xml"]:
                 raise errors.HighchartsUnsupportedExportTypeError(
-                    f'format_ expects either '
+                    f"format_ expects either "
                     f'"png", "jpeg", "pdf", "svg", or '
                     f'"image/svg+xml". Received: {value}'
                 )
-            if value == 'svg':
-                value = 'image/svg+xml'
+            if value == "svg":
+                value = "image/svg+xml"
 
             self._format_ = value
 
@@ -443,9 +457,7 @@ class ExportServer(HighchartsMeta):
 
     @scale.setter
     def scale(self, value):
-        value = validators.numeric(value,
-                                   allow_empty = True,
-                                   minimum = 0)
+        value = validators.numeric(value, allow_empty=True, minimum=0)
         if not value:
             value = 1
 
@@ -467,9 +479,7 @@ class ExportServer(HighchartsMeta):
 
     @width.setter
     def width(self, value):
-        value = validators.numeric(value,
-                                   allow_empty = True,
-                                   minimum = 0)
+        value = validators.numeric(value, allow_empty=True, minimum=0)
         if not value:
             value = None
 
@@ -536,23 +546,34 @@ class ExportServer(HighchartsMeta):
 
     @constructor.setter
     def constructor(self, value):
-        value = validators.string(value, allow_empty = True)
+        value = validators.string(value, allow_empty=True)
         if not value:
             self._constructor = None
         else:
-            if value not in ['Chart', 'Stock', 'Map', 'Gantt', 'chart', 'stockChart', 'mapChart', 'ganttChart',]:
-                raise errors.HighchartsUnsupportedConstructorError(f'constructor expects '
-                                                                   f'"Chart", "Stock", "Map", "Gantt", "chart", '
-                                                                   f'"stockChart",  "mapChart", or "ganttChart", but '
-                                                                   f'received: "{value}"')
-            if value == 'Chart':
-                value = 'chart'
-            elif value == 'Stock':
-                value = 'stockChart'
-            elif value == 'Map':
-                value = 'mapChart'
-            elif value == 'Gantt':
-                value = 'ganttChart'
+            if value not in [
+                "Chart",
+                "Stock",
+                "Map",
+                "Gantt",
+                "chart",
+                "stockChart",
+                "mapChart",
+                "ganttChart",
+            ]:
+                raise errors.HighchartsUnsupportedConstructorError(
+                    f"constructor expects "
+                    f'"Chart", "Stock", "Map", "Gantt", "chart", '
+                    f'"stockChart",  "mapChart", or "ganttChart", but '
+                    f'received: "{value}"'
+                )
+            if value == "Chart":
+                value = "chart"
+            elif value == "Stock":
+                value = "stockChart"
+            elif value == "Map":
+                value = "mapChart"
+            elif value == "Gantt":
+                value = "ganttChart"
 
             self._constructor = value
 
@@ -645,31 +666,31 @@ class ExportServer(HighchartsMeta):
     @property
     def resources(self) -> Optional[Dict]:
         """A dictionary of resources to be used in the export server.
-        
-        Expects to contain up to three keys: 
-        
+
+        Expects to contain up to three keys:
+
           * ``files`` which contains an array of JS filenames
           * ``js`` which contains a string representation of JS code
           * ``css`` which contains a string representation of CSS code that will
             applied to the chart on export
-        
+
         Defaults to :obj:`None <python:None>`.
 
         :rtype: :class:`dict <python:dict>` or :obj:`None <python:None>`
         """
         resources = {}
         if self.files:
-            resources['files'] = self.files
+            resources["files"] = self.files
         if self.js:
-            resources['js'] = self.js
+            resources["js"] = self.js
         if self.css:
-            resources['css'] = self.css
-            
+            resources["css"] = self.css
+
         if not resources:
             return None
-        
+
         return resources
-    
+
     @resources.setter
     def resources(self, value):
         if not value:
@@ -677,22 +698,24 @@ class ExportServer(HighchartsMeta):
             self.js = None
             self.css = None
         elif not isinstance(value, dict):
-            raise errors.HighchartsValueError('resources expects a dictionary with keys "files", "js", and "css"')
+            raise errors.HighchartsValueError(
+                'resources expects a dictionary with keys "files", "js", and "css"'
+            )
         else:
-            self.files = value.get('files', None)
-            self.js = value.get('js', None)
-            self.css = value.get('css', None)
+            self.files = value.get("files", None)
+            self.js = value.get("js", None)
+            self.css = value.get("css", None)
 
     @property
     def files(self) -> Optional[List[str]]:
         """Collection of files that will be loaded into context for the export.
         Defaults to :obj:`None <python:None>`.
-        
+
         :rtype: :class:`list <python:list>` of :class:`str <python:str>` or
           :obj:`None <python:None>`
         """
         return self._files
-    
+
     @files.setter
     def files(self, value):
         if not value:
@@ -701,51 +724,51 @@ class ExportServer(HighchartsMeta):
             if isinstance(value, str):
                 value = [value]
             elif not checkers.is_iterable(value):
-                raise errors.HighchartsValueError('files expects a list of strings')
-            
+                raise errors.HighchartsValueError("files expects a list of strings")
+
             self._files = value
-            
+
     @property
     def js(self) -> Optional[str]:
         """JavaScript code that will be loaded into context for the exported chart.
         Defaults to :obj:`None <python:None>`.
-        
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._js
-    
+
     @js.setter
     def js(self, value):
         if not value:
             self._js = None
         else:
             if not isinstance(value, str):
-                raise errors.HighchartsValueError('js expects a string')
+                raise errors.HighchartsValueError("js expects a string")
             self._js = value
-    
+
     @property
     def css(self) -> Optional[str]:
         """CSS code that will be loaded into context for the exported chart.
         Defaults to :obj:`None <python:None>`.
-        
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._css
-    
+
     @css.setter
     def css(self, value):
         if not value:
             self._css = None
         else:
             if not isinstance(value, str):
-                raise errors.HighchartsValueError('css expects a string')
-            
+                raise errors.HighchartsValueError("css expects a string")
+
             self._css = value
 
     @classmethod
     def is_export_supported(cls, options) -> bool:
         """Evaluates whether the Highcharts Export Server supports exporting the series types in ``options``.
-        
+
         :rtype: :class:`bool <python:bool>`
         """
         if not isinstance(options, HighchartsOptions):
@@ -758,83 +781,78 @@ class ExportServer(HighchartsMeta):
         for item in series_types:
             if item in constants.EXPORT_SERVER_UNSUPPORTED_SERIES_TYPES:
                 return False
-            
+
         return True
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
-        url = as_dict.get('url', None)
+        url = as_dict.get("url", None)
         protocol = None
         domain = None
         port = None
         path = None
         if not url:
-            protocol = as_dict.get('protocol', None)
-            domain = as_dict.get('domain', None)
-            port = as_dict.get('port', None)
-            path = as_dict.get('path', None)
+            protocol = as_dict.get("protocol", None)
+            domain = as_dict.get("domain", None)
+            port = as_dict.get("port", None)
+            path = as_dict.get("path", None)
 
         kwargs = {
-            'options': as_dict.get('options', None),
-            'format_': as_dict.get('type', as_dict.get('format_', 'png')),
-            'scale': as_dict.get('scale', 1),
-            'width': as_dict.get('width', None),
-            'callback': as_dict.get('callback', None),
-            'constructor': as_dict.get('constructor',
-                                       None) or as_dict.get('constr', None),
-            'use_base64': as_dict.get('use_base64', None) or as_dict.get('b64', False),
-            'no_download': as_dict.get('noDownload',
-                                       None) or as_dict.get('no_download', None),
-            'async_rendering': as_dict.get('asyncRendering',
-                                           False) or as_dict.get('async_rendering',
-                                                                 False),
-            'global_options': as_dict.get('global_options',
-                                          None) or as_dict.get('globalOptions',
-                                                               None),
-            'data_options': as_dict.get('data_options',
-                                        None) or as_dict.get('dataOptions', None),
-            'custom_code': as_dict.get('custom_code',
-                                       None) or as_dict.get('customCode', None)
+            "options": as_dict.get("options", None),
+            "format_": as_dict.get("type", as_dict.get("format_", "png")),
+            "scale": as_dict.get("scale", 1),
+            "width": as_dict.get("width", None),
+            "callback": as_dict.get("callback", None),
+            "constructor": as_dict.get("constructor", None)
+            or as_dict.get("constr", None),
+            "use_base64": as_dict.get("use_base64", None) or as_dict.get("b64", False),
+            "no_download": as_dict.get("noDownload", None)
+            or as_dict.get("no_download", None),
+            "async_rendering": as_dict.get("asyncRendering", False)
+            or as_dict.get("async_rendering", False),
+            "global_options": as_dict.get("global_options", None)
+            or as_dict.get("globalOptions", None),
+            "data_options": as_dict.get("data_options", None)
+            or as_dict.get("dataOptions", None),
+            "custom_code": as_dict.get("custom_code", None)
+            or as_dict.get("customCode", None),
         }
         if url:
-            kwargs['url'] = url
+            kwargs["url"] = url
         if protocol:
-            kwargs['protocol'] = protocol
+            kwargs["protocol"] = protocol
         if domain:
-            kwargs['domain'] = domain
+            kwargs["domain"] = domain
         if port:
-            kwargs['port'] = port
+            kwargs["port"] = port
         if path:
-            kwargs['path'] = path
+            kwargs["path"] = path
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'url': self.url,
-            'options': self.options,
-            'type': self.format_,
-            'scale': self.scale,
-            'width': self.width,
-            'callback': self.callback,
-            'constr': self.constructor,
-            'b64': self.use_base64,
-            'noDownload': self.no_download,
-            'asyncRendering': self.async_rendering,
-            'globalOptions': self.global_options,
-            'dataOptions': self.data_options,
-            'customCode': self.custom_code,
-            'resources': self.resources,
+            "url": self.url,
+            "options": self.options,
+            "type": self.format_,
+            "scale": self.scale,
+            "width": self.width,
+            "callback": self.callback,
+            "constr": self.constructor,
+            "b64": self.use_base64,
+            "noDownload": self.no_download,
+            "asyncRendering": self.async_rendering,
+            "globalOptions": self.global_options,
+            "dataOptions": self.data_options,
+            "customCode": self.custom_code,
+            "resources": self.resources,
         }
 
         return untrimmed
 
-    def request_chart(self,
-                      filename = None,
-                      auth_user = None,
-                      auth_password = None,
-                      timeout = 3,
-                      **kwargs):
+    def request_chart(
+        self, filename=None, auth_user=None, auth_password=None, timeout=3, **kwargs
+    ):
         """Execute a request against the export server based on the configuration in the
         instance.
 
@@ -867,34 +885,34 @@ class ExportServer(HighchartsMeta):
           :meth:`use_base64 <ExportServer.use_base64>` property).
         :rtype: :class:`bytes <python:bytes>` or :class:`str <python:str>`
         """
-        self.options = kwargs.get('options', self.options)
-        self.format_ = kwargs.get('format_', kwargs.get('type', self.format_))
-        self.scale = kwargs.get('scale', self.scale)
-        self.width = kwargs.get('width', self.width)
-        self.callback = kwargs.get('callback', self.callback)
-        self.constructor = kwargs.get('constructor', self.constructor)
-        self.use_base64 = kwargs.get('use_base64', self.use_base64)
-        self.no_download = kwargs.get('no_download', self.no_download)
-        self.async_rendering = kwargs.get('async_rendering', self.async_rendering)
-        self.global_options = kwargs.get('global_options', self.global_options)
-        self.custom_code = kwargs.get('custom_code', self.custom_code)
+        self.options = kwargs.get("options", self.options)
+        self.format_ = kwargs.get("format_", kwargs.get("type", self.format_))
+        self.scale = kwargs.get("scale", self.scale)
+        self.width = kwargs.get("width", self.width)
+        self.callback = kwargs.get("callback", self.callback)
+        self.constructor = kwargs.get("constructor", self.constructor)
+        self.use_base64 = kwargs.get("use_base64", self.use_base64)
+        self.no_download = kwargs.get("no_download", self.no_download)
+        self.async_rendering = kwargs.get("async_rendering", self.async_rendering)
+        self.global_options = kwargs.get("global_options", self.global_options)
+        self.custom_code = kwargs.get("custom_code", self.custom_code)
 
         missing_details = []
         if not self.options:
-            missing_details.append('options')
+            missing_details.append("options")
         if not self.format_:
-            missing_details.append('format_')
+            missing_details.append("format_")
         if not self.constructor:
-            missing_details.append('constructor')
+            missing_details.append("constructor")
         if not self.url:
-            missing_details.append('url')
+            missing_details.append("url")
 
         if missing_details:
             raise errors.HighchartsMissingExportSettingsError(
-                f'Unable to export a chart.'
-                f'ExportServer was missing '
-                f' following settings: '
-                f'{missing_details}'
+                f"Unable to export a chart."
+                f"ExportServer was missing "
+                f" following settings: "
+                f"{missing_details}"
             )
 
         basic_auth = None
@@ -902,104 +920,112 @@ class ExportServer(HighchartsMeta):
             basic_auth = requests.HTTPBasicAuth(auth_user, auth_password)
 
         payload = {
-            'infile': 'HIGHCHARTS FOR PYTHON: REPLACE WITH OPTIONS',
-            'type': self.format_,
-            'scale': self.scale,
-            'constr': self.constructor,
-            'b64': self.use_base64,
-            'noDownload': self.no_download,
+            "infile": "HIGHCHARTS FOR PYTHON: REPLACE WITH OPTIONS",
+            "type": self.format_,
+            "scale": self.scale,
+            "constr": self.constructor,
+            "b64": self.use_base64,
+            "noDownload": self.no_download,
         }
         if self.width:
-            payload['width'] = self.width
+            payload["width"] = self.width
         if self.height:
-            payload['height'] = self.height
+            payload["height"] = self.height
         if self.callback:
-            payload['callback'] = 'HIGHCHARTS FOR PYTHON: REPLACE WITH CALLBACK'
+            payload["callback"] = "HIGHCHARTS FOR PYTHON: REPLACE WITH CALLBACK"
         if self.global_options:
-            payload['globalOptions'] = 'HIGHCHARTS FOR PYTHON: REPLACE WITH GLOBAL'
+            payload["globalOptions"] = "HIGHCHARTS FOR PYTHON: REPLACE WITH GLOBAL"
         if self.custom_code:
-            payload['customCode'] = 'HIGHCHARTS FOR PYTHON: REPLACE WITH CUSTOM'
+            payload["customCode"] = "HIGHCHARTS FOR PYTHON: REPLACE WITH CUSTOM"
         if self.resources:
-            payload['resources'] = self.resources
+            payload["resources"] = self.resources
 
         as_json = json.dumps(payload)
-        
+
         if not self.is_export_supported(self.options):
-            raise errors.HighchartsUnsupportedExportError('The Highcharts Export Server currently only supports '
-                                                          'exports from Highcharts (Javascript) v.10. You are '
-                                                          'using a series type introduced in v.11. Sorry, but '
-                                                          'that functionality is still forthcoming.')
-        
-        options_as_json = self.options.to_json(for_export = True)
+            raise errors.HighchartsUnsupportedExportError(
+                "The Highcharts Export Server currently only supports "
+                "exports from Highcharts (Javascript) v.10. You are "
+                "using a series type introduced in v.11. Sorry, but "
+                "that functionality is still forthcoming."
+            )
+
+        options_as_json = self.options.to_json(for_export=True)
         if isinstance(options_as_json, bytes):
-            options_as_str = str(options_as_json, encoding = 'utf-8')
+            options_as_str = str(options_as_json, encoding="utf-8")
         else:
             options_as_str = options_as_json
 
-        as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH OPTIONS"',
-                                  options_as_str)
+        as_json = as_json.replace(
+            '"HIGHCHARTS FOR PYTHON: REPLACE WITH OPTIONS"', options_as_str
+        )
         if self.callback:
-            callback_as_json = self.callback.to_json(for_export = True)
+            callback_as_json = self.callback.to_json(for_export=True)
             if isinstance(callback_as_json, bytes):
-                callback_as_str = str(callback_as_json, encoding = 'utf-8')
+                callback_as_str = str(callback_as_json, encoding="utf-8")
             else:
                 callback_as_str = callback_as_json
-            as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH CALLBACK"',
-                                      callback_as_str)
+            as_json = as_json.replace(
+                '"HIGHCHARTS FOR PYTHON: REPLACE WITH CALLBACK"', callback_as_str
+            )
         if self.global_options:
-            global_as_json = self.global_options.to_json(for_export = True)
+            global_as_json = self.global_options.to_json(for_export=True)
             if isinstance(global_as_json, bytes):
-                global_as_str = str(global_as_json, encoding = 'utf-8')
+                global_as_str = str(global_as_json, encoding="utf-8")
             else:
                 global_as_str = global_as_json
-            as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH GLOBAL"',
-                                      global_as_str)
+            as_json = as_json.replace(
+                '"HIGHCHARTS FOR PYTHON: REPLACE WITH GLOBAL"', global_as_str
+            )
         if self.data_options:
-            data_as_json = self.data_options.to_json(for_export = True)
+            data_as_json = self.data_options.to_json(for_export=True)
             if isinstance(data_as_json, bytes):
-                data_as_str = str(data_as_json, encoding = 'utf-8')
+                data_as_str = str(data_as_json, encoding="utf-8")
             else:
                 data_as_str = data_as_json
-            as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH DATA"',
-                                      data_as_str)
+            as_json = as_json.replace(
+                '"HIGHCHARTS FOR PYTHON: REPLACE WITH DATA"', data_as_str
+            )
         if self.custom_code:
-            code_as_json = self.custom_code.to_json(for_export = True)
+            code_as_json = self.custom_code.to_json(for_export=True)
             if isinstance(code_as_json, bytes):
-                code_as_str = str(code_as_json, encoding = 'utf-8')
+                code_as_str = str(code_as_json, encoding="utf-8")
             else:
                 code_as_str = code_as_json
-            as_json = as_json.replace('"HIGHCHARTS FOR PYTHON: REPLACE WITH CUSTOM"',
-                                      code_as_str)
+            as_json = as_json.replace(
+                '"HIGHCHARTS FOR PYTHON: REPLACE WITH CUSTOM"', code_as_str
+            )
 
-        result = requests.post(self.url,
-                               data = as_json.encode('utf-8'),
-                               headers = { 
-                                   'Content-Type': 'application/json',
-                                   'Referer': self.referer,
-                                   'User-Agent': self.user_agent,
-                               },
-                               auth = basic_auth,
-                               timeout = timeout)
+        headers = {
+            "Content-Type": "application/json",
+            "Referer": self.referer,
+            "User-Agent": self.user_agent,
+        }
+
+        result = requests.post(
+            self.url,
+            data=as_json.encode("utf-8"),
+            headers=headers,
+            auth=basic_auth,
+            timeout=timeout,
+        )
 
         result.raise_for_status()
 
-        if filename and self.format_ != 'svg':
-            with open(filename, 'wb') as file_:
+        if filename and self.format_ != "svg":
+            with open(filename, "wb") as file_:
                 file_.write(result.content)
-        elif filename and self.format_ == 'svg':
+        elif filename and self.format_ == "svg":
             content = str(result.content, encoding="utf-8").replace("\u200b", " ")
-            with open(filename, 'wt') as file_:
+            with open(filename, "wt") as file_:
                 file_.write(content)
 
         return result.content
 
     @classmethod
-    def get_chart(cls,
-                  filename = None,
-                  auth_user = None,
-                  auth_password = None,
-                  timeout = 3,
-                  **kwargs):
+    def get_chart(
+        cls, filename=None, auth_user=None, auth_password=None, timeout=3, **kwargs
+    ):
         """Produce an exported chart image.
 
         :param filename: The name of the file where the exported chart should (optionally)
@@ -1033,9 +1059,11 @@ class ExportServer(HighchartsMeta):
         """
         instance = cls(**kwargs)
 
-        exported_chart = instance.request_chart(filename = filename,
-                                                auth_user = auth_user,
-                                                auth_password = auth_password,
-                                                timeout = timeout)
+        exported_chart = instance.request_chart(
+            filename=filename,
+            auth_user=auth_user,
+            auth_password=auth_password,
+            timeout=timeout,
+        )
 
         return exported_chart
