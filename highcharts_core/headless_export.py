@@ -32,7 +32,7 @@ class ExportServer(HighchartsMeta):
       configure the class using either the :meth:`url <ExportServer.url>`,
       :meth:`port <ExportServer.port>`, and
       :meth:`path <ExportServer.path>` properties explicitly or by setting
-      the ``HIGHCHARTS_EXPORT_SERVER_DOMAIN`, ``HIGHCHARTS_EXPORT_SERVER_PORT``, or
+      the ``HIGHCHARTS_EXPORT_SERVER_DOMAIN``, ``HIGHCHARTS_EXPORT_SERVER_PORT``, or
       ``HIGHCHARTS_EXPORT_SERVER_PATH`` environment variables.
 
     """
@@ -133,7 +133,7 @@ class ExportServer(HighchartsMeta):
     @property
     def user_agent(self) -> Optional[str]:
         """The user agent to use when making requests to the export server. Defaults to the ``HIGHCHARTS_EXPORT_SERVER_USER_AGENT`` environment variable if present, otherwise defaults to
-        ``Highcharts Core for Python / v.<VERSION NUMBER>.
+        ``Highcharts Core for Python / v.<VERSION NUMBER>``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """

@@ -699,6 +699,8 @@ class Chart(HighchartsMeta):
                        auth_user = None,
                        auth_password = None,
                        timeout = 3,
+                       referer = None,
+                       user_agent = None,
                        server_instance = None,
                        **kwargs):
         """Export a downloaded form of the chart using a Highcharts :term:`Export Server`.
@@ -721,6 +723,18 @@ class Chart(HighchartsMeta):
           The timeout check is passed if bytes have been received on the socket in less
           than the ``timeout`` value. Defaults to ``3``.
         :type timeout: numeric or :obj:`None <python:None>`
+        
+        :param referer: Provide the referer URL to use when making the request to the Export
+          Server. If not specified, will try to read from the 
+          ``HIGHCHARTS_EXPORT_SERVER_REFERER`` environment variable. If that is not found, then 
+          will apply a default of ``https://www.highcharts.com``.
+        :type referer: :class:`str <python:str>` or :obj:`None <python:None>`
+        
+        :param user_agent: Provide the user agent to use when making the request to the Export
+          Server. If not specified, will try to read from the ``HIGHCHARTS_EXPORT_SERVER_USER_AGENT``
+          environment variable. If that is not found, then will apply a default submitting Highcharts
+          for Python as the user agent.
+        :type user_agent: :class:`str <python:str>` or :obj:`None <python:None>`
 
         :param server_instance: Provide an already-configured :class:`ExportServer`
           instance to use to programmatically produce the exported chart. Defaults to
@@ -752,6 +766,8 @@ class Chart(HighchartsMeta):
                                           scale = scale,
                                           width = width,
                                           format_ = format,
+                                          referer = referer,
+                                          user_agent = user_agent,
                                           **kwargs)
 
         if not isinstance(server_instance, ExportServer):
@@ -766,6 +782,8 @@ class Chart(HighchartsMeta):
                                              options = self.options,
                                              constructor = constructor,
                                              format_ = format,
+                                             referer = referer,
+                                             user_agent = user_agent,
                                              **kwargs)
 
     @classmethod
