@@ -11,7 +11,10 @@ from highcharts_core.options import HighchartsOptions
 from highcharts_core.utility_classes.javascript_functions import CallbackFunction
 from highcharts_core.js_literal_functions import serialize_to_js_literal
 from highcharts_core.headless_export import ExportServer
-from highcharts_core.options.series.series_generator import create_series_obj, SERIES_CLASSES
+from highcharts_core.options.series.series_generator import (
+    create_series_obj,
+    SERIES_CLASSES,
+)
 from highcharts_core.global_options.shared_options import SharedOptions
 
 
@@ -72,35 +75,36 @@ class Chart(HighchartsMeta):
 
         self._random_slug = {}
 
-        self.callback = kwargs.get('callback', None)
-        self.container = kwargs.get('container', None)
-        self.options = kwargs.get('options', None)
-        self.variable_name = kwargs.get('variable_name', None)
-        self.module_url = kwargs.get('module_url',
-                                     None) or os.environ.get('HIGHCHARTS_MODULE_URL',
-                                                             'https://code.highcharts.com/')
+        self.callback = kwargs.get("callback", None)
+        self.container = kwargs.get("container", None)
+        self.options = kwargs.get("options", None)
+        self.variable_name = kwargs.get("variable_name", None)
+        self.module_url = kwargs.get("module_url", None) or os.environ.get(
+            "HIGHCHARTS_MODULE_URL", "https://code.highcharts.com/"
+        )
 
-        series = kwargs.get('series', None)
-        series_type = kwargs.get('series_type', None)
-        data = kwargs.get('data', None)
+        series = kwargs.get("series", None)
+        series_type = kwargs.get("series_type", None)
+        data = kwargs.get("data", None)
 
         if series_type and not data:
             data = []
 
         if series is not None:
-            if not checkers.is_iterable(series, forbid_literals = (str, bytes, dict, UserDict)):
+            if not checkers.is_iterable(
+                series, forbid_literals=(str, bytes, dict, UserDict)
+            ):
                 series = [series]
             self.add_series(*series)
         elif data is not None and series_type:
-            series_as_dict = {
-                'data': data,
-                'type': series_type
-            }
+            series_as_dict = {"data": data, "type": series_type}
             self.add_series(series_as_dict)
         elif data is not None:
-            raise errors.HighchartsValueError('If ``data`` is provided, then '
-                                              '``series_type`` must also be provided. '
-                                              '``series_type`` was empty.')
+            raise errors.HighchartsValueError(
+                "If ``data`` is provided, then "
+                "``series_type`` must also be provided. "
+                "``series_type`` was empty."
+            )
 
     def __str__(self):
         """Return a human-readable :class:`str <python:str>` representation of the chart.
@@ -124,33 +128,38 @@ class Chart(HighchartsMeta):
         """
         as_dict = self.to_dict()
 
-        kwargs = {utility_functions.to_snake_case(key): as_dict[key]
-                  for key in as_dict if key not in ['options', 'userOptions']}
+        kwargs = {
+            utility_functions.to_snake_case(key): as_dict[key]
+            for key in as_dict
+            if key not in ["options", "userOptions"]
+        }
 
-        if 'options' in as_dict:
-            kwargs['options'] = str(as_dict['options'])
-        elif 'userOptions' in as_dict:
-            kwargs['options'] = str(as_dict['userOptions'])
+        if "options" in as_dict:
+            kwargs["options"] = str(as_dict["options"])
+        elif "userOptions" in as_dict:
+            kwargs["options"] = str(as_dict["userOptions"])
 
-        kwargs_as_str = ''
+        kwargs_as_str = ""
         for index, key in enumerate(kwargs):
             if index > 0:
-                kwargs_as_str += ', '
-            if key == 'options':
-                kwargs_as_str += f'options = {kwargs[key]}'
+                kwargs_as_str += ", "
+            if key == "options":
+                kwargs_as_str += f"options = {kwargs[key]}"
             else:
-                kwargs_as_str += f'{key} = {repr(kwargs[key])}'
+                kwargs_as_str += f"{key} = {repr(kwargs[key])}"
 
-        return f'{self.__class__.__name__}({kwargs_as_str})'
+        return f"{self.__class__.__name__}({kwargs_as_str})"
 
     def _jupyter_include_scripts(self, **kwargs):
         """Return the JavaScript code that is used to load the Highcharts JS libraries.
 
         :rtype: :class:`str <python:str>`
         """
-        required_modules = [f'{self.module_url}{x}'
-                            for x in self.get_required_modules(include_extension = True)]
-        js_str = ''
+        required_modules = [
+            f"{self.module_url}{x}"
+            for x in self.get_required_modules(include_extension=True)
+        ]
+        js_str = ""
         for item in required_modules:
             js_str += utility_functions.jupyter_add_script(item)
             js_str += """.then(() => {"""
@@ -160,12 +169,14 @@ class Chart(HighchartsMeta):
 
         return js_str
 
-    def _jupyter_javascript(self,
-                            global_options = None,
-                            container = None,
-                            random_slug = None,
-                            retries = 5,
-                            interval = 1000):
+    def _jupyter_javascript(
+        self,
+        global_options=None,
+        container=None,
+        random_slug=None,
+        retries=5,
+        interval=1000,
+    ):
         """Return the JavaScript code which Jupyter Labs will need to render the chart.
 
         :param global_options: The :term:`shared options` to use when rendering the chart.
@@ -193,34 +204,37 @@ class Chart(HighchartsMeta):
         :rtype: :class:`str <python:str>`
         """
         original_container = self.container
-        new_container = container or self.container or 'highcharts_target_div'
+        new_container = container or self.container or "highcharts_target_div"
         if not random_slug:
             self.container = new_container
         else:
-            self.container = f'{new_container}_{random_slug}'
+            self.container = f"{new_container}_{random_slug}"
 
         if global_options is not None:
-            global_options = validate_types(global_options,
-                                            types = SharedOptions)
+            global_options = validate_types(global_options, types=SharedOptions)
 
         js_str = utility_functions.get_retryHighcharts()
 
         if global_options:
-            js_str += '\n' + utility_functions.prep_js_for_jupyter(global_options.to_js_literal()) + '\n'
+            js_str += (
+                "\n"
+                + utility_functions.prep_js_for_jupyter(global_options.to_js_literal())
+                + "\n"
+            )
 
-        js_str += utility_functions.prep_js_for_jupyter(self.to_js_literal(),
-                                                        container = self.container,
-                                                        random_slug = random_slug,
-                                                        retries = retries,
-                                                        interval = interval)
+        js_str += utility_functions.prep_js_for_jupyter(
+            self.to_js_literal(),
+            container=self.container,
+            random_slug=random_slug,
+            retries=retries,
+            interval=interval,
+        )
 
         self.container = original_container
 
         return js_str
 
-    def _jupyter_container_html(self,
-                                container = None,
-                                random_slug = None):
+    def _jupyter_container_html(self, container=None, random_slug=None):
         """Returns the Jupyter Labs HTML container for rendering the chart in Jupyter Labs context.
 
         :param container: The ID to apply to the HTML container when rendered in Jupyter Labs. Defaults to
@@ -239,9 +253,9 @@ class Chart(HighchartsMeta):
         else:
             height = 400
 
-        container = container or self.container or 'highcharts_target_div'
+        container = container or self.container or "highcharts_target_div"
         if random_slug:
-            container = f'{container}_{random_slug}'
+            container = f"{container}_{random_slug}"
 
         container_str = f"""<div id=\"{container}\" style=\"width:100%; height:{height};\"></div>\n"""
 
@@ -253,7 +267,7 @@ class Chart(HighchartsMeta):
         :returns: The HTML representation of the chart.
         :rtype: :class:`str <python:str>`
         """
-        container = self.container or 'highcharts_target_div'
+        container = self.container or "highcharts_target_div"
         if not self._random_slug:
             self._random_slug = {}
 
@@ -265,9 +279,10 @@ class Chart(HighchartsMeta):
 
         html_str = self._jupyter_container_html(container, random_slug)
 
-        chart_js_str = self._jupyter_javascript(container = container,
-                                                random_slug = random_slug)
-        wrapped_chart_js_str = utility_functions.wrap_for_requirejs('', chart_js_str)
+        chart_js_str = self._jupyter_javascript(
+            container=container, random_slug=random_slug
+        )
+        wrapped_chart_js_str = utility_functions.wrap_for_requirejs("", chart_js_str)
 
         include_js_str = self._get_jupyter_script_loader(chart_js_str)
 
@@ -280,53 +295,53 @@ class Chart(HighchartsMeta):
 
     def _repr_png_(self) -> bytes:
         """Return a PNG representation of the chart, expressed as bytes.
-        
+
         .. note::
-        
-          This relies on the 
+
+          This relies on the
           :meth:`.download_chart() <highcharts_core.chart.Chart.download_chart>` method,
           which in turn relies on the Highcharts Export Server. If you need to override
-          the default Export Server configuration, you can do so using environment 
-          variables as documented for the 
+          the default Export Server configuration, you can do so using environment
+          variables as documented for the
           :class:`ExportServer <highcharts_core.headless_export.ExportServer>` class.
-        
+
         :rtype: :class:`bytes <python:bytes>`
         """
-        return self.download_chart(format = 'png')
+        return self.download_chart(format="png")
 
     def _repr_svg_(self):
         """Return an SVG representation of the chart.
-        
+
         .. note::
-        
-          This relies on the 
+
+          This relies on the
           :meth:`.download_chart() <highcharts_core.chart.Chart.download_chart>` method,
           which in turn relies on the Highcharts Export Server. If you need to override
-          the default Export Server configuration, you can do so using environment 
-          variables as documented for the 
+          the default Export Server configuration, you can do so using environment
+          variables as documented for the
           :class:`ExportServer <highcharts_core.headless_export.ExportServer>` class.
-        
+
         :rtype: :class:`str <python:str>`
         """
-        return self.download_chart(format = 'svg')
+        return self.download_chart(format="svg")
 
     def _repr_jpeg_(self) -> bytes:
         """Return a JPEG representation of the chart, expressed as bytes.
-        
+
         .. note::
-        
-          This relies on the 
+
+          This relies on the
           :meth:`.download_chart() <highcharts_core.chart.Chart.download_chart>` method,
           which in turn relies on the Highcharts Export Server. If you need to override
-          the default Export Server configuration, you can do so using environment 
-          variables as documented for the 
+          the default Export Server configuration, you can do so using environment
+          variables as documented for the
           :class:`ExportServer <highcharts_core.headless_export.ExportServer>` class.
-        
+
         :rtype: :class:`bytes <python:bytes>`
         """
-        return self.download_chart(format = 'jpeg')
+        return self.download_chart(format="jpeg")
 
-    def get_script_tags(self, as_str = False) -> List[str] | str:
+    def get_script_tags(self, as_str=False) -> List[str] | str:
         """Return the collection of ``<script/>`` tags needed to load the modules
         for the chart to render.
 
@@ -338,16 +353,17 @@ class Chart(HighchartsMeta):
         :rtype: :class:`list <python:list>` of :class:`str <python:str>` or
           :class:`str <python:str>`
         """
-        scripts = [f'<script src="{self.module_url}{x}"></script>'
-                   for x in self.get_required_modules(include_extension = True)]
+        scripts = [
+            f'<script src="{self.module_url}{x}"></script>'
+            for x in self.get_required_modules(include_extension=True)
+        ]
 
         if as_str:
-            return '\n'.join(scripts)
+            return "\n".join(scripts)
 
         return scripts
 
-    def get_required_modules(self,
-                             include_extension = False) -> List[str]:
+    def get_required_modules(self, include_extension=False) -> List[str]:
         """Return the list of URLs from which the Highcharts JavaScript modules
         needed to render the chart can be retrieved.
 
@@ -357,7 +373,7 @@ class Chart(HighchartsMeta):
 
         :rtype: :class:`list <python:list>` of :class:`str <python:str>`
         """
-        initial_scripts = ['highcharts']
+        initial_scripts = ["highcharts"]
         scripts = self._process_required_modules(initial_scripts, include_extension)
 
         return scripts
@@ -372,7 +388,7 @@ class Chart(HighchartsMeta):
         :returns: The JavaScript code that loads the required modules.
         :rtype: :class:`str <python:str>`
         """
-        if_no_requirejs = ''
+        if_no_requirejs = ""
 
         if_requirejs = """require.config({\n"""
         if_requirejs += """  packages: [{\n"""
@@ -384,10 +400,10 @@ class Chart(HighchartsMeta):
         if_requirejs += """ require(["""
         requirejs_modules = []
         for item in self.get_required_modules():
-            if item == 'highcharts' and item not in requirejs_modules:
+            if item == "highcharts" and item not in requirejs_modules:
                 requirejs_modules.append(item)
             else:
-                revised_item = f'highcharts/{item}'
+                revised_item = f"highcharts/{item}"
                 if revised_item not in requirejs_modules:
                     requirejs_modules.append(revised_item)
 
@@ -395,13 +411,15 @@ class Chart(HighchartsMeta):
             is_last = index == len(requirejs_modules) - 1
             if_requirejs += f"""'{item}'"""
             if not is_last:
-                if_requirejs += ', '
+                if_requirejs += ", "
         if_requirejs += """], function (Highcharts) {\n"""
         if_requirejs += chart_js_str
         if_requirejs += """\n});"""
 
-        required_modules = [f'{self.module_url}{x}'
-                            for x in self.get_required_modules(include_extension = True)]
+        required_modules = [
+            f"{self.module_url}{x}"
+            for x in self.get_required_modules(include_extension=True)
+        ]
         for item in required_modules:
             if_no_requirejs += utility_functions.jupyter_add_script(item)
             if_no_requirejs += """.then(() => {"""
@@ -470,11 +488,13 @@ class Chart(HighchartsMeta):
     @module_url.setter
     def module_url(self, value):
         try:
-            value = validators.url(value, 
-                                   allow_empty = True, 
-                                   allow_special_ips = os.getenv('HCP_ALLOW_SPECIAL_IPS', False))
+            value = validators.url(
+                value,
+                allow_empty=True,
+                allow_special_ips=os.getenv("HCP_ALLOW_SPECIAL_IPS", False),
+            )
         except (ValueError, TypeError):
-            value = validators.path(value, allow_empty = True)
+            value = validators.path(value, allow_empty=True)
 
         self._module_url = value
 
@@ -493,13 +513,14 @@ class Chart(HighchartsMeta):
         if not value:
             self._options = None
         elif isinstance(value, SharedOptions):
-            raise errors.HighchartsValueError('Chart.options expects a HighchartsOptions instance '
-                                              'or a valid descendent. However, the value you supplied '
-                                              'is a SharedOptions instance, which wil a descendent is not '
-                                              'valid for this parameter.')
+            raise errors.HighchartsValueError(
+                "Chart.options expects a HighchartsOptions instance "
+                "or a valid descendent. However, the value you supplied "
+                "is a SharedOptions instance, which wil a descendent is not "
+                "valid for this parameter."
+            )
         else:
-            value = validate_types(value,
-                                   types = HighchartsOptions)
+            value = validate_types(value, types=HighchartsOptions)
 
         self._options = value
 
@@ -520,7 +541,7 @@ class Chart(HighchartsMeta):
 
     @container.setter
     def container(self, value):
-        self._container = validators.string(value, allow_empty = True)
+        self._container = validators.string(value, allow_empty=True)
 
     @property
     def variable_name(self) -> Optional[str]:
@@ -549,35 +570,38 @@ class Chart(HighchartsMeta):
 
     @variable_name.setter
     def variable_name(self, value):
-        self._variable_name = validators.variable_name(value, allow_empty = True)
+        self._variable_name = validators.variable_name(value, allow_empty=True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'callback': as_dict.get('callback', None),
-            'container': as_dict.get('container', None) or as_dict.get('renderTo', None),
-            'options': as_dict.get('options', None) or as_dict.get('userOptions', None),
-            'variable_name': as_dict.get('variable_name',
-                                         None) or as_dict.get('variableName', None)
+            "callback": as_dict.get("callback", None),
+            "container": as_dict.get("container", None)
+            or as_dict.get("renderTo", None),
+            "options": as_dict.get("options", None) or as_dict.get("userOptions", None),
+            "variable_name": as_dict.get("variable_name", None)
+            or as_dict.get("variableName", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'callback': self.callback,
-            'container': self.container,
-            'userOptions': self.options
+            "callback": self.callback,
+            "container": self.container,
+            "userOptions": self.options,
         }
 
         return untrimmed
 
-    def to_js_literal(self,
-                      filename = None,
-                      encoding = 'utf-8',
-                      careful_validation = False,
-                      event_listener: str = 'DOMContentLoaded',
-                      event_listener_enabled: bool = True) -> Optional[str]:
+    def to_js_literal(
+        self,
+        filename=None,
+        encoding="utf-8",
+        careful_validation=False,
+        event_listener: str = "DOMContentLoaded",
+        event_listener_enabled: bool = True,
+    ) -> Optional[str]:
         """Return the object represented as a :class:`str <python:str>` containing the
         JavaScript object literal.
 
@@ -631,9 +655,9 @@ class Chart(HighchartsMeta):
         as_dict = {}
         for key in untrimmed:
             item = untrimmed[key]
-            serialized = serialize_to_js_literal(item, 
-                                                 encoding = encoding,
-                                                 careful_validation = careful_validation)
+            serialized = serialize_to_js_literal(
+                item, encoding=encoding, careful_validation=careful_validation
+            )
             if serialized is not None:
                 as_dict[key] = serialized
 
@@ -646,61 +670,71 @@ class Chart(HighchartsMeta):
 
         if self.options:
             options_as_str = "{}".format(
-                self.options.to_js_literal(encoding = encoding,
-                                           careful_validation = careful_validation)
+                self.options.to_js_literal(
+                    encoding=encoding, careful_validation=careful_validation
+                )
             )
         else:
             options_as_str = """null"""
 
-        callback_as_str = ''
+        callback_as_str = ""
         if self.callback:
             callback_as_str = "{}".format(
-                self.callback.to_js_literal(encoding = encoding,
-                                            careful_validation = careful_validation)
+                self.callback.to_js_literal(
+                    encoding=encoding, careful_validation=careful_validation
+                )
             )
             signature_elements += 1
 
         signature = """Highcharts.chart("""
         signature += container_as_str
         if signature_elements > 1:
-            signature += ',\n'
+            signature += ",\n"
         signature += options_as_str
         if signature_elements > 1:
-            signature += ',\n'
+            signature += ",\n"
         if callback_as_str:
             signature += callback_as_str
-        signature += ');'
+        signature += ");"
 
-        constructor_prefix = ''
+        constructor_prefix = ""
         if self.variable_name:
-            constructor_prefix = f'var {self.variable_name} = '
+            constructor_prefix = f"var {self.variable_name} = "
 
         as_str = constructor_prefix + signature
 
         if event_listener_enabled:
             if event_listener:
-                prefix = """document.addEventListener('""" + event_listener + """', function() {\n"""
+                prefix = (
+                    """document.addEventListener('"""
+                    + event_listener
+                    + """', function() {\n"""
+                )
             else:
                 prefix = """document.addEventListener(function() {\n"""
             suffix = """});"""
-            as_str = prefix + as_str + '\n' + suffix
+            as_str = prefix + as_str + "\n" + suffix
 
-        if validators.path(filename, allow_empty = True):
-            with open(filename, 'w', encoding = encoding) as file_:
+        if validators.path(filename, allow_empty=True):
+            with open(filename, "w", encoding=encoding) as file_:
                 file_.write(as_str)
 
         return as_str
 
-    def download_chart(self,
-                       format = 'png',
-                       scale = 1,
-                       width = None,
-                       filename = None,
-                       auth_user = None,
-                       auth_password = None,
-                       timeout = 3,
-                       server_instance = None,
-                       **kwargs):
+    def download_chart(
+        self,
+        format="png",
+        scale=1,
+        width=None,
+        filename=None,
+        auth_user=None,
+        auth_password=None,
+        timeout=3,
+        referer=None,
+        user_agent=None,
+        server_instance=None,
+        **kwargs,
+    ):
         """Export a downloaded form of the chart using a Highcharts :term:`Export Server`.
 
         :param filename: The name of the file where the exported chart should (optionally)
@@ -722,6 +756,18 @@ class Chart(HighchartsMeta):
           than the ``timeout`` value. Defaults to ``3``.
         :type timeout: numeric or :obj:`None <python:None>`
 
+        :param referer: Provide the referer URL to use when making the request to the Export
+          Server. If not specified, will try to read from the
+          ``HIGHCHARTS_EXPORT_SERVER_REFERER`` environment variable. If that is not found, then
+          will apply a default of ``https://www.highchartspython.com``.
+        :type referer: :class:`str <python:str>` or :obj:`None <python:None>`
+
+        :param user_agent: Provide the user agent to use when making the request to the Export
+          Server. If not specified, will try to read from the ``HIGHCHARTS_EXPORT_SERVER_USER_AGENT``
+          environment variable. If that is not found, then will apply a default submitting Highcharts
+          for Python as the user agent.
+        :type user_agent: :class:`str <python:str>` or :obj:`None <python:None>`
+
         :param server_instance: Provide an already-configured :class:`ExportServer`
           instance to use to programmatically produce the exported chart. Defaults to
           :obj:`None <python:None>`, which causes Highcharts for Python to instantiate
@@ -737,44 +783,49 @@ class Chart(HighchartsMeta):
           keyword argument).
         :rtype: :class:`bytes <python:bytes>` or :class:`str <python:str>`
         """
-        if checkers.is_type(self.options, 'HighchartsStockOptions'):
-            constructor = 'Stock'
+        if checkers.is_type(self.options, "HighchartsStockOptions"):
+            constructor = "Stock"
         else:
-            constructor = 'Chart'
+            constructor = "Chart"
 
         if not server_instance:
-            return ExportServer.get_chart(filename = filename,
-                                          auth_user = auth_user,
-                                          auth_password = auth_password,
-                                          timeout = timeout,
-                                          options = self.options,
-                                          constructor = constructor,
-                                          scale = scale,
-                                          width = width,
-                                          format_ = format,
-                                          **kwargs)
+            return ExportServer.get_chart(
+                filename=filename,
+                auth_user=auth_user,
+                auth_password=auth_password,
+                timeout=timeout,
+                options=self.options,
+                constructor=constructor,
+                scale=scale,
+                width=width,
+                format_=format,
+                referer=referer,
+                user_agent=user_agent,
+                **kwargs,
+            )
 
         if not isinstance(server_instance, ExportServer):
-            raise errors.HighchartsValueError(f'server_instance is expected to be an '
-                                              f'ExportServer instance. Was: '
-                                              f'{server_instance.__class__.__name__}')
+            raise errors.HighchartsValueError(
+                f"server_instance is expected to be an "
+                f"ExportServer instance. Was: "
+                f"{server_instance.__class__.__name__}"
+            )
 
-        return server_instance.request_chart(filename = filename,
-                                             auth_user = auth_user,
-                                             auth_password = auth_password,
-                                             timeout = timeout,
-                                             options = self.options,
-                                             constructor = constructor,
-                                             format_ = format,
-                                             **kwargs)
+        return server_instance.request_chart(
+            filename=filename,
+            auth_user=auth_user,
+            auth_password=auth_password,
+            timeout=timeout,
+            options=self.options,
+            constructor=constructor,
+            format_=format,
+            referer=referer,
+            user_agent=user_agent,
+            **kwargs,
+        )
 
     @classmethod
-    def _copy_dict_key(cls,
-                       key,
-                       original,
-                       other,
-                       overwrite = True,
-                       **kwargs):
+    def _copy_dict_key(cls, key, original, other, overwrite=True, **kwargs):
         """Copies the value of ``key`` from ``original`` to ``other``.
 
         :param key: The key that is to be copied.
@@ -789,7 +840,7 @@ class Chart(HighchartsMeta):
 
         :returns: The value that should be placed in ``other`` for ``key``.
         """
-        preserve_data = kwargs.get('preserve_data', True)
+        preserve_data = kwargs.get("preserve_data", True)
 
         original_value = original[key]
         if other is None:
@@ -797,13 +848,13 @@ class Chart(HighchartsMeta):
 
         other_value = other.get(key, None)
 
-        if key == 'data' and preserve_data:
+        if key == "data" and preserve_data:
             return other_value
 
-        if key == 'points' and preserve_data:
+        if key == "points" and preserve_data:
             return other_value
 
-        if key == 'series' and preserve_data:
+        if key == "series" and preserve_data:
             if not other_value:
                 return [x for x in original_value]
 
@@ -825,11 +876,13 @@ class Chart(HighchartsMeta):
                     other_item = items[1]
                     new_item = {}
                     for subkey in original_item:
-                        new_item_value = cls._copy_dict_key(subkey,
-                                                            original_item,
-                                                            new_item,
-                                                            overwrite = overwrite,
-                                                            **kwargs)
+                        new_item_value = cls._copy_dict_key(
+                            subkey,
+                            original_item,
+                            new_item,
+                            overwrite=overwrite,
+                            **kwargs,
+                        )
                         new_item[subkey] = new_item_value
                     updated_series.append(new_item)
                 updated_series.extend(new_series)
@@ -837,20 +890,18 @@ class Chart(HighchartsMeta):
                 return updated_series
 
         elif isinstance(original_value, (dict, UserDict)):
-            new_value = {subkey: cls._copy_dict_key(subkey,
-                                                   original_value,
-                                                   other_value,
-                                                   overwrite = overwrite,
-                                                   **kwargs)
-                         for subkey in original_value}
+            new_value = {
+                subkey: cls._copy_dict_key(
+                    subkey, original_value, other_value, overwrite=overwrite, **kwargs
+                )
+                for subkey in original_value
+            }
 
             return new_value
 
-        elif checkers.is_iterable(original_value,
-                                  forbid_literals = (str,
-                                                     bytes,
-                                                     dict,
-                                                     UserDict)):
+        elif checkers.is_iterable(
+            original_value, forbid_literals=(str, bytes, dict, UserDict)
+        ):
             if overwrite:
                 new_value = [x for x in original_value]
 
@@ -863,10 +914,7 @@ class Chart(HighchartsMeta):
 
         return original_value
 
-    def copy(self,
-             other = None,
-             overwrite = True,
-             **kwargs):
+    def copy(self, other=None, overwrite=True, **kwargs):
         """Copy the configuration settings from this chart to the ``other`` chart.
 
         :param other: The target chart to which the properties of this chart should
@@ -892,9 +940,7 @@ class Chart(HighchartsMeta):
         :returns: A mutated version of ``other`` with new property values
 
         """
-        return super().copy(other = other,
-                            overwrite = overwrite,
-                            **kwargs)
+        return super().copy(other=other, overwrite=overwrite, **kwargs)
 
     def add_series(self, *series):
         """Adds ``series`` to the
@@ -910,8 +956,7 @@ class Chart(HighchartsMeta):
           or coercable
 
         """
-        new_series = [create_series_obj(item)
-                      for item in series]
+        new_series = [create_series_obj(item) for item in series]
 
         if self.options and self.options.series:
             existing_series = [x for x in self.options.series]
@@ -925,7 +970,7 @@ class Chart(HighchartsMeta):
 
         self.options.series = updated_series
 
-    def update_series(self, *series, add_if_unmatched = False):
+    def update_series(self, *series, add_if_unmatched=False):
         """Replace existing series with the new versions supplied in ``series``,
         matching them based on their
         :meth:`.id <highcharts_core.options.series.base.SeriesBase.id>` property.
@@ -944,8 +989,7 @@ class Chart(HighchartsMeta):
           if a series does not have a match on the chart. Defaults to ``False``.
         :type add_if_unmatched: :class:`bool <python:bool>`
         """
-        new_series = [create_series_obj(item)
-                      for item in series]
+        new_series = [create_series_obj(item) for item in series]
 
         if self.options and self.options.series:
             existing_series = [x for x in self.options.series]
@@ -959,23 +1003,25 @@ class Chart(HighchartsMeta):
         new_ids = [x.id for x in new_series]
         overlap_ids = [x for x in new_ids if x in existing_ids]
 
-        updated_series = [existing
-                          for existing in existing_series
-                          if existing.id not in overlap_ids]
+        updated_series = [
+            existing for existing in existing_series if existing.id not in overlap_ids
+        ]
 
         for new in new_series:
             if new.id not in overlap_ids and not add_if_unmatched:
-                raise errors.HighchartsMissingSeriesError(f'attempted to update series '
-                                                          f'id "{new.id}", but that '
-                                                          f'series is not present in '
-                                                          f'the chart')
+                raise errors.HighchartsMissingSeriesError(
+                    f"attempted to update series "
+                    f'id "{new.id}", but that '
+                    f"series is not present in "
+                    f"the chart"
+                )
 
             updated_series.append(new)
 
         self.options.series = updated_series
 
     @classmethod
-    def from_series(cls, *series, kwargs = None):
+    def from_series(cls, *series, kwargs=None):
         """Creates a new :class:`Chart <highcharts_core.chart.Chart>` instance populated
         with ``series``.
 
@@ -1001,7 +1047,7 @@ class Chart(HighchartsMeta):
         :returns: A new :class:`Chart <highcharts_core.chart.Chart>` instance
         :rtype: :class:`Chart <highcharts_core.chart.Chart>`
         """
-        kwargs = validators.dict(kwargs, allow_empty = True) or {}
+        kwargs = validators.dict(kwargs, allow_empty=True) or {}
         instance = cls(**kwargs)
 
         if checkers.is_iterable(series) is True:
@@ -1012,11 +1058,7 @@ class Chart(HighchartsMeta):
 
         return instance
 
-    def display(self,
-                global_options = None,
-                container = None,
-                retries = 5,
-                interval = 1000):
+    def display(self, global_options=None, container=None, retries=5, interval=1000):
         """Display the chart in `Jupyter Labs <https://jupyter.org/>`_ or
         `Jupyter Notebooks <https://jupyter.org/>`_.
 
@@ -1058,12 +1100,14 @@ class Chart(HighchartsMeta):
             from IPython import display as display_mod
             from IPython.core.display_functions import display
         except ImportError:
-            raise errors.HighchartsDependencyError('Unable to import IPython modules. '
-                                                   'Make sure that it is available in '
-                                                   'your runtime environment. To install,'
-                                                   'use: pip install ipython')
+            raise errors.HighchartsDependencyError(
+                "Unable to import IPython modules. "
+                "Make sure that it is available in "
+                "your runtime environment. To install,"
+                "use: pip install ipython"
+            )
 
-        container = container or self.container or 'highcharts_target_div'
+        container = container or self.container or "highcharts_target_div"
         if not self._random_slug:
             self._random_slug = {}
 
@@ -1074,30 +1118,34 @@ class Chart(HighchartsMeta):
             self._random_slug[container] = random_slug
 
         html_str = self._jupyter_container_html(container, random_slug)
-        html_display = display_mod.HTML(data = html_str)
+        html_display = display_mod.HTML(data=html_str)
 
-        chart_js_str = self._jupyter_javascript(global_options = global_options,
-                                                container = container,
-                                                random_slug = random_slug,
-                                                retries = retries,
-                                                interval = interval)
-        wrapped_chart_js_str = utility_functions.wrap_for_requirejs('', chart_js_str)
-        javascript_display = display_mod.Javascript(data = wrapped_chart_js_str)
+        chart_js_str = self._jupyter_javascript(
+            global_options=global_options,
+            container=container,
+            random_slug=random_slug,
+            retries=retries,
+            interval=interval,
+        )
+        wrapped_chart_js_str = utility_functions.wrap_for_requirejs("", chart_js_str)
+        javascript_display = display_mod.Javascript(data=wrapped_chart_js_str)
 
         include_js_str = self._get_jupyter_script_loader(chart_js_str)
-        include_display = display_mod.Javascript(data = include_js_str)
+        include_display = display_mod.Javascript(data=include_js_str)
 
         display(html_display)
         display(include_display)
         display(javascript_display)
 
     @classmethod
-    def from_array(cls,
-                   value,
-                   series_type = 'line',
-                   series_kwargs = None,
-                   options_kwargs = None,
-                   chart_kwargs = None):
+    def from_array(
+        cls,
+        value,
+        series_type="line",
+        series_kwargs=None,
+        options_kwargs=None,
+        chart_kwargs=None,
+    ):
         """Create a :class:`Chart <highcharts_core.chart.Chart>` instance with
         one series populated from the array contained in ``value``.
 
@@ -1155,21 +1203,23 @@ class Chart(HighchartsMeta):
         :rtype: :class:`Chart <highcharts_core.chart.Chart>`
 
         """
-        series_type = validators.string(series_type, allow_empty = False)
+        series_type = validators.string(series_type, allow_empty=False)
         series_type = series_type.lower()
         if series_type not in SERIES_CLASSES:
-            raise errors.HighchartsValueError(f'series_type expects a valid Highcharts '
-                                              f'series type. Received: {series_type}')
+            raise errors.HighchartsValueError(
+                f"series_type expects a valid Highcharts "
+                f"series type. Received: {series_type}"
+            )
 
-        series_kwargs = validators.dict(series_kwargs, allow_empty = True) or {}
-        options_kwargs = validators.dict(options_kwargs, allow_empty = True) or {}
-        chart_kwargs = validators.dict(chart_kwargs, allow_empty = True) or {}
+        series_kwargs = validators.dict(series_kwargs, allow_empty=True) or {}
+        options_kwargs = validators.dict(options_kwargs, allow_empty=True) or {}
+        chart_kwargs = validators.dict(chart_kwargs, allow_empty=True) or {}
 
         series_cls = SERIES_CLASSES.get(series_type, None)
 
-        series = series_cls.from_array(value, series_kwargs = series_kwargs)
+        series = series_cls.from_array(value, series_kwargs=series_kwargs)
 
-        options_kwargs['series'] = [series]
+        options_kwargs["series"] = [series]
         options = HighchartsOptions(**options_kwargs)
 
         instance = cls(**chart_kwargs)
@@ -1178,22 +1228,24 @@ class Chart(HighchartsMeta):
         return instance
 
     @classmethod
-    def from_csv_in_rows(cls,
-                         as_string_or_file,
-                         series_type = 'line',
-                         has_header_row = True,
-                         series_kwargs = None,
-                         options_kwargs = None,
-                         chart_kwargs = None,
-                         delimiter = ',',
-                         null_text = 'None',
-                         wrapper_character = "'",
-                         line_terminator = '\r\n',
-                         wrap_all_strings = False,
-                         double_wrapper_character_when_nested = False,
-                         escape_character = "\\",
-                         series_index = None,
-                         **kwargs):
+    def from_csv_in_rows(
+        cls,
+        as_string_or_file,
+        series_type="line",
+        has_header_row=True,
+        series_kwargs=None,
+        options_kwargs=None,
+        chart_kwargs=None,
+        delimiter=",",
+        null_text="None",
+        wrapper_character="'",
+        line_terminator="\r\n",
+        wrap_all_strings=False,
+        double_wrapper_character_when_nested=False,
+        escape_character="\\",
+        series_index=None,
+        **kwargs,
+    ):
         """Create a new :class:`Chart <highcharts_core.chart.Chart>` instance with
         data populated from a CSV string or file.
 
@@ -1342,43 +1394,47 @@ class Chart(HighchartsMeta):
           CSV columns by their label, but the CSV data does not contain a header row
 
         """
-        return cls.from_csv(as_string_or_file,
-                            property_column_map = None,
-                            series_type = series_type,
-                            has_header_row = has_header_row,
-                            series_kwargs = series_kwargs,
-                            options_kwargs = options_kwargs,
-                            chart_kwargs = chart_kwargs,
-                            delimiter = delimiter,
-                            null_text = null_text,
-                            wrapper_character = wrapper_character,
-                            line_terminator = line_terminator,
-                            wrap_all_strings = wrap_all_strings,
-                            double_wrapper_character_when_nested = double_wrapper_character_when_nested,
-                            escape_character = escape_character,
-                            series_in_rows = True,
-                            series_index = series_index,
-                            **kwargs)
+        return cls.from_csv(
+            as_string_or_file,
+            property_column_map=None,
+            series_type=series_type,
+            has_header_row=has_header_row,
+            series_kwargs=series_kwargs,
+            options_kwargs=options_kwargs,
+            chart_kwargs=chart_kwargs,
+            delimiter=delimiter,
+            null_text=null_text,
+            wrapper_character=wrapper_character,
+            line_terminator=line_terminator,
+            wrap_all_strings=wrap_all_strings,
+            double_wrapper_character_when_nested=double_wrapper_character_when_nested,
+            escape_character=escape_character,
+            series_in_rows=True,
+            series_index=series_index,
+            **kwargs,
+        )
 
     @classmethod
-    def from_csv(cls,
-                 as_string_or_file,
-                 property_column_map = None,
-                 series_type = 'line',
-                 has_header_row = True,
-                 series_kwargs = None,
-                 options_kwargs = None,
-                 chart_kwargs = None,
-                 delimiter = ',',
-                 null_text = 'None',
-                 wrapper_character = "'",
-                 line_terminator = '\r\n',
-                 wrap_all_strings = False,
-                 double_wrapper_character_when_nested = False,
-                 escape_character = "\\",
-                 series_in_rows = False,
-                 series_index = None,
-                 **kwargs):
+    def from_csv(
+        cls,
+        as_string_or_file,
+        property_column_map=None,
+        series_type="line",
+        has_header_row=True,
+        series_kwargs=None,
+        options_kwargs=None,
+        chart_kwargs=None,
+        delimiter=",",
+        null_text="None",
+        wrapper_character="'",
+        line_terminator="\r\n",
+        wrap_all_strings=False,
+        double_wrapper_character_when_nested=False,
+        escape_character="\\",
+        series_in_rows=False,
+        series_index=None,
+        **kwargs,
+    ):
         """Create a new :class:`Chart <highcharts_core.chart.Chart>` instance with
         data populated from a CSV string or file.
 
@@ -1598,44 +1654,48 @@ class Chart(HighchartsMeta):
           CSV columns by their label, but the CSV data does not contain a header row
 
         """
-        series_type = validators.string(series_type, allow_empty = False)
+        series_type = validators.string(series_type, allow_empty=False)
         series_type = series_type.lower()
         if series_type not in SERIES_CLASSES:
-            raise errors.HighchartsValueError(f'series_type expects a valid Highcharts '
-                                              f'series type. Received: {series_type}')
+            raise errors.HighchartsValueError(
+                f"series_type expects a valid Highcharts "
+                f"series type. Received: {series_type}"
+            )
 
-        options_kwargs = validators.dict(options_kwargs, allow_empty = True) or {}
-        chart_kwargs = validators.dict(chart_kwargs, allow_empty = True) or {}
+        options_kwargs = validators.dict(options_kwargs, allow_empty=True) or {}
+        chart_kwargs = validators.dict(chart_kwargs, allow_empty=True) or {}
 
         series_cls = SERIES_CLASSES.get(series_type, None)
 
         if series_in_rows:
             series = series_cls.from_csv_in_rows(
                 as_string_or_file,
-                has_header_row = has_header_row,
-                series_kwargs = series_kwargs,
-                delimiter = delimiter,
-                null_text = null_text,
-                wrapper_character = wrapper_character,
-                line_terminator = line_terminator,
-                wrap_all_strings = wrap_all_strings,
-                double_wrapper_character_when_nested = double_wrapper_character_when_nested,
-                escape_character = escape_character,
-                **kwargs
+                has_header_row=has_header_row,
+                series_kwargs=series_kwargs,
+                delimiter=delimiter,
+                null_text=null_text,
+                wrapper_character=wrapper_character,
+                line_terminator=line_terminator,
+                wrap_all_strings=wrap_all_strings,
+                double_wrapper_character_when_nested=double_wrapper_character_when_nested,
+                escape_character=escape_character,
+                **kwargs,
             )
         else:
-            series = series_cls.from_csv(as_string_or_file,
-                                         property_column_map = property_column_map,
-                                         has_header_row = has_header_row,
-                                         series_kwargs = series_kwargs,
-                                         delimiter = delimiter,
-                                         null_text = null_text,
-                                         wrapper_character = wrapper_character,
-                                         line_terminator = line_terminator,
-                                         wrap_all_strings = wrap_all_strings,
-                                         double_wrapper_character_when_nested = double_wrapper_character_when_nested,
-                                         escape_character = escape_character,
-                                         **kwargs)
+            series = series_cls.from_csv(
+                as_string_or_file,
+                property_column_map=property_column_map,
+                has_header_row=has_header_row,
+                series_kwargs=series_kwargs,
+                delimiter=delimiter,
+                null_text=null_text,
+                wrapper_character=wrapper_character,
+                line_terminator=line_terminator,
+                wrap_all_strings=wrap_all_strings,
+                double_wrapper_character_when_nested=double_wrapper_character_when_nested,
+                escape_character=escape_character,
+                **kwargs,
+            )
 
         if isinstance(series, list) and series_index is not None:
             series = series[series_index]
@@ -1643,7 +1703,7 @@ class Chart(HighchartsMeta):
         if not isinstance(series, list):
             series = [series]
 
-        options_kwargs['series'] = series
+        options_kwargs["series"] = series
 
         options = HighchartsOptions(**options_kwargs)
 
@@ -1653,14 +1713,16 @@ class Chart(HighchartsMeta):
         return instance
 
     @classmethod
-    def from_pandas_in_rows(cls,
-                            df,
-                            series_type = 'line',
-                            series_kwargs = None,
-                            options_kwargs = None,
-                            chart_kwargs = None,
-                            series_index = None,
-                            **kwargs):
+    def from_pandas_in_rows(
+        cls,
+        df,
+        series_type="line",
+        series_kwargs=None,
+        options_kwargs=None,
+        chart_kwargs=None,
+        series_index=None,
+        **kwargs,
+    ):
         """Create a chart from a Pandas :class:`DataFrame <pandas:pandas.DataFrame>`,
         treating each row in the dataframe as a :term:`series` instances.
 
@@ -1725,27 +1787,31 @@ class Chart(HighchartsMeta):
           not available in the runtime environment
 
         """
-        return cls.from_pandas(df,
-                               property_map = None,
-                               series_type = series_type,
-                               series_kwargs = series_kwargs,
-                               options_kwargs = options_kwargs,
-                               chart_kwargs = chart_kwargs,
-                               series_in_rows = True,
-                               series_index = series_index,
-                               **kwargs)
+        return cls.from_pandas(
+            df,
+            property_map=None,
+            series_type=series_type,
+            series_kwargs=series_kwargs,
+            options_kwargs=options_kwargs,
+            chart_kwargs=chart_kwargs,
+            series_in_rows=True,
+            series_index=series_index,
+            **kwargs,
+        )
 
     @classmethod
-    def from_pandas(cls,
-                    df,
-                    property_map = None,
-                    series_type = 'line',
-                    series_kwargs = None,
-                    options_kwargs = None,
-                    chart_kwargs = None,
-                    series_in_rows = False,
-                    series_index = None,
-                    **kwargs):
+    def from_pandas(
+        cls,
+        df,
+        property_map=None,
+        series_type="line",
+        series_kwargs=None,
+        options_kwargs=None,
+        chart_kwargs=None,
+        series_in_rows=False,
+        series_index=None,
+        **kwargs,
+    ):
         """Create a :class:`Chart <highcharts_core.chart.Chart>` instance whose
         series are populated from a `pandas <https://pandas.pydata.org/>`_
         :class:`DataFrame <pandas:pandas.DataFrame>`.
@@ -1879,48 +1945,56 @@ class Chart(HighchartsMeta):
           not available in the runtime environment
         """
         if not series_type:
-            raise errors.HighchartsValueError('series_type cannot be empty')
+            raise errors.HighchartsValueError("series_type cannot be empty")
         series_type = str(series_type).lower()
         if series_type not in SERIES_CLASSES:
-            raise errors.HighchartsValueError(f'series_type expects a valid Highcharts '
-                                              f'series type. Received: {series_type}')
+            raise errors.HighchartsValueError(
+                f"series_type expects a valid Highcharts "
+                f"series type. Received: {series_type}"
+            )
 
         if not isinstance(options_kwargs, (dict, UserDict, type(None))):
-            raise errors.HighchartsValueError(f'options_kwarts expects a dict. '
-                                              f'Received: {options_kwargs.__class__.__name__}')
+            raise errors.HighchartsValueError(
+                f"options_kwarts expects a dict. "
+                f"Received: {options_kwargs.__class__.__name__}"
+            )
         if not options_kwargs:
             options_kwargs = {}
 
         if not isinstance(chart_kwargs, (dict, UserDict, type(None))):
-            raise errors.HighchartsValueError(f'chart_kwargs expects a dict. '
-                                              f'Received: {chart_kwargs.__class__.__name__}')
+            raise errors.HighchartsValueError(
+                f"chart_kwargs expects a dict. "
+                f"Received: {chart_kwargs.__class__.__name__}"
+            )
         if not chart_kwargs:
             chart_kwargs = {}
 
         if not isinstance(kwargs, (dict, UserDict, type(None))):
-            raise errors.HighchartsValueError(f'kwargs expects a dict. '
-                                              f'Received: {kwargs.__class__.__name__}')
+            raise errors.HighchartsValueError(
+                f"kwargs expects a dict. " f"Received: {kwargs.__class__.__name__}"
+            )
         if not kwargs:
             kwargs = {}
 
         series_cls = SERIES_CLASSES.get(series_type, None)
 
         if series_in_rows:
-            series = series_cls.from_pandas_in_rows(df,
-                                                    series_kwargs = series_kwargs,
-                                                    series_index = series_index,
-                                                    **kwargs)
+            series = series_cls.from_pandas_in_rows(
+                df, series_kwargs=series_kwargs, series_index=series_index, **kwargs
+            )
         else:
-            series = series_cls.from_pandas(df,
-                                            property_map = property_map,
-                                            series_kwargs = series_kwargs,
-                                            series_index = series_index,
-                                            **kwargs)
+            series = series_cls.from_pandas(
+                df,
+                property_map=property_map,
+                series_kwargs=series_kwargs,
+                series_index=series_index,
+                **kwargs,
+            )
 
         if isinstance(series, series_cls):
             series = [series]
 
-        options_kwargs['series'] = series
+        options_kwargs["series"] = series
         options = HighchartsOptions(**options_kwargs)
 
         instance = cls(**chart_kwargs)
@@ -1929,13 +2003,15 @@ class Chart(HighchartsMeta):
         return instance
 
     @classmethod
-    def from_pyspark(cls,
-                     df,
-                     property_map,
-                     series_type,
-                     series_kwargs = None,
-                     options_kwargs = None,
-                     chart_kwargs = None):
+    def from_pyspark(
+        cls,
+        df,
+        property_map,
+        series_type,
+        series_kwargs=None,
+        options_kwargs=None,
+        chart_kwargs=None,
+    ):
         """Create a :class:`Chart <highcharts_core.chart.Chart>` instance whose
         data is populated from a
         `PySpark <https://spark.apache.org/docs/latest/api/python/>`_
@@ -2000,20 +2076,20 @@ class Chart(HighchartsMeta):
           `PySpark <https://spark.apache.org/docs/latest/api/python/>`_ is not available
           in the runtime environment
         """
-        series_type = validators.string(series_type, allow_empty = False)
+        series_type = validators.string(series_type, allow_empty=False)
         series_type = series_type.lower()
         if series_type not in SERIES_CLASSES:
-            raise errors.HighchartsValueError(f'series_type expects a valid Highcharts '
-                                              f'series type. Received: {series_type}')
+            raise errors.HighchartsValueError(
+                f"series_type expects a valid Highcharts "
+                f"series type. Received: {series_type}"
+            )
 
-        options_kwargs = validators.dict(options_kwargs, allow_empty = True) or {}
-        chart_kwargs = validators.dict(chart_kwargs, allow_empty = True) or {}
+        options_kwargs = validators.dict(options_kwargs, allow_empty=True) or {}
+        chart_kwargs = validators.dict(chart_kwargs, allow_empty=True) or {}
 
         series_cls = SERIES_CLASSES.get(series_type, None)
 
-        series = series_cls.from_pyspark(df,
-                                         property_map,
-                                         series_kwargs)
+        series = series_cls.from_pyspark(df, property_map, series_kwargs)
 
         options = HighchartsOptions(**options_kwargs)
         options.series = [series]
@@ -2024,9 +2100,7 @@ class Chart(HighchartsMeta):
         return instance
 
     @classmethod
-    def from_options(cls,
-                     options,
-                     chart_kwargs = None):
+    def from_options(cls, options, chart_kwargs=None):
         """Create a :class:`Chart <highcharts_core.chart.Chart>` instance from a
         :class:`HighchartsOptions <highcharts_core.options.HighchartsOptions>` object.
 
@@ -2049,12 +2123,10 @@ class Chart(HighchartsMeta):
         :returns: The :class:`Chart <highcharts_core.chart.Chart>` instance
         :rtype: :class:`Chart <highcharts_core.chart.Chart>`
         """
-        chart_kwargs = validators.dict(chart_kwargs, allow_empty = True) or {}
-        options = validate_types(options,
-                                 types = (HighchartsOptions))
+        chart_kwargs = validators.dict(chart_kwargs, allow_empty=True) or {}
+        options = validate_types(options, types=(HighchartsOptions))
 
         instance = cls(**chart_kwargs)
         instance.options = options
 
         return instance
-

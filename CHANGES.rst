@@ -1,4 +1,16 @@
 
+Release 1.10.2
+=========================================
+
+* **BUGFIX:** Fixed type coercion for `plot_options.series.data_labels` to allow for series type-specific
+  label label classes. Closes #209.
+* **BUGFIX:** Modified the default `Referer` and `User-Agent` strings for use when exporting charts.
+* **DOCS:** Added some additional documentation around the `User-Agent` and `Referer` support for use when
+  exporting charts.
+* **ENHANCEMENT:** Some minor refactoring.
+
+----
+
 Release 1.10.1
 =========================================
 

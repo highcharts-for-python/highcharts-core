@@ -28,9 +28,9 @@ class Filter(HighchartsMeta):
         self._property = None
         self._value = None
 
-        self.operator = kwargs.get('operator', None)
-        self.property_ = kwargs.get('property_', None)
-        self.value = kwargs.get('value', None)
+        self.operator = kwargs.get("operator", None)
+        self.property_ = kwargs.get("property_", None)
+        self.value = kwargs.get("value", None)
 
     @property
     def operator(self) -> Optional[str]:
@@ -51,7 +51,7 @@ class Filter(HighchartsMeta):
 
     @operator.setter
     def operator(self, value):
-        self._operator = validators.string(value, allow_empty = True)
+        self._operator = validators.string(value, allow_empty=True)
 
     @property
     def property_(self) -> Optional[str]:
@@ -66,7 +66,7 @@ class Filter(HighchartsMeta):
 
     @property_.setter
     def property_(self, value):
-        self._property = validators.string(value, allow_empty = True)
+        self._property = validators.string(value, allow_empty=True)
 
     @property
     def value(self) -> Optional[int | float | Decimal]:
@@ -78,23 +78,23 @@ class Filter(HighchartsMeta):
 
     @value.setter
     def value(self, value_):
-        self._value = validators.numeric(value_, allow_empty = True)
+        self._value = validators.numeric(value_, allow_empty=True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'operator': as_dict.get('operator', None),
-            'property_': as_dict.get('property', None),
-            'value': as_dict.get('value', None)
+            "operator": as_dict.get("operator", None),
+            "property_": as_dict.get("property", None),
+            "value": as_dict.get("value", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         return {
-            'operator': self.operator,
-            'property': self.property_,
-            'value': self.value
+            "operator": self.operator,
+            "property": self.property_,
+            "value": self.value,
         }
 
 
@@ -134,37 +134,37 @@ class DataLabel(HighchartsMeta):
         self._y = None
         self._z = None
 
-        self.align = kwargs.get('align', None)
-        self.allow_overlap = kwargs.get('allow_overlap', None)
-        self.animation = kwargs.get('animation', None)
-        self.background_color = kwargs.get('background_color', None)
-        self.border_color = kwargs.get('border_color', None)
-        self.border_radius = kwargs.get('border_radius', None)
-        self.border_width = kwargs.get('border_width', None)
-        self.class_name = kwargs.get('class_name', None)
-        self.color = kwargs.get('color', None)
-        self.crop = kwargs.get('crop', None)
-        self.defer = kwargs.get('defer', None)
-        self.enabled = kwargs.get('enabled', None)
-        self.filter = kwargs.get('filter', None)
-        self.format = kwargs.get('format', None)
-        self.formatter = kwargs.get('formatter', None)
-        self.inside = kwargs.get('inside', None)
-        self.null_format = kwargs.get('null_format', None)
-        self.null_formatter = kwargs.get('null_formatter', None)
-        self.overflow = kwargs.get('overflow', None)
-        self.padding = kwargs.get('padding', None)
-        self.position = kwargs.get('position', None)
-        self.rotation = kwargs.get('rotation', None)
-        self.shadow = kwargs.get('shadow', None)
-        self.shape = kwargs.get('shape', None)
-        self.style = kwargs.get('style', None)
-        self.text_path = kwargs.get('text_path', None)
-        self.use_html = kwargs.get('use_html', None)
-        self.vertical_align = kwargs.get('vertical_align', None)
-        self.x = kwargs.get('x', None)
-        self.y = kwargs.get('y', None)
-        self.z = kwargs.get('z', None)
+        self.align = kwargs.get("align", None)
+        self.allow_overlap = kwargs.get("allow_overlap", None)
+        self.animation = kwargs.get("animation", None)
+        self.background_color = kwargs.get("background_color", None)
+        self.border_color = kwargs.get("border_color", None)
+        self.border_radius = kwargs.get("border_radius", None)
+        self.border_width = kwargs.get("border_width", None)
+        self.class_name = kwargs.get("class_name", None)
+        self.color = kwargs.get("color", None)
+        self.crop = kwargs.get("crop", None)
+        self.defer = kwargs.get("defer", None)
+        self.enabled = kwargs.get("enabled", None)
+        self.filter = kwargs.get("filter", None)
+        self.format = kwargs.get("format", None)
+        self.formatter = kwargs.get("formatter", None)
+        self.inside = kwargs.get("inside", None)
+        self.null_format = kwargs.get("null_format", None)
+        self.null_formatter = kwargs.get("null_formatter", None)
+        self.overflow = kwargs.get("overflow", None)
+        self.padding = kwargs.get("padding", None)
+        self.position = kwargs.get("position", None)
+        self.rotation = kwargs.get("rotation", None)
+        self.shadow = kwargs.get("shadow", None)
+        self.shape = kwargs.get("shape", None)
+        self.style = kwargs.get("style", None)
+        self.text_path = kwargs.get("text_path", None)
+        self.use_html = kwargs.get("use_html", None)
+        self.vertical_align = kwargs.get("vertical_align", None)
+        self.x = kwargs.get("x", None)
+        self.y = kwargs.get("y", None)
+        self.z = kwargs.get("z", None)
 
     @property
     def align(self) -> Optional[str]:
@@ -191,11 +191,13 @@ class DataLabel(HighchartsMeta):
         if not value:
             self._align = None
         else:
-            value = validators.string(value, allow_empty = False)
+            value = validators.string(value, allow_empty=False)
             value = value.lower()
-            if value not in ['left', 'center', 'right']:
-                raise errors.HighchartsValueError(f'align must be either "left", '
-                                                  f'"center", or "right". Was: {value}')
+            if value not in ["left", "center", "right"]:
+                raise errors.HighchartsValueError(
+                    f'align must be either "left", '
+                    f'"center", or "right". Was: {value}'
+                )
 
         self._align = value
 
@@ -262,6 +264,7 @@ class DataLabel(HighchartsMeta):
     @background_color.setter
     def background_color(self, value):
         from highcharts_core import utility_functions
+
         self._background_color = utility_functions.validate_color(value)
 
     @property
@@ -276,7 +279,7 @@ class DataLabel(HighchartsMeta):
 
     @border_color.setter
     def border_color(self, value):
-        self._border_color = validators.string(value, allow_empty = True)
+        self._border_color = validators.string(value, allow_empty=True)
 
     @property
     def border_radius(self) -> Optional[int | float | Decimal]:
@@ -290,7 +293,7 @@ class DataLabel(HighchartsMeta):
 
     @border_radius.setter
     def border_radius(self, value):
-        self._border_radius = validators.numeric(value, allow_empty = True)
+        self._border_radius = validators.numeric(value, allow_empty=True)
 
     @property
     def border_width(self) -> Optional[int | float | Decimal]:
@@ -304,7 +307,7 @@ class DataLabel(HighchartsMeta):
 
     @border_width.setter
     def border_width(self, value):
-        self._border_width = validators.numeric(value, allow_empty = True)
+        self._border_width = validators.numeric(value, allow_empty=True)
 
     @property
     def class_name(self) -> Optional[str]:
@@ -318,7 +321,7 @@ class DataLabel(HighchartsMeta):
 
     @class_name.setter
     def class_name(self, value):
-        self._class_name = validators.string(value, allow_empty = True)
+        self._class_name = validators.string(value, allow_empty=True)
 
     @property
     def color(self) -> Optional[str]:
@@ -339,7 +342,7 @@ class DataLabel(HighchartsMeta):
 
     @color.setter
     def color(self, value):
-        self._color = validators.string(value, allow_empty = True)
+        self._color = validators.string(value, allow_empty=True)
 
     @property
     def crop(self) -> Optional[bool]:
@@ -445,7 +448,7 @@ class DataLabel(HighchartsMeta):
 
     @format.setter
     def format(self, value):
-        self._format = validators.string(value, allow_empty = True)
+        self._format = validators.string(value, allow_empty=True)
 
     @property
     def formatter(self) -> Optional[CallbackFunction]:
@@ -503,7 +506,7 @@ class DataLabel(HighchartsMeta):
 
     @null_format.setter
     def null_format(self, value):
-        self._null_format = validators.string(value, allow_empty = True)
+        self._null_format = validators.string(value, allow_empty=True)
 
     @property
     def null_formatter(self) -> Optional[CallbackFunction]:
@@ -556,14 +559,15 @@ class DataLabel(HighchartsMeta):
 
     @overflow.setter
     def overflow(self, value):
-        value = validators.string(value, allow_empty = True)
+        value = validators.string(value, allow_empty=True)
         if not value:
             self._overflow = None
         else:
             value = value.lower()
-            if value not in ['justify', 'allow', 'none']:
-                raise errors.HighchartsValueError(f'overflow accepts "justify", "allow", or "none".'
-                                                  f' Was: {value}')
+            if value not in ["justify", "allow", "none"]:
+                raise errors.HighchartsValueError(
+                    f'overflow accepts "justify", "allow", or "none".' f" Was: {value}"
+                )
             self._overflow = value
 
     @property
@@ -580,7 +584,7 @@ class DataLabel(HighchartsMeta):
 
     @padding.setter
     def padding(self, value):
-        self._padding = validators.numeric(value, allow_empty = True)
+        self._padding = validators.numeric(value, allow_empty=True)
 
     @property
     def position(self) -> Optional[str]:
@@ -608,9 +612,11 @@ class DataLabel(HighchartsMeta):
         else:
             value = validators.string(value)
             value = value.lower()
-            if value not in ['center', 'left', 'right']:
-                raise errors.HighchartsValueError(f'position expects a value of "center",'
-                                                  f' "left", or "right". Was: {value}')
+            if value not in ["center", "left", "right"]:
+                raise errors.HighchartsValueError(
+                    f'position expects a value of "center",'
+                    f' "left", or "right". Was: {value}'
+                )
             self._position = value
 
     @property
@@ -629,7 +635,7 @@ class DataLabel(HighchartsMeta):
 
     @rotation.setter
     def rotation(self, value):
-        self._rotation = validators.numeric(value, allow_empty = True)
+        self._rotation = validators.numeric(value, allow_empty=True)
 
     @property
     def shadow(self) -> Optional[bool | ShadowOptions]:
@@ -651,8 +657,7 @@ class DataLabel(HighchartsMeta):
         elif value is False:
             self._shadow = False
         else:
-            value = validate_types(value,
-                                   types = ShadowOptions)
+            value = validate_types(value, types=ShadowOptions)
             self._shadow = value
 
     @property
@@ -679,16 +684,20 @@ class DataLabel(HighchartsMeta):
         if not value:
             self._shape = None
         else:
-            value = validators.string(value, allow_empty = False)
+            value = validators.string(value, allow_empty=False)
             value = value.lower()
-            if value not in ['callout',
-                             'connector',
-                             'rect',
-                             'circle',
-                             'diamond',
-                             'triangle']:
-                raise errors.HighchartsValueError(f'shape expects a supported annotation '
-                                                  f'label shape. Was: {value}')
+            if value not in [
+                "callout",
+                "connector",
+                "rect",
+                "circle",
+                "diamond",
+                "triangle",
+            ]:
+                raise errors.HighchartsValueError(
+                    f"shape expects a supported annotation "
+                    f"label shape. Was: {value}"
+                )
             self._shape = value
 
     @property
@@ -721,9 +730,9 @@ class DataLabel(HighchartsMeta):
     @style.setter
     def style(self, value):
         try:
-            self._style = validators.dict(value, allow_empty = True)
+            self._style = validators.dict(value, allow_empty=True)
         except (ValueError, TypeError):
-            self._style = validators.string(value, allow_empty = True)
+            self._style = validators.string(value, allow_empty=True)
 
     @property
     def text_path(self) -> Optional[TextPath]:
@@ -783,14 +792,16 @@ class DataLabel(HighchartsMeta):
 
     @vertical_align.setter
     def vertical_align(self, value):
-        value = validators.string(value, allow_empty = True)
+        value = validators.string(value, allow_empty=True)
         if not value:
             self._vertical_align = None
         else:
             value = value.lower()
-            if value not in ['bottom', 'middle', 'top']:
-                raise errors.HighchartsValueError(f'vertical_align expects either "top", '
-                                                  f'"middle", or "bottom". Was: {value}')
+            if value not in ["bottom", "middle", "top"]:
+                raise errors.HighchartsValueError(
+                    f'vertical_align expects either "top", '
+                    f'"middle", or "bottom". Was: {value}'
+                )
             self._vertical_align = value
 
     @property
@@ -804,7 +815,7 @@ class DataLabel(HighchartsMeta):
 
     @x.setter
     def x(self, value):
-        self._x = validators.numeric(value, allow_empty = True)
+        self._x = validators.numeric(value, allow_empty=True)
 
     @property
     def y(self) -> Optional[int | float | Decimal]:
@@ -817,7 +828,7 @@ class DataLabel(HighchartsMeta):
 
     @y.setter
     def y(self, value):
-        self._y = validators.numeric(value, allow_empty = True)
+        self._y = validators.numeric(value, allow_empty=True)
 
     @property
     def z(self) -> Optional[int]:
@@ -836,79 +847,79 @@ class DataLabel(HighchartsMeta):
 
     @z.setter
     def z(self, value):
-        self._z = validators.numeric(value, allow_empty = True)
+        self._z = validators.numeric(value, allow_empty=True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.get('align', None),
-            'allow_overlap': as_dict.get('allowOverlap', None),
-            'animation': as_dict.get('animation', None),
-            'background_color': as_dict.get('backgroundColor', None),
-            'border_color': as_dict.get('borderColor', None),
-            'border_radius': as_dict.get('borderRadius', None),
-            'border_width': as_dict.get('borderWidth', None),
-            'class_name': as_dict.get('className', None),
-            'color': as_dict.get('color', None),
-            'crop': as_dict.get('crop', None),
-            'defer': as_dict.get('defer', None),
-            'enabled': as_dict.get('enabled', None),
-            'filter': as_dict.get('filter', None),
-            'format': as_dict.get('format', None),
-            'formatter': as_dict.get('formatter', None),
-            'inside': as_dict.get('inside', None),
-            'null_format': as_dict.get('nullFormat', None),
-            'null_formatter': as_dict.get('nullFormatter', None),
-            'overflow': as_dict.get('overflow', None),
-            'padding': as_dict.get('padding', None),
-            'position': as_dict.get('position', None),
-            'rotation': as_dict.get('rotation', None),
-            'shadow': as_dict.get('shadow', None),
-            'shape': as_dict.get('shape', None),
-            'style': as_dict.get('style', None),
-            'text_path': as_dict.get('textPath', None),
-            'use_html': as_dict.get('useHTML', None),
-            'vertical_align': as_dict.get('verticalAlign', None),
-            'x': as_dict.get('x', None),
-            'y': as_dict.get('y', None),
-            'z': as_dict.get('z', None),
+            "align": as_dict.get("align", None),
+            "allow_overlap": as_dict.get("allowOverlap", None),
+            "animation": as_dict.get("animation", None),
+            "background_color": as_dict.get("backgroundColor", None),
+            "border_color": as_dict.get("borderColor", None),
+            "border_radius": as_dict.get("borderRadius", None),
+            "border_width": as_dict.get("borderWidth", None),
+            "class_name": as_dict.get("className", None),
+            "color": as_dict.get("color", None),
+            "crop": as_dict.get("crop", None),
+            "defer": as_dict.get("defer", None),
+            "enabled": as_dict.get("enabled", None),
+            "filter": as_dict.get("filter", None),
+            "format": as_dict.get("format", None),
+            "formatter": as_dict.get("formatter", None),
+            "inside": as_dict.get("inside", None),
+            "null_format": as_dict.get("nullFormat", None),
+            "null_formatter": as_dict.get("nullFormatter", None),
+            "overflow": as_dict.get("overflow", None),
+            "padding": as_dict.get("padding", None),
+            "position": as_dict.get("position", None),
+            "rotation": as_dict.get("rotation", None),
+            "shadow": as_dict.get("shadow", None),
+            "shape": as_dict.get("shape", None),
+            "style": as_dict.get("style", None),
+            "text_path": as_dict.get("textPath", None),
+            "use_html": as_dict.get("useHTML", None),
+            "vertical_align": as_dict.get("verticalAlign", None),
+            "x": as_dict.get("x", None),
+            "y": as_dict.get("y", None),
+            "z": as_dict.get("z", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'align': self.align,
-            'allowOverlap': self.allow_overlap,
-            'animation': self.animation,
-            'backgroundColor': self.background_color,
-            'borderColor': self.border_color,
-            'borderRadius': self.border_radius,
-            'borderWidth': self.border_width,
-            'className': self.class_name,
-            'color': self.color,
-            'crop': self.crop,
-            'defer': self.defer,
-            'enabled': self.enabled,
-            'filter': self.filter,
-            'format': self.format,
-            'formatter': self.formatter,
-            'inside': self.inside,
-            'nullFormat': self.null_format,
-            'nullFormatter': self.null_formatter,
-            'overflow': self.overflow,
-            'padding': self.padding,
-            'position': self.position,
-            'rotation': self.rotation,
-            'shadow': self.shadow,
-            'shape': self.shape,
-            'style': self.style,
-            'textPath': self.text_path,
-            'useHTML': self.use_html,
-            'verticalAlign': self.vertical_align,
-            'x': self.x,
-            'y': self.y,
-            'z': self.z
+            "align": self.align,
+            "allowOverlap": self.allow_overlap,
+            "animation": self.animation,
+            "backgroundColor": self.background_color,
+            "borderColor": self.border_color,
+            "borderRadius": self.border_radius,
+            "borderWidth": self.border_width,
+            "className": self.class_name,
+            "color": self.color,
+            "crop": self.crop,
+            "defer": self.defer,
+            "enabled": self.enabled,
+            "filter": self.filter,
+            "format": self.format,
+            "formatter": self.formatter,
+            "inside": self.inside,
+            "nullFormat": self.null_format,
+            "nullFormatter": self.null_formatter,
+            "overflow": self.overflow,
+            "padding": self.padding,
+            "position": self.position,
+            "rotation": self.rotation,
+            "shadow": self.shadow,
+            "shape": self.shape,
+            "style": self.style,
+            "textPath": self.text_path,
+            "useHTML": self.use_html,
+            "verticalAlign": self.vertical_align,
+            "x": self.x,
+            "y": self.y,
+            "z": self.z,
         }
 
         return untrimmed
@@ -916,46 +927,48 @@ class DataLabel(HighchartsMeta):
 
 class PieDataLabel(DataLabel):
     """Variant of :class:`DataLabel` used for pie (and related) series."""
-    
+
     def __init__(self, **kwargs):
         self._distance = None
-        
-        self.distance = kwargs.get('distance', None)
-        
+
+        self.distance = kwargs.get("distance", None)
+
         super().__init__(**kwargs)
-        
+
     @property
     def distance(self) -> Optional[int | float | Decimal | str]:
-        """The distance of the data label from the pie's edge. 
-        
+        """The distance of the data label from the pie's edge.
+
         .. note::
-        
-          Negative numbers put the data label on top of the pie slices. 
-          
+
+          Negative numbers put the data label on top of the pie slices.
+
         .. tip::
-        
-          Can also be defined as a percentage of pie's radius. 
-        
+
+          Can also be defined as a percentage of pie's radius.
+
         .. warning::
-        
+
           Connectors are only shown for data labels outside the pie.
-          
+
         :rtype: numeric or :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._distance
-    
+
     @distance.setter
     def distance(self, value):
         if value is None:
             self._distance = None
         else:
             try:
-                value = validators.numeric(value, allow_empty = False)
+                value = validators.numeric(value, allow_empty=False)
             except (ValueError, TypeError):
                 if not isinstance(value, str):
-                    raise errors.HighchartsValueError(f'distance must be a number or a string, but received '
-                                                      f'{type(value).__name__}.')
-                if value == '':
+                    raise errors.HighchartsValueError(
+                        f"distance must be a number or a string, but received "
+                        f"{type(value).__name__}."
+                    )
+                if value == "":
                     value = None
 
             self._distance = value
@@ -963,49 +976,48 @@ class PieDataLabel(DataLabel):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.get('align', None),
-            'allow_overlap': as_dict.get('allowOverlap', None),
-            'animation': as_dict.get('animation', None),
-            'background_color': as_dict.get('backgroundColor', None),
-            'border_color': as_dict.get('borderColor', None),
-            'border_radius': as_dict.get('borderRadius', None),
-            'border_width': as_dict.get('borderWidth', None),
-            'class_name': as_dict.get('className', None),
-            'color': as_dict.get('color', None),
-            'crop': as_dict.get('crop', None),
-            'defer': as_dict.get('defer', None),
-            'enabled': as_dict.get('enabled', None),
-            'filter': as_dict.get('filter', None),
-            'format': as_dict.get('format', None),
-            'formatter': as_dict.get('formatter', None),
-            'inside': as_dict.get('inside', None),
-            'null_format': as_dict.get('nullFormat', None),
-            'null_formatter': as_dict.get('nullFormatter', None),
-            'overflow': as_dict.get('overflow', None),
-            'padding': as_dict.get('padding', None),
-            'position': as_dict.get('position', None),
-            'rotation': as_dict.get('rotation', None),
-            'shadow': as_dict.get('shadow', None),
-            'shape': as_dict.get('shape', None),
-            'style': as_dict.get('style', None),
-            'text_path': as_dict.get('textPath', None),
-            'use_html': as_dict.get('useHTML', None),
-            'vertical_align': as_dict.get('verticalAlign', None),
-            'x': as_dict.get('x', None),
-            'y': as_dict.get('y', None),
-            'z': as_dict.get('z', None),
-            
-            'distance': as_dict.get('distance', None),
+            "align": as_dict.get("align", None),
+            "allow_overlap": as_dict.get("allowOverlap", None),
+            "animation": as_dict.get("animation", None),
+            "background_color": as_dict.get("backgroundColor", None),
+            "border_color": as_dict.get("borderColor", None),
+            "border_radius": as_dict.get("borderRadius", None),
+            "border_width": as_dict.get("borderWidth", None),
+            "class_name": as_dict.get("className", None),
+            "color": as_dict.get("color", None),
+            "crop": as_dict.get("crop", None),
+            "defer": as_dict.get("defer", None),
+            "enabled": as_dict.get("enabled", None),
+            "filter": as_dict.get("filter", None),
+            "format": as_dict.get("format", None),
+            "formatter": as_dict.get("formatter", None),
+            "inside": as_dict.get("inside", None),
+            "null_format": as_dict.get("nullFormat", None),
+            "null_formatter": as_dict.get("nullFormatter", None),
+            "overflow": as_dict.get("overflow", None),
+            "padding": as_dict.get("padding", None),
+            "position": as_dict.get("position", None),
+            "rotation": as_dict.get("rotation", None),
+            "shadow": as_dict.get("shadow", None),
+            "shape": as_dict.get("shape", None),
+            "style": as_dict.get("style", None),
+            "text_path": as_dict.get("textPath", None),
+            "use_html": as_dict.get("useHTML", None),
+            "vertical_align": as_dict.get("verticalAlign", None),
+            "x": as_dict.get("x", None),
+            "y": as_dict.get("y", None),
+            "z": as_dict.get("z", None),
+            "distance": as_dict.get("distance", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'distance': self.distance,
+            "distance": self.distance,
         }
 
-        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
+        parent_as_dict = super()._to_untrimmed_dict(in_cls=in_cls) or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
@@ -1014,104 +1026,105 @@ class PieDataLabel(DataLabel):
 
 class SunburstDataLabel(DataLabel):
     """Variant of :class:`DataLabel` used for :term:`sunburst` series."""
-    
+
     def __init__(self, **kwargs):
         self._rotation_mode = None
-        
-        self.rotation_mode = kwargs.get('rotation_mode', None)
-        
+
+        self.rotation_mode = kwargs.get("rotation_mode", None)
+
         super().__init__(**kwargs)
-        
+
     @property
     def rotation_mode(self) -> Optional[str]:
-        """Determines how the data label will be rotated relative to the perimeter of the sunburst. 
-        
+        """Determines how the data label will be rotated relative to the perimeter of the sunburst.
+
         Valid values are:
-        
+
           * ``'circular'``
           * ``'auto'``
-          * ``'parallel'`` 
-          * ``'perpendicular'``. 
-          
+          * ``'parallel'``
+          * ``'perpendicular'``.
+
         Defaults to ``'circular'``.
-        
+
         .. note::
 
-          When ``'circular'``, the best fit will be computed for the point, so that the label is curved around the 
-          center when there is room for it, otherwise perpendicular. 
-        
-          The legacy ``'auto'`` option works similiarly to ``'circular'``, but instead of curving the labels, they are 
+          When ``'circular'``, the best fit will be computed for the point, so that the label is curved around the
+          center when there is room for it, otherwise perpendicular.
+
+          The legacy ``'auto'`` option works similiarly to ``'circular'``, but instead of curving the labels, they are
           tangented to the perimiter.
-        
+
         .. warning::
-        
-          The :meth:`.rotation <highcharts_core.utility_classes.data_labels.SunburstDataLabel.rotation>` property 
+
+          The :meth:`.rotation <highcharts_core.utility_classes.data_labels.SunburstDataLabel.rotation>` property
           takes precedence over ``.rotation_mode``.
-          
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._rotation_mode
-    
+
     @rotation_mode.setter
     def rotation_mode(self, value):
         if not value:
             self._rotation_mode = None
         else:
-            value = validators.string(value, allow_empty = False)
+            value = validators.string(value, allow_empty=False)
             value = value.lower()
-            if value not in ['circular', 'auto', 'parallel', 'perpendicular']:
-                raise errors.HighchartsValueError(f'if not empty, rotation_mode expects a value of either '
-                                                  f'"circular", "auto", "parallel", or "perpendicular", '
-                                                  f' but received "{str}".')
+            if value not in ["circular", "auto", "parallel", "perpendicular"]:
+                raise errors.HighchartsValueError(
+                    f"if not empty, rotation_mode expects a value of either "
+                    f'"circular", "auto", "parallel", or "perpendicular", '
+                    f' but received "{str}".'
+                )
 
             self._rotation_mode = value
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.get('align', None),
-            'allow_overlap': as_dict.get('allowOverlap', None),
-            'animation': as_dict.get('animation', None),
-            'background_color': as_dict.get('backgroundColor', None),
-            'border_color': as_dict.get('borderColor', None),
-            'border_radius': as_dict.get('borderRadius', None),
-            'border_width': as_dict.get('borderWidth', None),
-            'class_name': as_dict.get('className', None),
-            'color': as_dict.get('color', None),
-            'crop': as_dict.get('crop', None),
-            'defer': as_dict.get('defer', None),
-            'enabled': as_dict.get('enabled', None),
-            'filter': as_dict.get('filter', None),
-            'format': as_dict.get('format', None),
-            'formatter': as_dict.get('formatter', None),
-            'inside': as_dict.get('inside', None),
-            'null_format': as_dict.get('nullFormat', None),
-            'null_formatter': as_dict.get('nullFormatter', None),
-            'overflow': as_dict.get('overflow', None),
-            'padding': as_dict.get('padding', None),
-            'position': as_dict.get('position', None),
-            'rotation': as_dict.get('rotation', None),
-            'shadow': as_dict.get('shadow', None),
-            'shape': as_dict.get('shape', None),
-            'style': as_dict.get('style', None),
-            'text_path': as_dict.get('textPath', None),
-            'use_html': as_dict.get('useHTML', None),
-            'vertical_align': as_dict.get('verticalAlign', None),
-            'x': as_dict.get('x', None),
-            'y': as_dict.get('y', None),
-            'z': as_dict.get('z', None),
-            
-            'rotation_mode': as_dict.get('rotationMode', None),
+            "align": as_dict.get("align", None),
+            "allow_overlap": as_dict.get("allowOverlap", None),
+            "animation": as_dict.get("animation", None),
+            "background_color": as_dict.get("backgroundColor", None),
+            "border_color": as_dict.get("borderColor", None),
+            "border_radius": as_dict.get("borderRadius", None),
+            "border_width": as_dict.get("borderWidth", None),
+            "class_name": as_dict.get("className", None),
+            "color": as_dict.get("color", None),
+            "crop": as_dict.get("crop", None),
+            "defer": as_dict.get("defer", None),
+            "enabled": as_dict.get("enabled", None),
+            "filter": as_dict.get("filter", None),
+            "format": as_dict.get("format", None),
+            "formatter": as_dict.get("formatter", None),
+            "inside": as_dict.get("inside", None),
+            "null_format": as_dict.get("nullFormat", None),
+            "null_formatter": as_dict.get("nullFormatter", None),
+            "overflow": as_dict.get("overflow", None),
+            "padding": as_dict.get("padding", None),
+            "position": as_dict.get("position", None),
+            "rotation": as_dict.get("rotation", None),
+            "shadow": as_dict.get("shadow", None),
+            "shape": as_dict.get("shape", None),
+            "style": as_dict.get("style", None),
+            "text_path": as_dict.get("textPath", None),
+            "use_html": as_dict.get("useHTML", None),
+            "vertical_align": as_dict.get("verticalAlign", None),
+            "x": as_dict.get("x", None),
+            "y": as_dict.get("y", None),
+            "z": as_dict.get("z", None),
+            "rotation_mode": as_dict.get("rotationMode", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'rotationMode': self.rotation_mode,
+            "rotationMode": self.rotation_mode,
         }
 
-        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
+        parent_as_dict = super()._to_untrimmed_dict(in_cls=in_cls) or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
@@ -1120,39 +1133,39 @@ class SunburstDataLabel(DataLabel):
 
 class OrganizationDataLabel(DataLabel):
     """Variant of :class:`DataLabel` used for :term:`organization` series."""
-    
+
     def __init__(self, **kwargs):
         self._link_format = None
         self._link_formatter = None
         self._link_text_path = None
-        
-        self.link_format = kwargs.get('link_format', None)
-        self.link_formatter = kwargs.get('link_formatter', None)
-        self.link_text_path = kwargs.get('link_text_path', None)
-        
+
+        self.link_format = kwargs.get("link_format", None)
+        self.link_formatter = kwargs.get("link_formatter", None)
+        self.link_text_path = kwargs.get("link_text_path", None)
+
         super().__init__(**kwargs)
 
     @property
     def link_format(self) -> Optional[str]:
         """The format string specifying what to show for links in the\rorganization chart.
-        
+
         .. tip::
-        
-          Best to use with 
+
+          Best to use with
           :meth:`.link_text_path <highcharts_core.utility_classes.data_labels.OrganizationDataLabel.link_text_path>`
           enabled.
-          
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._link_format
-    
+
     @link_format.setter
     def link_format(self, value):
-        self._link_format = validators.string(value, allow_empty = True)
+        self._link_format = validators.string(value, allow_empty=True)
 
     @property
     def link_formatter(self) -> Optional[CallbackFunction]:
-        """JavaScript callback function to format data labels for links in the organization chart. 
+        """JavaScript callback function to format data labels for links in the organization chart.
 
         .. note::
 
@@ -1189,53 +1202,52 @@ class OrganizationDataLabel(DataLabel):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.get('align', None),
-            'allow_overlap': as_dict.get('allowOverlap', None),
-            'animation': as_dict.get('animation', None),
-            'background_color': as_dict.get('backgroundColor', None),
-            'border_color': as_dict.get('borderColor', None),
-            'border_radius': as_dict.get('borderRadius', None),
-            'border_width': as_dict.get('borderWidth', None),
-            'class_name': as_dict.get('className', None),
-            'color': as_dict.get('color', None),
-            'crop': as_dict.get('crop', None),
-            'defer': as_dict.get('defer', None),
-            'enabled': as_dict.get('enabled', None),
-            'filter': as_dict.get('filter', None),
-            'format': as_dict.get('format', None),
-            'formatter': as_dict.get('formatter', None),
-            'inside': as_dict.get('inside', None),
-            'null_format': as_dict.get('nullFormat', None),
-            'null_formatter': as_dict.get('nullFormatter', None),
-            'overflow': as_dict.get('overflow', None),
-            'padding': as_dict.get('padding', None),
-            'position': as_dict.get('position', None),
-            'rotation': as_dict.get('rotation', None),
-            'shadow': as_dict.get('shadow', None),
-            'shape': as_dict.get('shape', None),
-            'style': as_dict.get('style', None),
-            'text_path': as_dict.get('textPath', None),
-            'use_html': as_dict.get('useHTML', None),
-            'vertical_align': as_dict.get('verticalAlign', None),
-            'x': as_dict.get('x', None),
-            'y': as_dict.get('y', None),
-            'z': as_dict.get('z', None),
-            
-            'link_format': as_dict.get('linkFormat', None),
-            'link_formatter': as_dict.get('linkFormatter', None),
-            'link_text_path': as_dict.get('linkTextPath', None),
+            "align": as_dict.get("align", None),
+            "allow_overlap": as_dict.get("allowOverlap", None),
+            "animation": as_dict.get("animation", None),
+            "background_color": as_dict.get("backgroundColor", None),
+            "border_color": as_dict.get("borderColor", None),
+            "border_radius": as_dict.get("borderRadius", None),
+            "border_width": as_dict.get("borderWidth", None),
+            "class_name": as_dict.get("className", None),
+            "color": as_dict.get("color", None),
+            "crop": as_dict.get("crop", None),
+            "defer": as_dict.get("defer", None),
+            "enabled": as_dict.get("enabled", None),
+            "filter": as_dict.get("filter", None),
+            "format": as_dict.get("format", None),
+            "formatter": as_dict.get("formatter", None),
+            "inside": as_dict.get("inside", None),
+            "null_format": as_dict.get("nullFormat", None),
+            "null_formatter": as_dict.get("nullFormatter", None),
+            "overflow": as_dict.get("overflow", None),
+            "padding": as_dict.get("padding", None),
+            "position": as_dict.get("position", None),
+            "rotation": as_dict.get("rotation", None),
+            "shadow": as_dict.get("shadow", None),
+            "shape": as_dict.get("shape", None),
+            "style": as_dict.get("style", None),
+            "text_path": as_dict.get("textPath", None),
+            "use_html": as_dict.get("useHTML", None),
+            "vertical_align": as_dict.get("verticalAlign", None),
+            "x": as_dict.get("x", None),
+            "y": as_dict.get("y", None),
+            "z": as_dict.get("z", None),
+            "link_format": as_dict.get("linkFormat", None),
+            "link_formatter": as_dict.get("linkFormatter", None),
+            "link_text_path": as_dict.get("linkTextPath", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'linkFormat': self.link_format,
-            'linkFormatter': self.link_formatter,
-            'linkTextPath': self.link_text_path,
+            "linkFormat": self.link_format,
+            "linkFormatter": self.link_formatter,
+            "linkTextPath": self.link_text_path,
         }
 
-        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
+        parent_as_dict = super()._to_untrimmed_dict(in_cls=in_cls) or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
@@ -1249,8 +1261,8 @@ class NodeDataLabel(DataLabel):
         self._node_format = None
         self._node_formatter = None
 
-        self.node_format = kwargs.get('node_format', None)
-        self.node_formatter = kwargs.get('node_formatter', None)
+        self.node_format = kwargs.get("node_format", None)
+        self.node_formatter = kwargs.get("node_formatter", None)
 
         super().__init__(**kwargs)
 
@@ -1265,7 +1277,7 @@ class NodeDataLabel(DataLabel):
 
     @node_format.setter
     def node_format(self, value):
-        self._node_format = validators.string(value, allow_empty = True)
+        self._node_format = validators.string(value, allow_empty=True)
 
     @property
     def node_formatter(self) -> Optional[CallbackFunction]:
@@ -1289,52 +1301,59 @@ class NodeDataLabel(DataLabel):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'align': as_dict.get('align', None),
-            'allow_overlap': as_dict.get('allowOverlap', None),
-            'animation': as_dict.get('animation', None),
-            'background_color': as_dict.get('backgroundColor', None),
-            'border_color': as_dict.get('borderColor', None),
-            'border_radius': as_dict.get('borderRadius', None),
-            'border_width': as_dict.get('borderWidth', None),
-            'class_name': as_dict.get('className', None),
-            'color': as_dict.get('color', None),
-            'crop': as_dict.get('crop', None),
-            'defer': as_dict.get('defer', None),
-            'enabled': as_dict.get('enabled', None),
-            'filter': as_dict.get('filter', None),
-            'format': as_dict.get('format', None),
-            'formatter': as_dict.get('formatter', None),
-            'inside': as_dict.get('inside', None),
-            'null_format': as_dict.get('nullFormat', None),
-            'null_formatter': as_dict.get('nullFormatter', None),
-            'overflow': as_dict.get('overflow', None),
-            'padding': as_dict.get('padding', None),
-            'position': as_dict.get('position', None),
-            'rotation': as_dict.get('rotation', None),
-            'shadow': as_dict.get('shadow', None),
-            'shape': as_dict.get('shape', None),
-            'style': as_dict.get('style', None),
-            'text_path': as_dict.get('textPath', None),
-            'use_html': as_dict.get('useHTML', None),
-            'vertical_align': as_dict.get('verticalAlign', None),
-            'x': as_dict.get('x', None),
-            'y': as_dict.get('y', None),
-            'z': as_dict.get('z', None),
-
-            'node_format': as_dict.get('nodeFormat', None),
-            'node_formatter': as_dict.get('nodeFormatter', None),
+            "align": as_dict.get("align", None),
+            "allow_overlap": as_dict.get("allowOverlap", None),
+            "animation": as_dict.get("animation", None),
+            "background_color": as_dict.get("backgroundColor", None),
+            "border_color": as_dict.get("borderColor", None),
+            "border_radius": as_dict.get("borderRadius", None),
+            "border_width": as_dict.get("borderWidth", None),
+            "class_name": as_dict.get("className", None),
+            "color": as_dict.get("color", None),
+            "crop": as_dict.get("crop", None),
+            "defer": as_dict.get("defer", None),
+            "enabled": as_dict.get("enabled", None),
+            "filter": as_dict.get("filter", None),
+            "format": as_dict.get("format", None),
+            "formatter": as_dict.get("formatter", None),
+            "inside": as_dict.get("inside", None),
+            "null_format": as_dict.get("nullFormat", None),
+            "null_formatter": as_dict.get("nullFormatter", None),
+            "overflow": as_dict.get("overflow", None),
+            "padding": as_dict.get("padding", None),
+            "position": as_dict.get("position", None),
+            "rotation": as_dict.get("rotation", None),
+            "shadow": as_dict.get("shadow", None),
+            "shape": as_dict.get("shape", None),
+            "style": as_dict.get("style", None),
+            "text_path": as_dict.get("textPath", None),
+            "use_html": as_dict.get("useHTML", None),
+            "vertical_align": as_dict.get("verticalAlign", None),
+            "x": as_dict.get("x", None),
+            "y": as_dict.get("y", None),
+            "z": as_dict.get("z", None),
+            "node_format": as_dict.get("nodeFormat", None),
+            "node_formatter": as_dict.get("nodeFormatter", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'nodeFormat': self.node_format,
-            'nodeFormatter': self.node_formatter,
+            "nodeFormat": self.node_format,
+            "nodeFormatter": self.node_formatter,
         }
 
-        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
+        parent_as_dict = super()._to_untrimmed_dict(in_cls=in_cls) or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
         return untrimmed
+
+
+data_label_property_map = {
+    "distance": PieDataLabel,
+    "rotation_mode": SunburstDataLabel,
+    "link_format|link_formatter|link_text_path": OrganizationDataLabel,
+    "node_format|node_formatter": NodeDataLabel,
+}
