@@ -6,7 +6,12 @@ from validator_collection import validators, checkers
 
 from highcharts_core import errors
 from highcharts_core.decorators import class_sensitive, validate_types
+from highcharts_core.metaclasses import HighchartsMeta
 from highcharts_core.options.plot_options.generic import GenericTypeOptions
+from highcharts_core.utility_classes.data_labels import (
+    DataLabel,
+    data_label_property_map,
+)
 from highcharts_core.utility_classes.gradients import Gradient
 from highcharts_core.utility_classes.patterns import Pattern
 from highcharts_core.utility_classes.shadows import ShadowOptions
@@ -40,26 +45,26 @@ class SeriesBaseOptions(GenericTypeOptions):
         self._zone_axis = None
         self._zones = None
 
-        self.animation_limit = kwargs.get('animation_limit', None)
-        self.boost_blending = kwargs.get('boost_blending', None)
-        self.boost_threshold = kwargs.get('boost_threshold', None)
-        self.color_index = kwargs.get('color_index', None)
-        self.color_key = kwargs.get('color_key', None)
-        self.connect_nulls = kwargs.get('connect_nulls', None)
-        self.crisp = kwargs.get('crisp', None)
-        self.crop_threshold = kwargs.get('crop_threshold', None)
-        self.data_sorting = kwargs.get('data_sorting', None)
-        self.find_nearest_point_by = kwargs.get('find_nearest_point_by', None)
-        self.get_extremes_from_all = kwargs.get('get_extremes_from_all', None)
-        self.inactive_other_points = kwargs.get('inactive_other_points', None)
-        self.linecap = kwargs.get('linecap', None)
-        self.line_width = kwargs.get('line_width', None)
-        self.relative_x_value = kwargs.get('relative_x_value', None)
-        self.shadow = kwargs.get('shadow', None)
-        self.soft_threshold = kwargs.get('soft_threshold',  None)
-        self.step = kwargs.get('step', None)
-        self.zone_axis = kwargs.get('zone_axis', None)
-        self.zones = kwargs.get('zones', None)
+        self.animation_limit = kwargs.get("animation_limit", None)
+        self.boost_blending = kwargs.get("boost_blending", None)
+        self.boost_threshold = kwargs.get("boost_threshold", None)
+        self.color_index = kwargs.get("color_index", None)
+        self.color_key = kwargs.get("color_key", None)
+        self.connect_nulls = kwargs.get("connect_nulls", None)
+        self.crisp = kwargs.get("crisp", None)
+        self.crop_threshold = kwargs.get("crop_threshold", None)
+        self.data_sorting = kwargs.get("data_sorting", None)
+        self.find_nearest_point_by = kwargs.get("find_nearest_point_by", None)
+        self.get_extremes_from_all = kwargs.get("get_extremes_from_all", None)
+        self.inactive_other_points = kwargs.get("inactive_other_points", None)
+        self.linecap = kwargs.get("linecap", None)
+        self.line_width = kwargs.get("line_width", None)
+        self.relative_x_value = kwargs.get("relative_x_value", None)
+        self.shadow = kwargs.get("shadow", None)
+        self.soft_threshold = kwargs.get("soft_threshold", None)
+        self.step = kwargs.get("step", None)
+        self.zone_axis = kwargs.get("zone_axis", None)
+        self.zones = kwargs.get("zones", None)
 
         super().__init__(**kwargs)
 
@@ -79,12 +84,12 @@ class SeriesBaseOptions(GenericTypeOptions):
 
     @animation_limit.setter
     def animation_limit(self, value):
-        if value == float('inf'):
-            self._animation_limit = float('inf')
+        if value == float("inf"):
+            self._animation_limit = float("inf")
         else:
-            self._animation_limit = validators.numeric(value,
-                                                       allow_empty = True,
-                                                       minimum = 0)
+            self._animation_limit = validators.numeric(
+                value, allow_empty=True, minimum=0
+            )
 
     @property
     def boost_blending(self) -> Optional[str]:
@@ -97,7 +102,7 @@ class SeriesBaseOptions(GenericTypeOptions):
 
     @boost_blending.setter
     def boost_blending(self, value):
-        self._boost_blending = validators.string(value, allow_empty = True)
+        self._boost_blending = validators.string(value, allow_empty=True)
 
     @property
     def boost_threshold(self) -> Optional[int]:
@@ -124,9 +129,7 @@ class SeriesBaseOptions(GenericTypeOptions):
 
     @boost_threshold.setter
     def boost_threshold(self, value):
-        self._boost_threshold = validators.integer(value,
-                                                   allow_empty = True,
-                                                   minimum = 0)
+        self._boost_threshold = validators.integer(value, allow_empty=True, minimum=0)
 
     @property
     def color_index(self) -> Optional[int]:
@@ -135,7 +138,7 @@ class SeriesBaseOptions(GenericTypeOptions):
         ``highcharts-color-{n}``.
 
         .. tip::
-        
+
           .. versionadded:: Highcharts (JS) v.11
 
           With Highcharts (JS) v.11, using CSS variables of the form ``--highcharts-color-{n}`` make
@@ -149,9 +152,7 @@ class SeriesBaseOptions(GenericTypeOptions):
 
     @color_index.setter
     def color_index(self, value):
-        self._color_index = validators.integer(value,
-                                               allow_empty = True,
-                                               minimum = 0)
+        self._color_index = validators.integer(value, allow_empty=True, minimum=0)
 
     @property
     def color_key(self) -> Optional[str]:
@@ -169,7 +170,7 @@ class SeriesBaseOptions(GenericTypeOptions):
 
     @color_key.setter
     def color_key(self, value):
-        self._color_key = validators.string(value, allow_empty = True)
+        self._color_key = validators.string(value, allow_empty=True)
 
     @property
     def connect_nulls(self) -> Optional[bool]:
@@ -228,9 +229,60 @@ class SeriesBaseOptions(GenericTypeOptions):
 
     @crop_threshold.setter
     def crop_threshold(self, value):
-        self._crop_threshold = validators.integer(value,
-                                                   allow_empty = True,
-                                                   minimum = 0)
+        self._crop_threshold = validators.integer(value, allow_empty=True, minimum=0)
+
+    @property
+    def data_labels(self) -> Optional[DataLabel | List[DataLabel]]:
+        """Options for the series data labels, appearing next to each data point.
+
+        .. note::
+
+          To have multiple data labels per data point, you can also supply a collection of
+          :class:`DataLabel` configuration settings.
+
+        .. note::
+
+          Highcharts for Python has a generic :class:`DataLabel` class for data labels, but
+          certain specific series types may take a series-specific class (e.g. :class:`PieDataLabel`
+          or :class:`SunburstDataLabel`) with series type-specific properties. This
+          property will examine the type of value supplied and coerce it to the appropriate
+          sub-type of :class:`DataLabel`.
+
+        :rtype: :class:`DataLabel`, :class:`list <python:list>` of :class:`DataLabel`, or
+          :obj:`None <python:None>`
+        """
+        return self._data_labels
+
+    @data_labels.setter
+    def data_labels(self, value):
+        if not value:
+            self._data_labels = None
+        else:
+            allowed_types = DataLabel
+            for key, types_ in data_label_property_map.items():
+                possible_properties = key.split("|")
+                found_prop = False
+                for prop in possible_properties:
+                    if isinstance(value, HighchartsMeta) and hasattr(value, prop):
+                        allowed_types = types_
+                        found_prop = True
+                        break
+                    if isinstance(value, (str, dict)) and prop in value:
+                        allowed_types = types_
+                        found_prop = True
+                        break
+
+                if found_prop:
+                    break
+
+            if checkers.is_iterable(value):
+                self._data_labels = validate_types(
+                    value, types=allowed_types, allow_none=False, force_iterable=True
+                )
+            else:
+                self._data_labels = validate_types(
+                    value, types=allowed_types, allow_none=False
+                )
 
     @property
     def data_sorting(self) -> Optional[DataSorting]:
@@ -263,7 +315,7 @@ class SeriesBaseOptions(GenericTypeOptions):
 
     @find_nearest_point_by.setter
     def find_nearest_point_by(self, value):
-        self._find_nearest_point_by = validators.string(value, allow_empty = True)
+        self._find_nearest_point_by = validators.string(value, allow_empty=True)
 
     @property
     def get_extremes_from_all(self) -> Optional[bool]:
@@ -290,16 +342,16 @@ class SeriesBaseOptions(GenericTypeOptions):
     def inactive_other_points(self) -> Optional[bool]:
         """If ``True``, highlights only the hovered point and fades the other points.
         Defaults to ``False``.
-        
+
         .. warning::
-        
+
           Scatter-type series require enabling the 'inactive' marker state and adjusting
           opacity. This approach could affect performance\nwith large datasets.
-          
+
         :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._inactive_other_points
-    
+
     @inactive_other_points.setter
     def inactive_other_points(self, value):
         if value is None:
@@ -319,7 +371,7 @@ class SeriesBaseOptions(GenericTypeOptions):
 
     @linecap.setter
     def linecap(self, value):
-        self._linecap = validators.string(value, allow_empty = True)
+        self._linecap = validators.string(value, allow_empty=True)
 
     @property
     def line_width(self) -> Optional[int | float | Decimal]:
@@ -331,9 +383,7 @@ class SeriesBaseOptions(GenericTypeOptions):
 
     @line_width.setter
     def line_width(self, value):
-        self._line_width = validators.numeric(value,
-                                              allow_empty = True,
-                                              minimum = 0)
+        self._line_width = validators.numeric(value, allow_empty=True, minimum=0)
 
     @property
     def relative_x_value(self) -> Optional[bool]:
@@ -380,8 +430,7 @@ class SeriesBaseOptions(GenericTypeOptions):
         elif not value:
             self._shadow = None
         else:
-            value = validate_types(value,
-                                   types = ShadowOptions)
+            value = validate_types(value, types=ShadowOptions)
             self._shadow = value
 
     @property
@@ -422,7 +471,7 @@ class SeriesBaseOptions(GenericTypeOptions):
 
     @step.setter
     def step(self, value):
-        self._step = validators.string(value, allow_empty = True)
+        self._step = validators.string(value, allow_empty=True)
 
     @property
     def zone_axis(self) -> Optional[str]:
@@ -434,7 +483,7 @@ class SeriesBaseOptions(GenericTypeOptions):
 
     @zone_axis.setter
     def zone_axis(self, value):
-        self._zone_axis = validators.string(value, allow_empty = True)
+        self._zone_axis = validators.string(value, allow_empty=True)
 
     @property
     def zones(self) -> Optional[List[Zone]]:
@@ -453,97 +502,97 @@ class SeriesBaseOptions(GenericTypeOptions):
         return self._zones
 
     @zones.setter
-    @class_sensitive(Zone,
-                     force_iterable = True)
+    @class_sensitive(Zone, force_iterable=True)
     def zones(self, value):
         self._zones = value
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.get('accessibility', None),
-            'allow_point_select': as_dict.get('allowPointSelect', None),
-            'animation': as_dict.get('animation', None),
-            'class_name': as_dict.get('className', None),
-            'clip': as_dict.get('clip', None),
-            'color': as_dict.get('color', None),
-            'cursor': as_dict.get('cursor', None),
-            'custom': as_dict.get('custom', None),
-            'dash_style': as_dict.get('dashStyle', None),
-            'data_labels': as_dict.get('dataLabels', None),
-            'description': as_dict.get('description', None),
-            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
-            'events': as_dict.get('events', None),
-            'include_in_data_export': as_dict.get('includeInDataExport', None),
-            'keys': as_dict.get('keys', None),
-            'label': as_dict.get('label', None),
-            'legend_symbol': as_dict.get('legendSymbol', None),
-            'linked_to': as_dict.get('linkedTo', None),
-            'marker': as_dict.get('marker', None),
-            'on_point': as_dict.get('onPoint', None),
-            'opacity': as_dict.get('opacity', None),
-            'point': as_dict.get('point', None),
-            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
-            'selected': as_dict.get('selected', None),
-            'show_checkbox': as_dict.get('showCheckbox', None),
-            'show_in_legend': as_dict.get('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
-            'sonification': as_dict.get('sonification', None),
-            'states': as_dict.get('states', None),
-            'sticky_tracking': as_dict.get('stickyTracking', None),
-            'threshold': as_dict.get('threshold', None),
-            'tooltip': as_dict.get('tooltip', None),
-            'turbo_threshold': as_dict.get('turboThreshold', None),
-            'visible': as_dict.get('visible', None),
-
-            'animation_limit': as_dict.get('animationLimit', None),
-            'boost_blending': as_dict.get('boostBlending', None),
-            'boost_threshold': as_dict.get('boostThreshold', None),
-            'color_index': as_dict.get('colorIndex', None),
-            'color_key': as_dict.get('colorKey', None),
-            'connect_nulls': as_dict.get('connectNulls', None),
-            'crisp': as_dict.get('crisp', None),
-            'crop_threshold': as_dict.get('cropThreshold', None),
-            'data_sorting': as_dict.get('dataSorting', None),
-            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
-            'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
-            'inactive_other_points': as_dict.get('inactiveOtherPoints', None),
-            'linecap': as_dict.get('linecap', None),
-            'line_width': as_dict.get('lineWidth', None),
-            'relative_x_value': as_dict.get('relativeXValue', None),
-            'shadow': as_dict.get('shadow', None),
-            'soft_threshold': as_dict.get('softThreshold', None),
-            'step': as_dict.get('step', None),
-            'zone_axis': as_dict.get('zoneAxis', None),
-            'zones': as_dict.get('zones', None),
+            "accessibility": as_dict.get("accessibility", None),
+            "allow_point_select": as_dict.get("allowPointSelect", None),
+            "animation": as_dict.get("animation", None),
+            "class_name": as_dict.get("className", None),
+            "clip": as_dict.get("clip", None),
+            "color": as_dict.get("color", None),
+            "cursor": as_dict.get("cursor", None),
+            "custom": as_dict.get("custom", None),
+            "dash_style": as_dict.get("dashStyle", None),
+            "data_labels": as_dict.get("dataLabels", None),
+            "description": as_dict.get("description", None),
+            "enable_mouse_tracking": as_dict.get("enableMouseTracking", None),
+            "events": as_dict.get("events", None),
+            "include_in_data_export": as_dict.get("includeInDataExport", None),
+            "keys": as_dict.get("keys", None),
+            "label": as_dict.get("label", None),
+            "legend_symbol": as_dict.get("legendSymbol", None),
+            "linked_to": as_dict.get("linkedTo", None),
+            "marker": as_dict.get("marker", None),
+            "on_point": as_dict.get("onPoint", None),
+            "opacity": as_dict.get("opacity", None),
+            "point": as_dict.get("point", None),
+            "point_description_formatter": as_dict.get(
+                "pointDescriptionFormatter", None
+            ),
+            "selected": as_dict.get("selected", None),
+            "show_checkbox": as_dict.get("showCheckbox", None),
+            "show_in_legend": as_dict.get("showInLegend", None),
+            "skip_keyboard_navigation": as_dict.get("skipKeyboardNavigation", None),
+            "sonification": as_dict.get("sonification", None),
+            "states": as_dict.get("states", None),
+            "sticky_tracking": as_dict.get("stickyTracking", None),
+            "threshold": as_dict.get("threshold", None),
+            "tooltip": as_dict.get("tooltip", None),
+            "turbo_threshold": as_dict.get("turboThreshold", None),
+            "visible": as_dict.get("visible", None),
+            "animation_limit": as_dict.get("animationLimit", None),
+            "boost_blending": as_dict.get("boostBlending", None),
+            "boost_threshold": as_dict.get("boostThreshold", None),
+            "color_index": as_dict.get("colorIndex", None),
+            "color_key": as_dict.get("colorKey", None),
+            "connect_nulls": as_dict.get("connectNulls", None),
+            "crisp": as_dict.get("crisp", None),
+            "crop_threshold": as_dict.get("cropThreshold", None),
+            "data_sorting": as_dict.get("dataSorting", None),
+            "find_nearest_point_by": as_dict.get("findNearestPointBy", None),
+            "get_extremes_from_all": as_dict.get("getExtremesFromAll", None),
+            "inactive_other_points": as_dict.get("inactiveOtherPoints", None),
+            "linecap": as_dict.get("linecap", None),
+            "line_width": as_dict.get("lineWidth", None),
+            "relative_x_value": as_dict.get("relativeXValue", None),
+            "shadow": as_dict.get("shadow", None),
+            "soft_threshold": as_dict.get("softThreshold", None),
+            "step": as_dict.get("step", None),
+            "zone_axis": as_dict.get("zoneAxis", None),
+            "zones": as_dict.get("zones", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'animationLimit': self.animation_limit,
-            'boostBlending': self.boost_blending,
-            'boostThreshold': self.boost_threshold,
-            'colorIndex': self.color_index,
-            'colorKey': self.color_key,
-            'connectNulls': self.connect_nulls,
-            'crisp': self.crisp,
-            'cropThreshold': self.crop_threshold,
-            'dataSorting': self.data_sorting,
-            'findNearestPointBy': self.find_nearest_point_by,
-            'getExtremesFromAll': self.get_extremes_from_all,
-            'inactiveOtherPoints': self.inactive_other_points,
-            'linecap': self.linecap,
-            'lineWidth': self.line_width,
-            'relativeXValue': self.relative_x_value,
-            'shadow': self.shadow,
-            'softThreshold': self.soft_threshold,
-            'step': self.step,
-            'zoneAxis': self.zone_axis,
-            'zones': self.zones
+            "animationLimit": self.animation_limit,
+            "boostBlending": self.boost_blending,
+            "boostThreshold": self.boost_threshold,
+            "colorIndex": self.color_index,
+            "colorKey": self.color_key,
+            "connectNulls": self.connect_nulls,
+            "crisp": self.crisp,
+            "cropThreshold": self.crop_threshold,
+            "dataSorting": self.data_sorting,
+            "findNearestPointBy": self.find_nearest_point_by,
+            "getExtremesFromAll": self.get_extremes_from_all,
+            "inactiveOtherPoints": self.inactive_other_points,
+            "linecap": self.linecap,
+            "lineWidth": self.line_width,
+            "relativeXValue": self.relative_x_value,
+            "shadow": self.shadow,
+            "softThreshold": self.soft_threshold,
+            "step": self.step,
+            "zoneAxis": self.zone_axis,
+            "zones": self.zones,
         }
-        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
+        parent_as_dict = super()._to_untrimmed_dict(in_cls=in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
@@ -565,16 +614,16 @@ class SeriesOptions(SeriesBaseOptions):
         self._point_start = None
         self._stacking = None
 
-        self.color_axis = kwargs.get('color_axis', None)
-        self.connect_ends = kwargs.get('connect_ends', None)
-        self.drag_drop = kwargs.get('drag_drop', None)
-        self.negative_color = kwargs.get('negative_color', None)
-        self.point_description_format = kwargs.get('point_description_format', None)
-        self.point_interval = kwargs.get('point_interval', None)
-        self.point_interval_unit = kwargs.get('point_interval_unit', None)
-        self.point_placement = kwargs.get('point_placement', None)
-        self.point_start = kwargs.get('point_start', None)
-        self.stacking = kwargs.get('stacking', None)
+        self.color_axis = kwargs.get("color_axis", None)
+        self.connect_ends = kwargs.get("connect_ends", None)
+        self.drag_drop = kwargs.get("drag_drop", None)
+        self.negative_color = kwargs.get("negative_color", None)
+        self.point_description_format = kwargs.get("point_description_format", None)
+        self.point_interval = kwargs.get("point_interval", None)
+        self.point_interval_unit = kwargs.get("point_interval_unit", None)
+        self.point_placement = kwargs.get("point_placement", None)
+        self.point_start = kwargs.get("point_start", None)
+        self.stacking = kwargs.get("stacking", None)
 
         super().__init__(**kwargs)
 
@@ -603,8 +652,7 @@ class SeriesOptions(SeriesBaseOptions):
             try:
                 self._color_axis = validators.string(value)
             except TypeError:
-                self._color_axis = validators.integer(value,
-                                                      minimum = 0)
+                self._color_axis = validators.integer(value, minimum=0)
 
     @property
     def connect_ends(self) -> Optional[bool]:
@@ -665,24 +713,25 @@ class SeriesOptions(SeriesBaseOptions):
     @negative_color.setter
     def negative_color(self, value):
         from highcharts_core import utility_functions
+
         self._negative_color = utility_functions.validate_color(value)
 
     @property
     def point_description_format(self) -> Optional[str]:
-        """A :term:`format string` to use instead of the default for 
+        """A :term:`format string` to use instead of the default for
         point descriptions on the series. Defaults to :obj:`None <python:None>`.
-        
+
         .. note::
-        
+
           Overrides the chart-wide configuration, as applicable.
-        
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._point_description_format
-    
+
     @point_description_format.setter
     def point_description_format(self, value):
-        self._point_description_format = validators.string(value, allow_empty = True)
+        self._point_description_format = validators.string(value, allow_empty=True)
 
     @property
     def point_interval(self) -> Optional[int | float | Decimal]:
@@ -716,9 +765,7 @@ class SeriesOptions(SeriesBaseOptions):
 
     @point_interval.setter
     def point_interval(self, value):
-        self._point_interval = validators.numeric(value,
-                                                  allow_empty = True,
-                                                  minimum = 0)
+        self._point_interval = validators.numeric(value, allow_empty=True, minimum=0)
 
     @property
     def point_interval_unit(self) -> Optional[str]:
@@ -743,7 +790,7 @@ class SeriesOptions(SeriesBaseOptions):
 
     @point_interval_unit.setter
     def point_interval_unit(self, value):
-        self._point_interval_unit = validators.string(value, allow_empty = True)
+        self._point_interval_unit = validators.string(value, allow_empty=True)
 
     @property
     def point_placement(self) -> Optional[str | int | float | Decimal]:
@@ -785,16 +832,18 @@ class SeriesOptions(SeriesBaseOptions):
             self._point_placement = None
         else:
             try:
-                self._point_placement = validators.numeric(value,
-                                                           minimum = -0.5,
-                                                           maximum = 0.5)
+                self._point_placement = validators.numeric(
+                    value, minimum=-0.5, maximum=0.5
+                )
             except (TypeError, ValueError):
                 value = validators.string(value)
                 value = value.lower()
-                if value not in ['on', 'between']:
-                    raise errors.HighchartsValueError(f'point_placement must be a number,'
-                                                      f' "on", or "between". Was: '
-                                                      f'{value}')
+                if value not in ["on", "between"]:
+                    raise errors.HighchartsValueError(
+                        f"point_placement must be a number,"
+                        f' "on", or "between". Was: '
+                        f"{value}"
+                    )
                 self._point_placement = value
 
     @property
@@ -817,20 +866,20 @@ class SeriesOptions(SeriesBaseOptions):
     @point_start.setter
     def point_start(self, value):
         try:
-            value = validators.numeric(value, allow_empty = True)
+            value = validators.numeric(value, allow_empty=True)
         except (TypeError, ValueError) as error:
             value = validators.datetime(value)
 
-            if hasattr(value, 'timestamp') and value.tzinfo is not None:
-                self._point_start = value.timestamp()*1000
-            elif hasattr(value, 'timestamp'):
-                value = value.replace(tzinfo = datetime.timezone.utc)
-                value = value.timestamp()*1000
+            if hasattr(value, "timestamp") and value.tzinfo is not None:
+                self._point_start = value.timestamp() * 1000
+            elif hasattr(value, "timestamp"):
+                value = value.replace(tzinfo=datetime.timezone.utc)
+                value = value.timestamp() * 1000
             else:
                 raise error
-            
+
         self._point_start = value
-                
+
     @property
     def stacking(self) -> Optional[str]:
         """Whether to stack the values of each series on top of each other. Defaults to
@@ -859,98 +908,100 @@ class SeriesOptions(SeriesBaseOptions):
         else:
             value = validators.string(value)
             value = value.lower()
-            if value not in ['normal', 'percent', 'stream', 'overlap']:
-                raise errors.HighchartsValueError(f'stacking expects a valid stacking '
-                                                  f'value. However, received: {value}')
+            if value not in ["normal", "percent", "stream", "overlap"]:
+                raise errors.HighchartsValueError(
+                    f"stacking expects a valid stacking "
+                    f"value. However, received: {value}"
+                )
             self._stacking = value
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.get('accessibility', None),
-            'allow_point_select': as_dict.get('allowPointSelect', None),
-            'animation': as_dict.get('animation', None),
-            'class_name': as_dict.get('className', None),
-            'clip': as_dict.get('clip', None),
-            'color': as_dict.get('color', None),
-            'cursor': as_dict.get('cursor', None),
-            'custom': as_dict.get('custom', None),
-            'dash_style': as_dict.get('dashStyle', None),
-            'data_labels': as_dict.get('dataLabels', None),
-            'description': as_dict.get('description', None),
-            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
-            'events': as_dict.get('events', None),
-            'include_in_data_export': as_dict.get('includeInDataExport', None),
-            'keys': as_dict.get('keys', None),
-            'label': as_dict.get('label', None),
-            'legend_symbol': as_dict.get('legendSymbol', None),
-            'linked_to': as_dict.get('linkedTo', None),
-            'marker': as_dict.get('marker', None),
-            'on_point': as_dict.get('onPoint', None),
-            'opacity': as_dict.get('opacity', None),
-            'point': as_dict.get('point', None),
-            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
-            'selected': as_dict.get('selected', None),
-            'show_checkbox': as_dict.get('showCheckbox', None),
-            'show_in_legend': as_dict.get('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
-            'sonification': as_dict.get('sonification', None),
-            'states': as_dict.get('states', None),
-            'sticky_tracking': as_dict.get('stickyTracking', None),
-            'threshold': as_dict.get('threshold', None),
-            'tooltip': as_dict.get('tooltip', None),
-            'turbo_threshold': as_dict.get('turboThreshold', None),
-            'visible': as_dict.get('visible', None),
-
-            'animation_limit': as_dict.get('animationLimit', None),
-            'boost_blending': as_dict.get('boostBlending', None),
-            'boost_threshold': as_dict.get('boostThreshold', None),
-            'color_index': as_dict.get('colorIndex', None),
-            'color_key': as_dict.get('colorKey', None),
-            'connect_nulls': as_dict.get('connectNulls', None),
-            'crisp': as_dict.get('crisp', None),
-            'crop_threshold': as_dict.get('cropThreshold', None),
-            'data_sorting': as_dict.get('dataSorting', None),
-            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
-            'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
-            'inactive_other_points': as_dict.get('inactiveOtherPoints', None),
-            'linecap': as_dict.get('linecap', None),
-            'line_width': as_dict.get('lineWidth', None),
-            'relative_x_value': as_dict.get('relativeXValue', None),
-            'shadow': as_dict.get('shadow', None),
-            'soft_threshold': as_dict.get('softThreshold', None),
-            'step': as_dict.get('step', None),
-            'zone_axis': as_dict.get('zoneAxis', None),
-            'zones': as_dict.get('zones', None),
-
-            'color_axis': as_dict.get('colorAxis', None),
-            'connect_ends': as_dict.get('connectEnds', None),
-            'drag_drop': as_dict.get('dragDrop', None),
-            'negative_color': as_dict.get('negativeColor', None),
-            'point_description_format': as_dict.get('pointDescriptionFormat', None),
-            'point_interval': as_dict.get('pointInterval', None),
-            'point_interval_unit': as_dict.get('pointIntervalUnit', None),
-            'point_placement': as_dict.get('pointPlacement', None),
-            'point_start': as_dict.get('pointStart', None),
-            'stacking': as_dict.get('stacking', None),
+            "accessibility": as_dict.get("accessibility", None),
+            "allow_point_select": as_dict.get("allowPointSelect", None),
+            "animation": as_dict.get("animation", None),
+            "class_name": as_dict.get("className", None),
+            "clip": as_dict.get("clip", None),
+            "color": as_dict.get("color", None),
+            "cursor": as_dict.get("cursor", None),
+            "custom": as_dict.get("custom", None),
+            "dash_style": as_dict.get("dashStyle", None),
+            "data_labels": as_dict.get("dataLabels", None),
+            "description": as_dict.get("description", None),
+            "enable_mouse_tracking": as_dict.get("enableMouseTracking", None),
+            "events": as_dict.get("events", None),
+            "include_in_data_export": as_dict.get("includeInDataExport", None),
+            "keys": as_dict.get("keys", None),
+            "label": as_dict.get("label", None),
+            "legend_symbol": as_dict.get("legendSymbol", None),
+            "linked_to": as_dict.get("linkedTo", None),
+            "marker": as_dict.get("marker", None),
+            "on_point": as_dict.get("onPoint", None),
+            "opacity": as_dict.get("opacity", None),
+            "point": as_dict.get("point", None),
+            "point_description_formatter": as_dict.get(
+                "pointDescriptionFormatter", None
+            ),
+            "selected": as_dict.get("selected", None),
+            "show_checkbox": as_dict.get("showCheckbox", None),
+            "show_in_legend": as_dict.get("showInLegend", None),
+            "skip_keyboard_navigation": as_dict.get("skipKeyboardNavigation", None),
+            "sonification": as_dict.get("sonification", None),
+            "states": as_dict.get("states", None),
+            "sticky_tracking": as_dict.get("stickyTracking", None),
+            "threshold": as_dict.get("threshold", None),
+            "tooltip": as_dict.get("tooltip", None),
+            "turbo_threshold": as_dict.get("turboThreshold", None),
+            "visible": as_dict.get("visible", None),
+            "animation_limit": as_dict.get("animationLimit", None),
+            "boost_blending": as_dict.get("boostBlending", None),
+            "boost_threshold": as_dict.get("boostThreshold", None),
+            "color_index": as_dict.get("colorIndex", None),
+            "color_key": as_dict.get("colorKey", None),
+            "connect_nulls": as_dict.get("connectNulls", None),
+            "crisp": as_dict.get("crisp", None),
+            "crop_threshold": as_dict.get("cropThreshold", None),
+            "data_sorting": as_dict.get("dataSorting", None),
+            "find_nearest_point_by": as_dict.get("findNearestPointBy", None),
+            "get_extremes_from_all": as_dict.get("getExtremesFromAll", None),
+            "inactive_other_points": as_dict.get("inactiveOtherPoints", None),
+            "linecap": as_dict.get("linecap", None),
+            "line_width": as_dict.get("lineWidth", None),
+            "relative_x_value": as_dict.get("relativeXValue", None),
+            "shadow": as_dict.get("shadow", None),
+            "soft_threshold": as_dict.get("softThreshold", None),
+            "step": as_dict.get("step", None),
+            "zone_axis": as_dict.get("zoneAxis", None),
+            "zones": as_dict.get("zones", None),
+            "color_axis": as_dict.get("colorAxis", None),
+            "connect_ends": as_dict.get("connectEnds", None),
+            "drag_drop": as_dict.get("dragDrop", None),
+            "negative_color": as_dict.get("negativeColor", None),
+            "point_description_format": as_dict.get("pointDescriptionFormat", None),
+            "point_interval": as_dict.get("pointInterval", None),
+            "point_interval_unit": as_dict.get("pointIntervalUnit", None),
+            "point_placement": as_dict.get("pointPlacement", None),
+            "point_start": as_dict.get("pointStart", None),
+            "stacking": as_dict.get("stacking", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'colorAxis': self.color_axis,
-            'connectEnds': self.connect_ends,
-            'dragDrop': self.drag_drop,
-            'negativeColor': self.negative_color,
-            'pointDescriptionFormat': self.point_description_format,
-            'pointInterval': self.point_interval,
-            'pointIntervalUnit': self.point_interval_unit,
-            'pointPlacement': self.point_placement,
-            'pointStart': self.point_start,
-            'stacking': self.stacking,
+            "colorAxis": self.color_axis,
+            "connectEnds": self.connect_ends,
+            "dragDrop": self.drag_drop,
+            "negativeColor": self.negative_color,
+            "pointDescriptionFormat": self.point_description_format,
+            "pointInterval": self.point_interval,
+            "pointIntervalUnit": self.point_interval_unit,
+            "pointPlacement": self.point_placement,
+            "pointStart": self.point_start,
+            "stacking": self.stacking,
         }
-        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
+        parent_as_dict = super()._to_untrimmed_dict(in_cls=in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
