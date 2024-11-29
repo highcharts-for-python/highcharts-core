@@ -94,7 +94,9 @@ class ExportServer(HighchartsMeta):
 
         self.referer = kwargs.get(
             "referer",
-            os.getenv("HIGHCHARTS_EXPORT_SERVER_REFERER", "https://www.highcharts.com"),
+            os.getenv(
+                "HIGHCHARTS_EXPORT_SERVER_REFERER", "https://www.highchartspython.com"
+            ),
         )
         self.user_agent = kwargs.get(
             "user_agent", os.getenv("HIGHCHARTS_EXPORT_SERVER_USER_AGENT", None)
@@ -113,13 +115,13 @@ class ExportServer(HighchartsMeta):
     def referer(self) -> Optional[str]:
         """The referer to use when making requests to the export server. Defaults to the
         ``HIGHCHARTS_EXPORT_SERVER_REFERER`` environment variable if present, otherwise defaults to
-        ``'https://www.highcharts.com'``.
+        ``'https://www.highchartspython.com'``.
 
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         if not self._referer:
             return os.getenv(
-                "HIGHCHARTS_EXPORT_SERVER_REFERER", "https://www.highcharts.com"
+                "HIGHCHARTS_EXPORT_SERVER_REFERER", "https://www.highchartspython.com"
             )
 
         return self._referer
@@ -142,7 +144,7 @@ class ExportServer(HighchartsMeta):
 
         user_agent = os.getenv(
             "HIGHCHARTS_EXPORT_SERVER_USER_AGENT",
-            f"Highcharts Core for Python / v.{highcharts_version.__version__}",
+            f"HighchartsCoreforPy/{highcharts_version.__version__}",
         )
 
         return user_agent
@@ -998,6 +1000,7 @@ class ExportServer(HighchartsMeta):
 
         headers = {
             "Content-Type": "application/json",
+            "Origin": self.referer,
             "Referer": self.referer,
             "User-Agent": self.user_agent,
         }
