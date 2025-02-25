@@ -3,8 +3,7 @@ from decimal import Decimal
 
 from validator_collection import validators
 
-from highcharts_core import errors
-from highcharts_core.constants import EnforcedNull, EnforcedNullType
+from highcharts_core.constants import EnforcedNullType
 from highcharts_core.decorators import class_sensitive, validate_types
 from highcharts_core.metaclasses import HighchartsMeta
 from highcharts_core.utility_classes.animation import AnimationOptions
