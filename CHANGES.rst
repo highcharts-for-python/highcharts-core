@@ -1,4 +1,12 @@
 
+Release 1.10.3
+=========================================
+
+* **BUGFIX:** Fixed support for missing ``HoverState`` options. Closes #211.
+
+----
+
+
 Release 1.10.2
 =========================================
 
