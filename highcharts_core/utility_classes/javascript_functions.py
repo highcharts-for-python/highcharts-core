@@ -17,31 +17,31 @@ class CallbackFunction(HighchartsMeta):
         self._arguments = None
         self._body = None
 
-        self.function_name = kwargs.get('function_name', None)
-        self.arguments = kwargs.get('arguments', None)
-        self.body = kwargs.get('body', None)
+        self.function_name = kwargs.get("function_name", None)
+        self.arguments = kwargs.get("arguments", None)
+        self.body = kwargs.get("body", None)
 
     def __str__(self) -> str:
         if self.function_name:
-            prefix = f'function {self.function_name}'
+            prefix = f"function {self.function_name}"
         else:
-            prefix = 'function'
+            prefix = "function"
 
-        arguments = '('
+        arguments = "("
         if self.arguments:
             for argument in self.arguments:
-                arguments += f'{argument},'
+                arguments += f"{argument},"
             arguments = arguments[:-1]
 
-        arguments += ')'
+        arguments += ")"
 
-        as_str = f'{prefix}{arguments}'
-        as_str += ' {'
+        as_str = f"{prefix}{arguments}"
+        as_str += " {"
         if self.body:
-            as_str += '\n'
+            as_str += "\n"
             as_str += self.body
 
-        as_str += '}'
+        as_str += "}"
 
         return as_str
 
@@ -61,7 +61,7 @@ class CallbackFunction(HighchartsMeta):
 
     @function_name.setter
     def function_name(self, value):
-        self._function_name = validators.variable_name(value, allow_empty = True)
+        self._function_name = validators.variable_name(value, allow_empty=True)
 
     @property
     def arguments(self) -> Optional[List[str]]:
@@ -80,13 +80,13 @@ class CallbackFunction(HighchartsMeta):
             arguments = validators.iterable(value)
             validated_value = []
             for argument in arguments:
-                if '=' not in argument:
+                if "=" not in argument:
                     validated_value.append(validators.variable_name(argument))
                 else:
-                    variable = argument.split('=')[0]
-                    default_value = argument.split('=')[1]
+                    variable = argument.split("=")[0]
+                    default_value = argument.split("=")[1]
                     variable = validators.variable_name(variable)
-                    validated_value.append(f'{variable}={default_value}')
+                    validated_value.append(f"{variable}={default_value}")
 
             self._arguments = validated_value
 
@@ -117,43 +117,47 @@ class CallbackFunction(HighchartsMeta):
 
     @body.setter
     def body(self, value):
-        self._body = validators.string(value, allow_empty = True)
+        self._body = validators.string(value, allow_empty=True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'function_name': as_dict.get('function_name',
-                                         as_dict.get('functionName', None)),
-            'arguments': as_dict.get('arguments', None),
-            'body': as_dict.get('body', None)
+            "function_name": as_dict.get(
+                "function_name", as_dict.get("functionName", None)
+            ),
+            "arguments": as_dict.get("arguments", None),
+            "body": as_dict.get("body", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         return {
-            'function_name': self.function_name,
-            'arguments': self.arguments,
-            'body': self.body
+            "function_name": self.function_name,
+            "arguments": self.arguments,
+            "body": self.body,
         }
 
-    def to_json(self, encoding = 'utf-8', for_export: bool = False):
+    def to_json(self, encoding="utf-8", for_export: bool = False):
         if for_export:
-            return str(self)
+            as_str = str(self)
+            if '"' in as_str:
+                as_str = as_str.replace('"', '\\"')
+
+            return as_str
 
         return None
 
-    def to_js_literal(self,
-                      filename = None,
-                      encoding = 'utf-8',
-                      careful_validation = False) -> str:
+    def to_js_literal(
+        self, filename=None, encoding="utf-8", careful_validation=False
+    ) -> str:
         if filename:
             filename = validators.path(filename)
 
         as_str = str(self)
 
         if filename:
-            with open(filename, 'w', encoding = encoding) as file_:
+            with open(filename, "w", encoding=encoding) as file_:
                 file_.write(as_str)
 
         return as_str
@@ -175,17 +179,24 @@ class CallbackFunction(HighchartsMeta):
 
         :returns: :class:`CallbackFunction`
         """
-        if not checkers.is_type(property_definition, ('FunctionDeclaration',
-                                                      'FunctionExpression',
-                                                      'MethodDefinition',
-                                                      'Property')):
-            raise errors.HighchartsParseError(f'property_definition should contain a '
-                                              f'FunctionExpression, FunctionDeclaration, '
-                                              'MethodDefinition, or Property instance. '
-                                              f'Received: '
-                                              f'{property_definition.__class__.__name__}')
+        if not checkers.is_type(
+            property_definition,
+            (
+                "FunctionDeclaration",
+                "FunctionExpression",
+                "MethodDefinition",
+                "Property",
+            ),
+        ):
+            raise errors.HighchartsParseError(
+                f"property_definition should contain a "
+                f"FunctionExpression, FunctionDeclaration, "
+                "MethodDefinition, or Property instance. "
+                f"Received: "
+                f"{property_definition.__class__.__name__}"
+            )
 
-        if property_definition.type not in ['MethodDefinition', 'Property']:
+        if property_definition.type not in ["MethodDefinition", "Property"]:
             body = property_definition.body
         else:
             body = property_definition.value.body
@@ -194,12 +205,14 @@ class CallbackFunction(HighchartsMeta):
         body_start = body_range[0] + 1
         body_end = body_range[1] - 1
 
-        if property_definition.type == 'FunctionDeclaration':
+        if property_definition.type == "FunctionDeclaration":
             function_name = property_definition.id.name
-        elif property_definition.type == 'MethodDefinition':
+        elif property_definition.type == "MethodDefinition":
             function_name = property_definition.key.name
-        elif property_definition.type == 'FunctionExpression' and \
-             property_definition.id is not None:
+        elif (
+            property_definition.type == "FunctionExpression"
+            and property_definition.id is not None
+        ):
             function_name = property_definition.id.name
         else:
             function_name = None
@@ -207,28 +220,28 @@ class CallbackFunction(HighchartsMeta):
         function_body = original_str[body_start:body_end]
 
         arguments = []
-        if property_definition.type in ['MethodDefinition', 'Property']:
+        if property_definition.type in ["MethodDefinition", "Property"]:
             for item in property_definition.value.params:
                 if item.name:
                     arguments.append(item.name)
                 elif item.left.name and item.right.name:
-                    arguments.append(f'{item.left.name}={item.right.name}')
+                    arguments.append(f"{item.left.name}={item.right.name}")
         else:
             for item in property_definition.params:
                 if item.name:
                     arguments.append(item.name)
                 elif item.left.name and item.right.name:
-                    arguments.append(f'{item.left.name}={item.right.name}')
+                    arguments.append(f"{item.left.name}={item.right.name}")
 
-        return cls(function_name = function_name,
-                   arguments = arguments,
-                   body = function_body)
+        return cls(function_name=function_name, arguments=arguments, body=function_body)
 
     @classmethod
-    def from_js_literal(cls,
-                        as_str_or_file,
-                        allow_snake_case: bool = True,
-                        _break_loop_on_failure: bool = False):
+    def from_js_literal(
+        cls,
+        as_str_or_file,
+        allow_snake_case: bool = True,
+        _break_loop_on_failure: bool = False,
+    ):
         """Return a Python object representation of a Highcharts JavaScript object
         literal.
 
@@ -251,33 +264,29 @@ class CallbackFunction(HighchartsMeta):
         """
         is_file = checkers.is_file(as_str_or_file)
         if is_file:
-            with open(as_str_or_file, 'r') as file_:
+            with open(as_str_or_file, "r") as file_:
                 as_str = file_.read()
         else:
             as_str = as_str_or_file
 
         parsed, updated_str = cls._validate_js_function(as_str)
-        if parsed.body[0].type == 'FunctionDeclaration':
+        if parsed.body[0].type == "FunctionDeclaration":
             property_definition = parsed.body[0]
-        elif parsed.body[0].type == 'MethodDefinition':
+        elif parsed.body[0].type == "MethodDefinition":
             property_definition = parsed.body[0].body[0]
-        elif parsed.body[0].type != 'FunctionDeclaration':
+        elif parsed.body[0].type != "FunctionDeclaration":
             property_definition = parsed.body[0].declarations[0].init
 
         return cls._convert_from_js_ast(property_definition, updated_str)
 
     @classmethod
-    def from_python(cls,
-                    callable, 
-                    model = 'gpt-3.5-turbo',
-                    api_key = None,
-                    **kwargs):
+    def from_python(cls, callable, model="gpt-3.5-turbo", api_key=None, **kwargs):
         """Return a :class:`CallbackFunction` having converted a Python callable into
         a JavaScript function using the generative AI ``model`` indicated.
-        
+
         .. note::
-        
-          Because this relies on the outside APIs exposed by 
+
+          Because this relies on the outside APIs exposed by
           `OpenAI <https://www.openai.com/>`__ and `Anthropic <https://www.anthropic.com>`__,
           if you wish to use one of their models you *must* supply your own API key.
           These are paid services which they provide, and so you *will* be incurring
@@ -285,10 +294,10 @@ class CallbackFunction(HighchartsMeta):
 
         :param callable: The Python callable to convert.
         :type callable: callable
-        
-        :param model: The generative AI model to use. 
+
+        :param model: The generative AI model to use.
           Defaults to ``'gpt-3.5-turbo'``. Accepts:
-        
+
             * ``'gpt-3.5-turbo'`` (default)
             * ``'gpt-3.5-turbo-16k'``
             * ``'gpt-4'``
@@ -303,9 +312,9 @@ class CallbackFunction(HighchartsMeta):
           :obj:`None <python:None>`, which then tries to find the API
           key in the appropriate environment variable:
 
-            * ``OPENAI_API_KEY`` if using an 
+            * ``OPENAI_API_KEY`` if using an
               `OpenAI <https://www.openai.com/>`__ provided model
-            * ``ANTHROPIC_API_KEY`` if using an 
+            * ``ANTHROPIC_API_KEY`` if using an
               `Anthropic <https://www.anthropic.com/>`__ provided model
 
         :type api_key: :class:`str <python:str>` or :obj:`None <python:None>`
@@ -316,15 +325,15 @@ class CallbackFunction(HighchartsMeta):
 
         :returns: The ``CallbackFunction`` representation of the JavaScript
           code that does the same as the ``callable`` argument.
-        
+
           .. warning::
 
             Generating the JavaScript source code is *not* deterministic.
-            That means that it may not be correct, and we **STRONGLY** 
-            recommend reviewing it before using it in a production 
+            That means that it may not be correct, and we **STRONGLY**
+            recommend reviewing it before using it in a production
             application.
 
-            Every single generative AI is known to have issues - whether 
+            Every single generative AI is known to have issues - whether
             "hallucinations", biases, or incoherence. We cannot stress
             enough:
 
@@ -339,7 +348,7 @@ class CallbackFunction(HighchartsMeta):
         :raises HighchartsValueError: if no ``api_key`` is available
         :raises HighchartsDependencyError: if a required dependency is not
           available in the runtime environment
-        :raises HighchartsModerationError: if using an OpenAI model, and 
+        :raises HighchartsModerationError: if using an OpenAI model, and
           OpenAI detects that the supplied input violates their usage policies
         :raises HighchartsPythonConversionError: if the model was unable to
           convert ``callable`` into JavaScript source code
@@ -352,17 +361,14 @@ class CallbackFunction(HighchartsMeta):
         except errors.HighchartsParseError:
             raise errors.HighchartsPythonConversionError(
                 f'The JavaScript function generated by model "{model}" '
-                f'failed to be validated as a proper JavaScript function. '
-                f'Please retry, or select a different model and retry.'
+                f"failed to be validated as a proper JavaScript function. "
+                f"Please retry, or select a different model and retry."
             )
-        
+
         return obj
 
     @classmethod
-    def _validate_js_function(cls,
-                              as_str,
-                              range = True,
-                              _break_loop_on_failure = False):
+    def _validate_js_function(cls, as_str, range=True, _break_loop_on_failure=False):
         """Parse a JavaScript function from within ``as_str``.
 
         :param as_str: A string that potentially contains a JavaScript function.
@@ -380,26 +386,28 @@ class CallbackFunction(HighchartsMeta):
           :class:`str <python:str>`
         """
         try:
-            parsed = esprima.parseScript(as_str, loc = range, range = range)
+            parsed = esprima.parseScript(as_str, loc=range, range=range)
         except ParseError:
             try:
-                parsed = esprima.parseModule(as_str, loc = range, range = range)
+                parsed = esprima.parseModule(as_str, loc=range, range=range)
             except ParseError:
-                if not _break_loop_on_failure and as_str.startswith('function'):
+                if not _break_loop_on_failure and as_str.startswith("function"):
                     as_str = f"""const testFunction = {as_str}"""
-                    return cls._validate_js_function(as_str,
-                                                     range = range,
-                                                     _break_loop_on_failure = True)
+                    return cls._validate_js_function(
+                        as_str, range=range, _break_loop_on_failure=True
+                    )
                 elif not _break_loop_on_failure:
                     as_str = f"""const testFunction = function {as_str}"""
-                    return cls._validate_js_function(as_str,
-                                                     range = range,
-                                                     _break_loop_on_failure = True)
+                    return cls._validate_js_function(
+                        as_str, range=range, _break_loop_on_failure=True
+                    )
                 else:
-                    raise errors.HighchartsParseError('._validate_js_function() expects '
-                                                      'a str containing a valid '
-                                                      'JavaScript function. Could not '
-                                                      'find a valid function.')
+                    raise errors.HighchartsParseError(
+                        "._validate_js_function() expects "
+                        "a str containing a valid "
+                        "JavaScript function. Could not "
+                        "find a valid function."
+                    )
 
         return parsed, as_str
 
@@ -411,32 +419,34 @@ class JavaScriptClass(HighchartsMeta):
         self._class_name = None
         self._methods = None
 
-        self.class_name = kwargs.get('class_name', None)
-        self.methods = kwargs.get('methods', None)
+        self.class_name = kwargs.get("class_name", None)
+        self.methods = kwargs.get("methods", None)
 
     def __str__(self) -> str:
         if not self.class_name:
-            raise errors.HighchartsMissingClassNameError('Unable to serialize. The '
-                                                         'JavaScriptClass instance has '
-                                                         'no class_name provided.')
-        as_str = f'class {self.class_name} '
-        as_str += '{\n'
+            raise errors.HighchartsMissingClassNameError(
+                "Unable to serialize. The "
+                "JavaScriptClass instance has "
+                "no class_name provided."
+            )
+        as_str = f"class {self.class_name} "
+        as_str += "{\n"
         for method in self.methods or []:
-            method_str = f'{method.function_name}'
-            argument_str = '('
+            method_str = f"{method.function_name}"
+            argument_str = "("
             for argument in method.arguments or []:
-                argument_str += f'{argument},'
+                argument_str += f"{argument},"
             if method.arguments:
                 argument_str = argument_str[:-1]
-            argument_str += ') {\n'
+            argument_str += ") {\n"
 
             method_str += argument_str
 
-            method_str += method.body + '\n}\n'
+            method_str += method.body + "\n}\n"
 
             as_str += method_str
 
-        as_str += '}'
+        as_str += "}"
 
         return as_str
 
@@ -450,7 +460,7 @@ class JavaScriptClass(HighchartsMeta):
 
     @class_name.setter
     def class_name(self, value):
-        self._class_name = validators.variable_name(value, allow_empty = True)
+        self._class_name = validators.variable_name(value, allow_empty=True)
 
     @property
     def methods(self) -> Optional[List[CallbackFunction]]:
@@ -488,38 +498,36 @@ class JavaScriptClass(HighchartsMeta):
         if not value:
             self._methods = None
         else:
-            value = validate_types(value,
-                                   types = CallbackFunction,
-                                   force_iterable = True)
+            value = validate_types(value, types=CallbackFunction, force_iterable=True)
             has_constructor = False
             for method in value:
                 if not method.function_name:
-                    raise errors.HighchartsJavaScriptError('All JavaScriptClass methods '
-                                                           'require a function name.')
-                if method.function_name == 'constructor':
+                    raise errors.HighchartsJavaScriptError(
+                        "All JavaScriptClass methods require a function name."
+                    )
+                if method.function_name == "constructor":
                     has_constructor = True
 
             if not has_constructor:
-                raise errors.HighchartsJavaScriptError('A JavaScriptClass requires at '
-                                                       'least one "constructor" method. '
-                                                       'Yours had none.')
+                raise errors.HighchartsJavaScriptError(
+                    "A JavaScriptClass requires at "
+                    'least one "constructor" method. '
+                    "Yours had none."
+                )
 
             self._methods = value
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'class_name': as_dict.get('className', None),
-            'methods': as_dict.get('methods', None)
+            "class_name": as_dict.get("className", None),
+            "methods": as_dict.get("methods", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
-        return {
-            'className': self.class_name,
-            'methods': self.methods
-        }
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
+        return {"className": self.class_name, "methods": self.methods}
 
     @classmethod
     def _convert_from_js_ast(cls, definition, original_str):
@@ -538,11 +546,13 @@ class JavaScriptClass(HighchartsMeta):
 
         :returns: :class:`JavaScriptClass`
         """
-        if not checkers.is_type(definition, ('ClassDeclaration', 'ClassExpression')):
-            raise errors.HighchartsParseError(f'definition should contain a '
-                                              f'ClassDeclaration or ClassExpression'
-                                              ' instance. Received: '
-                                              f'{definition.__class__.__name__}')
+        if not checkers.is_type(definition, ("ClassDeclaration", "ClassExpression")):
+            raise errors.HighchartsParseError(
+                f"definition should contain a "
+                f"ClassDeclaration or ClassExpression"
+                " instance. Received: "
+                f"{definition.__class__.__name__}"
+            )
 
         class_name = definition.id.name
 
@@ -556,12 +566,10 @@ class JavaScriptClass(HighchartsMeta):
 
         methods = [CallbackFunction.from_js_literal(x) for x in method_strings]
 
-        return cls(class_name = class_name,
-                   methods = methods)
+        return cls(class_name=class_name, methods=methods)
 
     @classmethod
-    def from_js_literal(cls,
-                        as_str_or_file):
+    def from_js_literal(cls, as_str_or_file):
         """Return a Python object representation of a JavaScript class.
 
         :param as_str_or_file: The JavaScript object literal, represented either as a
@@ -579,35 +587,35 @@ class JavaScriptClass(HighchartsMeta):
         """
         is_file = checkers.is_file(as_str_or_file)
         if is_file:
-            with open(as_str_or_file, 'r') as file_:
+            with open(as_str_or_file, "r") as file_:
                 as_str = file_.read()
         else:
             as_str = as_str_or_file
 
         try:
-            parsed = esprima.parseScript(as_str, range = True)
+            parsed = esprima.parseScript(as_str, range=True)
         except ParseError:
             try:
-                parsed = esprima.parseModule(as_str, range = True)
+                parsed = esprima.parseModule(as_str, range=True)
             except ParseError:
-                raise errors.HighchartsParseError('unable to find a JavaScript class '
-                                                  'declaration in ``as_str``.')
+                raise errors.HighchartsParseError(
+                    "unable to find a JavaScript class declaration in ``as_str``."
+                )
 
         definition = parsed.body[0]
 
         return cls._convert_from_js_ast(definition, as_str)
 
-    def to_js_literal(self,
-                      filename = None,
-                      encoding = 'utf-8',
-                      careful_validation = False) -> str:
+    def to_js_literal(
+        self, filename=None, encoding="utf-8", careful_validation=False
+    ) -> str:
         if filename:
             filename = validators.path(filename)
 
         as_str = str(self)
 
         if filename:
-            with open(filename, 'w', encoding = encoding) as file_:
+            with open(filename, "w", encoding=encoding) as file_:
                 file_.write(as_str)
 
         return as_str
@@ -620,7 +628,7 @@ class VariableName(HighchartsMeta):
     def __init__(self, **kwargs):
         self._variable_name = None
 
-        self.variable_name = kwargs.get('variable_name', None)
+        self.variable_name = kwargs.get("variable_name", None)
 
     @property
     def variable_name(self) -> Optional[str]:
@@ -633,20 +641,21 @@ class VariableName(HighchartsMeta):
 
     @variable_name.setter
     def variable_name(self, value):
-        self._variable_name = validators.variable_name(value, allow_empty = True)
+        self._variable_name = validators.variable_name(value, allow_empty=True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'variable_name': as_dict.get('variable_name', as_dict.get('variableName',
-                                                                      None)),
+            "variable_name": as_dict.get(
+                "variable_name", as_dict.get("variableName", None)
+            ),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'variableName': self.variable_name,
+            "variableName": self.variable_name,
         }
 
         return untrimmed
