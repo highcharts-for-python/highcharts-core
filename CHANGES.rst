@@ -4,6 +4,7 @@ Release 1.10.3
 
 * **BUGFIX:** Fixed support for missing ``HoverState`` options. Closes #211.
 * **BUGFIX:** Fixed JavaScript serialization of ``CallbackFunction``. Closes #213.
+* **BUGFIX:** Fixed the ``DataLabel`` support for `NetworkGraphOptions`. Closes #215.
 
 ----
 
