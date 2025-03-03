@@ -1,13 +1,14 @@
 from typing import Optional, List
 from decimal import Decimal
 
-from validator_collection import validators
+from validator_collection import validators, checkers
 
 from highcharts_core import errors
 from highcharts_core.decorators import class_sensitive, validate_types
 from highcharts_core.metaclasses import HighchartsMeta
 from highcharts_core.options.plot_options.generic import GenericTypeOptions
 from highcharts_core.options.plot_options.link import LinkOptions
+from highcharts_core.utility_classes.data_labels import OrganizationDataLabel
 from highcharts_core.utility_classes.zones import Zone
 from highcharts_core.utility_classes.shadows import ShadowOptions
 from highcharts_core.utility_classes.javascript_functions import CallbackFunction
@@ -33,20 +34,20 @@ class LayoutAlgorithm(HighchartsMeta):
         self._theta = None
         self._type = None
 
-        self.approximation = kwargs.get('approximation', None)
-        self.attractive_force = kwargs.get('attractive_force', None)
-        self.enable_simulation = kwargs.get('enable_simulation', None)
-        self.friction = kwargs.get('friction', None)
-        self.gravitational_constant = kwargs.get('gravitational_constant', None)
-        self.initial_position_radius = kwargs.get('initial_position_radius', None)
-        self.initial_positions = kwargs.get('initial_positions', None)
-        self.integration = kwargs.get('integration', None)
-        self.link_length = kwargs.get('link_length', None)
-        self.max_iterations = kwargs.get('max_iterations', None)
-        self.max_speed = kwargs.get('max_speed', None)
-        self.repulsive_force = kwargs.get('repulsive_force', None)
-        self.theta = kwargs.get('theta', None)
-        self.type = kwargs.get('type', None)
+        self.approximation = kwargs.get("approximation", None)
+        self.attractive_force = kwargs.get("attractive_force", None)
+        self.enable_simulation = kwargs.get("enable_simulation", None)
+        self.friction = kwargs.get("friction", None)
+        self.gravitational_constant = kwargs.get("gravitational_constant", None)
+        self.initial_position_radius = kwargs.get("initial_position_radius", None)
+        self.initial_positions = kwargs.get("initial_positions", None)
+        self.integration = kwargs.get("integration", None)
+        self.link_length = kwargs.get("link_length", None)
+        self.max_iterations = kwargs.get("max_iterations", None)
+        self.max_speed = kwargs.get("max_speed", None)
+        self.repulsive_force = kwargs.get("repulsive_force", None)
+        self.theta = kwargs.get("theta", None)
+        self.type = kwargs.get("type", None)
 
     @property
     def approximation(self) -> Optional[str]:
@@ -69,7 +70,7 @@ class LayoutAlgorithm(HighchartsMeta):
 
     @approximation.setter
     def approximation(self, value):
-        self._approximation = validators.string(value, allow_empty = True)
+        self._approximation = validators.string(value, allow_empty=True)
 
     @property
     def attractive_force(self) -> Optional[CallbackFunction]:
@@ -138,7 +139,7 @@ class LayoutAlgorithm(HighchartsMeta):
 
     @friction.setter
     def friction(self, value):
-        self._friction = validators.numeric(value, allow_empty = True)
+        self._friction = validators.numeric(value, allow_empty=True)
 
     @property
     def gravitational_constant(self) -> Optional[int | float | Decimal]:
@@ -151,7 +152,7 @@ class LayoutAlgorithm(HighchartsMeta):
 
     @gravitational_constant.setter
     def gravitational_constant(self, value):
-        self._gravitational_constant = validators.numeric(value, allow_empty = True)
+        self._gravitational_constant = validators.numeric(value, allow_empty=True)
 
     @property
     def initial_position_radius(self) -> Optional[int | float | Decimal]:
@@ -165,7 +166,7 @@ class LayoutAlgorithm(HighchartsMeta):
 
     @initial_position_radius.setter
     def initial_position_radius(self, value):
-        self._initial_position_radius = validators.numeric(value, allow_empty = True)
+        self._initial_position_radius = validators.numeric(value, allow_empty=True)
 
     @property
     def initial_positions(self) -> Optional[str]:
@@ -184,7 +185,7 @@ class LayoutAlgorithm(HighchartsMeta):
 
     @initial_positions.setter
     def initial_positions(self, value):
-        self._initial_positions = validators.string(value, allow_empty = True)
+        self._initial_positions = validators.string(value, allow_empty=True)
 
     @property
     def integration(self) -> Optional[str]:
@@ -213,9 +214,10 @@ class LayoutAlgorithm(HighchartsMeta):
         else:
             value = validators.string(value)
             value = value.lower()
-            if value not in ['euler', 'verlet']:
-                raise errors.HighchartsValueError(f'integration expects either "euler" '
-                                                  f'or "verlet". Was: {value}')
+            if value not in ["euler", "verlet"]:
+                raise errors.HighchartsValueError(
+                    f'integration expects either "euler" or "verlet". Was: {value}'
+                )
             self._integration = value
 
     @property
@@ -235,9 +237,7 @@ class LayoutAlgorithm(HighchartsMeta):
 
     @link_length.setter
     def link_length(self, value):
-        self._link_length = validators.numeric(value,
-                                               allow_empty = True,
-                                               minimum = 0)
+        self._link_length = validators.numeric(value, allow_empty=True, minimum=0)
 
     @property
     def max_iterations(self) -> Optional[int]:
@@ -254,9 +254,7 @@ class LayoutAlgorithm(HighchartsMeta):
 
     @max_iterations.setter
     def max_iterations(self, value):
-        self._max_iterations = validators.integer(value,
-                                                  allow_empty = True,
-                                                  minimum = 1)
+        self._max_iterations = validators.integer(value, allow_empty=True, minimum=1)
 
     @property
     def max_speed(self) -> Optional[int | float | Decimal]:
@@ -273,9 +271,7 @@ class LayoutAlgorithm(HighchartsMeta):
 
     @max_speed.setter
     def max_speed(self, value):
-        self._max_speed = validators.numeric(value,
-                                             allow_empty = True,
-                                             minimum = 0)
+        self._max_speed = validators.numeric(value, allow_empty=True, minimum=0)
 
     @property
     def repulsive_force(self) -> Optional[CallbackFunction]:
@@ -332,7 +328,7 @@ class LayoutAlgorithm(HighchartsMeta):
 
     @theta.setter
     def theta(self, value):
-        self._theta = validators.numeric(value, allow_empty = True)
+        self._theta = validators.numeric(value, allow_empty=True)
 
     @property
     def type(self) -> Optional[str]:
@@ -345,45 +341,45 @@ class LayoutAlgorithm(HighchartsMeta):
 
     @type.setter
     def type(self, value):
-        self._type = validators.string(value, allow_empty = True)
+        self._type = validators.string(value, allow_empty=True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'approximation': as_dict.get('approximation', None),
-            'attractive_force': as_dict.get('attractiveForce', None),
-            'enable_simulation': as_dict.get('enableSimulation', None),
-            'friction': as_dict.get('friction', None),
-            'gravitational_constant': as_dict.get('gravitationalConstant', None),
-            'initial_position_radius': as_dict.get('initialPositionRadius', None),
-            'initial_positions': as_dict.get('initialPositions', None),
-            'integration': as_dict.get('integration', None),
-            'link_length': as_dict.get('linkLength', None),
-            'max_iterations': as_dict.get('maxIterations', None),
-            'max_speed': as_dict.get('maxSpeed', None),
-            'repulsive_force': as_dict.get('repulsiveForce', None),
-            'theta': as_dict.get('theta', None),
-            'type': as_dict.get('type', None)
+            "approximation": as_dict.get("approximation", None),
+            "attractive_force": as_dict.get("attractiveForce", None),
+            "enable_simulation": as_dict.get("enableSimulation", None),
+            "friction": as_dict.get("friction", None),
+            "gravitational_constant": as_dict.get("gravitationalConstant", None),
+            "initial_position_radius": as_dict.get("initialPositionRadius", None),
+            "initial_positions": as_dict.get("initialPositions", None),
+            "integration": as_dict.get("integration", None),
+            "link_length": as_dict.get("linkLength", None),
+            "max_iterations": as_dict.get("maxIterations", None),
+            "max_speed": as_dict.get("maxSpeed", None),
+            "repulsive_force": as_dict.get("repulsiveForce", None),
+            "theta": as_dict.get("theta", None),
+            "type": as_dict.get("type", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'approximation': self.approximation,
-            'attractiveForce': self.attractive_force,
-            'enableSimulation': self.enable_simulation,
-            'friction': self.friction,
-            'gravitationalConstant': self.gravitational_constant,
-            'initialPositionRadius': self.initial_position_radius,
-            'initialPositions': self.initial_positions,
-            'integration': self.integration,
-            'linkLength': self.link_length,
-            'maxIterations': self.max_iterations,
-            'maxSpeed': self.max_speed,
-            'repulsiveForce': self.repulsive_force,
-            'theta': self.theta,
-            'type': self.type
+            "approximation": self.approximation,
+            "attractiveForce": self.attractive_force,
+            "enableSimulation": self.enable_simulation,
+            "friction": self.friction,
+            "gravitationalConstant": self.gravitational_constant,
+            "initialPositionRadius": self.initial_position_radius,
+            "initialPositions": self.initial_positions,
+            "integration": self.integration,
+            "linkLength": self.link_length,
+            "maxIterations": self.max_iterations,
+            "maxSpeed": self.max_speed,
+            "repulsiveForce": self.repulsive_force,
+            "theta": self.theta,
+            "type": self.type,
         }
 
         return untrimmed
@@ -413,16 +409,16 @@ class NetworkGraphOptions(GenericTypeOptions):
         self._shadow = None
         self._zones = None
 
-        self.color_index = kwargs.get('color_index', None)
-        self.crisp = kwargs.get('crisp', None)
-        self.draggable = kwargs.get('draggable', None)
-        self.find_nearest_point_by = kwargs.get('find_nearest_point_by', None)
-        self.layout_algorithm = kwargs.get('layout_algorithm', None)
-        self.line_width = kwargs.get('line_width', None)
-        self.link = kwargs.get('link', None)
-        self.relative_x_value = kwargs.get('relative_x_value', None)
-        self.shadow = kwargs.get('shadow', None)
-        self.zones = kwargs.get('zones', None)
+        self.color_index = kwargs.get("color_index", None)
+        self.crisp = kwargs.get("crisp", None)
+        self.draggable = kwargs.get("draggable", None)
+        self.find_nearest_point_by = kwargs.get("find_nearest_point_by", None)
+        self.layout_algorithm = kwargs.get("layout_algorithm", None)
+        self.line_width = kwargs.get("line_width", None)
+        self.link = kwargs.get("link", None)
+        self.relative_x_value = kwargs.get("relative_x_value", None)
+        self.shadow = kwargs.get("shadow", None)
+        self.zones = kwargs.get("zones", None)
 
         super().__init__(**kwargs)
 
@@ -440,9 +436,7 @@ class NetworkGraphOptions(GenericTypeOptions):
 
     @color_index.setter
     def color_index(self, value):
-        self._color_index = validators.integer(value,
-                                               allow_empty = True,
-                                               minimum = 0)
+        self._color_index = validators.integer(value, allow_empty=True, minimum=0)
 
     @property
     def crisp(self) -> Optional[bool]:
@@ -468,6 +462,41 @@ class NetworkGraphOptions(GenericTypeOptions):
             self._crisp = bool(value)
 
     @property
+    def data_labels(
+        self,
+    ) -> Optional[OrganizationDataLabel | List[OrganizationDataLabel]]:
+        """Options for the series data labels, appearing next to each data point.
+
+        .. note::
+
+          To have multiple data labels per data point, you can also supply a collection of
+          :class:`DataLabel` configuration settings.
+
+        :rtype: :class:`OrganizationDataLabel <highcharts_core.utility_classes.data_labels.OrganizationDataLabel>`,
+          :class:`list <python:list>` of
+            :class:`OrganizationDataLabel <highcharts_core.utility_classes.data_labels.OrganizationDataLabel>` or
+            :obj:`None <python:None>`
+        """
+        return self._data_labels
+
+    @data_labels.setter
+    def data_labels(self, value):
+        if not value:
+            self._data_labels = None
+        else:
+            if checkers.is_iterable(value):
+                self._data_labels = validate_types(
+                    value,
+                    types=OrganizationDataLabel,
+                    allow_none=False,
+                    force_iterable=True,
+                )
+            else:
+                self._data_labels = validate_types(
+                    value, types=OrganizationDataLabel, allow_none=False
+                )
+
+    @property
     def draggable(self) -> Optional[bool]:
         """If ``True``, indicates that the nodes are draggable. Defaults to ``True``.
 
@@ -491,7 +520,7 @@ class NetworkGraphOptions(GenericTypeOptions):
           These event hooks can also be attached to the series at run time using the
           (JavaScript) ``Highcharts.addEvent()`` function.
 
-        :rtype: :class:`SimulationEvents <highcharts_core.utility_classes.events.SimulationEvents>` or 
+        :rtype: :class:`SimulationEvents <highcharts_core.utility_classes.events.SimulationEvents>` or
           :obj:`None <python:None>`
         """
         return self._events
@@ -519,7 +548,7 @@ class NetworkGraphOptions(GenericTypeOptions):
 
     @find_nearest_point_by.setter
     def find_nearest_point_by(self, value):
-        self._find_nearest_point_by = validators.string(value, allow_empty = True)
+        self._find_nearest_point_by = validators.string(value, allow_empty=True)
 
     @property
     def layout_algorithm(self) -> Optional[LayoutAlgorithm]:
@@ -544,9 +573,7 @@ class NetworkGraphOptions(GenericTypeOptions):
 
     @line_width.setter
     def line_width(self, value):
-        self._line_width = validators.numeric(value,
-                                              allow_empty = True,
-                                              minimum = 0)
+        self._line_width = validators.numeric(value, allow_empty=True, minimum=0)
 
     @property
     def link(self) -> Optional[LinkOptions]:
@@ -606,8 +633,7 @@ class NetworkGraphOptions(GenericTypeOptions):
         elif not value:
             self._shadow = None
         else:
-            value = validate_types(value,
-                                   types = ShadowOptions)
+            value = validate_types(value, types=ShadowOptions)
             self._shadow = value
 
     @property
@@ -627,77 +653,77 @@ class NetworkGraphOptions(GenericTypeOptions):
         return self._zones
 
     @zones.setter
-    @class_sensitive(Zone,
-                     force_iterable = True)
+    @class_sensitive(Zone, force_iterable=True)
     def zones(self, value):
         self._zones = value
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.get('accessibility', None),
-            'allow_point_select': as_dict.get('allowPointSelect', None),
-            'animation': as_dict.get('animation', None),
-            'class_name': as_dict.get('className', None),
-            'clip': as_dict.get('clip', None),
-            'color': as_dict.get('color', None),
-            'cursor': as_dict.get('cursor', None),
-            'custom': as_dict.get('custom', None),
-            'dash_style': as_dict.get('dashStyle', None),
-            'data_labels': as_dict.get('dataLabels', None),
-            'description': as_dict.get('description', None),
-            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
-            'events': as_dict.get('events', None),
-            'include_in_data_export': as_dict.get('includeInDataExport', None),
-            'keys': as_dict.get('keys', None),
-            'label': as_dict.get('label', None),
-            'legend_symbol': as_dict.get('legendSymbol', None),
-            'linked_to': as_dict.get('linkedTo', None),
-            'marker': as_dict.get('marker', None),
-            'on_point': as_dict.get('onPoint', None),
-            'opacity': as_dict.get('opacity', None),
-            'point': as_dict.get('point', None),
-            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
-            'selected': as_dict.get('selected', None),
-            'show_checkbox': as_dict.get('showCheckbox', None),
-            'show_in_legend': as_dict.get('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
-            'sonification': as_dict.get('sonification', None),
-            'states': as_dict.get('states', None),
-            'sticky_tracking': as_dict.get('stickyTracking', None),
-            'threshold': as_dict.get('threshold', None),
-            'tooltip': as_dict.get('tooltip', None),
-            'turbo_threshold': as_dict.get('turboThreshold', None),
-            'visible': as_dict.get('visible', None),
-
-            'color_index': as_dict.get('colorIndex', None),
-            'crisp': as_dict.get('crisp', None),
-            'draggable': as_dict.get('draggable', None),
-            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
-            'layout_algorithm': as_dict.get('layoutAlgorithm', None),
-            'line_width': as_dict.get('lineWidth', None),
-            'link': as_dict.get('link', None),
-            'relative_x_value': as_dict.get('relativeXValue', None),
-            'shadow': as_dict.get('shadow', None),
-            'zones': as_dict.get('zones', None)
+            "accessibility": as_dict.get("accessibility", None),
+            "allow_point_select": as_dict.get("allowPointSelect", None),
+            "animation": as_dict.get("animation", None),
+            "class_name": as_dict.get("className", None),
+            "clip": as_dict.get("clip", None),
+            "color": as_dict.get("color", None),
+            "cursor": as_dict.get("cursor", None),
+            "custom": as_dict.get("custom", None),
+            "dash_style": as_dict.get("dashStyle", None),
+            "data_labels": as_dict.get("dataLabels", None),
+            "description": as_dict.get("description", None),
+            "enable_mouse_tracking": as_dict.get("enableMouseTracking", None),
+            "events": as_dict.get("events", None),
+            "include_in_data_export": as_dict.get("includeInDataExport", None),
+            "keys": as_dict.get("keys", None),
+            "label": as_dict.get("label", None),
+            "legend_symbol": as_dict.get("legendSymbol", None),
+            "linked_to": as_dict.get("linkedTo", None),
+            "marker": as_dict.get("marker", None),
+            "on_point": as_dict.get("onPoint", None),
+            "opacity": as_dict.get("opacity", None),
+            "point": as_dict.get("point", None),
+            "point_description_formatter": as_dict.get(
+                "pointDescriptionFormatter", None
+            ),
+            "selected": as_dict.get("selected", None),
+            "show_checkbox": as_dict.get("showCheckbox", None),
+            "show_in_legend": as_dict.get("showInLegend", None),
+            "skip_keyboard_navigation": as_dict.get("skipKeyboardNavigation", None),
+            "sonification": as_dict.get("sonification", None),
+            "states": as_dict.get("states", None),
+            "sticky_tracking": as_dict.get("stickyTracking", None),
+            "threshold": as_dict.get("threshold", None),
+            "tooltip": as_dict.get("tooltip", None),
+            "turbo_threshold": as_dict.get("turboThreshold", None),
+            "visible": as_dict.get("visible", None),
+            "color_index": as_dict.get("colorIndex", None),
+            "crisp": as_dict.get("crisp", None),
+            "draggable": as_dict.get("draggable", None),
+            "find_nearest_point_by": as_dict.get("findNearestPointBy", None),
+            "layout_algorithm": as_dict.get("layoutAlgorithm", None),
+            "line_width": as_dict.get("lineWidth", None),
+            "link": as_dict.get("link", None),
+            "relative_x_value": as_dict.get("relativeXValue", None),
+            "shadow": as_dict.get("shadow", None),
+            "zones": as_dict.get("zones", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'colorIndex': self.color_index,
-            'crisp': self.crisp,
-            'draggable': self.draggable,
-            'findNearestPointBy': self.find_nearest_point_by,
-            'layoutAlgorithm': self.layout_algorithm,
-            'lineWidth': self.line_width,
-            'link': self.link,
-            'relativeXValue': self.relative_x_value,
-            'shadow': self.shadow,
-            'zones': self.zones
+            "colorIndex": self.color_index,
+            "crisp": self.crisp,
+            "draggable": self.draggable,
+            "findNearestPointBy": self.find_nearest_point_by,
+            "layoutAlgorithm": self.layout_algorithm,
+            "lineWidth": self.line_width,
+            "link": self.link,
+            "relativeXValue": self.relative_x_value,
+            "shadow": self.shadow,
+            "zones": self.zones,
         }
-        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
+        parent_as_dict = super()._to_untrimmed_dict(in_cls=in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
