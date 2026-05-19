@@ -28,6 +28,7 @@ class Tooltip(HighchartsMeta):
         self._date_time_label_formats = None
         self._distance = None
         self._enabled = None
+        self._fixed = None
         self._follow_pointer = None
         self._follow_touch_move = None
         self._footer_format = None
@@ -56,51 +57,52 @@ class Tooltip(HighchartsMeta):
         self._value_suffix = None
         self._x_date_format = None
 
-        self.animation = kwargs.get('animation', None)
-        self.background_color = kwargs.get('background_color', None)
-        self.border_color = kwargs.get('border_color', None)
-        self.border_radius = kwargs.get('border_radius', None)
-        self.border_width = kwargs.get('border_width', None)
-        self.class_name = kwargs.get('class_name', None)
-        self.cluster_format = kwargs.get('cluster_format', None)
-        self.date_time_label_formats = kwargs.get('date_time_label_formats', None)
-        self.distance = kwargs.get('distance', None)
-        self.enabled = kwargs.get('enabled', None)
-        self.follow_pointer = kwargs.get('follow_pointer', None)
-        self.follow_touch_move = kwargs.get('follow_touch_move', None)
-        self.footer_format = kwargs.get('footer_format', None)
-        self.format = kwargs.get('format', None)
-        self.formatter = kwargs.get('formatter', None)
-        self.header_format = kwargs.get('header_format', None)
-        self.header_shape = kwargs.get('header_shape', None)
-        self.hide_delay = kwargs.get('hide_delay', None)
-        self.null_format = kwargs.get('null_format', None)
-        self.null_formatter = kwargs.get('null_formatter', None)
-        self.outside = kwargs.get('outside', None)
-        self.padding = kwargs.get('padding', None)
-        self.point_format = kwargs.get('point_format', None)
-        self.point_formatter = kwargs.get('point_formatter', None)
-        self.positioner = kwargs.get('positioner', None)
-        self.shadow = kwargs.get('shadow', None)
-        self.shape = kwargs.get('shape', None)
-        self.shared = kwargs.get('shared', None)
-        self.snap = kwargs.get('snap', None)
-        self.split = kwargs.get('split', None)
-        self.stick_on_contact = kwargs.get('stick_on_contact', None)
-        self.style = kwargs.get('style', None)
-        self.use_html = kwargs.get('use_html', None)
-        self.value_decimals = kwargs.get('value_decimals', None)
-        self.value_prefix = kwargs.get('value_prefix', None)
-        self.value_suffix = kwargs.get('value_suffix', None)
-        self.x_date_format = kwargs.get('x_date_format', None)
+        self.animation = kwargs.get("animation", None)
+        self.background_color = kwargs.get("background_color", None)
+        self.border_color = kwargs.get("border_color", None)
+        self.border_radius = kwargs.get("border_radius", None)
+        self.border_width = kwargs.get("border_width", None)
+        self.class_name = kwargs.get("class_name", None)
+        self.cluster_format = kwargs.get("cluster_format", None)
+        self.date_time_label_formats = kwargs.get("date_time_label_formats", None)
+        self.distance = kwargs.get("distance", None)
+        self.enabled = kwargs.get("enabled", None)
+        self.fixed = kwargs.get("fixed", None)
+        self.follow_pointer = kwargs.get("follow_pointer", None)
+        self.follow_touch_move = kwargs.get("follow_touch_move", None)
+        self.footer_format = kwargs.get("footer_format", None)
+        self.format = kwargs.get("format", None)
+        self.formatter = kwargs.get("formatter", None)
+        self.header_format = kwargs.get("header_format", None)
+        self.header_shape = kwargs.get("header_shape", None)
+        self.hide_delay = kwargs.get("hide_delay", None)
+        self.null_format = kwargs.get("null_format", None)
+        self.null_formatter = kwargs.get("null_formatter", None)
+        self.outside = kwargs.get("outside", None)
+        self.padding = kwargs.get("padding", None)
+        self.point_format = kwargs.get("point_format", None)
+        self.point_formatter = kwargs.get("point_formatter", None)
+        self.positioner = kwargs.get("positioner", None)
+        self.shadow = kwargs.get("shadow", None)
+        self.shape = kwargs.get("shape", None)
+        self.shared = kwargs.get("shared", None)
+        self.snap = kwargs.get("snap", None)
+        self.split = kwargs.get("split", None)
+        self.stick_on_contact = kwargs.get("stick_on_contact", None)
+        self.style = kwargs.get("style", None)
+        self.use_html = kwargs.get("use_html", None)
+        self.value_decimals = kwargs.get("value_decimals", None)
+        self.value_prefix = kwargs.get("value_prefix", None)
+        self.value_suffix = kwargs.get("value_suffix", None)
+        self.x_date_format = kwargs.get("x_date_format", None)
 
     @property
     def _dot_path(self) -> Optional[str]:
         """The dot-notation path to the options key for the current class.
-        
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return 'tooltip'
+        return "tooltip"
 
     @property
     def animation(self) -> Optional[bool]:
@@ -133,6 +135,7 @@ class Tooltip(HighchartsMeta):
     @background_color.setter
     def background_color(self, value):
         from highcharts_core import utility_functions
+
         self._background_color = utility_functions.validate_color(value)
 
     @property
@@ -149,6 +152,7 @@ class Tooltip(HighchartsMeta):
     @border_color.setter
     def border_color(self, value):
         from highcharts_core import utility_functions
+
         self._border_color = utility_functions.validate_color(value)
 
     @property
@@ -163,13 +167,13 @@ class Tooltip(HighchartsMeta):
 
     @border_radius.setter
     def border_radius(self, value):
-        if value is None or value == '':
+        if value is None or value == "":
             self._border_radius = None
         else:
             try:
-                self._border_radius = validators.string(value, allow_empty = True)
+                self._border_radius = validators.string(value, allow_empty=True)
             except (TypeError, ValueError):
-                self._border_radius = validators.numeric(value, allow_empty = True)
+                self._border_radius = validators.numeric(value, allow_empty=True)
 
     @property
     def border_width(self) -> Optional[int | float | Decimal]:
@@ -183,7 +187,7 @@ class Tooltip(HighchartsMeta):
 
     @border_width.setter
     def border_width(self, value):
-        self._border_width = validators.numeric(value, allow_empty = True)
+        self._border_width = validators.numeric(value, allow_empty=True)
 
     @property
     def class_name(self) -> Optional[str]:
@@ -196,7 +200,7 @@ class Tooltip(HighchartsMeta):
 
     @class_name.setter
     def class_name(self, value):
-        self._class_name = validators.string(value, allow_empty = True)
+        self._class_name = validators.string(value, allow_empty=True)
 
     @property
     def cluster_format(self) -> Optional[str]:
@@ -218,7 +222,7 @@ class Tooltip(HighchartsMeta):
 
     @cluster_format.setter
     def cluster_format(self, value):
-        self._cluster_format = validators.string(value, allow_empty = True)
+        self._cluster_format = validators.string(value, allow_empty=True)
 
     @property
     def date_time_label_formats(self) -> Optional[DateTimeLabelFormats]:
@@ -249,7 +253,7 @@ class Tooltip(HighchartsMeta):
 
     @distance.setter
     def distance(self, value):
-        self._distance = validators.numeric(value, allow_empty = True)
+        self._distance = validators.numeric(value, allow_empty=True)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -265,6 +269,29 @@ class Tooltip(HighchartsMeta):
             self._enabled = None
         else:
             self._enabled = bool(value)
+
+    @property
+    def fixed(self) -> Optional[bool]:
+        """If ``True``, indicates that the tooltip should be fixed to one position in
+        the chart. If ``False``, the tooltip should be positioned next to the point or
+        mouse.
+
+        .. note::
+
+          When ``True``, the specific position of the tooltip can be further specified
+          using the :meth:`Tooltip.position` property.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+
+        """
+        return self._fixed
+
+    @fixed.setter
+    def fixed(self, value):
+        if value is None:
+            self._fixed = None
+        else:
+            self._fixed = bool(value)
 
     @property
     def follow_pointer(self) -> Optional[bool]:
@@ -331,10 +358,10 @@ class Tooltip(HighchartsMeta):
 
     @footer_format.setter
     def footer_format(self, value):
-        if value == '':
+        if value == "":
             self._footer_format = value
         else:
-            self._footer_format = validators.string(value, allow_empty = True)
+            self._footer_format = validators.string(value, allow_empty=True)
 
     @property
     def format(self) -> Optional[str]:
@@ -346,21 +373,21 @@ class Tooltip(HighchartsMeta):
           :meth:`.header_format <highcharts_core.options.tooltips.Tooltip.header_format>`,
           :meth:`.point_format <highcharts_core.options.tooltips.Tooltip.point_format>`, and
           :meth:`.footer_format <highcharts_core.options.tooltips.Tooltip.footer_format>`.
-          
+
           However, the ``.format`` option allows combining them into one setting.
-          
+
         .. note::
-        
+
           The context of the format string is the same as that of the
           :meth:`.formatter <highcharts_core.options.tooltips.Tooltip.formatter>` callback.
-        
-        :rtype: :class:`str <python:str>`  
+
+        :rtype: :class:`str <python:str>`
         """
         return self._format
-    
+
     @format.setter
     def format(self, value):
-        self._format = validators.string(value, allow_empty = True)
+        self._format = validators.string(value, allow_empty=True)
 
     @property
     def formatter(self) -> Optional[CallbackFunction]:
@@ -438,10 +465,10 @@ class Tooltip(HighchartsMeta):
 
     @header_format.setter
     def header_format(self, value):
-        if value == '':
+        if value == "":
             self._header_format = value
         else:
-            self._header_format = validators.string(value, allow_empty = True)
+            self._header_format = validators.string(value, allow_empty=True)
 
     @property
     def header_shape(self) -> Optional[str]:
@@ -464,9 +491,10 @@ class Tooltip(HighchartsMeta):
         else:
             value = validators.string(value)
             value = value.lower()
-            if value not in ['callout', 'circle', 'square']:
-                raise errors.HighchartsValueError(f'shape expects a supported tooltip '
-                                                  f'header shape. Was: {value}')
+            if value not in ["callout", "circle", "square"]:
+                raise errors.HighchartsValueError(
+                    f"shape expects a supported tooltip header shape. Was: {value}"
+                )
             self._header_shape = value
 
     @property
@@ -482,9 +510,7 @@ class Tooltip(HighchartsMeta):
 
     @hide_delay.setter
     def hide_delay(self, value):
-        self._hide_delay = validators.integer(value,
-                                              allow_empty = True,
-                                              minimum = 0)
+        self._hide_delay = validators.integer(value, allow_empty=True, minimum=0)
 
     @property
     def null_format(self) -> Optional[str]:
@@ -501,7 +527,7 @@ class Tooltip(HighchartsMeta):
 
     @null_format.setter
     def null_format(self, value):
-        self._null_format = validators.string(value, allow_empty = True)
+        self._null_format = validators.string(value, allow_empty=True)
 
     @property
     def null_formatter(self) -> Optional[CallbackFunction]:
@@ -565,7 +591,7 @@ class Tooltip(HighchartsMeta):
 
     @padding.setter
     def padding(self, value):
-        self._padding = validators.numeric(value, allow_empty = True)
+        self._padding = validators.numeric(value, allow_empty=True)
 
     @property
     def point_format(self) -> Optional[str]:
@@ -588,7 +614,7 @@ class Tooltip(HighchartsMeta):
 
     @point_format.setter
     def point_format(self, value):
-        self._point_format = validators.string(value, allow_empty = True)
+        self._point_format = validators.string(value, allow_empty=True)
 
     @property
     def point_formatter(self) -> Optional[CallbackFunction]:
@@ -649,8 +675,7 @@ class Tooltip(HighchartsMeta):
         elif isinstance(value, bool) and value is False:
             self._shadow = False
         else:
-            value = validate_types(value,
-                                   types = ShadowOptions)
+            value = validate_types(value, types=ShadowOptions)
             self._shadow = value
 
     @property
@@ -679,13 +704,12 @@ class Tooltip(HighchartsMeta):
         if not value:
             self._shape = None
         else:
-            value = validators.string(value, allow_empty = False)
+            value = validators.string(value, allow_empty=False)
             value = value.lower()
-            if value not in ['callout',
-                             'rect',
-                             'circle']:
-                raise errors.HighchartsValueError(f'shape expects a supported tooltip '
-                                                  f'shape. Was: {value}')
+            if value not in ["callout", "rect", "circle"]:
+                raise errors.HighchartsValueError(
+                    f"shape expects a supported tooltip shape. Was: {value}"
+                )
             self._shape = value
 
     @property
@@ -734,9 +758,7 @@ class Tooltip(HighchartsMeta):
 
     @snap.setter
     def snap(self, value):
-        self._snap = validators.numeric(value,
-                                        allow_empty = True,
-                                        minimum = 0)
+        self._snap = validators.numeric(value, allow_empty=True, minimum=0)
 
     @property
     def split(self) -> Optional[bool]:
@@ -799,11 +821,9 @@ class Tooltip(HighchartsMeta):
     @style.setter
     def style(self, value):
         try:
-            self._style = validators.dict(value, allow_empty = True)
+            self._style = validators.dict(value, allow_empty=True)
         except (ValueError, TypeError):
-            self._style = validators.string(value, 
-                                            allow_empty = True,
-                                            coerce_value = True)
+            self._style = validators.string(value, allow_empty=True, coerce_value=True)
 
     @property
     def use_html(self) -> Optional[bool]:
@@ -845,7 +865,7 @@ class Tooltip(HighchartsMeta):
 
     @value_decimals.setter
     def value_decimals(self, value):
-        self._value_decimals = validators.integer(value, allow_empty = True)
+        self._value_decimals = validators.integer(value, allow_empty=True)
 
     @property
     def value_prefix(self) -> Optional[str]:
@@ -858,7 +878,7 @@ class Tooltip(HighchartsMeta):
 
     @value_prefix.setter
     def value_prefix(self, value):
-        self._value_prefix = validators.string(value, allow_empty = True)
+        self._value_prefix = validators.string(value, allow_empty=True)
 
     @property
     def value_suffix(self) -> Optional[str]:
@@ -871,7 +891,7 @@ class Tooltip(HighchartsMeta):
 
     @value_suffix.setter
     def value_suffix(self, value):
-        self._value_suffix = validators.string(value, allow_empty = True)
+        self._value_suffix = validators.string(value, allow_empty=True)
 
     @property
     def x_date_format(self) -> Optional[str]:
@@ -885,91 +905,93 @@ class Tooltip(HighchartsMeta):
 
     @x_date_format.setter
     def x_date_format(self, value):
-        self._x_date_format = validators.string(value, allow_empty = True)
+        self._x_date_format = validators.string(value, allow_empty=True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'animation': as_dict.get('animation', None),
-            'background_color': as_dict.get('backgroundColor', None),
-            'border_color': as_dict.get('borderColor', None),
-            'border_radius': as_dict.get('borderRadius', None),
-            'border_width': as_dict.get('borderWidth', None),
-            'class_name': as_dict.get('className', None),
-            'cluster_format': as_dict.get('clusterFormat', None),
-            'date_time_label_formats': as_dict.get('dateTimeLabelFormats', None),
-            'distance': as_dict.get('distance', None),
-            'enabled': as_dict.get('enabled', None),
-            'follow_pointer': as_dict.get('followPointer', None),
-            'follow_touch_move': as_dict.get('followTouchMove', None),
-            'footer_format': as_dict.get('footerFormat', None),
-            'format': as_dict.get('format', None),
-            'formatter': as_dict.get('formatter', None),
-            'header_format': as_dict.get('headerFormat', None),
-            'header_shape': as_dict.get('headerShape', None),
-            'hide_delay': as_dict.get('hideDelay', None),
-            'null_format': as_dict.get('nullFormat', None),
-            'null_formatter': as_dict.get('nullFormatter', None),
-            'outside': as_dict.get('outside', None),
-            'padding': as_dict.get('padding', None),
-            'point_format': as_dict.get('pointFormat', None),
-            'point_formatter': as_dict.get('pointFormatter', None),
-            'positioner': as_dict.get('positioner', None),
-            'shadow': as_dict.get('shadow', None),
-            'shape': as_dict.get('shape', None),
-            'shared': as_dict.get('shared', None),
-            'snap': as_dict.get('snap', None),
-            'split': as_dict.get('split', None),
-            'stick_on_contact': as_dict.get('stickOnContact', None),
-            'style': as_dict.get('style', None),
-            'use_html': as_dict.get('useHTML', None),
-            'value_decimals': as_dict.get('valueDecimals', None),
-            'value_prefix': as_dict.get('valuePrefix', None),
-            'value_suffix': as_dict.get('valueSuffix', None),
-            'x_date_format': as_dict.get('xDateFormat', None)
+            "animation": as_dict.get("animation", None),
+            "background_color": as_dict.get("backgroundColor", None),
+            "border_color": as_dict.get("borderColor", None),
+            "border_radius": as_dict.get("borderRadius", None),
+            "border_width": as_dict.get("borderWidth", None),
+            "class_name": as_dict.get("className", None),
+            "cluster_format": as_dict.get("clusterFormat", None),
+            "date_time_label_formats": as_dict.get("dateTimeLabelFormats", None),
+            "distance": as_dict.get("distance", None),
+            "enabled": as_dict.get("enabled", None),
+            "fixed": as_dict.get("fixed", None),
+            "follow_pointer": as_dict.get("followPointer", None),
+            "follow_touch_move": as_dict.get("followTouchMove", None),
+            "footer_format": as_dict.get("footerFormat", None),
+            "format": as_dict.get("format", None),
+            "formatter": as_dict.get("formatter", None),
+            "header_format": as_dict.get("headerFormat", None),
+            "header_shape": as_dict.get("headerShape", None),
+            "hide_delay": as_dict.get("hideDelay", None),
+            "null_format": as_dict.get("nullFormat", None),
+            "null_formatter": as_dict.get("nullFormatter", None),
+            "outside": as_dict.get("outside", None),
+            "padding": as_dict.get("padding", None),
+            "point_format": as_dict.get("pointFormat", None),
+            "point_formatter": as_dict.get("pointFormatter", None),
+            "positioner": as_dict.get("positioner", None),
+            "shadow": as_dict.get("shadow", None),
+            "shape": as_dict.get("shape", None),
+            "shared": as_dict.get("shared", None),
+            "snap": as_dict.get("snap", None),
+            "split": as_dict.get("split", None),
+            "stick_on_contact": as_dict.get("stickOnContact", None),
+            "style": as_dict.get("style", None),
+            "use_html": as_dict.get("useHTML", None),
+            "value_decimals": as_dict.get("valueDecimals", None),
+            "value_prefix": as_dict.get("valuePrefix", None),
+            "value_suffix": as_dict.get("valueSuffix", None),
+            "x_date_format": as_dict.get("xDateFormat", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'animation': self.animation,
-            'backgroundColor': self.background_color,
-            'borderColor': self.border_color,
-            'borderRadius': self.border_radius,
-            'borderWidth': self.border_width,
-            'className': self.class_name,
-            'clusterFormat': self.cluster_format,
-            'dateTimeLabelFormats': self.date_time_label_formats,
-            'distance': self.distance,
-            'enabled': self.enabled,
-            'followPointer': self.follow_pointer,
-            'followTouchMove': self.follow_touch_move,
-            'footerFormat': self.footer_format,
-            'format': self.format,
-            'formatter': self.formatter,
-            'headerFormat': self.header_format,
-            'headerShape': self.header_shape,
-            'hideDelay': self.hide_delay,
-            'nullFormat': self.null_format,
-            'nullFormatter': self.null_formatter,
-            'outside': self.outside,
-            'padding': self.padding,
-            'pointFormat': self.point_format,
-            'pointFormatter': self.point_formatter,
-            'positioner': self.positioner,
-            'shadow': self.shadow,
-            'shape': self.shape,
-            'shared': self.shared,
-            'snap': self.snap,
-            'split': self.split,
-            'stickOnContact': self.stick_on_contact,
-            'style': self.style,
-            'useHTML': self.use_html,
-            'valueDecimals': self.value_decimals,
-            'valuePrefix': self.value_prefix,
-            'valueSuffix': self.value_suffix,
-            'xDateFormat': self.x_date_format
+            "animation": self.animation,
+            "backgroundColor": self.background_color,
+            "borderColor": self.border_color,
+            "borderRadius": self.border_radius,
+            "borderWidth": self.border_width,
+            "className": self.class_name,
+            "clusterFormat": self.cluster_format,
+            "dateTimeLabelFormats": self.date_time_label_formats,
+            "distance": self.distance,
+            "enabled": self.enabled,
+            "fixed": self.fixed,
+            "followPointer": self.follow_pointer,
+            "followTouchMove": self.follow_touch_move,
+            "footerFormat": self.footer_format,
+            "format": self.format,
+            "formatter": self.formatter,
+            "headerFormat": self.header_format,
+            "headerShape": self.header_shape,
+            "hideDelay": self.hide_delay,
+            "nullFormat": self.null_format,
+            "nullFormatter": self.null_formatter,
+            "outside": self.outside,
+            "padding": self.padding,
+            "pointFormat": self.point_format,
+            "pointFormatter": self.point_formatter,
+            "positioner": self.positioner,
+            "shadow": self.shadow,
+            "shape": self.shape,
+            "shared": self.shared,
+            "snap": self.snap,
+            "split": self.split,
+            "stickOnContact": self.stick_on_contact,
+            "style": self.style,
+            "useHTML": self.use_html,
+            "valueDecimals": self.value_decimals,
+            "valuePrefix": self.value_prefix,
+            "valueSuffix": self.value_suffix,
+            "xDateFormat": self.x_date_format,
         }
 
         return untrimmed
@@ -977,27 +999,27 @@ class Tooltip(HighchartsMeta):
 
 class DiagramTooltip(Tooltip):
     """Options for tooltips in diagram series, like :class:`DependencyWheelSeries <highcharts_core.options.series.dependencywheel.DependencyWheelSeries>` or :class:`SankeySeries <highcharts_core.options.series.sankey.SankeySeries>`."""
-    
+
     def __init__(self, **kwargs):
         self._node_format = None
         self._node_formatter = None
-        
-        self.node_format = kwargs.get('node_format', None)
-        self.node_formatter = kwargs.get('node_formatter', None)
-        
+
+        self.node_format = kwargs.get("node_format", None)
+        self.node_formatter = kwargs.get("node_formatter", None)
+
         super().__init__(**kwargs)
-        
+
     @property
     def node_format(self) -> Optional[str]:
         """The format string specifying what to show for nodes in the tooltip of a diagram series, as opposed to links.
-        
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
         return self._node_format
-    
+
     @node_format.setter
     def node_format(self, value):
-        self._node_format = validators.string(value, allow_empty = True)
+        self._node_format = validators.string(value, allow_empty=True)
 
     @property
     def node_formatter(self) -> Optional[CallbackFunction]:
@@ -1052,17 +1074,16 @@ class DiagramTooltip(Tooltip):
             "value_prefix": as_dict.get("valuePrefix", None),
             "value_suffix": as_dict.get("valueSuffix", None),
             "x_date_format": as_dict.get("xDateFormat", None),
-            
-            "node_format": as_dict.get('nodeFormat', None),
-            "node_formatter": as_dict.get('nodeFormatter', None)
+            "node_format": as_dict.get("nodeFormat", None),
+            "node_formatter": as_dict.get("nodeFormatter", None),
         }
 
         return kwargs
 
     def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'nodeFormat': self.node_format,
-            'nodeFormatter': self.node_formatter,
+            "nodeFormat": self.node_format,
+            "nodeFormatter": self.node_formatter,
         }
 
         parent_as_dict = super()._to_untrimmed_dict(in_cls=in_cls) or {}
