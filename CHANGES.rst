@@ -1,3 +1,22 @@
+Release 1.11.0
+=========================================
+
+* **ENHANCEMENT:** Align the API to **Highcharts (JS) v.12.6**. In particular, this includes:
+
+  * Added ``Credits.events`` property.
+  * Added ``Boost.chunk_size`` property.
+  * Added ``Exporting.local`` property.
+  * Added non-Cartesian series zoom module.
+  * Added ``Tooltip.show_delay`` and ``CrosshairOptions.show_delay`` properties.
+  * Added ``Legend.max_width`` support.
+  * Added multiple new properties to Treegraph and Treemap series types, including:
+    ``headers``, ``group_padding``, ``node_size_by``, ``traverse_to_leaf``, and ``zoom_enabled``.
+  * Added ``Tooltip.fixed`` and ``Tooltip.position`` support.
+
+* **TESTS:** Added unit tests to confirm ``Chart.module_url`` support for local path.
+* **ENHANCEMENT:** Updated dependencies and requirements to more-recent versions to address security patches.
+
+----
 
 Release 1.10.3
 =========================================
