@@ -452,7 +452,7 @@ class Chart(HighchartsMeta):
 
     @property
     def module_url(self) -> str:
-        """The URL from which Highcharts modules should be downloaded when
+        """The URL or local path from which Highcharts modules should be downloaded when
         generating the ``<script/>`` tags. Will default to the
         ``HIGHCHARTS_MODULE_URL`` environment variable if available, and
         otherwise defaults to ``'https://code.highcharts.com/'``.
@@ -1971,7 +1971,7 @@ class Chart(HighchartsMeta):
 
         if not isinstance(kwargs, (dict, UserDict, type(None))):
             raise errors.HighchartsValueError(
-                f"kwargs expects a dict. " f"Received: {kwargs.__class__.__name__}"
+                f"kwargs expects a dict. Received: {kwargs.__class__.__name__}"
             )
         if not kwargs:
             kwargs = {}
