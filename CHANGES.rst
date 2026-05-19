@@ -16,6 +16,7 @@ Release 1.11.0
 * **TESTS:** Added unit tests to confirm ``Chart.module_url`` support for local path.
 * **ENHANCEMENT:** Updated dependencies and requirements to more-recent versions to address security patches.
 * **ENHANCEMENT:** Major performance optimization to data point serialization. (courtesy of @dcherman)
+* **BUGFIX:** Fixed import error associated with ``requests.auth.HTTPBasicAuth``. Closes #221
 
 ----
 

@@ -10,6 +10,7 @@ import os
 from typing import Optional, Dict, List
 
 import requests
+from requests.auth import HTTPBasicAuth
 from validator_collection import validators, checkers
 
 from highcharts_core import __version__ as highcharts_version
@@ -188,9 +189,7 @@ class ExportServer(HighchartsMeta):
         value = value.lower()
         if value not in ["https", "http"]:
             raise errors.HighchartsUnsupportedProtocolError(
-                f"protocol expects either "
-                f'"https" or "http". '
-                f'Received: "{value}"'
+                f'protocol expects either "https" or "http". Received: "{value}"'
             )
 
         self._protocol = value
@@ -919,7 +918,7 @@ class ExportServer(HighchartsMeta):
 
         basic_auth = None
         if auth_user and auth_password:
-            basic_auth = requests.HTTPBasicAuth(auth_user, auth_password)
+            basic_auth = HTTPBasicAuth(auth_user, auth_password)
 
         payload = {
             "infile": "HIGHCHARTS FOR PYTHON: REPLACE WITH OPTIONS",
