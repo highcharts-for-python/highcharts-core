@@ -7,6 +7,12 @@ job:
     - python: "3.11"
       dist: bionic
       env: TOXENV=py311
+    - python: "3.12"
+      dist: bionic
+      env: TOXENV=py312
+    - python: "3.13"
+      dist: bionic
+      env: TOXENV=py313
     - python: "3.10"
       dist: focal
       env: TOXENV=coverage

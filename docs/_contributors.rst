@@ -6,3 +6,4 @@
 * Max Dugan Knight (`@maxduganknight <https://github.com/maxduganknight>`__)
 * Julien Bacquart (`@JulienBacquart <https://github.com/JulienBacquart>`__)
 * Thomas Glezer (`@ThomasGL <https://github.com/ThomasGl>`__)
+* dherman (`@dcherman <https://github.com/dcherman>`__)

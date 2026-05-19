@@ -7,6 +7,7 @@ from highcharts_core import constants
 from highcharts_core.decorators import class_sensitive
 from highcharts_core.metaclasses import HighchartsMeta
 from highcharts_core.utility_classes.position import Position
+from highcharts_core.utility_classes.events import CreditsEvents
 
 
 class CreditStyleOptions(HighchartsMeta):
@@ -17,9 +18,9 @@ class CreditStyleOptions(HighchartsMeta):
         self._cursor = None
         self._font_size = None
 
-        self.color = kwargs.get('color', None)
-        self.cursor = kwargs.get('cursor', None)
-        self.font_size = kwargs.get('font_size', None)
+        self.color = kwargs.get("color", None)
+        self.cursor = kwargs.get("cursor", None)
+        self.font_size = kwargs.get("font_size", None)
 
     @property
     def color(self) -> Optional[str]:
@@ -31,7 +32,7 @@ class CreditStyleOptions(HighchartsMeta):
 
     @color.setter
     def color(self, value):
-        self._color = validators.string(value, allow_empty = True)
+        self._color = validators.string(value, allow_empty=True)
 
     @property
     def cursor(self) -> Optional[str]:
@@ -43,7 +44,7 @@ class CreditStyleOptions(HighchartsMeta):
 
     @cursor.setter
     def cursor(self, value):
-        self._cursor = validators.string(value, allow_empty = True)
+        self._cursor = validators.string(value, allow_empty=True)
 
     @property
     def font_size(self) -> Optional[str]:
@@ -55,23 +56,23 @@ class CreditStyleOptions(HighchartsMeta):
 
     @font_size.setter
     def font_size(self, value):
-        self._font_size = validators.string(value, allow_empty = True)
+        self._font_size = validators.string(value, allow_empty=True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'color': as_dict.get('color', None),
-            'cursor': as_dict.get('cursor', None),
-            'font_size': as_dict.get('fontSize', None)
+            "color": as_dict.get("color", None),
+            "cursor": as_dict.get("cursor", None),
+            "font_size": as_dict.get("fontSize", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'color': self.color,
-            'cursor': self.cursor,
-            'fontSize': self.font_size
+            "color": self.color,
+            "cursor": self.cursor,
+            "fontSize": self.font_size,
         }
 
         return untrimmed
@@ -83,24 +84,26 @@ class Credits(HighchartsMeta):
 
     def __init__(self, **kwargs):
         self._enabled = None
+        self._events = None
         self._href = None
         self._position = None
         self._style = None
         self._text = None
 
-        self.enabled = kwargs.get('enabled', None)
-        self.href = kwargs.get('href', None)
-        self.position = kwargs.get('position', None)
-        self.style = kwargs.get('style', None)
-        self.text = kwargs.get('text', None)
+        self.enabled = kwargs.get("enabled", None)
+        self.events = kwargs.get("events", None)
+        self.href = kwargs.get("href", None)
+        self.position = kwargs.get("position", None)
+        self.style = kwargs.get("style", None)
+        self.text = kwargs.get("text", None)
 
     @property
     def _dot_path(self) -> Optional[str]:
         """The dot-notation path to the options key for the current class.
-        
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return 'credits'
+        return "credits"
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -117,6 +120,16 @@ class Credits(HighchartsMeta):
             self._enabled = None
         else:
             self._enabled = bool(value)
+
+    @property
+    def events(self) -> Optional[CreditsEvents]:
+        """Events for the credits label."""
+        return self._events
+
+    @events.setter
+    @class_sensitive(CreditsEvents)
+    def events(self, value):
+        self._events = value
 
     @property
     def href(self) -> Optional[str]:
@@ -184,27 +197,29 @@ class Credits(HighchartsMeta):
 
     @text.setter
     def text(self, value):
-        self._text = validators.string(value, allow_empty = True)
+        self._text = validators.string(value, allow_empty=True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'enabled': as_dict.get('enabled', None),
-            'href': as_dict.get('href', None),
-            'position': as_dict.get('position', None),
-            'style': as_dict.get('style', None),
-            'text': as_dict.get('text', None)
+            "enabled": as_dict.get("enabled", None),
+            "events": as_dict.get("events", None),
+            "href": as_dict.get("href", None),
+            "position": as_dict.get("position", None),
+            "style": as_dict.get("style", None),
+            "text": as_dict.get("text", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'enabled': self.enabled,
-            'href': self.href,
-            'position': self.position,
-            'style': self.style,
-            'text': self.text,
+            "enabled": self.enabled,
+            "events": self.events,
+            "href": self.href,
+            "position": self.position,
+            "style": self.style,
+            "text": self.text,
         }
 
         return untrimmed

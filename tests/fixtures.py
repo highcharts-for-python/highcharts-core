@@ -8,14 +8,17 @@ tests._fixtures
 Fixtures used by the SQLAthanor test suite.
 
 """
+
 import os
 import pathlib
 from copy import deepcopy
 from collections import UserDict
 
 import pytest
+
 try:
     import numpy as np
+
     HAS_NUMPY = True
 except ImportError:
     HAS_NUMPY = False
@@ -26,13 +29,14 @@ from highcharts_core import constants
 
 ALLOWED_NONE_PROPERTIES = []
 for item in constants.ALLOWED_NONE_CONTEXTS:
-    class_name, prop_name = item.split('.')
+    class_name, prop_name = item.split(".")
     if prop_name not in ALLOWED_NONE_PROPERTIES:
         ALLOWED_NONE_PROPERTIES.append(prop_name)
 
 
 class State(object):
     """Class to hold incremental test state."""
+
     # pylint: disable=too-few-public-methods
     pass
 
@@ -41,10 +45,7 @@ class State(object):
 def state(request):
     """Return the :class:`State` object that holds incremental test state."""
     # pylint: disable=W0108
-    return request.cached_setup(
-        setup = lambda: State(),
-        scope = "session"
-    )
+    return request.cached_setup(setup=lambda: State(), scope="session")
 
 
 @pytest.fixture
@@ -52,7 +53,7 @@ def run_pyspark_tests(request):
     """Return the ``--pyspark`` command-line option."""
     value = request.config.getoption("--pyspark")
     value = value.lower()
-    if value in ['false', False, 0, 'no', 'no']:
+    if value in ["false", False, 0, "no", "no"]:
         return False
     else:
         return True
@@ -63,7 +64,7 @@ def run_pandas_tests(request):
     """Return the ``--pandas`` command-line option."""
     value = request.config.getoption("--pandas")
     value = value.lower()
-    if value in ['false', False, 0, 'no', 'no']:
+    if value in ["false", False, 0, "no", "no"]:
         return False
     else:
         return True
@@ -74,7 +75,7 @@ def run_download_tests(request):
     """Return the ``--downloads`` command-line option."""
     value = request.config.getoption("--downloads")
     value = value.lower()
-    if value in ['false', False, 0, 'no', 'no']:
+    if value in ["false", False, 0, "no", "no"]:
         return False
     else:
         return True
@@ -85,12 +86,13 @@ def input_files(request):
     """Return the ``--inputs`` command-line option."""
     return request.config.getoption("--inputs")
 
+
 @pytest.fixture
 def create_output_directory(request):
     """Return the ``--create-output-directory`` command-line option."""
     value = request.config.getoption("--create-output-directory")
     value = value.lower()
-    if value in ['false', False, 0, 'no', 'no']:
+    if value in ["false", False, 0, "no", "no"]:
         return False
     else:
         return True
@@ -100,12 +102,12 @@ def create_output_directory(request):
 def openai_api_key(request):
     """Return the ``--openai`` command-line option."""
     api_key = request.config.getoption("--openai")
-    if api_key == 'none':
+    if api_key == "none":
         api_key = None
-        
+
     if not api_key:
-        api_key = os.getenv('OPENAI_API_KEY', None)
-    
+        api_key = os.getenv("OPENAI_API_KEY", None)
+
     return api_key
 
 
@@ -113,21 +115,22 @@ def openai_api_key(request):
 def disable_ai(request):
     """Return the ``--disable-ai`` command-line option."""
     disable_ai = request.config.getoption("--disable-ai")
-    if disable_ai in ['false', False, 0, 'no', 'no', 'f', 'F']:
+    if disable_ai in ["false", False, 0, "no", "no", "f", "F"]:
         disable_ai = False
     else:
         disable_ai = True
-        
+
     return disable_ai
 
-def check_input_file(input_directory, input_value, create_directory = False):
+
+def check_input_file(input_directory, input_value, create_directory=False):
     inputs = os.path.abspath(input_directory)
     if not os.path.exists(input_directory) and not create_directory:
-        raise AssertionError('input directory (%s) does not exist' % inputs)
+        raise AssertionError("input directory (%s) does not exist" % inputs)
     elif not os.path.exists(input_directory) and create_directory:
-        pathlib.Path(input_directory).mkdir(parents = True, exist_ok = True)
+        pathlib.Path(input_directory).mkdir(parents=True, exist_ok=True)
     elif not os.path.isdir(input_directory):
-        raise AssertionError('input directory (%s) is not a directory' % inputs)
+        raise AssertionError("input directory (%s) is not a directory" % inputs)
 
     try:
         input_file = os.path.join(input_directory, input_value)
@@ -141,21 +144,21 @@ def check_input_file(input_directory, input_value, create_directory = False):
 
 
 def to_camelCase(variable_name):
-    if '_' not in variable_name:
+    if "_" not in variable_name:
         return variable_name
 
-    if 'url' in variable_name:
-        variable_name = variable_name.replace('url', 'URL')
+    if "url" in variable_name:
+        variable_name = variable_name.replace("url", "URL")
 
-    camel_case = ''
-    previous_character = ''
+    camel_case = ""
+    previous_character = ""
     for character in variable_name:
-        if character != '_' and previous_character != '_':
+        if character != "_" and previous_character != "_":
             camel_case += character
             previous_character = character
-        elif character == '_':
+        elif character == "_":
             previous_character = character
-        elif character != '_' and previous_character == '_':
+        elif character != "_" and previous_character == "_":
             camel_case += character.upper()
             previous_character = character
 
@@ -163,41 +166,41 @@ def to_camelCase(variable_name):
 
 
 def to_js_dict(original):
-    print(f'\n{original}\n')
+    print(f"\n{original}\n")
     as_dict = {}
     for key in original:
-        if 'use_html' in key:
-            new_key = 'useHTML'
-        elif key == 'allow_html':
-            new_key = 'allowHTML'
-        elif 'utc' in key:
-            new_key = 'useUTC'
-        elif '_csv' in key:
-            new_key = 'downloadCSV'
-        elif '_jpeg' in key:
-            new_key = 'downloadJPEG'
-        elif '_pdf' in key:
-            new_key = 'downloadPDF'
-        elif '_png' in key:
-            new_key = 'downloadPNG'
-        elif '_svg' in key:
-            new_key = 'downloadSVG'
-        elif '_xls' in key:
-            new_key = 'downloadXLS'
-        elif '_atr' in key:
-            new_key = key.replace('_atr', 'ATR')
-        elif key == 'drillup_text':
-            new_key = 'drillUpText'
-        elif key == 'drillup_button':
-            new_key = 'drillUpButton'
-        elif key == 'thousands_separator':
-            new_key = 'thousandsSep'
-        elif key == 'measure_xy':
-            new_key = 'measureXY'
-        elif key == 'use_gpu_translations':
-            new_key = 'useGPUTranslations'
-        elif key == 'label_rank':
-            new_key = 'labelrank'
+        if "use_html" in key:
+            new_key = "useHTML"
+        elif key == "allow_html":
+            new_key = "allowHTML"
+        elif "utc" in key:
+            new_key = "useUTC"
+        elif "_csv" in key:
+            new_key = "downloadCSV"
+        elif "_jpeg" in key:
+            new_key = "downloadJPEG"
+        elif "_pdf" in key:
+            new_key = "downloadPDF"
+        elif "_png" in key:
+            new_key = "downloadPNG"
+        elif "_svg" in key:
+            new_key = "downloadSVG"
+        elif "_xls" in key:
+            new_key = "downloadXLS"
+        elif "_atr" in key:
+            new_key = key.replace("_atr", "ATR")
+        elif key == "drillup_text":
+            new_key = "drillUpText"
+        elif key == "drillup_button":
+            new_key = "drillUpButton"
+        elif key == "thousands_separator":
+            new_key = "thousandsSep"
+        elif key == "measure_xy":
+            new_key = "measureXY"
+        elif key == "use_gpu_translations":
+            new_key = "useGPUTranslations"
+        elif key == "label_rank":
+            new_key = "labelrank"
         else:
             new_key = to_camelCase(key)
 
@@ -211,12 +214,12 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
 
     :returns: ``True`` if match, ``False`` if not
     """
-    print(f'EVALUATING KWARG_VALUE:\n{kwarg_value}')
-    print(f'  against\n    {result_value}')
-    if isinstance(kwarg_value, (dict,
-                                UserDict)) and not isinstance(result_value, (dict,
-                                                                             UserDict)):
-        print('- converting KWARG dict back to object INSTANCE')
+    print(f"EVALUATING KWARG_VALUE:\n{kwarg_value}")
+    print(f"  against\n    {result_value}")
+    if isinstance(kwarg_value, (dict, UserDict)) and not isinstance(
+        result_value, (dict, UserDict)
+    ):
+        print("- converting KWARG dict back to object INSTANCE")
         result_cls = result_value.__class__
         try:
             test_value = result_cls.from_dict(kwarg_value)
@@ -226,93 +229,104 @@ def does_kwarg_value_match_result(kwarg_value, result_value):
             else:
                 return False
 
-        ('-- converted INSTANCE as JS literal:')
+        ("-- converted INSTANCE as JS literal:")
         print(test_value.to_js_literal())
-        print('-- original result as JS literal:')
+        print("-- original result as JS literal:")
         print(result_value.to_js_literal())
 
         return test_value == result_value
-    elif not isinstance(kwarg_value, (int, float)) and isinstance(result_value, (int,
-                                                                                 float)):
-        print('- converting KWARG value into numeric')
+    elif not isinstance(kwarg_value, (int, float)) and isinstance(
+        result_value, (int, float)
+    ):
+        print("- converting KWARG value into numeric")
         test_value = validators.numeric(kwarg_value)
         return test_value == result_value
-    elif isinstance(kwarg_value, (int, float)) and not isinstance(result_value, (int,
-                                                                                 float)):
-        print('- converting RESULT value into numeric')
+    elif isinstance(kwarg_value, (int, float)) and not isinstance(
+        result_value, (int, float)
+    ):
+        print("- converting RESULT value into numeric")
         result_value = validators.numeric(result_value)
         return test_value == result_value
-    elif isinstance(kwarg_value, (dict,
-                                  UserDict)) and isinstance(result_value, (dict,
-                                                                           UserDict)):
-        print('- checking two dict objects')
+    elif isinstance(kwarg_value, (dict, UserDict)) and isinstance(
+        result_value, (dict, UserDict)
+    ):
+        print("- checking two dict objects")
         if len(kwarg_value) != len(result_value):
-            print('-- len does not match')
+            print("-- len does not match")
             if len(kwarg_value) > len(result_value):
                 extra_in_result = [x for x in result_value if x not in kwarg_value]
                 extra_in_kwarg = [x for x in kwarg_value if x not in result_value]
-                print(f'-- extra in RESULT: {extra_in_result}')
-                print(f'-- extra in KWARG: {extra_in_kwarg}')
+                print(f"-- extra in RESULT: {extra_in_result}")
+                print(f"-- extra in KWARG: {extra_in_kwarg}")
                 return False
-            difference = len(result_value) - len(kwarg_value)                
+            difference = len(result_value) - len(kwarg_value)
             if abs(difference) > 1:
                 return False
         for key in kwarg_value:
-            print(f'CHECKING: {key}')
-            if key == 'patternOptions':
-                matches = does_kwarg_value_match_result(kwarg_value.get(key),
-                                                        result_value.get('pattern'))
+            print(f"CHECKING: {key}")
+            if key == "patternOptions":
+                matches = does_kwarg_value_match_result(
+                    kwarg_value.get(key), result_value.get("pattern")
+                )
             elif key in ALLOWED_NONE_PROPERTIES:
                 if kwarg_value.get(key, None) is None and result_value.get(key) is None:
                     continue
                 else:
-                    matches = does_kwarg_value_match_result(kwarg_value.get(key),
-                                                            result_value.get(key))
+                    print("- found in ALLOWED_NONE_PROPERTIES. Evaluating match...")
+                    matches = does_kwarg_value_match_result(
+                        kwarg_value.get(key), result_value.get(key)
+                    )
             else:
-                matches = does_kwarg_value_match_result(kwarg_value.get(key),
-                                                        result_value.get(key))
+                matches = does_kwarg_value_match_result(
+                    kwarg_value.get(key), result_value.get(key)
+                )
             if not matches:
-                print(f'-- dict key ({key}) does not match')
+                print(f"-- dict key ({key}) does not match")
                 return False
 
         return True
     elif HAS_NUMPY and isinstance(kwarg_value, np.ndarray):
         return np.array_equal(kwarg_value, result_value)
     elif checkers.is_iterable(kwarg_value):
-        print('- evaluating a KWARG value that is iterable')
-        if hasattr(result_value, 'from_setter'):
-            print('- converting iterable to a HighchartsMeta from_setter()')
+        print("- evaluating a KWARG value that is iterable")
+        if hasattr(result_value, "from_setter"):
+            print("- converting iterable to a HighchartsMeta from_setter()")
             updated_kwarg_value = result_value.__class__.from_array([kwarg_value])[0]
             matches = does_kwarg_value_match_result(updated_kwarg_value, result_value)
             return matches
         elif len(kwarg_value) != len(result_value):
-            print('-- len does not match')
+            print("-- len does not match")
             return False
         counter = 0
         for item in kwarg_value:
-            print('-- processing items in KWARG iterable')
+            print("-- processing items in KWARG iterable")
             result_item = result_value[counter]
-            print(f'-- evaluating:\n   {item}')
-            print(f'-- against:\n   {result_item}')
+            print(f"-- evaluating:\n   {item}")
+            print(f"-- against:\n   {result_item}")
             item_match = does_kwarg_value_match_result(item, result_item)
             if not item_match:
-                print('-- DOES NOT MATCH')
+                print("-- DOES NOT MATCH")
                 return False
             counter += 1
     elif kwarg_value is None and result_value is not None:
         print('- converting None to "null" to check')
-        if result_value == 'null' or isinstance(result_value, constants.EnforcedNullType):
+        if result_value == "null" or isinstance(
+            result_value, constants.EnforcedNullType
+        ):
             return True
         else:
             return False
     elif isinstance(kwarg_value, str) and isinstance(result_value, dict):
-        print('- checking function string against function dict')
-        if 'body' in result_value and kwarg_value.startswith('function'):
+        print("- checking function string against function dict")
+        if "body" in result_value and kwarg_value.startswith("function"):
             return True
         else:
             return False
+    elif isinstance(kwarg_value, constants.EnforcedNullType) and result_value is None:
+        print("- checking EnforcedNullType against None")
+        return True
     else:
-        print('- falling back to simple equivalency check')
+        print("- falling back to simple equivalency check")
         return kwarg_value == result_value
 
     return True
@@ -359,87 +373,104 @@ def compare_js_literals(original, new):
         max_index = min(counter + 200, len(original))
 
         if new[counter] != char:
-            print(f'\nMISMATCH FOUND AT ORIGINAL CHARACTER: {counter}')
+            print(f"\nMISMATCH FOUND AT ORIGINAL CHARACTER: {counter}")
             original_substring = original[min_index:max_index]
             new_substring = new[min_index:max_index]
-            print(f'-- ORIGINAL: {original_substring}')
-            print(f'-- NEW: {new_substring}')
+            print(f"-- ORIGINAL: {original_substring}")
+            print(f"-- NEW: {new_substring}")
 
-            allowed_original = 'Literal'
-            allowed_new = 'TemplateLiteral'
+            allowed_original = "Literal"
+            allowed_new = "TemplateLiteral"
 
             if allowed_original in original_substring and allowed_new in new_substring:
-                print('Returning True')
+                print("Returning True")
                 return True
             else:
                 return False
 
         counter += 1
-    
+
     return True
 
 
-def Class__init__(cls, kwargs, error, check_as_dict = False):
+def Class__init__(cls, kwargs, error, check_as_dict=False):
     kwargs_copy = deepcopy(kwargs)
     if not error:
         result = cls(**kwargs)
         print(kwargs_copy)
         assert result is not None
         assert isinstance(result, cls) is True
-        if checkers.is_type(result, 'GenericTypeOptions'):
-            kwargs_copy['type'] = result.type
-            #kwargs['type'] = result.type
+        if checkers.is_type(result, "GenericTypeOptions"):
+            kwargs_copy["type"] = result.type
+            # kwargs['type'] = result.type
         for key in kwargs_copy:
-            print(f'CHECKING: {key}')
+            print(f"CHECKING: {key}")
             if HAS_NUMPY and isinstance(kwargs.get(key, None), np.ndarray):
                 continue
-            elif kwargs.get(key) and isinstance(kwargs_copy[key],
-                                                str) and kwargs[key].startswith('function'):
+            elif (
+                kwargs.get(key)
+                and isinstance(kwargs_copy[key], str)
+                and kwargs[key].startswith("function")
+            ):
                 continue
-            if kwargs.get(key) and isinstance(kwargs_copy[key],
-                                              str) and kwargs[key].startswith('class'):
+            if (
+                kwargs.get(key)
+                and isinstance(kwargs_copy[key], str)
+                and kwargs[key].startswith("class")
+            ):
                 continue
-            if key == 'type' and checkers.is_type(result, 'GenericTypeOptions'):
-                assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                     getattr(result, 'type'))
-            elif key == 'margin' and checkers.is_type(result, 'ChartOptions'):
-                print(f'CHECKING: {key}, which gets split over other values')
+            if key == "type" and checkers.is_type(result, "GenericTypeOptions"):
+                assert does_kwarg_value_match_result(
+                    kwargs_copy[key], getattr(result, "type")
+                )
+            elif key == "margin" and checkers.is_type(result, "ChartOptions"):
+                print(f"CHECKING: {key}, which gets split over other values")
                 if checkers.is_iterable(kwargs_copy[key]):
-                    print('is iterable')
-                    assert does_kwarg_value_match_result(kwargs_copy[key][0],
-                                                         getattr(result, 'margin_top'))
-                    assert does_kwarg_value_match_result(kwargs_copy[key][1],
-                                                         getattr(result, 'margin_right'))
-                    assert does_kwarg_value_match_result(kwargs_copy[key][2],
-                                                         getattr(result, 'margin_bottom'))
-                    assert does_kwarg_value_match_result(kwargs_copy[key][3],
-                                                         getattr(result, 'margin_left'))
+                    print("is iterable")
+                    assert does_kwarg_value_match_result(
+                        kwargs_copy[key][0], getattr(result, "margin_top")
+                    )
+                    assert does_kwarg_value_match_result(
+                        kwargs_copy[key][1], getattr(result, "margin_right")
+                    )
+                    assert does_kwarg_value_match_result(
+                        kwargs_copy[key][2], getattr(result, "margin_bottom")
+                    )
+                    assert does_kwarg_value_match_result(
+                        kwargs_copy[key][3], getattr(result, "margin_left")
+                    )
                 elif kwargs_copy[key]:
-                    print('not iterable')
-                    print('checking margin_top')
+                    print("not iterable")
+                    print("checking margin_top")
                     print(result.margin_top)
-                    assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                         getattr(result, 'margin_top'))
-                    print('checking margin_right')
-                    assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                         getattr(result, 'margin_right'))
-                    print('checking margin_bottom')
-                    assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                         getattr(result, 'margin_bottom'))
-                    print('checking margin_left')
-                    assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                         getattr(result, 'margin_left'))
+                    assert does_kwarg_value_match_result(
+                        kwargs_copy[key], getattr(result, "margin_top")
+                    )
+                    print("checking margin_right")
+                    assert does_kwarg_value_match_result(
+                        kwargs_copy[key], getattr(result, "margin_right")
+                    )
+                    print("checking margin_bottom")
+                    assert does_kwarg_value_match_result(
+                        kwargs_copy[key], getattr(result, "margin_bottom")
+                    )
+                    print("checking margin_left")
+                    assert does_kwarg_value_match_result(
+                        kwargs_copy[key], getattr(result, "margin_left")
+                    )
             else:
-                print('not margin')
+                print("not margin")
                 kwarg_value = kwargs_copy[key]
                 if check_as_dict:
                     result_value = result.get(key, None)
                 else:
                     result_value = getattr(result, key)
-                print(f'KWARG VALUE:\n{kwarg_value}')
-                print(f'RESULT VALUE:\n{result_value}')
-                assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                     result_value) is True
+                print(f"KWARG VALUE:\n{kwarg_value}")
+                print(f"RESULT VALUE:\n{result_value}")
+                assert (
+                    does_kwarg_value_match_result(kwargs_copy[key], result_value)
+                    is True
+                )
     else:
         with pytest.raises(error):
             result = cls(**kwargs)
@@ -452,9 +483,9 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
         result = instance._to_untrimmed_dict()
         assert result is not None
         assert isinstance(result, dict) is True
-        if checkers.is_type(instance, 'GenericTypeOptions'):
-            print('updating the type!')
-            kwargs_copy['type'] = instance.type
+        if checkers.is_type(instance, "GenericTypeOptions"):
+            print("updating the type!")
+            kwargs_copy["type"] = instance.type
 
         for key in kwargs_copy:
             kwarg_value = kwargs_copy[key]
@@ -467,186 +498,246 @@ def Class__to_untrimmed_dict(cls, kwargs, error):
                     assert isinstance(key_value, np.ndarray) is True
                     assert len(key_value) == len(kwarg_value)
                 continue
-            if kwargs.get(key) and isinstance(kwargs_copy[key],
-                                              str) and kwargs[key].startswith('function'):
+            if (
+                kwargs.get(key)
+                and isinstance(kwargs_copy[key], str)
+                and kwargs[key].startswith("function")
+            ):
                 continue
-            if kwargs.get(key) and isinstance(kwargs_copy[key],
-                                              str) and kwargs[key].startswith('class'):
+            if (
+                kwargs.get(key)
+                and isinstance(kwargs_copy[key], str)
+                and kwargs[key].startswith("class")
+            ):
                 continue
-            if '_' not in key and (key != 'margin' and not checkers.is_type(instance,
-                                                                            'ChartOptions')):
-                assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                     result.get(key)) is True
+            if "_" not in key and (
+                key != "margin" and not checkers.is_type(instance, "ChartOptions")
+            ):
+                assert (
+                    does_kwarg_value_match_result(kwargs_copy[key], result.get(key))
+                    is True
+                )
             else:
-                if 'use_html' in key:
-                    print(f'CHECKING: {key}')
-                    assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                         result.get('useHTML')) is True
-                elif key == 'allow_html':
-                    print(f'CHECKING: {key}')
-                    assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                         result.get('allowHTML')) is True
-                elif 'utc' in key:
-                    print(f'CHECKING: {key}')
-                    assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                         result.get('useUTC')) is True
-                elif 'url' in key:
-                    print(f'CHECKING: {key}')
-                    updated_key = key.replace('url', 'URL')
+                if "use_html" in key:
+                    print(f"CHECKING: {key}")
+                    assert (
+                        does_kwarg_value_match_result(
+                            kwargs_copy[key], result.get("useHTML")
+                        )
+                        is True
+                    )
+                elif key == "allow_html":
+                    print(f"CHECKING: {key}")
+                    assert (
+                        does_kwarg_value_match_result(
+                            kwargs_copy[key], result.get("allowHTML")
+                        )
+                        is True
+                    )
+                elif "utc" in key:
+                    print(f"CHECKING: {key}")
+                    assert (
+                        does_kwarg_value_match_result(
+                            kwargs_copy[key], result.get("useUTC")
+                        )
+                        is True
+                    )
+                elif "url" in key:
+                    print(f"CHECKING: {key}")
+                    updated_key = key.replace("url", "URL")
                     matches = does_kwarg_value_match_result(
-                        kwargs_copy[key],
-                        result.get(to_camelCase(updated_key))
+                        kwargs_copy[key], result.get(to_camelCase(updated_key))
                     )
                     assert matches is True
-                elif '_kd_tree' in key:
-                    updated_key = key.replace('_kd_tree', 'KDTree')
+                elif "_kd_tree" in key:
+                    updated_key = key.replace("_kd_tree", "KDTree")
                     matches = does_kwarg_value_match_result(
-                        kwargs_copy[key],
-                        result.get(to_camelCase(updated_key))
+                        kwargs_copy[key], result.get(to_camelCase(updated_key))
                     )
                     assert matches is True
-                elif key == 'use_gpu_translations':
-                    updated_key = 'useGPUTranslations'
-                    print(f'using key: {updated_key}')
+                elif key == "use_gpu_translations":
+                    updated_key = "useGPUTranslations"
+                    print(f"using key: {updated_key}")
                     matches = does_kwarg_value_match_result(
-                        kwargs_copy[key],
-                        result.get(to_camelCase(updated_key))
+                        kwargs_copy[key], result.get(to_camelCase(updated_key))
                     )
                     assert matches is True
-                elif '_csv' in key:
-                    print(f'CHECKING: {key}')
-                    new_key = 'downloadCSV'
-                    matches = does_kwarg_value_match_result(kwargs_copy[key],
-                                                            result.get(new_key))
+                elif "_csv" in key:
+                    print(f"CHECKING: {key}")
+                    new_key = "downloadCSV"
+                    matches = does_kwarg_value_match_result(
+                        kwargs_copy[key], result.get(new_key)
+                    )
                     assert matches is True
-                elif '_jpeg' in key:
-                    print(f'CHECKING: {key}')
-                    new_key = 'downloadJPEG'
-                    matches = does_kwarg_value_match_result(kwargs_copy[key],
-                                                            result.get(new_key))
+                elif "_jpeg" in key:
+                    print(f"CHECKING: {key}")
+                    new_key = "downloadJPEG"
+                    matches = does_kwarg_value_match_result(
+                        kwargs_copy[key], result.get(new_key)
+                    )
                     assert matches is True
-                elif '_pdf' in key:
-                    print(f'CHECKING: {key}')
-                    new_key = 'downloadPDF'
-                    matches = does_kwarg_value_match_result(kwargs_copy[key],
-                                                            result.get(new_key))
+                elif "_pdf" in key:
+                    print(f"CHECKING: {key}")
+                    new_key = "downloadPDF"
+                    matches = does_kwarg_value_match_result(
+                        kwargs_copy[key], result.get(new_key)
+                    )
                     assert matches is True
-                elif '_png' in key:
-                    print(f'CHECKING: {key}')
-                    new_key = 'downloadPNG'
-                    matches = does_kwarg_value_match_result(kwargs_copy[key],
-                                                            result.get(new_key))
+                elif "_png" in key:
+                    print(f"CHECKING: {key}")
+                    new_key = "downloadPNG"
+                    matches = does_kwarg_value_match_result(
+                        kwargs_copy[key], result.get(new_key)
+                    )
                     assert matches is True
-                elif '_svg' in key:
-                    print(f'CHECKING: {key}')
-                    new_key = 'downloadSVG'
-                    matches = does_kwarg_value_match_result(kwargs_copy[key],
-                                                            result.get(new_key))
+                elif "_svg" in key:
+                    print(f"CHECKING: {key}")
+                    new_key = "downloadSVG"
+                    matches = does_kwarg_value_match_result(
+                        kwargs_copy[key], result.get(new_key)
+                    )
                     assert matches is True
-                elif '_xls' in key:
-                    print(f'CHECKING: {key}')
-                    new_key = 'downloadXLS'
-                    matches = does_kwarg_value_match_result(kwargs_copy[key],
-                                                            result.get(new_key))
+                elif "_xls" in key:
+                    print(f"CHECKING: {key}")
+                    new_key = "downloadXLS"
+                    matches = does_kwarg_value_match_result(
+                        kwargs_copy[key], result.get(new_key)
+                    )
                     assert matches is True
-                elif '_atr' in key:
-                    print(f'CHECKING: {key}')
-                    new_key = key.replace('_atr', 'ATR')
-                    matches = does_kwarg_value_match_result(kwargs_copy[key],
-                                                            result.get(new_key))
+                elif "_atr" in key:
+                    print(f"CHECKING: {key}")
+                    new_key = key.replace("_atr", "ATR")
+                    matches = does_kwarg_value_match_result(
+                        kwargs_copy[key], result.get(new_key)
+                    )
                     assert matches is True
-                elif key == 'drillup_text':
-                    print(f'CHECKING: {key}')
-                    new_key = 'drillUpText'
-                    matches = does_kwarg_value_match_result(kwargs_copy[key],
-                                                            result.get(new_key))
+                elif key == "drillup_text":
+                    print(f"CHECKING: {key}")
+                    new_key = "drillUpText"
+                    matches = does_kwarg_value_match_result(
+                        kwargs_copy[key], result.get(new_key)
+                    )
                     assert matches is True
-                elif key == 'drillup_button':
-                    print(f'CHECKING: {key}')
-                    new_key = 'drillUpButton'
-                    matches = does_kwarg_value_match_result(kwargs_copy[key],
-                                                            result.get(new_key))
+                elif key == "drillup_button":
+                    print(f"CHECKING: {key}")
+                    new_key = "drillUpButton"
+                    matches = does_kwarg_value_match_result(
+                        kwargs_copy[key], result.get(new_key)
+                    )
                     assert matches is True
-                elif key == 'thousands_separator':
-                    print(f'CHECKING: {key}')
-                    new_key = 'thousandsSep'
-                    matches = does_kwarg_value_match_result(kwargs_copy[key],
-                                                            result.get(new_key))
+                elif key == "thousands_separator":
+                    print(f"CHECKING: {key}")
+                    new_key = "thousandsSep"
+                    matches = does_kwarg_value_match_result(
+                        kwargs_copy[key], result.get(new_key)
+                    )
                     assert matches is True
-                elif key == 'measure_xy':
-                    print(f'CHECKING: {key}')
-                    new_key = 'measureXY'
-                    matches = does_kwarg_value_match_result(kwargs_copy[key],
-                                                            result.get(new_key))
+                elif key == "measure_xy":
+                    print(f"CHECKING: {key}")
+                    new_key = "measureXY"
+                    matches = does_kwarg_value_match_result(
+                        kwargs_copy[key], result.get(new_key)
+                    )
                     assert matches is True
-                elif key == 'pattern_options':
-                    print(f'CHECKING: {key}')
-                    assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                         result.get('pattern')) is True
+                elif key == "pattern_options":
+                    print(f"CHECKING: {key}")
+                    assert (
+                        does_kwarg_value_match_result(
+                            kwargs_copy[key], result.get("pattern")
+                        )
+                        is True
+                    )
                 elif isinstance(instance, UserDict):
-                    print(f'CHECKING: {key}')
-                    assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                         result.get(key)) is True
-                elif key == 'margin' and checkers.is_type(instance, 'ChartOptions'):
-                    print(f'CHECKING: {key}, which gets split over other values')
+                    print(f"CHECKING: {key}")
+                    assert (
+                        does_kwarg_value_match_result(kwargs_copy[key], result.get(key))
+                        is True
+                    )
+                elif key == "margin" and checkers.is_type(instance, "ChartOptions"):
+                    print(f"CHECKING: {key}, which gets split over other values")
                     if checkers.is_iterable(kwargs_copy[key]):
-                        assert does_kwarg_value_match_result(kwargs_copy[key][0],
-                                                             result.get('marginTop'))
-                        assert does_kwarg_value_match_result(kwargs_copy[key][1],
-                                                             result.get('marginRight'))
-                        assert does_kwarg_value_match_result(kwargs_copy[key][2],
-                                                             result.get('marginBottom'))
-                        assert does_kwarg_value_match_result(kwargs_copy[key][3],
-                                                             result.get('marginLeft'))
+                        assert does_kwarg_value_match_result(
+                            kwargs_copy[key][0], result.get("marginTop")
+                        )
+                        assert does_kwarg_value_match_result(
+                            kwargs_copy[key][1], result.get("marginRight")
+                        )
+                        assert does_kwarg_value_match_result(
+                            kwargs_copy[key][2], result.get("marginBottom")
+                        )
+                        assert does_kwarg_value_match_result(
+                            kwargs_copy[key][3], result.get("marginLeft")
+                        )
                     elif kwargs_copy[key]:
-                        print('EVALUATING single margin value to list')
-                        assert does_kwarg_value_match_result([kwargs_copy[key],
-                                                              kwargs_copy[key],
-                                                              kwargs_copy[key],
-                                                              kwargs_copy[key]],
-                                                             result.get('margin'))
-                        assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                             result.get('marginTop'))
-                        assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                             result.get('marginRight'))
-                        assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                             result.get('marginBottom'))
-                        assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                             result.get('marginLeft'))
-                elif key == 'spacing' and checkers.is_type(instance, 'ChartOptions'):
-                    print(f'CHECKING: {key}, which gets split over other values')
+                        print("EVALUATING single margin value to list")
+                        assert does_kwarg_value_match_result(
+                            [
+                                kwargs_copy[key],
+                                kwargs_copy[key],
+                                kwargs_copy[key],
+                                kwargs_copy[key],
+                            ],
+                            result.get("margin"),
+                        )
+                        assert does_kwarg_value_match_result(
+                            kwargs_copy[key], result.get("marginTop")
+                        )
+                        assert does_kwarg_value_match_result(
+                            kwargs_copy[key], result.get("marginRight")
+                        )
+                        assert does_kwarg_value_match_result(
+                            kwargs_copy[key], result.get("marginBottom")
+                        )
+                        assert does_kwarg_value_match_result(
+                            kwargs_copy[key], result.get("marginLeft")
+                        )
+                elif key == "spacing" and checkers.is_type(instance, "ChartOptions"):
+                    print(f"CHECKING: {key}, which gets split over other values")
                     if checkers.is_iterable(kwargs_copy[key]):
-                        assert does_kwarg_value_match_result(kwargs_copy[key][0],
-                                                             result.get('spacingTop'))
-                        assert does_kwarg_value_match_result(kwargs_copy[key][1],
-                                                             result.get('spacingRight'))
-                        assert does_kwarg_value_match_result(kwargs_copy[key][2],
-                                                             result.get('spacingBottom'))
-                        assert does_kwarg_value_match_result(kwargs_copy[key][3],
-                                                             result.get('spacingLeft'))
+                        assert does_kwarg_value_match_result(
+                            kwargs_copy[key][0], result.get("spacingTop")
+                        )
+                        assert does_kwarg_value_match_result(
+                            kwargs_copy[key][1], result.get("spacingRight")
+                        )
+                        assert does_kwarg_value_match_result(
+                            kwargs_copy[key][2], result.get("spacingBottom")
+                        )
+                        assert does_kwarg_value_match_result(
+                            kwargs_copy[key][3], result.get("spacingLeft")
+                        )
                     elif kwargs_copy[key]:
-                        print('EVALUATING single spacing value to list')
-                        assert does_kwarg_value_match_result([kwargs_copy[key],
-                                                              kwargs_copy[key],
-                                                              kwargs_copy[key],
-                                                              kwargs_copy[key]],
-                                                             result.get('spacing'))
-                elif key == 'label_rank':
-                    new_key = 'labelrank'
-                    matches = does_kwarg_value_match_result(kwargs_copy[key],
-                                                            result.get(new_key))
+                        print("EVALUATING single spacing value to list")
+                        assert does_kwarg_value_match_result(
+                            [
+                                kwargs_copy[key],
+                                kwargs_copy[key],
+                                kwargs_copy[key],
+                                kwargs_copy[key],
+                            ],
+                            result.get("spacing"),
+                        )
+                elif key == "label_rank":
+                    new_key = "labelrank"
+                    matches = does_kwarg_value_match_result(
+                        kwargs_copy[key], result.get(new_key)
+                    )
                     assert matches is True
                 else:
-                    print(f'CHECKING: {key}')
-                    assert does_kwarg_value_match_result(kwargs_copy[key],
-                                                         result.get(to_camelCase(key))) is True
+                    print(f"CHECKING: {key}")
+                    assert (
+                        does_kwarg_value_match_result(
+                            kwargs_copy[key], result.get(to_camelCase(key))
+                        )
+                        is True
+                    )
     else:
         with pytest.raises(error):
             instance = cls(**kwargs)
             result = instance._to_untrimmed_dict()
 
 
-def Class_from_dict(cls, kwargs, error, check_as_dict = False):
+def Class_from_dict(cls, kwargs, error, check_as_dict=False):
     if kwargs:
         as_dict = to_js_dict(deepcopy(kwargs))
     else:
@@ -657,50 +748,58 @@ def Class_from_dict(cls, kwargs, error, check_as_dict = False):
         assert instance is not None
         assert isinstance(instance, cls) is True
         for key in kwargs:
-            print(f'CHECKING: {key}')
-            if isinstance(kwargs[key], str) and kwargs[key].startswith('function'):
+            print(f"CHECKING: {key}")
+            if isinstance(kwargs[key], str) and kwargs[key].startswith("function"):
                 continue
-            if isinstance(kwargs[key], str) and kwargs[key].startswith('class'):
+            if isinstance(kwargs[key], str) and kwargs[key].startswith("class"):
                 continue
-            elif key == 'margin' and checkers.is_type(instance, 'ChartOptions'):
-                print(f'CHECKING: {key}, which gets split over other values')
+            elif key == "margin" and checkers.is_type(instance, "ChartOptions"):
+                print(f"CHECKING: {key}, which gets split over other values")
                 if checkers.is_iterable(kwargs[key]):
-                    print('is iterable')
-                    assert does_kwarg_value_match_result(kwargs[key][0],
-                                                         getattr(instance, 'margin_top'))
-                    assert does_kwarg_value_match_result(kwargs[key][1],
-                                                         getattr(instance, 'margin_right'))
-                    assert does_kwarg_value_match_result(kwargs[key][2],
-                                                         getattr(instance, 'margin_bottom'))
-                    assert does_kwarg_value_match_result(kwargs[key][3],
-                                                         getattr(instance, 'margin_left'))
+                    print("is iterable")
+                    assert does_kwarg_value_match_result(
+                        kwargs[key][0], getattr(instance, "margin_top")
+                    )
+                    assert does_kwarg_value_match_result(
+                        kwargs[key][1], getattr(instance, "margin_right")
+                    )
+                    assert does_kwarg_value_match_result(
+                        kwargs[key][2], getattr(instance, "margin_bottom")
+                    )
+                    assert does_kwarg_value_match_result(
+                        kwargs[key][3], getattr(instance, "margin_left")
+                    )
                 elif kwargs[key]:
-                    print('not iterable')
-                    print('checking margin_top')
-                    assert does_kwarg_value_match_result(kwargs[key],
-                                                         getattr(instance, 'margin_top'))
-                    print('checking margin_right')
-                    assert does_kwarg_value_match_result(kwargs[key],
-                                                         getattr(instance, 'margin_right'))
-                    print('checking margin_bottom')
-                    assert does_kwarg_value_match_result(kwargs[key],
-                                                         getattr(instance, 'margin_bottom'))
-                    print('checking margin_left')
-                    assert does_kwarg_value_match_result(kwargs[key],
-                                                         getattr(instance, 'margin_left'))
+                    print("not iterable")
+                    print("checking margin_top")
+                    assert does_kwarg_value_match_result(
+                        kwargs[key], getattr(instance, "margin_top")
+                    )
+                    print("checking margin_right")
+                    assert does_kwarg_value_match_result(
+                        kwargs[key], getattr(instance, "margin_right")
+                    )
+                    print("checking margin_bottom")
+                    assert does_kwarg_value_match_result(
+                        kwargs[key], getattr(instance, "margin_bottom")
+                    )
+                    print("checking margin_left")
+                    assert does_kwarg_value_match_result(
+                        kwargs[key], getattr(instance, "margin_left")
+                    )
             else:
                 kwarg_value = kwargs[key]
-                if key in ['pattern_options', 'patternOptions']:
-                    result_value = getattr(instance, 'pattern_options')
-                elif key == 'type':
-                    result_value = getattr(instance, 'type')
+                if key in ["pattern_options", "patternOptions"]:
+                    result_value = getattr(instance, "pattern_options")
+                elif key == "type":
+                    result_value = getattr(instance, "type")
                 elif check_as_dict:
                     result_value = instance.get(key, None)
                 else:
                     result_value = getattr(instance, key)
                 print(kwarg_value)
                 print(result_value)
-                if key == 'ndarray':
+                if key == "ndarray":
                     assert isinstance(result_value, dict) is True
                     for key in result_value:
                         key_value = result_value[key]
@@ -712,7 +811,7 @@ def Class_from_dict(cls, kwargs, error, check_as_dict = False):
             instance = cls.from_dict(as_dict)
 
 
-def Class_to_dict(cls, kwargs, error, trim_expected = True):
+def Class_to_dict(cls, kwargs, error, trim_expected=True):
     untrimmed_expected = to_js_dict(deepcopy(kwargs))
     if trim_expected:
         expected = trim_expected_dict(untrimmed_expected)
@@ -722,41 +821,47 @@ def Class_to_dict(cls, kwargs, error, trim_expected = True):
     for key in expected:
         if not checkers.is_type(expected[key], (str, int, float, bool, list, dict)):
             check_dicts = False
-        elif isinstance(expected[key], str) and expected[key].startswith('function'):
+        elif isinstance(expected[key], str) and expected[key].startswith("function"):
             check_dicts = False
-        elif isinstance(expected[key], str) and expected[key].startswith('class'):
+        elif isinstance(expected[key], str) and expected[key].startswith("class"):
             check_dicts = False
 
     if not error:
         instance = cls(**kwargs)
-        if checkers.is_type(instance, 'GenericTypeOptions'):
-            expected['type'] = instance.type
+        if checkers.is_type(instance, "GenericTypeOptions"):
+            expected["type"] = instance.type
 
         result = instance.to_dict()
         assert result is not None
         assert isinstance(result, dict) is True
-        print('EXPECTED:')
+        print("EXPECTED:")
         print(expected)
-        print('RESULT:')
+        print("RESULT:")
         print(result)
-        if checkers.is_type(instance, ('MarkerAttributeObject')):
+        if checkers.is_type(instance, ("MarkerAttributeObject")):
             check_dicts = False
         if check_dicts:
-            if 'contextButton' not in result and 'context_button' not in result:
+            if "contextButton" not in result and "context_button" not in result:
                 assert len(expected) == len(result)
             else:
                 assert len(result) == len(expected) + 1
             for key in expected:
-                print(f'CHECKING: {key}')
-                if key == 'patternOptions':
-                    print('running special check for patternOptions')
-                    assert does_kwarg_value_match_result(expected[key],
-                                                         result.get('pattern')) is True
-                elif key in ['contextButton', 'context_button']:
+                print(f"CHECKING: {key}")
+                if key == "patternOptions":
+                    print("running special check for patternOptions")
+                    assert (
+                        does_kwarg_value_match_result(
+                            expected[key], result.get("pattern")
+                        )
+                        is True
+                    )
+                elif key in ["contextButton", "context_button"]:
                     continue
                 else:
-                    assert does_kwarg_value_match_result(expected[key],
-                                                         result.get(key)) is True
+                    assert (
+                        does_kwarg_value_match_result(expected[key], result.get(key))
+                        is True
+                    )
     else:
         with pytest.raises(error):
             instance = cls(**kwargs)
@@ -773,15 +878,15 @@ def append_plot_options_type(cls, as_str):
     class_parents = cls.mro()
     is_generic_type_options = False
     for parent in class_parents:
-        if 'GenericTypeOptions' in parent.__name__:
+        if "GenericTypeOptions" in parent.__name__:
             is_generic_type_options = True
             break
     if not is_generic_type_options:
         return as_str
-    class_name = class_name.replace('TypeOptions', '')
-    class_name = class_name.replace('Options', '')
-    if class_name.endswith('Series') and class_name != 'Series':
-        class_name = class_name.replace('Series', '')
+    class_name = class_name.replace("TypeOptions", "")
+    class_name = class_name.replace("Options", "")
+    if class_name.endswith("Series") and class_name != "Series":
+        class_name = class_name.replace("Series", "")
 
     class_name = class_name.lower()
     str_to_append = f"""type: '{class_name}'"""
@@ -795,7 +900,7 @@ def append_plot_options_type(cls, as_str):
 def Class_from_js_literal(cls, input_files, filename, as_file, error):
     input_file = check_input_file(input_files, filename)
 
-    with open(input_file, 'r') as file_:
+    with open(input_file, "r") as file_:
         as_str = file_.read()
 
     if as_file:
@@ -806,51 +911,48 @@ def Class_from_js_literal(cls, input_files, filename, as_file, error):
     as_str = append_plot_options_type(cls, as_str)
 
     if not error:
-        #print('-------------------')
-        #print('ORIGINAL VALIDATION')
-        parsed_original, original_str = cls._validate_js_literal(as_str, range = False)
-        #print('-------------')
-        #print('ORIGINAL CALL')
-        #print(as_str)
+        # print('-------------------')
+        # print('ORIGINAL VALIDATION')
+        parsed_original, original_str = cls._validate_js_literal(as_str, range=False)
+        # print('-------------')
+        # print('ORIGINAL CALL')
+        # print(as_str)
         result = cls.from_js_literal(input_string)
         assert result is not None
         assert isinstance(result, cls) is True
 
         as_js_literal = result.to_js_literal()
         print(as_js_literal)
-        #print('-----------------')
-        #print('RESULT VALIDATION')
-        if 'pattern:' in as_js_literal:
-            as_js_literal = as_js_literal.replace('pattern:', 'patternOptions:')
+        # print('-----------------')
+        # print('RESULT VALIDATION')
+        if "pattern:" in as_js_literal:
+            as_js_literal = as_js_literal.replace("pattern:", "patternOptions:")
 
-        #print(as_js_literal)
-        parsed_output, output_str = cls._validate_js_literal(as_js_literal, range = False)
+        # print(as_js_literal)
+        parsed_output, output_str = cls._validate_js_literal(as_js_literal, range=False)
         try:
             assert str(parsed_output) == str(parsed_original)
         except AssertionError as error:
-            print('\n')
+            print("\n")
             result = compare_js_literals(str(parsed_original), str(parsed_output))
             if result is False:
-                print(f'RESULT: {result}')
+                print(f"RESULT: {result}")
                 raise error
     else:
         with pytest.raises(error):
             result = cls.from_js_literal(input_string)
 
 
-def Class_from_js_literal_with_expected(cls,
-                                        input_files,
-                                        filename,
-                                        expected_filename,
-                                        as_file,
-                                        error):
+def Class_from_js_literal_with_expected(
+    cls, input_files, filename, expected_filename, as_file, error
+):
     input_file = check_input_file(input_files, filename)
     expected_file = check_input_file(input_files, expected_filename)
 
-    with open(input_file, 'r') as file_:
+    with open(input_file, "r") as file_:
         as_str = file_.read()
 
-    with open(expected_file, 'r') as file_:
+    with open(expected_file, "r") as file_:
         expected_as_str = file_.read()
 
     if as_file:
@@ -865,8 +967,9 @@ def Class_from_js_literal_with_expected(cls,
     if not error:
         # print('-------------------')
         # print('ORIGINAL VALIDATION')
-        parsed_expected, parsed_expected_str = cls._validate_js_literal(expected_string,
-                                                                        range = False)
+        parsed_expected, parsed_expected_str = cls._validate_js_literal(
+            expected_string, range=False
+        )
         # print('-------------')
         # print('ORIGINAL CALL')
         # print(as_str)
@@ -877,15 +980,15 @@ def Class_from_js_literal_with_expected(cls,
         as_js_literal = result.to_js_literal()
         # print('-----------------')
         # print('RESULT VALIDATION')
-        if 'pattern:' in as_js_literal:
-            as_js_literal = as_js_literal.replace('pattern:', 'patternOptions:')
+        if "pattern:" in as_js_literal:
+            as_js_literal = as_js_literal.replace("pattern:", "patternOptions:")
 
         # print(as_js_literal)
-        parsed_output, output_str = cls._validate_js_literal(as_js_literal, range = False)
+        parsed_output, output_str = cls._validate_js_literal(as_js_literal, range=False)
         try:
             assert str(parsed_output) == str(parsed_expected)
         except AssertionError as error:
-            print('\n')
+            print("\n")
             compare_js_literals(str(parsed_expected), str(parsed_output))
             raise error
     else:

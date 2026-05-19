@@ -18,12 +18,12 @@ class BoostDebug(HighchartsMeta):
         self._time_series_processing = None
         self._time_setup = None
 
-        self.show_skip_summary = kwargs.get('show_skip_summary', None)
-        self.time_buffer_copy = kwargs.get('time_buffer_copy', None)
-        self.time_kd_tree = kwargs.get('time_kd_tree', None)
-        self.time_rendering = kwargs.get('time_rendering', None)
-        self.time_series_processing = kwargs.get('time_series_processing', None)
-        self.time_setup = kwargs.get('time_setup', None)
+        self.show_skip_summary = kwargs.get("show_skip_summary", None)
+        self.time_buffer_copy = kwargs.get("time_buffer_copy", None)
+        self.time_kd_tree = kwargs.get("time_kd_tree", None)
+        self.time_rendering = kwargs.get("time_rendering", None)
+        self.time_series_processing = kwargs.get("time_series_processing", None)
+        self.time_setup = kwargs.get("time_setup", None)
 
     @property
     def show_skip_summary(self) -> Optional[bool]:
@@ -137,24 +137,24 @@ class BoostDebug(HighchartsMeta):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'show_skip_summary': as_dict.get('showSkipSummary', None),
-            'time_buffer_copy': as_dict.get('timeBufferCopy', None),
-            'time_kd_tree': as_dict.get('timeKDTree', None),
-            'time_rendering': as_dict.get('timeRendering', None),
-            'time_series_processing': as_dict.get('timeSeriesProcessing', None),
-            'time_setup': as_dict.get('timeSetup', None),
+            "show_skip_summary": as_dict.get("showSkipSummary", None),
+            "time_buffer_copy": as_dict.get("timeBufferCopy", None),
+            "time_kd_tree": as_dict.get("timeKDTree", None),
+            "time_rendering": as_dict.get("timeRendering", None),
+            "time_series_processing": as_dict.get("timeSeriesProcessing", None),
+            "time_setup": as_dict.get("timeSetup", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         return {
-            'showSkipSummary': self.show_skip_summary,
-            'timeBufferCopy': self.time_buffer_copy,
-            'timeKDTree': self.time_kd_tree,
-            'timeRendering': self.time_rendering,
-            'timeSeriesProcessing': self.time_series_processing,
-            'timeSetup': self.time_setup
+            "showSkipSummary": self.show_skip_summary,
+            "timeBufferCopy": self.time_buffer_copy,
+            "timeKDTree": self.time_kd_tree,
+            "timeRendering": self.time_rendering,
+            "timeSeriesProcessing": self.time_series_processing,
+            "timeSetup": self.time_setup,
         }
 
 
@@ -178,6 +178,7 @@ class Boost(HighchartsMeta):
 
     def __init__(self, **kwargs):
         self._allow_force = None
+        self._chunk_size = None
         self._debug = None
         self._enabled = None
         self._pixel_ratio = None
@@ -185,21 +186,22 @@ class Boost(HighchartsMeta):
         self._use_gpu_translations = None
         self._use_preallocated = None
 
-        self.allow_force = kwargs.get('allow_force', None)
-        self.debug = kwargs.get('debug', None)
-        self.enabled = kwargs.get('enabled', None)
-        self.pixel_ratio = kwargs.get('pixel_ratio', None)
-        self.series_threshold = kwargs.get('series_threshold', None)
-        self.use_gpu_translations = kwargs.get('use_gpu_translations', None)
-        self.use_preallocated = kwargs.get('use_preallocated', None)
+        self.allow_force = kwargs.get("allow_force", None)
+        self.chunk_size = kwargs.get("chunk_size", None)
+        self.debug = kwargs.get("debug", None)
+        self.enabled = kwargs.get("enabled", None)
+        self.pixel_ratio = kwargs.get("pixel_ratio", None)
+        self.series_threshold = kwargs.get("series_threshold", None)
+        self.use_gpu_translations = kwargs.get("use_gpu_translations", None)
+        self.use_preallocated = kwargs.get("use_preallocated", None)
 
     @property
     def _dot_path(self) -> Optional[str]:
         """The dot-notation path to the options key for the current class.
-        
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return 'boost'
+        return "boost"
 
     @property
     def allow_force(self) -> Optional[bool]:
@@ -218,6 +220,23 @@ class Boost(HighchartsMeta):
             self._allow_force = None
         else:
             self._allow_force = bool(value)
+
+    @property
+    def chunk_size(self) -> Optional[int]:
+        """The number of points processed per frame when building the k-d tree for boosted series.
+
+        .. tip::
+
+          Lower values improve responsiveness but increase the time it takes to build the tree.
+
+        :rtype: :class:`int <python:int>` or :obj:`None <python:None>`
+
+        """
+        return self._chunk_size
+
+    @chunk_size.setter
+    def chunk_size(self, value):
+        self._chunk_size = validators.integer(value, allow_empty=True)
 
     @property
     def debug(self) -> Optional[BoostDebug]:
@@ -280,9 +299,7 @@ class Boost(HighchartsMeta):
 
     @pixel_ratio.setter
     def pixel_ratio(self, value):
-        self._pixel_ratio = validators.integer(value,
-                                               allow_empty = True,
-                                               minimum = 0)
+        self._pixel_ratio = validators.integer(value, allow_empty=True, minimum=0)
 
     @property
     def series_threshold(self) -> Optional[int]:
@@ -300,7 +317,7 @@ class Boost(HighchartsMeta):
 
     @series_threshold.setter
     def series_threshold(self, value):
-        self._series_threshold = validators.integer(value, allow_empty = True)
+        self._series_threshold = validators.integer(value, allow_empty=True)
 
     @property
     def use_gpu_translations(self) -> Optional[bool]:
@@ -358,26 +375,28 @@ class Boost(HighchartsMeta):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'allow_force': as_dict.get('allowForce', None),
-            'debug': as_dict.get('debug', None),
-            'enabled': as_dict.get('enabled', None),
-            'pixel_ratio': as_dict.get('pixelRatio', None),
-            'series_threshold': as_dict.get('seriesThreshold', None),
-            'use_gpu_translations': as_dict.get('useGPUTranslations', None),
-            'use_preallocated': as_dict.get('usePreallocated', None),
+            "allow_force": as_dict.get("allowForce", None),
+            "chunk_size": as_dict.get("chunkSize", None),
+            "debug": as_dict.get("debug", None),
+            "enabled": as_dict.get("enabled", None),
+            "pixel_ratio": as_dict.get("pixelRatio", None),
+            "series_threshold": as_dict.get("seriesThreshold", None),
+            "use_gpu_translations": as_dict.get("useGPUTranslations", None),
+            "use_preallocated": as_dict.get("usePreallocated", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'allowForce': self.allow_force,
-            'debug': self.debug,
-            'enabled': self.enabled,
-            'pixelRatio': self.pixel_ratio,
-            'seriesThreshold': self.series_threshold,
-            'useGPUTranslations': self.use_gpu_translations,
-            'usePreallocated': self.use_preallocated
+            "allowForce": self.allow_force,
+            "chunkSize": self.chunk_size,
+            "debug": self.debug,
+            "enabled": self.enabled,
+            "pixelRatio": self.pixel_ratio,
+            "seriesThreshold": self.series_threshold,
+            "useGPUTranslations": self.use_gpu_translations,
+            "usePreallocated": self.use_preallocated,
         }
 
         return untrimmed

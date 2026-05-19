@@ -17,16 +17,18 @@ class CrosshairOptions(HighchartsMeta):
         self._class_name = None
         self._color = None
         self._dash_style = None
+        self._show_delay = None
         self._snap = None
         self._width = None
         self._z_index = None
 
-        self.class_name = kwargs.get('class_name', None)
-        self.color = kwargs.get('color', None)
-        self.dash_style = kwargs.get('dash_style', None)
-        self.snap = kwargs.get('snap', None)
-        self.width = kwargs.get('width', None)
-        self.z_index = kwargs.get('z_index', None)
+        self.class_name = kwargs.get("class_name", None)
+        self.color = kwargs.get("color", None)
+        self.dash_style = kwargs.get("dash_style", None)
+        self.show_delay = kwargs.get("show_delay", None)
+        self.snap = kwargs.get("snap", None)
+        self.width = kwargs.get("width", None)
+        self.z_index = kwargs.get("z_index", None)
 
     @property
     def class_name(self) -> Optional[str]:
@@ -39,7 +41,7 @@ class CrosshairOptions(HighchartsMeta):
 
     @class_name.setter
     def class_name(self, value):
-        self._class_name = validators.string(value, allow_empty = True)
+        self._class_name = validators.string(value, allow_empty=True)
 
     @property
     def color(self) -> Optional[str | Gradient | Pattern]:
@@ -57,6 +59,7 @@ class CrosshairOptions(HighchartsMeta):
     @color.setter
     def color(self, value):
         from highcharts_core import utility_functions
+
         self._color = utility_functions.validate_color(value)
 
     @property
@@ -88,10 +91,22 @@ class CrosshairOptions(HighchartsMeta):
         else:
             value = validators.string(value)
             if value not in constants.SUPPORTED_DASH_STYLE_VALUES:
-                raise errors.HighchartsValueError(f'dash_style expects a '
-                                                  f'recognized value, but received: '
-                                                  f'{value}')
+                raise errors.HighchartsValueError(
+                    f"dash_style expects a recognized value, but received: {value}"
+                )
             self._dash_style = value
+
+    @property
+    def show_delay(self) -> Optional[int | float | Decimal]:
+        """The number of milliseconds to wait until the crosshair is shown. Defaults to ``0``.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._show_delay
+
+    @show_delay.setter
+    def show_delay(self, value):
+        self._show_delay = validators.numeric(value, allow_empty=True, minimum=0)
 
     @property
     def snap(self) -> Optional[bool]:
@@ -121,7 +136,7 @@ class CrosshairOptions(HighchartsMeta):
 
     @width.setter
     def width(self, value):
-        self._width = validators.numeric(value, allow_empty = True)
+        self._width = validators.numeric(value, allow_empty=True)
 
     @property
     def z_index(self) -> Optional[int | float | Decimal]:
@@ -138,29 +153,31 @@ class CrosshairOptions(HighchartsMeta):
 
     @z_index.setter
     def z_index(self, value):
-        self._z_index = validators.numeric(value, allow_empty = True)
+        self._z_index = validators.numeric(value, allow_empty=True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'class_name': as_dict.get('className', None),
-            'color': as_dict.get('color', None),
-            'dash_style': as_dict.get('dashStyle', None),
-            'snap': as_dict.get('snap', None),
-            'width': as_dict.get('width', None),
-            'z_index': as_dict.get('zIndex', None)
+            "class_name": as_dict.get("className", None),
+            "color": as_dict.get("color", None),
+            "dash_style": as_dict.get("dashStyle", None),
+            "show_delay": as_dict.get("showDelay", None),
+            "snap": as_dict.get("snap", None),
+            "width": as_dict.get("width", None),
+            "z_index": as_dict.get("zIndex", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'className': self.class_name,
-            'color': self.color,
-            'dashStyle': self.dash_style,
-            'snap': self.snap,
-            'width': self.width,
-            'zIndex': self.z_index
+            "className": self.class_name,
+            "color": self.color,
+            "dashStyle": self.dash_style,
+            "showDelay": self.show_delay,
+            "snap": self.snap,
+            "width": self.width,
+            "zIndex": self.z_index,
         }
 
         return untrimmed

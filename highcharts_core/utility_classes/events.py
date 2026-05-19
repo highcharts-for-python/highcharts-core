@@ -27,17 +27,17 @@ class ChartEvents(HighchartsMeta):
         self._selection = None
 
         for attribute in dir(self):
-            if attribute.startswith('_') and not attribute.startswith('__'):
+            if attribute.startswith("_") and not attribute.startswith("__"):
                 non_private_name = attribute[1:]
                 setattr(self, non_private_name, kwargs.get(non_private_name, None))
 
     @property
     def _dot_path(self) -> Optional[str]:
         """The dot-notation path to the options key for the current class.
-        
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return 'chart.events'
+        return "chart.events"
 
     @property
     def add_series(self) -> Optional[CallbackFunction]:
@@ -235,7 +235,7 @@ class ChartEvents(HighchartsMeta):
 
     @property
     def render(self) -> Optional[CallbackFunction]:
-        """JavaScript callback function that fires when the chart is initially loaded 
+        """JavaScript callback function that fires when the chart is initially loaded
         (directly after the ``load`` event), and after each redraw (directly after the ``redraw`` event).
 
         :rtype: :class:`CallbackFunction` or :obj:`None <python:None>`
@@ -302,40 +302,40 @@ class ChartEvents(HighchartsMeta):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'add_series': as_dict.get('addSeries', None),
-            'after_print': as_dict.get('afterPrint', None),
-            'before_print': as_dict.get('beforePrint', None),
-            'click': as_dict.get('click', None),
-            'drilldown': as_dict.get('drilldown', None),
-            'drillup': as_dict.get('drillup', None),
-            'drillupall': as_dict.get('drillupall', None),
-            'export_data': as_dict.get('exportData', None),
-            'fullscreen_close': as_dict.get('fullscreenClose', None),
-            'fullscreen_open': as_dict.get('fullscreenOpen', None),
-            'load': as_dict.get('load', None),
-            'redraw': as_dict.get('redraw', None),
-            'render': as_dict.get('render', None),
-            'selection': as_dict.get('selection', None)
+            "add_series": as_dict.get("addSeries", None),
+            "after_print": as_dict.get("afterPrint", None),
+            "before_print": as_dict.get("beforePrint", None),
+            "click": as_dict.get("click", None),
+            "drilldown": as_dict.get("drilldown", None),
+            "drillup": as_dict.get("drillup", None),
+            "drillupall": as_dict.get("drillupall", None),
+            "export_data": as_dict.get("exportData", None),
+            "fullscreen_close": as_dict.get("fullscreenClose", None),
+            "fullscreen_open": as_dict.get("fullscreenOpen", None),
+            "load": as_dict.get("load", None),
+            "redraw": as_dict.get("redraw", None),
+            "render": as_dict.get("render", None),
+            "selection": as_dict.get("selection", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'addSeries': self.add_series,
-            'afterPrint': self.after_print,
-            'beforePrint': self.before_print,
-            'click': self.click,
-            'drilldown': self.drilldown,
-            'drillup': self.drillup,
-            'drillupall': self.drillupall,
-            'exportData': self.export_data,
-            'fullscreenClose': self.fullscreen_close,
-            'fullscreenOpen': self.fullscreen_open,
-            'load': self.load,
-            'redraw': self.redraw,
-            'render': self.render,
-            'selection': self.selection
+            "addSeries": self.add_series,
+            "afterPrint": self.after_print,
+            "beforePrint": self.before_print,
+            "click": self.click,
+            "drilldown": self.drilldown,
+            "drillup": self.drillup,
+            "drillupall": self.drillupall,
+            "exportData": self.export_data,
+            "fullscreenClose": self.fullscreen_close,
+            "fullscreenOpen": self.fullscreen_open,
+            "load": self.load,
+            "redraw": self.redraw,
+            "render": self.render,
+            "selection": self.selection,
         }
 
         return untrimmed
@@ -348,17 +348,17 @@ class BreadcrumbEvents(HighchartsMeta):
         self._click = None
 
         for attribute in dir(self):
-            if attribute.startswith('_') and not attribute.startswith('__'):
+            if attribute.startswith("_") and not attribute.startswith("__"):
                 non_private_name = attribute[1:]
                 setattr(self, non_private_name, kwargs.get(non_private_name, None))
 
     @property
     def _dot_path(self) -> Optional[str]:
         """The dot-notation path to the options key for the current class.
-        
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return 'breadcrumb.events'
+        return "breadcrumb.events"
 
     @property
     def click(self) -> Optional[CallbackFunction]:
@@ -387,18 +387,20 @@ class BreadcrumbEvents(HighchartsMeta):
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
-        kwargs = {
-            'click': as_dict.get('click', None)
-        }
+        kwargs = {"click": as_dict.get("click", None)}
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
-        untrimmed = {
-            'click': self.click
-        }
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
+        untrimmed = {"click": self.click}
 
         return untrimmed
+
+
+class CreditsEvents(BreadcrumbEvents):
+    """Event listeners for Credits."""
+
+    pass
 
 
 class NavigationEvents(HighchartsMeta):
@@ -411,17 +413,17 @@ class NavigationEvents(HighchartsMeta):
         self._show_popup = None
 
         for attribute in dir(self):
-            if attribute.startswith('_') and not attribute.startswith('__'):
+            if attribute.startswith("_") and not attribute.startswith("__"):
                 non_private_name = attribute[1:]
                 setattr(self, non_private_name, kwargs.get(non_private_name, None))
 
     @property
     def _dot_path(self) -> Optional[str]:
         """The dot-notation path to the options key for the current class.
-        
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return 'navigation.events'
+        return "navigation.events"
 
     @property
     def close_popup(self) -> Optional[CallbackFunction]:
@@ -480,20 +482,20 @@ class NavigationEvents(HighchartsMeta):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'close_popup': as_dict.get('closePopup', None),
-            'deselect_button': as_dict.get('deselectButton', None),
-            'select_button': as_dict.get('selectButton', None),
-            'show_popup': as_dict.get('showPopup', None)
+            "close_popup": as_dict.get("closePopup", None),
+            "deselect_button": as_dict.get("deselectButton", None),
+            "select_button": as_dict.get("selectButton", None),
+            "show_popup": as_dict.get("showPopup", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'closePopup': self.close_popup,
-            'deselectButton': self.deselect_button,
-            'selectButton': self.select_button,
-            'showPopup': self.show_popup
+            "closePopup": self.close_popup,
+            "deselectButton": self.deselect_button,
+            "selectButton": self.select_button,
+            "showPopup": self.show_popup,
         }
 
         return untrimmed
@@ -514,24 +516,24 @@ class PointEvents(HighchartsMeta):
         self._unselect = None
         self._update = None
 
-        self.click = kwargs.get('click', None)
-        self.drag = kwargs.get('drag', None)
-        self.drag_start = kwargs.get('drag_start', None)
-        self.drop = kwargs.get('drop', None)
-        self.mouse_out = kwargs.get('mouse_out', None)
-        self.mouse_over = kwargs.get('mouse_over', None)
-        self.remove = kwargs.get('remove', None)
-        self.select = kwargs.get('select', None)
-        self.unselect = kwargs.get('unselect', None)
-        self.update = kwargs.get('update', None)
+        self.click = kwargs.get("click", None)
+        self.drag = kwargs.get("drag", None)
+        self.drag_start = kwargs.get("drag_start", None)
+        self.drop = kwargs.get("drop", None)
+        self.mouse_out = kwargs.get("mouse_out", None)
+        self.mouse_over = kwargs.get("mouse_over", None)
+        self.remove = kwargs.get("remove", None)
+        self.select = kwargs.get("select", None)
+        self.unselect = kwargs.get("unselect", None)
+        self.update = kwargs.get("update", None)
 
     @property
     def _dot_path(self) -> Optional[str]:
         """The dot-notation path to the options key for the current class.
-        
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return 'plotOptions.series.point.events'
+        return "plotOptions.series.point.events"
 
     @property
     def click(self) -> Optional[CallbackFunction]:
@@ -710,32 +712,32 @@ class PointEvents(HighchartsMeta):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'click': as_dict.get('click', None),
-            'drag': as_dict.get('drag', None),
-            'drag_start': as_dict.get('dragStart', None),
-            'drop': as_dict.get('drop', None),
-            'mouse_out': as_dict.get('mouseOut', None),
-            'mouse_over': as_dict.get('mouseOver', None),
-            'remove': as_dict.get('remove', None),
-            'select': as_dict.get('select', None),
-            'unselect': as_dict.get('unselect', None),
-            'update': as_dict.get('update', None)
+            "click": as_dict.get("click", None),
+            "drag": as_dict.get("drag", None),
+            "drag_start": as_dict.get("dragStart", None),
+            "drop": as_dict.get("drop", None),
+            "mouse_out": as_dict.get("mouseOut", None),
+            "mouse_over": as_dict.get("mouseOver", None),
+            "remove": as_dict.get("remove", None),
+            "select": as_dict.get("select", None),
+            "unselect": as_dict.get("unselect", None),
+            "update": as_dict.get("update", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'click': self.click,
-            'drag': self.drag,
-            'dragStart': self.drag_start,
-            'drop': self.drop,
-            'mouseOut': self.mouse_out,
-            'mouseOver': self.mouse_over,
-            'remove': self.remove,
-            'select': self.select,
-            'unselect': self.unselect,
-            'update': self.update
+            "click": self.click,
+            "drag": self.drag,
+            "dragStart": self.drag_start,
+            "drop": self.drop,
+            "mouseOut": self.mouse_out,
+            "mouseOver": self.mouse_over,
+            "remove": self.remove,
+            "select": self.select,
+            "unselect": self.unselect,
+            "update": self.update,
         }
 
         return untrimmed
@@ -754,14 +756,14 @@ class SeriesEvents(HighchartsMeta):
         self._mouse_over = None
         self._show = None
 
-        self.after_animate = kwargs.get('after_animate', None)
-        self.checkbox_click = kwargs.get('checkbox_click', None)
-        self.click = kwargs.get('click', None)
-        self.hide = kwargs.get('hide', None)
-        self.legend_item_click = kwargs.get('legend_item_click', None)
-        self.mouse_out = kwargs.get('mouse_out', None)
-        self.mouse_over = kwargs.get('mouse_over', None)
-        self.show = kwargs.get('show', None)
+        self.after_animate = kwargs.get("after_animate", None)
+        self.checkbox_click = kwargs.get("checkbox_click", None)
+        self.click = kwargs.get("click", None)
+        self.hide = kwargs.get("hide", None)
+        self.legend_item_click = kwargs.get("legend_item_click", None)
+        self.mouse_out = kwargs.get("mouse_out", None)
+        self.mouse_over = kwargs.get("mouse_over", None)
+        self.show = kwargs.get("show", None)
 
     @property
     def after_animate(self) -> Optional[CallbackFunction]:
@@ -898,28 +900,28 @@ class SeriesEvents(HighchartsMeta):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'after_animate': as_dict.get('afterAnimate', None),
-            'checkbox_click': as_dict.get('checkboxClick', None),
-            'click': as_dict.get('click', None),
-            'hide': as_dict.get('hide', None),
-            'legend_item_click': as_dict.get('legendItemClick', None),
-            'mouse_out': as_dict.get('mouseOut', None),
-            'mouse_over': as_dict.get('mouseOver', None),
-            'show': as_dict.get('show', None)
+            "after_animate": as_dict.get("afterAnimate", None),
+            "checkbox_click": as_dict.get("checkboxClick", None),
+            "click": as_dict.get("click", None),
+            "hide": as_dict.get("hide", None),
+            "legend_item_click": as_dict.get("legendItemClick", None),
+            "mouse_out": as_dict.get("mouseOut", None),
+            "mouse_over": as_dict.get("mouseOver", None),
+            "show": as_dict.get("show", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'afterAnimate': self.after_animate,
-            'checkboxClick': self.checkbox_click,
-            'click': self.click,
-            'hide': self.hide,
-            'legendItemClick': self.legend_item_click,
-            'mouseOut': self.mouse_out,
-            'mouseOver': self.mouse_over,
-            'show': self.show
+            "afterAnimate": self.after_animate,
+            "checkboxClick": self.checkbox_click,
+            "click": self.click,
+            "hide": self.hide,
+            "legendItemClick": self.legend_item_click,
+            "mouseOut": self.mouse_out,
+            "mouseOver": self.mouse_over,
+            "show": self.show,
         }
 
         return untrimmed
@@ -927,22 +929,22 @@ class SeriesEvents(HighchartsMeta):
 
 class SimulationEvents(SeriesEvents):
     """Event listeners for series that involve simulation / layout.
-    
+
     .. versionadded:: Highcharts Core for Python v.1.1.0 / Highcharts Core (JS) v.11.0.0
-    
+
     """
-    
+
     def __init__(self, **kwargs):
         self._after_simulation = None
-        
-        self.after_simulation = kwargs.get('after_simulation', None)
-        
+
+        self.after_simulation = kwargs.get("after_simulation", None)
+
         super().__init__(**kwargs)
-        
+
     @property
     def after_simulation(self) -> Optional[CallbackFunction]:
         """Event which fires after the simulation is ended and the layout is stable.
-        
+
         :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
           :obj:`None <python:None>`
         """
@@ -956,30 +958,29 @@ class SimulationEvents(SeriesEvents):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'after_animate': as_dict.get('afterAnimate', None),
-            'checkbox_click': as_dict.get('checkboxClick', None),
-            'click': as_dict.get('click', None),
-            'hide': as_dict.get('hide', None),
-            'legend_item_click': as_dict.get('legendItemClick', None),
-            'mouse_out': as_dict.get('mouseOut', None),
-            'mouse_over': as_dict.get('mouseOver', None),
-            'show': as_dict.get('show', None),
-            
-            'after_simulation': as_dict.get('afterSimulation', None),
+            "after_animate": as_dict.get("afterAnimate", None),
+            "checkbox_click": as_dict.get("checkboxClick", None),
+            "click": as_dict.get("click", None),
+            "hide": as_dict.get("hide", None),
+            "legend_item_click": as_dict.get("legendItemClick", None),
+            "mouse_out": as_dict.get("mouseOut", None),
+            "mouse_over": as_dict.get("mouseOver", None),
+            "show": as_dict.get("show", None),
+            "after_simulation": as_dict.get("afterSimulation", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'afterSimulation': self.after_simulation,
+            "afterSimulation": self.after_simulation,
         }
-        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls) or {}
+        parent_as_dict = super()._to_untrimmed_dict(in_cls=in_cls) or {}
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]
 
         return untrimmed
-    
+
 
 class ClusterEvents(HighchartsMeta):
     """General event handlers for marker clusters."""
@@ -987,7 +988,7 @@ class ClusterEvents(HighchartsMeta):
     def __init__(self, **kwargs):
         self._drill_to_cluster = None
 
-        self.drill_to_cluster = kwargs.get('drill_to_cluster', None)
+        self.drill_to_cluster = kwargs.get("drill_to_cluster", None)
 
     @property
     def drill_to_cluster(self) -> Optional[CallbackFunction]:
@@ -1009,14 +1010,10 @@ class ClusterEvents(HighchartsMeta):
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
-        return {
-            'drill_to_cluster': as_dict.get('drillToCluster', None)
-        }
+        return {"drill_to_cluster": as_dict.get("drillToCluster", None)}
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
-        untrimmed = {
-            'drillToCluster': self.drill_to_cluster
-        }
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
+        untrimmed = {"drillToCluster": self.drill_to_cluster}
 
         return untrimmed
 
@@ -1032,12 +1029,12 @@ class AxisEvents(HighchartsMeta):
         self._point_in_break = None
         self._set_extremes = None
 
-        self.after_breaks = kwargs.get('after_breaks', None)
-        self.after_set_extremes = kwargs.get('after_set_extremes', None)
-        self.point_break = kwargs.get('point_break', None)
-        self.point_break_out = kwargs.get('point_break_out', None)
-        self.point_in_break = kwargs.get('point_in_break', None)
-        self.set_extremes = kwargs.get('set_extremes', None)
+        self.after_breaks = kwargs.get("after_breaks", None)
+        self.after_set_extremes = kwargs.get("after_set_extremes", None)
+        self.point_break = kwargs.get("point_break", None)
+        self.point_break_out = kwargs.get("point_break_out", None)
+        self.point_in_break = kwargs.get("point_in_break", None)
+        self.set_extremes = kwargs.get("set_extremes", None)
 
     @property
     def after_breaks(self) -> Optional[CallbackFunction]:
@@ -1095,12 +1092,12 @@ class AxisEvents(HighchartsMeta):
     @property
     def point_break_out(self) -> Optional[CallbackFunction]:
         """An event fired when a point is outside a break after zoom.
-        
+
         :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>`
           or :obj:`None <python:None>`
         """
         return self._point_break_out
-    
+
     @point_break_out.setter
     def point_break_out(self, value):
         self._point_break_out = value
@@ -1146,24 +1143,24 @@ class AxisEvents(HighchartsMeta):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'after_breaks': as_dict.get('afterBreaks', None),
-            'after_set_extremes': as_dict.get('afterSetExtremes', None),
-            'point_break': as_dict.get('pointBreak', None),
-            'point_break_out': as_dict.get('pointBreakOut', None),
-            'point_in_break': as_dict.get('pointInBreak', None),
-            'set_extremes': as_dict.get('setExtremes', None)
+            "after_breaks": as_dict.get("afterBreaks", None),
+            "after_set_extremes": as_dict.get("afterSetExtremes", None),
+            "point_break": as_dict.get("pointBreak", None),
+            "point_break_out": as_dict.get("pointBreakOut", None),
+            "point_in_break": as_dict.get("pointInBreak", None),
+            "set_extremes": as_dict.get("setExtremes", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'afterBreaks': self.after_breaks,
-            'afterSetExtremes': self.after_set_extremes,
-            'pointBreak': self.point_break,
-            'pointBreakOut': self.point_break_out,
-            'pointInBreak': self.point_in_break,
-            'setExtremes': self.set_extremes
+            "afterBreaks": self.after_breaks,
+            "afterSetExtremes": self.after_set_extremes,
+            "pointBreak": self.point_break,
+            "pointBreakOut": self.point_break_out,
+            "pointInBreak": self.point_in_break,
+            "setExtremes": self.set_extremes,
         }
 
         return untrimmed
@@ -1178,10 +1175,10 @@ class MouseEvents(HighchartsMeta):
         self._mouseout = None
         self._mouseover = None
 
-        self.click = kwargs.get('click', None)
-        self.mousemove = kwargs.get('mousemove', None)
-        self.mouseout = kwargs.get('mouseout', None)
-        self.mouseover = kwargs.get('mouseover', None)
+        self.click = kwargs.get("click", None)
+        self.mousemove = kwargs.get("mousemove", None)
+        self.mouseout = kwargs.get("mouseout", None)
+        self.mouseover = kwargs.get("mouseover", None)
 
     @property
     def click(self) -> Optional[CallbackFunction]:
@@ -1244,20 +1241,20 @@ class MouseEvents(HighchartsMeta):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'click': as_dict.get('click', None),
-            'mousemove': as_dict.get('mousemove', None),
-            'mouseout': as_dict.get('mouseout', None),
-            'mouseover': as_dict.get('mouseover', None)
+            "click": as_dict.get("click", None),
+            "mousemove": as_dict.get("mousemove", None),
+            "mouseout": as_dict.get("mouseout", None),
+            "mouseover": as_dict.get("mouseover", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'click': self.click,
-            'mousemove': self.mousemove,
-            'mouseout': self.mouseout,
-            'mouseover': self.mouseover
+            "click": self.click,
+            "mousemove": self.mousemove,
+            "mouseout": self.mouseout,
+            "mouseover": self.mouseover,
         }
 
         return untrimmed
@@ -1265,7 +1262,7 @@ class MouseEvents(HighchartsMeta):
 
 class SonificationEvents(HighchartsMeta):
     """Event handlers for sonification."""
-    
+
     def __init__(self, **kwargs):
         self._after_update = None
         self._before_play = None
@@ -1276,29 +1273,29 @@ class SonificationEvents(HighchartsMeta):
         self._on_series_end = None
         self._on_series_start = None
         self._on_stop = None
-        
-        self.after_update = kwargs.get('after_update', None)
-        self.before_play = kwargs.get('before_play', None)
-        self.before_update = kwargs.get('before_update', None)
-        self.on_boundary_hit = kwargs.get('on_boundary_hit', None)
-        self.on_end = kwargs.get('on_end', None)
-        self.on_play = kwargs.get('on_play', None)
-        self.on_series_end = kwargs.get('on_series_end', None)
-        self.on_series_start = kwargs.get('on_series_start', None)
-        self.on_stop = kwargs.get('on_stop', None)
+
+        self.after_update = kwargs.get("after_update", None)
+        self.before_play = kwargs.get("before_play", None)
+        self.before_update = kwargs.get("before_update", None)
+        self.on_boundary_hit = kwargs.get("on_boundary_hit", None)
+        self.on_end = kwargs.get("on_end", None)
+        self.on_play = kwargs.get("on_play", None)
+        self.on_series_end = kwargs.get("on_series_end", None)
+        self.on_series_start = kwargs.get("on_series_start", None)
+        self.on_stop = kwargs.get("on_stop", None)
 
     @property
     def after_update(self) -> Optional[CallbackFunction]:
         """Event (Javascript) :term:`callback function` that is called *after* updating the
         sonification.
-        
+
         A context object is passed to the function, with properties ``chart`` and ``timeline``.
-        
+
         :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
           :obj:`None <python:None>`
         """
         return self._after_update
-    
+
     @after_update.setter
     @class_sensitive(CallbackFunction)
     def after_update(self, value):
@@ -1307,14 +1304,14 @@ class SonificationEvents(HighchartsMeta):
     @property
     def before_play(self) -> Optional[CallbackFunction]:
         """Event (Javascript) :term:`callback function` that is called immediately when playback is requested.
-        
+
         A context object is passed to the function, with properties ``chart`` and ``timeline``.
-        
+
         :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
           :obj:`None <python:None>`
         """
         return self._before_play
-    
+
     @before_play.setter
     @class_sensitive(CallbackFunction)
     def before_play(self, value):
@@ -1324,14 +1321,14 @@ class SonificationEvents(HighchartsMeta):
     def before_update(self) -> Optional[CallbackFunction]:
         """Event (Javascript) :term:`callback function` that is called *before* updating the
         sonification.
-        
+
         A context object is passed to the function, with properties ``chart`` and ``timeline``.
-        
+
         :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
           :obj:`None <python:None>`
         """
         return self._before_update
-    
+
     @before_update.setter
     @class_sensitive(CallbackFunction)
     def before_update(self, value):
@@ -1341,16 +1338,16 @@ class SonificationEvents(HighchartsMeta):
     def on_boundary_hit(self) -> Optional[CallbackFunction]:
         """Event (Javascript) :term:`callback function` that is called when attempting to play an adjacent point
         or series, and there is none found. By defualt, a percussive sound is played.
-        
+
         A context object is passed to the function, with properties ``chart``, ``timeline``, and ``attemptedNext``. The
-        ``attemptedNext`` property is a boolean value that is ``true`` if the boundary hit was from trying to play the 
+        ``attemptedNext`` property is a boolean value that is ``true`` if the boundary hit was from trying to play the
         next series/point, and ``false`` if it was from trying to play the previous.
-        
+
         :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
           :obj:`None <python:None>`
         """
         return self._on_boundary_hit
-    
+
     @on_boundary_hit.setter
     @class_sensitive(CallbackFunction)
     def on_boundary_hit(self, value):
@@ -1359,15 +1356,15 @@ class SonificationEvents(HighchartsMeta):
     @property
     def on_end(self) -> Optional[CallbackFunction]:
         """Event (Javascript) :term:`callback function` that is called when playback is completed.
-        
+
         A context object is passed to the function, with properties ``chart``, ``timeline``, and ``pointsPlayed`` where
         ``pointsPlayed`` is an array of ``Point`` objects referencing data points related to the audio events played.
-        
+
         :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
           :obj:`None <python:None>`
         """
         return self._on_end
-    
+
     @on_end.setter
     @class_sensitive(CallbackFunction)
     def on_end(self, value):
@@ -1376,14 +1373,14 @@ class SonificationEvents(HighchartsMeta):
     @property
     def on_play(self) -> Optional[CallbackFunction]:
         """Event (Javascript) :term:`callback function` that is called on play.
-        
+
         A context object is passed to the function, with properties ``chart`` and ``timeline``.
-        
+
         :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
           :obj:`None <python:None>`
         """
         return self._on_play
-    
+
     @on_play.setter
     @class_sensitive(CallbackFunction)
     def on_play(self, value):
@@ -1392,14 +1389,14 @@ class SonificationEvents(HighchartsMeta):
     @property
     def on_series_end(self) -> Optional[CallbackFunction]:
         """Event (Javascript) :term:`callback function` that is called when finished playing a series.
-        
+
         A context object is passed to the function, with properties ``series`` and ``timeline``.
-        
+
         :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
           :obj:`None <python:None>`
         """
         return self._on_series_end
-    
+
     @on_series_end.setter
     @class_sensitive(CallbackFunction)
     def on_series_end(self, value):
@@ -1408,14 +1405,14 @@ class SonificationEvents(HighchartsMeta):
     @property
     def on_series_start(self) -> Optional[CallbackFunction]:
         """Event (Javascript) :term:`callback function` that is called when starting to play a series.
-        
+
         A context object is passed to the function, with properties ``series`` and ``timeline``.
-        
+
         :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
           :obj:`None <python:None>`
         """
         return self._on_series_start
-    
+
     @on_series_start.setter
     @class_sensitive(CallbackFunction)
     def on_series_start(self, value):
@@ -1425,15 +1422,15 @@ class SonificationEvents(HighchartsMeta):
     def on_stop(self) -> Optional[CallbackFunction]:
         """Event (Javascript) :term:`callback function` that is called on pause, cancel, or if playback is
         completed.
-        
+
         A context object is passed to the function, with properties ``chart``, ``timeline``, and ``pointsPlayed`` where
         ``pointsPlayed`` is an array of ``Point`` objects referencing data points related to the audio events played.
-        
+
         :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
           :obj:`None <python:None>`
         """
         return self._on_stop
-    
+
     @on_stop.setter
     @class_sensitive(CallbackFunction)
     def on_stop(self, value):
@@ -1442,30 +1439,30 @@ class SonificationEvents(HighchartsMeta):
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'after_update': as_dict.get('afterUpdate', None),
-            'before_play': as_dict.get('beforePlay', None),
-            'before_update': as_dict.get('beforeUpdate', None),
-            'on_boundary_hit': as_dict.get('onBoundaryHit', None),
-            'on_end': as_dict.get('onEnd', None),
-            'on_play': as_dict.get('onPlay', None),
-            'on_series_end': as_dict.get('onSeriesEnd', None),
-            'on_series_start': as_dict.get('onSeriesStart', None),
-            'on_stop': as_dict.get('onStop', None),
+            "after_update": as_dict.get("afterUpdate", None),
+            "before_play": as_dict.get("beforePlay", None),
+            "before_update": as_dict.get("beforeUpdate", None),
+            "on_boundary_hit": as_dict.get("onBoundaryHit", None),
+            "on_end": as_dict.get("onEnd", None),
+            "on_play": as_dict.get("onPlay", None),
+            "on_series_end": as_dict.get("onSeriesEnd", None),
+            "on_series_start": as_dict.get("onSeriesStart", None),
+            "on_stop": as_dict.get("onStop", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'afterUpdate': self.after_update,
-            'beforePlay': self.before_play,
-            'beforeUpdate': self.before_update,
-            'onBoundaryHit': self.on_boundary_hit,
-            'onEnd': self.on_end,
-            'onPlay': self.on_play,
-            'onSeriesEnd': self.on_series_end,
-            'onSeriesStart': self.on_series_start,
-            'onStop': self.on_stop,
+            "afterUpdate": self.after_update,
+            "beforePlay": self.before_play,
+            "beforeUpdate": self.before_update,
+            "onBoundaryHit": self.on_boundary_hit,
+            "onEnd": self.on_end,
+            "onPlay": self.on_play,
+            "onSeriesEnd": self.on_series_end,
+            "onSeriesStart": self.on_series_start,
+            "onStop": self.on_stop,
         }
 
         return untrimmed
