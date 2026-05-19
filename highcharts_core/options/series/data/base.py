@@ -363,25 +363,31 @@ class DataBase(DataCore):
 
     @property
     def requires_js_object(self) -> bool:
-        """Indicates whether or not the data point *must* be serialized to a JS literal 
+        """Indicates whether or not the data point *must* be serialized to a JS literal
         object or whether it can be serialized to a primitive array.
-        
+
         :returns: ``True`` if the data point *must* be serialized to a JS literal object.
           ``False`` if it can be serialized to an array.
         :rtype: :class:`bool <python:bool>`
         """
-        from_array_props = [utility_functions.to_camelCase(x)
-                            for x in self._get_props_from_array()]
-        
-        as_dict = self.to_dict()
-        trimmed_dict = self.trim_dict(as_dict)
-        for prop in from_array_props:
-            if prop in trimmed_dict:
-                del trimmed_dict[prop]
+        from_array_props = {utility_functions.to_camelCase(x)
+                            for x in self._get_props_from_array()}
 
-        if trimmed_dict:
+        untrimmed = self._to_untrimmed_dict()
+        for key, value in untrimmed.items():
+            if key in from_array_props:
+                continue
+            if value is None:
+                continue
+            # Filter out empty objects whose trimmed dict would be empty
+            if hasattr(value, '_to_untrimmed_dict'):
+                inner = value._to_untrimmed_dict()
+                if not any(v is not None for v in inner.values()):
+                    continue
+            elif hasattr(value, '__len__') and not isinstance(value, str) and len(value) == 0:
+                continue
             return True
-        
+
         return False
 
     def populate_from_array(self, value):

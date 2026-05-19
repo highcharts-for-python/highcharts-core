@@ -59,48 +59,59 @@ class TreemapOptions(GenericTypeOptions):
         self._levels = None
 
         self._alternate_starting_direction = None
+        self._group_padding = None
+        self._headers = None
         self._interact_by_leaf = None
         self._layout_algorithm = None
         self._layout_starting_direction = None
+        self._node_size_by = None
         self._sort_index = None
+        self._traverse_to_leaf = None
+        self._zoom_enabled = None
 
-        self.animation_limit = kwargs.get('animation_limit', None)
-        self.boost_blending = kwargs.get('boost_blending', None)
-        self.boost_threshold = kwargs.get('boost_threshold', None)
-        self.color_axis = kwargs.get('color_axis', None)
-        self.color_key = kwargs.get('color_key', None)
-        self.colors = kwargs.get('colors', None)
-        self.crop_threshold = kwargs.get('crop_threshold', None)
-        self.find_nearest_point_by = kwargs.get('find_nearest_point_by', None)
-        self.get_extremes_from_all = kwargs.get('get_extremes_from_all', None)
-        self.ignore_hidden_point = kwargs.get('ignore_hidden_point', None)
-        self.linecap = kwargs.get('linecap', None)
-        self.line_width = kwargs.get('line_width', None)
-        self.negative_color = kwargs.get('negative_color', None)
-        self.point_interval = kwargs.get('point_interval', None)
-        self.point_interval_unit = kwargs.get('point_interval_unit', None)
-        self.point_start = kwargs.get('point_start', None)
-        self.relative_x_value = kwargs.get('relative_x_value', None)
-        self.soft_threshold = kwargs.get('soft_threshold', None)
-        self.stacking = kwargs.get('stacking', None)
-        self.step = kwargs.get('step', None)
-        self.zone_axis = kwargs.get('zone_axis', None)
-        self.zones = kwargs.get('zones', None)
+        self.animation_limit = kwargs.get("animation_limit", None)
+        self.boost_blending = kwargs.get("boost_blending", None)
+        self.boost_threshold = kwargs.get("boost_threshold", None)
+        self.color_axis = kwargs.get("color_axis", None)
+        self.color_key = kwargs.get("color_key", None)
+        self.colors = kwargs.get("colors", None)
+        self.crop_threshold = kwargs.get("crop_threshold", None)
+        self.find_nearest_point_by = kwargs.get("find_nearest_point_by", None)
+        self.get_extremes_from_all = kwargs.get("get_extremes_from_all", None)
+        self.ignore_hidden_point = kwargs.get("ignore_hidden_point", None)
+        self.linecap = kwargs.get("linecap", None)
+        self.line_width = kwargs.get("line_width", None)
+        self.negative_color = kwargs.get("negative_color", None)
+        self.point_interval = kwargs.get("point_interval", None)
+        self.point_interval_unit = kwargs.get("point_interval_unit", None)
+        self.point_start = kwargs.get("point_start", None)
+        self.relative_x_value = kwargs.get("relative_x_value", None)
+        self.soft_threshold = kwargs.get("soft_threshold", None)
+        self.stacking = kwargs.get("stacking", None)
+        self.step = kwargs.get("step", None)
+        self.zone_axis = kwargs.get("zone_axis", None)
+        self.zones = kwargs.get("zones", None)
 
-        self.color_index = kwargs.get('color_index', None)
-        self.crisp = kwargs.get('crisp', None)
-        self.allow_traversing_tree = kwargs.get('allow_traversing_tree', None)
-        self.breadcrumbs = kwargs.get('breadcrumbs', None)
-        self.color_by_point = kwargs.get('color_by_point', None)
-        self.level_is_constant = kwargs.get('level_is_constant', None)
-        self.levels = kwargs.get('levels', None)
+        self.color_index = kwargs.get("color_index", None)
+        self.crisp = kwargs.get("crisp", None)
+        self.allow_traversing_tree = kwargs.get("allow_traversing_tree", None)
+        self.breadcrumbs = kwargs.get("breadcrumbs", None)
+        self.color_by_point = kwargs.get("color_by_point", None)
+        self.level_is_constant = kwargs.get("level_is_constant", None)
+        self.levels = kwargs.get("levels", None)
 
-        self.alternate_starting_direction = kwargs.get('alternate_starting_direction',
-                                                       None)
-        self.interact_by_leaf = kwargs.get('interact_by_leaf', None)
-        self.layout_algorithm = kwargs.get('layout_algorithm', None)
-        self.layout_starting_direction = kwargs.get('layout_starting_direction', None)
-        self.sort_index = kwargs.get('sort_index', None)
+        self.alternate_starting_direction = kwargs.get(
+            "alternate_starting_direction", None
+        )
+        self.group_padding = kwargs.get("group_padding", None)
+        self.headers = kwargs.get("headers", None)
+        self.interact_by_leaf = kwargs.get("interact_by_leaf", None)
+        self.layout_algorithm = kwargs.get("layout_algorithm", None)
+        self.layout_starting_direction = kwargs.get("layout_starting_direction", None)
+        self.node_size_by = kwargs.get("node_size_by", None)
+        self.sort_index = kwargs.get("sort_index", None)
+        self.traverse_to_leaf = kwargs.get("traverse_to_leaf", None)
+        self.zoom_enabled = kwargs.get("zoom_enabled", None)
 
         super().__init__(**kwargs)
 
@@ -153,12 +164,12 @@ class TreemapOptions(GenericTypeOptions):
 
     @animation_limit.setter
     def animation_limit(self, value):
-        if value == float('inf'):
-            self._animation_limit = float('inf')
+        if value == float("inf"):
+            self._animation_limit = float("inf")
         else:
-            self._animation_limit = validators.numeric(value,
-                                                       allow_empty = True,
-                                                       minimum = 0)
+            self._animation_limit = validators.numeric(
+                value, allow_empty=True, minimum=0
+            )
 
     @property
     def boost_blending(self) -> Optional[str]:
@@ -171,7 +182,7 @@ class TreemapOptions(GenericTypeOptions):
 
     @boost_blending.setter
     def boost_blending(self, value):
-        self._boost_blending = validators.string(value, allow_empty = True)
+        self._boost_blending = validators.string(value, allow_empty=True)
 
     @property
     def boost_threshold(self) -> Optional[int]:
@@ -198,9 +209,7 @@ class TreemapOptions(GenericTypeOptions):
 
     @boost_threshold.setter
     def boost_threshold(self, value):
-        self._boost_threshold = validators.integer(value,
-                                                   allow_empty = True,
-                                                   minimum = 0)
+        self._boost_threshold = validators.integer(value, allow_empty=True, minimum=0)
 
     @property
     def breadcrumbs(self) -> Optional[BreadcrumbOptions]:
@@ -240,8 +249,7 @@ class TreemapOptions(GenericTypeOptions):
             try:
                 self._color_axis = validators.string(value)
             except TypeError:
-                self._color_axis = validators.integer(value,
-                                                      minimum = 0)
+                self._color_axis = validators.integer(value, minimum=0)
 
     @property
     def color_by_point(self) -> Optional[bool]:
@@ -276,9 +284,7 @@ class TreemapOptions(GenericTypeOptions):
 
     @color_index.setter
     def color_index(self, value):
-        self._color_index = validators.integer(value,
-                                               allow_empty = True,
-                                               minimum = 0)
+        self._color_index = validators.integer(value, allow_empty=True, minimum=0)
 
     @property
     def color_key(self) -> Optional[str]:
@@ -296,7 +302,7 @@ class TreemapOptions(GenericTypeOptions):
 
     @color_key.setter
     def color_key(self, value):
-        self._color_key = validators.string(value, allow_empty = True)
+        self._color_key = validators.string(value, allow_empty=True)
 
     @property
     def colors(self) -> Optional[List[str | Gradient | Pattern]]:
@@ -358,9 +364,7 @@ class TreemapOptions(GenericTypeOptions):
 
     @crop_threshold.setter
     def crop_threshold(self, value):
-        self._crop_threshold = validators.integer(value,
-                                                   allow_empty = True,
-                                                   minimum = 0)
+        self._crop_threshold = validators.integer(value, allow_empty=True, minimum=0)
 
     @property
     def find_nearest_point_by(self) -> Optional[str]:
@@ -380,7 +384,7 @@ class TreemapOptions(GenericTypeOptions):
 
     @find_nearest_point_by.setter
     def find_nearest_point_by(self, value):
-        self._find_nearest_point_by = validators.string(value, allow_empty = True)
+        self._find_nearest_point_by = validators.string(value, allow_empty=True)
 
     @property
     def get_extremes_from_all(self) -> Optional[bool]:
@@ -402,6 +406,43 @@ class TreemapOptions(GenericTypeOptions):
             self._get_extremes_from_all = None
         else:
             self._get_extremes_from_all = bool(value)
+
+    @property
+    def group_padding(self) -> Optional[int | float | Decimal]:
+        """Group padding for parent elements, expressed in pixels.
+
+        .. seealso::
+
+          :meth:`TreemapOptions.node_size_by` for how leaf nodes' size is affected
+          by group padding.
+
+        :rtype: Number or :obj:`None <python:None>`
+        """
+        return self._group_padding
+
+    @group_padding.setter
+    def group_padding(self, value):
+        self._group_padding = validators.numeric(value, allow_empty=True)
+
+    @property
+    def headers(self) -> Optional[bool]:
+        """If ``True``, indicates that the data label should act as a group-level header.
+        Defaults to ``False``.
+
+        .. note::
+
+          For leaf nodes, headers are not supported and the data label will be rendered inside.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._headers
+
+    @headers.setter
+    def headers(self, value):
+        if value is None:
+            self._headers = None
+        else:
+            self._headers = bool(value)
 
     @property
     def ignore_hidden_point(self) -> Optional[bool]:
@@ -466,7 +507,7 @@ class TreemapOptions(GenericTypeOptions):
 
     @layout_algorithm.setter
     def layout_algorithm(self, value):
-        self._layout_algorithm = validators.variable_name(value, allow_empty = True)
+        self._layout_algorithm = validators.variable_name(value, allow_empty=True)
 
     @property
     def layout_starting_direction(self) -> Optional[str]:
@@ -489,10 +530,12 @@ class TreemapOptions(GenericTypeOptions):
         else:
             value = validators.string(value)
             value = value.lower()
-            if value not in ['vertical', 'horizontal']:
-                raise errors.HighchartsError(f'layout_starting_direction expects either '
-                                             f'"vertical" or "horizontal". Received: '
-                                             f'{value}')
+            if value not in ["vertical", "horizontal"]:
+                raise errors.HighchartsError(
+                    f"layout_starting_direction expects either "
+                    f'"vertical" or "horizontal". Received: '
+                    f"{value}"
+                )
 
             self._layout_starting_direction = value
 
@@ -524,7 +567,7 @@ class TreemapOptions(GenericTypeOptions):
         return self._levels
 
     @levels.setter
-    @class_sensitive(TreemapLevelOptions, force_iterable = True)
+    @class_sensitive(TreemapLevelOptions, force_iterable=True)
     def levels(self, value):
         self._levels = value
 
@@ -540,7 +583,7 @@ class TreemapOptions(GenericTypeOptions):
 
     @linecap.setter
     def linecap(self, value):
-        self._linecap = validators.string(value, allow_empty = True)
+        self._linecap = validators.string(value, allow_empty=True)
 
     @property
     def line_width(self) -> Optional[int | float | Decimal]:
@@ -552,9 +595,7 @@ class TreemapOptions(GenericTypeOptions):
 
     @line_width.setter
     def line_width(self, value):
-        self._line_width = validators.numeric(value,
-                                              allow_empty = True,
-                                              minimum = 0)
+        self._line_width = validators.numeric(value, allow_empty=True, minimum=0)
 
     @property
     def negative_color(self) -> Optional[str | Gradient | Pattern]:
@@ -574,7 +615,36 @@ class TreemapOptions(GenericTypeOptions):
     @negative_color.setter
     def negative_color(self, value):
         from highcharts_core import utility_functions
+
         self._negative_color = utility_functions.validate_color(value)
+
+    @property
+    def node_size_by(self) -> Optional[str]:
+        """Determines how to calculate the size of a leaf node when a header or group padding is present.
+
+        Accepts:
+
+          * ``'leaf'``, which expands the group to make room for headers and padding to preserve
+            relative sizes between leaves
+          * ``'group'``, which fits leaves naively into the remaining area after the header and padding
+            are subtracted
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._node_size_by
+
+    @node_size_by.setter
+    def node_size_by(self, value):
+        if not value:
+            value = None
+        else:
+            value = value.lower()
+            if value not in ["leaf", "group"]:
+                raise errors.HighchartsError(
+                    f"node_size_by expects either 'leaf' or 'group'. Received: {value}"
+                )
+
+        self._node_size_by = value
 
     @property
     def point_interval(self) -> Optional[int | float | Decimal]:
@@ -608,9 +678,7 @@ class TreemapOptions(GenericTypeOptions):
 
     @point_interval.setter
     def point_interval(self, value):
-        self._point_interval = validators.numeric(value,
-                                                  allow_empty = True,
-                                                  minimum = 0)
+        self._point_interval = validators.numeric(value, allow_empty=True, minimum=0)
 
     @property
     def point_interval_unit(self) -> Optional[str]:
@@ -635,7 +703,7 @@ class TreemapOptions(GenericTypeOptions):
 
     @point_interval_unit.setter
     def point_interval_unit(self, value):
-        self._point_interval_unit = validators.string(value, allow_empty = True)
+        self._point_interval_unit = validators.string(value, allow_empty=True)
 
     @property
     def point_start(self) -> Optional[int | float | Decimal]:
@@ -656,7 +724,7 @@ class TreemapOptions(GenericTypeOptions):
 
     @point_start.setter
     def point_start(self, value):
-        self._point_start = validators.numeric(value, allow_empty = True)
+        self._point_start = validators.numeric(value, allow_empty=True)
 
     @property
     def relative_x_value(self) -> Optional[bool]:
@@ -715,9 +783,7 @@ class TreemapOptions(GenericTypeOptions):
 
     @sort_index.setter
     def sort_index(self, value):
-        self._sort_index = validators.integer(value,
-                                              allow_empty = True,
-                                              minimum = 0)
+        self._sort_index = validators.integer(value, allow_empty=True, minimum=0)
 
     @property
     def stacking(self) -> Optional[str]:
@@ -747,9 +813,11 @@ class TreemapOptions(GenericTypeOptions):
         else:
             value = validators.string(value)
             value = value.lower()
-            if value not in ['normal', 'percent', 'stream', 'overlap']:
-                raise errors.HighchartsValueError(f'stacking expects a valid stacking '
-                                                  f'value. However, received: {value}')
+            if value not in ["normal", "percent", "stream", "overlap"]:
+                raise errors.HighchartsValueError(
+                    f"stacking expects a valid stacking "
+                    f"value. However, received: {value}"
+                )
             self._stacking = value
 
     @property
@@ -769,7 +837,42 @@ class TreemapOptions(GenericTypeOptions):
 
     @step.setter
     def step(self, value):
-        self._step = validators.string(value, allow_empty = True)
+        self._step = validators.string(value, allow_empty=True)
+
+    @property
+    def traverse_to_leaf(self) -> Optional[bool]:
+        """If ``True``, enables automatic traversing to the last child upon node interaction.
+        Defaults to ``False``.
+
+        .. tip::
+          This feature simplifies navigation by immediately focusing on the deepest layer of the
+          data structure without intermediate steps.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._traverse_to_leaf
+
+    @traverse_to_leaf.setter
+    def traverse_to_leaf(self, value):
+        if value is None:
+            self._traverse_to_leaf = None
+        else:
+            self._traverse_to_leaf = bool(value)
+
+    @property
+    def zoom_enabled(self) -> Optional[bool]:
+        """If ``True``, enables zooming in on nodes when clicking on them. Defaults to ``True``.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._zoom_enabled
+
+    @zoom_enabled.setter
+    def zoom_enabled(self, value):
+        if value is None:
+            self._zoom_enabled = None
+        else:
+            self._zoom_enabled = bool(value)
 
     @property
     def zone_axis(self) -> Optional[str]:
@@ -781,7 +884,7 @@ class TreemapOptions(GenericTypeOptions):
 
     @zone_axis.setter
     def zone_axis(self, value):
-        self._zone_axis = validators.string(value, allow_empty = True)
+        self._zone_axis = validators.string(value, allow_empty=True)
 
     @property
     def zones(self) -> Optional[List[Zone]]:
@@ -800,128 +903,139 @@ class TreemapOptions(GenericTypeOptions):
         return self._zones
 
     @zones.setter
-    @class_sensitive(Zone, force_iterable = True)
+    @class_sensitive(Zone, force_iterable=True)
     def zones(self, value):
         self._zones = value
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.get('accessibility', None),
-            'allow_point_select': as_dict.get('allowPointSelect', None),
-            'animation': as_dict.get('animation', None),
-            'class_name': as_dict.get('className', None),
-            'clip': as_dict.get('clip', None),
-            'color': as_dict.get('color', None),
-            'cursor': as_dict.get('cursor', None),
-            'custom': as_dict.get('custom', None),
-            'dash_style': as_dict.get('dashStyle', None),
-            'data_labels': as_dict.get('dataLabels', None),
-            'description': as_dict.get('description', None),
-            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
-            'events': as_dict.get('events', None),
-            'include_in_data_export': as_dict.get('includeInDataExport', None),
-            'keys': as_dict.get('keys', None),
-            'label': as_dict.get('label', None),
-            'legend_symbol': as_dict.get('legendSymbol', None),
-            'linked_to': as_dict.get('linkedTo', None),
-            'marker': as_dict.get('marker', None),
-            'on_point': as_dict.get('onPoint', None),
-            'opacity': as_dict.get('opacity', None),
-            'point': as_dict.get('point', None),
-            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
-            'selected': as_dict.get('selected', None),
-            'show_checkbox': as_dict.get('showCheckbox', None),
-            'show_in_legend': as_dict.get('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
-            'sonification': as_dict.get('sonification', None),
-            'states': as_dict.get('states', None),
-            'sticky_tracking': as_dict.get('stickyTracking', None),
-            'threshold': as_dict.get('threshold', None),
-            'tooltip': as_dict.get('tooltip', None),
-            'turbo_threshold': as_dict.get('turboThreshold', None),
-            'visible': as_dict.get('visible', None),
-
-            'animation_limit': as_dict.get('animationLimit', None),
-            'boost_blending': as_dict.get('boostBlending', None),
-            'boost_threshold': as_dict.get('boostThreshold', None),
-            'color_axis': as_dict.get('colorAxis', None),
-            'color_key': as_dict.get('colorKey', None),
-            'colors': as_dict.get('colors', None),
-            'crop_threshold': as_dict.get('cropThreshold', None),
-            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
-            'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
-            'inactive_other_points': as_dict.get('inactiveOtherPoints', None),
-            'ignore_hidden_point': as_dict.get('ignoreHiddenPoint', None),
-            'linecap': as_dict.get('linecap', None),
-            'line_width': as_dict.get('lineWidth', None),
-            'negative_color': as_dict.get('negativeColor', None),
-            'point_description_format': as_dict.get('pointDescriptionFormat', None),
-            'point_interval': as_dict.get('pointInterval', None),            'point_interval_unit': as_dict.get('pointIntervalUnit', None),
-            'point_start': as_dict.get('pointStart', None),
-            'relative_x_value': as_dict.get('relativeXValue', None),
-            'soft_threshold': as_dict.get('softThreshold', None),
-            'stacking': as_dict.get('stacking', None),
-            'step': as_dict.get('step', None),
-            'zone_axis': as_dict.get('zoneAxis', None),
-            'zones': as_dict.get('zones', None),
-
-            'color_index': as_dict.get('colorIndex', None),
-            'crisp': as_dict.get('crisp', None),
-            'allow_traversing_tree': as_dict.get('allowTraversingTree', None),
-            'breadcrumbs': as_dict.get('breadcrumbs', None),
-            'color_by_point': as_dict.get('colorByPoint', None),
-            'level_is_constant': as_dict.get('levelIsConstant', None),
-            'levels': as_dict.get('levels', None),
-
-            'alternate_starting_direction': as_dict.get('alternateStartingDirection',
-                                                        None),
-            'interact_by_leaf': as_dict.get('interactByLeaf', None),
-            'layout_algorithm': as_dict.get('layoutAlgorithm', None),
-            'layout_starting_direction': as_dict.get('layoutStartingDirection', None),
-            'sort_index': as_dict.get('sortIndex', None)
+            "accessibility": as_dict.get("accessibility", None),
+            "allow_point_select": as_dict.get("allowPointSelect", None),
+            "animation": as_dict.get("animation", None),
+            "class_name": as_dict.get("className", None),
+            "clip": as_dict.get("clip", None),
+            "color": as_dict.get("color", None),
+            "cursor": as_dict.get("cursor", None),
+            "custom": as_dict.get("custom", None),
+            "dash_style": as_dict.get("dashStyle", None),
+            "data_labels": as_dict.get("dataLabels", None),
+            "description": as_dict.get("description", None),
+            "enable_mouse_tracking": as_dict.get("enableMouseTracking", None),
+            "events": as_dict.get("events", None),
+            "include_in_data_export": as_dict.get("includeInDataExport", None),
+            "keys": as_dict.get("keys", None),
+            "label": as_dict.get("label", None),
+            "legend_symbol": as_dict.get("legendSymbol", None),
+            "linked_to": as_dict.get("linkedTo", None),
+            "marker": as_dict.get("marker", None),
+            "on_point": as_dict.get("onPoint", None),
+            "opacity": as_dict.get("opacity", None),
+            "point": as_dict.get("point", None),
+            "point_description_formatter": as_dict.get(
+                "pointDescriptionFormatter", None
+            ),
+            "selected": as_dict.get("selected", None),
+            "show_checkbox": as_dict.get("showCheckbox", None),
+            "show_in_legend": as_dict.get("showInLegend", None),
+            "skip_keyboard_navigation": as_dict.get("skipKeyboardNavigation", None),
+            "sonification": as_dict.get("sonification", None),
+            "states": as_dict.get("states", None),
+            "sticky_tracking": as_dict.get("stickyTracking", None),
+            "threshold": as_dict.get("threshold", None),
+            "tooltip": as_dict.get("tooltip", None),
+            "turbo_threshold": as_dict.get("turboThreshold", None),
+            "visible": as_dict.get("visible", None),
+            "animation_limit": as_dict.get("animationLimit", None),
+            "boost_blending": as_dict.get("boostBlending", None),
+            "boost_threshold": as_dict.get("boostThreshold", None),
+            "color_axis": as_dict.get("colorAxis", None),
+            "color_key": as_dict.get("colorKey", None),
+            "colors": as_dict.get("colors", None),
+            "crop_threshold": as_dict.get("cropThreshold", None),
+            "find_nearest_point_by": as_dict.get("findNearestPointBy", None),
+            "get_extremes_from_all": as_dict.get("getExtremesFromAll", None),
+            "inactive_other_points": as_dict.get("inactiveOtherPoints", None),
+            "ignore_hidden_point": as_dict.get("ignoreHiddenPoint", None),
+            "linecap": as_dict.get("linecap", None),
+            "line_width": as_dict.get("lineWidth", None),
+            "negative_color": as_dict.get("negativeColor", None),
+            "point_description_format": as_dict.get("pointDescriptionFormat", None),
+            "point_interval": as_dict.get("pointInterval", None),
+            "point_interval_unit": as_dict.get("pointIntervalUnit", None),
+            "point_start": as_dict.get("pointStart", None),
+            "relative_x_value": as_dict.get("relativeXValue", None),
+            "soft_threshold": as_dict.get("softThreshold", None),
+            "stacking": as_dict.get("stacking", None),
+            "step": as_dict.get("step", None),
+            "zone_axis": as_dict.get("zoneAxis", None),
+            "zones": as_dict.get("zones", None),
+            "color_index": as_dict.get("colorIndex", None),
+            "crisp": as_dict.get("crisp", None),
+            "allow_traversing_tree": as_dict.get("allowTraversingTree", None),
+            "breadcrumbs": as_dict.get("breadcrumbs", None),
+            "color_by_point": as_dict.get("colorByPoint", None),
+            "level_is_constant": as_dict.get("levelIsConstant", None),
+            "levels": as_dict.get("levels", None),
+            "alternate_starting_direction": as_dict.get(
+                "alternateStartingDirection", None
+            ),
+            "group_padding": as_dict.get("groupPadding", None),
+            "headers": as_dict.get("headers", None),
+            "interact_by_leaf": as_dict.get("interactByLeaf", None),
+            "layout_algorithm": as_dict.get("layoutAlgorithm", None),
+            "layout_starting_direction": as_dict.get("layoutStartingDirection", None),
+            "node_size_by": as_dict.get("nodeSizeBy", None),
+            "sort_index": as_dict.get("sortIndex", None),
+            "traverse_to_leaf": as_dict.get("traverseToLeaf", None),
+            "zoom_enabled": as_dict.get("zoomEnabled", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'allowTraversingTree': self.allow_traversing_tree,
-            'alternateStartingDirection': self.alternate_starting_direction,
-            'animationLimit': self.animation_limit,
-            'boostBlending': self.boost_blending,
-            'boostThreshold': self.boost_threshold,
-            'breadcrumbs': self.breadcrumbs,
-            'colorAxis': self.color_axis,
-            'colorByPoint': self.color_by_point,
-            'colorIndex': self.color_index,
-            'colorKey': self.color_key,
-            'colors': self.colors,
-            'crisp': self.crisp,
-            'cropThreshold': self.crop_threshold,
-            'findNearestPointBy': self.find_nearest_point_by,
-            'getExtremesFromAll': self.get_extremes_from_all,
-            'ignoreHiddenPoint': self.ignore_hidden_point,
-            'interactByLeaf': self.interact_by_leaf,
-            'layoutAlgorithm': self.layout_algorithm,
-            'layoutStartingDirection': self.layout_starting_direction,
-            'levelIsConstant': self.level_is_constant,
-            'levels': self.levels,
-            'linecap': self.linecap,
-            'lineWidth': self.line_width,
-            'negativeColor': self.negative_color,
-            'pointInterval': self.point_interval,
-            'pointIntervalUnit': self.point_interval_unit,
-            'pointStart': self.point_start,
-            'relativeXValue': self.relative_x_value,
-            'softThreshold': self.soft_threshold,
-            'sortIndex': self.sort_index,
-            'stacking': self.stacking,
-            'step': self.step,
-            'zoneAxis': self.zone_axis,
-            'zones': self.zones
+            "allowTraversingTree": self.allow_traversing_tree,
+            "alternateStartingDirection": self.alternate_starting_direction,
+            "animationLimit": self.animation_limit,
+            "boostBlending": self.boost_blending,
+            "boostThreshold": self.boost_threshold,
+            "breadcrumbs": self.breadcrumbs,
+            "colorAxis": self.color_axis,
+            "colorByPoint": self.color_by_point,
+            "colorIndex": self.color_index,
+            "colorKey": self.color_key,
+            "colors": self.colors,
+            "crisp": self.crisp,
+            "cropThreshold": self.crop_threshold,
+            "findNearestPointBy": self.find_nearest_point_by,
+            "getExtremesFromAll": self.get_extremes_from_all,
+            "groupPadding": self.group_padding,
+            "headers": self.headers,
+            "ignoreHiddenPoint": self.ignore_hidden_point,
+            "interactByLeaf": self.interact_by_leaf,
+            "layoutAlgorithm": self.layout_algorithm,
+            "layoutStartingDirection": self.layout_starting_direction,
+            "levelIsConstant": self.level_is_constant,
+            "levels": self.levels,
+            "linecap": self.linecap,
+            "lineWidth": self.line_width,
+            "negativeColor": self.negative_color,
+            "nodeSizeBy": self.node_size_by,
+            "pointInterval": self.point_interval,
+            "pointIntervalUnit": self.point_interval_unit,
+            "pointStart": self.point_start,
+            "relativeXValue": self.relative_x_value,
+            "softThreshold": self.soft_threshold,
+            "sortIndex": self.sort_index,
+            "stacking": self.stacking,
+            "step": self.step,
+            "traverseToLeaf": self.traverse_to_leaf,
+            "zoneAxis": self.zone_axis,
+            "zones": self.zones,
+            "zoomEnabled": self.zoom_enabled,
         }
-        parent_as_dict = super()._to_untrimmed_dict(in_cls = in_cls)
+        parent_as_dict = super()._to_untrimmed_dict(in_cls=in_cls)
 
         for key in parent_as_dict:
             untrimmed[key] = parent_as_dict[key]

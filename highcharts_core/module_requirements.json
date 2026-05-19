@@ -81,6 +81,9 @@
   "chart.zoomKey": [
     "modules/draggable-points"
   ],
+  "chart.zooming": [
+    "modules/non-cartesian-zoom"
+  ],
   "chart.zooming.key": [
     "modules/draggable-points"
   ],

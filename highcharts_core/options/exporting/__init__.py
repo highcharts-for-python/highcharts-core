@@ -10,12 +10,14 @@ from highcharts_core.metaclasses import HighchartsMeta
 from highcharts_core.options.exporting.csv import ExportingCSV
 from highcharts_core.options.exporting.pdf_font import PDFFontOptions
 from highcharts_core.utility_classes.menus import MenuObject
-from highcharts_core.utility_classes.buttons import ContextButtonConfiguration, \
-    ExportingButtons
+from highcharts_core.utility_classes.buttons import (
+    ContextButtonConfiguration,
+    ExportingButtons,
+)
 from highcharts_core.utility_classes.javascript_functions import CallbackFunction
 
 default_context_button = ExportingButtons()
-default_context_button['contextButton'] = ContextButtonConfiguration()
+default_context_button["contextButton"] = ContextButtonConfiguration()
 
 
 class ExportingAccessibilityOptions(HighchartsMeta):
@@ -24,15 +26,15 @@ class ExportingAccessibilityOptions(HighchartsMeta):
     def __init_(self, **kwargs):
         self._enabled = None
 
-        self.enabled = kwargs.get('enabled', None)
+        self.enabled = kwargs.get("enabled", None)
 
     @property
     def _dot_path(self) -> Optional[str]:
         """The dot-notation path to the options key for the current class.
-        
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return 'exporting.accessibility'
+        return "exporting.accessibility"
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -54,16 +56,12 @@ class ExportingAccessibilityOptions(HighchartsMeta):
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
-        kwargs = {
-            'enabled': as_dict.get('enabled', None)
-        }
+        kwargs = {"enabled": as_dict.get("enabled", None)}
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
-        return {
-            'enabled': self.enabled
-        }
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
+        return {"enabled": self.enabled}
 
 
 class Exporting(HighchartsMeta):
@@ -82,6 +80,7 @@ class Exporting(HighchartsMeta):
         self._filename = None
         self._form_attributes = None
         self._lib_url = None
+        self._local = None
         self._menu_item_definitions = None
         self._pdf_font = None
         self._print_max_width = None
@@ -97,40 +96,41 @@ class Exporting(HighchartsMeta):
         self._use_rowspan_headers = None
         self._width = None
 
-        self.accessibility = kwargs.get('accessibility', None)
-        self.allow_html = kwargs.get('allow_html', None)
-        self.buttons = kwargs.get('buttons', default_context_button)
-        self.chart_options = kwargs.get('chart_options', None)
-        self.csv = kwargs.get('csv', None)
-        self.enabled = kwargs.get('enabled', None)
-        self.error = kwargs.get('error', None)
-        self.fallback_to_export_server = kwargs.get('fallback_to_export_server', None)
-        self.fetch_options = kwargs.get('fetch_options', None)
-        self.filename = kwargs.get('filename', None)
-        self.form_attributes = kwargs.get('form_attributes', None)
-        self.lib_url = kwargs.get('lib_url', None)
-        self.menu_item_definitions = kwargs.get('menu_item_definitions', None)
-        self.pdf_font = kwargs.get('pdf_font', None)
-        self.print_max_width = kwargs.get('print_max_width', None)
-        self.scale = kwargs.get('scale', None)
-        self.show_export_in_progress = kwargs.get('show_export_in_progress', None)
-        self.show_table = kwargs.get('show_table', None)
-        self.source_height = kwargs.get('source_height', None)
-        self.source_width = kwargs.get('source_width', None)
-        self.table_caption = kwargs.get('table_caption', None)
-        self.type = kwargs.get('type', None)
-        self.url = kwargs.get('url', None)
-        self.use_multi_level_headers = kwargs.get('use_multi_level_headers', None)
-        self.use_rowspan_headers = kwargs.get('use_rowspan_headers', None)
-        self.width = kwargs.get('width', None)
+        self.accessibility = kwargs.get("accessibility", None)
+        self.allow_html = kwargs.get("allow_html", None)
+        self.buttons = kwargs.get("buttons", default_context_button)
+        self.chart_options = kwargs.get("chart_options", None)
+        self.csv = kwargs.get("csv", None)
+        self.enabled = kwargs.get("enabled", None)
+        self.error = kwargs.get("error", None)
+        self.fallback_to_export_server = kwargs.get("fallback_to_export_server", None)
+        self.fetch_options = kwargs.get("fetch_options", None)
+        self.filename = kwargs.get("filename", None)
+        self.form_attributes = kwargs.get("form_attributes", None)
+        self.lib_url = kwargs.get("lib_url", None)
+        self.local = kwargs.get("local", None)
+        self.menu_item_definitions = kwargs.get("menu_item_definitions", None)
+        self.pdf_font = kwargs.get("pdf_font", None)
+        self.print_max_width = kwargs.get("print_max_width", None)
+        self.scale = kwargs.get("scale", None)
+        self.show_export_in_progress = kwargs.get("show_export_in_progress", None)
+        self.show_table = kwargs.get("show_table", None)
+        self.source_height = kwargs.get("source_height", None)
+        self.source_width = kwargs.get("source_width", None)
+        self.table_caption = kwargs.get("table_caption", None)
+        self.type = kwargs.get("type", None)
+        self.url = kwargs.get("url", None)
+        self.use_multi_level_headers = kwargs.get("use_multi_level_headers", None)
+        self.use_rowspan_headers = kwargs.get("use_rowspan_headers", None)
+        self.width = kwargs.get("width", None)
 
     @property
     def _dot_path(self) -> Optional[str]:
         """The dot-notation path to the options key for the current class.
-        
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return 'exporting'
+        return "exporting"
 
     @property
     def accessibility(self) -> Optional[ExportingAccessibilityOptions]:
@@ -148,8 +148,8 @@ class Exporting(HighchartsMeta):
     @property
     def allow_html(self) -> Optional[bool]:
         """If ``True``, allows HTML inside the chart (added using
-        ``.use_html`` properties present on various chart components) to be added 
-        directly to the exported image. This allows you to preserve complicated HTML 
+        ``.use_html`` properties present on various chart components) to be added
+        directly to the exported image. This allows you to preserve complicated HTML
         structures like tables or bi-directional text in exported charts.
 
         Defaults to ``False``.
@@ -159,8 +159,8 @@ class Exporting(HighchartsMeta):
           This setting is **EXPERIMENTAL**.
 
           The HTML is rendered in a ``foreignObject`` tag in the generated SVG. The
-          official export server is based on PhantomJS, which supports this, but other 
-          SVG clients, like Batik, do not support it. This also applies to downloaded 
+          official export server is based on PhantomJS, which supports this, but other
+          SVG clients, like Batik, do not support it. This also applies to downloaded
           SVG that you want to open in a desktop client.
 
         :returns: Flag indicating whether to allow HTML in the exported image.
@@ -182,10 +182,10 @@ class Exporting(HighchartsMeta):
         .. note::
 
           In addition to the default buttons listed above, custom buttons can be added.
-          
+
         .. warning::
-        
-          The ``.buttons`` property accepts an 
+
+          The ``.buttons`` property accepts an
           :class:`ExportingButtons <highcharts_core.utility_classes.buttons.ExportingButtons>`
           instance as its value. This object is a descendent of the special :class:`JavaScriptDict <highcharts_core.metaclasses.JavaScriptDict>`
           which by default initially contains a ``'context
@@ -219,9 +219,9 @@ class Exporting(HighchartsMeta):
           value of :obj:`None <python:None>`.
 
         :rtype: :class:`Options` or :obj:`None <python:None>`
-        
+
         :raises HighchartsInstanceNeededError: if attempting to set it to a value that is
-          not a :class:`Options <highcharts_core.options.Options>` (or descendent) 
+          not a :class:`Options <highcharts_core.options.Options>` (or descendent)
           instance.
         """
         return self._chart_options
@@ -230,16 +230,16 @@ class Exporting(HighchartsMeta):
     def chart_options(self, value):
         if not value:
             self._chart_options = None
-        elif not checkers.is_type(value, ['Options']):
+        elif not checkers.is_type(value, ["Options"]):
             raise errors.HighchartsInstanceNeededError(
-                f'The Exporting.chart_options property is '
-                f'one of the few properties in Highcharts '
-                f'for Python that REQUIRES a Highcharts for '
-                f'Python instance as its value (or None). '
-                f'Specifically, you should supply an Options'
-                f' instance to it, rather than a dict or a '
-                f'string. The value you supplied was: '
-                f'{value.__class__.__name__}'
+                f"The Exporting.chart_options property is "
+                f"one of the few properties in Highcharts "
+                f"for Python that REQUIRES a Highcharts for "
+                f"Python instance as its value (or None). "
+                f"Specifically, you should supply an Options"
+                f" instance to it, rather than a dict or a "
+                f"string. The value you supplied was: "
+                f"{value.__class__.__name__}"
             )
         else:
             self._chart_options = value
@@ -345,19 +345,19 @@ class Exporting(HighchartsMeta):
     def fetch_options(self) -> Optional[dict]:
         """Options for the fetch request used when sending the SVG to the export server.
         Defaults to :obj:`None <python:None>`.
-        
+
         .. seealso::
-        
+
           * `MDN: Fetch <https://developer.mozilla.org/en-US/docs/Web/API/fetch>`__ for more information
-        
+
         :returns: The options for the fetch request, expressed as a Python :class:`dict <python:dict>`
         :rtype: :class:`dict <python:dict>` or :obj:`None <python:None>`
         """
         return self._fetch_options
-    
+
     @fetch_options.setter
     def fetch_options(self, value):
-        self._fetch_options = validators.dict(value, allow_empty = True)
+        self._fetch_options = validators.dict(value, allow_empty=True)
 
     @property
     def filename(self) -> Optional[str]:
@@ -370,7 +370,7 @@ class Exporting(HighchartsMeta):
 
     @filename.setter
     def filename(self, value):
-        self._filename = validators.string(value, allow_empty = True)
+        self._filename = validators.string(value, allow_empty=True)
 
     @property
     def form_attributes(self) -> Optional[dict]:
@@ -387,7 +387,7 @@ class Exporting(HighchartsMeta):
 
     @form_attributes.setter
     def form_attributes(self, value):
-        self._form_attributes = validators.dict(value, allow_empty = True)
+        self._form_attributes = validators.dict(value, allow_empty=True)
 
     @property
     def lib_url(self) -> Optional[str]:
@@ -413,6 +413,28 @@ class Exporting(HighchartsMeta):
         )
 
     @property
+    def local(self) -> Optional[bool]:
+        """Indicates whether the chart should be exported using the browser's built-in capabilities, allowing
+        offline exports without requiring access to the Highcharts export server. Defaults to ``True``.
+
+        .. note::
+
+          This option is different from :meth:`Exporting.fallback_to_export_server`, which controls whether
+          the export server should be used if local export fails. This option explicitly controls which export
+          option to use.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._local
+
+    @local.setter
+    def local(self, value):
+        if value is None:
+            self._local = None
+        else:
+            self._local = bool(value)
+
+    @property
     def menu_item_definitions(self) -> Optional[MenuObject]:
         """An object consisting of definitions for the menu items in the context menu.
 
@@ -421,12 +443,12 @@ class Exporting(HighchartsMeta):
 
           * ``onclick``: The click handler for the menu item
           * ``text``: The text for the menu item
-          * ``textKey``: If internationalization is required, the key to a language 
+          * ``textKey``: If internationalization is required, the key to a language
             string
 
         .. note::
 
-          Custom text for ``"exitFullScreen"`` can be set only in ``language`` options 
+          Custom text for ``"exitFullScreen"`` can be set only in ``language`` options
           (it is not a separate button).
 
         Defaults to:
@@ -496,7 +518,7 @@ class Exporting(HighchartsMeta):
 
     @print_max_width.setter
     def print_max_width(self, value):
-        self._print_max_width = validators.numeric(value, allow_empty = True)
+        self._print_max_width = validators.numeric(value, allow_empty=True)
 
     @property
     def scale(self) -> Optional[int | float | Decimal]:
@@ -513,22 +535,22 @@ class Exporting(HighchartsMeta):
 
     @scale.setter
     def scale(self, value):
-        self._scale = validators.numeric(value, allow_empty = True)
+        self._scale = validators.numeric(value, allow_empty=True)
 
     @property
     def show_export_in_progress(self) -> Optional[bool]:
         """If ``True``, displays a message when export is in progress. Defaults to
         ``True``.
-        
+
         .. note::
-        
-          The message displayed can be adjusted in 
+
+          The message displayed can be adjusted in
           :class:`Language.export_in_progress <highcharts_core.global_options.language.Language.export_in_progress>`.
-        
+
         :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
         """
         return self._show_export_in_progress
-    
+
     @show_export_in_progress.setter
     def show_export_in_progress(self, value):
         if value is None:
@@ -566,7 +588,7 @@ class Exporting(HighchartsMeta):
 
     @source_height.setter
     def source_height(self, value):
-        self._source_height = validators.numeric(value, allow_empty = True)
+        self._source_height = validators.numeric(value, allow_empty=True)
 
     @property
     def source_width(self) -> Optional[int | float | Decimal]:
@@ -581,7 +603,7 @@ class Exporting(HighchartsMeta):
 
     @source_width.setter
     def source_width(self, value):
-        self._source_width = validators.numeric(value, allow_empty = True)
+        self._source_width = validators.numeric(value, allow_empty=True)
 
     @property
     def table_caption(self) -> Optional[bool | str]:
@@ -606,7 +628,7 @@ class Exporting(HighchartsMeta):
         elif not value:
             self._table_caption = None
         else:
-            self._table_caption = validators.string(value, allow_empty = False)
+            self._table_caption = validators.string(value, allow_empty=False)
 
     @property
     def type(self) -> Optional[str]:
@@ -633,12 +655,15 @@ class Exporting(HighchartsMeta):
         else:
             value = validators.string(value)
             value = value.lower()
-            if value not in ['image/png',
-                             'image/jpeg',
-                             'application/pdf',
-                             'image/svg+xml']:
-                raise errors.HighchartsValueError(f'type expects a supported export MIME '
-                                                  f'type. Received: "{value}"')
+            if value not in [
+                "image/png",
+                "image/jpeg",
+                "application/pdf",
+                "image/svg+xml",
+            ]:
+                raise errors.HighchartsValueError(
+                    f'type expects a supported export MIME type. Received: "{value}"'
+                )
 
             self._type = value
 
@@ -724,69 +749,71 @@ class Exporting(HighchartsMeta):
 
     @width.setter
     def width(self, value):
-        self._width = validators.numeric(value, allow_empty = True)
+        self._width = validators.numeric(value, allow_empty=True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.get('accessibility', None),
-            'allow_html': as_dict.get('allowHTML', None),
-            'buttons': as_dict.get('buttons', None),
-            'chart_options': as_dict.get('chartOptions', None),
-            'csv': as_dict.get('csv', None),
-            'enabled': as_dict.get('enabled', None),
-            'error': as_dict.get('error', None),
-            'fallback_to_export_server': as_dict.get('fallbackToExportServer', None),
-            'fetch_options': as_dict.get('fetchOptions', None),
-            'filename': as_dict.get('filename', None),
-            'form_attributes': as_dict.get('formAttributes', None),
-            'lib_url': as_dict.get('libURL', None),
-            'menu_item_definitions': as_dict.get('menuItemDefinitions', None),
-            'pdf_font': as_dict.get('pdfFont', None),
-            'print_max_width': as_dict.get('printMaxWidth', None),
-            'scale': as_dict.get('scale', None),
-            'show_export_in_progress': as_dict.get('showExportInProgress', None),
-            'show_table': as_dict.get('showTable', None),
-            'source_height': as_dict.get('sourceHeight', None),
-            'source_width': as_dict.get('sourceWidth', None),
-            'table_caption': as_dict.get('tableCaption', None),
-            'type': as_dict.get('type', None),
-            'url': as_dict.get('url', None),
-            'use_multi_level_headers': as_dict.get('useMultiLevelHeaders', None),
-            'use_rowspan_headers': as_dict.get('useRowspanHeaders', None),
-            'width': as_dict.get('width', None)
+            "accessibility": as_dict.get("accessibility", None),
+            "allow_html": as_dict.get("allowHTML", None),
+            "buttons": as_dict.get("buttons", None),
+            "chart_options": as_dict.get("chartOptions", None),
+            "csv": as_dict.get("csv", None),
+            "enabled": as_dict.get("enabled", None),
+            "error": as_dict.get("error", None),
+            "fallback_to_export_server": as_dict.get("fallbackToExportServer", None),
+            "fetch_options": as_dict.get("fetchOptions", None),
+            "filename": as_dict.get("filename", None),
+            "form_attributes": as_dict.get("formAttributes", None),
+            "lib_url": as_dict.get("libURL", None),
+            "local": as_dict.get("local", None),
+            "menu_item_definitions": as_dict.get("menuItemDefinitions", None),
+            "pdf_font": as_dict.get("pdfFont", None),
+            "print_max_width": as_dict.get("printMaxWidth", None),
+            "scale": as_dict.get("scale", None),
+            "show_export_in_progress": as_dict.get("showExportInProgress", None),
+            "show_table": as_dict.get("showTable", None),
+            "source_height": as_dict.get("sourceHeight", None),
+            "source_width": as_dict.get("sourceWidth", None),
+            "table_caption": as_dict.get("tableCaption", None),
+            "type": as_dict.get("type", None),
+            "url": as_dict.get("url", None),
+            "use_multi_level_headers": as_dict.get("useMultiLevelHeaders", None),
+            "use_rowspan_headers": as_dict.get("useRowspanHeaders", None),
+            "width": as_dict.get("width", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'accessibility': self.accessibility,
-            'allowHTML': self.allow_html,
-            'buttons': self.buttons,
-            'chartOptions': self.chart_options,
-            'csv': self.csv,
-            'enabled': self.enabled,
-            'error': self.error,
-            'fallbackToExportServer': self.fallback_to_export_server,
-            'fetchOptions': self.fetch_options,
-            'filename': self.filename,
-            'formAttributes': self.form_attributes,
-            'libURL': self.lib_url,
-            'menuItemDefinitions': self.menu_item_definitions,
-            'pdfFont': self.pdf_font,
-            'printMaxWidth': self.print_max_width,
-            'scale': self.scale,
-            'showExportInProgress': self.show_export_in_progress,
-            'showTable': self.show_table,
-            'sourceHeight': self.source_height,
-            'sourceWidth': self.source_width,
-            'tableCaption': self.table_caption,
-            'type': self.type,
-            'url': self.url,
-            'useMultiLevelHeaders': self.use_multi_level_headers,
-            'useRowspanHeaders': self.use_rowspan_headers,
-            'width': self.width
+            "accessibility": self.accessibility,
+            "allowHTML": self.allow_html,
+            "buttons": self.buttons,
+            "chartOptions": self.chart_options,
+            "csv": self.csv,
+            "enabled": self.enabled,
+            "error": self.error,
+            "fallbackToExportServer": self.fallback_to_export_server,
+            "fetchOptions": self.fetch_options,
+            "filename": self.filename,
+            "formAttributes": self.form_attributes,
+            "libURL": self.lib_url,
+            "local": self.local,
+            "menuItemDefinitions": self.menu_item_definitions,
+            "pdfFont": self.pdf_font,
+            "printMaxWidth": self.print_max_width,
+            "scale": self.scale,
+            "showExportInProgress": self.show_export_in_progress,
+            "showTable": self.show_table,
+            "sourceHeight": self.source_height,
+            "sourceWidth": self.source_width,
+            "tableCaption": self.table_caption,
+            "type": self.type,
+            "url": self.url,
+            "useMultiLevelHeaders": self.use_multi_level_headers,
+            "useRowspanHeaders": self.use_rowspan_headers,
+            "width": self.width,
         }
 
         return untrimmed

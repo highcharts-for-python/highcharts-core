@@ -15,69 +15,68 @@ from highcharts_core.options.plot_options.levels import TreegraphLevelOptions
 
 
 class TreegraphEvents(SeriesEvents):
-    """General event handlers for the series items. 
-    
+    """General event handlers for the series items.
+
     .. tip::
-    
-      These event hooks can also be attached to the series at run time using the ``Highcharts.addEvent()`` (JavaScript) 
+
+      These event hooks can also be attached to the series at run time using the ``Highcharts.addEvent()`` (JavaScript)
       function.
-      
+
     """
-    
+
     def __init__(self, **kwargs):
         self._set_root_node = None
-        
-        self.set_root_node = kwargs.get('set_root_node', None)
-        
+
+        self.set_root_node = kwargs.get("set_root_node", None)
+
         super().__init__(**kwargs)
-        
+
     @property
     def set_root_node(self) -> Optional[CallbackFunction]:
-        """Event handler that fires on a request to change the tree's root node, *before* the update is made. 
-        
-        An event object is passed to the function, containing additional properties ``newRootId``, ``previousRootId``, 
+        """Event handler that fires on a request to change the tree's root node, *before* the update is made.
+
+        An event object is passed to the function, containing additional properties ``newRootId``, ``previousRootId``,
         ``redraw``, and ``trigger``.
-        
+
         Defaults to :obj:`None <python:None>`
-        
+
         :rtype: :class:`CallbackFunction <highcharts_core.utility_classes.javascript_functions.CallbackFunction>` or
           :obj:`None <python:None>`
         """
         return self._set_root_node
-    
+
     @set_root_node.setter
     @class_sensitive(CallbackFunction)
     def set_root_node(self, value):
         self._set_root_node = value
-        
+
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'after_animate': as_dict.get('afterAnimate', None),
-            'checkbox_click': as_dict.get('checkboxClick', None),
-            'click': as_dict.get('click', None),
-            'hide': as_dict.get('hide', None),
-            'legend_item_click': as_dict.get('legendItemClick', None),
-            'mouse_out': as_dict.get('mouseOut', None),
-            'mouse_over': as_dict.get('mouseOver', None),
-            'show': as_dict.get('show', None),
-            
-            'set_root_node': as_dict.get('setRootNode', None),
+            "after_animate": as_dict.get("afterAnimate", None),
+            "checkbox_click": as_dict.get("checkboxClick", None),
+            "click": as_dict.get("click", None),
+            "hide": as_dict.get("hide", None),
+            "legend_item_click": as_dict.get("legendItemClick", None),
+            "mouse_out": as_dict.get("mouseOut", None),
+            "mouse_over": as_dict.get("mouseOver", None),
+            "show": as_dict.get("show", None),
+            "set_root_node": as_dict.get("setRootNode", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'afterAnimate': self.after_animate,
-            'checkboxClick': self.checkbox_click,
-            'click': self.click,
-            'hide': self.hide,
-            'legendItemClick': self.legend_item_click,
-            'mouseOut': self.mouse_out,
-            'mouseOver': self.mouse_over,
-            'setRootNode': self.set_root_node,
-            'show': self.show
+            "afterAnimate": self.after_animate,
+            "checkboxClick": self.checkbox_click,
+            "click": self.click,
+            "hide": self.hide,
+            "legendItemClick": self.legend_item_click,
+            "mouseOut": self.mouse_out,
+            "mouseOver": self.mouse_over,
+            "setRootNode": self.set_root_node,
+            "show": self.show,
         }
 
         return untrimmed
@@ -85,14 +84,14 @@ class TreegraphEvents(SeriesEvents):
 
 class TreegraphOptions(GenericTypeOptions):
     """General options to apply to all :term:`Treegraph` series types.
-    
+
     A treegraph visualizes a relationship between ancestors and descendants with a clear parent-child relationship,
     e.g. a family tree or a directory structure.
-    
+
     .. figure:: ../../../_static/treegraph-example.png
       :alt: Treegraph Example Chart
       :align: center
-    
+
     """
 
     def __init__(self, **kwargs):
@@ -118,43 +117,53 @@ class TreegraphOptions(GenericTypeOptions):
         self._color_by_point = None
         self._fill_space = None
         self._link = None
-        self._reversed = None        
+        self._reversed = None
         self._traverse_up_button = None
-        
+
         self._levels = None
         self._node_distance = None
         self._node_width = None
-        
-        self.animation_limit = kwargs.get('animation_limit', None)
-        self.boost_blending = kwargs.get('boost_blending', None)
-        self.boost_threshold = kwargs.get('boost_threshold', None)
-        self.color_index = kwargs.get('color_index', None)
-        self.crisp = kwargs.get('crisp', None)
-        self.crop_threshold = kwargs.get('crop_threshold', None)
-        self.find_nearest_point_by = kwargs.get('find_nearest_point_by', None)
-        self.get_extremes_from_all = kwargs.get('get_extremes_from_all', None)
-        self.relative_x_value = kwargs.get('relative_x_value', None)
-        self.soft_threshold = kwargs.get('soft_threshold',  None)
-        self.step = kwargs.get('step', None)
 
-        self.point_interval = kwargs.get('point_interval', None)
-        self.point_interval_unit = kwargs.get('point_interval_unit', None)
-        self.point_start = kwargs.get('point_start', None)
-        self.stacking = kwargs.get('stacking', None)
+        self._group_padding = None
+        self._node_size_by = None
+        self._traverse_to_leaf = None
+        self._zoom_enabled = None
 
-        self.allow_traversing_tree = kwargs.get('allow_traversing_tree', None)
-        self.collapse_button = kwargs.get('collapse_button', None)
-        self.color_by_point = kwargs.get('color_by_point', None)
-        self.fill_space = kwargs.get('fill_space', None)
-        self.link = kwargs.get('link', None)
-        self.reversed = kwargs.get('reversed', None)
-        
-        self.levels = kwargs.get('levels', None)
-        self.node_distance = kwargs.get('node_distance', None)
-        self.node_width = kwargs.get('node_width', None)
-        
+        self.animation_limit = kwargs.get("animation_limit", None)
+        self.boost_blending = kwargs.get("boost_blending", None)
+        self.boost_threshold = kwargs.get("boost_threshold", None)
+        self.color_index = kwargs.get("color_index", None)
+        self.crisp = kwargs.get("crisp", None)
+        self.crop_threshold = kwargs.get("crop_threshold", None)
+        self.find_nearest_point_by = kwargs.get("find_nearest_point_by", None)
+        self.get_extremes_from_all = kwargs.get("get_extremes_from_all", None)
+        self.relative_x_value = kwargs.get("relative_x_value", None)
+        self.soft_threshold = kwargs.get("soft_threshold", None)
+        self.step = kwargs.get("step", None)
+
+        self.point_interval = kwargs.get("point_interval", None)
+        self.point_interval_unit = kwargs.get("point_interval_unit", None)
+        self.point_start = kwargs.get("point_start", None)
+        self.stacking = kwargs.get("stacking", None)
+
+        self.allow_traversing_tree = kwargs.get("allow_traversing_tree", None)
+        self.collapse_button = kwargs.get("collapse_button", None)
+        self.color_by_point = kwargs.get("color_by_point", None)
+        self.fill_space = kwargs.get("fill_space", None)
+        self.link = kwargs.get("link", None)
+        self.reversed = kwargs.get("reversed", None)
+
+        self.levels = kwargs.get("levels", None)
+        self.node_distance = kwargs.get("node_distance", None)
+        self.node_width = kwargs.get("node_width", None)
+
+        self.group_padding = kwargs.get("group_padding", None)
+        self.node_size_by = kwargs.get("node_size_by", None)
+        self.traverse_to_leaf = kwargs.get("traverse_to_leaf", None)
+        self.zoom_enabled = kwargs.get("zoom_enabled", None)
+
         super().__init__(**kwargs)
-        
+
     @property
     def animation_limit(self) -> Optional[int | float | Decimal]:
         """For some series, there is a limit that shuts down initial animation by default
@@ -171,12 +180,12 @@ class TreegraphOptions(GenericTypeOptions):
 
     @animation_limit.setter
     def animation_limit(self, value):
-        if value == float('inf'):
-            self._animation_limit = float('inf')
+        if value == float("inf"):
+            self._animation_limit = float("inf")
         else:
-            self._animation_limit = validators.numeric(value,
-                                                       allow_empty = True,
-                                                       minimum = 0)
+            self._animation_limit = validators.numeric(
+                value, allow_empty=True, minimum=0
+            )
 
     @property
     def boost_blending(self) -> Optional[str]:
@@ -189,7 +198,7 @@ class TreegraphOptions(GenericTypeOptions):
 
     @boost_blending.setter
     def boost_blending(self, value):
-        self._boost_blending = validators.string(value, allow_empty = True)
+        self._boost_blending = validators.string(value, allow_empty=True)
 
     @property
     def boost_threshold(self) -> Optional[int]:
@@ -216,9 +225,7 @@ class TreegraphOptions(GenericTypeOptions):
 
     @boost_threshold.setter
     def boost_threshold(self, value):
-        self._boost_threshold = validators.integer(value,
-                                                   allow_empty = True,
-                                                   minimum = 0)
+        self._boost_threshold = validators.integer(value, allow_empty=True, minimum=0)
 
     @property
     def color_index(self) -> Optional[int]:
@@ -227,7 +234,7 @@ class TreegraphOptions(GenericTypeOptions):
         ``highcharts-color-{n}``.
 
         .. tip::
-        
+
           .. versionadded:: Highcharts (JS) v.11
 
           With Highcharts (JS) v.11, using CSS variables of the form ``--highcharts-color-{n}`` make
@@ -241,9 +248,7 @@ class TreegraphOptions(GenericTypeOptions):
 
     @color_index.setter
     def color_index(self, value):
-        self._color_index = validators.integer(value,
-                                               allow_empty = True,
-                                               minimum = 0)
+        self._color_index = validators.integer(value, allow_empty=True, minimum=0)
 
     @property
     def crisp(self) -> Optional[bool]:
@@ -286,9 +291,7 @@ class TreegraphOptions(GenericTypeOptions):
 
     @crop_threshold.setter
     def crop_threshold(self, value):
-        self._crop_threshold = validators.integer(value,
-                                                   allow_empty = True,
-                                                   minimum = 0)
+        self._crop_threshold = validators.integer(value, allow_empty=True, minimum=0)
 
     @property
     def events(self) -> Optional[TreegraphEvents]:
@@ -326,7 +329,7 @@ class TreegraphOptions(GenericTypeOptions):
 
     @find_nearest_point_by.setter
     def find_nearest_point_by(self, value):
-        self._find_nearest_point_by = validators.string(value, allow_empty = True)
+        self._find_nearest_point_by = validators.string(value, allow_empty=True)
 
     @property
     def get_extremes_from_all(self) -> Optional[bool]:
@@ -412,7 +415,7 @@ class TreegraphOptions(GenericTypeOptions):
 
     @step.setter
     def step(self, value):
-        self._step = validators.string(value, allow_empty = True)
+        self._step = validators.string(value, allow_empty=True)
 
     @property
     def point_interval(self) -> Optional[int | float | Decimal]:
@@ -446,9 +449,7 @@ class TreegraphOptions(GenericTypeOptions):
 
     @point_interval.setter
     def point_interval(self, value):
-        self._point_interval = validators.numeric(value,
-                                                  allow_empty = True,
-                                                  minimum = 0)
+        self._point_interval = validators.numeric(value, allow_empty=True, minimum=0)
 
     @property
     def point_interval_unit(self) -> Optional[str]:
@@ -473,7 +474,7 @@ class TreegraphOptions(GenericTypeOptions):
 
     @point_interval_unit.setter
     def point_interval_unit(self, value):
-        self._point_interval_unit = validators.string(value, allow_empty = True)
+        self._point_interval_unit = validators.string(value, allow_empty=True)
 
     @property
     def point_start(self) -> Optional[int | float | Decimal]:
@@ -495,18 +496,18 @@ class TreegraphOptions(GenericTypeOptions):
     @point_start.setter
     def point_start(self, value):
         try:
-            value = validators.numeric(value, allow_empty = True)
+            value = validators.numeric(value, allow_empty=True)
         except (TypeError, ValueError) as error:
             value = validators.datetime(value)
 
-            if hasattr(value, 'timestamp') and value.tzinfo is not None:
-                self._point_start = value.timestamp()*1000
-            elif hasattr(value, 'timestamp'):
-                value = value.replace(tzinfo = datetime.timezone.utc)
-                value = value.timestamp()*1000
+            if hasattr(value, "timestamp") and value.tzinfo is not None:
+                self._point_start = value.timestamp() * 1000
+            elif hasattr(value, "timestamp"):
+                value = value.replace(tzinfo=datetime.timezone.utc)
+                value = value.timestamp() * 1000
             else:
                 raise error
-            
+
         self._point_start = value
 
     @property
@@ -537,9 +538,11 @@ class TreegraphOptions(GenericTypeOptions):
         else:
             value = validators.string(value)
             value = value.lower()
-            if value not in ['normal', 'percent', 'stream', 'overlap']:
-                raise errors.HighchartsValueError(f'stacking expects a valid stacking '
-                                                  f'value. However, received: {value}')
+            if value not in ["normal", "percent", "stream", "overlap"]:
+                raise errors.HighchartsValueError(
+                    f"stacking expects a valid stacking "
+                    f"value. However, received: {value}"
+                )
             self._stacking = value
 
     @property
@@ -561,17 +564,17 @@ class TreegraphOptions(GenericTypeOptions):
     @property
     def collapse_button(self) -> Optional[CollapseButtonConfiguration]:
         """Options applied to the Collapse Button, which is the small button that indicates the node is collapsible.
-        
-        :rtype: :class:`CollapseButtonConfiguration <highcharts_core.utility_classes.buttons.CollapseButtonConfiguration>` 
+
+        :rtype: :class:`CollapseButtonConfiguration <highcharts_core.utility_classes.buttons.CollapseButtonConfiguration>`
           or :obj:`None <python:None>`
         """
         return self._collapse_button
-    
+
     @collapse_button.setter
     @class_sensitive(CollapseButtonConfiguration)
     def collapse_button(self, value):
         self._collapse_button = value
-        
+
     @property
     def color_by_point(self) -> Optional[bool]:
         """When using automatic point colors pulled from the global colors or
@@ -593,20 +596,20 @@ class TreegraphOptions(GenericTypeOptions):
 
     @property
     def fill_space(self) -> Optional[bool]:
-        """If ``True``, the treegraph series should fill the entire plot area in the 
+        """If ``True``, the treegraph series should fill the entire plot area in the
         X-axis direction, even when there are collapsed points. Defaults to ``False``.
-        
+
         :rtype: :class:`bool <python:bool>`
         """
         return self._fill_space
-    
+
     @fill_space.setter
     def fill_space(self, value):
         if value is None:
             self._fill_space = None
         else:
             self._fill_space = bool(value)
-            
+
     @property
     def link(self) -> Optional[LinkOptions]:
         """Link style options.
@@ -638,17 +641,17 @@ class TreegraphOptions(GenericTypeOptions):
 
     @property
     def levels(self) -> Optional[List[TreegraphLevelOptions]]:
-        """Set options on specific levels. 
-        
+        """Set options on specific levels.
+
         .. note::
-        
+
           Takes precedence over series options, but not point options.
-          
-        :rtype: :class:`TreemapLevelOptions <highcharts_core.options.plot_options.levels.TreemapLevelOptions>` 
+
+        :rtype: :class:`TreemapLevelOptions <highcharts_core.options.plot_options.levels.TreemapLevelOptions>`
           or :obj:`None <python:None>`
         """
         return self._levels
-    
+
     @levels.setter
     @class_sensitive(TreegraphLevelOptions)
     def levels(self, value):
@@ -656,7 +659,7 @@ class TreegraphOptions(GenericTypeOptions):
 
     @property
     def node_distance(self) -> Optional[str | int | float | Decimal]:
-        """The distance between nodes in a treegraph diagram in the longitudinal 
+        """The distance between nodes in a treegraph diagram in the longitudinal
         direction. Defaults to ``30``.
 
         .. note::
@@ -700,8 +703,8 @@ class TreegraphOptions(GenericTypeOptions):
         For tree graphs, the node width is only applied if the marker symbol is ``'rect'``,
         otherwise the marker sizing options apply.
 
-        Can be a number or a percentage string, or ``'auto'``. If ``'auto'``, the nodes are 
-        sized to fill up the plot area in the longitudinal direction, regardless of the 
+        Can be a number or a percentage string, or ``'auto'``. If ``'auto'``, the nodes are
+        sized to fill up the plot area in the longitudinal direction, regardless of the
         number of levels.
 
         :rtype: :class:`str <python:str>` or numeric or :obj:`None <python:None>`
@@ -723,6 +726,86 @@ class TreegraphOptions(GenericTypeOptions):
 
             self._node_width = value
 
+    @property
+    def group_padding(self) -> Optional[int | float | Decimal]:
+        """Group padding for parent elements, expressed in pixels.
+
+        .. seealso::
+
+          :meth:`TreegraphOptions.node_size_by` for how leaf nodes' size is affected
+          by group padding.
+
+        :rtype: Number or :obj:`None <python:None>`
+        """
+        return self._group_padding
+
+    @group_padding.setter
+    def group_padding(self, value):
+        self._group_padding = validators.numeric(value, allow_empty=True)
+
+    @property
+    def node_size_by(self) -> Optional[str]:
+        """Determines how to calculate the size of a leaf node when a header or group padding is present.
+
+        Accepts:
+
+          * ``'leaf'``, which expands the group to make room for headers and padding to preserve
+            relative sizes between leaves
+          * ``'group'``, which fits leaves naively into the remaining area after the header and padding
+            are subtracted
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._node_size_by
+
+    @node_size_by.setter
+    def node_size_by(self, value):
+        if not value:
+            value = None
+        else:
+            value = value.lower()
+            if value not in ["leaf", "group"]:
+                raise errors.HighchartsError(
+                    f"node_size_by expects either 'leaf' or 'group'. Received: {value}"
+                )
+
+        self._node_size_by = value
+
+    @property
+    def traverse_to_leaf(self) -> Optional[bool]:
+        """If ``True``, enables automatic traversing to the last child upon node interaction.
+        Defaults to ``False``.
+
+        .. tip::
+          This feature simplifies navigation by immediately focusing on the deepest layer of the
+          data structure without intermediate steps.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._traverse_to_leaf
+
+    @traverse_to_leaf.setter
+    def traverse_to_leaf(self, value):
+        if value is None:
+            self._traverse_to_leaf = None
+        else:
+            self._traverse_to_leaf = bool(value)
+
+    @property
+    def zoom_enabled(self) -> Optional[bool]:
+        """If ``True``, enables zooming in on nodes when clicking on them. Defaults to ``True``.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._zoom_enabled
+
+    @zoom_enabled.setter
+    def zoom_enabled(self, value):
+        if value is None:
+            self._zoom_enabled = None
+        else:
+            self._zoom_enabled = bool(value)
+
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         """Convenience method which returns the keyword arguments used to initialize the
@@ -737,133 +820,137 @@ class TreegraphOptions(GenericTypeOptions):
 
         """
         kwargs = {
-            'accessibility': as_dict.get('accessibility', None),
-            'allow_point_select': as_dict.get('allowPointSelect', None),
-            'animation': as_dict.get('animation', None),
-            'class_name': as_dict.get('className', None),
-            'clip': as_dict.get('clip', None),
-            'color': as_dict.get('color', None),
-            'cursor': as_dict.get('cursor', None),
-            'custom': as_dict.get('custom', None),
-            'dash_style': as_dict.get('dashStyle', None),
-            'data_labels': as_dict.get('dataLabels', None),
-            'description': as_dict.get('description', None),
-            'enable_mouse_tracking': as_dict.get('enableMouseTracking', None),
-            'events': as_dict.get('events', None),
-            'include_in_data_export': as_dict.get('includeInDataExport', None),
-            'keys': as_dict.get('keys', None),
-            'label': as_dict.get('label', None),
-            'legend_symbol': as_dict.get('legendSymbol', None),
-            'linked_to': as_dict.get('linkedTo', None),
-            'marker': as_dict.get('marker', None),
-            'on_point': as_dict.get('onPoint', None),
-            'opacity': as_dict.get('opacity', None),
-            'point': as_dict.get('point', None),
-            'point_description_formatter': as_dict.get('pointDescriptionFormatter', None),
-            'selected': as_dict.get('selected', None),
-            'show_checkbox': as_dict.get('showCheckbox', None),
-            'show_in_legend': as_dict.get('showInLegend', None),
-            'skip_keyboard_navigation': as_dict.get('skipKeyboardNavigation', None),
-            'sonification': as_dict.get('sonification', None),
-            'states': as_dict.get('states', None),
-            'sticky_tracking': as_dict.get('stickyTracking', None),
-            'tooltip': as_dict.get('tooltip', None),
-            'turbo_threshold': as_dict.get('turboThreshold', None),
-            'visible': as_dict.get('visible', None),
-
-            'animation_limit': as_dict.get('animationLimit', None),
-            'boost_blending': as_dict.get('boostBlending', None),
-            'boost_threshold': as_dict.get('boostThreshold', None),
-            'color_index': as_dict.get('colorIndex', None),
-            'crisp': as_dict.get('crisp', None),
-            'crop_threshold': as_dict.get('cropThreshold', None),
-            'find_nearest_point_by': as_dict.get('findNearestPointBy', None),
-            'get_extremes_from_all': as_dict.get('getExtremesFromAll', None),
-            'inactive_other_points': as_dict.get('inactiveOtherPoints', None),
-            'relative_x_value': as_dict.get('relativeXValue', None),
-            'soft_threshold': as_dict.get('softThreshold', None),
-            'step': as_dict.get('step', None),
-
-            'point_interval': as_dict.get('pointInterval', None),
-            'point_interval_unit': as_dict.get('pointIntervalUnit', None),
-            'point_start': as_dict.get('pointStart', None),
-            'stacking': as_dict.get('stacking', None),
-
-            'allow_traversing_tree': as_dict.get('allowTraversingTree', None),
-            'collapse_button': as_dict.get('collapseButton', None),
-            'color_by_point': as_dict.get('colorByPoint', None),
-            'fill_space': as_dict.get('fillSpace', None),
-            'link': as_dict.get('link', None),
-            'reversed': as_dict.get('reversed', None),
-            'levels': as_dict.get('levels', None),
-            'node_distance': as_dict.get('nodeDistance', None),
-            'node_width': as_dict.get('nodeWidth', None),
+            "accessibility": as_dict.get("accessibility", None),
+            "allow_point_select": as_dict.get("allowPointSelect", None),
+            "animation": as_dict.get("animation", None),
+            "class_name": as_dict.get("className", None),
+            "clip": as_dict.get("clip", None),
+            "color": as_dict.get("color", None),
+            "cursor": as_dict.get("cursor", None),
+            "custom": as_dict.get("custom", None),
+            "dash_style": as_dict.get("dashStyle", None),
+            "data_labels": as_dict.get("dataLabels", None),
+            "description": as_dict.get("description", None),
+            "enable_mouse_tracking": as_dict.get("enableMouseTracking", None),
+            "events": as_dict.get("events", None),
+            "include_in_data_export": as_dict.get("includeInDataExport", None),
+            "keys": as_dict.get("keys", None),
+            "label": as_dict.get("label", None),
+            "legend_symbol": as_dict.get("legendSymbol", None),
+            "linked_to": as_dict.get("linkedTo", None),
+            "marker": as_dict.get("marker", None),
+            "on_point": as_dict.get("onPoint", None),
+            "opacity": as_dict.get("opacity", None),
+            "point": as_dict.get("point", None),
+            "point_description_formatter": as_dict.get(
+                "pointDescriptionFormatter", None
+            ),
+            "selected": as_dict.get("selected", None),
+            "show_checkbox": as_dict.get("showCheckbox", None),
+            "show_in_legend": as_dict.get("showInLegend", None),
+            "skip_keyboard_navigation": as_dict.get("skipKeyboardNavigation", None),
+            "sonification": as_dict.get("sonification", None),
+            "states": as_dict.get("states", None),
+            "sticky_tracking": as_dict.get("stickyTracking", None),
+            "tooltip": as_dict.get("tooltip", None),
+            "turbo_threshold": as_dict.get("turboThreshold", None),
+            "visible": as_dict.get("visible", None),
+            "animation_limit": as_dict.get("animationLimit", None),
+            "boost_blending": as_dict.get("boostBlending", None),
+            "boost_threshold": as_dict.get("boostThreshold", None),
+            "color_index": as_dict.get("colorIndex", None),
+            "crisp": as_dict.get("crisp", None),
+            "crop_threshold": as_dict.get("cropThreshold", None),
+            "find_nearest_point_by": as_dict.get("findNearestPointBy", None),
+            "get_extremes_from_all": as_dict.get("getExtremesFromAll", None),
+            "inactive_other_points": as_dict.get("inactiveOtherPoints", None),
+            "relative_x_value": as_dict.get("relativeXValue", None),
+            "soft_threshold": as_dict.get("softThreshold", None),
+            "step": as_dict.get("step", None),
+            "point_interval": as_dict.get("pointInterval", None),
+            "point_interval_unit": as_dict.get("pointIntervalUnit", None),
+            "point_start": as_dict.get("pointStart", None),
+            "stacking": as_dict.get("stacking", None),
+            "allow_traversing_tree": as_dict.get("allowTraversingTree", None),
+            "collapse_button": as_dict.get("collapseButton", None),
+            "color_by_point": as_dict.get("colorByPoint", None),
+            "fill_space": as_dict.get("fillSpace", None),
+            "link": as_dict.get("link", None),
+            "reversed": as_dict.get("reversed", None),
+            "levels": as_dict.get("levels", None),
+            "node_distance": as_dict.get("nodeDistance", None),
+            "node_width": as_dict.get("nodeWidth", None),
+            "group_padding": as_dict.get("groupPadding", None),
+            "node_size_by": as_dict.get("nodeSizeBy", None),
+            "traverse_to_leaf": as_dict.get("traverseToLeaf", None),
+            "zoom_enabled": as_dict.get("zoomEnabled", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'accessibility': self.accessibility,
-            'allowPointSelect': self.allow_point_select,
-            'animation': self.animation,
-            'className': self.class_name,
-            'clip': self.clip,
-            'color': self.color,
-            'cursor': self.cursor,
-            'custom': self.custom,
-            'dashStyle': self.dash_style,
-            'dataLabels': self.data_labels,
-            'description': self.description,
-            'enableMouseTracking': self.enable_mouse_tracking,
-            'events': self.events,
-            'includeInDataExport': self.include_in_data_export,
-            'keys': self.keys,
-            'label': self.label,
-            'linkedTo': self.linked_to,
-            'marker': self.marker,
-            'onPoint': self.on_point,
-            'opacity': self.opacity,
-            'point': self.point,
-            'pointDescriptionFormatter': self.point_description_formatter,
-            'selected': self.selected,
-            'showCheckbox': self.show_checkbox,
-            'showInLegend': self.show_in_legend,
-            'skipKeyboardNavigation': self.skip_keyboard_navigation,
-            'states': self.states,
-            'stickyTracking': self.sticky_tracking,
-            'threshold': self.threshold,
-            'tooltip': self.tooltip,
-            'turboThreshold': self.turbo_threshold,
-            'visible': self.visible,
-            'type': self.type,
-
-            'animationLimit': self.animation_limit,
-            'boostBlending': self.boost_blending,
-            'boostThreshold': self.boost_threshold,
-            'colorIndex': self.color_index,
-            'crisp': self.crisp,
-            'cropThreshold': self.crop_threshold,
-            'findNearestPointBy': self.find_nearest_point_by,
-            'getExtremesFromAll': self.get_extremes_from_all,
-            'relativeXValue': self.relative_x_value,
-            'softThreshold': self.soft_threshold,
-            'step': self.step,
-
-            'pointInterval': self.point_interval,
-            'pointIntervalUnit': self.point_interval_unit,
-            'pointStart': self.point_start,
-            'stacking': self.stacking,
-
-            'allowTraversingTree': self.allow_traversing_tree,
-            'collapseButton': self.collapse_button,
-            'colorByPoint': self.color_by_point,
-            'fillSpace': self.fill_space,
-            'link': self.link,
-            'reversed': self.reversed,
-            'levels': self.levels,
-            'nodeDistance': self.node_distance,
-            'nodeWidth': self.node_width,
+            "accessibility": self.accessibility,
+            "allowPointSelect": self.allow_point_select,
+            "animation": self.animation,
+            "className": self.class_name,
+            "clip": self.clip,
+            "color": self.color,
+            "cursor": self.cursor,
+            "custom": self.custom,
+            "dashStyle": self.dash_style,
+            "dataLabels": self.data_labels,
+            "description": self.description,
+            "enableMouseTracking": self.enable_mouse_tracking,
+            "events": self.events,
+            "includeInDataExport": self.include_in_data_export,
+            "keys": self.keys,
+            "label": self.label,
+            "linkedTo": self.linked_to,
+            "marker": self.marker,
+            "onPoint": self.on_point,
+            "opacity": self.opacity,
+            "point": self.point,
+            "pointDescriptionFormatter": self.point_description_formatter,
+            "selected": self.selected,
+            "showCheckbox": self.show_checkbox,
+            "showInLegend": self.show_in_legend,
+            "skipKeyboardNavigation": self.skip_keyboard_navigation,
+            "states": self.states,
+            "stickyTracking": self.sticky_tracking,
+            "threshold": self.threshold,
+            "tooltip": self.tooltip,
+            "turboThreshold": self.turbo_threshold,
+            "visible": self.visible,
+            "type": self.type,
+            "animationLimit": self.animation_limit,
+            "boostBlending": self.boost_blending,
+            "boostThreshold": self.boost_threshold,
+            "colorIndex": self.color_index,
+            "crisp": self.crisp,
+            "cropThreshold": self.crop_threshold,
+            "findNearestPointBy": self.find_nearest_point_by,
+            "getExtremesFromAll": self.get_extremes_from_all,
+            "relativeXValue": self.relative_x_value,
+            "softThreshold": self.soft_threshold,
+            "step": self.step,
+            "pointInterval": self.point_interval,
+            "pointIntervalUnit": self.point_interval_unit,
+            "pointStart": self.point_start,
+            "stacking": self.stacking,
+            "allowTraversingTree": self.allow_traversing_tree,
+            "collapseButton": self.collapse_button,
+            "colorByPoint": self.color_by_point,
+            "fillSpace": self.fill_space,
+            "link": self.link,
+            "reversed": self.reversed,
+            "levels": self.levels,
+            "nodeDistance": self.node_distance,
+            "nodeWidth": self.node_width,
+            "groupPadding": self.group_padding,
+            "nodeSizeBy": self.node_size_by,
+            "traverseToLeaf": self.traverse_to_leaf,
+            "zoomEnabled": self.zoom_enabled,
         }
 
         return untrimmed
