@@ -157,6 +157,7 @@ class TreemapSeries(SeriesBase, TreemapOptions):
             "interact_by_leaf": as_dict.get("interactByLeaf", None),
             "layout_algorithm": as_dict.get("layoutAlgorithm", None),
             "layout_starting_direction": as_dict.get("layoutStartingDirection", None),
+            "node_size_by": as_dict.get("nodeSizeBy", None),
             "sort_index": as_dict.get("sortIndex", None),
         }
 

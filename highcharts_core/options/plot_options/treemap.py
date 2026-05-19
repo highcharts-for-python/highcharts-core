@@ -64,6 +64,7 @@ class TreemapOptions(GenericTypeOptions):
         self._interact_by_leaf = None
         self._layout_algorithm = None
         self._layout_starting_direction = None
+        self._node_size_by = None
         self._sort_index = None
 
         self.animation_limit = kwargs.get("animation_limit", None)
@@ -105,6 +106,7 @@ class TreemapOptions(GenericTypeOptions):
         self.interact_by_leaf = kwargs.get("interact_by_leaf", None)
         self.layout_algorithm = kwargs.get("layout_algorithm", None)
         self.layout_starting_direction = kwargs.get("layout_starting_direction", None)
+        self.node_size_by = kwargs.get("node_size_by", None)
         self.sort_index = kwargs.get("sort_index", None)
 
         super().__init__(**kwargs)
@@ -613,6 +615,34 @@ class TreemapOptions(GenericTypeOptions):
         self._negative_color = utility_functions.validate_color(value)
 
     @property
+    def node_size_by(self) -> Optional[str]:
+        """Determines how to calculate the size of a leaf node when a header or group padding is present.
+
+        Accepts:
+
+          * ``'leaf'``, which expands the group to make room for headers and padding to preserve
+            relative sizes between leaves
+          * ``'group'``, which fits leaves naively into the remaining area after the header and padding
+            are subtracted
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._node_size_by
+
+    @node_size_by.setter
+    def node_size_by(self, value):
+        if not value:
+            value = None
+        else:
+            value = value.lower()
+            if value not in ["leaf", "group"]:
+                raise errors.HighchartsError(
+                    f"node_size_by expects either 'leaf' or 'group'. Received: {value}"
+                )
+
+        self._node_size_by = value
+
+    @property
     def point_interval(self) -> Optional[int | float | Decimal]:
         """If no x values are given for the points in a series, ``point_interval`` defines
         the interval of the x values. Defaults to ``1``.
@@ -916,6 +946,7 @@ class TreemapOptions(GenericTypeOptions):
             "interact_by_leaf": as_dict.get("interactByLeaf", None),
             "layout_algorithm": as_dict.get("layoutAlgorithm", None),
             "layout_starting_direction": as_dict.get("layoutStartingDirection", None),
+            "node_size_by": as_dict.get("nodeSizeBy", None),
             "sort_index": as_dict.get("sortIndex", None),
         }
 
@@ -949,6 +980,7 @@ class TreemapOptions(GenericTypeOptions):
             "linecap": self.linecap,
             "lineWidth": self.line_width,
             "negativeColor": self.negative_color,
+            "nodeSizeBy": self.node_size_by,
             "pointInterval": self.point_interval,
             "pointIntervalUnit": self.point_interval_unit,
             "pointStart": self.point_start,
