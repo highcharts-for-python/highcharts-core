@@ -135,3 +135,6 @@ tests/input_files/headless_export/output/
 
 # VSCode Settings
 .vscode/
+
+# test_stbox
+.test_stbox/
