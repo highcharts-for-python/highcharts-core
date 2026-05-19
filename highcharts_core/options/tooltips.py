@@ -118,6 +118,7 @@ class Tooltip(HighchartsMeta):
         self._shadow = None
         self._shape = None
         self._shared = None
+        self._show_delay = None
         self._snap = None
         self._split = None
         self._stick_on_contact = None
@@ -158,6 +159,7 @@ class Tooltip(HighchartsMeta):
         self.shadow = kwargs.get("shadow", None)
         self.shape = kwargs.get("shape", None)
         self.shared = kwargs.get("shared", None)
+        self.show_delay = kwargs.get("show_delay", None)
         self.snap = kwargs.get("snap", None)
         self.split = kwargs.get("split", None)
         self.stick_on_contact = kwargs.get("stick_on_contact", None)
@@ -829,6 +831,18 @@ class Tooltip(HighchartsMeta):
             self._shared = bool(value)
 
     @property
+    def show_delay(self) -> Optional[int | float | Decimal]:
+        """The number of milliseconds to wait until the tooltip is shown. Defaults to ``0``.
+
+        :rtype: numeric or :obj:`None <python:None>`
+        """
+        return self._show_delay
+
+    @show_delay.setter
+    def show_delay(self, value):
+        self._show_delay = validators.numeric(value, allow_empty=True, minimum=0)
+
+    @property
     def snap(self) -> Optional[int | float | Decimal]:
         """Proximity snap for graphs or single points. If :obj:`None <python:None>`, it
         defaults to ``10`` pixels for mouse-powered devices and ``25`` for touch devices.
@@ -1030,6 +1044,7 @@ class Tooltip(HighchartsMeta):
             "shadow": as_dict.get("shadow", None),
             "shape": as_dict.get("shape", None),
             "shared": as_dict.get("shared", None),
+            "show_delay": as_dict.get("showDelay", None),
             "snap": as_dict.get("snap", None),
             "split": as_dict.get("split", None),
             "stick_on_contact": as_dict.get("stickOnContact", None),
@@ -1075,6 +1090,7 @@ class Tooltip(HighchartsMeta):
             "shadow": self.shadow,
             "shape": self.shape,
             "shared": self.shared,
+            "showDelay": self.show_delay,
             "snap": self.snap,
             "split": self.split,
             "stickOnContact": self.stick_on_contact,
@@ -1159,6 +1175,7 @@ class DiagramTooltip(Tooltip):
             "shadow": as_dict.get("shadow", None),
             "shape": as_dict.get("shape", None),
             "shared": as_dict.get("shared", None),
+            "show_delay": as_dict.get("showDelay", None),
             "snap": as_dict.get("snap", None),
             "split": as_dict.get("split", None),
             "stick_on_contact": as_dict.get("stickOnContact", None),
