@@ -152,6 +152,7 @@ class TreemapSeries(SeriesBase, TreemapOptions):
             "alternate_starting_direction": as_dict.get(
                 "alternateStartingDirection", None
             ),
+            "group_padding": as_dict.get("groupPadding", None),
             "headers": as_dict.get("headers", None),
             "interact_by_leaf": as_dict.get("interactByLeaf", None),
             "layout_algorithm": as_dict.get("layoutAlgorithm", None),

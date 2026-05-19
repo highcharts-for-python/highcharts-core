@@ -59,6 +59,7 @@ class TreemapOptions(GenericTypeOptions):
         self._levels = None
 
         self._alternate_starting_direction = None
+        self._group_padding = None
         self._headers = None
         self._interact_by_leaf = None
         self._layout_algorithm = None
@@ -99,6 +100,7 @@ class TreemapOptions(GenericTypeOptions):
         self.alternate_starting_direction = kwargs.get(
             "alternate_starting_direction", None
         )
+        self.group_padding = kwargs.get("group_padding", None)
         self.headers = kwargs.get("headers", None)
         self.interact_by_leaf = kwargs.get("interact_by_leaf", None)
         self.layout_algorithm = kwargs.get("layout_algorithm", None)
@@ -398,6 +400,23 @@ class TreemapOptions(GenericTypeOptions):
             self._get_extremes_from_all = None
         else:
             self._get_extremes_from_all = bool(value)
+
+    @property
+    def group_padding(self) -> Optional[int | float | Decimal]:
+        """Group padding for parent elements, expressed in pixels.
+
+        .. seealso::
+
+          :meth:`TreemapOptions.node_size_by` for how leaf nodes' size is affected
+          by group padding.
+
+        :rtype: Number or :obj:`None <python:None>`
+        """
+        return self._group_padding
+
+    @group_padding.setter
+    def group_padding(self, value):
+        self._group_padding = validators.numeric(value, allow_empty=True)
 
     @property
     def headers(self) -> Optional[bool]:
@@ -892,6 +911,7 @@ class TreemapOptions(GenericTypeOptions):
             "alternate_starting_direction": as_dict.get(
                 "alternateStartingDirection", None
             ),
+            "group_padding": as_dict.get("groupPadding", None),
             "headers": as_dict.get("headers", None),
             "interact_by_leaf": as_dict.get("interactByLeaf", None),
             "layout_algorithm": as_dict.get("layoutAlgorithm", None),
@@ -918,6 +938,7 @@ class TreemapOptions(GenericTypeOptions):
             "cropThreshold": self.crop_threshold,
             "findNearestPointBy": self.find_nearest_point_by,
             "getExtremesFromAll": self.get_extremes_from_all,
+            "groupPadding": self.group_padding,
             "headers": self.headers,
             "ignoreHiddenPoint": self.ignore_hidden_point,
             "interactByLeaf": self.interact_by_leaf,
