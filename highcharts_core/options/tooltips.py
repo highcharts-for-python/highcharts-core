@@ -11,6 +11,76 @@ from highcharts_core.utility_classes.patterns import Pattern
 from highcharts_core.utility_classes.shadows import ShadowOptions
 from highcharts_core.utility_classes.date_time_label_formats import DateTimeLabelFormats
 from highcharts_core.utility_classes.javascript_functions import CallbackFunction
+from highcharts_core.utility_classes.position import Position
+
+
+class TooltipPosition(Position):
+    """Options for coniguring the fixed position of a Tooltip."""
+
+    def __init__(self, **kwargs):
+        self._relative_to = None
+
+        self.relative_to = kwargs.get("relative_to", None)
+
+        super().__init__(**kwargs)
+
+    @property
+    def relative_to(self) -> Optional[str]:
+        """Indicates the object relative to which a fixed tooltip should be positioned.
+
+        Accepts:
+
+          * ``'pane'``
+          * ``'chart'``
+          * ``'plotBox'``
+          * ``'spacingBox'``
+
+        Defaults to ``'pane'`` if not specified.
+
+        :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
+
+        """
+        return self.relative_to
+
+    @relative_to.setter
+    def relative_to(self, value):
+        if not value:
+            value = None
+        else:
+            value = value.lower()
+            if value not in ["pane", "chart", "plotbox", "spacingbox"]:
+                raise errors.HighchartsValueError(
+                    f'relative_to expects either "pane", "chart", "plotBox", or "spacingBox". Was: {value}'
+                )
+            if value == "plotbox":
+                value = "plotBox"
+            elif value == "spacingbox":
+                value = "spacingBox"
+
+        self._relative_to = value
+
+    @classmethod
+    def _get_kwargs_from_dict(cls, as_dict):
+        kwargs = {
+            "align": as_dict.get("align", None),
+            "vertical_align": as_dict.get("verticalAlign", None),
+            "x": as_dict.get("x", None),
+            "y": as_dict.get("y", None),
+            "relative_to": as_dict.get("relativeTo", None),
+        }
+
+        return kwargs
+
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
+        untrimmed = {
+            "relativeTo": self.relative_to,
+        }
+
+        parent_as_dict = super()._to_untrimmed_dict(in_cls=in_cls)
+        for key in parent_as_dict:
+            untrimmed[key] = parent_as_dict[key]
+
+        return untrimmed
 
 
 class Tooltip(HighchartsMeta):
@@ -43,6 +113,7 @@ class Tooltip(HighchartsMeta):
         self._padding = None
         self._point_format = None
         self._point_formatter = None
+        self._position = None
         self._positioner = None
         self._shadow = None
         self._shape = None
@@ -82,6 +153,7 @@ class Tooltip(HighchartsMeta):
         self.padding = kwargs.get("padding", None)
         self.point_format = kwargs.get("point_format", None)
         self.point_formatter = kwargs.get("point_formatter", None)
+        self.position = kwargs.get("position", None)
         self.positioner = kwargs.get("positioner", None)
         self.shadow = kwargs.get("shadow", None)
         self.shape = kwargs.get("shape", None)
@@ -630,6 +702,24 @@ class Tooltip(HighchartsMeta):
         self._point_formatter = value
 
     @property
+    def position(self) -> Optional[TooltipPosition]:
+        """Positioning options for the tooltip when it is fixed.
+
+        .. note::
+
+          This option is only respected if :meth:`Tooltip.fixed` is ``True``.
+
+        :rtype: :class:`Position <highcharts_core.options.tooltips.Position>` or :obj:`None <python:None>`
+
+        """
+        return self._position
+
+    @position.setter
+    @class_sensitive(TooltipPosition)
+    def position(self, value):
+        self._position = value
+
+    @property
     def positioner(self) -> Optional[CallbackFunction]:
         """A JavaScript callback function to place the tooltip in a custom position.
 
@@ -935,6 +1025,7 @@ class Tooltip(HighchartsMeta):
             "padding": as_dict.get("padding", None),
             "point_format": as_dict.get("pointFormat", None),
             "point_formatter": as_dict.get("pointFormatter", None),
+            "position": as_dict.get("position", None),
             "positioner": as_dict.get("positioner", None),
             "shadow": as_dict.get("shadow", None),
             "shape": as_dict.get("shape", None),
@@ -979,6 +1070,7 @@ class Tooltip(HighchartsMeta):
             "padding": self.padding,
             "pointFormat": self.point_format,
             "pointFormatter": self.point_formatter,
+            "position": self.position,
             "positioner": self.positioner,
             "shadow": self.shadow,
             "shape": self.shape,
@@ -1047,6 +1139,7 @@ class DiagramTooltip(Tooltip):
             "date_time_label_formats": as_dict.get("dateTimeLabelFormats", None),
             "distance": as_dict.get("distance", None),
             "enabled": as_dict.get("enabled", None),
+            "fixed": as_dict.get("fixed", None),
             "follow_pointer": as_dict.get("followPointer", None),
             "follow_touch_move": as_dict.get("followTouchMove", None),
             "footer_format": as_dict.get("footerFormat", None),
@@ -1061,6 +1154,7 @@ class DiagramTooltip(Tooltip):
             "padding": as_dict.get("padding", None),
             "point_format": as_dict.get("pointFormat", None),
             "point_formatter": as_dict.get("pointFormatter", None),
+            "position": as_dict.get("position", None),
             "positioner": as_dict.get("positioner", None),
             "shadow": as_dict.get("shadow", None),
             "shape": as_dict.get("shape", None),
