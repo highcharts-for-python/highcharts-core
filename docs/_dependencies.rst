@@ -32,7 +32,7 @@
         not work properly if your rendering layer does not leverage Highcharts Core (JS).
 
     * `esprima-python <https://github.com/Kronuz/esprima-python>`_ v.4.0 or higher
-    * `requests <https://requests.readthedocs.io/en/latest/>`_ v.2.31 or higher
+    * `requests <https://requests.readthedocs.io/en/latest/>`_ v.2.32 or higher
     * `validator-collection <https://validator-collection.readthedocs.io/en/latest/>`_
       v.1.5 or higher
 
@@ -76,7 +76,7 @@
 
         $ pip install highcharts-core[dev]
 
-    * `pytest <https://docs.pytest.org/en/7.1.x/>`_ v.7.1 or higher
+    * `pytest <https://docs.pytest.org/en/9.0.x/>`_ v.9.0 or higher
     * `pytest-cov <https://pytest-cov.readthedocs.io/en/latest/>`_ v.3.0 or higher
     * `pytest-xdist <https://pytest-xdist.readthedocs.io/en/latest/>`_ v.2.5 or higher
     * `python-dotenv <https://github.com/theskumar/python-dotenv>`_ v. 0.21 or higher
