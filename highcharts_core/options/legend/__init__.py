@@ -53,6 +53,7 @@ class Legend(HighchartsMeta):
         self._layout = None
         self._margin = None
         self._max_height = None
+        self._max_width = None
         self._navigation = None
         self._padding = None
         self._reversed = None
@@ -70,54 +71,55 @@ class Legend(HighchartsMeta):
         self._x = None
         self._y = None
 
-        self.accessibility = kwargs.get('accessibility', None)
-        self.align = kwargs.get('align', None)
-        self.align_columns = kwargs.get('align_columns', None)
-        self.background_color = kwargs.get('background_color', None)
-        self.border_color = kwargs.get('border_color', None)
-        self.border_width = kwargs.get('border_width', None)
-        self.border_radius = kwargs.get('border_radius', None)
-        self.bubble_legend = kwargs.get('bubble_legend', None)
-        self.class_name = kwargs.get('class_name', None)
-        self.enabled = kwargs.get('enabled', None)
-        self.floating = kwargs.get('floating', None)
-        self.item_checkbox_style = kwargs.get('item_checkbox_style', None)
-        self.item_distance = kwargs.get('item_distance', None)
-        self.item_hidden_style = kwargs.get('item_hidden_style', None)
-        self.item_hover_style = kwargs.get('item_hover_style', None)
-        self.item_margin_bottom = kwargs.get('item_margin_bottom', None)
-        self.item_margin_top = kwargs.get('item_margin_top', None)
-        self.item_style = kwargs.get('item_style', None)
-        self.item_width = kwargs.get('item_width', None)
-        self.label_format = kwargs.get('label_format', None)
-        self.label_formatter = kwargs.get('label_formatter', None)
-        self.layout = kwargs.get('layout', None)
-        self.margin = kwargs.get('margin', None)
-        self.max_height = kwargs.get('max_height', None)
-        self.navigation = kwargs.get('navigation', None)
-        self.padding = kwargs.get('padding', None)
-        self.reversed = kwargs.get('reversed', None)
-        self.rtl = kwargs.get('rtl', None)
-        self.shadow = kwargs.get('shadow', None)
-        self.square_symbol = kwargs.get('square_symbol', None)
-        self.symbol_height = kwargs.get('symbol_height', None)
-        self.symbol_padding = kwargs.get('symbol_padding', None)
-        self.symbol_radius = kwargs.get('symbol_radius', None)
-        self.symbol_width = kwargs.get('symbol_width', None)
-        self.title = kwargs.get('title', None)
-        self.use_html = kwargs.get('use_html', None)
-        self.vertical_align = kwargs.get('vertical_align', None)
-        self.width = kwargs.get('width', None)
-        self.x = kwargs.get('x', None)
-        self.y = kwargs.get('y', None)
+        self.accessibility = kwargs.get("accessibility", None)
+        self.align = kwargs.get("align", None)
+        self.align_columns = kwargs.get("align_columns", None)
+        self.background_color = kwargs.get("background_color", None)
+        self.border_color = kwargs.get("border_color", None)
+        self.border_width = kwargs.get("border_width", None)
+        self.border_radius = kwargs.get("border_radius", None)
+        self.bubble_legend = kwargs.get("bubble_legend", None)
+        self.class_name = kwargs.get("class_name", None)
+        self.enabled = kwargs.get("enabled", None)
+        self.floating = kwargs.get("floating", None)
+        self.item_checkbox_style = kwargs.get("item_checkbox_style", None)
+        self.item_distance = kwargs.get("item_distance", None)
+        self.item_hidden_style = kwargs.get("item_hidden_style", None)
+        self.item_hover_style = kwargs.get("item_hover_style", None)
+        self.item_margin_bottom = kwargs.get("item_margin_bottom", None)
+        self.item_margin_top = kwargs.get("item_margin_top", None)
+        self.item_style = kwargs.get("item_style", None)
+        self.item_width = kwargs.get("item_width", None)
+        self.label_format = kwargs.get("label_format", None)
+        self.label_formatter = kwargs.get("label_formatter", None)
+        self.layout = kwargs.get("layout", None)
+        self.margin = kwargs.get("margin", None)
+        self.max_width = kwargs.get("max_width", None)
+        self.max_height = kwargs.get("max_height", None)
+        self.navigation = kwargs.get("navigation", None)
+        self.padding = kwargs.get("padding", None)
+        self.reversed = kwargs.get("reversed", None)
+        self.rtl = kwargs.get("rtl", None)
+        self.shadow = kwargs.get("shadow", None)
+        self.square_symbol = kwargs.get("square_symbol", None)
+        self.symbol_height = kwargs.get("symbol_height", None)
+        self.symbol_padding = kwargs.get("symbol_padding", None)
+        self.symbol_radius = kwargs.get("symbol_radius", None)
+        self.symbol_width = kwargs.get("symbol_width", None)
+        self.title = kwargs.get("title", None)
+        self.use_html = kwargs.get("use_html", None)
+        self.vertical_align = kwargs.get("vertical_align", None)
+        self.width = kwargs.get("width", None)
+        self.x = kwargs.get("x", None)
+        self.y = kwargs.get("y", None)
 
     @property
     def _dot_path(self) -> Optional[str]:
         """The dot-notation path to the options key for the current class.
-        
+
         :rtype: :class:`str <python:str>` or :obj:`None <python:None>`
         """
-        return 'legend'
+        return "legend"
 
     @property
     def accessibility(self) -> Optional[LegendAccessibilityOptions]:
@@ -162,9 +164,10 @@ class Legend(HighchartsMeta):
         else:
             value = validators.string(value)
             value = value.lower()
-            if value not in ['left', 'center', 'right']:
-                raise errors.HighchartsValueError(f'align must be either "left", "center"'
-                                                  f', or "right". Was: "{value}"')
+            if value not in ["left", "center", "right"]:
+                raise errors.HighchartsValueError(
+                    f'align must be either "left", "center", or "right". Was: "{value}"'
+                )
             self._align = value
 
     @property
@@ -201,6 +204,7 @@ class Legend(HighchartsMeta):
     @background_color.setter
     def background_color(self, value):
         from highcharts_core import utility_functions
+
         self._background_color = utility_functions.validate_color(value)
 
     @property
@@ -218,6 +222,7 @@ class Legend(HighchartsMeta):
     @border_color.setter
     def border_color(self, value):
         from highcharts_core import utility_functions
+
         self._border_color = utility_functions.validate_color(value)
 
     @property
@@ -232,7 +237,7 @@ class Legend(HighchartsMeta):
 
     @border_radius.setter
     def border_radius(self, value):
-        self._border_radius = validators.numeric(value, allow_empty = True)
+        self._border_radius = validators.numeric(value, allow_empty=True)
 
     @property
     def border_width(self) -> Optional[int | float | Decimal]:
@@ -246,7 +251,7 @@ class Legend(HighchartsMeta):
 
     @border_width.setter
     def border_width(self, value):
-        self._border_width = validators.numeric(value, allow_empty = True)
+        self._border_width = validators.numeric(value, allow_empty=True)
 
     @property
     def bubble_legend(self) -> Optional[BubbleLegend]:
@@ -276,7 +281,7 @@ class Legend(HighchartsMeta):
 
     @class_name.setter
     def class_name(self, value):
-        self._class_name = validators.string(value, allow_empty = True)
+        self._class_name = validators.string(value, allow_empty=True)
 
     @property
     def enabled(self) -> Optional[bool]:
@@ -324,7 +329,7 @@ class Legend(HighchartsMeta):
         :meth:`Legend.show_checkbox` is ``True``. Defaults to:
         ``'{"width": "13px", "height": "13px", "position":"absolute"}'``.
 
-        :rtype: :class:`str <python:str>` or :class:`dict <python:dict>` or 
+        :rtype: :class:`str <python:str>` or :class:`dict <python:dict>` or
           :obj:`None <python:None>`
         """
         return self._item_checkbox_style
@@ -332,11 +337,11 @@ class Legend(HighchartsMeta):
     @item_checkbox_style.setter
     def item_checkbox_style(self, value):
         try:
-            self._item_checkbox_style = validators.dict(value, allow_empty = True)
+            self._item_checkbox_style = validators.dict(value, allow_empty=True)
         except (ValueError, TypeError):
-            self._item_checkbox_style = validators.string(value, 
-                                                          allow_empty = True,
-                                                          coerce_value = True)
+            self._item_checkbox_style = validators.string(
+                value, allow_empty=True, coerce_value=True
+            )
 
     @property
     def item_distance(self) -> Optional[int | float | Decimal]:
@@ -349,9 +354,7 @@ class Legend(HighchartsMeta):
 
     @item_distance.setter
     def item_distance(self, value):
-        self._item_distance = validators.numeric(value,
-                                                 allow_empty = True,
-                                                 minimum = 0)
+        self._item_distance = validators.numeric(value, allow_empty=True, minimum=0)
 
     @property
     def item_hidden_style(self) -> Optional[str | dict]:
@@ -374,11 +377,11 @@ class Legend(HighchartsMeta):
     @item_hidden_style.setter
     def item_hidden_style(self, value):
         try:
-            self._item_hidden_style = validators.dict(value, allow_empty = True)
+            self._item_hidden_style = validators.dict(value, allow_empty=True)
         except (ValueError, TypeError):
-            self._item_hidden_style = validators.string(value, 
-                                                        allow_empty = True,
-                                                        coerce_value = True)
+            self._item_hidden_style = validators.string(
+                value, allow_empty=True, coerce_value=True
+            )
 
     @property
     def item_hover_style(self) -> Optional[str | dict]:
@@ -394,7 +397,7 @@ class Legend(HighchartsMeta):
 
           Properties are inherited from :meth:`Legend.style` unless overridden here.
 
-        :rtype: :class:`str <python:str>` or :class:`dict <python:dict>` or 
+        :rtype: :class:`str <python:str>` or :class:`dict <python:dict>` or
           :obj:`None <python:None>`
         """
         return self._item_hover_style
@@ -402,11 +405,11 @@ class Legend(HighchartsMeta):
     @item_hover_style.setter
     def item_hover_style(self, value):
         try:
-            self._item_hover_style = validators.dict(value, allow_empty = True)
+            self._item_hover_style = validators.dict(value, allow_empty=True)
         except (ValueError, TypeError):
-            self._item_hover_style = validators.string(value, 
-                                                       allow_empty = True,
-                                                       coerce_value = True)
+            self._item_hover_style = validators.string(
+                value, allow_empty=True, coerce_value=True
+            )
 
     @property
     def item_margin_bottom(self) -> Optional[int | float | Decimal]:
@@ -419,9 +422,9 @@ class Legend(HighchartsMeta):
 
     @item_margin_bottom.setter
     def item_margin_bottom(self, value):
-        self._item_margin_bottom = validators.numeric(value,
-                                                      allow_empty = True,
-                                                      minimum = 0)
+        self._item_margin_bottom = validators.numeric(
+            value, allow_empty=True, minimum=0
+        )
 
     @property
     def item_margin_top(self) -> Optional[int | float | Decimal]:
@@ -434,9 +437,7 @@ class Legend(HighchartsMeta):
 
     @item_margin_top.setter
     def item_margin_top(self, value):
-        self._item_margin_top = validators.numeric(value,
-                                                      allow_empty = True,
-                                                      minimum = 0)
+        self._item_margin_top = validators.numeric(value, allow_empty=True, minimum=0)
 
     @property
     def item_style(self) -> Optional[str | dict]:
@@ -460,11 +461,11 @@ class Legend(HighchartsMeta):
     @item_style.setter
     def item_style(self, value):
         try:
-            self._item_style = validators.dict(value, allow_empty = True)
+            self._item_style = validators.dict(value, allow_empty=True)
         except (ValueError, TypeError):
-            self._item_style = validators.string(value, 
-                                                 allow_empty = True,
-                                                 coerce_value = True)
+            self._item_style = validators.string(
+                value, allow_empty=True, coerce_value=True
+            )
 
     @property
     def item_width(self) -> Optional[int | float | Decimal]:
@@ -481,9 +482,7 @@ class Legend(HighchartsMeta):
 
     @item_width.setter
     def item_width(self, value):
-        self._item_width = validators.numeric(value,
-                                              allow_empty = True,
-                                              minimum = 0)
+        self._item_width = validators.numeric(value, allow_empty=True, minimum=0)
 
     @property
     def label_format(self) -> Optional[str]:
@@ -501,7 +500,7 @@ class Legend(HighchartsMeta):
 
     @label_format.setter
     def label_format(self, value):
-        self._label_format = validators.string(value, allow_empty = True)
+        self._label_format = validators.string(value, allow_empty=True)
 
     @property
     def label_formatter(self) -> Optional[CallbackFunction]:
@@ -547,10 +546,12 @@ class Legend(HighchartsMeta):
         else:
             value = validators.string(value)
             value = value.lower()
-            if value not in ['horizontal', 'vertical', 'proximate']:
-                raise errors.HighchartsValueError(f'layout must be either "horizontal", '
-                                                  f', "vertical", or "proximate". Was: '
-                                                  f'"{value}"')
+            if value not in ["horizontal", "vertical", "proximate"]:
+                raise errors.HighchartsValueError(
+                    f'layout must be either "horizontal", '
+                    f', "vertical", or "proximate". Was: '
+                    f'"{value}"'
+                )
             self._layout = value
 
     @property
@@ -565,8 +566,7 @@ class Legend(HighchartsMeta):
 
     @margin.setter
     def margin(self, value):
-        self._margin = validators.numeric(value,
-                                          allow_empty = True)
+        self._margin = validators.numeric(value, allow_empty=True)
 
     @property
     def max_height(self) -> Optional[int | float | Decimal]:
@@ -581,9 +581,25 @@ class Legend(HighchartsMeta):
 
     @max_height.setter
     def max_height(self, value):
-        self._max_height = validators.numeric(value,
-                                              allow_empty = True,
-                                              minimum = 0)
+        self._max_height = validators.numeric(value, allow_empty=True, minimum=0)
+
+    @property
+    def max_width(self) -> Optional[int | float | Decimal | str]:
+        """The maximum width for the legend, expressed in pixels (as an integer) or a
+        percentage of the chart (as a string). Defaults to ``None``.
+
+        When the maximum width is extended, navigation will show.
+
+        :rtype: numeric or :class:`str <python:str>` or :obj:`None <python:None>`
+        """
+        return self._max_width
+
+    @max_width.setter
+    def max_width(self, value):
+        try:
+            self._max_width = validators.numeric(value, allow_empty=True, minimum=0)
+        except (ValueError, TypeError):
+            self._max_width = validators.string(value)
 
     @property
     def navigation(self) -> Optional[LegendNavigation]:
@@ -615,7 +631,7 @@ class Legend(HighchartsMeta):
 
     @padding.setter
     def padding(self, value):
-        self._padding = validators.numeric(value, allow_empty = True)
+        self._padding = validators.numeric(value, allow_empty=True)
 
     @property
     def reversed(self) -> Optional[bool]:
@@ -676,11 +692,9 @@ class Legend(HighchartsMeta):
             self._shadow = False
         else:
             if value is True:
-                value = ShadowOptions(enabled = True)
+                value = ShadowOptions(enabled=True)
             else:
-                value = validate_types(value,
-                                       types = ShadowOptions,
-                                       allow_none = False)
+                value = validate_types(value, types=ShadowOptions, allow_none=False)
             self._shadow = value
 
     @property
@@ -711,9 +725,7 @@ class Legend(HighchartsMeta):
 
     @symbol_height.setter
     def symbol_height(self, value):
-        self._symbol_height = validators.numeric(value,
-                                                 allow_empty = True,
-                                                 minimum = 0)
+        self._symbol_height = validators.numeric(value, allow_empty=True, minimum=0)
 
     @property
     def symbol_padding(self) -> Optional[int | float | Decimal]:
@@ -726,7 +738,7 @@ class Legend(HighchartsMeta):
 
     @symbol_padding.setter
     def symbol_padding(self, value):
-        self._symbol_padding = validators.numeric(value, allow_empty = True)
+        self._symbol_padding = validators.numeric(value, allow_empty=True)
 
     @property
     def symbol_radius(self) -> Optional[int | float | Decimal]:
@@ -739,7 +751,7 @@ class Legend(HighchartsMeta):
 
     @symbol_radius.setter
     def symbol_radius(self, value):
-        self._symbol_radius = validators.numeric(value, allow_empty = True)
+        self._symbol_radius = validators.numeric(value, allow_empty=True)
 
     @property
     def symbol_width(self) -> Optional[int | float | Decimal]:
@@ -753,9 +765,7 @@ class Legend(HighchartsMeta):
 
     @symbol_width.setter
     def symbol_width(self, value):
-        self._symbol_width = validators.numeric(value,
-                                                allow_empty = True,
-                                                minimum = 0)
+        self._symbol_width = validators.numeric(value, allow_empty=True, minimum=0)
 
     @property
     def title(self) -> Optional[LegendTitle]:
@@ -821,11 +831,13 @@ class Legend(HighchartsMeta):
         if not value:
             self._vertical_align = None
         else:
-            value = validators.string(value, allow_empty = True)
+            value = validators.string(value, allow_empty=True)
             value = value.lower()
-            if value not in ['bottom', 'middle', 'top']:
-                raise errors.HighchartsValueError(f'vertical_align expects either "top", '
-                                                  f'"middle", or "bottom". Was: {value}')
+            if value not in ["bottom", "middle", "top"]:
+                raise errors.HighchartsValueError(
+                    f'vertical_align expects either "top", '
+                    f'"middle", or "bottom". Was: {value}'
+                )
             self._vertical_align = value
 
     @property
@@ -851,14 +863,16 @@ class Legend(HighchartsMeta):
         else:
             try:
                 value = validators.string(value)
-                if '%' not in value:
-                    raise errors.HighchartsValueError(f'if width is a string, it is '
-                                                      f'expected to be a percentage of '
-                                                      f'the chart area. No % sign found '
-                                                      f'in value: {value}')
+                if "%" not in value:
+                    raise errors.HighchartsValueError(
+                        f"if width is a string, it is "
+                        f"expected to be a percentage of "
+                        f"the chart area. No % sign found "
+                        f"in value: {value}"
+                    )
                 self._width = value
             except (TypeError, ValueError):
-                self._width = validators.numeric(value, minimum = 0)
+                self._width = validators.numeric(value, minimum=0)
 
     @property
     def x(self) -> Optional[int]:
@@ -876,7 +890,7 @@ class Legend(HighchartsMeta):
 
     @x.setter
     def x(self, value):
-        self._x = validators.numeric(value, allow_empty = True)
+        self._x = validators.numeric(value, allow_empty=True)
 
     @property
     def y(self) -> Optional[int]:
@@ -894,97 +908,99 @@ class Legend(HighchartsMeta):
 
     @y.setter
     def y(self, value):
-        self._y = validators.numeric(value, allow_empty = True)
+        self._y = validators.numeric(value, allow_empty=True)
 
     @classmethod
     def _get_kwargs_from_dict(cls, as_dict):
         kwargs = {
-            'accessibility': as_dict.get('accessibility', None),
-            'align': as_dict.get('align', None),
-            'align_columns': as_dict.get('alignColumns', None),
-            'background_color': as_dict.get('backgroundColor', None),
-            'border_color': as_dict.get('borderColor', None),
-            'border_width': as_dict.get('borderWidth', None),
-            'border_radius': as_dict.get('borderRadius', None),
-            'bubble_legend': as_dict.get('bubbleLegend', None),
-            'class_name': as_dict.get('className', None),
-            'enabled': as_dict.get('enabled', None),
-            'floating': as_dict.get('floating', None),
-            'item_checkbox_style': as_dict.get('itemCheckboxStyle', None),
-            'item_distance': as_dict.get('itemDistance', None),
-            'item_hidden_style': as_dict.get('itemHiddenStyle', None),
-            'item_hover_style': as_dict.get('itemHoverStyle', None),
-            'item_margin_bottom': as_dict.get('itemMarginBottom', None),
-            'item_margin_top': as_dict.get('itemMarginTop', None),
-            'item_style': as_dict.get('itemStyle', None),
-            'item_width': as_dict.get('itemWidth', None),
-            'label_format': as_dict.get('labelFormat', None),
-            'label_formatter': as_dict.get('labelFormatter', None),
-            'layout': as_dict.get('layout', None),
-            'margin': as_dict.get('margin', None),
-            'max_height': as_dict.get('maxHeight', None),
-            'navigation': as_dict.get('navigation', None),
-            'padding': as_dict.get('padding', None),
-            'reversed': as_dict.get('reversed', None),
-            'rtl': as_dict.get('rtl', None),
-            'shadow': as_dict.get('shadow', None),
-            'square_symbol': as_dict.get('squareSymbol', None),
-            'symbol_height': as_dict.get('symbolHeight', None),
-            'symbol_padding': as_dict.get('symbolPadding', None),
-            'symbol_radius': as_dict.get('symbolRadius', None),
-            'symbol_width': as_dict.get('symbolWidth', None),
-            'title': as_dict.get('title', None),
-            'use_html': as_dict.get('useHTML', None),
-            'vertical_align': as_dict.get('verticalAlign', None),
-            'width': as_dict.get('width', None),
-            'x': as_dict.get('x', None),
-            'y': as_dict.get('y', None),
+            "accessibility": as_dict.get("accessibility", None),
+            "align": as_dict.get("align", None),
+            "align_columns": as_dict.get("alignColumns", None),
+            "background_color": as_dict.get("backgroundColor", None),
+            "border_color": as_dict.get("borderColor", None),
+            "border_width": as_dict.get("borderWidth", None),
+            "border_radius": as_dict.get("borderRadius", None),
+            "bubble_legend": as_dict.get("bubbleLegend", None),
+            "class_name": as_dict.get("className", None),
+            "enabled": as_dict.get("enabled", None),
+            "floating": as_dict.get("floating", None),
+            "item_checkbox_style": as_dict.get("itemCheckboxStyle", None),
+            "item_distance": as_dict.get("itemDistance", None),
+            "item_hidden_style": as_dict.get("itemHiddenStyle", None),
+            "item_hover_style": as_dict.get("itemHoverStyle", None),
+            "item_margin_bottom": as_dict.get("itemMarginBottom", None),
+            "item_margin_top": as_dict.get("itemMarginTop", None),
+            "item_style": as_dict.get("itemStyle", None),
+            "item_width": as_dict.get("itemWidth", None),
+            "label_format": as_dict.get("labelFormat", None),
+            "label_formatter": as_dict.get("labelFormatter", None),
+            "layout": as_dict.get("layout", None),
+            "margin": as_dict.get("margin", None),
+            "max_height": as_dict.get("maxHeight", None),
+            "max_width": as_dict.get("maxWidth", None),
+            "navigation": as_dict.get("navigation", None),
+            "padding": as_dict.get("padding", None),
+            "reversed": as_dict.get("reversed", None),
+            "rtl": as_dict.get("rtl", None),
+            "shadow": as_dict.get("shadow", None),
+            "square_symbol": as_dict.get("squareSymbol", None),
+            "symbol_height": as_dict.get("symbolHeight", None),
+            "symbol_padding": as_dict.get("symbolPadding", None),
+            "symbol_radius": as_dict.get("symbolRadius", None),
+            "symbol_width": as_dict.get("symbolWidth", None),
+            "title": as_dict.get("title", None),
+            "use_html": as_dict.get("useHTML", None),
+            "vertical_align": as_dict.get("verticalAlign", None),
+            "width": as_dict.get("width", None),
+            "x": as_dict.get("x", None),
+            "y": as_dict.get("y", None),
         }
 
         return kwargs
 
-    def _to_untrimmed_dict(self, in_cls = None) -> dict:
+    def _to_untrimmed_dict(self, in_cls=None) -> dict:
         untrimmed = {
-            'accessibility': self.accessibility,
-            'align': self.align,
-            'alignColumns': self.align_columns,
-            'backgroundColor': self.background_color,
-            'borderColor': self.border_color,
-            'borderWidth': self.border_width,
-            'borderRadius': self.border_radius,
-            'bubbleLegend': self.bubble_legend,
-            'className': self.class_name,
-            'enabled': self.enabled,
-            'floating': self.floating,
-            'itemCheckboxStyle': self.item_checkbox_style,
-            'itemDistance': self.item_distance,
-            'itemHiddenStyle': self.item_hidden_style,
-            'itemHoverStyle': self.item_hover_style,
-            'itemMarginBottom': self.item_margin_bottom,
-            'itemMarginTop': self.item_margin_top,
-            'itemStyle': self.item_style,
-            'itemWidth': self.item_width,
-            'labelFormat': self.label_format,
-            'labelFormatter': self.label_formatter,
-            'layout': self.layout,
-            'margin': self.margin,
-            'maxHeight': self.max_height,
-            'navigation': self.navigation,
-            'padding': self.padding,
-            'reversed': self.reversed,
-            'rtl': self.rtl,
-            'shadow': self.shadow,
-            'squareSymbol': self.square_symbol,
-            'symbolHeight': self.symbol_height,
-            'symbolPadding': self.symbol_padding,
-            'symbolRadius': self.symbol_radius,
-            'symbolWidth': self.symbol_width,
-            'title': self.title,
-            'useHTML': self.use_html,
-            'verticalAlign': self.vertical_align,
-            'width': self.width,
-            'x': self.x,
-            'y': self.y
+            "accessibility": self.accessibility,
+            "align": self.align,
+            "alignColumns": self.align_columns,
+            "backgroundColor": self.background_color,
+            "borderColor": self.border_color,
+            "borderWidth": self.border_width,
+            "borderRadius": self.border_radius,
+            "bubbleLegend": self.bubble_legend,
+            "className": self.class_name,
+            "enabled": self.enabled,
+            "floating": self.floating,
+            "itemCheckboxStyle": self.item_checkbox_style,
+            "itemDistance": self.item_distance,
+            "itemHiddenStyle": self.item_hidden_style,
+            "itemHoverStyle": self.item_hover_style,
+            "itemMarginBottom": self.item_margin_bottom,
+            "itemMarginTop": self.item_margin_top,
+            "itemStyle": self.item_style,
+            "itemWidth": self.item_width,
+            "labelFormat": self.label_format,
+            "labelFormatter": self.label_formatter,
+            "layout": self.layout,
+            "margin": self.margin,
+            "maxHeight": self.max_height,
+            "maxWidth": self.max_width,
+            "navigation": self.navigation,
+            "padding": self.padding,
+            "reversed": self.reversed,
+            "rtl": self.rtl,
+            "shadow": self.shadow,
+            "squareSymbol": self.square_symbol,
+            "symbolHeight": self.symbol_height,
+            "symbolPadding": self.symbol_padding,
+            "symbolRadius": self.symbol_radius,
+            "symbolWidth": self.symbol_width,
+            "title": self.title,
+            "useHTML": self.use_html,
+            "verticalAlign": self.vertical_align,
+            "width": self.width,
+            "x": self.x,
+            "y": self.y,
         }
 
         return untrimmed
