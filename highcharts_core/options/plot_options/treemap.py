@@ -66,6 +66,8 @@ class TreemapOptions(GenericTypeOptions):
         self._layout_starting_direction = None
         self._node_size_by = None
         self._sort_index = None
+        self._traverse_to_leaf = None
+        self._zoom_enabled = None
 
         self.animation_limit = kwargs.get("animation_limit", None)
         self.boost_blending = kwargs.get("boost_blending", None)
@@ -108,6 +110,8 @@ class TreemapOptions(GenericTypeOptions):
         self.layout_starting_direction = kwargs.get("layout_starting_direction", None)
         self.node_size_by = kwargs.get("node_size_by", None)
         self.sort_index = kwargs.get("sort_index", None)
+        self.traverse_to_leaf = kwargs.get("traverse_to_leaf", None)
+        self.zoom_enabled = kwargs.get("zoom_enabled", None)
 
         super().__init__(**kwargs)
 
@@ -836,6 +840,41 @@ class TreemapOptions(GenericTypeOptions):
         self._step = validators.string(value, allow_empty=True)
 
     @property
+    def traverse_to_leaf(self) -> Optional[bool]:
+        """If ``True``, enables automatic traversing to the last child upon node interaction.
+        Defaults to ``False``.
+
+        .. tip::
+          This feature simplifies navigation by immediately focusing on the deepest layer of the
+          data structure without intermediate steps.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._traverse_to_leaf
+
+    @traverse_to_leaf.setter
+    def traverse_to_leaf(self, value):
+        if value is None:
+            self._traverse_to_leaf = None
+        else:
+            self._traverse_to_leaf = bool(value)
+
+    @property
+    def zoom_enabled(self) -> Optional[bool]:
+        """If ``True``, enables zooming in on nodes when clicking on them. Defaults to ``True``.
+
+        :rtype: :class:`bool <python:bool>` or :obj:`None <python:None>`
+        """
+        return self._zoom_enabled
+
+    @zoom_enabled.setter
+    def zoom_enabled(self, value):
+        if value is None:
+            self._zoom_enabled = None
+        else:
+            self._zoom_enabled = bool(value)
+
+    @property
     def zone_axis(self) -> Optional[str]:
         """Defines the Axis on which the zones are applied. Defaults to ``'y'``.
 
@@ -948,6 +987,8 @@ class TreemapOptions(GenericTypeOptions):
             "layout_starting_direction": as_dict.get("layoutStartingDirection", None),
             "node_size_by": as_dict.get("nodeSizeBy", None),
             "sort_index": as_dict.get("sortIndex", None),
+            "traverse_to_leaf": as_dict.get("traverseToLeaf", None),
+            "zoom_enabled": as_dict.get("zoomEnabled", None),
         }
 
         return kwargs
@@ -989,8 +1030,10 @@ class TreemapOptions(GenericTypeOptions):
             "sortIndex": self.sort_index,
             "stacking": self.stacking,
             "step": self.step,
+            "traverseToLeaf": self.traverse_to_leaf,
             "zoneAxis": self.zone_axis,
             "zones": self.zones,
+            "zoomEnabled": self.zoom_enabled,
         }
         parent_as_dict = super()._to_untrimmed_dict(in_cls=in_cls)
 

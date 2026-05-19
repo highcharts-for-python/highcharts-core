@@ -159,6 +159,8 @@ class TreemapSeries(SeriesBase, TreemapOptions):
             "layout_starting_direction": as_dict.get("layoutStartingDirection", None),
             "node_size_by": as_dict.get("nodeSizeBy", None),
             "sort_index": as_dict.get("sortIndex", None),
+            "traverse_to_leaf": as_dict.get("traverseToLeaf", None),
+            "zoom_enabled": as_dict.get("zoomEnabled", None),
         }
 
         return kwargs
